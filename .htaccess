@@ -1,0 +1,4 @@
+PassengerEnabled on
+PassengerAppType node
+PassengerStartupFile server.js
+PassengerNodejs /opt/alt/alt-nodejs22/root/usr/bin/node
