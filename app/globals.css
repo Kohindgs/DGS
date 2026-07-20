@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --v1215-blue: #00d4ff;
@@ -23,19 +23,19 @@ html {
   scroll-behavior: smooth;
   background: var(--v1215-dark);
   color: #ffffff;
-  font-size: clamp(14px, 0.9vw + 8px, 20px); /* Fluid base font size for 4K down to mobile */
+  font-size: clamp(14px, 0.9vw + 8px, 20px);
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Manrope', sans-serif;
   overflow-x: hidden;
   background: #020202;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
-  font-family: 'Outfit', sans-serif;
+h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
+  font-family: 'Manrope', sans-serif;
 }
 
 /* Base DGS Wrapper */
@@ -105,6 +105,7 @@ h1, h2, h3, h4, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   letter-spacing: 0.02em;
+  font-family: 'Manrope', sans-serif;
 }
 
 .dgs-v1215-btn-primary {
@@ -364,7 +365,7 @@ h1, h2, h3, h4, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.35);
   transition: color 0.3s ease;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 .dgs-v1215-rail-track span:hover {
@@ -539,7 +540,7 @@ h1, h2, h3, h4, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   font-weight: 900;
   opacity: 0.15;
   margin-bottom: 1.5rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Manrope', sans-serif;
   transition: opacity 0.3s ease, color 0.3s ease;
 }
 
@@ -700,6 +701,7 @@ h1, h2, h3, h4, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   cursor: pointer;
   backdrop-filter: blur(10px);
   color: #fff;
+  font-family: 'Manrope', sans-serif;
 }
 
 .portfolio-filter-tab.active,
