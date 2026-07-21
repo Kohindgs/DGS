@@ -164,7 +164,7 @@ export default function HomePage() {
               </div>
 
               <h1>
-                Dominating Search, Social & AI Search Engines
+                Dominating Search, Social & AI Engines
                 <span>AI Video • AEO / GEO • Web Dev • Performance</span>
               </h1>
 
@@ -182,14 +182,61 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* 3D Holographic AI Studio Graphic (Native Pure SVG/CSS - Zero Broken Links) */}
             <div className="dgs-v1215-visual dgs-v1215-reveal">
               <div className="dgs-v1215-robot-wrap">
                 <div className="dgs-v1215-robot-aura"></div>
-                <img
+                
+                <div
                   id="dgs-v1215-robot"
-                  src="/images/v1215/robot-hero.webp"
-                  alt="D'Genius Solutions AI Visual Representation"
-                />
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(12, 16, 28, 0.95), rgba(5, 5, 8, 0.95))',
+                    border: '1px solid rgba(0, 212, 255, 0.3)',
+                    borderRadius: '2.5rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2.5rem',
+                    boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 212, 255, 0.25)',
+                    backdropFilter: 'blur(20px)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {/* Holographic Core Graphic */}
+                  <svg
+                    width="140"
+                    height="140"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ marginBottom: '1.5rem', filter: 'drop-shadow(0 0 20px rgba(0, 212, 255, 0.8))' }}
+                  >
+                    <circle cx="50" cy="50" r="45" stroke="url(#paint0_linear)" strokeWidth="2" strokeDasharray="6 4" />
+                    <circle cx="50" cy="50" r="32" stroke="url(#paint1_linear)" strokeWidth="3" />
+                    <polygon points="50,25 70,65 30,65" stroke="#00d4ff" strokeWidth="2" fill="rgba(0, 212, 255, 0.15)" />
+                    <circle cx="50" cy="50" r="8" fill="#fd5c62" />
+                    <defs>
+                      <linearGradient id="paint0_linear" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#00d4ff" />
+                        <stop offset="0.5" stopColor="#9d4edd" />
+                        <stop offset="1" stopColor="#fd5c62" />
+                      </linearGradient>
+                      <linearGradient id="paint1_linear" x1="0" y1="100" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#fd5c62" />
+                        <stop offset="1" stopColor="#00d4ff" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+
+                  <strong style={{ fontSize: '1.35rem', fontWeight: '900', color: '#fff', textAlign: 'center', marginBottom: '0.4rem' }}>
+                    DGS AI Engine Studio
+                  </strong>
+                  <span style={{ fontSize: '0.85rem', color: '#00d4ff', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: '800' }}>
+                    Generative Search & Media
+                  </span>
+                </div>
 
                 <div className="dgs-v1215-floating-chip dgs-v1215-chip-one">
                   <span>Generative Search</span>

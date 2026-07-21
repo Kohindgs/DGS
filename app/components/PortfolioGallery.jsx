@@ -8,7 +8,8 @@ const PORTFOLIO_ITEMS = [
     category: 'ai-video',
     title: 'AI Avatar Brand Campaign — NextGen Finance',
     tag: 'AI Video Production',
-    image: '/images/v1215/ai-portfolio-1.webp',
+    accentColor: 'linear-gradient(135deg, rgba(0, 212, 255, 0.4), rgba(157, 78, 221, 0.2))',
+    icon: '🎬',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     metrics: '+450% Engagement Rate',
   },
@@ -17,7 +18,8 @@ const PORTFOLIO_ITEMS = [
     category: 'seo-aeo',
     title: 'Perplexity & Google AI Overview Takeover — D2C Unicorn',
     tag: 'SEO, AEO, GEO & LLM',
-    image: '/images/v1215/ai-portfolio-2.webp',
+    accentColor: 'linear-gradient(135deg, rgba(253, 92, 98, 0.4), rgba(157, 78, 221, 0.2))',
+    icon: '🧠',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     metrics: '#1 Rank in AI Overview',
   },
@@ -26,7 +28,8 @@ const PORTFOLIO_ITEMS = [
     category: 'web-dev',
     title: 'Ultra-Performance 3D Web App — Luxury Retail',
     tag: 'Website Development',
-    image: '/images/v1215/ai-portfolio-3.webp',
+    accentColor: 'linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(0, 212, 255, 0.2))',
+    icon: '💻',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     metrics: '99/100 Core Web Vitals',
   },
@@ -35,7 +38,8 @@ const PORTFOLIO_ITEMS = [
     category: 'performance',
     title: 'High-ROAS Meta & Paid Search Funnel — E-Commerce Brand',
     tag: 'Performance Marketing',
-    image: '/images/v1215/ai-portfolio-4.webp',
+    accentColor: 'linear-gradient(135deg, rgba(247, 215, 87, 0.3), rgba(253, 92, 98, 0.2))',
+    icon: '📈',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     metrics: '8.4x Verified ROAS',
   },
@@ -44,7 +48,8 @@ const PORTFOLIO_ITEMS = [
     category: 'social',
     title: 'Viral Social Media Campaign — FMCG India',
     tag: 'Social Media Marketing',
-    image: '/images/v1215/ai-portfolio-5.webp',
+    accentColor: 'linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(99, 102, 241, 0.3))',
+    icon: '📱',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     metrics: '12M+ Organic Views',
   },
@@ -53,7 +58,8 @@ const PORTFOLIO_ITEMS = [
     category: 'branding',
     title: 'Complete Brand Identity & Visual Asset System — FinTech SaaS',
     tag: 'Branding & Content Creation',
-    image: '/images/v1215/ai-portfolio-6.webp',
+    accentColor: 'linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(253, 92, 98, 0.2))',
+    icon: '🎨',
     videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     metrics: 'Global Brand Launch',
   },
@@ -100,15 +106,18 @@ export default function PortfolioGallery() {
             key={item.id}
             className="dgs-v1215-case-visual-card portfolio-item-card dgs-v1215-reveal"
           >
-            <div className="dgs-v1215-case-media">
-              <img
-                src={item.image}
-                alt={item.title}
-                loading="lazy"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
+            <div
+              className="dgs-v1215-case-media"
+              style={{
+                background: item.accentColor,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+              }}
+            >
+              <div style={{ fontSize: '4rem', opacity: 0.85 }}>{item.icon}</div>
+              
               <div
                 style={{
                   position: 'absolute',
@@ -117,6 +126,7 @@ export default function PortfolioGallery() {
                     'linear-gradient(180deg, transparent 40%, rgba(5,5,8,0.95) 100%)',
                 }}
               />
+
               <button
                 onClick={() => setActiveVideo(item)}
                 style={{
@@ -127,16 +137,17 @@ export default function PortfolioGallery() {
                   width: '64px',
                   height: '64px',
                   borderRadius: '50%',
-                  background: 'rgba(0, 212, 255, 0.9)',
+                  background: 'rgba(0, 212, 255, 0.95)',
                   border: 'none',
                   color: '#050508',
-                  fontSize: '1.5rem',
+                  fontSize: '1.4rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
-                  boxShadow: '0 0 30px rgba(0, 212, 255, 0.6)',
+                  boxShadow: '0 0 35px rgba(0, 212, 255, 0.7)',
                   transition: 'transform 0.3s ease',
+                  zIndex: 5,
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.15)')}
                 onMouseLeave={(e) => (e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)')}
@@ -145,6 +156,7 @@ export default function PortfolioGallery() {
                 ▶
               </button>
             </div>
+
             <div className="dgs-v1215-case-content">
               <span>{item.tag}</span>
               <h3>{item.title}</h3>
@@ -167,7 +179,7 @@ export default function PortfolioGallery() {
             position: 'fixed',
             inset: 0,
             zIndex: 999,
-            background: 'rgba(5, 5, 8, 0.92)',
+            background: 'rgba(5, 5, 8, 0.94)',
             backdropFilter: 'blur(20px)',
             display: 'flex',
             alignItems: 'center',
