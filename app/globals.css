@@ -6,11 +6,12 @@
   --v1215-purple: #9d4edd;
   --v1215-yellow: #f7d757;
   --v1215-indigo: #6366f1;
-  --v1215-dark: #020202;
-  --v1215-card-bg: rgba(15, 23, 42, 0.45);
-  --v1215-card-border: rgba(255, 255, 255, 0.09);
+  --v1215-dark: #050508;
+  --v1215-card-bg: rgba(12, 16, 28, 0.55);
+  --v1215-card-border: rgba(255, 255, 255, 0.08);
   --v1215-glow-blue: rgba(0, 212, 255, 0.35);
   --v1215-glow-purple: rgba(157, 78, 221, 0.35);
+  --v1215-glow-coral: rgba(253, 92, 98, 0.35);
 }
 
 * {
@@ -29,7 +30,7 @@ html {
 body {
   font-family: 'Manrope', sans-serif;
   overflow-x: hidden;
-  background: #020202;
+  background: var(--v1215-dark);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -48,7 +49,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   width: 100%;
 }
 
-/* Fluid Widescreen Container: Supports 4K (3840px) down to 320px */
+/* Fluid Widescreen Shell */
 .dgs-v1215-shell {
   width: min(1800px, calc(100% - clamp(24px, 5vw, 96px)));
   margin: 0 auto;
@@ -62,62 +63,64 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   z-index: -2;
   pointer-events: none;
   overflow: hidden;
-  background: #020202;
+  background: #050508;
 }
 
 .dgs-v1215-fallback {
   position: absolute;
-  inset: -15%;
+  inset: -20%;
   background: 
-    radial-gradient(circle at 15% 25%, rgba(0, 212, 255, 0.2), transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(253, 92, 98, 0.14), transparent 45%),
-    radial-gradient(circle at 50% 75%, rgba(157, 78, 221, 0.2), transparent 50%);
-  filter: blur(100px);
+    radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.14), transparent 45%),
+    radial-gradient(circle at 80% 15%, rgba(253, 92, 98, 0.12), transparent 45%),
+    radial-gradient(circle at 50% 65%, rgba(157, 78, 221, 0.14), transparent 50%);
+  filter: blur(120px);
 }
 
 .dgs-v1215-grid {
   position: absolute;
   inset: 0;
-  opacity: 0.18;
+  opacity: 0.12;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px), 
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: clamp(40px, 3vw, 80px) clamp(40px, 3vw, 80px);
-  mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: clamp(50px, 3.5vw, 90px) clamp(50px, 3.5vw, 90px);
+  mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
 }
 
 .dgs-v1215-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,0.85) 100%);
+  background: radial-gradient(circle at center, transparent 40%, rgba(5,5,8,0.92) 100%);
 }
 
-/* Buttons */
+/* Ultra-Premium Glass Buttons */
 .dgs-v1215-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: clamp(0.85rem, 1.2vw, 1.25rem) clamp(1.8rem, 2.5vw, 3rem);
+  gap: 0.75rem;
+  padding: clamp(0.9rem, 1.2vw, 1.35rem) clamp(2rem, 2.8vw, 3.25rem);
   border-radius: 9999px;
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(0.9rem, 1vw, 1.15rem);
   text-decoration: none;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   letter-spacing: 0.02em;
   font-family: 'Manrope', sans-serif;
+  position: relative;
+  overflow: hidden;
 }
 
 .dgs-v1215-btn-primary {
   background: linear-gradient(135deg, var(--v1215-blue), var(--v1215-purple));
-  color: #000;
-  box-shadow: 0 4px 25px var(--v1215-glow-blue);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #050508;
+  box-shadow: 0 4px 30px rgba(0, 212, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .dgs-v1215-btn-primary:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 10px 40px rgba(0, 212, 255, 0.6);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 45px rgba(0, 212, 255, 0.65);
   color: #fff;
 }
 
@@ -125,19 +128,20 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--v1215-card-border);
   color: #fff;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
 }
 
 .dgs-v1215-btn-secondary:hover {
   background: rgba(255, 255, 255, 0.09);
   border-color: var(--v1215-blue);
   transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.15);
 }
 
 /* Section Headings */
 .dgs-v1215-section-head {
-  max-width: clamp(700px, 60vw, 1200px);
-  margin: 0 auto clamp(3.5rem, 5vw, 7rem);
+  max-width: clamp(750px, 60vw, 1250px);
+  margin: 0 auto clamp(4rem, 6vw, 8rem);
   text-align: center;
 }
 
@@ -146,27 +150,33 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   text-transform: uppercase;
   letter-spacing: 0.25em;
   color: var(--v1215-blue);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   font-weight: 800;
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
 }
 
 .dgs-v1215-section-head h2 {
-  font-size: clamp(2.2rem, 4.2vw, 4.5rem);
+  font-size: clamp(2.3rem, 4.5vw, 4.8rem);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 1.1;
   margin-bottom: 1.5rem;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
 }
 
 .dgs-v1215-section-head h2 span {
-  background: linear-gradient(135deg, var(--v1215-blue), var(--v1215-purple));
+  background: linear-gradient(135deg, var(--v1215-blue), var(--v1215-coral), var(--v1215-purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .dgs-v1215-section-head p {
   color: #94a3b8;
-  font-size: clamp(1.05rem, 1.3vw, 1.4rem);
+  font-size: clamp(1.05rem, 1.3vw, 1.45rem);
   line-height: 1.7;
 }
 
@@ -176,12 +186,12 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   display: flex;
   align-items: center;
   position: relative;
-  padding: clamp(7rem, 10vw, 12rem) 0 clamp(4rem, 6vw, 8rem);
+  padding: clamp(8rem, 11vw, 13rem) 0 clamp(4rem, 6vw, 8rem);
 }
 
 .dgs-v1215-hero-layout {
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: clamp(3rem, 5vw, 8rem);
   align-items: center;
 }
@@ -195,16 +205,17 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   border: 1px solid rgba(0, 212, 255, 0.25);
   border-radius: 9999px;
   font-size: clamp(0.8rem, 0.9vw, 1rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--v1215-blue);
   margin-bottom: 2rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15);
 }
 
 .dgs-v1215-copy h1 {
-  font-size: clamp(2.6rem, 5.8vw, 6.2rem);
+  font-size: clamp(2.8rem, 6vw, 6.5rem);
   font-weight: 900;
-  line-height: 1.06;
+  line-height: 1.05;
   margin-bottom: 2rem;
   letter-spacing: -0.035em;
 }
@@ -217,11 +228,11 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 }
 
 .dgs-v1215-copy p {
-  font-size: clamp(1.05rem, 1.4vw, 1.45rem);
+  font-size: clamp(1.1rem, 1.4vw, 1.5rem);
   line-height: 1.75;
   color: #94a3b8;
-  margin-bottom: 3rem;
-  max-width: 780px;
+  margin-bottom: 3.25rem;
+  max-width: 800px;
 }
 
 .dgs-v1215-actions {
@@ -230,7 +241,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   flex-wrap: wrap;
 }
 
-/* 3D Robot Visual & Floating Chips */
+/* 3D Visual Spotlight Container */
 .dgs-v1215-visual {
   position: relative;
   display: flex;
@@ -239,15 +250,15 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 
 .dgs-v1215-robot-wrap {
   position: relative;
-  width: clamp(280px, 25vw, 480px);
-  height: clamp(280px, 25vw, 480px);
+  width: clamp(300px, 26vw, 500px);
+  height: clamp(300px, 26vw, 500px);
 }
 
 .dgs-v1215-robot-aura {
   position: absolute;
-  inset: -30px;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.35) 0%, rgba(157, 78, 221, 0.25) 50%, transparent 75%);
-  filter: blur(30px);
+  inset: -35px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.4) 0%, rgba(157, 78, 221, 0.25) 50%, transparent 75%);
+  filter: blur(35px);
   animation: pulseAura 4s ease-in-out infinite alternate;
 }
 
@@ -255,24 +266,25 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: clamp(2rem, 3vw, 3.5rem);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85), 0 0 40px var(--v1215-glow-blue);
-  transition: transform 0.5s ease;
+  border-radius: clamp(2.2rem, 3.2vw, 3.8rem);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9), 0 0 45px var(--v1215-glow-blue);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #dgs-v1215-robot:hover {
   transform: scale(1.04) rotate(1deg);
 }
 
+/* Raycast Style Floating Glass Badges */
 .dgs-v1215-floating-chip {
   position: absolute;
-  background: rgba(10, 16, 30, 0.88);
+  background: rgba(12, 16, 28, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: clamp(0.7rem, 0.9vw, 1.1rem) clamp(1.1rem, 1.4vw, 1.75rem);
-  border-radius: 1.35rem;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.65), 0 0 20px rgba(0, 212, 255, 0.2);
+  padding: clamp(0.75rem, 0.95vw, 1.15rem) clamp(1.2rem, 1.5vw, 1.85rem);
+  border-radius: 1.4rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.7), 0 0 20px rgba(0, 212, 255, 0.2);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -284,12 +296,12 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   font-size: clamp(0.65rem, 0.75vw, 0.85rem);
   text-transform: uppercase;
   color: var(--v1215-blue);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   font-weight: 800;
 }
 
 .dgs-v1215-floating-chip strong {
-  font-size: clamp(0.85rem, 1vw, 1.2rem);
+  font-size: clamp(0.88rem, 1.05vw, 1.25rem);
   font-weight: 800;
 }
 
@@ -316,14 +328,14 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  padding: clamp(3rem, 4vw, 5rem) 0 0;
+  padding: clamp(3.5rem, 4.5vw, 5.5rem) 0 0;
   border-top: 1px solid var(--v1215-card-border);
-  margin-top: clamp(4rem, 6vw, 8rem);
+  margin-top: clamp(4.5rem, 6.5vw, 8.5rem);
 }
 
 .dgs-v1215-statline div strong {
   display: block;
-  font-size: clamp(2.5rem, 3.8vw, 4.5rem);
+  font-size: clamp(2.6rem, 4vw, 4.8rem);
   font-weight: 900;
   background: linear-gradient(135deg, #ffffff, #94a3b8);
   -webkit-background-clip: text;
@@ -333,13 +345,13 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 
 .dgs-v1215-statline div span {
   color: #94a3b8;
-  font-size: clamp(0.9rem, 1vw, 1.25rem);
-  font-weight: 500;
+  font-size: clamp(0.92rem, 1.05vw, 1.3rem);
+  font-weight: 600;
 }
 
-/* Infinite Marquee Capability Rail */
+/* Infinite Marquee Ticker */
 .dgs-v1215-rail {
-  padding: clamp(1.8rem, 2.5vw, 3rem) 0;
+  padding: clamp(2rem, 2.8vw, 3.5rem) 0;
   background: rgba(255, 255, 255, 0.015);
   border-top: 1px solid var(--v1215-card-border);
   border-bottom: 1px solid var(--v1215-card-border);
@@ -353,16 +365,16 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 
 .dgs-v1215-rail-track {
   display: flex;
-  animation: marquee 25s linear infinite;
-  gap: clamp(3rem, 4vw, 6rem);
-  padding-right: clamp(3rem, 4vw, 6rem);
+  animation: marquee 28s linear infinite;
+  gap: clamp(3.5rem, 4.5vw, 7rem);
+  padding-right: clamp(3.5rem, 4.5vw, 7rem);
 }
 
 .dgs-v1215-rail-track span {
-  font-size: clamp(1.1rem, 1.4vw, 1.8rem);
+  font-size: clamp(1.15rem, 1.5vw, 1.9rem);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: rgba(255, 255, 255, 0.35);
   transition: color 0.3s ease;
   font-family: 'Manrope', sans-serif;
@@ -370,19 +382,19 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 
 .dgs-v1215-rail-track span:hover {
   color: var(--v1215-blue);
-  text-shadow: 0 0 16px var(--v1215-glow-blue);
+  text-shadow: 0 0 18px var(--v1215-glow-blue);
 }
 
 /* Client Logo & Awards Section */
 .dgs-v1215-proof-stack {
-  padding: clamp(6rem, 9vw, 12rem) 0;
+  padding: clamp(6.5rem, 9.5vw, 12.5rem) 0;
 }
 
 .dgs-v1215-logo-marquee {
   width: 100%;
   overflow: hidden;
   padding: 2.5rem 0;
-  margin-bottom: clamp(4rem, 6vw, 8rem);
+  margin-bottom: clamp(4.5rem, 6.5vw, 8.5rem);
 }
 
 .dgs-v1215-logo-track {
@@ -395,14 +407,14 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 .dgs-v1215-logo-tile {
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  height: clamp(75px, 6vw, 110px);
-  width: clamp(170px, 12vw, 240px);
+  height: clamp(80px, 6.5vw, 115px);
+  width: clamp(180px, 13vw, 250px);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1.35rem;
-  padding: 1.25rem;
-  backdrop-filter: blur(10px);
+  border-radius: 1.4rem;
+  padding: 1.35rem;
+  backdrop-filter: blur(12px);
   transition: all 0.35s ease;
 }
 
@@ -435,176 +447,139 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   text-transform: uppercase;
 }
 
-/* Awards Grid - Scales to 4 cols on 4K widescreen */
-.dgs-v1215-awards-grid {
+/* Core Focus Services Showcase Grid (6 Priority Services) */
+.dgs-v1215-services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(320px, 22vw, 450px), 1fr));
-  gap: clamp(2rem, 2.5vw, 3.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(clamp(320px, 25vw, 520px), 1fr));
+  gap: clamp(2rem, 2.8vw, 3.75rem);
 }
 
-.dgs-v1215-award-card {
+.dgs-v1215-service-card {
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  border-radius: 1.85rem;
-  padding: clamp(2rem, 3vw, 3.5rem);
+  border-radius: 2.2rem;
+  padding: clamp(2.5rem, 3.5vw, 4.25rem);
+  position: relative;
+  backdrop-filter: blur(20px);
+  transition: all 0.45 cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(16px);
-  position: relative;
   overflow: hidden;
 }
 
-.dgs-v1215-award-card::before {
+.dgs-v1215-service-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--v1215-blue), var(--v1215-purple));
+  background: linear-gradient(90deg, var(--v1215-blue), var(--v1215-coral), var(--v1215-purple));
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 
-.dgs-v1215-award-card:hover::before {
+.dgs-v1215-service-card:hover::before {
   opacity: 1;
 }
 
-.dgs-v1215-award-card:hover {
+.dgs-v1215-service-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(157, 78, 221, 0.4);
-  box-shadow: 0 18px 40px rgba(157, 78, 221, 0.18);
+  border-color: rgba(0, 212, 255, 0.35);
+  box-shadow: 0 22px 50px rgba(0, 212, 255, 0.16);
 }
 
-.dgs-v1215-award-image {
-  height: clamp(75px, 5vw, 105px);
+.dgs-v1215-service-icon {
+  width: clamp(60px, 4.5vw, 85px);
+  height: clamp(60px, 4.5vw, 85px);
+  border-radius: 1.5rem;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   display: flex;
   align-items: center;
+  justify-content: center;
+  font-size: clamp(1.8rem, 2.2vw, 2.8rem);
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.15);
 }
 
-.dgs-v1215-award-image img {
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.dgs-v1215-award-body span {
-  font-size: clamp(0.75rem, 0.85vw, 1rem);
-  color: var(--v1215-blue);
-  font-weight: 700;
-}
-
-.dgs-v1215-award-body h3 {
-  font-size: clamp(1.25rem, 1.5vw, 1.8rem);
+.dgs-v1215-service-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   font-weight: 800;
-  margin: 0.5rem 0 1rem;
+  color: var(--v1215-coral);
+  margin-bottom: 0.75rem;
 }
 
-.dgs-v1215-award-body p {
-  color: #94a3b8;
-  font-size: clamp(0.95rem, 1.1vw, 1.2rem);
-  line-height: 1.65;
-}
-
-/* Services Clarity Menu */
-.dgs-v1215-service-clarity {
-  padding: clamp(6rem, 9vw, 12rem) 0;
-}
-
-.dgs-v1215-service-menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 20vw, 420px), 1fr));
-  gap: clamp(2rem, 2.5vw, 3.5rem);
-}
-
-.dgs-v1215-service-menu article {
-  background: var(--v1215-card-bg);
-  border: 1px solid var(--v1215-card-border);
-  border-radius: 1.85rem;
-  padding: clamp(2.5rem, 3.2vw, 4rem) clamp(2rem, 2.5vw, 3.25rem);
-  position: relative;
-  backdrop-filter: blur(16px);
-  transition: all 0.4s ease;
-}
-
-.dgs-v1215-service-menu article:hover {
-  transform: translateY(-6px);
-  border-color: rgba(0, 212, 255, 0.4);
-  box-shadow: 0 18px 40px rgba(0, 212, 255, 0.15);
-}
-
-.dgs-v1215-service-menu article span {
-  display: block;
-  font-size: clamp(3rem, 4vw, 5rem);
-  font-weight: 900;
-  opacity: 0.15;
-  margin-bottom: 1.5rem;
-  font-family: 'Manrope', sans-serif;
-  transition: opacity 0.3s ease, color 0.3s ease;
-}
-
-.dgs-v1215-service-menu article:hover span {
-  opacity: 0.65;
-  color: var(--v1215-blue);
-}
-
-.dgs-v1215-service-menu article h3 {
-  font-size: clamp(1.35rem, 1.6vw, 2rem);
+.dgs-v1215-service-card h3 {
+  font-size: clamp(1.45rem, 1.8vw, 2.2rem);
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.dgs-v1215-service-menu article p {
+.dgs-v1215-service-card p {
   color: #94a3b8;
-  font-size: clamp(0.95rem, 1.1vw, 1.25rem);
-  line-height: 1.65;
-  margin-bottom: 2.2rem;
+  font-size: clamp(1rem, 1.15vw, 1.3rem);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  flex: 1;
 }
 
-.dgs-v1215-service-menu article div {
+.dgs-v1215-service-tags {
   display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 2.25rem;
 }
 
-.dgs-v1215-service-menu article div a {
-  font-size: clamp(0.88rem, 1vw, 1.15rem);
-  font-weight: 700;
-  color: #fff;
-  transition: color 0.3s ease;
+.dgs-v1215-service-tags span {
+  font-size: clamp(0.78rem, 0.85vw, 0.95rem);
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.dgs-v1215-service-link {
   display: inline-flex;
   align-items: center;
-}
-
-.dgs-v1215-service-menu article div a::after {
-  content: ' →';
-  opacity: 0;
-  transform: translateX(-5px);
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: clamp(0.92rem, 1.05vw, 1.15rem);
+  color: var(--v1215-blue);
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.dgs-v1215-service-menu article div a:hover {
-  color: var(--v1215-blue);
+.dgs-v1215-service-link::after {
+  content: ' →';
+  transition: transform 0.3s ease;
 }
 
-.dgs-v1215-service-menu article div a:hover::after {
-  opacity: 1;
-  transform: translateX(4px);
+.dgs-v1215-service-link:hover {
+  color: #fff;
 }
 
-/* AI Portfolio Section */
+.dgs-v1215-service-link:hover::after {
+  transform: translateX(6px);
+}
+
+/* AI Portfolio & Case Studies */
 .dgs-v1215-ai-portfolio {
-  padding: clamp(6rem, 9vw, 12rem) 0;
+  padding: clamp(6.5rem, 9.5vw, 12.5rem) 0;
 }
 
 .dgs-ai-service-clarity {
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  border-radius: 2.5rem;
-  padding: clamp(3rem, 4.5vw, 6rem);
+  border-radius: 2.75rem;
+  padding: clamp(3.25rem, 4.8vw, 6.5rem);
   margin-bottom: 4.5rem;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
 }
 
 .dgs-ai-service-grid {
@@ -691,15 +666,15 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 }
 
 .portfolio-filter-tab {
-  padding: clamp(0.75rem, 1vw, 1.25rem) clamp(1.4rem, 1.8vw, 2.5rem);
+  padding: clamp(0.8rem, 1vw, 1.3rem) clamp(1.5rem, 2vw, 2.75rem);
   border-radius: 9999px;
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  font-size: clamp(0.82rem, 0.9vw, 1.1rem);
+  font-size: clamp(0.85rem, 0.95vw, 1.15rem);
   font-weight: 800;
   transition: all 0.35s ease;
   cursor: pointer;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   color: #fff;
   font-family: 'Manrope', sans-serif;
 }
@@ -707,19 +682,15 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 .portfolio-filter-tab.active,
 .portfolio-filter-tab:hover {
   background: var(--v1215-coral);
-  color: #000 !important;
+  color: #050508 !important;
   border-color: var(--v1215-coral);
-  box-shadow: 0 6px 20px rgba(253, 92, 98, 0.35);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(253, 92, 98, 0.4);
+  transform: translateY(-3px);
 }
 
-.dgs-ai-content-container {
-  min-height: 250px;
-}
-
-/* SEO Case Studies */
+/* Case Studies Visual Cards */
 .dgs-v1215-case-block {
-  padding: clamp(6rem, 9vw, 12rem) 0;
+  padding: clamp(6.5rem, 9.5vw, 12.5rem) 0;
 }
 
 .dgs-v1215-case-visual-grid {
@@ -732,18 +703,18 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 .dgs-v1215-case-visual-card {
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  border-radius: 2.25rem;
+  border-radius: 2.5rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.4s ease;
-  backdrop-filter: blur(16px);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(20px);
 }
 
 .dgs-v1215-case-visual-card:hover {
   transform: translateY(-8px);
   border-color: rgba(0, 212, 255, 0.4);
-  box-shadow: 0 20px 45px rgba(0, 212, 255, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 212, 255, 0.18);
 }
 
 .dgs-v1215-case-media {
@@ -756,7 +727,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s ease;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dgs-v1215-case-visual-card:hover .dgs-v1215-case-media img {
@@ -814,7 +785,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 
 /* Testimonials */
 .dgs-v1215-testimonials {
-  padding: clamp(6rem, 9vw, 12rem) 0;
+  padding: clamp(6.5rem, 9.5vw, 12.5rem) 0;
 }
 
 .dgs-v1215-testimonial-grid {
@@ -826,13 +797,13 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 .dgs-v1215-testimonial-card {
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  border-radius: 1.85rem;
-  padding: clamp(2.5rem, 3.2vw, 4rem);
+  border-radius: 2.2rem;
+  padding: clamp(2.5rem, 3.5vw, 4.25rem);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  backdrop-filter: blur(16px);
-  transition: all 0.35s ease;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s ease;
 }
 
 .dgs-v1215-testimonial-card:hover {
@@ -849,12 +820,12 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 
 .dgs-v1215-testimonial-card p {
   color: #e2e8f0;
-  font-size: clamp(1.05rem, 1.2vw, 1.35rem);
+  font-size: clamp(1.05rem, 1.25vw, 1.4rem);
   line-height: 1.75;
 }
 
 .dgs-v1215-testimonial-card h3 {
-  font-size: clamp(1.2rem, 1.4vw, 1.6rem);
+  font-size: clamp(1.2rem, 1.4vw, 1.65rem);
   font-weight: 800;
 }
 
@@ -863,9 +834,9 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   color: #94a3b8;
 }
 
-/* Search Authority */
+/* Search Authority (SEO, AEO, GEO, LLM) */
 .dgs-v1215-search-authority {
-  padding: clamp(6rem, 9vw, 12rem) 0;
+  padding: clamp(6.5rem, 9.5vw, 12.5rem) 0;
 }
 
 .dgs-v1215-authority-grid {
@@ -877,10 +848,10 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 .dgs-v1215-authority-card {
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  border-radius: 1.85rem;
-  padding: clamp(2.2rem, 2.8vw, 3.5rem);
-  backdrop-filter: blur(16px);
-  transition: all 0.35s ease;
+  border-radius: 2.2rem;
+  padding: clamp(2.4rem, 3vw, 3.8rem);
+  backdrop-filter: blur(20px);
+  transition: all 0.4s ease;
 }
 
 .dgs-v1215-authority-card:hover {
@@ -898,20 +869,20 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 }
 
 .dgs-v1215-authority-card h3 {
-  font-size: clamp(1.25rem, 1.5vw, 1.8rem);
+  font-size: clamp(1.3rem, 1.55vw, 1.85rem);
   font-weight: 800;
   margin: 1rem 0;
 }
 
 .dgs-v1215-authority-card p {
   color: #94a3b8;
-  font-size: clamp(0.92rem, 1.05vw, 1.2rem);
-  line-height: 1.65;
+  font-size: clamp(0.95rem, 1.1vw, 1.25rem);
+  line-height: 1.68;
 }
 
-/* FAQ Details/Summary Accordion */
+/* FAQ Accordion */
 .dgs-v1215-faq {
-  padding: clamp(6rem, 9vw, 12rem) 0;
+  padding: clamp(6.5rem, 9.5vw, 12.5rem) 0;
 }
 
 .dgs-v1215-faq-grid {
@@ -925,9 +896,9 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 .dgs-v1215-faq-grid details {
   background: var(--v1215-card-bg);
   border: 1px solid var(--v1215-card-border);
-  border-radius: 1.35rem;
+  border-radius: 1.5rem;
   overflow: hidden;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
   transition: border-color 0.35s ease;
 }
 
@@ -936,8 +907,8 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 }
 
 .dgs-v1215-faq-grid summary {
-  padding: clamp(1.5rem, 2vw, 2.5rem) clamp(2rem, 2.5vw, 3rem);
-  font-size: clamp(1.1rem, 1.3vw, 1.5rem);
+  padding: clamp(1.6rem, 2.2vw, 2.75rem) clamp(2.2rem, 2.8vw, 3.25rem);
+  font-size: clamp(1.15rem, 1.35vw, 1.55rem);
   font-weight: 800;
   cursor: pointer;
   outline: none;
@@ -953,7 +924,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 
 .dgs-v1215-faq-grid summary::after {
   content: '+';
-  font-size: 1.6rem;
+  font-size: 1.75rem;
   color: var(--v1215-blue);
   transition: transform 0.35s ease;
 }
@@ -963,39 +934,39 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 }
 
 .dgs-v1215-faq-grid p {
-  padding: 0 clamp(2rem, 2.5vw, 3rem) clamp(2rem, 2.5vw, 3rem);
+  padding: 0 clamp(2.2rem, 2.8vw, 3.25rem) clamp(2.2rem, 2.8vw, 3.25rem);
   color: #94a3b8;
   line-height: 1.75;
-  font-size: clamp(1rem, 1.15vw, 1.3rem);
+  font-size: clamp(1.02rem, 1.2vw, 1.35rem);
 }
 
-/* Final CTA */
+/* Final CTA Card */
 .dgs-v1215-final {
-  padding: clamp(6rem, 9vw, 12rem) 0 clamp(8rem, 12vw, 16rem);
+  padding: clamp(6.5rem, 9.5vw, 12.5rem) 0 clamp(8.5rem, 12.5vw, 16.5rem);
 }
 
 .dgs-v1215-final-card {
   background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(157, 78, 221, 0.08));
   border: 1px solid var(--v1215-card-border);
-  border-radius: clamp(2.5rem, 4vw, 4.5rem);
-  padding: clamp(3rem, 5vw, 7rem);
+  border-radius: clamp(2.75rem, 4.5vw, 5rem);
+  padding: clamp(3.5rem, 5.5vw, 7.5rem);
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: clamp(3rem, 4.5vw, 6rem);
   align-items: center;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px);
 }
 
 .dgs-v1215-final-card::before {
   content: '';
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
-  top: -200px;
-  right: -200px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.18) 0%, transparent 70%);
+  top: -225px;
+  right: -225px;
   z-index: -1;
 }
 
@@ -1008,9 +979,9 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
 }
 
 .dgs-v1215-final-card h2 {
-  font-size: clamp(2.2rem, 3.8vw, 4.2rem);
+  font-size: clamp(2.3rem, 4vw, 4.5rem);
   font-weight: 900;
-  line-height: 1.15;
+  line-height: 1.12;
   margin: 1.5rem 0 1rem;
 }
 
@@ -1018,7 +989,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   color: #94a3b8;
   line-height: 1.75;
   margin-bottom: 2.5rem;
-  font-size: clamp(1.05rem, 1.2vw, 1.4rem);
+  font-size: clamp(1.08rem, 1.25vw, 1.45rem);
 }
 
 /* Keyframe Animations */
@@ -1052,14 +1023,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
   100% { transform: translateY(-12px) rotate(-3deg); }
 }
 
-/* Widescreen 4K specific optimizations */
-@media (min-width: 2560px) {
-  .dgs-v1215-hero-layout {
-    grid-template-columns: 1.35fr 0.65fr;
-  }
-}
-
-/* Responsive Media Queries */
+/* Media Queries */
 @media (max-width: 1200px) {
   .dgs-v1215-hero-layout {
     grid-template-columns: 1fr;
@@ -1086,7 +1050,7 @@ h1, h2, h3, h4, h5, h6, .dgs-v1215-kicker, .dgs-v1215-section-kicker {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
-  .dgs-v1215-awards-grid {
+  .dgs-v1215-services-grid {
     grid-template-columns: 1fr;
   }
   .dgs-v1215-case-visual-grid {

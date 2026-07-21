@@ -11,15 +11,16 @@ export default function ThreeCanvas() {
 
     // 1. Scene, Camera, Renderer Setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2('#020202', 0.018);
+    scene.fog = new THREE.FogExp2('#050508', 0.015);
 
     const camera = new THREE.PerspectiveCamera(
-      55,
+      60,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
-    camera.position.set(0, 0, 28);
+    camera.position.set(0, 12, 32);
+    camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
       canvas: containerRef.current,
@@ -30,124 +31,90 @@ export default function ThreeCanvas() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // 2. Central 3D Cyber Core (TorusKnot Geometry + Wireframe + Inner Core)
-    const knotGeometry = new THREE.TorusKnotGeometry(6, 1.8, 128, 32);
-    
-    // Outer glowing wireframe material
-    const wireframeMaterial = new THREE.MeshBasicMaterial({
+    // 2. Organic Fluid Wave Mesh (Plane Geometry with Dynamic Vertex Displacement)
+    const cols = 90;
+    const rows = 90;
+    const waveGeo = new THREE.PlaneGeometry(80, 80, cols, rows);
+    waveGeo.rotateX(-Math.PI / 2.5); // Tilt to create dramatic horizon perspective
+
+    const count = waveGeo.attributes.position.count;
+    const initialZ = new Float32Array(count);
+    const posAttr = waveGeo.attributes.position;
+
+    // Save initial coordinates
+    for (let i = 0; i < count; i++) {
+      initialZ[i] = posAttr.getZ(i);
+    }
+
+    // High-end Shader Material for Fluid Grid Waves
+    const waveMat = new THREE.MeshBasicMaterial({
       color: new THREE.Color('#00d4ff'),
       wireframe: true,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.18,
     });
-    const torusKnot = new THREE.Mesh(knotGeometry, wireframeMaterial);
-    scene.add(torusKnot);
+    const waveMesh = new THREE.Mesh(waveGeo, waveMat);
+    waveMesh.position.y = -8;
+    scene.add(waveMesh);
 
-    // Inner glowing sphere core
-    const coreGeometry = new THREE.IcosahedronGeometry(4, 3);
-    const coreMaterial = new THREE.MeshPhongMaterial({
-      color: new THREE.Color('#9d4edd'),
-      emissive: new THREE.Color('#3c096c'),
-      wireframe: true,
-      transparent: true,
-      opacity: 0.6,
-      shininess: 100,
-    });
-    const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
-    scene.add(coreMesh);
-
-    // 3. Floating 3D Orbs / Geometry Elements
-    const orbGroup = new THREE.Group();
-    const orbGeometries = [
-      new THREE.IcosahedronGeometry(1.2, 1),
-      new THREE.OctahedronGeometry(1.5, 0),
-      new THREE.TetrahedronGeometry(1.4, 0),
-    ];
-    const orbColors = ['#00d4ff', '#fd5c62', '#f7d757', '#9d4edd', '#6366f1'];
-
-    const orbData = [];
-    for (let i = 0; i < 15; i++) {
-      const geom = orbGeometries[i % orbGeometries.length];
-      const mat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(orbColors[i % orbColors.length]),
-        wireframe: true,
-        transparent: true,
-        opacity: 0.45,
-      });
-      const mesh = new THREE.Mesh(geom, mat);
-      
-      // Random positions around scene
-      const radius = 18 + Math.random() * 14;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-
-      mesh.position.set(
-        radius * Math.sin(phi) * Math.cos(theta),
-        radius * Math.sin(phi) * Math.sin(theta),
-        radius * Math.cos(phi)
-      );
-
-      orbGroup.add(mesh);
-      orbData.push({
-        mesh,
-        rotSpeedX: (Math.random() - 0.5) * 0.02,
-        rotSpeedY: (Math.random() - 0.5) * 0.02,
-        floatOffset: Math.random() * Math.PI * 2,
-      });
-    }
-    scene.add(orbGroup);
-
-    // 4. Background Particle Galaxy System
-    const particleCount = 1800;
+    // 3. Luminous Organic Particle Galaxy Field
+    const particleCount = 2800;
     const particleGeo = new THREE.BufferGeometry();
-    const particlePos = new Float32Array(particleCount * 3);
+    const particlePositions = new Float32Array(particleCount * 3);
     const particleColors = new Float32Array(particleCount * 3);
+    const particleScales = new Float32Array(particleCount);
 
-    const palette = [
-      new THREE.Color('#00d4ff'),
-      new THREE.Color('#9d4edd'),
-      new THREE.Color('#fd5c62'),
-      new THREE.Color('#6366f1'),
+    const colorPalette = [
+      new THREE.Color('#00d4ff'), // Cyan
+      new THREE.Color('#9d4edd'), // Violet
+      new THREE.Color('#fd5c62'), // Coral
+      new THREE.Color('#6366f1'), // Indigo
+      new THREE.Color('#ffffff'), // Pure White Glow
     ];
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
-      const r = 15 + Math.random() * 35;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
+      // Organic distribution along a flowing curve
+      const u = Math.random();
+      const v = Math.random();
+      const radius = 25 + Math.random() * 35;
+      const theta = u * Math.PI * 2;
+      const phi = (v - 0.5) * Math.PI * 0.8;
 
-      particlePos[i3] = r * Math.sin(phi) * Math.cos(theta);
-      particlePos[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      particlePos[i3 + 2] = r * Math.cos(phi);
+      particlePositions[i3] = radius * Math.cos(theta) * Math.cos(phi);
+      particlePositions[i3 + 1] = radius * Math.sin(phi) + Math.sin(u * 10) * 4;
+      particlePositions[i3 + 2] = radius * Math.sin(theta) * Math.cos(phi);
 
-      const col = palette[Math.floor(Math.random() * palette.length)];
-      particleColors[i3] = col.r;
-      particleColors[i3 + 1] = col.g;
-      particleColors[i3 + 2] = col.b;
+      const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      particleColors[i3] = color.r;
+      particleColors[i3 + 1] = color.g;
+      particleColors[i3 + 2] = color.b;
+
+      particleScales[i] = Math.random() * 0.8 + 0.2;
     }
 
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
     particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
-    // Particle Texture Gradient
-    const canvas = document.createElement('canvas');
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext('2d');
-    const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+    // Glow Texture Canvas
+    const glowCanvas = document.createElement('canvas');
+    glowCanvas.width = 64;
+    glowCanvas.height = 64;
+    const ctx = glowCanvas.getContext('2d');
+    const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    grad.addColorStop(0.4, 'rgba(255, 255, 255, 0.6)');
-    grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    grad.addColorStop(0.3, 'rgba(0, 212, 255, 0.5)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 32, 32);
-    const particleTexture = new THREE.CanvasTexture(canvas);
+    ctx.fillRect(0, 0, 64, 64);
+    const particleTex = new THREE.CanvasTexture(glowCanvas);
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.4,
+      size: 0.65,
       vertexColors: true,
       transparent: true,
-      opacity: 0.6,
-      map: particleTexture,
+      opacity: 0.55,
+      map: particleTex,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
@@ -155,19 +122,16 @@ export default function ThreeCanvas() {
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // 5. Lighting Setup
-    const ambientLight = new THREE.AmbientLight('#ffffff', 0.4);
-    scene.add(ambientLight);
+    // 4. Volumetric Ambient Glow Lights
+    const light1 = new THREE.PointLight('#00d4ff', 4, 60);
+    light1.position.set(20, 20, 10);
+    scene.add(light1);
 
-    const pointLight1 = new THREE.PointLight('#00d4ff', 3, 50);
-    pointLight1.position.set(15, 15, 15);
-    scene.add(pointLight1);
+    const light2 = new THREE.PointLight('#9d4edd', 4, 60);
+    light2.position.set(-20, -10, -10);
+    scene.add(light2);
 
-    const pointLight2 = new THREE.PointLight('#fd5c62', 3, 50);
-    pointLight2.position.set(-15, -15, -15);
-    scene.add(pointLight2);
-
-    // 6. Interactive Mouse & Scroll Effects
+    // 5. Mouse & Scroll Interactivity
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -193,45 +157,44 @@ export default function ThreeCanvas() {
     };
     window.addEventListener('resize', handleResize);
 
-    // 7. Render Animation Loop
+    // 6. Smooth Animation Loop
     const clock = new THREE.Clock();
     let animId;
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const time = clock.getElapsedTime();
 
-      // Smooth Mouse Intertia
-      targetX += (mouseX - targetX) * 0.04;
-      targetY += (mouseY - targetY) * 0.04;
+      // Smooth inertia mouse tracking
+      targetX += (mouseX - targetX) * 0.03;
+      targetY += (mouseY - targetY) * 0.03;
 
-      // Torus & Core Rotations
-      torusKnot.rotation.x = elapsed * 0.15 + targetY * 0.5;
-      torusKnot.rotation.y = elapsed * 0.2 + targetX * 0.5;
+      // Animate Fluid Wave Vertices
+      const pos = waveGeo.attributes.position;
+      for (let i = 0; i < count; i++) {
+        const x = pos.getX(i);
+        const y = pos.getY(i);
+        const dist = Math.sqrt(x * x + y * y);
+        const z = Math.sin(x * 0.2 + time * 1.5) * 1.8 + Math.cos(y * 0.2 + time * 1.2) * 1.8 + Math.sin(dist * 0.1 - time) * 1.2;
+        pos.setZ(i, z);
+      }
+      waveGeo.attributes.position.needsUpdate = true;
 
-      coreMesh.rotation.x = -elapsed * 0.2;
-      coreMesh.rotation.y = -elapsed * 0.25;
+      // Rotate particle galaxy gently
+      particles.rotation.y = time * 0.03 + targetX * 0.15;
+      particles.rotation.x = Math.sin(time * 0.02) * 0.05 + targetY * 0.1;
 
-      // Scale pulse effect on the core
-      const pulseScale = 1 + Math.sin(elapsed * 2) * 0.06;
-      coreMesh.scale.set(pulseScale, pulseScale, pulseScale);
+      // Dynamic light movements
+      light1.position.x = Math.sin(time * 0.8) * 25 + targetX * 10;
+      light1.position.z = Math.cos(time * 0.8) * 25;
 
-      // Rotate Particles
-      particles.rotation.y = elapsed * 0.02 + targetX * 0.1;
-      particles.rotation.x = elapsed * 0.01 + targetY * 0.1;
+      light2.position.x = -Math.sin(time * 0.6) * 25;
+      light2.position.z = -Math.cos(time * 0.6) * 25 + targetY * 10;
 
-      // Animate floating orbs
-      orbData.forEach((item) => {
-        item.mesh.rotation.x += item.rotSpeedX;
-        item.mesh.rotation.y += item.rotSpeedY;
-        item.mesh.position.y += Math.sin(elapsed * 1.5 + item.floatOffset) * 0.02;
-      });
-
-      // Scroll-driven camera depth offset
-      const scrollFactor = scrollY * 0.008;
-      camera.position.z = 28 + Math.sin(scrollFactor) * 4;
-      camera.position.y = -targetY * 2 - scrollY * 0.003;
-      camera.position.x = targetX * 2;
+      // Camera depth parallax based on scroll
+      camera.position.y = 12 - scrollY * 0.004 + targetY * 3;
+      camera.position.x = targetX * 4;
+      camera.position.z = 32 + Math.sin(scrollY * 0.002) * 3;
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);

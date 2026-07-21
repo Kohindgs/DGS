@@ -8,21 +8,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function GsapClient() {
   useEffect(() => {
-    // 1. Reveal Animations with Stagger & Smooth Easing
+    // 1. Reveal Animations with Stagger & Smooth Power3 Easing
     const reveals = document.querySelectorAll('.dgs-v1215-reveal');
     reveals.forEach((element) => {
       gsap.fromTo(
         element,
         {
           opacity: 0,
-          y: 50,
+          y: 40,
           scale: 0.98,
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1,
+          duration: 0.9,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: element,
@@ -33,9 +33,9 @@ export default function GsapClient() {
       );
     });
 
-    // 2. 3D Card Tilt Micro-Interactions on MouseMove
+    // 2. Raycast/Awwwards 3D Card Tilt with Cursor Specular Lighting
     const tiltCards = document.querySelectorAll(
-      '.dgs-v1215-award-card, .dgs-v1215-service-menu article, .dgs-v1215-case-visual-card, .dgs-v1215-authority-card, .dgs-v1215-testimonial-card'
+      '.dgs-v1215-service-card, .dgs-v1215-award-card, .dgs-v1215-case-visual-card, .dgs-v1215-authority-card, .dgs-v1215-testimonial-card'
     );
 
     tiltCards.forEach((card) => {
@@ -47,8 +47,8 @@ export default function GsapClient() {
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
 
-        const rotateX = (-y / (rect.height / 2)) * 6; // Max 6 deg tilt
-        const rotateY = (x / (rect.width / 2)) * 6;
+        const rotateX = (-y / (rect.height / 2)) * 5; // Max 5 deg tilt
+        const rotateY = (x / (rect.width / 2)) * 5;
 
         gsap.to(card, {
           rotateX,
@@ -76,8 +76,8 @@ export default function GsapClient() {
       };
     });
 
-    // 3. Magnetic Hover Effect on Primary Buttons
-    const magButtons = document.querySelectorAll('.dgs-v1215-btn-primary');
+    // 3. Magnetic Hover Effect on Buttons
+    const magButtons = document.querySelectorAll('.dgs-v1215-btn');
     magButtons.forEach((btn) => {
       const handleMagMove = (e) => {
         const rect = btn.getBoundingClientRect();
@@ -85,8 +85,8 @@ export default function GsapClient() {
         const y = e.clientY - rect.top - rect.height / 2;
 
         gsap.to(btn, {
-          x: x * 0.25,
-          y: y * 0.25,
+          x: x * 0.2,
+          y: y * 0.2,
           duration: 0.3,
           ease: 'power2.out',
         });
@@ -105,7 +105,7 @@ export default function GsapClient() {
       btn.addEventListener('mouseleave', handleMagLeave);
     });
 
-    // 4. Parallax Scroll effect for floating UI chips
+    // 4. Parallax Floating Chips
     gsap.to('.dgs-v1215-chip-one', {
       y: -30,
       scrollTrigger: {
@@ -117,7 +117,7 @@ export default function GsapClient() {
     });
 
     gsap.to('.dgs-v1215-chip-two', {
-      y: -50,
+      y: -45,
       scrollTrigger: {
         trigger: '.dgs-v1215-hero',
         start: 'top top',
@@ -127,7 +127,7 @@ export default function GsapClient() {
     });
 
     gsap.to('.dgs-v1215-chip-three', {
-      y: -20,
+      y: -25,
       scrollTrigger: {
         trigger: '.dgs-v1215-hero',
         start: 'top top',
