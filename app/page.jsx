@@ -3,22 +3,12 @@ import GsapClient from './components/GsapClient';
 import PortfolioGallery from './components/PortfolioGallery';
 
 export const metadata = {
-  title: "D'Genius Solutions | Mumbai Full Service Digital Marketing, AI Video & SEO/AEO/GEO Agency",
-  description: "Mumbai's premier digital marketing agency specializing in AI Video Production, SEO/AEO/GEO/LLM Optimization, High-Performance Website Development, Performance Marketing, Social Media & Brand Content.",
-  keywords: [
-    "Digital Marketing Agency Mumbai",
-    "AI Video Production Mumbai",
-    "AEO GEO LLM Optimization",
-    "Generative Engine Optimization",
-    "Google AI Overview Ranking Agency",
-    "Next.js Website Development",
-    "Performance Marketing Agency India",
-    "Social Media Agency Mumbai",
-    "Branding and Content Creation",
-  ],
+  title: "D'Genius Solutions — AI Video, SEO/AEO/GEO & Digital Marketing Agency, Mumbai",
+  description: "Mumbai's premier digital agency. AI Video Production, Generative Engine Optimization (AEO/GEO/LLM), High-Performance Web Development, Performance Marketing, Social Media & Brand Content.",
+  keywords: ["Digital Marketing Agency Mumbai", "AI Video Production", "AEO GEO LLM Optimization", "Generative Engine Optimization", "Next.js Website Development", "Performance Marketing Agency India"],
   openGraph: {
-    title: "D'Genius Solutions | Next-Gen AI Digital Agency Mumbai",
-    description: "Dominating Search, Social & AI Search Engines with High-Performance Digital Marketing, AI Video, & Generative Engine Optimization.",
+    title: "D'Genius Solutions — Next-Gen Digital Agency",
+    description: "AI Video · AEO/GEO · Web Development · Performance Marketing",
     url: "https://www.dgeniussolutions.com/",
     siteName: "D'Genius Solutions",
     locale: "en_IN",
@@ -26,520 +16,347 @@ export const metadata = {
   },
 };
 
-const JSON_LD_SCHEMA = {
+const JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": "https://www.dgeniussolutions.com/#organization",
-      "name": "D'Genius Solutions",
-      "url": "https://www.dgeniussolutions.com/",
-      "logo": "https://www.dgeniussolutions.com/logo.png",
-      "sameAs": [
-        "https://www.linkedin.com/company/dgeniussolutions/",
-        "https://www.instagram.com/dgeniussolutions/",
-        "https://www.facebook.com/dgeniussolutions/"
+      "@type": "Organization", "@id": "https://www.dgeniussolutions.com/#organization",
+      name: "D'Genius Solutions", url: "https://www.dgeniussolutions.com/",
+      logo: "https://www.dgeniussolutions.com/logo.png",
+      sameAs: ["https://www.linkedin.com/company/dgeniussolutions/", "https://www.instagram.com/dgeniussolutions/", "https://www.facebook.com/dgeniussolutions/"],
+      address: { "@type": "PostalAddress", streetAddress: "SV Road", addressLocality: "Khar W", addressRegion: "Mumbai", postalCode: "400050", addressCountry: "IN" },
+    },
+    {
+      "@type": "ProfessionalService", "@id": "https://www.dgeniussolutions.com/#service",
+      name: "D'Genius Solutions", priceRange: "$$$", telephone: "+91-9987922901",
+      areaServed: ["Mumbai", "India", "Global"],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog", name: "Digital Services",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Video Production" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "SEO, AEO, GEO & LLM Optimization" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Website Development" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Social Media Marketing" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Performance Marketing" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Branding & Content Creation" } },
+        ],
+      },
+    },
+    {
+      "@type": "FAQPage", "@id": "https://www.dgeniussolutions.com/#faq",
+      mainEntity: [
+        { "@type": "Question", name: "What is AEO, GEO, and LLM Search Optimization?", acceptedAnswer: { "@type": "Answer", text: "AEO and GEO optimize your brand's data graph so AI engines like Google AI Overview, Perplexity, and ChatGPT cite your brand as the authoritative source." } },
+        { "@type": "Question", name: "How does D'Genius Solutions use AI for video production?", acceptedAnswer: { "@type": "Answer", text: "We combine AI video synthesis with cinema-grade post-production to create realistic AI avatars, viral short-form content, and high-converting video at scale." } },
       ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Mumbai",
-        "addressRegion": "Maharashtra",
-        "addressCountry": "IN"
-      }
     },
-    {
-      "@type": "ProfessionalService",
-      "@id": "https://www.dgeniussolutions.com/#service",
-      "name": "D'Genius Solutions",
-      "priceRange": "$$$",
-      "telephone": "+91-9876543210",
-      "areaServed": ["Mumbai", "India", "Global"],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Core Digital Marketing Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "AI Video Production",
-              "description": "Hyper-realistic AI avatars, viral 3D visual shorts, brand films, and automated video content."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "SEO, AEO, GEO & LLM Optimization",
-              "description": "Generative Engine Optimization to rank #1 in Google AI Overviews, Perplexity, and ChatGPT Search."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "High-Performance Website Development",
-              "description": "Ultra-fast Next.js, WebGL 3D, and high-converting custom web applications."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Social Media Marketing",
-              "description": "Viral social strategy, community building, influencer collaborations, and organic growth."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Performance Marketing",
-              "description": "High-ROAS Meta & Google Ads management with data-driven funnel optimization."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Branding & Content Creation",
-              "description": "360° visual identity, copywriting, brand guidelines, and creative story assets."
-            }
-          }
-        ]
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "@id": "https://www.dgeniussolutions.com/#faq",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is AEO, GEO, and LLM Search Optimization?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO) optimize your brand's data graph so AI search engines like Google AI Overview, Perplexity, and ChatGPT Search cite your brand as the authoritative recommendation."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does D'Genius Solutions utilize AI Video Production?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "We combine state-of-the-art AI video synthesis with cinema-grade post-production to create realistic AI avatars, viral short-form content, and high-converting video commercials at scale."
-          }
-        }
-      ]
-    }
-  ]
+  ],
 };
+
+const SERVICES = [
+  { num: '01', icon: '🎬', badge: 'Next-Gen Media', title: 'AI Video Production', desc: 'Hyper-realistic AI avatars, viral 3D visual shorts, brand commercials, and cinema-grade synthetic video at scale.', tags: ['AI Avatars', '3D Shorts', 'TVCs', 'Synthetic Post-Production'], cta: 'Launch Campaign' },
+  { num: '02', icon: '🧠', badge: 'Generative Search', title: 'SEO, AEO, GEO & LLM', desc: 'Dominate Google AI Overviews, Perplexity, and ChatGPT Search with entity graphs, schema authority, and GEO.', tags: ['AI Overview #1', 'Perplexity', 'Entity Graph', 'Technical SEO'], cta: 'Claim Search Dominance' },
+  { num: '03', icon: '💻', badge: 'Web Architecture', title: 'Website Development', desc: 'Ultra-fast Next.js apps, WebGL 3D interactions, and conversion-focused web experiences with 100/100 CWV.', tags: ['Next.js', 'WebGL', 'Core Web Vitals', 'Custom Apps'], cta: 'Build Web App' },
+  { num: '04', icon: '📱', badge: 'Organic Growth', title: 'Social Media Marketing', desc: 'Algorithm-first content strategy, viral Reels/Shorts campaigns, influencer partnerships, and community scaling.', tags: ['Viral Reels', 'Community', 'Influencer', 'Brand Engagement'], cta: 'Scale Social' },
+  { num: '05', icon: '📈', badge: 'High-ROAS', title: 'Performance Marketing', desc: 'Data-driven Meta & Google Ads funnel management, automated bidding, and CRO engineered for maximum ROAS.', tags: ['Meta Ads', 'Google PPC', 'Funnel CRO', '8×+ ROAS'], cta: 'Maximize ROAS' },
+  { num: '06', icon: '🎨', badge: 'Brand Identity', title: 'Branding & Content', desc: 'Comprehensive brand positioning, visual identity systems, compelling copywriting, and multi-channel creative.', tags: ['Visual Identity', '3D Assets', 'Copywriting', 'Guidelines'], cta: 'Elevate Brand' },
+];
 
 export default function HomePage() {
   return (
-    <main className="dgs-v1215" id="dgs-v1215">
+    <>
       <GsapClient />
-      
-      {/* Schema Injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_SCHEMA) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
 
-      {/* Dynamic Background */}
-      <div className="dgs-v1215-bg" aria-hidden="true">
-        <ThreeCanvas />
-        <div className="dgs-v1215-fallback"></div>
-        <div className="dgs-v1215-grid"></div>
-        <div className="dgs-v1215-vignette"></div>
-      </div>
+      {/* ── NAVIGATION ── */}
+      <nav className="dgs-nav" id="dgs-nav">
+        <div className="dgs-container">
+          <div className="dgs-nav-container">
+            <a href="/" className="dgs-nav-logo">
+              <span className="dgs-nav-logo-icon"></span>
+              D'Genius Solutions
+            </a>
 
-      {/* HERO SECTION */}
-      <section className="dgs-v1215-hero" id="dgs-home-start">
-        <div className="dgs-v1215-shell">
-          <div className="dgs-v1215-hero-layout">
+            <div className="dgs-nav-links">
+              <a href="#services" className="dgs-nav-link">Services</a>
+              <a href="#work" className="dgs-nav-link">Work</a>
+              <a href="#approach" className="dgs-nav-link">Approach</a>
+              <a href="#faq" className="dgs-nav-link">FAQ</a>
+            </div>
 
-            <div className="dgs-v1215-copy dgs-v1215-reveal">
-              <div className="dgs-v1215-kicker">
-                <span>⚡</span> Mumbai-Based Full Service Digital Marketing Agency
+            <div className="dgs-nav-actions">
+              <a href="#contact" className="dgs-btn-primary dgs-nav-cta">Start a Project</a>
+              <button className="dgs-nav-toggle" aria-label="Toggle menu">
+                <span></span><span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        {/* ── HERO ── */}
+        <section className="dgs-hero" id="hero">
+          <div className="dgs-hero-bg" aria-hidden="true">
+            <ThreeCanvas />
+            <div className="dgs-hero-gradient-orb"></div>
+            <div className="dgs-hero-grain"></div>
+          </div>
+
+          <div className="dgs-container">
+            <div className="dgs-hero-content dgs-reveal">
+              <div className="dgs-hero-badge">
+                <span className="dgs-hero-badge-dot"></span>
+                Full-Service Digital Agency · Mumbai
               </div>
 
-              <h1>
-                Dominating Search, Social & AI Engines
-                <span>AI Video • AEO / GEO • Web Dev • Performance</span>
+              <h1 className="dgs-hero-title">
+                We build digital engines
+                <br />
+                <span className="dgs-gradient-text">that drive growth.</span>
               </h1>
 
-              <p>
-                We build high-growth digital engines for ambitious brands. From <strong>AI Video Production</strong> and <strong>Generative Engine Optimization (AEO/GEO/LLM)</strong> to <strong>High-Performance Web Apps</strong> and <strong>High-ROAS Marketing</strong>, we turn digital presence into exponential revenue.
+              <p className="dgs-hero-subtitle">
+                AI Video Production · SEO / AEO / GEO · High-Performance Web Apps · Performance Marketing · Social Media · Branding
               </p>
 
-              <div className="dgs-v1215-actions">
-                <a href="#dgs-v1215-services" className="dgs-v1215-btn dgs-v1215-btn-primary">
-                  Explore Priority Services →
+              <div className="dgs-hero-actions">
+                <a href="#contact" className="dgs-btn-primary">
+                  Start a Project
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M8.67 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </a>
-                <a href="#dgs-v1215-case-block" className="dgs-v1215-btn dgs-v1215-btn-secondary">
-                  View Verified Results
-                </a>
+                <a href="#work" className="dgs-btn-ghost">View Our Work</a>
               </div>
             </div>
 
-            {/* 3D Holographic AI Studio Graphic (Native Pure SVG/CSS - Zero Broken Links) */}
-            <div className="dgs-v1215-visual dgs-v1215-reveal">
-              <div className="dgs-v1215-robot-wrap">
-                <div className="dgs-v1215-robot-aura"></div>
-                
-                <div
-                  id="dgs-v1215-robot"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(12, 16, 28, 0.95), rgba(5, 5, 8, 0.95))',
-                    border: '1px solid rgba(0, 212, 255, 0.3)',
-                    borderRadius: '2.5rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '2.5rem',
-                    boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 212, 255, 0.25)',
-                    backdropFilter: 'blur(20px)',
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {/* Holographic Core Graphic */}
-                  <svg
-                    width="140"
-                    height="140"
-                    viewBox="0 0 100 100"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style={{ marginBottom: '1.5rem', filter: 'drop-shadow(0 0 20px rgba(0, 212, 255, 0.8))' }}
-                  >
-                    <circle cx="50" cy="50" r="45" stroke="url(#paint0_linear)" strokeWidth="2" strokeDasharray="6 4" />
-                    <circle cx="50" cy="50" r="32" stroke="url(#paint1_linear)" strokeWidth="3" />
-                    <polygon points="50,25 70,65 30,65" stroke="#00d4ff" strokeWidth="2" fill="rgba(0, 212, 255, 0.15)" />
-                    <circle cx="50" cy="50" r="8" fill="#fd5c62" />
-                    <defs>
-                      <linearGradient id="paint0_linear" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#00d4ff" />
-                        <stop offset="0.5" stopColor="#9d4edd" />
-                        <stop offset="1" stopColor="#fd5c62" />
-                      </linearGradient>
-                      <linearGradient id="paint1_linear" x1="0" y1="100" x2="100" y2="0" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#fd5c62" />
-                        <stop offset="1" stopColor="#00d4ff" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-
-                  <strong style={{ fontSize: '1.35rem', fontWeight: '900', color: '#fff', textAlign: 'center', marginBottom: '0.4rem' }}>
-                    DGS AI Engine Studio
-                  </strong>
-                  <span style={{ fontSize: '0.85rem', color: '#00d4ff', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: '800' }}>
-                    Generative Search & Media
-                  </span>
-                </div>
-
-                <div className="dgs-v1215-floating-chip dgs-v1215-chip-one">
-                  <span>Generative Search</span>
-                  <strong>#1 in Google AI Overview</strong>
-                </div>
-
-                <div className="dgs-v1215-floating-chip dgs-v1215-chip-two">
-                  <span>AI Video Production</span>
-                  <strong>Viral Avatar Shorts & TVCs</strong>
-                </div>
-
-                <div className="dgs-v1215-floating-chip dgs-v1215-chip-three">
-                  <span>Performance ROAS</span>
-                  <strong>8.4x Verified Conversion</strong>
-                </div>
+            <div className="dgs-hero-stats dgs-reveal">
+              <div className="dgs-stat-item">
+                <strong className="dgs-stat-value dgs-stat-number" data-value="150" data-suffix="+">0</strong>
+                <span className="dgs-stat-label">Brand Campaigns</span>
+              </div>
+              <div className="dgs-stat-item">
+                <strong className="dgs-stat-value dgs-stat-number" data-value="40" data-prefix="$" data-suffix="M+">0</strong>
+                <span className="dgs-stat-label">Revenue Generated</span>
+              </div>
+              <div className="dgs-stat-item">
+                <strong className="dgs-stat-value dgs-stat-number" data-value="99" data-suffix="%">0</strong>
+                <span className="dgs-stat-label">Client Retention</span>
+              </div>
+              <div className="dgs-stat-item">
+                <strong className="dgs-stat-value dgs-stat-number" data-value="8" data-suffix="×+">0</strong>
+                <span className="dgs-stat-label">Average ROAS</span>
               </div>
             </div>
-
           </div>
+        </section>
 
-          <div className="dgs-v1215-statline dgs-v1215-reveal">
-            <div>
-              <strong>150+</strong>
-              <span>Global Brand Campaigns</span>
-            </div>
-            <div>
-              <strong>$40M+</strong>
-              <span>Client Revenue Generated</span>
-            </div>
-            <div>
-              <strong>99.4%</strong>
-              <span>AI Engine Recommendation</span>
-            </div>
-            <div>
-              <strong>100%</strong>
-              <span>Core Web Vitals Performance</span>
-            </div>
+        {/* ── MARQUEE ── */}
+        <div className="dgs-marquee" aria-hidden="true">
+          <div className="dgs-marquee-content">
+            {['AI Video Production', 'SEO & AEO', 'Generative Engine Optimization', 'LLM Search', 'Web Development', 'Performance Marketing', 'Social Media', 'Branding & Content',
+              'AI Video Production', 'SEO & AEO', 'Generative Engine Optimization', 'LLM Search', 'Web Development', 'Performance Marketing', 'Social Media', 'Branding & Content',
+            ].map((text, i) => (
+              <span key={i}>
+                <span className="dgs-marquee-item">{text}</span>
+                <span className="dgs-marquee-separator">·</span>
+              </span>
+            ))}
           </div>
         </div>
-      </section>
 
-      {/* MARQUEE TICKER */}
-      <section className="dgs-v1215-rail" aria-label="Core Capabilities Marquee">
-        <div className="dgs-v1215-rail-line">
-          <div className="dgs-v1215-rail-track">
-            <span>AI Video Production</span>
-            <span>SEO & AEO Optimization</span>
-            <span>Generative Engine Optimization (GEO)</span>
-            <span>LLM Search Dominance</span>
-            <span>High-Speed Web Development</span>
-            <span>Performance Marketing</span>
-            <span>Social Media Growth</span>
-            <span>Branding & Content Creation</span>
+        {/* ── SERVICES ── */}
+        <section className="dgs-services" id="services">
+          <div className="dgs-container">
+            <div className="dgs-section-header dgs-reveal">
+              <span className="dgs-section-label">What We Do</span>
+              <h2>Capabilities built for <span className="dgs-gradient-text">modern growth</span></h2>
+              <p>Six specialized service verticals engineered to dominate traditional search, social algorithms, and generative AI engines.</p>
+            </div>
 
-            {/* Repeat for seamless infinite scroll */}
-            <span>AI Video Production</span>
-            <span>SEO & AEO Optimization</span>
-            <span>Generative Engine Optimization (GEO)</span>
-            <span>LLM Search Dominance</span>
-            <span>High-Speed Web Development</span>
-            <span>Performance Marketing</span>
-            <span>Social Media Growth</span>
-            <span>Branding & Content Creation</span>
-          </div>
-        </div>
-      </section>
-
-      {/* CLIENT LOGO & PROOF STACK */}
-      <section className="dgs-v1215-proof-stack" id="dgs-v1215-proof">
-        <div className="dgs-v1215-shell">
-          <div className="dgs-v1215-section-head dgs-v1215-reveal">
-            <div className="dgs-v1215-section-kicker">Trusted Industry Leaders</div>
-            <h2>Accelerating Growth for <span>Market Leaders & Unicorns</span></h2>
-            <p>From high-growth D2C brands to enterprise leaders, our AI-forward digital strategies deliver measurable impact.</p>
-          </div>
-
-          <div className="dgs-v1215-logo-marquee">
-            <div className="dgs-v1215-logo-track">
-              {['Bespoke', 'Style', 'Blanco', 'Creative', 'Elegance', 'Urban', 'Glam', 'Luxe'].map((client, idx) => (
-                <div key={idx} className="dgs-v1215-logo-tile">
-                  <span className="dgs-v1215-logo-text">{client}</span>
-                </div>
-              ))}
-              {['Bespoke', 'Style', 'Blanco', 'Creative', 'Elegance', 'Urban', 'Glam', 'Luxe'].map((client, idx) => (
-                <div key={`dup-${idx}`} className="dgs-v1215-logo-tile">
-                  <span className="dgs-v1215-logo-text">{client}</span>
-                </div>
+            <div className="dgs-services-grid dgs-stagger-grid">
+              {SERVICES.map((s) => (
+                <article key={s.num} className="dgs-service-card dgs-tilt">
+                  <span className="dgs-service-number">{s.num}</span>
+                  <div className="dgs-service-icon">{s.icon}</div>
+                  <span className="dgs-service-badge">{s.badge}</span>
+                  <h3 className="dgs-service-title">{s.title}</h3>
+                  <p className="dgs-service-desc">{s.desc}</p>
+                  <div className="dgs-service-tags">
+                    {s.tags.map((t) => <span key={t} className="dgs-service-tag">{t}</span>)}
+                  </div>
+                  <a href="#contact" className="dgs-service-link">
+                    {s.cta}
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M8.67 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </a>
+                </article>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CORE FOCUS SERVICES SHOWCASE */}
-      <section className="dgs-v1215-service-clarity" id="dgs-v1215-services">
-        <div className="dgs-v1215-shell">
-          <div className="dgs-v1215-section-head dgs-v1215-reveal">
-            <div className="dgs-v1215-section-kicker">Priority Service Suites</div>
-            <h2>Full-Service Digital Solutions <span>Built For Modern Growth</span></h2>
-            <p>Specialized, high-impact digital capabilities tailored to dominate traditional search, social algorithms, and generative AI search engines.</p>
+        {/* ── PORTFOLIO ── */}
+        <section className="dgs-portfolio" id="work">
+          <div className="dgs-container">
+            <div className="dgs-section-header dgs-reveal">
+              <span className="dgs-section-label">Selected Work</span>
+              <h2>Results that <span className="dgs-gradient-text">speak for themselves</span></h2>
+              <p>Featured campaigns across AI video, search dominance, web development, and performance marketing.</p>
+            </div>
+            <PortfolioGallery />
           </div>
+        </section>
 
-          <div className="dgs-v1215-services-grid">
-            
-            {/* Service 1: AI Video Production */}
-            <article className="dgs-v1215-service-card dgs-v1215-reveal">
-              <div className="dgs-v1215-service-icon">🎬</div>
-              <span className="dgs-v1215-service-badge">Next-Gen Media</span>
-              <h3>AI Video Production</h3>
-              <p>Hyper-realistic AI avatars, viral 3D visual shorts, automated brand commercials, and cinema-grade synthetic video creation at scale.</p>
-              <div className="dgs-v1215-service-tags">
-                <span>AI Avatars</span>
-                <span>3D Shorts</span>
-                <span>TVCs</span>
-                <span>Synthetic Post-Production</span>
-              </div>
-              <a href="#dgs-v1215-final" className="dgs-v1215-service-link">
-                Launch AI Video Campaign
-              </a>
-            </article>
-
-            {/* Service 2: SEO, AEO, GEO & LLM Optimization */}
-            <article className="dgs-v1215-service-card dgs-v1215-reveal">
-              <div className="dgs-v1215-service-icon">🧠</div>
-              <span className="dgs-v1215-service-badge">Generative Search</span>
-              <h3>SEO, AEO, GEO & LLM Optimization</h3>
-              <p>Dominate Google AI Overviews, Perplexity, and ChatGPT Search with Generative Engine Optimization, entity graphs, and schema authority.</p>
-              <div className="dgs-v1215-service-tags">
-                <span>AI Overview #1</span>
-                <span>Perplexity Citation</span>
-                <span>Entity Graph</span>
-                <span>Technical SEO</span>
-              </div>
-              <a href="#dgs-v1215-final" className="dgs-v1215-service-link">
-                Claim AI Search Dominance
-              </a>
-            </article>
-
-            {/* Service 3: High-Performance Website Development */}
-            <article className="dgs-v1215-service-card dgs-v1215-reveal">
-              <div className="dgs-v1215-service-icon">💻</div>
-              <span className="dgs-v1215-service-badge">Web Architecture</span>
-              <h3>Website Development</h3>
-              <p>Ultra-fast Next.js, WebGL 3D micro-interactions, and conversion-focused web applications built with 100/100 Core Web Vitals performance.</p>
-              <div className="dgs-v1215-service-tags">
-                <span>Next.js</span>
-                <span>WebGL 3D</span>
-                <span>Core Web Vitals 100</span>
-                <span>Custom Web Apps</span>
-              </div>
-              <a href="#dgs-v1215-final" className="dgs-v1215-service-link">
-                Build High-Speed Web App
-              </a>
-            </article>
-
-            {/* Service 4: Social Media Marketing */}
-            <article className="dgs-v1215-service-card dgs-v1215-reveal">
-              <div className="dgs-v1215-service-icon">📱</div>
-              <span className="dgs-v1215-service-badge">Viral Organic Growth</span>
-              <h3>Social Media Marketing</h3>
-              <p>Algorithm-first content strategy, viral Reels/Shorts campaigns, influencer partnerships, and active community engagement that scales brand affinity.</p>
-              <div className="dgs-v1215-service-tags">
-                <span>Viral Reels</span>
-                <span>Community Growth</span>
-                <span>Influencer Strategy</span>
-                <span>Brand Engagement</span>
-              </div>
-              <a href="#dgs-v1215-final" className="dgs-v1215-service-link">
-                Scale Social Presence
-              </a>
-            </article>
-
-            {/* Service 5: Performance Marketing */}
-            <article className="dgs-v1215-service-card dgs-v1215-reveal">
-              <div className="dgs-v1215-service-icon">📈</div>
-              <span className="dgs-v1215-service-badge">High-ROAS Ads</span>
-              <h3>Performance Marketing</h3>
-              <p>Data-driven Meta & Google Ads funnel management, automated bidding, and conversion rate optimization engineered for high ROAS.</p>
-              <div className="dgs-v1215-service-tags">
-                <span>Meta Ads</span>
-                <span>Google PPC</span>
-                <span>Funnel CRO</span>
-                <span>8x+ ROAS</span>
-              </div>
-              <a href="#dgs-v1215-final" className="dgs-v1215-service-link">
-                Maximize Ad ROAS
-              </a>
-            </article>
-
-            {/* Service 6: Branding & Content Creation */}
-            <article className="dgs-v1215-service-card dgs-v1215-reveal">
-              <div className="dgs-v1215-service-icon">🎨</div>
-              <span className="dgs-v1215-service-badge">Brand Identity</span>
-              <h3>Branding & Content Creation</h3>
-              <p>Comprehensive brand positioning, 3D visual identities, compelling copywriting, and multi-channel creative storytelling assets.</p>
-              <div className="dgs-v1215-service-tags">
-                <span>Visual Identity</span>
-                <span>3D Brand Assets</span>
-                <span>Copywriting</span>
-                <span>Creative Guidelines</span>
-              </div>
-              <a href="#dgs-v1215-final" className="dgs-v1215-service-link">
-                Elevate Brand Identity
-              </a>
-            </article>
-
-          </div>
-        </div>
-      </section>
-
-      {/* PORTFOLIO & WORK SHOWCASE */}
-      <section className="dgs-v1215-ai-portfolio" id="dgs-v1215-portfolio">
-        <div className="dgs-v1215-shell">
-          <div className="dgs-v1215-section-head dgs-v1215-reveal">
-            <div className="dgs-v1215-section-kicker">Creative Portfolio</div>
-            <h2>Featured Client Work & <span>Verified Results</span></h2>
-            <p>Interactive showcase of our AI Video Production, SEO/AEO takeovers, Web Development, and Performance Marketing campaigns.</p>
-          </div>
-
-          <PortfolioGallery />
-        </div>
-      </section>
-
-      {/* SEARCH & AI AUTHORITY (SEO / AEO / GEO) */}
-      <section className="dgs-v1215-search-authority" id="dgs-v1215-authority">
-        <div className="dgs-v1215-shell">
-          <div className="dgs-v1215-section-head dgs-v1215-reveal">
-            <div className="dgs-v1215-section-kicker">AI & Search Leadership</div>
-            <h2>Next-Gen Search Engine <span>Dominance (AEO / GEO / LLM)</span></h2>
-            <p>How we guarantee your brand ranks at the top of Google Search and generative AI engines like Perplexity, ChatGPT, and Gemini.</p>
-          </div>
-
-          <div className="dgs-v1215-authority-grid">
-            <article className="dgs-v1215-authority-card dgs-v1215-reveal">
-              <span>Google AI Overview</span>
-              <h3>Generative Engine Optimization (GEO)</h3>
-              <p>Optimizing content structures, entity graphs, and structured JSON-LD data so Google's AI Overview prominently features your brand in snapshot answers.</p>
-            </article>
-
-            <article className="dgs-v1215-authority-card dgs-v1215-reveal">
-              <span>Perplexity & LLM Search</span>
-              <h3>Answer Engine Optimization (AEO)</h3>
-              <p>Directing conversational AI engines to source facts, recommendations, and product citations directly from your website's semantic data graph.</p>
-            </article>
-
-            <article className="dgs-v1215-authority-card dgs-v1215-reveal">
-              <span>Core Web Vitals & Speed</span>
-              <h3>High-Performance Web Engineering</h3>
-              <p>Ensuring 100/100 Core Web Vitals speed scores, instant page loads, and zero layout shifts to maximize Google Search quality rankings.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ ACCORDION SECTION */}
-      <section className="dgs-v1215-faq" id="dgs-v1215-faq">
-        <div className="dgs-v1215-shell">
-          <div className="dgs-v1215-section-head dgs-v1215-reveal">
-            <div className="dgs-v1215-section-kicker">Frequently Asked Questions</div>
-            <h2>Clear Answers to <span>Your Growth Questions</span></h2>
-          </div>
-
-          <div className="dgs-v1215-faq-grid dgs-v1215-reveal">
-            <details open>
-              <summary>How does D'Genius Solutions combine traditional SEO with AEO and GEO?</summary>
-              <p>While traditional SEO focuses on keyword rankings on Google SERPs, Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO) structure your brand's data so LLMs (Google AI Overview, Perplexity, ChatGPT) cite your company as the premier answer.</p>
-            </details>
-
-            <details>
-              <summary>What makes your AI Video Production service unique?</summary>
-              <p>We combine hyper-realistic AI video generation with professional cinema-grade post-production, custom AI avatars, and multi-platform aspect ratios to produce high-converting commercial video content in a fraction of traditional production time.</p>
-            </details>
-
-            <details>
-              <summary>How fast can we launch a high-performance Website Development project?</summary>
-              <p>Using our modern Next.js and WebGL architecture, we design, engineer, test, and deploy ultra-fast, mobile-optimized websites within weeks, fully backed by 100/100 Core Web Vitals performance.</p>
-            </details>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CALL TO ACTION */}
-      <section className="dgs-v1215-final" id="dgs-v1215-final">
-        <div className="dgs-v1215-shell">
-          <div className="dgs-v1215-final-card dgs-v1215-reveal">
-            <div>
-              <span>Ready for Exponential Growth?</span>
-              <h2>Let's Build Your <span>AI-Powered Digital Engine</span></h2>
-              <p>Partner with Mumbai's leading digital marketing, AI video, and search optimization agency to scale your brand's reach and revenue.</p>
-              <a href="mailto:contact@dgeniussolutions.com" className="dgs-v1215-btn dgs-v1215-btn-primary">
-                Schedule Strategy Consultation →
-              </a>
+        {/* ── APPROACH / AUTHORITY ── */}
+        <section className="dgs-authority" id="approach">
+          <div className="dgs-container">
+            <div className="dgs-section-header dgs-reveal">
+              <span className="dgs-section-label">Our Approach</span>
+              <h2>Next-gen search <span className="dgs-gradient-text">dominance strategy</span></h2>
+              <p>How we ensure your brand ranks at the top of Google Search and generative AI engines.</p>
             </div>
 
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '4.5rem', marginBottom: '1rem' }}>🚀</div>
-              <strong style={{ display: 'block', fontSize: '1.4rem', color: '#fff' }}>D'Genius Solutions</strong>
-              <span style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Mumbai • Global Operations</span>
+            <div className="dgs-authority-grid dgs-stagger-grid">
+              <article className="dgs-authority-card dgs-tilt">
+                <span className="dgs-authority-step">Google AI Overview</span>
+                <h3 className="dgs-authority-title">Generative Engine Optimization</h3>
+                <p className="dgs-authority-desc">We optimize content structures, entity graphs, and structured data so Google's AI Overview features your brand in snapshot answers.</p>
+              </article>
+
+              <article className="dgs-authority-card dgs-tilt">
+                <span className="dgs-authority-step">Perplexity & LLM Search</span>
+                <h3 className="dgs-authority-title">Answer Engine Optimization</h3>
+                <p className="dgs-authority-desc">Directing conversational AI engines to source facts, recommendations, and citations directly from your website's semantic data graph.</p>
+              </article>
+
+              <article className="dgs-authority-card dgs-tilt">
+                <span className="dgs-authority-step">Core Web Vitals</span>
+                <h3 className="dgs-authority-title">Performance Engineering</h3>
+                <p className="dgs-authority-desc">100/100 speed scores, instant page loads, and zero layout shifts to maximize quality rankings across every search engine.</p>
+              </article>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-    </main>
+        {/* ── FAQ ── */}
+        <section className="dgs-faq" id="faq">
+          <div className="dgs-container">
+            <div className="dgs-faq-container">
+              <div className="dgs-section-header dgs-reveal">
+                <span className="dgs-section-label">FAQ</span>
+                <h2>Frequently asked <span className="dgs-gradient-text">questions</span></h2>
+              </div>
+
+              <div className="dgs-reveal">
+                <details className="dgs-faq-item" open>
+                  <summary className="dgs-faq-summary">
+                    How does D'Genius combine traditional SEO with AEO and GEO?
+                    <span className="dgs-faq-icon"></span>
+                  </summary>
+                  <div className="dgs-faq-content">While traditional SEO targets keyword rankings on Google SERPs, our AEO and GEO practice structures your brand's data so LLMs — Google AI Overview, Perplexity, ChatGPT — cite your company as the authoritative answer. We layer all three for compounding visibility.</div>
+                </details>
+
+                <details className="dgs-faq-item">
+                  <summary className="dgs-faq-summary">
+                    What makes your AI Video Production unique?
+                    <span className="dgs-faq-icon"></span>
+                  </summary>
+                  <div className="dgs-faq-content">We combine hyper-realistic AI video synthesis with cinema-grade post-production. Custom AI avatars, multi-platform aspect ratios, and automated scaling produce high-converting commercial video in a fraction of traditional production time and cost.</div>
+                </details>
+
+                <details className="dgs-faq-item">
+                  <summary className="dgs-faq-summary">
+                    How fast can a website development project launch?
+                    <span className="dgs-faq-icon"></span>
+                  </summary>
+                  <div className="dgs-faq-content">Using our Next.js and WebGL architecture, we design, build, and deploy ultra-fast websites within 4–8 weeks — fully optimized for 100/100 Core Web Vitals and AEO-ready structured data from day one.</div>
+                </details>
+
+                <details className="dgs-faq-item">
+                  <summary className="dgs-faq-summary">
+                    What ROAS can we expect from performance marketing?
+                    <span className="dgs-faq-icon"></span>
+                  </summary>
+                  <div className="dgs-faq-content">Our performance marketing clients average 6–10× ROAS across Meta and Google Ads. We achieve this through data-driven creative testing, funnel CRO, automated bidding, and real-time optimization loops.</div>
+                </details>
+
+                <details className="dgs-faq-item">
+                  <summary className="dgs-faq-summary">
+                    Do you work with businesses outside Mumbai?
+                    <span className="dgs-faq-icon"></span>
+                  </summary>
+                  <div className="dgs-faq-content">Absolutely. While headquartered in Mumbai, we serve clients across India and internationally. Our process is fully remote-optimized with structured sprint workflows, shared dashboards, and weekly strategy calls.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CTA ── */}
+        <section className="dgs-cta" id="contact">
+          <div className="dgs-container">
+            <div className="dgs-cta-card dgs-reveal">
+              <span className="dgs-section-label">Ready to grow?</span>
+              <h2 className="dgs-cta-title">Let's build your <span className="dgs-gradient-text">digital engine</span></h2>
+              <p className="dgs-cta-desc">Partner with Mumbai's leading digital agency to scale your brand's reach, authority, and revenue.</p>
+              <a href="mailto:contact@dgeniussolutions.com" className="dgs-btn-primary dgs-btn-lg">
+                Schedule Strategy Call
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M8.67 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* ── FOOTER ── */}
+        <footer className="dgs-footer">
+          <div className="dgs-container">
+            <div className="dgs-footer-grid">
+              <div className="dgs-footer-brand">
+                <a href="/" className="dgs-nav-logo">
+                  <span className="dgs-nav-logo-icon"></span>
+                  D'Genius Solutions
+                </a>
+                <p className="dgs-footer-brand-desc">Mumbai-based full-service digital agency specializing in AI video, generative search optimization, and high-performance web experiences.</p>
+              </div>
+
+              <div>
+                <h4 className="dgs-footer-heading">Services</h4>
+                <div className="dgs-footer-links">
+                  <a href="#services" className="dgs-footer-link">AI Video Production</a>
+                  <a href="#services" className="dgs-footer-link">SEO / AEO / GEO</a>
+                  <a href="#services" className="dgs-footer-link">Web Development</a>
+                  <a href="#services" className="dgs-footer-link">Performance Marketing</a>
+                  <a href="#services" className="dgs-footer-link">Social Media</a>
+                  <a href="#services" className="dgs-footer-link">Branding & Content</a>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="dgs-footer-heading">Company</h4>
+                <div className="dgs-footer-links">
+                  <a href="#work" className="dgs-footer-link">Our Work</a>
+                  <a href="#approach" className="dgs-footer-link">Approach</a>
+                  <a href="#faq" className="dgs-footer-link">FAQ</a>
+                  <a href="#contact" className="dgs-footer-link">Contact</a>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="dgs-footer-heading">Connect</h4>
+                <div className="dgs-footer-links">
+                  <a href="https://www.linkedin.com/company/dgeniussolutions/" target="_blank" rel="noopener noreferrer" className="dgs-footer-link">LinkedIn</a>
+                  <a href="https://www.instagram.com/dgeniussolutions/" target="_blank" rel="noopener noreferrer" className="dgs-footer-link">Instagram</a>
+                  <a href="https://www.facebook.com/dgeniussolutions/" target="_blank" rel="noopener noreferrer" className="dgs-footer-link">Facebook</a>
+                  <a href="mailto:contact@dgeniussolutions.com" className="dgs-footer-link">Email Us</a>
+                </div>
+              </div>
+            </div>
+
+            <div className="dgs-footer-bottom">
+              <span className="dgs-footer-copyright">© 2026 D'Genius Solutions. All rights reserved.</span>
+              <span className="dgs-footer-copyright">Mumbai, India · Global Operations</span>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </>
   );
 }

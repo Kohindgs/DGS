@@ -9,18 +9,15 @@ export default function ThreeCanvas() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // 1. Scene, Camera, Renderer Setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2('#050508', 0.015);
 
     const camera = new THREE.PerspectiveCamera(
-      60,
+      55,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
-    camera.position.set(0, 12, 32);
-    camera.lookAt(0, 0, 0);
+    camera.position.set(0, 2, 30);
 
     const renderer = new THREE.WebGLRenderer({
       canvas: containerRef.current,
@@ -28,93 +25,67 @@ export default function ThreeCanvas() {
       alpha: true,
       powerPreference: 'high-performance',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
 
-    // 2. Organic Fluid Wave Mesh (Plane Geometry with Dynamic Vertex Displacement)
-    const cols = 90;
-    const rows = 90;
-    const waveGeo = new THREE.PlaneGeometry(80, 80, cols, rows);
-    waveGeo.rotateX(-Math.PI / 2.5); // Tilt to create dramatic horizon perspective
-
-    const count = waveGeo.attributes.position.count;
-    const initialZ = new Float32Array(count);
-    const posAttr = waveGeo.attributes.position;
-
-    // Save initial coordinates
-    for (let i = 0; i < count; i++) {
-      initialZ[i] = posAttr.getZ(i);
-    }
-
-    // High-end Shader Material for Fluid Grid Waves
-    const waveMat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color('#00d4ff'),
-      wireframe: true,
-      transparent: true,
-      opacity: 0.18,
-    });
-    const waveMesh = new THREE.Mesh(waveGeo, waveMat);
-    waveMesh.position.y = -8;
-    scene.add(waveMesh);
-
-    // 3. Luminous Organic Particle Galaxy Field
-    const particleCount = 2800;
+    // --- Organic Nebula Particle Cloud ---
+    const particleCount = 1800;
     const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
-    const particleScales = new Float32Array(particleCount);
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const sizes = new Float32Array(particleCount);
 
-    const colorPalette = [
-      new THREE.Color('#00d4ff'), // Cyan
-      new THREE.Color('#9d4edd'), // Violet
-      new THREE.Color('#fd5c62'), // Coral
-      new THREE.Color('#6366f1'), // Indigo
-      new THREE.Color('#ffffff'), // Pure White Glow
+    const palette = [
+      new THREE.Color('#7c5cfc'), // Violet
+      new THREE.Color('#3ecfb4'), // Teal
+      new THREE.Color('#f0734f'), // Coral
+      new THREE.Color('#5b6abf'), // Slate indigo
+      new THREE.Color('#ffffff'), // White
     ];
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
-      // Organic distribution along a flowing curve
-      const u = Math.random();
-      const v = Math.random();
-      const radius = 25 + Math.random() * 35;
-      const theta = u * Math.PI * 2;
-      const phi = (v - 0.5) * Math.PI * 0.8;
+      // Nebula-like distribution using gaussian-ish spread
+      const r = 15 + Math.pow(Math.random(), 0.6) * 40;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = (Math.random() - 0.5) * Math.PI * 0.55;
 
-      particlePositions[i3] = radius * Math.cos(theta) * Math.cos(phi);
-      particlePositions[i3 + 1] = radius * Math.sin(phi) + Math.sin(u * 10) * 4;
-      particlePositions[i3 + 2] = radius * Math.sin(theta) * Math.cos(phi);
+      positions[i3] = r * Math.cos(theta) * Math.cos(phi);
+      positions[i3 + 1] = r * Math.sin(phi) * 0.5 + (Math.random() - 0.5) * 6;
+      positions[i3 + 2] = r * Math.sin(theta) * Math.cos(phi) - 10;
 
-      const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-      particleColors[i3] = color.r;
-      particleColors[i3 + 1] = color.g;
-      particleColors[i3 + 2] = color.b;
+      const color = palette[Math.floor(Math.random() * palette.length)];
+      colors[i3] = color.r;
+      colors[i3 + 1] = color.g;
+      colors[i3 + 2] = color.b;
 
-      particleScales[i] = Math.random() * 0.8 + 0.2;
+      sizes[i] = Math.random() * 1.2 + 0.3;
     }
 
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // Glow Texture Canvas
-    const glowCanvas = document.createElement('canvas');
-    glowCanvas.width = 64;
-    glowCanvas.height = 64;
-    const ctx = glowCanvas.getContext('2d');
+    // Soft glow texture
+    const canvas2d = document.createElement('canvas');
+    canvas2d.width = 64;
+    canvas2d.height = 64;
+    const ctx = canvas2d.getContext('2d');
     const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    grad.addColorStop(0.3, 'rgba(0, 212, 255, 0.5)');
+    grad.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+    grad.addColorStop(0.2, 'rgba(255, 255, 255, 0.3)');
+    grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.05)');
     grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 64, 64);
-    const particleTex = new THREE.CanvasTexture(glowCanvas);
+    const tex = new THREE.CanvasTexture(canvas2d);
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.65,
+      size: 0.45,
       vertexColors: true,
       transparent: true,
-      opacity: 0.55,
-      map: particleTex,
+      opacity: 0.4,
+      map: tex,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
@@ -122,33 +93,40 @@ export default function ThreeCanvas() {
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // 4. Volumetric Ambient Glow Lights
-    const light1 = new THREE.PointLight('#00d4ff', 4, 60);
-    light1.position.set(20, 20, 10);
-    scene.add(light1);
+    // --- Floating Orbital Rings ---
+    const ringGeo1 = new THREE.TorusGeometry(18, 0.04, 16, 200);
+    const ringMat1 = new THREE.MeshBasicMaterial({
+      color: '#7c5cfc',
+      transparent: true,
+      opacity: 0.12,
+    });
+    const ring1 = new THREE.Mesh(ringGeo1, ringMat1);
+    ring1.rotation.x = Math.PI / 2.8;
+    ring1.rotation.z = 0.3;
+    scene.add(ring1);
 
-    const light2 = new THREE.PointLight('#9d4edd', 4, 60);
-    light2.position.set(-20, -10, -10);
-    scene.add(light2);
+    const ringGeo2 = new THREE.TorusGeometry(24, 0.03, 16, 200);
+    const ringMat2 = new THREE.MeshBasicMaterial({
+      color: '#3ecfb4',
+      transparent: true,
+      opacity: 0.08,
+    });
+    const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
+    ring2.rotation.x = Math.PI / 3.5;
+    ring2.rotation.z = -0.5;
+    scene.add(ring2);
 
-    // 5. Mouse & Scroll Interactivity
+    // Mouse tracking
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
     let targetY = 0;
-    let scrollY = 0;
 
     const handleMouseMove = (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-      mouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
-
-    const handleScroll = () => {
-      scrollY = window.scrollY || window.pageYOffset;
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
 
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -157,45 +135,32 @@ export default function ThreeCanvas() {
     };
     window.addEventListener('resize', handleResize);
 
-    // 6. Smooth Animation Loop
+    // Animation
     const clock = new THREE.Clock();
     let animId;
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      const time = clock.getElapsedTime();
+      const t = clock.getElapsedTime();
 
-      // Smooth inertia mouse tracking
-      targetX += (mouseX - targetX) * 0.03;
-      targetY += (mouseY - targetY) * 0.03;
+      // Smooth mouse follow
+      targetX += (mouseX - targetX) * 0.015;
+      targetY += (mouseY - targetY) * 0.015;
 
-      // Animate Fluid Wave Vertices
-      const pos = waveGeo.attributes.position;
-      for (let i = 0; i < count; i++) {
-        const x = pos.getX(i);
-        const y = pos.getY(i);
-        const dist = Math.sqrt(x * x + y * y);
-        const z = Math.sin(x * 0.2 + time * 1.5) * 1.8 + Math.cos(y * 0.2 + time * 1.2) * 1.8 + Math.sin(dist * 0.1 - time) * 1.2;
-        pos.setZ(i, z);
-      }
-      waveGeo.attributes.position.needsUpdate = true;
+      // Gentle particle cloud rotation
+      particles.rotation.y = t * 0.015 + targetX * 0.08;
+      particles.rotation.x = Math.sin(t * 0.01) * 0.03 + targetY * 0.04;
 
-      // Rotate particle galaxy gently
-      particles.rotation.y = time * 0.03 + targetX * 0.15;
-      particles.rotation.x = Math.sin(time * 0.02) * 0.05 + targetY * 0.1;
+      // Ring orbits
+      ring1.rotation.z = 0.3 + t * 0.02;
+      ring1.rotation.y = t * 0.008;
+      ring2.rotation.z = -0.5 + t * 0.015;
+      ring2.rotation.y = -t * 0.006;
 
-      // Dynamic light movements
-      light1.position.x = Math.sin(time * 0.8) * 25 + targetX * 10;
-      light1.position.z = Math.cos(time * 0.8) * 25;
-
-      light2.position.x = -Math.sin(time * 0.6) * 25;
-      light2.position.z = -Math.cos(time * 0.6) * 25 + targetY * 10;
-
-      // Camera depth parallax based on scroll
-      camera.position.y = 12 - scrollY * 0.004 + targetY * 3;
-      camera.position.x = targetX * 4;
-      camera.position.z = 32 + Math.sin(scrollY * 0.002) * 3;
-      camera.lookAt(0, 0, 0);
+      // Subtle camera drift
+      camera.position.x = targetX * 1.5;
+      camera.position.y = 2 + targetY * 1;
+      camera.lookAt(0, 0, -5);
 
       renderer.render(scene, camera);
     };
@@ -205,16 +170,20 @@ export default function ThreeCanvas() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
+      particleGeo.dispose();
+      particleMat.dispose();
+      ringGeo1.dispose();
+      ringMat1.dispose();
+      ringGeo2.dispose();
+      ringMat2.dispose();
     };
   }, []);
 
   return (
     <canvas
       ref={containerRef}
-      id="dgs-v1215-canvas"
       style={{
         position: 'absolute',
         inset: 0,
