@@ -1,0 +1,305 @@
+name: Build Weavings V12
+
+on:
+  push:
+    branches:
+      - temp/weavings-v12-build
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download V11 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet gdown beautifulsoup4
+          gdown --id 1mVCNSQVG_wdIvI3McFGKfp6j-1NgUS9F -O source.zip
+          unzip -t source.zip >/dev/null
+          mkdir source
+          unzip -q source.zip -d source
+          ROOT="$(find source -type f -name index.html -printf '%h\n' | head -1)"
+          test -n "$ROOT"
+          echo "ROOT=$ROOT" >> "$GITHUB_ENV"
+          echo "Source root: $ROOT"
+
+      - name: Apply V12 changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/build_v12.py <<'PY'
+          from pathlib import Path
+          import re, html, json, shutil, hashlib
+
+          root = Path(__import__('os').environ['ROOT'])
+          report = []
+
+          def read(path):
+              return path.read_text(encoding='utf-8', errors='replace')
+          def write(path, text):
+              path.write_text(text, encoding='utf-8')
+
+          # 1) Correct every IT Staffing footer/link-label mismatch without touching other anchors.
+          anchor_re = re.compile(r'<a\b[^>]*\bhref\s*=\s*(["\'])(.*?)\1[^>]*>.*?</a>', re.I | re.S)
+          fixed_files = []
+          fixed_count = 0
+          target_texts = {
+              'it staffing and recruitment services',
+              'it staffing & recruitment services',
+          }
+          def fix_anchor(m):
+              nonlocal_box = None
+              raw = m.group(0)
+              visible = html.unescape(re.sub(r'<[^>]+>', '', raw))
+              visible = re.sub(r'\s+', ' ', visible).strip().lower()
+              if visible not in target_texts:
+                  return raw
+              href = m.group(2).strip()
+              if href.split('#')[0].split('?')[0].lstrip('/') == 'it-staffing-and-recruitment-services.html':
+                  return raw
+              quote = m.group(1)
+              replacement = ('/' if href.startswith('/') else '') + 'it-staffing-and-recruitment-services.html'
+              return re.sub(r'(\bhref\s*=\s*)(["\']).*?\2', lambda x: x.group(1)+quote+replacement+quote, raw, count=1, flags=re.I|re.S)
+
+          for p in root.rglob('*.html'):
+              old = read(p)
+              new, n = anchor_re.subn(fix_anchor, old)
+              # Count actual wrong labeled anchors removed.
+              before_wrong = 0
+              for m in anchor_re.finditer(old):
+                  visible = html.unescape(re.sub(r'<[^>]+>', '', m.group(0)))
+                  visible = re.sub(r'\s+', ' ', visible).strip().lower()
+                  href = m.group(2).split('#')[0].split('?')[0].lstrip('/')
+                  if visible in target_texts and href != 'it-staffing-and-recruitment-services.html':
+                      before_wrong += 1
+              if before_wrong:
+                  write(p, new)
+                  fixed_files.append(str(p.relative_to(root)))
+                  fixed_count += before_wrong
+          report.append(f'Footer/link corrections: {fixed_count} anchors across {len(fixed_files)} files')
+
+          # 2) Make blogs.html crawlable while preserving the existing dynamic loader and Load More.
+          blogs = root / 'blogs.html'
+          t = read(blogs)
+          latest = [
+            ('Contract Staffing Companies in Mumbai: Employer Guide','/blogs/contract-staffing-companies-in-mumbai-for-workforc.html','Contract Staffing','A practical employer guide to evaluating contract staffing partners in Mumbai.'),
+            ('Why Contract Staffing Is Growing','/blogs/from-workforce-pressure-to-workforce-agility-why.html','Contract Staffing','How flexible workforce models help companies respond to changing demand.'),
+            ('How Global Mobility Trends Are Influencing Overseas Recruitment','/blogs/how-global-mobility-trends-are-influencing-oversea.html','Overseas Recruitment','Key global mobility shifts affecting international workforce planning.'),
+            ('What Companies Get Wrong About Contract Staffing in India','/blogs/what-companies-get-wrong-about-contract-staffing-i.html','Contract Staffing','Common employer mistakes and how to build a stronger staffing programme.'),
+            ('7 Signs Your Business Needs Contract Staffing Services','/blogs/7-signs-your-business-needs-contract-staffing-serv.html','Contract Staffing','Signals that a flexible staffing model may be the right next step.'),
+            ('Why Skill Verification Is Core to Overseas Recruitment','/blogs/why-skill-verification-is-now-the-core-of-overseas.html','Overseas Recruitment','Why verified skills reduce international hiring risk and improve deployment quality.'),
+            ('Why Employer Branding Matters in Permanent Recruitment','/blogs/why-employer-branding-matters-more-in-permanent-re.html','Permanent Recruitment','How employer reputation influences candidate quality and offer acceptance.'),
+            ('Permanent Recruitment for Succession Planning','/blogs/how-permanent-recruitment-services-support-success.html','Permanent Recruitment','Using structured permanent hiring to support leadership continuity.'),
+            ('IT Staffing for AI, Cybersecurity and Data Skills','/blogs/how-it-staffing-is-adapting-to-indian-ai-cyberse.html','IT Staffing','How technology staffing models are adapting to high-demand digital skills.'),
+            ('Why Quick Commerce Is Scaling Through Contract Staffing','/blogs/why-quick-commerce-are-scaling-through-contract-s.html','Contract Staffing','How fast-growth commerce businesses build flexible frontline workforces.'),
+            ('How Labour Codes Are Reshaping Contract Staffing','/blogs/how-labour-codes-are-reshaping-contract-staffing-s.html','Compliance','What employers should consider as workforce compliance requirements evolve.'),
+            ('Overseas Recruitment Strategies for Fast-Growing Companies','/blogs/overseas-recruitment-strategies-for-fast-growing-c.html','Overseas Recruitment','A structured approach to international hiring, verification and mobilisation.'),
+          ]
+          cards = []
+          for title, url, cat, desc in latest:
+              cards.append(f'''<article class="col-lg-4 col-md-6 col-sm-12 weavings-seo-blog-item" itemscope itemtype="https://schema.org/BlogPosting">
+                <div class="weavings-seo-blog-card">
+                  <div class="weavings-seo-blog-category">{html.escape(cat)}</div>
+                  <h3 itemprop="headline"><a itemprop="url" href="{url}">{html.escape(title)}</a></h3>
+                  <p itemprop="description">{html.escape(desc)}</p>
+                  <a class="weavings-seo-blog-read" href="{url}" aria-label="Read {html.escape(title, quote=True)}">Read article <span aria-hidden="true">→</span></a>
+                </div>
+              </article>''')
+          static_grid = '<div class="row" id="weavingsCrawlableBlogGrid">' + ''.join(cards) + '</div>'
+          marker = '<div class="row" id="blogListDiv">'
+          if 'id="weavingsCrawlableBlogGrid"' not in t:
+              if marker not in t:
+                  raise SystemExit('blogs.html: blogListDiv marker missing')
+              t = t.replace(marker, static_grid + '\n' + marker, 1)
+
+          css = '''<style id="weavings-v12-crawlable-blog-css">
+          #weavingsCrawlableBlogGrid{row-gap:28px;margin-bottom:8px}.weavings-seo-blog-item{display:flex}.weavings-seo-blog-card{display:flex;flex-direction:column;width:100%;min-height:265px;padding:26px;border:1px solid rgba(82,109,169,.16);border-radius:18px;background:#fff;box-shadow:0 12px 34px rgba(7,28,49,.08);transition:transform .2s ease,box-shadow .2s ease}.weavings-seo-blog-card:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(7,28,49,.12)}.weavings-seo-blog-category{display:inline-flex;align-self:flex-start;margin-bottom:14px;padding:6px 10px;border-radius:999px;background:#edf7f7;color:#0c6e6d;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}.weavings-seo-blog-card h3{font-size:20px;line-height:1.35;margin:0 0 12px}.weavings-seo-blog-card h3 a{color:#102235;text-decoration:none}.weavings-seo-blog-card p{color:#53667b;line-height:1.65;margin:0 0 18px}.weavings-seo-blog-read{margin-top:auto;color:#0c6e6d!important;font-weight:700;text-decoration:none!important}@media(max-width:767px){.weavings-seo-blog-card{min-height:auto;padding:22px}}
+          </style>'''
+          if 'weavings-v12-crawlable-blog-css' not in t:
+              t = t.replace('</head>', css + '\n</head>', 1)
+
+          urls_json = json.dumps([x[1] for x in latest])
+          dedupe_js = f'''<script id="weavings-v12-blog-dedupe-js">
+          (function(){{
+            var staticUrls=new Set({urls_json});
+            function pathOf(href){{try{{return new URL(href,location.href).pathname;}}catch(e){{return href;}}}}
+            function removeDuplicateDynamicCards(){{
+              var dynamic=document.getElementById('blogListDiv'); if(!dynamic)return;
+              dynamic.querySelectorAll('a[href]').forEach(function(a){{
+                if(!staticUrls.has(pathOf(a.getAttribute('href'))))return;
+                var card=a.closest('.col-lg-4,.col-md-6,.blog-item,.single-blog-box');
+                if(card && card.parentNode && !card.closest('#weavingsCrawlableBlogGrid')) card.parentNode.removeChild(card);
+              }});
+            }}
+            function init(){{var dynamic=document.getElementById('blogListDiv');if(!dynamic)return;removeDuplicateDynamicCards();new MutationObserver(removeDuplicateDynamicCards).observe(dynamic,{{childList:true,subtree:true}});}}
+            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+          }})();
+          </script>'''
+          if 'weavings-v12-blog-dedupe-js' not in t:
+              t = t.replace('</body>', dedupe_js + '\n</body>', 1)
+
+          item_schema = {'@context':'https://schema.org','@type':'ItemList','name':'Latest Weavings Blog Articles','itemListElement':[{'@type':'ListItem','position':i+1,'url':'https://www.weavings.in'+x[1],'name':x[0]} for i,x in enumerate(latest)]}
+          schema_tag = '<script id="weavings-v12-blog-itemlist-schema" type="application/ld+json">'+json.dumps(item_schema,ensure_ascii=False)+'</script>'
+          if 'weavings-v12-blog-itemlist-schema' not in t:
+              t = t.replace('</head>', schema_tag + '\n</head>', 1)
+          write(blogs, t)
+          report.append('Blog hub: 12 crawlable HTML cards + ItemList schema + dynamic duplicate guard')
+
+          # 3) Expand sitemap.html with 36 location links.
+          sitemap = root / 'sitemap.html'
+          s = read(sitemap)
+          cities = [
+            ('Bangalore','bangalore'),('Chennai','chennai'),('Delhi NCR','delhi-ncr'),('Gurugram','gurugram'),('Hyderabad','hyderabad'),('Kolkata','kolkata'),('Mumbai','mumbai'),('Noida','noida'),('Pune','pune')
+          ]
+          groups = [
+            ('Contract Staffing by Location','contract-staffing-companies-in-{slug}.html','Contract Staffing Companies in {city}'),
+            ('IT Staffing by Location','it-staffing-companies-in-{slug}.html','IT Staffing Companies in {city}'),
+            ('Payroll Outsourcing by Location','payroll-outsourcing-services-in-{slug}.html','Payroll Outsourcing Services in {city}'),
+            ('Permanent Staffing by Location','permanent-staffing-services-in-{slug}.html','Permanent Staffing Services in {city}'),
+          ]
+          sections=[]
+          for heading, pattern, label in groups:
+              links=''.join(f'<li><a href="/{pattern.format(slug=slug)}">{html.escape(label.format(city=city))}</a></li>' for city,slug in cities)
+              sections.append(f'<section class="weavings-sitemap-group"><h2>{heading}</h2><ul>{links}</ul></section>')
+          sitemap_block = '''<section class="weavings-expanded-location-sitemap" id="weavingsLocationSitemap"><div class="container"><div class="weavings-sitemap-intro"><span>Service Locations</span><h2>Workforce Solutions by Location</h2><p>Explore Weavings staffing, recruitment and payroll solutions across major Indian business locations.</p></div><div class="weavings-sitemap-grid">''' + ''.join(sections) + '</div></div></section>'
+          sitemap_css='''<style id="weavings-v12-sitemap-css">.weavings-expanded-location-sitemap{padding:70px 0;background:#f7fbfc}.weavings-sitemap-intro{text-align:center;max-width:760px;margin:0 auto 34px}.weavings-sitemap-intro span{color:#0c6e6d;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:12px}.weavings-sitemap-intro h2{color:#102235;margin:8px 0 10px}.weavings-sitemap-intro p{color:#53667b}.weavings-sitemap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.weavings-sitemap-group{background:#fff;border:1px solid rgba(82,109,169,.16);border-radius:18px;padding:25px;box-shadow:0 10px 30px rgba(7,28,49,.06)}.weavings-sitemap-group h2{font-size:21px;color:#102235;margin:0 0 15px}.weavings-sitemap-group ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 16px}.weavings-sitemap-group a{color:#263747;text-decoration:none;line-height:1.45}.weavings-sitemap-group a:hover{color:#0c6e6d;text-decoration:underline}@media(max-width:767px){.weavings-sitemap-grid,.weavings-sitemap-group ul{grid-template-columns:1fr}.weavings-expanded-location-sitemap{padding:48px 0}}</style>'''
+          if 'id="weavingsLocationSitemap"' not in s:
+              footer_pos = s.find('<section class="footer_area')
+              if footer_pos < 0: footer_pos = s.find('<footer')
+              if footer_pos < 0: footer_pos = s.rfind('</body>')
+              if footer_pos < 0: raise SystemExit('sitemap.html: insertion point missing')
+              s = s[:footer_pos] + sitemap_block + '\n' + s[footer_pos:]
+          if 'weavings-v12-sitemap-css' not in s:
+              s = s.replace('</head>', sitemap_css + '\n</head>', 1)
+          write(sitemap, s)
+          report.append('HTML sitemap: 4 service-location groups, 36 location links')
+
+          # 4) Hide the duplicate homepage logo set from assistive technology.
+          index = root / 'index.html'
+          x = read(index)
+          m = re.search(r'<[^>]+class=(["\'])[^"\']*wv-logo-marquee[^"\']*\1[^>]*>', x, re.I)
+          if not m: raise SystemExit('index.html: wv-logo-marquee markup missing')
+          start = m.start()
+          end = x.find('</section>', start)
+          if end < 0: end = x.find('</div>', start) + 6
+          segment = x[start:end]
+          track_tags = list(re.finditer(r'<[^>]+class=(["\'])[^"\']*marquee_track[^"\']*\1[^>]*>', segment, re.I))
+          duplicate_mode=''
+          def set_attr(tag, name, value):
+              if re.search(r'\s'+re.escape(name)+r'\s*=', tag, re.I):
+                  return re.sub(r'(\s'+re.escape(name)+r'\s*=\s*)(["\']).*?\2', lambda q:q.group(1)+'"'+value+'"', tag, count=1, flags=re.I|re.S)
+              return tag[:-1]+' '+name+'="'+value+'">'
+          if len(track_tags) >= 2:
+              offset = track_tags[1].start()
+              second = track_tags[1].group(0)
+              segment = segment[:offset] + set_attr(second,'aria-hidden','true') + segment[track_tags[1].end():]
+              # Empty alt text on all images after the second track begins.
+              offset2 = offset
+              tail = segment[offset2:]
+              tail = re.sub(r'<img\b[^>]*>', lambda q:set_attr(set_attr(q.group(0),'alt',''),'aria-hidden','true'), tail, flags=re.I)
+              segment = segment[:offset2] + tail
+              duplicate_mode='second track'
+          else:
+              imgs = list(re.finditer(r'<img\b[^>]*>', segment, re.I))
+              srcs=[]
+              for im in imgs:
+                  sm=re.search(r'\bsrc\s*=\s*(["\'])(.*?)\1',im.group(0),re.I|re.S)
+                  srcs.append(sm.group(2) if sm else '')
+              half=len(imgs)//2
+              if len(imgs)>=2 and len(imgs)%2==0 and srcs[:half]==srcs[half:]:
+                  pieces=[]; pos=0
+                  for i,im in enumerate(imgs):
+                      pieces.append(segment[pos:im.start()])
+                      tag=im.group(0)
+                      if i>=half: tag=set_attr(set_attr(tag,'alt',''),'aria-hidden','true')
+                      pieces.append(tag); pos=im.end()
+                  pieces.append(segment[pos:]); segment=''.join(pieces)
+                  duplicate_mode='second repeated image set'
+              else:
+                  raise SystemExit('index.html: duplicate logo set could not be identified safely')
+          x = x[:start] + segment + x[end:]
+          write(index,x)
+          report.append('Homepage logo marquee: duplicate visual set aria-hidden with empty alt text ('+duplicate_mode+')')
+
+          # Validation
+          failures=[]
+          wrong=[]
+          for p in root.rglob('*.html'):
+              data=read(p)
+              for m in anchor_re.finditer(data):
+                  visible=html.unescape(re.sub(r'<[^>]+>','',m.group(0)))
+                  visible=re.sub(r'\s+',' ',visible).strip().lower()
+                  href=m.group(2).split('#')[0].split('?')[0].lstrip('/')
+                  if visible in target_texts and href!='it-staffing-and-recruitment-services.html': wrong.append(str(p.relative_to(root))+': '+href)
+          if wrong: failures.append('Wrong IT links remain: '+repr(wrong[:10]))
+          b=read(blogs)
+          if b.count('class="weavings-seo-blog-item"')!=12: failures.append('Blog card count is not 12')
+          if 'id="loadmorediv"' not in b or 'javascript:bloglist();' not in b: failures.append('Load More was not preserved')
+          ss=read(sitemap)
+          if ss.count('class="weavings-sitemap-group"')!=4: failures.append('Sitemap group count is not 4')
+          loc_count=sum(ss.count(pattern.format(slug=slug)) for _,pattern,_ in groups for _,slug in cities)
+          if loc_count < 36: failures.append(f'Sitemap location link count is {loc_count}, expected at least 36')
+          ix=read(index)
+          if 'aria-hidden="true"' not in ix or 'wv-logo-marquee' not in ix: failures.append('Logo accessibility validation failed')
+          # Ensure form/backend code survived from V11.
+          for required in ['weavings-v11-cta-popup-fix','/weavings/ajax/home/contactus.jsp','associateSupportForm']:
+              if required not in ix: failures.append('V11 form marker missing from index.html: '+required)
+          if failures: raise SystemExit('\n'.join(failures))
+
+          report.append('Validation: PASS')
+          report.append('V11 form and backend markers preserved')
+          (root/'_deployment_docs').mkdir(exist_ok=True)
+          (root/'_deployment_docs'/'V12-SEO-VALIDATION.txt').write_text('\n'.join(report)+'\n',encoding='utf-8')
+          print('\n'.join(report))
+          PY
+          python /tmp/build_v12.py
+
+      - name: Build full and patch ZIP files
+        shell: bash
+        run: |
+          set -euo pipefail
+          PARENT="$(dirname "$ROOT")"
+          BASENAME="$(basename "$ROOT")"
+          mv "$ROOT" "$PARENT/Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes"
+          ROOT="$PARENT/Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes"
+          mkdir -p out patch/_deployment_docs
+          cp "$ROOT/blogs.html" patch/
+          cp "$ROOT/index.html" patch/
+          cp "$ROOT/sitemap.html" patch/
+          cp "$ROOT/_deployment_docs/V12-SEO-VALIDATION.txt" patch/_deployment_docs/
+          # Include every HTML file changed by the corrected IT-label destination.
+          python - <<'PY'
+          from pathlib import Path
+          import re, shutil
+          root=Path(__import__('os').environ.get('ROOT_OVERRIDE',''))
+          if not root.exists():
+              candidates=list(Path('source').rglob('Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes'))
+              root=candidates[0]
+          patch=Path('patch')
+          target=re.compile(r'<a\b[^>]*href=["\']/?it-staffing-and-recruitment-services\.html["\'][^>]*>.*?IT Staffing (?:and|And|&) Recruitment Services.*?</a>',re.I|re.S)
+          for p in root.rglob('*.html'):
+              if p.name in {'blogs.html','index.html','sitemap.html'}: continue
+              data=p.read_text(encoding='utf-8',errors='replace')
+              if target.search(data):
+                  dest=patch/p.relative_to(root);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dest)
+          PY
+          (cd "$PARENT" && zip -qr "$GITHUB_WORKSPACE/out/Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes.zip" "Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes")
+          (cd patch && zip -qr ../out/Weavings_V12_SEO_Fixes_Patch.zip .)
+          cd out
+          sha256sum Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes.zip > Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes.zip.sha256
+          sha256sum Weavings_V12_SEO_Fixes_Patch.zip > Weavings_V12_SEO_Fixes_Patch.zip.sha256
+          unzip -t Weavings_B2B_SEO_Final_Deploy_v12_SEO_Fixes.zip >/dev/null
+          unzip -t Weavings_V12_SEO_Fixes_Patch.zip >/dev/null
+          ls -lh
+
+      - name: Upload V12 packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: Weavings-V12-SEO-Fixes
+          path: out/*
+          if-no-files-found: error
+          retention-days: 7
