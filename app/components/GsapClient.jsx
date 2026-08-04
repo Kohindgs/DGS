@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 
 export default function GsapClient() {
   useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const ctx = gsap.context(() => {
       const reveals = gsap.utils.toArray('.bh-reveal');
       if (reveals.length) {
@@ -14,10 +15,10 @@ export default function GsapClient() {
           {
             opacity: 1,
             y: 0,
-            duration: 1,
-            stagger: 0.12,
+            duration: prefersReduced ? 0.01 : 1,
+            stagger: prefersReduced ? 0 : 0.12,
             ease: 'power3.out',
-            delay: 0.15,
+            delay: prefersReduced ? 0 : 0.15,
           }
         );
       }
@@ -25,18 +26,43 @@ export default function GsapClient() {
       gsap.fromTo(
         '.bh-heart-stage',
         { opacity: 0, scale: 0.92, y: 24 },
-        { opacity: 1, scale: 1, y: 0, duration: 1.25, ease: 'power3.out', delay: 0.25 }
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: prefersReduced ? 0.01 : 1.25,
+          ease: 'power3.out',
+          delay: prefersReduced ? 0 : 0.25,
+        }
       );
 
       gsap.fromTo(
         '.bh-float',
         { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.9, stagger: 0.15, ease: 'power2.out', delay: 0.55 }
+        {
+          opacity: 1,
+          y: 0,
+          duration: prefersReduced ? 0.01 : 0.9,
+          stagger: prefersReduced ? 0 : 0.15,
+          ease: 'power2.out',
+          delay: prefersReduced ? 0 : 0.55,
+        }
       );
 
+      if (prefersReduced) return;
+
+      // Heart float + subtle pulse (design motion)
       gsap.to('.bh-heart-img', {
         y: -14,
         duration: 4.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      gsap.to('.bh-heart-stage', {
+        filter: 'drop-shadow(0 0 28px rgba(92,240,255,0.18))',
+        duration: 2.4,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
@@ -58,6 +84,59 @@ export default function GsapClient() {
         ease: 'none',
       });
 
+      gsap.to('.bh-orbit-heart', {
+        scale: 1.08,
+        duration: 1.6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      // Play button pulse rings (matches Figma play affordance)
+      gsap.to('.bh-play-ring', {
+        scale: 1.35,
+        opacity: 0,
+        duration: 1.8,
+        repeat: -1,
+        ease: 'power1.out',
+      });
+
+      gsap.to('.bh-play', {
+        boxShadow:
+          '0 0 0 1px rgba(255,255,255,0.16), 0 16px 48px rgba(0,0,0,0.4), 0 0 36px rgba(92,240,255,0.35)',
+        duration: 1.6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      // Gauge draw
+      const gauge = document.querySelector('.bh-gauge-progress');
+      if (gauge) {
+        const length = gauge.getTotalLength?.() || 120;
+        gsap.set(gauge, { strokeDasharray: length, strokeDashoffset: length });
+        gsap.to(gauge, {
+          strokeDashoffset: length * 0.18,
+          duration: 1.6,
+          ease: 'power2.out',
+          delay: 0.8,
+        });
+      }
+
+      // Sparkline draw
+      const spark = document.querySelector('.bh-spark-path');
+      if (spark) {
+        const length = spark.getTotalLength?.() || 200;
+        gsap.set(spark, { strokeDasharray: length, strokeDashoffset: length });
+        gsap.to(spark, {
+          strokeDashoffset: 0,
+          duration: 1.8,
+          ease: 'power2.out',
+          delay: 1,
+        });
+      }
+
+      // Ambient orbs
       gsap.to('.bh-orb--cyan', {
         x: 40,
         y: -30,
@@ -75,6 +154,21 @@ export default function GsapClient() {
         yoyo: true,
         ease: 'sine.inOut',
       });
+
+      // Headline word cascade glow
+      gsap.fromTo(
+        '.bh-headline span',
+        { opacity: 0, y: 20, filter: 'blur(6px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 0.85,
+          stagger: 0.1,
+          ease: 'power3.out',
+          delay: 0.2,
+        }
+      );
     });
 
     return () => ctx.revert();

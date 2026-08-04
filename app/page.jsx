@@ -1,4 +1,5 @@
 import GsapClient from './components/GsapClient';
+import HeroVideo from './components/HeroVideo';
 
 export const metadata = {
   title: "byheart — Shaped by a Love Story",
@@ -23,6 +24,8 @@ export default function HomePage() {
           <div className="bh-orb bh-orb--amber" />
           <div className="bh-grain" />
         </div>
+
+        <HeroVideo />
 
         <header className="bh-header">
           <a href="/" className="bh-logo">
@@ -65,7 +68,7 @@ export default function HomePage() {
 
         <main className="bh-hero" id="story">
           <div className="bh-hero-copy">
-            <h1 className="bh-headline bh-reveal">
+            <h1 className="bh-headline">
               <span>Shaped</span>
               <span>by a</span>
               <span>Love</span>
@@ -116,7 +119,7 @@ export default function HomePage() {
               <div className="bh-gauge" aria-hidden="true">
                 <svg viewBox="0 0 120 70" className="bh-gauge-svg">
                   <path d="M10 60 A50 50 0 0 1 110 60" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="6" strokeLinecap="round" />
-                  <path d="M10 60 A50 50 0 0 1 95 22" fill="none" stroke="url(#bhGauge)" strokeWidth="6" strokeLinecap="round" />
+                  <path className="bh-gauge-progress" d="M10 60 A50 50 0 0 1 95 22" fill="none" stroke="url(#bhGauge)" strokeWidth="6" strokeLinecap="round" />
                   <defs>
                     <linearGradient id="bhGauge" x1="0" y1="0" x2="1" y2="0">
                       <stop offset="0%" stopColor="#5cf0c8" />
@@ -136,6 +139,7 @@ export default function HomePage() {
               <strong className="bh-card-value bh-card-value--lg">42.5 <em>bpm</em></strong>
               <svg className="bh-spark" viewBox="0 0 160 36" aria-hidden="true">
                 <path
+                  className="bh-spark-path"
                   d="M0 24 C18 24 22 8 36 8 S54 28 70 22 92 4 108 12 128 30 160 18"
                   fill="none"
                   stroke="#6dff9a"
