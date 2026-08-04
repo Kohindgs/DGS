@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 export default function HeroVideo() {
   const [open, setOpen] = useState(false);
   const modalVideoRef = useRef(null);
-  const ambientRef = useRef(null);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -47,57 +46,26 @@ export default function HeroVideo() {
     };
   }, [open, close]);
 
-  useEffect(() => {
-    const video = ambientRef.current;
-    if (!video) return undefined;
-    const tryPlay = () => {
-      video.play().catch(() => {});
-    };
-    tryPlay();
-    const onVis = () => {
-      if (document.visibilityState === 'visible') tryPlay();
-    };
-    document.addEventListener('visibilitychange', onVis);
-    return () => document.removeEventListener('visibilitychange', onVis);
-  }, []);
+  if (!open) return null;
 
   return (
-    <>
-      <div className="bh-video-layer" aria-hidden="true">
+    <div className="bh-modal" role="dialog" aria-modal="true" aria-label="Story video">
+      <button type="button" className="bh-modal-backdrop" aria-label="Close video" onClick={close} />
+      <div className="bh-modal-panel">
+        <button type="button" className="bh-modal-close" onClick={close} aria-label="Close">
+          ×
+        </button>
         <video
-          ref={ambientRef}
-          className="bh-ambient-video"
-          src="/figma/video/heart-ambient.mp4"
-          poster="/figma/heart-visual-web.png"
-          muted
-          loop
+          ref={modalVideoRef}
+          className="bh-modal-video"
+          src="/figma/video/story.mp4"
+          poster="/figma/video/story-poster.jpg"
+          controls
           playsInline
           autoPlay
-          preload="auto"
+          preload="metadata"
         />
-        <div className="bh-ambient-veil" />
       </div>
-
-      {open ? (
-        <div className="bh-modal" role="dialog" aria-modal="true" aria-label="Story video">
-          <button type="button" className="bh-modal-backdrop" aria-label="Close video" onClick={close} />
-          <div className="bh-modal-panel">
-            <button type="button" className="bh-modal-close" onClick={close} aria-label="Close">
-              ×
-            </button>
-            <video
-              ref={modalVideoRef}
-              className="bh-modal-video"
-              src="/figma/video/story.mp4"
-              poster="/figma/video/story-poster.jpg"
-              controls
-              playsInline
-              autoPlay
-              preload="metadata"
-            />
-          </div>
-        </div>
-      ) : null}
-    </>
+    </div>
   );
 }

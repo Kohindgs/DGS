@@ -51,18 +51,9 @@ export default function GsapClient() {
 
       if (prefersReduced) return;
 
-      // Heart float + subtle pulse (design motion)
       gsap.to('.bh-heart-img', {
-        y: -14,
+        y: -12,
         duration: 4.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-
-      gsap.to('.bh-heart-stage', {
-        filter: 'drop-shadow(0 0 28px rgba(92,240,255,0.18))',
-        duration: 2.4,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
@@ -85,7 +76,7 @@ export default function GsapClient() {
       });
 
       gsap.to('.bh-orbit-heart', {
-        scale: 1.08,
+        scale: 1.06,
         duration: 1.6,
         repeat: -1,
         yoyo: true,

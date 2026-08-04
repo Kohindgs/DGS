@@ -97,11 +97,11 @@ export default function HomePage() {
           <div className="bh-hero-visual">
             <div className="bh-heart-stage bh-reveal">
               <img
-                src="/figma/heart-visual-web.png"
+                src="/figma/heart-clean.png"
                 alt="Translucent anatomical heart with cyan and magenta glow"
                 className="bh-heart-img"
-                width="1400"
-                height="1576"
+                width="1000"
+                height="1000"
               />
               <button className="bh-play" type="button" aria-label="Play story video">
                 <span className="bh-play-ring" />

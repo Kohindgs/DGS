@@ -1483,7 +1483,6 @@ details[open] .dgs-faq-summary {
   text-transform: uppercase;
   color: #fff;
   margin: 0 0 1.25rem;
-  text-shadow: 0 0 40px rgba(120, 210, 255, 0.18);
 }
 
 .bh-headline span {
@@ -1573,21 +1572,11 @@ details[open] .dgs-faq-summary {
 }
 
 .bh-heart-img {
-  width: 130%;
-  max-width: none;
+  width: min(100%, 520px);
+  max-width: 100%;
   height: auto;
-  object-fit: cover;
-  object-position: 58% 48%;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.45));
-  /* Soft-crop the composite Figma asset so baked UI fades and the heart remains */
-  mask-image:
-    radial-gradient(ellipse 52% 56% at 56% 50%, #000 34%, rgba(0, 0, 0, 0.75) 52%, transparent 72%),
-    linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
-  -webkit-mask-image:
-    radial-gradient(ellipse 52% 56% at 56% 50%, #000 34%, rgba(0, 0, 0, 0.75) 52%, transparent 72%),
-    linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.4));
 }
 
 .bh-play {
@@ -1864,33 +1853,12 @@ details[open] .dgs-faq-summary {
    VIDEO LAYER + MODAL + MOTION AFFORDANCES
    ========================================================================== */
 .bh-video-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
+  display: none;
 }
 
-.bh-ambient-video {
-  position: absolute;
-  right: -4%;
-  top: 8%;
-  width: min(62vw, 780px);
-  height: min(70vh, 720px);
-  object-fit: cover;
-  opacity: 0.42;
-  filter: saturate(1.15) blur(0.2px);
-  mask-image: radial-gradient(ellipse 55% 60% at 55% 48%, #000 30%, rgba(0,0,0,0.55) 55%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 55% 60% at 55% 48%, #000 30%, rgba(0,0,0,0.55) 55%, transparent 75%);
-  mix-blend-mode: screen;
-}
-
+.bh-ambient-video,
 .bh-ambient-veil {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 50% 55% at 62% 48%, transparent 20%, rgba(4, 11, 16, 0.55) 70%),
-    linear-gradient(90deg, rgba(4, 11, 16, 0.75) 0%, transparent 42%);
+  display: none;
 }
 
 .bh-play {
