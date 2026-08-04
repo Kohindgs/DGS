@@ -1573,13 +1573,21 @@ details[open] .dgs-faq-summary {
 }
 
 .bh-heart-img {
-  width: 118%;
+  width: 130%;
   max-width: none;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: 58% 48%;
   filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.45));
-  mask-image: radial-gradient(circle at 55% 48%, #000 42%, rgba(0, 0, 0, 0.85) 58%, transparent 78%);
-  -webkit-mask-image: radial-gradient(circle at 55% 48%, #000 42%, rgba(0, 0, 0, 0.85) 58%, transparent 78%);
+  /* Soft-crop the composite Figma asset so baked UI fades and the heart remains */
+  mask-image:
+    radial-gradient(ellipse 52% 56% at 56% 50%, #000 34%, rgba(0, 0, 0, 0.75) 52%, transparent 72%),
+    linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+  -webkit-mask-image:
+    radial-gradient(ellipse 52% 56% at 56% 50%, #000 34%, rgba(0, 0, 0, 0.75) 52%, transparent 72%),
+    linear-gradient(90deg, transparent 0%, #000 18%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
 .bh-play {
