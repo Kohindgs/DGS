@@ -2,173 +2,167 @@
 
 import { useEffect } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function GsapClient() {
   useEffect(() => {
-    // --- Nav scroll state ---
-    const nav = document.querySelector('.dgs-nav');
-    if (nav) {
-      const handleScroll = () => {
-        if (window.scrollY > 40) {
-          nav.classList.add('dgs-nav--scrolled');
-        } else {
-          nav.classList.remove('dgs-nav--scrolled');
-        }
-      };
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
-    }
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ctx = gsap.context(() => {
+      const reveals = gsap.utils.toArray('.bh-reveal');
+      if (reveals.length) {
+        gsap.fromTo(
+          reveals,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: prefersReduced ? 0.01 : 1,
+            stagger: prefersReduced ? 0 : 0.12,
+            ease: 'power3.out',
+            delay: prefersReduced ? 0 : 0.15,
+          }
+        );
+      }
 
-    // --- Reveal Animations ---
-    const reveals = document.querySelectorAll('.dgs-reveal');
-    reveals.forEach((el, i) => {
       gsap.fromTo(
-        el,
-        { opacity: 0, y: 24 },
+        '.bh-heart-stage',
+        { opacity: 0, scale: 0.92, y: 24 },
         {
           opacity: 1,
+          scale: 1,
           y: 0,
-          duration: 0.8,
+          duration: prefersReduced ? 0.01 : 1.25,
           ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-          },
+          delay: prefersReduced ? 0 : 0.25,
         }
       );
-    });
 
-    // --- Staggered grid reveals ---
-    const grids = document.querySelectorAll('.dgs-stagger-grid');
-    grids.forEach((grid) => {
-      const children = grid.children;
       gsap.fromTo(
-        children,
-        { opacity: 0, y: 30 },
+        '.bh-float',
+        { opacity: 0, y: 18 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.7,
+          duration: prefersReduced ? 0.01 : 0.9,
+          stagger: prefersReduced ? 0 : 0.15,
+          ease: 'power2.out',
+          delay: prefersReduced ? 0 : 0.55,
+        }
+      );
+
+      if (prefersReduced) return;
+
+      gsap.to('.bh-heart-img', {
+        y: -12,
+        duration: 4.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      gsap.to('.bh-float', {
+        y: '-=8',
+        duration: 3.2,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        stagger: { each: 0.4, from: 'random' },
+      });
+
+      gsap.to('.bh-orbit-ring', {
+        rotate: 360,
+        duration: 18,
+        repeat: -1,
+        ease: 'none',
+      });
+
+      gsap.to('.bh-orbit-heart', {
+        scale: 1.06,
+        duration: 1.6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      // Play button pulse rings (matches Figma play affordance)
+      gsap.to('.bh-play-ring', {
+        scale: 1.35,
+        opacity: 0,
+        duration: 1.8,
+        repeat: -1,
+        ease: 'power1.out',
+      });
+
+      gsap.to('.bh-play', {
+        boxShadow:
+          '0 0 0 1px rgba(255,255,255,0.16), 0 16px 48px rgba(0,0,0,0.4), 0 0 36px rgba(92,240,255,0.35)',
+        duration: 1.6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      // Gauge draw
+      const gauge = document.querySelector('.bh-gauge-progress');
+      if (gauge) {
+        const length = gauge.getTotalLength?.() || 120;
+        gsap.set(gauge, { strokeDasharray: length, strokeDashoffset: length });
+        gsap.to(gauge, {
+          strokeDashoffset: length * 0.18,
+          duration: 1.6,
+          ease: 'power2.out',
+          delay: 0.8,
+        });
+      }
+
+      // Sparkline draw
+      const spark = document.querySelector('.bh-spark-path');
+      if (spark) {
+        const length = spark.getTotalLength?.() || 200;
+        gsap.set(spark, { strokeDasharray: length, strokeDashoffset: length });
+        gsap.to(spark, {
+          strokeDashoffset: 0,
+          duration: 1.8,
+          ease: 'power2.out',
+          delay: 1,
+        });
+      }
+
+      // Ambient orbs
+      gsap.to('.bh-orb--cyan', {
+        x: 40,
+        y: -30,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      gsap.to('.bh-orb--magenta', {
+        x: -35,
+        y: 25,
+        duration: 9,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      // Headline word cascade glow
+      gsap.fromTo(
+        '.bh-headline span',
+        { opacity: 0, y: 20, filter: 'blur(6px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 0.85,
           stagger: 0.1,
           ease: 'power3.out',
-          scrollTrigger: {
-            trigger: grid,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-          },
+          delay: 0.2,
         }
       );
     });
 
-    // --- Subtle card hover tilt (desktop only) ---
-    if (window.matchMedia('(hover: hover)').matches) {
-      const cards = document.querySelectorAll('.dgs-tilt');
-      cards.forEach((card) => {
-        const handleMove = (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          gsap.to(card, {
-            rotateY: x * 4,
-            rotateX: -y * 4,
-            duration: 0.4,
-            ease: 'power2.out',
-          });
-        };
-        const handleLeave = () => {
-          gsap.to(card, {
-            rotateY: 0,
-            rotateX: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-          });
-        };
-        card.style.transformStyle = 'preserve-3d';
-        card.addEventListener('mousemove', handleMove);
-        card.addEventListener('mouseleave', handleLeave);
-      });
-    }
-
-    // --- Magnetic button hover ---
-    const magBtns = document.querySelectorAll('.dgs-btn-primary');
-    magBtns.forEach((btn) => {
-      const handleMove = (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(btn, {
-          x: x * 0.15,
-          y: y * 0.15,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-      };
-      const handleLeave = () => {
-        gsap.to(btn, {
-          x: 0,
-          y: 0,
-          duration: 0.5,
-          ease: 'elastic.out(1, 0.4)',
-        });
-      };
-      btn.addEventListener('mousemove', handleMove);
-      btn.addEventListener('mouseleave', handleLeave);
-    });
-
-    // --- Counter animation for stats ---
-    const statNums = document.querySelectorAll('.dgs-stat-number');
-    statNums.forEach((el) => {
-      const target = el.getAttribute('data-value');
-      const suffix = el.getAttribute('data-suffix') || '';
-      const prefix = el.getAttribute('data-prefix') || '';
-      const numericTarget = parseFloat(target);
-
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 90%',
-        once: true,
-        onEnter: () => {
-          gsap.fromTo(
-            { val: 0 },
-            { val: numericTarget },
-            {
-              val: numericTarget,
-              duration: 2,
-              ease: 'power2.out',
-              onUpdate: function () {
-                const current = this.targets()[0].val;
-                if (Number.isInteger(numericTarget)) {
-                  el.textContent = prefix + Math.round(current) + suffix;
-                } else {
-                  el.textContent = prefix + current.toFixed(1) + suffix;
-                }
-              },
-            }
-          );
-        },
-      });
-    });
-
-    // --- Mobile nav toggle ---
-    const toggle = document.querySelector('.dgs-nav-toggle');
-    const mobileMenu = document.querySelector('.dgs-nav-links');
-    if (toggle && mobileMenu) {
-      toggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('dgs-nav-links--open');
-        toggle.classList.toggle('dgs-nav-toggle--active');
-      });
-      // Close on link click
-      mobileMenu.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('dgs-nav-links--open');
-          toggle.classList.remove('dgs-nav-toggle--active');
-        });
-      });
-    }
+    return () => ctx.revert();
   }, []);
 
   return null;
