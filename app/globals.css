@@ -4,8 +4,21 @@
    1. CSS VARIABLES & DESIGN TOKENS
    ========================================================================== */
 :root {
+  /* byheart design tokens (Figma Daily Hero) */
+  --bh-bg: #07141a;
+  --bh-bg-deep: #040b10;
+  --bh-cyan: #5cf0ff;
+  --bh-magenta: #ff3d9a;
+  --bh-amber: #ffc15a;
+  --bh-text: #f4f7fa;
+  --bh-muted: rgba(244, 247, 250, 0.68);
+  --bh-glass: rgba(8, 24, 32, 0.55);
+  --bh-glass-border: rgba(255, 255, 255, 0.14);
+  --bh-display: 'Syncopate', 'Manrope', sans-serif;
+  --bh-body: 'Manrope', sans-serif;
+
   /* Colors - Background & Surfaces */
-  --dgs-color-bg: #08090a;
+  --dgs-color-bg: #07141a;
   --dgs-color-surface: rgba(255, 255, 255, 0.03);
   --dgs-color-surface-hover: rgba(255, 255, 255, 0.05);
   --dgs-color-surface-active: rgba(255, 255, 255, 0.08);
@@ -1279,5 +1292,558 @@ details[open] .dgs-faq-summary {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   BYHEART HOME — Figma Daily Hero recreation
+   ========================================================================== */
+.bh-page {
+  --bh-pad: clamp(1.1rem, 3.5vw, 3rem);
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  color: var(--bh-text);
+  font-family: var(--bh-body);
+  background:
+    radial-gradient(ellipse 70% 55% at 62% 48%, rgba(22, 74, 92, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at 18% 70%, rgba(90, 20, 55, 0.28) 0%, transparent 55%),
+    linear-gradient(160deg, #0a1c24 0%, var(--bh-bg-deep) 48%, #081820 100%);
+}
+
+.bh-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+}
+
+.bh-orb--cyan {
+  width: min(42vw, 520px);
+  height: min(42vw, 520px);
+  right: 8%;
+  top: 18%;
+  background: radial-gradient(circle, rgba(92, 240, 255, 0.45), transparent 70%);
+}
+
+.bh-orb--magenta {
+  width: min(36vw, 420px);
+  height: min(36vw, 420px);
+  left: 6%;
+  bottom: 8%;
+  background: radial-gradient(circle, rgba(255, 61, 154, 0.35), transparent 70%);
+}
+
+.bh-orb--amber {
+  width: min(28vw, 280px);
+  height: min(28vw, 280px);
+  right: 28%;
+  bottom: 22%;
+  background: radial-gradient(circle, rgba(255, 193, 90, 0.22), transparent 70%);
+}
+
+.bh-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+.bh-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--bh-pad);
+  padding-bottom: 0;
+}
+
+.bh-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--bh-text);
+}
+
+.bh-logo-mark {
+  display: grid;
+  place-items: center;
+  color: var(--bh-cyan);
+  filter: drop-shadow(0 0 10px rgba(92, 240, 255, 0.35));
+}
+
+.bh-logo-text {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.bh-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+
+.bh-nav-link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(244, 247, 250, 0.78);
+}
+
+.bh-nav-link:hover {
+  color: #fff;
+}
+
+.bh-nav-grid {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 4px;
+}
+
+.bh-nav-grid span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.bh-social {
+  position: absolute;
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bh-social-link {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  display: grid;
+  place-items: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bh-social-link:hover {
+  color: #fff;
+  border-color: rgba(92, 240, 255, 0.55);
+  box-shadow: 0 0 18px rgba(92, 240, 255, 0.2);
+}
+
+.bh-hero {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(320px, 1.15fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: center;
+  padding: var(--bh-pad);
+  padding-right: clamp(4rem, 8vw, 6.5rem);
+  min-height: calc(100vh - 88px);
+  min-height: calc(100dvh - 88px);
+}
+
+.bh-hero-copy {
+  position: relative;
+  z-index: 3;
+  max-width: 34rem;
+  padding-bottom: 4rem;
+}
+
+.bh-headline {
+  font-family: var(--bh-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5.6vw, 4.6rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 1.25rem;
+  text-shadow: 0 0 40px rgba(120, 210, 255, 0.18);
+}
+
+.bh-headline span {
+  display: block;
+}
+
+.bh-subhead {
+  max-width: 22rem;
+  font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+  line-height: 1.55;
+  color: var(--bh-muted);
+  margin: 0 0 1.75rem;
+  font-weight: 400;
+}
+
+.bh-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.35rem 0.35rem 0.35rem 1.35rem;
+  border-radius: 999px;
+  background: linear-gradient(105deg, #ffffff 0%, #d8f4ff 100%);
+  color: #0a1620;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.28),
+    0 0 24px rgba(120, 220, 255, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bh-cta:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.32),
+    0 0 30px rgba(120, 220, 255, 0.35);
+}
+
+.bh-cta-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #9fe9ff, #6ad2ff);
+  color: #0a1620;
+}
+
+.bh-orbit-badge {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-top: 2.75rem;
+  display: grid;
+  place-items: center;
+}
+
+.bh-orbit-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 0 20px rgba(92, 240, 255, 0.08);
+}
+
+.bh-orbit-heart {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(255, 61, 154, 0.35));
+}
+
+.bh-hero-visual {
+  position: relative;
+  min-height: min(72vh, 680px);
+  display: grid;
+  place-items: center;
+}
+
+.bh-heart-stage {
+  position: relative;
+  width: min(100%, 620px);
+  aspect-ratio: 1 / 1.05;
+  display: grid;
+  place-items: center;
+}
+
+.bh-heart-img {
+  width: 118%;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.45));
+  mask-image: radial-gradient(circle at 55% 48%, #000 42%, rgba(0, 0, 0, 0.85) 58%, transparent 78%);
+  -webkit-mask-image: radial-gradient(circle at 55% 48%, #000 42%, rgba(0, 0, 0, 0.85) 58%, transparent 78%);
+}
+
+.bh-play {
+  position: absolute;
+  left: 52%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(10, 20, 28, 0.45);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    inset 0 0 20px rgba(255, 255, 255, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bh-play:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(92, 240, 255, 0.25);
+}
+
+.bh-play-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 200, 230, 0.45);
+  opacity: 0.8;
+}
+
+.bh-card {
+  position: absolute;
+  width: min(210px, 42vw);
+  padding: 0.95rem 1rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(18, 36, 48, 0.72), rgba(8, 18, 26, 0.55));
+  border: 1px solid var(--bh-glass-border);
+  backdrop-filter: blur(18px);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  z-index: 4;
+}
+
+.bh-card--improving {
+  left: 2%;
+  bottom: 18%;
+}
+
+.bh-card--bpm {
+  right: 2%;
+  top: 28%;
+}
+
+.bh-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.bh-card-trend {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  color: #6dff9a;
+  background: rgba(109, 255, 154, 0.12);
+  box-shadow: 0 0 12px rgba(109, 255, 154, 0.25);
+}
+
+.bh-card-value {
+  display: block;
+  font-family: var(--bh-display);
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  line-height: 1;
+}
+
+.bh-card-value--lg {
+  font-size: 1.55rem;
+  margin-bottom: 0.45rem;
+}
+
+.bh-card-value em {
+  font-style: normal;
+  font-size: 0.55em;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.65);
+  margin-left: 0.15rem;
+}
+
+.bh-gauge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-top: 0.15rem;
+}
+
+.bh-gauge-svg {
+  width: 100%;
+  height: auto;
+}
+
+.bh-gauge .bh-card-value {
+  position: absolute;
+  bottom: 0.1rem;
+}
+
+.bh-spark {
+  width: 100%;
+  height: 34px;
+  filter: drop-shadow(0 0 6px rgba(109, 255, 154, 0.55));
+}
+
+.bh-secondary {
+  position: absolute;
+  right: clamp(4.5rem, 9vw, 7rem);
+  bottom: clamp(1.25rem, 3vh, 2.5rem);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  max-width: 280px;
+}
+
+.bh-secondary-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(92, 240, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.bh-secondary-title {
+  font-family: var(--bh-display);
+  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin: 0 0 0.35rem;
+  color: #fff;
+}
+
+.bh-secondary-copy {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--bh-muted);
+}
+
+.bh-reveal,
+.bh-float,
+.bh-heart-stage {
+  opacity: 0;
+}
+
+@media (max-width: 980px) {
+  .bh-hero {
+    grid-template-columns: 1fr;
+    padding-right: var(--bh-pad);
+    min-height: auto;
+    gap: 1.5rem;
+  }
+
+  .bh-hero-copy {
+    padding-bottom: 0;
+    max-width: none;
+    order: 1;
+  }
+
+  .bh-hero-visual {
+    order: 2;
+    min-height: 520px;
+  }
+
+  .bh-secondary {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    order: 3;
+    max-width: none;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .bh-social {
+    position: fixed;
+    right: 0.75rem;
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+  }
+
+  .bh-card--improving {
+    left: 0;
+    bottom: 8%;
+  }
+
+  .bh-card--bpm {
+    right: 0;
+    top: 12%;
+  }
+}
+
+@media (max-width: 640px) {
+  .bh-nav-link {
+    display: none;
+  }
+
+  .bh-headline {
+    font-size: clamp(2.1rem, 11vw, 2.8rem);
+  }
+
+  .bh-hero-visual {
+    min-height: 420px;
+  }
+
+  .bh-card {
+    width: min(168px, 46vw);
+    padding: 0.75rem;
+    border-radius: 14px;
+  }
+
+  .bh-card-value {
+    font-size: 1.35rem;
+  }
+
+  .bh-card-value--lg {
+    font-size: 1.15rem;
+  }
+
+  .bh-play {
+    width: 62px;
+    height: 62px;
+  }
+
+  .bh-orbit-badge {
+    width: 110px;
+    height: 110px;
+    margin-top: 1.75rem;
+  }
+
+  .bh-social-link {
+    width: 36px;
+    height: 36px;
+    font-size: 0.6rem;
   }
 }
