@@ -39,7 +39,7 @@ export async function generateMetadata() {
       title: { absolute: "Digital Marketing Agency in Mumbai | D'Genius Solutions" },
       description:
         "D'Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
-      alternates: { canonical: 'https://www.dgeniussolutions.com/' },
+      alternates: { canonical: 'https://dimgrey-goat-473970.hostingersite.com/' },
     };
   }
 }
@@ -63,7 +63,6 @@ export default async function WpHomePage() {
         <style key={`inline-style-${i}`} dangerouslySetInnerHTML={{ __html: css }} />
       ))}
 
-      {/* Exact Rank Math / custom JSON-LD from WordPress (Organization, FAQ, LocalBusiness, ItemList) */}
       {mirror.schemas.map((json, i) => (
         <script
           // eslint-disable-next-line react/no-danger
@@ -73,23 +72,41 @@ export default async function WpHomePage() {
         />
       ))}
 
-      {/* Prevent WP menu/chat CSS from locking page scroll on this host */}
       <style>{`
-        html, body { overflow-x: hidden !important; overflow-y: auto !important; height: auto !important; }
+        /* Keep page scrollable unless menu/talk popup intentionally locks it */
+        html, body {
+          overflow-x: clip !important;
+          overflow-y: auto !important;
+          height: auto !important;
+          min-height: 100% !important;
+        }
+        body:not(.dgs-talk-popup-active):not(:has(#dgsNav.nav-open)) {
+          position: static !important;
+          top: auto !important;
+          width: auto !important;
+        }
         #dgs-wp-home-mirror { min-height: 100vh; }
+        img.lazyload, img.lazyloading { opacity: 1 !important; }
+        .dgs-v1215-fallback { opacity: 1 !important; visibility: visible !important; }
+        video { max-width: 100%; }
       `}</style>
 
-      {/* Visible build stamp so we can confirm cache is cleared */}
-      <meta name="dgs-build" content="wp-mirror-2026-08-06b" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-06c" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-06b"
+        data-dgs-build="wp-mirror-2026-08-06c"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
-      <WpHomeClient bodyId={mirror.bodyId} bodyClass={mirror.bodyClass} />
+      <WpHomeClient
+        bodyId={mirror.bodyId}
+        bodyClass={mirror.bodyClass}
+        externalScripts={mirror.externalScripts}
+        inlineScripts={mirror.inlineScripts}
+        demoOrigin={mirror.demoOrigin}
+      />
     </>
   );
 }
