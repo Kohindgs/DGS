@@ -37,6 +37,20 @@ function runInline(code, id) {
   document.body.appendChild(s);
 }
 
+function paintFlatControl(el) {
+  if (!el) return;
+  el.style.setProperty('background', '#111', 'important');
+  el.style.setProperty('background-image', 'none', 'important');
+  el.style.setProperty('background-color', '#111', 'important');
+  el.style.setProperty('box-shadow', 'none', 'important');
+  el.style.setProperty('filter', 'none', 'important');
+  el.style.setProperty('border', '1px solid rgba(255,255,255,.35)', 'important');
+  el.style.setProperty('border-radius', '999px', 'important');
+  el.style.setProperty('color', '#fff', 'important');
+  el.style.setProperty('opacity', '1', 'important');
+  el.style.setProperty('visibility', 'visible', 'important');
+}
+
 function ensureCaseStudyModal() {
   if (document.getElementById('dgs-case-modal')) return;
 
@@ -62,9 +76,21 @@ function ensureCaseStudyModal() {
 
   let index = 0;
 
+  function flattenControls() {
+    modal
+      .querySelectorAll('.dgs-case-modal-close, .dgs-case-modal-nav')
+      .forEach(paintFlatControl);
+    document
+      .querySelectorAll(
+        '#lightbox-close, #lightbox-prev, #lightbox-next, .portfolio-lightbox-btn, .envirabox-button, .envirabox-button--close, .envirabox-close, .envirabox-nav, .envirabox-arrow'
+      )
+      .forEach(paintFlatControl);
+  }
+
   function close() {
     modal.classList.remove('is-open');
     document.body.classList.remove('dgs-case-modal-active');
+    if (typeof window.dgsUnlockScroll === 'function') window.dgsUnlockScroll();
   }
 
   function openAt(i) {
@@ -91,6 +117,7 @@ function ensureCaseStudyModal() {
     `;
     modal.classList.add('is-open');
     document.body.classList.add('dgs-case-modal-active');
+    flattenControls();
   }
 
   cards().forEach((card, i) => {
@@ -127,6 +154,8 @@ function ensureCaseStudyModal() {
     if (e.key === 'ArrowLeft') openAt(index - 1);
     if (e.key === 'ArrowRight') openAt(index + 1);
   });
+
+  flattenControls();
 }
 
 /**

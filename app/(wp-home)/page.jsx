@@ -290,6 +290,36 @@ export default async function WpHomePage() {
           font-weight: 400;
         }
         .dgs-case-modal-close,
+        .dgs-case-modal-nav,
+        .dgs-case-modal-close::before,
+        .dgs-case-modal-close::after,
+        .dgs-case-modal-nav::before,
+        .dgs-case-modal-nav::after,
+        #lightbox-close::before,
+        #lightbox-close::after,
+        #lightbox-prev::before,
+        #lightbox-prev::after,
+        #lightbox-next::before,
+        #lightbox-next::after,
+        .portfolio-lightbox-btn::before,
+        .portfolio-lightbox-btn::after {
+          background: #111 !important;
+          background-image: none !important;
+          background-color: #111 !important;
+          box-shadow: none !important;
+          filter: none !important;
+          -webkit-mask: none !important;
+          mask: none !important;
+          border-image: none !important;
+        }
+        .dgs-case-modal-close::before,
+        .dgs-case-modal-close::after,
+        .dgs-case-modal-nav::before,
+        .dgs-case-modal-nav::after {
+          content: none !important;
+          display: none !important;
+        }
+        .dgs-case-modal-close,
         .dgs-case-modal-nav {
           position: fixed;
           z-index: 2147483001;
@@ -320,12 +350,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-06j" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-06k" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-06j"
+        data-dgs-build="wp-mirror-2026-08-06k"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
