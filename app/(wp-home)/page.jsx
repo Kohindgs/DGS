@@ -79,9 +79,13 @@ export default async function WpHomePage() {
         #dgs-wp-home-mirror { min-height: 100vh; }
       `}</style>
 
+      {/* Visible build stamp so we can confirm cache is cleared */}
+      <meta name="dgs-build" content="wp-mirror-2026-08-06b" />
+
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
+        data-dgs-build="wp-mirror-2026-08-06b"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

@@ -18,7 +18,18 @@ const nextConfig = {
       },
     ],
   },
-  // Mirrors key redirects from WordPress public_html/.htaccess
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
+          { key: 'CDN-Cache-Control', value: 'no-store' },
+          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-06b' },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       { source: '/new-home-page', destination: '/', permanent: true },
