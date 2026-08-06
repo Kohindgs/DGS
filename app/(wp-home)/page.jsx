@@ -1,7 +1,9 @@
 import WpHomeClient from '../components/WpHomeClient';
 import { getWpHomeMirror } from '../../lib/wp-mirror';
 
-export const revalidate = 300;
+/** Dynamic — full WP mirror HTML is too heavy for Hostinger static generation (SIGABRT/OOM). */
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function generateMetadata() {
   try {
