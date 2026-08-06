@@ -100,14 +100,65 @@ export default function WpHomeClient({
     });
 
     async function boot() {
-      // Load CDN libs first (three/gsap), with timeouts so we never hang
-      for (const src of externalScripts) {
+      // Envira reads this global on init — set before loading its bundle
+      if (!window.envira_gallery) {
+        window.envira_gallery = {
+          debug: '',
+          ll_delay: '500',
+          ll_initial: 'false',
+          ll: '1',
+          mobile: '0',
+        };
+      }
+
+      const isJquery = (src) => /jquery/i.test(src);
+      const isEnvira = (src) => /envira/i.test(src);
+      const jqueryScripts = externalScripts.filter(isJquery);
+      const enviraScripts = externalScripts.filter((s) => isEnvira(s) && !isJquery(s));
+      const otherScripts = externalScripts.filter((s) => !isJquery(s) && !isEnvira(s));
+
+      // 1) jQuery
+      for (const src of jqueryScripts) {
         if (cancelled) return;
         await loadScript(src);
       }
 
-      // Run critical inline WP scripts (menu, motion, portfolio lightbox)
-      inlineScripts.forEach((code, i) => {
+      // 2) Inline configs that Envira needs (var envira_gallery=...)
+      const configInlines = [];
+      const appInlines = [];
+      inlineScripts.forEach((code) => {
+        if (
+          /^\s*var\s+envira_gallery\s*=/.test(code) ||
+          (/envira_gallery\s*=/.test(code) && code.length < 500)
+        ) {
+          configInlines.push(code);
+        } else {
+          appInlines.push(code);
+        }
+      });
+      configInlines.forEach((code, i) => {
+        if (cancelled) return;
+        try {
+          runInline(code, `dgs-envira-cfg-${i}`);
+        } catch (err) {
+          console.warn('DGS envira config failed', i, err);
+        }
+      });
+
+      // 3) Envira gallery bundle (case-studies / brand lightbox)
+      for (const src of enviraScripts) {
+        if (cancelled) return;
+        await loadScript(src);
+      }
+
+      // 4) GSAP / Three / etc.
+      for (const src of otherScripts) {
+        if (cancelled) return;
+        await loadScript(src);
+      }
+
+      // 5) Menu, motion, portfolio lightbox
+      appInlines.forEach((code, i) => {
         if (cancelled) return;
         try {
           runInline(code, `dgs-inline-${i}`);
@@ -115,6 +166,15 @@ export default function WpHomeClient({
           console.warn('DGS inline script failed', i, err);
         }
       });
+
+      // Nudge Envira layout after late paint
+      try {
+        if (window.jQuery && document.querySelector('.envira-gallery-public')) {
+          window.jQuery(window).trigger('resize');
+        }
+      } catch (_) {
+        /* ignore */
+      }
 
       // If motion script did not boot, keep content visible
       const root = document.querySelector('#dgs-v1215, .dgs-v1215');
