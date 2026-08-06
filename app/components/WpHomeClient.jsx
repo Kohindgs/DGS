@@ -326,6 +326,25 @@ export default function WpHomeClient({
         });
       }
 
+      // Last-paint Syne weight enforcement (WP external CSS may still set 700/800)
+      if (!document.getElementById('dgs-syne-weight')) {
+        const syne = document.createElement('style');
+        syne.id = 'dgs-syne-weight';
+        syne.textContent = `
+          html body .dgs-v1215 h1,
+          html body .dgs-v1215 h2,
+          html body .dgs-v1215 h3,
+          html body .dgs-v1215 .dgs-v1215-section-head h2,
+          html body .dgs-talk-popup h2,
+          html body .fluentform .ff-btn-submit {
+            font-family: "Syne", sans-serif !important;
+            font-weight: 500 !important;
+          }
+          html body .dgs-v1215 h1 { font-weight: 600 !important; }
+        `;
+        document.head.appendChild(syne);
+      }
+
       if (typeof window.dgsUnlockScroll === 'function') {
         window.dgsUnlockScroll();
       } else {
