@@ -268,9 +268,19 @@ p {
 }
 
 .dgs-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--dgs-radius-pill);
+  font-size: var(--dgs-text-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
   background-color: var(--dgs-color-text-primary);
   color: var(--dgs-color-bg);
   border: 1px solid transparent;
+  transition: all var(--dgs-transition-normal);
 }
 
 .dgs-btn-primary:hover {
