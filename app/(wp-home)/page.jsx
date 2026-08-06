@@ -73,13 +73,19 @@ export default async function WpHomePage() {
         />
       ))}
 
+      {/* Prevent WP menu/chat CSS from locking page scroll on this host */}
+      <style>{`
+        html, body { overflow-x: hidden !important; overflow-y: auto !important; height: auto !important; }
+        #dgs-wp-home-mirror { min-height: 100vh; }
+      `}</style>
+
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
-      <WpHomeClient bodyId={mirror.bodyId} bodyClass={mirror.bodyClass} scripts={mirror.scripts} />
+      <WpHomeClient bodyId={mirror.bodyId} bodyClass={mirror.bodyClass} />
     </>
   );
 }

@@ -1,66 +1,57 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 /**
- * Applies WordPress body classes and loads WP frontend scripts so Elementor /
- * GSAP / theme behaviours match the live CMS homepage.
+ * Lightweight homepage bootstrap — no WordPress script storm.
+ * Sets body classes and hydrates lazy media so the mirrored page
+ * paints immediately instead of hanging on 40+ remote JS files.
  */
-export default function WpHomeClient({ bodyId, bodyClass, scripts = [] }) {
-  const loaded = useRef(false);
-
+export default function WpHomeClient({ bodyId, bodyClass }) {
   useEffect(() => {
     const prevId = document.body.id;
     const prevClass = document.body.className;
+    const prevHtmlClass = document.documentElement.className;
+
     document.body.id = bodyId || 'cmsmasters_body';
     document.body.className = bodyClass || '';
+    document.documentElement.className = prevHtmlClass.replace(/\bno-js\b/g, 'js');
 
-    if (loaded.current) {
-      return () => {
-        document.body.id = prevId;
-        document.body.className = prevClass;
-      };
-    }
-    loaded.current = true;
-
-    const nodes = [];
-    let cancelled = false;
-
-    async function loadScripts() {
-      for (const src of scripts) {
-        if (cancelled) break;
-        if (document.querySelector(`script[data-dgs-mirror="${src}"]`)) continue;
-        await new Promise((resolve) => {
-          const s = document.createElement('script');
-          s.src = src;
-          s.async = false;
-          s.dataset.dgsMirror = src;
-          s.onload = () => resolve();
-          s.onerror = () => resolve();
-          document.body.appendChild(s);
-          nodes.push(s);
-        });
+    // Activate LiteSpeed/Smush lazy images left as data-src / lazyload
+    document.querySelectorAll('img[data-src], img[data-lazy-src], source[data-src]').forEach((el) => {
+      const src = el.getAttribute('data-src') || el.getAttribute('data-lazy-src');
+      if (src) {
+        el.setAttribute('src', src);
+        el.removeAttribute('data-src');
+        el.removeAttribute('data-lazy-src');
       }
-      // Nudge Elementor / theme init if present
-      try {
-        window.dispatchEvent(new Event('DOMContentLoaded'));
-        window.dispatchEvent(new Event('load'));
-        if (window.jQuery) {
-          window.jQuery(window).trigger('elementor/frontend/init');
-        }
-      } catch {
-        /* ignore */
-      }
-    }
+      el.classList.remove('lazyload', 'lazyloading');
+      el.classList.add('lazyloaded');
+    });
 
-    loadScripts();
+    document.querySelectorAll('[data-bg], [data-background]').forEach((el) => {
+      const bg = el.getAttribute('data-bg') || el.getAttribute('data-background');
+      if (bg) el.style.backgroundImage = `url(${bg})`;
+    });
+
+    // Ensure reveal content stays visible without WP motion JS
+    const root = document.querySelector('#dgs-v1215, .dgs-v1215');
+    if (root) {
+      root.classList.remove('motion-ready');
+      root.classList.add('gsap-active');
+    }
+    document.querySelectorAll('.dgs-v1215-reveal').forEach((el) => {
+      el.classList.add('is-visible');
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
 
     return () => {
-      cancelled = true;
       document.body.id = prevId;
       document.body.className = prevClass;
+      document.documentElement.className = prevHtmlClass;
     };
-  }, [bodyId, bodyClass, scripts]);
+  }, [bodyId, bodyClass]);
 
   return null;
 }
