@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { startDgsFastBackground } from './DgsFastBackground';
 
 const DEMO_ORIGIN = 'https://dimgrey-goat-473970.hostingersite.com';
 
@@ -141,6 +142,7 @@ export default function WpHomeClient({
 }) {
   useEffect(() => {
     let cancelled = false;
+    let stopBackground = () => {};
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations?.().then((regs) => {
@@ -186,6 +188,13 @@ export default function WpHomeClient({
       const bg = el.getAttribute('data-bg') || el.getAttribute('data-background');
       if (bg) el.style.backgroundImage = `url(${bg})`;
     });
+
+    // Start lightweight particle bg immediately (no Three.js wait)
+    try {
+      stopBackground = startDgsFastBackground(document.querySelector('.dgs-v1215')) || (() => {});
+    } catch (err) {
+      console.warn('Fast background failed', err);
+    }
 
     async function boot() {
       if (!window.envira_gallery) {
@@ -362,6 +371,11 @@ export default function WpHomeClient({
 
     return () => {
       cancelled = true;
+      try {
+        stopBackground();
+      } catch (_) {
+        /* ignore */
+      }
       document.body.id = prevId;
       document.body.className = prevClass;
       document.documentElement.className = prevHtmlClass;

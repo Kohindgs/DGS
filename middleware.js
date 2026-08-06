@@ -9,7 +9,7 @@ export function middleware(request) {
     response.headers.set('Expires', '0');
     response.headers.set('CDN-Cache-Control', 'no-store');
     response.headers.set('Surrogate-Control', 'no-store');
-    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-06f');
+    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-06g');
   }
   return response;
 }
