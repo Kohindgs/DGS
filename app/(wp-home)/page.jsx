@@ -91,12 +91,31 @@ export default async function WpHomePage() {
         video { max-width: 100%; }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-06c" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-06d" />
+      {/* Unmistakable stamp — if you don't see this, you're on a cached page */}
+      <div
+        id="dgs-live-stamp"
+        style={{
+          position: 'fixed',
+          left: 12,
+          bottom: 12,
+          zIndex: 2147483646,
+          background: '#FD5C62',
+          color: '#fff',
+          font: '600 11px/1 Manrope, system-ui, sans-serif',
+          letterSpacing: '0.04em',
+          padding: '8px 10px',
+          borderRadius: 999,
+          boxShadow: '0 8px 24px rgba(0,0,0,.35)',
+        }}
+      >
+        DGS WP DEMO · not byheart · 06d
+      </div>
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-06c"
+        data-dgs-build="wp-mirror-2026-08-06d"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

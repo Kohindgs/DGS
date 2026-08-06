@@ -50,7 +50,7 @@ export default function WpHomeClient({
   useEffect(() => {
     let cancelled = false;
 
-    // Clear stale byheart SW/cache
+    // Clear leftover service workers / Cache Storage from older deploys
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations?.().then((regs) => {
         regs.forEach((r) => r.unregister());
