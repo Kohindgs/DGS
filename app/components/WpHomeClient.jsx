@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 const DEMO_ORIGIN = 'https://dimgrey-goat-473970.hostingersite.com';
 
-function loadScript(src, timeoutMs = 12000) {
+function loadScript(src, timeoutMs = 15000) {
   return new Promise((resolve) => {
     if (document.querySelector(`script[data-dgs-src="${src}"]`)) {
       resolve(true);
@@ -36,9 +36,101 @@ function runInline(code, id) {
   document.body.appendChild(s);
 }
 
+function ensureCaseStudyModal() {
+  if (document.getElementById('dgs-case-modal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'dgs-case-modal';
+  modal.className = 'dgs-case-modal';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-label', 'Case study details');
+  modal.innerHTML = `
+    <button type="button" class="dgs-case-modal-close" aria-label="Close case study">×</button>
+    <button type="button" class="dgs-case-modal-nav dgs-case-modal-prev" aria-label="Previous case study">‹</button>
+    <div class="dgs-case-modal-panel">
+      <div class="dgs-case-modal-media"></div>
+      <div class="dgs-case-modal-body"></div>
+    </div>
+    <button type="button" class="dgs-case-modal-nav dgs-case-modal-next" aria-label="Next case study">›</button>
+  `;
+  document.body.appendChild(modal);
+
+  const cards = () =>
+    Array.from(document.querySelectorAll('#case-studies .dgs-v1215-case-visual-card, #case-studies .dgs-v1215-case-mini'));
+
+  let index = 0;
+
+  function close() {
+    modal.classList.remove('is-open');
+    document.body.classList.remove('dgs-case-modal-active');
+  }
+
+  function openAt(i) {
+    const list = cards();
+    if (!list.length) return;
+    index = (i + list.length) % list.length;
+    const card = list[index];
+    const media = modal.querySelector('.dgs-case-modal-media');
+    const body = modal.querySelector('.dgs-case-modal-body');
+    const img = card.querySelector('img');
+    const kicker = card.querySelector('span')?.textContent?.trim() || '';
+    const title = card.querySelector('h3')?.textContent?.trim() || '';
+    const copy = card.querySelector('p')?.textContent?.trim() || '';
+    const metrics = card.querySelector('.dgs-v1215-case-metrics')?.innerHTML || '';
+
+    media.innerHTML = img
+      ? `<img src="${img.currentSrc || img.src}" alt="${img.alt || title}" />`
+      : '';
+    body.innerHTML = `
+      ${kicker ? `<span class="dgs-case-modal-kicker">${kicker}</span>` : ''}
+      ${title ? `<h3>${title}</h3>` : ''}
+      ${copy ? `<p>${copy}</p>` : ''}
+      ${metrics ? `<div class="dgs-case-modal-metrics">${metrics}</div>` : ''}
+    `;
+    modal.classList.add('is-open');
+    document.body.classList.add('dgs-case-modal-active');
+  }
+
+  cards().forEach((card, i) => {
+    card.style.cursor = 'pointer';
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      openAt(i);
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openAt(i);
+      }
+    });
+  });
+
+  modal.querySelector('.dgs-case-modal-close')?.addEventListener('click', close);
+  modal.querySelector('.dgs-case-modal-prev')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openAt(index - 1);
+  });
+  modal.querySelector('.dgs-case-modal-next')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openAt(index + 1);
+  });
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') openAt(index - 1);
+    if (e.key === 'ArrowRight') openAt(index + 1);
+  });
+}
+
 /**
  * Restores WP homepage interactivity (menu, services dropdown, case lightbox,
- * WebGL background) without loading the full LiteSpeed script storm.
+ * WebGL background, FluentForm) without loading the full LiteSpeed script storm.
  */
 export default function WpHomeClient({
   bodyId,
@@ -50,7 +142,6 @@ export default function WpHomeClient({
   useEffect(() => {
     let cancelled = false;
 
-    // Clear leftover service workers / Cache Storage from older deploys
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations?.().then((regs) => {
         regs.forEach((r) => r.unregister());
@@ -65,7 +156,6 @@ export default function WpHomeClient({
     const prevHtmlClass = document.documentElement.className;
 
     document.body.id = bodyId || 'cmsmasters_body';
-    // Ensure popup/nav lock classes are not stuck from a partial prior load
     const cleaned = (bodyClass || '')
       .replace(/\bdgs-talk-popup-active\b/g, '')
       .replace(/\bnav-open\b/g, '');
@@ -79,11 +169,9 @@ export default function WpHomeClient({
     document.body.style.top = '';
     document.body.style.width = '';
 
-    // Force logo → demo host
     const logo = document.getElementById('dgsLogo');
     if (logo) logo.setAttribute('href', `${demoOrigin.replace(/\/$/, '')}/`);
 
-    // Hydrate any remaining lazy media
     document.querySelectorAll('img[data-src], img[data-lazy-src], source[data-src], video[data-src]').forEach((el) => {
       const src = el.getAttribute('data-src') || el.getAttribute('data-lazy-src');
       if (src && !src.startsWith('data:image/svg')) {
@@ -100,7 +188,6 @@ export default function WpHomeClient({
     });
 
     async function boot() {
-      // Envira reads this global on init — set before loading its bundle
       if (!window.envira_gallery) {
         window.envira_gallery = {
           debug: '',
@@ -111,20 +198,25 @@ export default function WpHomeClient({
         };
       }
 
-      const isJquery = (src) => /jquery/i.test(src);
-      const isEnvira = (src) => /envira/i.test(src);
-      const jqueryScripts = externalScripts.filter(isJquery);
-      const enviraScripts = externalScripts.filter((s) => isEnvira(s) && !isJquery(s));
-      const otherScripts = externalScripts.filter((s) => !isJquery(s) && !isEnvira(s));
+      // Normalize: support legacy string[] or [{src, kind}]
+      const scripts = externalScripts.map((item) =>
+        typeof item === 'string' ? { src: item, kind: 'lib', id: '' } : item
+      );
 
-      // 1) jQuery
+      const byKind = (kind) => scripts.filter((s) => s.kind === kind).map((s) => s.src);
+      const jqueryScripts = byKind('jquery');
+      const enviraScripts = byKind('envira');
+      const fluentScripts = byKind('fluent');
+      const recaptchaScripts = byKind('recaptcha');
+      const motionScripts = [...byKind('motion'), ...byKind('lib')];
+
       for (const src of jqueryScripts) {
         if (cancelled) return;
         await loadScript(src);
       }
 
-      // 2) Inline configs that Envira needs (var envira_gallery=...)
       const configInlines = [];
+      const fluentInlines = [];
       const appInlines = [];
       inlineScripts.forEach((code) => {
         if (
@@ -132,10 +224,13 @@ export default function WpHomeClient({
           (/envira_gallery\s*=/.test(code) && code.length < 500)
         ) {
           configInlines.push(code);
+        } else if (/fluentFormVars|fluent_form_ff_form_instance|fluentformElementor/i.test(code)) {
+          fluentInlines.push(code);
         } else {
           appInlines.push(code);
         }
       });
+
       configInlines.forEach((code, i) => {
         if (cancelled) return;
         try {
@@ -145,19 +240,35 @@ export default function WpHomeClient({
         }
       });
 
-      // 3) Envira gallery bundle (case-studies / brand lightbox)
       for (const src of enviraScripts) {
         if (cancelled) return;
         await loadScript(src);
       }
 
-      // 4) GSAP / Three / etc.
-      for (const src of otherScripts) {
+      for (const src of motionScripts) {
         if (cancelled) return;
         await loadScript(src);
       }
 
-      // 5) Menu, motion, portfolio lightbox
+      // FluentForm: configs → recaptcha → submission/elementor bundles
+      fluentInlines.forEach((code, i) => {
+        if (cancelled) return;
+        try {
+          runInline(code, `dgs-fluent-cfg-${i}`);
+        } catch (err) {
+          console.warn('DGS fluent config failed', i, err);
+        }
+      });
+
+      for (const src of recaptchaScripts) {
+        if (cancelled) return;
+        await loadScript(src);
+      }
+      for (const src of fluentScripts) {
+        if (cancelled) return;
+        await loadScript(src);
+      }
+
       appInlines.forEach((code, i) => {
         if (cancelled) return;
         try {
@@ -167,7 +278,6 @@ export default function WpHomeClient({
         }
       });
 
-      // Nudge Envira layout after late paint
       try {
         if (window.jQuery && document.querySelector('.envira-gallery-public')) {
           window.jQuery(window).trigger('resize');
@@ -176,7 +286,35 @@ export default function WpHomeClient({
         /* ignore */
       }
 
-      // If motion script did not boot, keep content visible
+      try {
+        ensureCaseStudyModal();
+      } catch (err) {
+        console.warn('Case study modal init failed', err);
+      }
+
+      const fixLightboxControls = () => {
+        ['lightbox-close', 'lightbox-prev', 'lightbox-next'].forEach((id) => {
+          const btn = document.getElementById(id);
+          if (!btn) return;
+          btn.style.setProperty('display', 'flex', 'important');
+          btn.style.setProperty('visibility', 'visible', 'important');
+          btn.style.setProperty('opacity', '1', 'important');
+          btn.style.setProperty('z-index', '2147483647', 'important');
+          btn.style.setProperty('pointer-events', 'auto', 'important');
+          if (id === 'lightbox-close') {
+            btn.style.setProperty('position', 'fixed', 'important');
+            btn.style.setProperty('top', '20px', 'important');
+            btn.style.setProperty('right', '20px', 'important');
+          }
+        });
+      };
+      fixLightboxControls();
+      const lb = document.getElementById('lightbox');
+      if (lb) {
+        const mo = new MutationObserver(fixLightboxControls);
+        mo.observe(lb, { attributes: true, attributeFilter: ['class', 'style'] });
+      }
+
       const root = document.querySelector('#dgs-v1215, .dgs-v1215');
       if (root && !root.dataset.dgsV1215Booted) {
         root.classList.remove('motion-ready');
@@ -188,7 +326,6 @@ export default function WpHomeClient({
         });
       }
 
-      // Always unlock scroll after boot (nav lock may have fired during init)
       if (typeof window.dgsUnlockScroll === 'function') {
         window.dgsUnlockScroll();
       } else {

@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const WP_ORIGIN = process.env.WP_ORIGIN || 'https://www.dgeniussolutions.com';
+
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
@@ -25,8 +27,22 @@ const nextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
           { key: 'CDN-Cache-Control', value: 'no-store' },
-          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-06d' },
+          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-06e' },
         ],
+      },
+    ];
+  },
+  async rewrites() {
+    // CSS url(/wp-content/...) resolves against the demo origin — proxy to WP
+    // so Envira icon fonts, Smush assets, etc. load correctly.
+    return [
+      {
+        source: '/wp-content/:path*',
+        destination: `${WP_ORIGIN}/wp-content/:path*`,
+      },
+      {
+        source: '/wp-includes/:path*',
+        destination: `${WP_ORIGIN}/wp-includes/:path*`,
       },
     ];
   },
