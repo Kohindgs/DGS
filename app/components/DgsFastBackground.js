@@ -86,10 +86,12 @@ export function startDgsFastBackground(root = document.querySelector('.dgs-v1215
     height = window.innerHeight;
     if (width < 901) {
       stop();
-      canvas.style.display = 'none';
+      canvas.style.setProperty('display', 'none', 'important');
       return;
     }
-    canvas.style.display = 'block';
+    canvas.style.setProperty('display', 'block', 'important');
+    canvas.style.setProperty('opacity', '1', 'important');
+    canvas.style.setProperty('visibility', 'visible', 'important');
     dpr = Math.min(window.devicePixelRatio || 1, 1.25);
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
