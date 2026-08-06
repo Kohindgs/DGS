@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import PageHero from '../../components/PageHero';
-import WpContent from '../../components/WpContent';
+import PageHero from '../../../components/PageHero';
+import WpContent from '../../../components/WpContent';
 import {
   getPostBySlug,
   getTitle,
@@ -8,7 +8,7 @@ import {
   getFeaturedImage,
   prepareWpHtml,
   wpMetadata,
-} from '../../../lib/wordpress';
+} from '../../../../lib/wordpress';
 
 export const revalidate = 300;
 

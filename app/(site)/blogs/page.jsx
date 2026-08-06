@@ -1,6 +1,6 @@
-import PageHero from '../components/PageHero';
-import BlogCard from '../components/BlogCard';
-import { getPosts } from '../../lib/wordpress';
+import PageHero from '../../components/PageHero';
+import BlogCard from '../../components/BlogCard';
+import { getPosts } from '../../../lib/wordpress';
 
 export const revalidate = 300;
 

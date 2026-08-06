@@ -1,5 +1,5 @@
-import PageHero from '../components/PageHero';
-import { getServices, getTitle, getExcerpt, SERVICE_LINKS } from '../../lib/wordpress';
+import PageHero from '../../components/PageHero';
+import { getServices, getTitle, getExcerpt, SERVICE_LINKS } from '../../../lib/wordpress';
 
 export const revalidate = 300;
 
