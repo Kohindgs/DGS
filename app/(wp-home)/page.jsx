@@ -270,6 +270,15 @@ export default async function WpHomePage() {
         }
         .dgs-case-modal-metrics strong { display: block; font-size: 1.25rem; }
         .dgs-case-modal-metrics small { color: rgba(255,255,255,.55); }
+
+        /* Demo host cannot use production Google reCAPTCHA keys — hide widget;
+           Hostinger WP mu-plugin skips captcha for proxied demo submits. */
+        .ff-el-recaptcha,
+        .g-recaptcha,
+        .ff-el-group:has(.g-recaptcha),
+        .ff-el-group:has(.ff-el-recaptcha) {
+          display: none !important;
+        }
       `}</style>
 
       <meta name="dgs-build" content="wp-mirror-2026-08-06f" />
