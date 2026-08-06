@@ -96,18 +96,23 @@ export default async function WpHomePage() {
         video { max-width: 100%; }
 
         /* Syne — medium weight, not thick 700/800 */
-        .dgs-v1215 h1,
-        .dgs-v1215 h2,
-        .dgs-v1215 h3,
-        .dgs-v1215 .dgs-v1215-section-head h2,
-        .dgs-talk-popup h2,
-        .dgs-talk-popup .ff-btn,
-        .dgs-talk-popup button[type="submit"],
-        .fluentform .ff-btn-submit {
+        html body .dgs-v1215 h1,
+        html body .dgs-v1215 h2,
+        html body .dgs-v1215 h3,
+        html body .dgs-v1215 .dgs-v1215-section-head h2,
+        html body .dgs-v1215 .dgs-v1215-hero h1,
+        html body .dgs-v1215 .dgs-v1215-hero-copy h1,
+        html body .dgs-talk-popup h2,
+        html body .dgs-talk-popup .ff-btn,
+        html body .dgs-talk-popup button[type="submit"],
+        html body .fluentform .ff-btn-submit,
+        html body .dgs-case-modal-body h3 {
           font-family: 'Syne', sans-serif !important;
           font-weight: 500 !important;
         }
-        .dgs-v1215 h1 { font-weight: 600 !important; }
+        html body .dgs-v1215 h1 {
+          font-weight: 600 !important;
+        }
 
         /* Portfolio lightbox controls — always visible */
         #lightbox.portfolio-lightbox.is-open #lightbox-close,
@@ -125,13 +130,16 @@ export default async function WpHomePage() {
         }
         #lightbox-close.portfolio-lightbox-close {
           position: fixed !important;
-          top: 20px !important;
-          right: 20px !important;
-          width: 52px !important;
-          height: 52px !important;
+          top: 18px !important;
+          right: 18px !important;
+          width: 56px !important;
+          height: 56px !important;
           border-radius: 999px !important;
-          font-size: 1.75rem !important;
+          font-size: 2rem !important;
           line-height: 1 !important;
+          background: #FD5C62 !important;
+          border: 1px solid rgba(255,255,255,.55) !important;
+          box-shadow: 0 10px 28px rgba(0,0,0,.45) !important;
         }
 
         /* Envira lightbox — icon font often 404s on demo; paint unicode fallbacks */
@@ -264,12 +272,12 @@ export default async function WpHomePage() {
         .dgs-case-modal-metrics small { color: rgba(255,255,255,.55); }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-06e" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-06f" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-06e"
+        data-dgs-build="wp-mirror-2026-08-06f"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
