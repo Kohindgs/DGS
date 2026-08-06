@@ -577,9 +577,13 @@ p {
   .dgs-hero-actions {
     flex-direction: column;
     width: 100%;
+    align-items: stretch;
   }
-  .dgs-hero-actions .dgs-btn {
+  .dgs-hero-actions .dgs-btn,
+  .dgs-hero-actions .dgs-btn-primary,
+  .dgs-hero-actions .dgs-btn-ghost {
     width: 100%;
+    justify-content: center;
   }
 }
 
