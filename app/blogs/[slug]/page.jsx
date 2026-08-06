@@ -3,7 +3,6 @@ import PageHero from '../../components/PageHero';
 import WpContent from '../../components/WpContent';
 import {
   getPostBySlug,
-  getPosts,
   getTitle,
   getExcerpt,
   getFeaturedImage,
@@ -13,24 +12,16 @@ import {
 
 export const revalidate = 300;
 
-export async function generateStaticParams() {
-  try {
-    const { posts } = await getPosts({ page: 1, perPage: 100, embed: false });
-    return posts.map((p) => ({ slug: p.slug }));
-  } catch {
-    return [];
-  }
-}
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   try {
     const post = await getPostBySlug(slug);
     if (!post) return { title: 'Post not found' };
+    const meta = wpMetadata(post, { path: `/blogs/${slug}` });
     return {
-      ...wpMetadata(post, { path: `/blogs/${slug}` }),
+      ...meta,
       openGraph: {
-        ...wpMetadata(post, { path: `/blogs/${slug}` }).openGraph,
+        ...meta.openGraph,
         type: 'article',
       },
     };

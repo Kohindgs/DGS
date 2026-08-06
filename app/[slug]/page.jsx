@@ -2,7 +2,6 @@ import { notFound, redirect } from 'next/navigation';
 import PageHero from '../components/PageHero';
 import WpContent from '../components/WpContent';
 import {
-  getAllPages,
   getPageBySlug,
   getTitle,
   getExcerpt,
@@ -13,17 +12,6 @@ import {
 } from '../../lib/wordpress';
 
 export const revalidate = 300;
-
-export async function generateStaticParams() {
-  try {
-    const pages = await getAllPages();
-    return pages
-      .filter((p) => p.slug && p.slug !== SITE.homeSlug && !RESERVED_SLUGS.has(p.slug))
-      .map((p) => ({ slug: p.slug }));
-  } catch {
-    return [];
-  }
-}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

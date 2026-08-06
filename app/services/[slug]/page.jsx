@@ -12,15 +12,6 @@ import {
 
 export const revalidate = 300;
 
-export async function generateStaticParams() {
-  try {
-    const services = await getServices({ embed: false });
-    return services.map((s) => ({ slug: s.slug }));
-  } catch {
-    return [];
-  }
-}
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   try {
