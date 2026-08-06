@@ -100,7 +100,8 @@ export function startDgsFastBackground(root = document.querySelector('.dgs-v1215
     start();
   }
 
-  // Perspective similar to THREE PerspectiveCamera(58) at z=8.5
+  // Perspective similar to THREE PerspectiveCamera(58, aspect, ...) at z=8.5
+  // FOV is vertical in Three — use height for both axes' focal length.
   const FOV = 58 * (Math.PI / 180);
   const CAM_Z = 8.5;
 
@@ -115,13 +116,15 @@ export function startDgsFastBackground(root = document.querySelector('.dgs-v1215
     z = p.y * sinX + z * cosX;
 
     const depth = z + CAM_Z;
-    if (depth <= 0.2) return null;
-    const scale = height / (2 * Math.tan(FOV / 2) * depth);
+    if (depth <= 0.25) return null;
+    const focal = height / (2 * Math.tan(FOV / 2));
+    const scale = focal / depth;
     return {
-      sx: width / 2 + x * scale * (width / height),
+      sx: width / 2 + x * scale,
       sy: height / 2 - y * scale,
-      size: Math.max(1.4, p.size * scale * 18),
-      alpha: Math.min(0.92, 0.28 + 2.4 / depth),
+      // PointsMaterial size 0.074 world units → ~px at this depth
+      size: Math.max(2.2, 0.074 * scale * 1.15),
+      alpha: Math.min(0.95, 0.4 + 2.8 / depth),
     };
   }
 

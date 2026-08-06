@@ -95,6 +95,19 @@ export default async function WpHomePage() {
         .dgs-v1215-fallback { opacity: 1 !important; visibility: visible !important; }
         video { max-width: 100%; }
 
+        /* Fast Canvas2D bg — keep canvas visible on desktop once ready */
+        @media (min-width: 901px) {
+          .dgs-v1215.v1215-webgl-ready #dgs-v1215-canvas {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: none !important;
+          }
+          .dgs-v1215.v1215-webgl-ready .dgs-v1215-fallback {
+            opacity: 0.64 !important;
+          }
+        }
+
         /* Syne — medium weight, not thick 700/800 */
         html body .dgs-v1215 h1,
         html body .dgs-v1215 h2,
@@ -281,12 +294,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-06g" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-06h" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-06g"
+        data-dgs-build="wp-mirror-2026-08-06h"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
