@@ -19,6 +19,10 @@ export const metadata = {
 export default function SiteLayout({ children }) {
   return (
     <>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
+      />
       <SiteHeader />
       {children}
       <SiteFooter />
