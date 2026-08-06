@@ -335,11 +335,14 @@ export default function WpHomeClient({
         });
       }
 
-      // Last-paint Syne weight enforcement (WP external CSS may still set 700/800)
+      // Last-paint Syne + flat lightbox controls
       if (!document.getElementById('dgs-syne-weight')) {
         const syne = document.createElement('style');
         syne.id = 'dgs-syne-weight';
         syne.textContent = `
+          html body, html body #dgs-wp-home-mirror {
+            font-family: "Syne", sans-serif !important;
+          }
           html body .dgs-v1215 h1,
           html body .dgs-v1215 h2,
           html body .dgs-v1215 h3,
@@ -350,21 +353,45 @@ export default function WpHomeClient({
             font-weight: 500 !important;
           }
           html body .dgs-v1215 h1 { font-weight: 600 !important; }
+          #lightbox-close, #lightbox-prev, #lightbox-next,
+          .portfolio-lightbox-btn, .dgs-case-modal-close, .dgs-case-modal-nav,
+          .envirabox-button, .envirabox-button--close, .envirabox-close,
+          .envirabox-nav, .envirabox-arrow {
+            background: #111 !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+          }
         `;
         document.head.appendChild(syne);
       }
 
+      // Ensure unlock helpers exist even if WP script failed to patch
+      if (typeof window.dgsUnlockScroll !== 'function') {
+        window.dgsScrollY = window.dgsScrollY || 0;
+        window.dgsUnlockScroll = function () {
+          const y = window.dgsScrollY || 0;
+          document.documentElement.classList.remove('dgs-scroll-locked');
+          document.body.classList.remove('dgs-scroll-locked');
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.left = '';
+          document.body.style.right = '';
+          document.body.style.width = '';
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => window.scrollTo(0, y));
+          });
+        };
+      }
+
       if (typeof window.dgsUnlockScroll === 'function') {
         window.dgsUnlockScroll();
-      } else {
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
       }
       document.getElementById('dgsNav')?.classList.remove('nav-open');
-      document.body.classList.remove('dgs-talk-popup-active');
-      document.documentElement.classList.remove('dgs-talk-popup-active');
+      document.body.classList.remove('dgs-talk-popup-active', 'dgs-scroll-locked');
+      document.documentElement.classList.remove('dgs-talk-popup-active', 'dgs-scroll-locked');
     }
 
     boot();

@@ -78,14 +78,27 @@ export default async function WpHomePage() {
       />
 
       <style>{`
-        /* Keep page scrollable unless menu/talk popup intentionally locks it */
+        /* Default scrollable; cooperate with menu/talk/case scroll-lock */
         html, body {
           overflow-x: clip !important;
-          overflow-y: auto !important;
           height: auto !important;
           min-height: 100% !important;
         }
-        body:not(.dgs-talk-popup-active):not(:has(#dgsNav.nav-open)):not(.dgs-case-modal-active) {
+        html:not(.dgs-scroll-locked):not(:has(#dgsNav.nav-open)):not(.dgs-talk-popup-active):not(:has(body.dgs-case-modal-active)),
+        body:not(.dgs-scroll-locked):not(.dgs-talk-popup-active):not(:has(#dgsNav.nav-open)):not(.dgs-case-modal-active) {
+          overflow-y: auto !important;
+        }
+        html.dgs-scroll-locked,
+        html.dgs-scroll-locked body,
+        html:has(#dgsNav.nav-open),
+        html:has(#dgsNav.nav-open) body,
+        body.dgs-scroll-locked,
+        body.dgs-talk-popup-active,
+        body.dgs-case-modal-active,
+        body:has(#dgsNav.nav-open) {
+          overflow: hidden !important;
+        }
+        body:not(.dgs-scroll-locked):not(.dgs-talk-popup-active):not(:has(#dgsNav.nav-open)):not(.dgs-case-modal-active) {
           position: static !important;
           top: auto !important;
           width: auto !important;
@@ -108,7 +121,16 @@ export default async function WpHomePage() {
           }
         }
 
-        /* Syne — medium weight, not thick 700/800 */
+        /* Syne everywhere — medium weight (SEO-page style, not thick 700/800) */
+        html body,
+        html body #dgs-wp-home-mirror,
+        html body #dgs-wp-home-mirror *:not(script):not(style),
+        html body .dgs-v1215,
+        html body .dgs-talk-popup,
+        html body .fluentform,
+        html body .dgs-case-modal {
+          font-family: 'Syne', sans-serif !important;
+        }
         html body .dgs-v1215 h1,
         html body .dgs-v1215 h2,
         html body .dgs-v1215 h3,
@@ -126,76 +148,82 @@ export default async function WpHomePage() {
         html body .dgs-v1215 h1 {
           font-weight: 600 !important;
         }
+        html body .dgs-v1215 p,
+        html body .dgs-v1215 li,
+        html body .dgs-v1215 .dgs-v1215-hero-copy p {
+          font-weight: 400 !important;
+          line-height: 1.7 !important;
+        }
 
-        /* Portfolio lightbox controls — always visible */
+        /* Flat solid close/nav — no gradients, glows, or coral fills */
         #lightbox.portfolio-lightbox.is-open #lightbox-close,
         #lightbox.portfolio-lightbox.is-open #lightbox-prev,
         #lightbox.portfolio-lightbox.is-open #lightbox-next,
-        .portfolio-lightbox.is-open .portfolio-lightbox-btn {
-          display: flex !important;
-          visibility: visible !important;
-          opacity: 1 !important;
-          z-index: 2147483647 !important;
-          pointer-events: auto !important;
-          color: #fff !important;
-          background: rgba(18,18,18,.88) !important;
-          border: 1px solid rgba(255,255,255,.35) !important;
-        }
-        #lightbox-close.portfolio-lightbox-close {
-          position: fixed !important;
-          top: 18px !important;
-          right: 18px !important;
-          width: 56px !important;
-          height: 56px !important;
-          border-radius: 999px !important;
-          font-size: 2rem !important;
-          line-height: 1 !important;
-          background: #FD5C62 !important;
-          border: 1px solid rgba(255,255,255,.55) !important;
-          box-shadow: 0 10px 28px rgba(0,0,0,.45) !important;
-        }
-
-        /* Envira lightbox — icon font often 404s on demo; paint unicode fallbacks */
+        .portfolio-lightbox.is-open .portfolio-lightbox-btn,
+        .envirabox-container .envirabox-button,
         .envirabox-container .envirabox-button--close,
         .envirabox-container .envirabox-close,
         .envirabox-container .envirabox-nav,
-        .envirabox-container .envirabox-arrow {
+        .envirabox-container .envirabox-arrow,
+        .envirabox-container .envirabox-button--arrow_left,
+        .envirabox-container .envirabox-button--arrow_right,
+        .dgs-case-modal-close,
+        .dgs-case-modal-nav {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
           visibility: visible !important;
           opacity: 1 !important;
-          z-index: 999999 !important;
+          z-index: 2147483647 !important;
           pointer-events: auto !important;
           color: #fff !important;
-          background: rgba(0,0,0,.55) !important;
+          background: #111 !important;
+          background-image: none !important;
+          border: 1px solid rgba(255,255,255,.35) !important;
+          border-radius: 999px !important;
+          box-shadow: none !important;
+          text-shadow: none !important;
+          filter: none !important;
+        }
+        #lightbox-close.portfolio-lightbox-close,
+        .dgs-case-modal-close,
+        .envirabox-container .envirabox-button--close,
+        .envirabox-container .envirabox-close {
+          position: fixed !important;
+          top: 18px !important;
+          right: 18px !important;
           width: 48px !important;
           height: 48px !important;
-          border-radius: 999px !important;
-          text-decoration: none !important;
+          font-size: 1.75rem !important;
+          line-height: 1 !important;
         }
         .envirabox-container .envirabox-close:before,
         .envirabox-container .envirabox-button--close:before {
           content: "×" !important;
-          font-family: system-ui, sans-serif !important;
+          font-family: 'Syne', system-ui, sans-serif !important;
           font-size: 28px !important;
           font-weight: 400 !important;
           color: #fff !important;
           line-height: 1 !important;
+          background: none !important;
         }
         .envirabox-container .envirabox-arrow--left span:before,
-        .envirabox-container .envirabox-prev span:before {
+        .envirabox-container .envirabox-prev span:before,
+        .envirabox-container .envirabox-button--arrow_left:after {
           content: "‹" !important;
-          font-family: system-ui, sans-serif !important;
+          font-family: 'Syne', system-ui, sans-serif !important;
           font-size: 36px !important;
           color: #fff !important;
+          background: none !important;
         }
         .envirabox-container .envirabox-arrow--right span:before,
-        .envirabox-container .envirabox-next span:before {
+        .envirabox-container .envirabox-next span:before,
+        .envirabox-container .envirabox-button--arrow_right:after {
           content: "›" !important;
-          font-family: system-ui, sans-serif !important;
+          font-family: 'Syne', system-ui, sans-serif !important;
           font-size: 36px !important;
           color: #fff !important;
+          background: none !important;
         }
         .envirabox-container .envirabox-toolbar,
         .envirabox-container .envira-close-button,
@@ -204,6 +232,8 @@ export default async function WpHomePage() {
           visibility: visible !important;
           opacity: 1 !important;
           z-index: 999999 !important;
+          background: none !important;
+          background-image: none !important;
         }
 
         /* Case studies modal */
@@ -254,26 +284,20 @@ export default async function WpHomePage() {
         .dgs-case-modal-body p {
           margin: 0 0 16px;
           color: rgba(255,255,255,.78);
-          line-height: 1.55;
+          line-height: 1.7;
+          font-weight: 400;
         }
         .dgs-case-modal-close,
         .dgs-case-modal-nav {
           position: fixed;
           z-index: 2147483001;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 52px;
-          height: 52px;
-          border-radius: 999px;
-          border: 1px solid rgba(255,255,255,.35);
-          background: rgba(18,18,18,.88);
-          color: #fff;
+          width: 48px;
+          height: 48px;
           font-size: 1.75rem;
           cursor: pointer;
           line-height: 1;
         }
-        .dgs-case-modal-close { top: 20px; right: 20px; }
+        .dgs-case-modal-close { top: 18px; right: 18px; }
         .dgs-case-modal-prev { left: 16px; top: 50%; transform: translateY(-50%); }
         .dgs-case-modal-next { right: 16px; top: 50%; transform: translateY(-50%); }
         .dgs-case-modal-metrics {
@@ -294,12 +318,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-06i" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-06j" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-06i"
+        data-dgs-build="wp-mirror-2026-08-06j"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
