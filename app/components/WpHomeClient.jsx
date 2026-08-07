@@ -582,6 +582,20 @@ export default function WpHomeClient({
     }
 
     async function boot() {
+      // Give the hero LCP image a clear runway before jQuery/Envira/GSAP contend
+      // for the same connections (was causing multi-second LCP load delay).
+      const robot = document.getElementById('dgs-v1215-robot');
+      if (robot && !robot.complete) {
+        await Promise.race([
+          new Promise((resolve) => {
+            robot.addEventListener('load', resolve, { once: true });
+            robot.addEventListener('error', resolve, { once: true });
+          }),
+          new Promise((resolve) => setTimeout(resolve, 2000)),
+        ]);
+      }
+      if (cancelled) return;
+
       if (!window.envira_gallery) {
         window.envira_gallery = {
           debug: '',
