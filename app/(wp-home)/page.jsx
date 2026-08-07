@@ -374,6 +374,69 @@ export default async function WpHomePage() {
         .dgs-case-modal-metrics strong { display: block; font-size: 1.25rem; }
         .dgs-case-modal-metrics small { color: rgba(255,255,255,.55); }
 
+        /* Mobile: keep arrows off the case study card — bottom bar like portfolio lightbox */
+        @media (max-width: 900px) {
+          .dgs-case-modal {
+            padding: 12px 12px 96px !important;
+            align-items: flex-start !important;
+          }
+          .dgs-case-modal-panel {
+            width: 100% !important;
+            max-width: 100% !important;
+            max-height: calc(100dvh - 110px) !important;
+            margin-top: 52px !important;
+          }
+          .dgs-case-modal-close {
+            top: calc(env(safe-area-inset-top, 0px) + 10px) !important;
+            right: 10px !important;
+            width: 44px !important;
+            height: 44px !important;
+          }
+          .dgs-case-modal-prev,
+          .dgs-case-modal-next {
+            top: auto !important;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important;
+            transform: none !important;
+            width: 44px !important;
+            height: 44px !important;
+          }
+          .dgs-case-modal-prev {
+            left: calc(50% - 54px) !important;
+            right: auto !important;
+          }
+          .dgs-case-modal-next {
+            left: calc(50% + 10px) !important;
+            right: auto !important;
+          }
+
+          /* Portfolio / Envira lightboxes — same bottom placement on small screens */
+          #lightbox.portfolio-lightbox.is-open #lightbox-prev,
+          #lightbox.portfolio-lightbox.is-open #lightbox-next,
+          .portfolio-lightbox.is-open .portfolio-lightbox-arrow {
+            top: auto !important;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important;
+            transform: none !important;
+          }
+          #lightbox.portfolio-lightbox.is-open #lightbox-prev,
+          .portfolio-lightbox.is-open .portfolio-lightbox-prev {
+            left: calc(50% - 54px) !important;
+            right: auto !important;
+          }
+          #lightbox.portfolio-lightbox.is-open #lightbox-next,
+          .portfolio-lightbox.is-open .portfolio-lightbox-next {
+            left: calc(50% + 10px) !important;
+            right: auto !important;
+          }
+          .envirabox-container .envirabox-nav,
+          .envirabox-container .envirabox-arrow,
+          .envirabox-container .envirabox-button--arrow_left,
+          .envirabox-container .envirabox-button--arrow_right {
+            top: auto !important;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important;
+            transform: none !important;
+          }
+        }
+
         /* Demo host cannot use production Google reCAPTCHA keys — hide widget;
            Hostinger WP mu-plugin skips captcha for proxied demo submits. */
         .ff-el-recaptcha,
@@ -384,12 +447,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07b" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07c" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07b"
+        data-dgs-build="wp-mirror-2026-08-07c"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
