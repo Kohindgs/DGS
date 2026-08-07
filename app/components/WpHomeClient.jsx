@@ -489,14 +489,30 @@ export default function WpHomeClient({
     let cancelled = false;
     let stopBackground = () => {};
 
-    // One-time SW cleanup only — do not wipe Cache Storage on every visit
-    // (that actively fights repeat-view performance).
-    if ('serviceWorker' in navigator && !window.__dgsSwCleared) {
-      window.__dgsSwCleared = true;
+    // Always clear SW + Cache Storage so an old Hostinger/Framer shell cannot
+    // keep controlling this origin after deploys.
+    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations?.().then((regs) => {
         regs.forEach((r) => r.unregister());
       });
     }
+    if (window.caches?.keys) {
+      caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
+    }
+
+    // If a stale document somehow loaded without our mirror root, force one
+    // hard reload with a cache-buster (prevents loops via session flag).
+    if (
+      !document.getElementById('dgs-wp-home-mirror') &&
+      !sessionStorage.getItem('dgs-force-reload')
+    ) {
+      sessionStorage.setItem('dgs-force-reload', '1');
+      const url = new URL(window.location.href);
+      url.searchParams.set('_dgs', String(Date.now()));
+      window.location.replace(url.toString());
+      return () => {};
+    }
+    sessionStorage.removeItem('dgs-force-reload');
 
     const prevId = document.body.id;
     const prevClass = document.body.className;
