@@ -596,12 +596,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07k" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07l" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07k"
+        data-dgs-build="wp-mirror-2026-08-07l"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

@@ -43,7 +43,7 @@ export async function GET(request, context) {
   const scriptLike = isScriptPath(pathname);
 
   const headers = {
-    'User-Agent': 'DGS-NextJS-MediaProxy/1.1',
+    'User-Agent': 'DGS-NextJS-MediaProxy/1.2',
     Accept: request.headers.get('accept') || '*/*',
     // Avoid compressed Content-Length vs decompressed body mismatch.
     'Accept-Encoding': 'identity',
@@ -79,7 +79,7 @@ export async function GET(request, context) {
   out.delete('content-encoding');
   out.delete('content-length');
   out.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
-  out.set('X-DGS-Media-Proxy', '1.1');
+  out.set('X-DGS-Media-Proxy', '1.2');
 
   // Scripts/CSS: buffer full body so clients never see truncated JS.
   // Do NOT set Content-Length — Hostinger/LiteSpeed may re-compress the
