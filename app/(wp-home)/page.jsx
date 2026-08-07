@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v9'],
+  ['wp-home-mirror-v10'],
   { revalidate: 300 }
 );
 
@@ -66,7 +66,13 @@ export default async function WpHomePage() {
       <link rel="dns-prefetch" href="https://www.dgeniussolutions.com" />
       <link rel="preload" href={cssBundle} as="style" />
       {mirror.lcpImage ? (
-        <link rel="preload" href={mirror.lcpImage} as="image" fetchPriority="high" />
+        <link
+          rel="preload"
+          href={mirror.lcpImage}
+          as="image"
+          fetchPriority="high"
+          imageSizes="(max-width: 900px) min(92vw, 420px), min(42vw, 560px)"
+        />
       ) : null}
 
       {mirror.stylesheets.map((sheet) => (
@@ -605,12 +611,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07m" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07n" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07m"
+        data-dgs-build="wp-mirror-2026-08-07n"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
