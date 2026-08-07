@@ -1,13 +1,22 @@
 import WpHomeClient from '../components/WpHomeClient';
+import { unstable_cache } from 'next/cache';
 import { getWpHomeMirror } from '../../lib/wp-mirror';
 
-/** Dynamic — full WP mirror HTML is too heavy for Hostinger static generation (SIGABRT/OOM). */
+/**
+ * SSR (avoids Hostinger OOM during `next build`) + 5-minute cache so cold
+ * traffic does not re-fetch the full WordPress homepage on every hit.
+ */
+const getCachedWpHomeMirror = unstable_cache(
+  async () => getWpHomeMirror({ revalidate: 0 }),
+  ['wp-home-mirror-v1'],
+  { revalidate: 300 }
+);
+
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export async function generateMetadata() {
   try {
-    const { meta } = await getWpHomeMirror();
+    const { meta } = await getCachedWpHomeMirror();
     return {
       title: { absolute: meta.title },
       description: meta.description,
@@ -47,7 +56,7 @@ export async function generateMetadata() {
 }
 
 export default async function WpHomePage() {
-  const mirror = await getWpHomeMirror();
+  const mirror = await getCachedWpHomeMirror();
 
   return (
     <>
@@ -350,12 +359,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-06k" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07a" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-06k"
+        data-dgs-build="wp-mirror-2026-08-07a"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
