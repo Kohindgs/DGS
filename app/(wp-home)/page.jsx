@@ -116,8 +116,30 @@ export default async function WpHomePage() {
         }
         #dgs-wp-home-mirror { min-height: 100vh; }
         img.lazyload, img.lazyloading { opacity: 1 !important; }
-        .dgs-v1215-fallback { opacity: 1 !important; visibility: visible !important; }
         video { max-width: 100%; }
+
+        /*
+          Background plane must stay still — only particle dots should move.
+          WP ships a drifting gradient fallback + mouse parallax on the whole
+          canvas/grid layer; kill both so motion stays in DgsFastBackground.
+        */
+        .dgs-v1215 {
+          --v1215-grid-x: 0px !important;
+          --v1215-grid-y: 0px !important;
+        }
+        .dgs-v1215-fallback {
+          opacity: 1 !important;
+          visibility: visible !important;
+          inset: 0 !important;
+          transform: none !important;
+          animation: none !important;
+          will-change: auto !important;
+        }
+        #dgs-v1215-canvas,
+        .dgs-v1215-grid {
+          transform: none !important;
+          will-change: auto !important;
+        }
 
         /* Fast Canvas2D bg — keep canvas visible on desktop once ready */
         @media (min-width: 901px) {
@@ -126,9 +148,12 @@ export default async function WpHomePage() {
             opacity: 1 !important;
             visibility: visible !important;
             pointer-events: none !important;
+            transform: none !important;
           }
           .dgs-v1215.v1215-webgl-ready .dgs-v1215-fallback {
             opacity: 0.64 !important;
+            transform: none !important;
+            animation: none !important;
           }
         }
 
@@ -359,12 +384,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07a" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07b" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07a"
+        data-dgs-build="wp-mirror-2026-08-07b"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
