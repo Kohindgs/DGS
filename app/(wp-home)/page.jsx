@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v5'],
+  ['wp-home-mirror-v6'],
   { revalidate: 300 }
 );
 
@@ -596,12 +596,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07i" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07j" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07i"
+        data-dgs-build="wp-mirror-2026-08-07j"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

@@ -517,16 +517,43 @@ export default function WpHomeClient({
     const logo = document.getElementById('dgsLogo');
     if (logo) logo.setAttribute('href', `${demoOrigin.replace(/\/$/, '')}/`);
 
-    document.querySelectorAll('img[data-src], img[data-lazy-src], source[data-src], video[data-src]').forEach((el) => {
-      const src = el.getAttribute('data-src') || el.getAttribute('data-lazy-src');
-      if (src && !src.startsWith('data:image/svg')) {
-        el.setAttribute('src', src);
-        el.removeAttribute('data-src');
-        el.removeAttribute('data-lazy-src');
-      }
-      el.classList.remove('lazyload', 'lazyloading');
-      el.classList.add('lazyloaded');
-    });
+    const isPlaceholder = (url) =>
+      !url ||
+      url.startsWith('data:image/svg') ||
+      /^data:image\/gif;base64,/i.test(url);
+
+    // Smush/LiteSpeed + Envira: promote real URLs and drop 1×1 GIF srcset so
+    // Brand Identity gallery can measure naturalWidth and finish layout.
+    document
+      .querySelectorAll(
+        'img[data-src], img[data-lazy-src], img[data-envira-src], img.envira-gallery-image, source[data-src], video[data-src]'
+      )
+      .forEach((el) => {
+        const real =
+          el.getAttribute('data-envira-src') ||
+          el.getAttribute('data-src') ||
+          el.getAttribute('data-lazy-src');
+        const srcNow = el.getAttribute('src');
+        if (real && !isPlaceholder(real) && isPlaceholder(srcNow)) {
+          el.setAttribute('src', real);
+        } else if (real && !isPlaceholder(real) && !srcNow) {
+          el.setAttribute('src', real);
+        }
+
+        const realSrcset =
+          el.getAttribute('data-envira-srcset') ||
+          el.getAttribute('data-srcset') ||
+          el.getAttribute('data-lazy-srcset');
+        const srcsetNow = el.getAttribute('srcset') || '';
+        if (realSrcset && !isPlaceholder(realSrcset.split(/\s/)[0] || '')) {
+          el.setAttribute('srcset', realSrcset);
+        } else if (isPlaceholder(srcsetNow.split(/\s/)[0] || '')) {
+          el.removeAttribute('srcset');
+        }
+
+        el.classList.remove('lazyload', 'lazyloading', 'envira-lazy');
+        el.classList.add('lazyloaded');
+      });
     document.querySelectorAll('[data-bg], [data-background]').forEach((el) => {
       const bg = el.getAttribute('data-bg') || el.getAttribute('data-background');
       if (bg) el.style.backgroundImage = `url(${bg})`;

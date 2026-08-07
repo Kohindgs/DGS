@@ -11,11 +11,19 @@ function isAllowedPath(parts = []) {
   return root === 'wp-content' || root === 'wp-includes';
 }
 
+function isScriptPath(pathname = '') {
+  return /\.(?:js|mjs|css)(?:$|\?)/i.test(pathname);
+}
+
 /**
  * Same-origin media proxy for the WP homepage mirror.
  * Next.js rewrites for /wp-content return empty bodies for .webp on Hostinger,
  * and browsers often fail cross-origin video/image loads (ERR_CONNECTION_FAILED).
- * This streams upstream bytes (with Range) so portfolio + case studies load.
+ *
+ * Important: Node fetch auto-decompresses gzip/brotli but still exposes the
+ * compressed Content-Length. Streaming that body while forwarding the compressed
+ * length truncates jQuery/Envira JS (~29KB of ~87KB) and breaks gallery init.
+ * Prefer identity encoding; buffer scripts so length always matches bytes.
  */
 export async function GET(request, context) {
   const params = await context.params;
@@ -31,12 +39,16 @@ export async function GET(request, context) {
     upstreamUrl.searchParams.set(key, value);
   });
 
-  const headers = {
-    'User-Agent': 'DGS-NextJS-MediaProxy/1.0',
-    Accept: request.headers.get('accept') || '*/*',
-  };
   const range = request.headers.get('range');
-  if (range) headers.Range = range;
+  const scriptLike = isScriptPath(pathname);
+
+  const headers = {
+    'User-Agent': 'DGS-NextJS-MediaProxy/1.1',
+    Accept: request.headers.get('accept') || '*/*',
+    // Avoid compressed Content-Length vs decompressed body mismatch.
+    'Accept-Encoding': 'identity',
+  };
+  if (range && !scriptLike) headers.Range = range;
 
   let upstream;
   try {
@@ -58,20 +70,36 @@ export async function GET(request, context) {
   }
 
   const out = new Headers();
-  const pass = [
-    'content-type',
-    'content-length',
-    'content-range',
-    'accept-ranges',
-    'etag',
-    'last-modified',
-  ];
+  const pass = ['content-type', 'accept-ranges', 'etag', 'last-modified'];
   for (const key of pass) {
     const val = upstream.headers.get(key);
     if (val) out.set(key, val);
   }
+  // Never forward content-encoding / compressed content-length from upstream.
+  out.delete('content-encoding');
+  out.delete('content-length');
   out.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
-  out.set('X-DGS-Media-Proxy', '1');
+  out.set('X-DGS-Media-Proxy', '1.1');
+
+  // Scripts/CSS: buffer full body so clients never see truncated JS.
+  if (scriptLike) {
+    const buf = Buffer.from(await upstream.arrayBuffer());
+    out.set('Content-Length', String(buf.byteLength));
+    return new NextResponse(buf, {
+      status: upstream.status,
+      headers: out,
+    });
+  }
+
+  // Media (images/video): stream. With identity encoding, length is safe to forward.
+  const contentRange = upstream.headers.get('content-range');
+  const contentLength = upstream.headers.get('content-length');
+  const contentEncoding = upstream.headers.get('content-encoding');
+  if (contentRange) out.set('Content-Range', contentRange);
+  // Only forward length when upstream did not compress (identity / missing).
+  if (contentLength && (!contentEncoding || /^(identity|)$/i.test(contentEncoding))) {
+    out.set('Content-Length', contentLength);
+  }
 
   return new NextResponse(upstream.body, {
     status: upstream.status,
