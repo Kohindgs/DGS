@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v1'],
+  ['wp-home-mirror-v2'],
   { revalidate: 300 }
 );
 
@@ -416,19 +416,67 @@ export default async function WpHomePage() {
           mask: none !important;
         }
 
-        /*
-          Portfolio: WP hides .thumb-video until .video-ready and paints a loud
-          radial gradient fallback. Missing -thumb.webp + cross-origin video
-          failures left cards looking "broken"/gradient-only.
-        */
-        .thumb-fallback {
+        /* Case study screenshots must paint — no frosted/gradient cover */
+        .dgs-v1215-case-visual-card,
+        .dgs-v1215-case-mini {
+          background: #111 !important;
+          background-image: none !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          box-shadow: none !important;
+        }
+        .dgs-v1215-case-media,
+        .dgs-weavings-case-media {
+          position: relative !important;
+          z-index: 1 !important;
           background: #0a0a0a !important;
           background-image: none !important;
         }
-        .thumb-video {
+        .dgs-v1215-case-media img,
+        .dgs-weavings-case-media img,
+        .dgs-v1215-case-visual-card img {
           opacity: 1 !important;
           visibility: visible !important;
+          display: block !important;
+          position: relative !important;
           z-index: 1 !important;
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          filter: none !important;
+          mix-blend-mode: normal !important;
+        }
+        .dgs-v1215-case-content {
+          position: relative !important;
+          z-index: 2 !important;
+          background: #111 !important;
+          background-image: none !important;
+        }
+        .dgs-case-open-btn {
+          z-index: 4 !important;
+          background: transparent !important;
+          background-image: none !important;
+        }
+
+        /*
+          Portfolio: flat dark tiles until a real frame/poster is ready.
+          Never show the WP radial pink/orange gradient fallback.
+        */
+        .thumb-fallback,
+        .gallery-item .thumb-fallback,
+        .case-study-item .thumb-fallback {
+          background: #0a0a0a !important;
+          background-image: none !important;
+          opacity: 1 !important;
+        }
+        .thumb-video {
+          opacity: 0 !important;
+          visibility: visible !important;
+          z-index: 1 !important;
+        }
+        .gallery-item.video-ready .thumb-video,
+        .case-study-item.video-ready .thumb-video {
+          opacity: 1 !important;
         }
         .thumb-poster,
         .thumb-img.thumb-poster {
@@ -439,10 +487,19 @@ export default async function WpHomePage() {
           opacity: 0 !important;
         }
         .gallery-item.thumb-failed .thumb-fallback,
-        .case-study-item.thumb-failed .thumb-fallback {
+        .case-study-item.thumb-failed .thumb-fallback,
+        .gallery-item.awaiting-frame .thumb-fallback,
+        .case-study-item.awaiting-frame .thumb-fallback {
           opacity: 1 !important;
           background: #0a0a0a !important;
           background-image: none !important;
+        }
+        /* Hide WP loading spinners sitting on empty tiles */
+        .gallery-item .loading-spinner,
+        .case-study-item .loading-spinner,
+        .gallery-item .spinner,
+        .case-study-item .spinner {
+          display: none !important;
         }
 
         /* Mobile: keep arrows off the case study card — bottom bar like portfolio lightbox */
@@ -518,12 +575,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07e" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07f" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07e"
+        data-dgs-build="wp-mirror-2026-08-07f"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

@@ -61,8 +61,81 @@ function caseCardTitle(card) {
 }
 
 function ensurePortfolioMedia() {
-  const items = document.querySelectorAll('.gallery-item, .case-study-item');
+  const items = Array.from(document.querySelectorAll('.gallery-item, .case-study-item'));
   if (!items.length) return;
+
+  // Cap concurrent video metadata fetches so case-study images can load.
+  const MAX_CONCURRENT = 3;
+  let active = 0;
+  const queue = [];
+
+  const runNext = () => {
+    while (active < MAX_CONCURRENT && queue.length) {
+      const job = queue.shift();
+      active += 1;
+      Promise.resolve()
+        .then(job)
+        .catch(() => {})
+        .finally(() => {
+          active -= 1;
+          runNext();
+        });
+    }
+  };
+
+  const enqueue = (job) => {
+    queue.push(job);
+    runNext();
+  };
+
+  const activateVideo = (item, video) => {
+    if (!video || video.dataset.dgsActivated === '1') return;
+    video.dataset.dgsActivated = '1';
+
+    enqueue(() => {
+      const sources = video.querySelectorAll('source[data-src]');
+      sources.forEach((source) => {
+        const src = source.getAttribute('data-src');
+        if (src) {
+          source.setAttribute('src', src);
+          source.removeAttribute('data-src');
+        }
+      });
+      // Also support src parked on the video element itself
+      const parked = video.getAttribute('data-src');
+      if (parked && !video.getAttribute('src')) {
+        video.setAttribute('src', parked);
+        video.removeAttribute('data-src');
+      }
+
+      video.preload = 'metadata';
+      const markReady = () => item.classList.add('video-ready');
+      const markFailed = () => {
+        item.classList.add('thumb-failed');
+        item.classList.remove('video-ready');
+      };
+      video.addEventListener('loadeddata', markReady, { once: true });
+      video.addEventListener('loadedmetadata', markReady, { once: true });
+      video.addEventListener('error', markFailed, { once: true });
+
+      try {
+        video.load();
+        // Seek a hair forward so a frame paints without playing audio.
+        const paint = () => {
+          try {
+            if (video.readyState >= 1) {
+              video.currentTime = Math.min(0.12, (video.duration || 1) * 0.01);
+            }
+          } catch (_) {
+            /* ignore */
+          }
+        };
+        video.addEventListener('loadedmetadata', paint, { once: true });
+      } catch (_) {
+        markFailed();
+      }
+    });
+  };
 
   items.forEach((item) => {
     if (item.dataset.dgsPortfolioBound === '1') return;
@@ -71,55 +144,90 @@ function ensurePortfolioMedia() {
     const video = item.querySelector('video.thumb-video');
     const poster = item.querySelector('img.thumb-poster, img.thumb-img');
 
-    const markReady = () => item.classList.add('video-ready');
-    const markFailed = () => {
-      item.classList.add('thumb-failed');
-      item.classList.remove('video-ready');
-    };
+    // Park any eager source so IO controls loading.
+    if (video) {
+      video.preload = 'none';
+      video.querySelectorAll('source[src]').forEach((source) => {
+        if (!source.getAttribute('data-src')) {
+          source.setAttribute('data-src', source.getAttribute('src'));
+          source.removeAttribute('src');
+        }
+      });
+      if (video.getAttribute('src') && !video.getAttribute('data-src')) {
+        video.setAttribute('data-src', video.getAttribute('src'));
+        video.removeAttribute('src');
+      }
+      try {
+        video.load(); // reset with empty sources
+      } catch (_) {
+        /* ignore */
+      }
+    }
 
     if (poster) {
       const onPosterError = () => {
         poster.style.display = 'none';
         poster.removeAttribute('src');
-        // Fall through to video frame / flat fallback
-        if (video) {
-          try {
-            video.preload = 'metadata';
-            video.load();
-          } catch (_) {
-            /* ignore */
-          }
-        }
+        item.classList.add('awaiting-frame');
       };
       poster.addEventListener('error', onPosterError);
       if (poster.complete && poster.naturalWidth === 0 && poster.getAttribute('src')) {
         onPosterError();
       }
-      if (poster.complete && poster.naturalWidth > 0) markReady();
-      else poster.addEventListener('load', markReady, { once: true });
+      if (poster.complete && poster.naturalWidth > 0) {
+        item.classList.add('video-ready');
+      } else {
+        poster.addEventListener('load', () => item.classList.add('video-ready'), {
+          once: true,
+        });
+      }
+    } else {
+      item.classList.add('awaiting-frame');
     }
 
-    if (video) {
-      try {
-        video.preload = 'metadata';
-      } catch (_) {
-        /* ignore */
-      }
-      video.addEventListener('loadeddata', markReady);
-      video.addEventListener('loadedmetadata', markReady);
-      video.addEventListener('error', () => {
-        if (!item.classList.contains('video-ready')) markFailed();
-      });
-      // Nudge first frame for cards without posters
-      if (!poster || poster.style.display === 'none') {
-        try {
-          video.load();
-        } catch (_) {
-          /* ignore */
-        }
-      }
+    if (!video) return;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      activateVideo(item, video);
+      return;
     }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          io.disconnect();
+          activateVideo(item, video);
+        });
+      },
+      { rootMargin: '200px 0px', threshold: 0.01 }
+    );
+    io.observe(item);
   });
+}
+
+function ensureCaseStudyImages() {
+  document
+    .querySelectorAll('.dgs-v1215-case-media img, .dgs-weavings-case-media img')
+    .forEach((img) => {
+      img.loading = 'eager';
+      img.setAttribute('fetchpriority', 'high');
+      img.style.setProperty('opacity', '1', 'important');
+      img.style.setProperty('visibility', 'visible', 'important');
+      img.style.setProperty('display', 'block', 'important');
+      // Retry once through proxy if the browser aborted under load.
+      img.addEventListener(
+        'error',
+        () => {
+          const src = img.currentSrc || img.getAttribute('src') || '';
+          if (!src || img.dataset.dgsRetry === '1') return;
+          img.dataset.dgsRetry = '1';
+          const bump = src.includes('?') ? `&_r=${Date.now()}` : `?_r=${Date.now()}`;
+          img.src = `${src}${bump}`;
+        },
+        { once: true }
+      );
+    });
 }
 
 function ensureAgentFriendlyMarkup() {
@@ -496,6 +604,7 @@ export default function WpHomeClient({
 
       try {
         ensureAgentFriendlyMarkup();
+        ensureCaseStudyImages();
         ensureCaseStudyModal();
         ensurePortfolioMedia();
         // Portfolio cards are injected async by WP scripts — observe and bind.
