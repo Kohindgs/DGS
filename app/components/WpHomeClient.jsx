@@ -251,9 +251,11 @@ function ensureCaseStudyImages() {
 
   document
     .querySelectorAll('.dgs-v1215-case-media img, .dgs-weavings-case-media img')
-    .forEach((img) => {
-      img.loading = 'eager';
-      img.setAttribute('fetchpriority', 'high');
+    .forEach((img, index) => {
+      // Keep screenshots visible, but don't compete with the hero LCP image.
+      img.loading = index < 2 ? 'eager' : 'lazy';
+      img.removeAttribute('fetchpriority');
+      img.decoding = 'async';
       img.style.setProperty('opacity', '1', 'important');
       img.style.setProperty('visibility', 'visible', 'important');
       img.style.setProperty('display', 'block', 'important');
@@ -487,13 +489,13 @@ export default function WpHomeClient({
     let cancelled = false;
     let stopBackground = () => {};
 
-    if ('serviceWorker' in navigator) {
+    // One-time SW cleanup only — do not wipe Cache Storage on every visit
+    // (that actively fights repeat-view performance).
+    if ('serviceWorker' in navigator && !window.__dgsSwCleared) {
+      window.__dgsSwCleared = true;
       navigator.serviceWorker.getRegistrations?.().then((regs) => {
         regs.forEach((r) => r.unregister());
       });
-    }
-    if (window.caches?.keys) {
-      caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
     }
 
     const prevId = document.body.id;
@@ -522,13 +524,15 @@ export default function WpHomeClient({
       url.startsWith('data:image/svg') ||
       /^data:image\/gif;base64,/i.test(url);
 
-    // Smush/LiteSpeed + Envira: promote real URLs and drop 1×1 GIF srcset so
-    // Brand Identity gallery can measure naturalWidth and finish layout.
+    // Promote Smush/LiteSpeed placeholders. Leave Envira tiles alone when they
+    // already have real src/srcset — loading=lazy + Envira refresh handles them.
     document
       .querySelectorAll(
         'img[data-src], img[data-lazy-src], img[data-envira-src], img.envira-gallery-image, source[data-src], video[data-src]'
       )
       .forEach((el) => {
+        const isEnviraImg =
+          el.tagName === 'IMG' && el.classList.contains('envira-gallery-image');
         const real =
           el.getAttribute('data-envira-src') ||
           el.getAttribute('data-src') ||
@@ -551,8 +555,11 @@ export default function WpHomeClient({
           el.removeAttribute('srcset');
         }
 
-        el.classList.remove('lazyload', 'lazyloading', 'envira-lazy');
-        el.classList.add('lazyloaded');
+        el.classList.remove('lazyload', 'lazyloading');
+        if (!isEnviraImg) {
+          el.classList.remove('envira-lazy');
+          el.classList.add('lazyloaded');
+        }
       });
     document.querySelectorAll('[data-bg], [data-background]').forEach((el) => {
       const bg = el.getAttribute('data-bg') || el.getAttribute('data-background');
@@ -594,7 +601,8 @@ export default function WpHomeClient({
       const jqueryScripts = byKind('jquery');
       const enviraScripts = byKind('envira');
       const fluentScripts = byKind('fluent');
-      const recaptchaScripts = byKind('recaptcha');
+      // reCAPTCHA is hidden on the demo host and skipped by the WP mu-plugin —
+      // never download ~330KB×2 of unused gstatic JS on first paint.
       const motionScripts = [...byKind('motion'), ...byKind('lib')];
 
       for (const src of jqueryScripts) {
@@ -632,34 +640,20 @@ export default function WpHomeClient({
         }
       });
 
-      for (const src of enviraScripts) {
-        if (cancelled) return;
-        await loadScript(src);
-      }
-
-      for (const src of motionScripts) {
-        if (cancelled) return;
-        await loadScript(src);
-      }
-
-      // FluentForm: configs → recaptcha → submission/elementor bundles
-      fluentInlines.forEach((code, i) => {
-        if (cancelled) return;
-        try {
-          runInline(code, `dgs-fluent-cfg-${i}`);
-        } catch (err) {
-          console.warn('DGS fluent config failed', i, err);
+      // Envira (needs jQuery) and GSAP can load in parallel after jQuery.
+      const loadEnvira = (async () => {
+        for (const src of enviraScripts) {
+          if (cancelled) return;
+          await loadScript(src);
         }
-      });
-
-      for (const src of recaptchaScripts) {
-        if (cancelled) return;
-        await loadScript(src);
-      }
-      for (const src of fluentScripts) {
-        if (cancelled) return;
-        await loadScript(src);
-      }
+      })();
+      const loadMotion = (async () => {
+        for (const src of motionScripts) {
+          if (cancelled) return;
+          await loadScript(src);
+        }
+      })();
+      await Promise.all([loadEnvira, loadMotion]);
 
       appInlines.forEach((code, i) => {
         if (cancelled) return;
@@ -669,6 +663,43 @@ export default function WpHomeClient({
           console.warn('DGS inline script failed', i, err);
         }
       });
+
+      // FluentForm only matters for the talk/contact popup — defer until idle
+      // or until the user opens a talk/contact control.
+      const bootFluent = async () => {
+        if (cancelled || window.__dgsFluentBooted) return;
+        window.__dgsFluentBooted = true;
+        fluentInlines.forEach((code, i) => {
+          if (cancelled) return;
+          try {
+            runInline(code, `dgs-fluent-cfg-${i}`);
+          } catch (err) {
+            console.warn('DGS fluent config failed', i, err);
+          }
+        });
+        for (const src of fluentScripts) {
+          if (cancelled) return;
+          await loadScript(src);
+        }
+      };
+      const maybeFluentFromEvent = (event) => {
+        const t = event.target?.closest?.(
+          'a, button, [role="button"], .dgs-talk-open, [data-dgs-talk], #dgsTrig'
+        );
+        if (!t) return;
+        const hay = `${t.id || ''} ${t.className || ''} ${t.getAttribute?.('aria-label') || ''} ${t.textContent || ''}`;
+        if (/talk|contact|fluent|let'?s talk|get in touch|enquire|inquiry/i.test(hay)) {
+          bootFluent();
+        }
+      };
+      document.addEventListener('pointerdown', maybeFluentFromEvent, true);
+      document.addEventListener('focusin', maybeFluentFromEvent, true);
+      window.__dgsFluentBootHandlers = { maybeFluentFromEvent };
+      if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(() => bootFluent(), { timeout: 8000 });
+      } else {
+        setTimeout(() => bootFluent(), 5000);
+      }
 
       // Envira justified galleries need a resize/relayout after images + scripts settle.
       const refreshEnvira = () => {
@@ -697,6 +728,24 @@ export default function WpHomeClient({
       setTimeout(refreshEnvira, 400);
       setTimeout(refreshEnvira, 1200);
       window.addEventListener('load', refreshEnvira, { once: true });
+      // Lazy Envira tiles: relayout as images arrive instead of stampeding all at once.
+      document.querySelectorAll('img.envira-gallery-image').forEach((img) => {
+        if (img.complete) return;
+        img.addEventListener('load', refreshEnvira, { once: true });
+      });
+      const enviraRoot = document.querySelector('.envira-gallery-public');
+      if (enviraRoot && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((e) => e.isIntersecting)) {
+              refreshEnvira();
+              io.disconnect();
+            }
+          },
+          { rootMargin: '200px 0px' }
+        );
+        io.observe(enviraRoot);
+      }
 
       try {
         ensureAgentFriendlyMarkup();
@@ -813,6 +862,16 @@ export default function WpHomeClient({
 
     return () => {
       cancelled = true;
+      try {
+        const handlers = window.__dgsFluentBootHandlers;
+        if (handlers?.maybeFluentFromEvent) {
+          document.removeEventListener('pointerdown', handlers.maybeFluentFromEvent, true);
+          document.removeEventListener('focusin', handlers.maybeFluentFromEvent, true);
+          delete window.__dgsFluentBootHandlers;
+        }
+      } catch (_) {
+        /* ignore */
+      }
       try {
         stopBackground();
       } catch (_) {

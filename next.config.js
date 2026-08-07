@@ -25,9 +25,9 @@ const nextConfig = {
       {
         source: '/',
         headers: [
-          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
-          { key: 'CDN-Cache-Control', value: 'no-store' },
-          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-07l' },
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' },
+          { key: 'CDN-Cache-Control', value: 'public, s-maxage=60, stale-while-revalidate=300' },
+          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-07m' },
         ],
       },
     ];

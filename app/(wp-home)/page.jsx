@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v8'],
+  ['wp-home-mirror-v9'],
   { revalidate: 300 }
 );
 
@@ -57,9 +57,18 @@ export async function generateMetadata() {
 
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
+  const cssBundle = '/api/wp-css?bundle=home';
 
   return (
     <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="dns-prefetch" href="https://www.dgeniussolutions.com" />
+      <link rel="preload" href={cssBundle} as="style" />
+      {mirror.lcpImage ? (
+        <link rel="preload" href={mirror.lcpImage} as="image" fetchPriority="high" />
+      ) : null}
+
       {mirror.stylesheets.map((sheet) => (
         <link
           key={`${sheet.rel}-${sheet.href}`}
@@ -596,12 +605,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07l" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07m" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07l"
+        data-dgs-build="wp-mirror-2026-08-07m"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

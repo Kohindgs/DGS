@@ -43,7 +43,7 @@ export async function GET(request, context) {
   const scriptLike = isScriptPath(pathname);
 
   const headers = {
-    'User-Agent': 'DGS-NextJS-MediaProxy/1.2',
+    'User-Agent': 'DGS-NextJS-MediaProxy/1.3',
     Accept: request.headers.get('accept') || '*/*',
     // Avoid compressed Content-Length vs decompressed body mismatch.
     'Accept-Encoding': 'identity',
@@ -55,7 +55,10 @@ export async function GET(request, context) {
     upstream = await fetch(upstreamUrl.toString(), {
       headers,
       redirect: 'follow',
-      cache: 'no-store',
+      // Cache upstream WP bytes in Next's data cache (Range requests stay fresh).
+      ...(range && !scriptLike
+        ? { cache: 'no-store' }
+        : { next: { revalidate: scriptLike ? 3600 : 86400 } }),
     });
   } catch (err) {
     return new NextResponse(`Media proxy failed: ${err?.message || 'error'}`, {
@@ -79,16 +82,16 @@ export async function GET(request, context) {
   out.delete('content-encoding');
   out.delete('content-length');
   out.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
-  out.set('X-DGS-Media-Proxy', '1.2');
+  out.set('X-DGS-Media-Proxy', '1.3');
 
   // Scripts/CSS: buffer full body so clients never see truncated JS.
   // Do NOT set Content-Length — Hostinger/LiteSpeed may re-compress the
   // response and leave a mismatched length that truncates in browsers.
-  // Keep CDN cache short for JS so a bad truncated HIT cannot stick.
   if (scriptLike) {
     const buf = Buffer.from(await upstream.arrayBuffer());
     out.set('X-DGS-Media-Bytes', String(buf.byteLength));
-    out.set('Cache-Control', 'public, max-age=120, s-maxage=60, stale-while-revalidate=30');
+    // dgsv query already busts bad CDN HITs — allow longer browser/CDN cache.
+    out.set('Cache-Control', 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800');
     return new NextResponse(buf, {
       status: upstream.status,
       headers: out,

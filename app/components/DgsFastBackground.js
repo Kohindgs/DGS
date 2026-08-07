@@ -62,8 +62,8 @@ export function startDgsFastBackground(root = document.querySelector('.dgs-v1215
   }
 
   function seedParticles() {
-    // Slightly fewer than WP (380–560) for speed; feel stays dense enough
-    const count = width > 1400 ? 400 : width > 1100 ? 300 : 240;
+    // Slightly fewer than WP for speed; feel stays dense enough on desktop.
+    const count = width > 1400 ? 280 : width > 1100 ? 220 : 160;
     const next = [];
     for (let i = 0; i < count; i++) {
       const t = i / count;
