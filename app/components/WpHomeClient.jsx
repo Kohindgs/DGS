@@ -638,13 +638,33 @@ export default function WpHomeClient({
         }
       });
 
-      try {
-        if (window.jQuery && document.querySelector('.envira-gallery-public')) {
-          window.jQuery(window).trigger('resize');
+      // Envira justified galleries need a resize/relayout after images + scripts settle.
+      const refreshEnvira = () => {
+        try {
+          if (!window.jQuery || !document.querySelector('.envira-gallery-public')) return;
+          const $ = window.jQuery;
+          $(window).trigger('resize');
+          $(window).trigger('envira');
+          $('.envira-gallery-justified-public, .envira-gallery-public').each(function () {
+            const $g = $(this);
+            try {
+              if ($.fn.justifiedGallery && $g.data('jg.rowHeight')) {
+                $g.justifiedGallery('norewind');
+              } else if ($.fn.justifiedGallery) {
+                $g.justifiedGallery();
+              }
+            } catch (_) {
+              /* ignore */
+            }
+          });
+        } catch (_) {
+          /* ignore */
         }
-      } catch (_) {
-        /* ignore */
-      }
+      };
+      refreshEnvira();
+      setTimeout(refreshEnvira, 400);
+      setTimeout(refreshEnvira, 1200);
+      window.addEventListener('load', refreshEnvira, { once: true });
 
       try {
         ensureAgentFriendlyMarkup();
