@@ -532,9 +532,10 @@ export default function WpHomeClient({
       if (bg) el.style.backgroundImage = `url(${bg})`;
     });
 
-    // Agent a11y: name the menu command + fix presentational gallery imgs ASAP
+    // Agent a11y + flatten case gradients ASAP (before portfolio scripts boot)
     try {
       ensureAgentFriendlyMarkup();
+      ensureCaseStudyImages();
     } catch (_) {
       /* ignore */
     }
