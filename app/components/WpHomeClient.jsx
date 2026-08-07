@@ -207,6 +207,48 @@ function ensurePortfolioMedia() {
 }
 
 function ensureCaseStudyImages() {
+  // Last-paint CSS kill — WP outline ::after must not become a full gradient slab.
+  if (!document.getElementById('dgs-case-flat-fix')) {
+    const style = document.createElement('style');
+    style.id = 'dgs-case-flat-fix';
+    style.textContent = `
+      html body .dgs-v1215-case-visual-card::before,
+      html body .dgs-v1215-case-visual-card::after,
+      html body .dgs-v1215-case-mini::before,
+      html body .dgs-v1215-case-mini::after {
+        content: none !important;
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        pointer-events: none !important;
+      }
+      html body .dgs-v1215-case-visual-card,
+      html body .dgs-v1215-case-mini {
+        background: #111 !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        isolation: auto !important;
+      }
+      html body .dgs-v1215-case-media img,
+      html body .dgs-weavings-case-media img {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+        object-position: top center !important;
+      }
+      html body .dgs-case-open-btn {
+        background: transparent !important;
+        background-image: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   document
     .querySelectorAll('.dgs-v1215-case-media img, .dgs-weavings-case-media img')
     .forEach((img) => {
@@ -215,6 +257,7 @@ function ensureCaseStudyImages() {
       img.style.setProperty('opacity', '1', 'important');
       img.style.setProperty('visibility', 'visible', 'important');
       img.style.setProperty('display', 'block', 'important');
+      img.style.setProperty('object-position', 'top center', 'important');
       // Retry once through proxy if the browser aborted under load.
       img.addEventListener(
         'error',

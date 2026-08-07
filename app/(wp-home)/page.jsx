@@ -380,61 +380,86 @@ export default async function WpHomePage() {
           position: relative;
         }
         .dgs-case-open-btn {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-          width: 100%;
-          height: 100%;
-          margin: 0;
-          padding: 0;
-          border: 0;
-          background: transparent;
-          cursor: pointer;
-          appearance: none;
-          -webkit-appearance: none;
+          /* Do NOT cover the card — a full-bleed overlay was painting as a
+             blue→pink gradient slab on top of screenshots + copy. */
+          position: absolute !important;
+          width: 1px !important;
+          height: 1px !important;
+          padding: 0 !important;
+          margin: -1px !important;
+          overflow: hidden !important;
+          clip: rect(0, 0, 0, 0) !important;
+          clip-path: inset(50%) !important;
+          border: 0 !important;
+          white-space: nowrap !important;
+          background: transparent !important;
+          background-image: none !important;
+          box-shadow: none !important;
+          opacity: 0 !important;
+          appearance: none !important;
+          -webkit-appearance: none !important;
         }
         .dgs-case-open-btn:focus-visible {
-          outline: 2px solid #fff;
-          outline-offset: -4px;
+          clip: auto !important;
+          clip-path: none !important;
+          width: auto !important;
+          height: auto !important;
+          margin: 0 !important;
+          inset: 8px auto auto 8px !important;
+          opacity: 1 !important;
+          color: #fff !important;
+          background: #111 !important;
+          padding: 6px 10px !important;
+          outline: 2px solid #fff !important;
         }
 
-        /* Kill rainbow outline gradient overlay on case study cards */
-        .dgs-v1215-case-visual-card::before,
-        .dgs-v1215-case-visual-card::after,
-        .dgs-v1215-case-mini::before,
-        .dgs-v1215-case-mini::after,
-        .dgs-v1215-case-visual-card:hover::before,
-        .dgs-v1215-case-visual-card:hover::after,
-        .dgs-v1215-case-mini:hover::before,
-        .dgs-v1215-case-mini:hover::after {
+        /*
+          Kill rainbow outline ::after. Critical: never set mask:none while
+          content/background still apply — that turns the 1px outline into a
+          full-card blue→pink gradient cover (what users were seeing).
+        */
+        html body .dgs-v1215-case-visual-card::before,
+        html body .dgs-v1215-case-visual-card::after,
+        html body .dgs-v1215-case-mini::before,
+        html body .dgs-v1215-case-mini::after,
+        html body .dgs-v1215-case-visual-card:hover::before,
+        html body .dgs-v1215-case-visual-card:hover::after,
+        html body .dgs-v1215-case-mini:hover::before,
+        html body .dgs-v1215-case-mini:hover::after {
           content: none !important;
           display: none !important;
-          background: none !important;
-          background-image: none !important;
+          visibility: hidden !important;
           opacity: 0 !important;
-          -webkit-mask: none !important;
-          mask: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          padding: 0 !important;
+          inset: auto !important;
+          background: transparent !important;
+          background-image: none !important;
+          pointer-events: none !important;
         }
 
-        /* Case study screenshots must paint — no frosted/gradient cover */
-        .dgs-v1215-case-visual-card,
-        .dgs-v1215-case-mini {
+        /* Case study screenshots must paint — no frosted/gradient glass */
+        html body .dgs-v1215-case-visual-card,
+        html body .dgs-v1215-case-mini {
           background: #111 !important;
           background-image: none !important;
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
           box-shadow: none !important;
+          isolation: auto !important;
         }
-        .dgs-v1215-case-media,
-        .dgs-weavings-case-media {
+        html body .dgs-v1215-case-media,
+        html body .dgs-weavings-case-media {
           position: relative !important;
           z-index: 1 !important;
           background: #0a0a0a !important;
           background-image: none !important;
+          min-height: 220px !important;
         }
-        .dgs-v1215-case-media img,
-        .dgs-weavings-case-media img,
-        .dgs-v1215-case-visual-card img {
+        html body .dgs-v1215-case-media img,
+        html body .dgs-weavings-case-media img,
+        html body .dgs-v1215-case-visual-card img {
           opacity: 1 !important;
           visibility: visible !important;
           display: block !important;
@@ -443,18 +468,14 @@ export default async function WpHomePage() {
           width: 100% !important;
           height: 100% !important;
           object-fit: cover !important;
+          object-position: top center !important;
           filter: none !important;
           mix-blend-mode: normal !important;
         }
-        .dgs-v1215-case-content {
+        html body .dgs-v1215-case-content {
           position: relative !important;
           z-index: 2 !important;
           background: #111 !important;
-          background-image: none !important;
-        }
-        .dgs-case-open-btn {
-          z-index: 4 !important;
-          background: transparent !important;
           background-image: none !important;
         }
 
@@ -575,12 +596,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07f" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07g" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07f"
+        data-dgs-build="wp-mirror-2026-08-07g"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
