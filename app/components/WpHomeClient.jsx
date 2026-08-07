@@ -51,6 +51,95 @@ function paintFlatControl(el) {
   el.style.setProperty('visibility', 'visible', 'important');
 }
 
+function caseCardTitle(card) {
+  const title =
+    card.querySelector('.dgs-v1215-case-visual-title, h3, h2, h4')?.textContent?.trim() ||
+    'Case study';
+  const kicker =
+    card.querySelector('.dgs-v1215-case-visual-kicker, span')?.textContent?.trim() || '';
+  return kicker ? `${kicker}: ${title}` : title;
+}
+
+function ensureAgentFriendlyMarkup() {
+  // Menu trigger must be a named command for agentic browsing / AT.
+  const trig = document.getElementById('dgsTrig');
+  if (trig) {
+    if (!trig.getAttribute('aria-label')) {
+      trig.setAttribute('aria-label', 'Open menu');
+    }
+    if (!trig.hasAttribute('aria-expanded')) {
+      trig.setAttribute('aria-expanded', 'false');
+    }
+    if (!trig.hasAttribute('aria-controls')) {
+      const panel =
+        document.getElementById('dgsPanel') ||
+        document.querySelector('#dgsNav .dgs-panel, #dgsNav [id]');
+      if (panel?.id) trig.setAttribute('aria-controls', panel.id);
+    }
+    trig.setAttribute('role', 'button');
+    if (!trig.hasAttribute('tabindex')) trig.tabIndex = 0;
+  }
+
+  const nav = document.getElementById('dgsNav');
+  if (nav && trig) {
+    const syncExpanded = () => {
+      const open = nav.classList.contains('nav-open');
+      trig.setAttribute('aria-expanded', open ? 'true' : 'false');
+      trig.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    syncExpanded();
+    const mo = new MutationObserver(syncExpanded);
+    mo.observe(nav, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  // Strip invalid role=button from articles (may arrive from earlier client boots).
+  document
+    .querySelectorAll('article.dgs-v1215-case-visual-card[role="button"], article.dgs-v1215-case-mini[role="button"]')
+    .forEach((card) => {
+      card.removeAttribute('role');
+      card.removeAttribute('tabindex');
+    });
+
+  // Envira imgs: empty alt + tabindex=-1 is inconsistent for presentational nodes.
+  // Prefer a real name from caption/title; otherwise keep decorative and drop tabindex.
+  document
+    .querySelectorAll(
+      'img.envira-gallery-image[alt=""], img.envira-gallery-image:not([alt])'
+    )
+    .forEach((img) => {
+      const caption =
+        img.getAttribute('data-caption') ||
+        img.getAttribute('title') ||
+        img.closest('[data-caption]')?.getAttribute('data-caption') ||
+        img.closest('a')?.getAttribute('title') ||
+        '';
+      const cleaned = String(caption).replace(/<[^>]+>/g, '').trim();
+      if (cleaned) {
+        img.setAttribute('alt', cleaned);
+        img.removeAttribute('aria-hidden');
+        img.removeAttribute('role');
+        img.removeAttribute('tabindex');
+      } else if (img.getAttribute('alt') === '') {
+        img.removeAttribute('tabindex');
+        img.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+  document
+    .querySelectorAll("a.envira-gallery-link, a[class*='envira-gallery-']")
+    .forEach((link) => {
+      if (link.getAttribute('aria-label')) return;
+      const img = link.querySelector('img');
+      const name =
+        img?.getAttribute('alt') ||
+        link.getAttribute('title') ||
+        img?.getAttribute('data-caption') ||
+        '';
+      const cleaned = String(name).replace(/<[^>]+>/g, '').trim();
+      if (cleaned) link.setAttribute('aria-label', `View image: ${cleaned}`);
+    });
+}
+
 function ensureCaseStudyModal() {
   if (document.getElementById('dgs-case-modal')) return;
 
@@ -121,18 +210,30 @@ function ensureCaseStudyModal() {
   }
 
   cards().forEach((card, i) => {
+    // Keep <article> as an article — no role="button".
+    // Expose a real <button> so agents/AT get a named command.
+    card.removeAttribute('role');
+    card.removeAttribute('tabindex');
     card.style.cursor = 'pointer';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.addEventListener('click', (e) => {
+
+    let openBtn = card.querySelector('.dgs-case-open-btn');
+    if (!openBtn) {
+      openBtn = document.createElement('button');
+      openBtn.type = 'button';
+      openBtn.className = 'dgs-case-open-btn';
+      card.appendChild(openBtn);
+    }
+    openBtn.setAttribute('aria-label', `Open case study: ${caseCardTitle(card)}`);
+
+    openBtn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       openAt(i);
     });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openAt(i);
-      }
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a,button')) return;
+      e.preventDefault();
+      openAt(i);
     });
   });
 
@@ -217,6 +318,13 @@ export default function WpHomeClient({
       const bg = el.getAttribute('data-bg') || el.getAttribute('data-background');
       if (bg) el.style.backgroundImage = `url(${bg})`;
     });
+
+    // Agent a11y: name the menu command + fix presentational gallery imgs ASAP
+    try {
+      ensureAgentFriendlyMarkup();
+    } catch (_) {
+      /* ignore */
+    }
 
     // Start lightweight particle bg immediately (no Three.js wait)
     try {
@@ -325,9 +433,10 @@ export default function WpHomeClient({
       }
 
       try {
+        ensureAgentFriendlyMarkup();
         ensureCaseStudyModal();
       } catch (err) {
-        console.warn('Case study modal init failed', err);
+        console.warn('Case study / agent a11y init failed', err);
       }
 
       const fixLightboxControls = () => {

@@ -374,6 +374,30 @@ export default async function WpHomePage() {
         .dgs-case-modal-metrics strong { display: block; font-size: 1.25rem; }
         .dgs-case-modal-metrics small { color: rgba(255,255,255,.55); }
 
+        /* Invisible hit-target button so case cards stay <article> in the a11y tree */
+        .dgs-v1215-case-visual-card,
+        .dgs-v1215-case-mini {
+          position: relative;
+        }
+        .dgs-case-open-btn {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          cursor: pointer;
+          appearance: none;
+          -webkit-appearance: none;
+        }
+        .dgs-case-open-btn:focus-visible {
+          outline: 2px solid #fff;
+          outline-offset: -4px;
+        }
+
         /* Mobile: keep arrows off the case study card — bottom bar like portfolio lightbox */
         @media (max-width: 900px) {
           .dgs-case-modal {
@@ -447,12 +471,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07c" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07d" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07c"
+        data-dgs-build="wp-mirror-2026-08-07d"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
