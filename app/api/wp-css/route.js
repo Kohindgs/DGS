@@ -8,14 +8,21 @@ const WP_HOME_URL = process.env.WP_HOME_URL || `${WP_ORIGIN}/`;
 export const runtime = 'nodejs';
 
 function rewriteWpUrlsInCss(css = '') {
+  const demo =
+    process.env.DEMO_ORIGIN || 'https://dimgrey-goat-473970.hostingersite.com';
+  const origin = demo.replace(/\/$/, '');
   return css
     .replace(
       /https?:\/\/(?:www\.)?dgeniussolutions\.com(\/wp-(?:content|includes)\/[^)'"\s]*)/gi,
-      '$1'
+      `${origin}/api/wp-media$1`
     )
     .replace(
       /url\(\s*(['"]?)\/\/(?:www\.)?dgeniussolutions\.com(\/wp-(?:content|includes)\/[^)'"\s]*)\1\s*\)/gi,
-      'url($1$2$1)'
+      `url($1${origin}/api/wp-media$2$1)`
+    )
+    .replace(
+      /url\(\s*(['"]?)\/(wp-(?:content|includes)\/[^)'"\s]*)\1\s*\)/gi,
+      `url($1${origin}/api/wp-media/$2$1)`
     );
 }
 
@@ -111,7 +118,7 @@ export async function GET(request) {
           const srcs = await collectHomeCssUrls();
           return buildBundle(srcs);
         },
-        ['wp-css-bundle-home-v1'],
+        ['wp-css-bundle-home-v2'],
         { revalidate: 3600 }
       );
       const css = await getHomeBundle();

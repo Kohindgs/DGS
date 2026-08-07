@@ -60,6 +60,68 @@ function caseCardTitle(card) {
   return kicker ? `${kicker}: ${title}` : title;
 }
 
+function ensurePortfolioMedia() {
+  const items = document.querySelectorAll('.gallery-item, .case-study-item');
+  if (!items.length) return;
+
+  items.forEach((item) => {
+    if (item.dataset.dgsPortfolioBound === '1') return;
+    item.dataset.dgsPortfolioBound = '1';
+
+    const video = item.querySelector('video.thumb-video');
+    const poster = item.querySelector('img.thumb-poster, img.thumb-img');
+
+    const markReady = () => item.classList.add('video-ready');
+    const markFailed = () => {
+      item.classList.add('thumb-failed');
+      item.classList.remove('video-ready');
+    };
+
+    if (poster) {
+      const onPosterError = () => {
+        poster.style.display = 'none';
+        poster.removeAttribute('src');
+        // Fall through to video frame / flat fallback
+        if (video) {
+          try {
+            video.preload = 'metadata';
+            video.load();
+          } catch (_) {
+            /* ignore */
+          }
+        }
+      };
+      poster.addEventListener('error', onPosterError);
+      if (poster.complete && poster.naturalWidth === 0 && poster.getAttribute('src')) {
+        onPosterError();
+      }
+      if (poster.complete && poster.naturalWidth > 0) markReady();
+      else poster.addEventListener('load', markReady, { once: true });
+    }
+
+    if (video) {
+      try {
+        video.preload = 'metadata';
+      } catch (_) {
+        /* ignore */
+      }
+      video.addEventListener('loadeddata', markReady);
+      video.addEventListener('loadedmetadata', markReady);
+      video.addEventListener('error', () => {
+        if (!item.classList.contains('video-ready')) markFailed();
+      });
+      // Nudge first frame for cards without posters
+      if (!poster || poster.style.display === 'none') {
+        try {
+          video.load();
+        } catch (_) {
+          /* ignore */
+        }
+      }
+    }
+  });
+}
+
 function ensureAgentFriendlyMarkup() {
   // Menu trigger must be a named command for agentic browsing / AT.
   const trig = document.getElementById('dgsTrig');
@@ -435,8 +497,18 @@ export default function WpHomeClient({
       try {
         ensureAgentFriendlyMarkup();
         ensureCaseStudyModal();
+        ensurePortfolioMedia();
+        // Portfolio cards are injected async by WP scripts — observe and bind.
+        const portfolioRoot =
+          document.querySelector('#portfolio, .dgs-v1215-portfolio, .portfolio-gallery, #work') ||
+          document.getElementById('dgs-wp-home-mirror');
+        if (portfolioRoot && !portfolioRoot.dataset.dgsPortfolioObserved) {
+          portfolioRoot.dataset.dgsPortfolioObserved = '1';
+          const mo = new MutationObserver(() => ensurePortfolioMedia());
+          mo.observe(portfolioRoot, { childList: true, subtree: true });
+        }
       } catch (err) {
-        console.warn('Case study / agent a11y init failed', err);
+        console.warn('Case study / portfolio / agent a11y init failed', err);
       }
 
       const fixLightboxControls = () => {

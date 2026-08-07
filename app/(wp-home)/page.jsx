@@ -398,6 +398,53 @@ export default async function WpHomePage() {
           outline-offset: -4px;
         }
 
+        /* Kill rainbow outline gradient overlay on case study cards */
+        .dgs-v1215-case-visual-card::before,
+        .dgs-v1215-case-visual-card::after,
+        .dgs-v1215-case-mini::before,
+        .dgs-v1215-case-mini::after,
+        .dgs-v1215-case-visual-card:hover::before,
+        .dgs-v1215-case-visual-card:hover::after,
+        .dgs-v1215-case-mini:hover::before,
+        .dgs-v1215-case-mini:hover::after {
+          content: none !important;
+          display: none !important;
+          background: none !important;
+          background-image: none !important;
+          opacity: 0 !important;
+          -webkit-mask: none !important;
+          mask: none !important;
+        }
+
+        /*
+          Portfolio: WP hides .thumb-video until .video-ready and paints a loud
+          radial gradient fallback. Missing -thumb.webp + cross-origin video
+          failures left cards looking "broken"/gradient-only.
+        */
+        .thumb-fallback {
+          background: #0a0a0a !important;
+          background-image: none !important;
+        }
+        .thumb-video {
+          opacity: 1 !important;
+          visibility: visible !important;
+          z-index: 1 !important;
+        }
+        .thumb-poster,
+        .thumb-img.thumb-poster {
+          z-index: 2 !important;
+        }
+        .gallery-item.video-ready .thumb-fallback,
+        .case-study-item.video-ready .thumb-fallback {
+          opacity: 0 !important;
+        }
+        .gallery-item.thumb-failed .thumb-fallback,
+        .case-study-item.thumb-failed .thumb-fallback {
+          opacity: 1 !important;
+          background: #0a0a0a !important;
+          background-image: none !important;
+        }
+
         /* Mobile: keep arrows off the case study card — bottom bar like portfolio lightbox */
         @media (max-width: 900px) {
           .dgs-case-modal {
@@ -471,12 +518,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07d" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-07e" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07d"
+        data-dgs-build="wp-mirror-2026-08-07e"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
