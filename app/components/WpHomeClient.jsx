@@ -601,6 +601,11 @@ export default function WpHomeClient({
         if (cancelled) return;
         await loadScript(src);
       }
+      // If proxy-served jQuery truncated/failed, fall back to a known-good CDN build.
+      if (!window.jQuery) {
+        console.warn('DGS jQuery missing after WP scripts; loading CDN fallback');
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js');
+      }
 
       const configInlines = [];
       const fluentInlines = [];

@@ -82,9 +82,13 @@ export async function GET(request, context) {
   out.set('X-DGS-Media-Proxy', '1.1');
 
   // Scripts/CSS: buffer full body so clients never see truncated JS.
+  // Do NOT set Content-Length — Hostinger/LiteSpeed may re-compress the
+  // response and leave a mismatched length that truncates in browsers.
+  // Keep CDN cache short for JS so a bad truncated HIT cannot stick.
   if (scriptLike) {
     const buf = Buffer.from(await upstream.arrayBuffer());
-    out.set('Content-Length', String(buf.byteLength));
+    out.set('X-DGS-Media-Bytes', String(buf.byteLength));
+    out.set('Cache-Control', 'public, max-age=120, s-maxage=60, stale-while-revalidate=30');
     return new NextResponse(buf, {
       status: upstream.status,
       headers: out,
