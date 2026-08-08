@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v34'],
+  ['wp-home-mirror-v35'],
   { revalidate: 900 }
 );
 
@@ -58,11 +58,10 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08t';
+  const cssBundle = '/api/wp-css?bundle=home&v=08u';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
-  const lcpSrcset = lcp.srcSet;
 
   return (
     <>
@@ -87,35 +86,10 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 `.replace(/\n/g, ''),
         }}
       />
-      {/* LCP image first — wins bandwidth vs fonts/CSS on Slow 4G. */}
-      <link
-        rel="preload"
-        as="image"
-        href={lcpPreloadHref}
-        imageSrcSet={lcpSrcset}
-        imageSizes={lcp.sizes}
-        fetchPriority="high"
-      />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      {/* Non-blocking home CSS: no style preload (competes with LCP on Slow 4G). */}
+      {/* Single LCP preload (href only — imageSrcSet made Next emit a duplicate). */}
+      <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
+      {/* Non-blocking home CSS / font: no rel=preload (they steal LCP bandwidth on Slow 4G). */}
       <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
-      <script
-        dangerouslySetInnerHTML={{
-          __html:
-            "(function(){var l=document.querySelector('link[data-dgs-css=\"home\"]');if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,2500);})();",
-        }}
-      />
-      <noscript>
-        <link rel="stylesheet" href={cssBundle} />
-      </noscript>
-
-      {/* Non-blocking Syne (RSC-safe: no React onLoad — use media=print + tiny script). */}
-      <link
-        rel="preload"
-        as="style"
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
-      />
       <link
         data-dgs-font="syne"
         rel="stylesheet"
@@ -125,22 +99,23 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "(function(){var l=document.querySelector('link[data-dgs-font=\"syne\"]');if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,1200);})();",
+            "(function(){function arm(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,2500);}arm('link[data-dgs-css=\"home\"]');arm('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
       <noscript>
+        <link rel="stylesheet" href={cssBundle} />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08t" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08u" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08t"
+        data-dgs-build="wp-mirror-2026-08-08u"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
