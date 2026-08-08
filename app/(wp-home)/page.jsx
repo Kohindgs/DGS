@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v42'],
+  ['wp-home-mirror-v43'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09b';
+  const cssBundle = '/api/wp-css?bundle=home&v=09c';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -116,28 +116,6 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           __html: `(function(){function enableCss(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css]').forEach(function(l){l.media='all'});}function enableFont(){var l=document.querySelector('link[data-dgs-font]');if(l)l.media='all';}var l=document.querySelector('link[data-dgs-css]');if(l){if(l.addEventListener)l.addEventListener('load',enableCss);if(l.sheet)enableCss()}setTimeout(enableCss,2000);setTimeout(enableFont,12000)})();`,
         }}
       />
-
-      <meta name="dgs-build" content="wp-mirror-2026-08-09b" />
-
-      <div
-        id="dgs-wp-home-mirror"
-        className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09b"
-        dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
-      />
-
-
-      {/* WP inline/link CSS omitted from first paint — covered by deferred home bundle. */}
-
-      {/* JSON-LD after CSS so it does not compete with first paint. */}
-      {mirror.schemas.map((json, i) => (
-        <script
-          // eslint-disable-next-line react/no-danger
-          key={`ld-${i}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: json }}
-        />
-      ))}
 
       <style>{`
         /* Default scrollable; cooperate with menu/talk/case scroll-lock */
@@ -807,7 +785,8 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 
       `}</style>
 
-      {/* After mirror HTML: responsive + contact overrides win on cascade */}
+
+      {/* Layout overrides before mirror HTML — prevents hero CLS */}
       <style id="dgs-responsive-overrides">{`
         /* Reinforce pill brand color after mirrored WP CSS */
         html body #dgsPill.dgs-talk-trigger,
@@ -1067,6 +1046,29 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           }
         }
       `}</style>
+
+
+      <meta name="dgs-build" content="wp-mirror-2026-08-09c" />
+
+      <div
+        id="dgs-wp-home-mirror"
+        className="dgs-wp-home-mirror"
+        data-dgs-build="wp-mirror-2026-08-09c"
+        dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
+      />
+
+
+      {/* WP inline/link CSS omitted from first paint — covered by deferred home bundle. */}
+
+      {/* JSON-LD after CSS so it does not compete with first paint. */}
+      {mirror.schemas.map((json, i) => (
+        <script
+          // eslint-disable-next-line react/no-danger
+          key={`ld-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: json }}
+        />
+      ))}
 
       <DeferredHomeClient
         bodyId={mirror.bodyId}
