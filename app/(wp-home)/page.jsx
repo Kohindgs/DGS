@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v37'],
+  ['wp-home-mirror-v38'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08w';
+  const cssBundle = '/api/wp-css?bundle=home&v=08x';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -75,7 +75,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 #dgsNav{background:transparent;min-height:0;height:auto}
 #dgsLogo img,#dgsNav img{height:28px;width:auto;display:block}
 .dgs-v1215-shell{width:min(1200px,92vw);margin:0 auto;padding:0 4vw;box-sizing:border-box}
-.dgs-v1215-hero{min-height:100svh;display:flex;align-items:center;padding:88px 0 40px;box-sizing:border-box}
+.dgs-v1215-hero,#dgs-home-start{min-height:100svh;display:flex;align-items:center;padding:88px 0 40px;box-sizing:border-box;width:100%}
 .dgs-v1215-hero-layout{display:grid;gap:28px;align-items:center}
 .dgs-v1215-kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 18px;color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 .dgs-v1215-copy h1{color:#fff;font-family:system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0;font-size:clamp(2rem,8vw,3.4rem)}
@@ -112,12 +112,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08w" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08x" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08w"
+        data-dgs-build="wp-mirror-2026-08-08x"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
@@ -216,7 +216,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         html body .dgs-talk-popup,
         html body .fluentform,
         html body .dgs-case-modal {
-          font-family: 'Syne', sans-serif !important;
+          font-family: system-ui, 'Syne', sans-serif !important;
         }
         html body .dgs-v1215 h1,
         html body .dgs-v1215 h2,
@@ -229,7 +229,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         html body .dgs-talk-popup button[type="submit"],
         html body .fluentform .ff-btn-submit,
         html body .dgs-case-modal-body h3 {
-          font-family: 'Syne', sans-serif !important;
+          font-family: system-ui, 'Syne', sans-serif !important;
           font-weight: 500 !important;
         }
         html body .dgs-v1215 h1 {
@@ -287,7 +287,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         .envirabox-container .envirabox-close:before,
         .envirabox-container .envirabox-button--close:before {
           content: "×" !important;
-          font-family: 'Syne', system-ui, sans-serif !important;
+          font-family: system-ui, 'Syne', sans-serif !important;
           font-size: 28px !important;
           font-weight: 400 !important;
           color: #fff !important;
@@ -298,7 +298,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         .envirabox-container .envirabox-prev span:before,
         .envirabox-container .envirabox-button--arrow_left:after {
           content: "‹" !important;
-          font-family: 'Syne', system-ui, sans-serif !important;
+          font-family: system-ui, 'Syne', sans-serif !important;
           font-size: 36px !important;
           color: #fff !important;
           background: none !important;
@@ -307,7 +307,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         .envirabox-container .envirabox-next span:before,
         .envirabox-container .envirabox-button--arrow_right:after {
           content: "›" !important;
-          font-family: 'Syne', system-ui, sans-serif !important;
+          font-family: system-ui, 'Syne', sans-serif !important;
           font-size: 36px !important;
           color: #fff !important;
           background: none !important;
@@ -359,12 +359,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           text-transform: uppercase;
           color: rgba(255,255,255,.55);
           margin-bottom: 8px;
-          font-family: 'Syne', sans-serif;
+          font-family: system-ui, 'Syne', sans-serif;
           font-weight: 500;
         }
         .dgs-case-modal-body h3 {
           margin: 0 0 10px;
-          font-family: 'Syne', sans-serif;
+          font-family: system-ui, 'Syne', sans-serif;
           font-weight: 600;
           font-size: clamp(22px, 3vw, 32px);
         }
