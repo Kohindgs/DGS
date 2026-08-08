@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v44'],
+  ['wp-home-mirror-v45'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09d';
+  const cssBundle = '/api/wp-css?bundle=home&v=09e';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -98,10 +98,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       />
       {/* Single LCP preload */}
       <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
-      {/* WP/Elementor bundle loads late — early apply restyled .elementor wrappers and caused hero CLS. */}
-      <noscript>
-        <link rel="stylesheet" href={cssBundle} />
-      </noscript>
+      {/* No <noscript> stylesheet — Next was hoisting it into a render-blocking <link>. */}
       <script
         dangerouslySetInnerHTML={{
           __html: `(function(h){function inject(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;var l=document.createElement('link');l.rel='stylesheet';l.href=h;document.head.appendChild(l);}setTimeout(inject,12000);})("${cssBundle}")`,
@@ -1039,12 +1036,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09d" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09e" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09d"
+        data-dgs-build="wp-mirror-2026-08-09e"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
