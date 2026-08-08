@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v24'],
+  ['wp-home-mirror-v25'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08j';
+  const cssBundle = '/api/wp-css?bundle=home&v=08k';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -765,7 +765,19 @@ export default async function WpHomePage() {
           color: rgba(255, 255, 255, 0.55) !important;
         }
 
-        /* Contact Us: centered layout, flat submit, one-line CTA */
+      `}</style>
+
+      <meta name="dgs-build" content="wp-mirror-2026-08-08k" />
+
+      <div
+        id="dgs-wp-home-mirror"
+        className="dgs-wp-home-mirror"
+        data-dgs-build="wp-mirror-2026-08-08k"
+        dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
+      />
+
+      {/* After mirror HTML so these beat WP inline styles on cascade + specificity */}
+      <style id="dgs-contact-overrides">{`
         html body #contact-form.dgs-v1215-final .dgs-v1215-final-card {
           display: flex !important;
           flex-direction: column !important;
@@ -789,16 +801,30 @@ export default async function WpHomePage() {
           margin-left: auto !important;
           margin-right: auto !important;
         }
-        html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode {
+        html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode,
+        html body #contact-form.dgs-v1215-final .fluentform,
+        html body #contact-form.dgs-v1215-final form.fluent_form_1 {
           width: 100% !important;
           max-width: 560px !important;
-          margin: 22px auto 0 !important;
-          text-align: left !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode {
+          margin-top: 22px !important;
+        }
+        html body #contact-form.dgs-v1215-final .ff-el-group:has(.ff-btn-submit),
+        html body #contact-form.dgs-v1215-final .ff-el-group.ff-text-left:has(.ff-btn-submit),
+        html body #contact-form.dgs-v1215-final .ff-t-container:has(.ff-btn-submit) {
+          text-align: center !important;
+          display: flex !important;
+          justify-content: center !important;
         }
         html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn,
         html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn-primary {
           align-self: center !important;
           justify-self: center !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
           width: auto !important;
           min-width: 0 !important;
           max-width: none !important;
@@ -823,13 +849,36 @@ export default async function WpHomePage() {
         }
         html body #contact-form .fluentform .ff-btn-submit,
         html body #contact-form .fluentform button[type="submit"],
-        html body #contact-form form.fluent_form_1 .ff-btn-submit:not(.ff_btn_no_style) {
+        html body #contact-form form.fluent_form_1 .ff-btn-submit:not(.ff_btn_no_style),
+        html body #contact-form .ff-btn.ff-btn-submit.ff_btn_style {
+          position: relative !important;
           background: #FD5C62 !important;
           background-color: #FD5C62 !important;
           background-image: none !important;
           border: 0 !important;
           box-shadow: none !important;
           color: #fff !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        /* FluentForm paints the gradient on ::before — kill it */
+        html body #contact-form .fluentform .ff-btn-submit::before,
+        html body #contact-form .fluentform .ff-btn-submit::after,
+        html body #contact-form .fluentform button[type="submit"]::before,
+        html body #contact-form .fluentform button[type="submit"]::after,
+        html body #contact-form form.fluent_form_1 .ff-btn-submit::before,
+        html body #contact-form form.fluent_form_1 .ff-btn-submit::after,
+        html body #contact-form .ff-btn.ff-btn-submit.ff_btn_style::before,
+        html body #contact-form .ff-btn.ff-btn-submit.ff_btn_style::after {
+          content: none !important;
+          display: none !important;
+          background: none !important;
+          background-image: none !important;
+          background-color: transparent !important;
+          opacity: 0 !important;
+          width: 0 !important;
+          height: 0 !important;
+          visibility: hidden !important;
         }
         html body #contact-form .fluentform .ff-btn-submit:hover,
         html body #contact-form .fluentform button[type="submit"]:hover,
@@ -844,21 +893,13 @@ export default async function WpHomePage() {
           html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn,
           html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn-primary {
             width: auto !important;
-            max-width: 100% !important;
+            max-width: calc(100% - 8px) !important;
             font-size: 12px !important;
             padding: 11px 18px !important;
+            white-space: nowrap !important;
           }
         }
       `}</style>
-
-      <meta name="dgs-build" content="wp-mirror-2026-08-08j" />
-
-      <div
-        id="dgs-wp-home-mirror"
-        className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08j"
-        dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
-      />
 
       <WpHomeClient
         bodyId={mirror.bodyId}
