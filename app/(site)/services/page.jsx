@@ -1,7 +1,8 @@
 import PageHero from '../../components/PageHero';
 import { getServices, getTitle, getExcerpt, SERVICE_LINKS } from '../../../lib/wordpress';
 
-export const revalidate = 300;
+// Avoid SSG on Hostinger — fetching WP during `next build` SIGABRTs the worker.
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Services Catalog',
