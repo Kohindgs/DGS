@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v43'],
+  ['wp-home-mirror-v44'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09c';
+  const cssBundle = '/api/wp-css?bundle=home&v=09d';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -88,6 +88,8 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 #dgsPill{color:#fff;background:#FD5C62}
 .dgs-v1215-reveal{opacity:1;transform:none}
 #cmsmasters-scroll-top{display:none!important;height:0!important;overflow:hidden!important}
+#dgs-wp-home-mirror .elementor,#dgs-wp-home-mirror .elementor-element,#dgs-wp-home-mirror .elementor-widget-html{margin:0!important;padding:0!important;max-width:100%!important;width:100%!important;position:static!important;min-height:0!important;background:transparent!important}
+#dgs-wp-home-mirror .elementor-section,#dgs-wp-home-mirror .elementor-container,#dgs-wp-home-mirror .elementor-column,#dgs-wp-home-mirror .elementor-widget-wrap{margin:0!important;padding:0!important;width:100%!important;max-width:100%!important}
 #dgs-wp-home-mirror,#dgs-wp-home-mirror .dgs-v1215{font-family:system-ui,sans-serif}
 #dgs-wp-home-mirror .dgs-v1215-hero,#dgs-wp-home-mirror .dgs-v1215-hero *{font-family:system-ui,sans-serif!important}
 @media(min-width:901px){.dgs-v1215-hero-layout{grid-template-columns:1fr 1fr;gap:48px}#dgs-v1215-robot{width:min(480px,42vw)}}
@@ -96,24 +98,13 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       />
       {/* Single LCP preload */}
       <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
-      {/* Fetch CSS/font without applying until AFTER LCP (warm cache used to flip media=all instantly). */}
-      <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
-      <link
-        data-dgs-font="syne"
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
-        media="print"
-      />
+      {/* WP/Elementor bundle loads late — early apply restyled .elementor wrappers and caused hero CLS. */}
       <noscript>
         <link rel="stylesheet" href={cssBundle} />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
-        />
       </noscript>
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(){function enableCss(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css]').forEach(function(l){l.media='all'});}function enableFont(){var l=document.querySelector('link[data-dgs-font]');if(l)l.media='all';}var l=document.querySelector('link[data-dgs-css]');if(l){if(l.addEventListener)l.addEventListener('load',enableCss);if(l.sheet)enableCss()}setTimeout(enableCss,2000);setTimeout(enableFont,12000)})();`,
+          __html: `(function(h){function inject(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;var l=document.createElement('link');l.rel='stylesheet';l.href=h;document.head.appendChild(l);}setTimeout(inject,12000);})("${cssBundle}")`,
         }}
       />
 
@@ -1048,12 +1039,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09c" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09d" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09c"
+        data-dgs-build="wp-mirror-2026-08-09d"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
