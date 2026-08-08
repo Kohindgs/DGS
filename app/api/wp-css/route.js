@@ -122,9 +122,7 @@ export async function GET(request) {
         { revalidate: 3600 }
       );
       const css = await getHomeBundle();
-      // Safe minify only: drop comments + collapse blank lines (keep rule syntax).
-      const minified = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\n{3,}/g, '\n\n').trim();
-      return new NextResponse(minified || css, {
+      return new NextResponse(css, {
         status: 200,
         headers: {
           'Content-Type': 'text/css; charset=utf-8',

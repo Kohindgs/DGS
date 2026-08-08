@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v20'],
+  ['wp-home-mirror-v21'],
   { revalidate: 300 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08f';
+  const cssBundle = '/api/wp-css?bundle=home&v=08g';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -765,12 +765,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08f" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08g" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08f"
+        data-dgs-build="wp-mirror-2026-08-08g"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
