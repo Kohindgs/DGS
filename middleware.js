@@ -20,7 +20,7 @@ export function middleware(request) {
     );
     response.headers.set('CDN-Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
     response.headers.set('Surrogate-Control', 'max-age=120');
-    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-08r');
+    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-08s');
   }
   return response;
 }

@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v32'],
+  ['wp-home-mirror-v33'],
   { revalidate: 900 }
 );
 
@@ -58,12 +58,14 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08r';
+  const cssBundle = '/api/wp-css?bundle=home&v=08s';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
     : '';
   const lcpJoin = lcpMaster.includes('?') ? '&' : '?';
+  // Prefer 640 as the preload href (mobile LCP); keep 720/800 in srcset for desktop.
+  const lcpPreloadHref = lcpMaster ? `${lcpMaster}${lcpJoin}dgs_w=640` : '';
   const lcpSrcset = lcpMaster
     ? `${lcpMaster}${lcpJoin}dgs_w=640 640w, ${lcpMaster}${lcpJoin}dgs_w=720 720w, ${lcpMaster}${lcpJoin}dgs_w=800 800w`
     : '';
@@ -95,13 +97,13 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://www.dgeniussolutions.com" />
       {/* LCP image first so it wins bandwidth vs fonts. */}
-      {lcpPreload ? (
+      {lcpPreloadHref ? (
         <link
           rel="preload"
           as="image"
-          href={lcpPreload}
+          href={lcpPreloadHref}
           imageSrcSet={lcpSrcset || undefined}
-          imageSizes="(max-width: 900px) min(92vw, 420px), 500px"
+          imageSizes="(max-width: 900px) 320px, 480px"
           fetchPriority="high"
         />
       ) : null}
@@ -143,12 +145,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08r" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08s" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08r"
+        data-dgs-build="wp-mirror-2026-08-08s"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

@@ -57,10 +57,32 @@ function waitForLcpImage(timeoutMs = 1500) {
   ]);
 }
 
-function waitForNearViewport(selector, { rootMargin = '320px 0px', timeoutMs = 6000 } = {}) {
-  const el = document.querySelector(selector);
-  if (!el || typeof IntersectionObserver === 'undefined') {
-    return new Promise((resolve) => whenIdle(resolve, Math.min(timeoutMs, 3000)));
+/**
+ * Resolve only when a target is near the viewport (or after a long fallback).
+ * Do NOT finish on requestIdleCallback — that was loading Envira/GSAP during the
+ * Lighthouse lab window as soon as the main thread went quiet.
+ */
+function waitForNearViewport(
+  selectors,
+  { rootMargin = '120px 0px', timeoutMs = 20000 } = {}
+) {
+  const list = (Array.isArray(selectors) ? selectors : String(selectors).split(','))
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const els = [];
+  const seen = new Set();
+  for (const sel of list) {
+    const el = document.querySelector(sel);
+    if (el && !seen.has(el)) {
+      seen.add(el);
+      els.push(el);
+    }
+  }
+  if (!els.length) {
+    return new Promise((resolve) => setTimeout(resolve, timeoutMs));
+  }
+  if (typeof IntersectionObserver === 'undefined') {
+    return new Promise((resolve) => setTimeout(resolve, timeoutMs));
   }
   return new Promise((resolve) => {
     let done = false;
@@ -80,9 +102,31 @@ function waitForNearViewport(selector, { rootMargin = '320px 0px', timeoutMs = 6
       },
       { rootMargin }
     );
-    io.observe(el);
-    whenIdle(finish, timeoutMs);
+    els.forEach((el) => io.observe(el));
     setTimeout(finish, timeoutMs);
+  });
+}
+
+function isCoarseMobile() {
+  try {
+    return (
+      window.matchMedia('(max-width: 900px)').matches ||
+      window.matchMedia('(pointer: coarse)').matches
+    );
+  } catch (_) {
+    return false;
+  }
+}
+
+function forceRevealHome() {
+  const root = document.querySelector('#dgs-v1215, .dgs-v1215');
+  if (!root) return;
+  root.classList.remove('motion-ready');
+  root.classList.add('gsap-active');
+  document.querySelectorAll('.dgs-v1215-reveal').forEach((el) => {
+    el.classList.add('is-visible');
+    el.style.opacity = '1';
+    el.style.transform = 'none';
   });
 }
 
@@ -352,9 +396,10 @@ function ensureCaseStudyImages() {
         img.dataset.dgsCaseCompact = '1';
         img.setAttribute('data-dgs-full-src', src);
         const join = src.includes('?') ? '&' : '?';
+        // Compact-only — never put the naked master in srcset (competes with LCP).
         img.setAttribute(
           'srcset',
-          `${src}${join}dgs_w=640 640w, ${src}${join}dgs_w=960 960w, ${src} 1600w`
+          `${src}${join}dgs_w=640 640w, ${src}${join}dgs_w=960 960w`
         );
         img.setAttribute('sizes', '(max-width: 900px) 92vw, 560px');
         img.src = `${src}${join}dgs_w=640`;
@@ -775,26 +820,19 @@ export default function WpHomeClient({
       await waitForLcpImage(1500);
       if (cancelled) return;
 
-      // Lightweight particles after LCP so canvas work does not steal the first paint.
+      // Show hero/section copy immediately — do not wait on GSAP for opacity.
+      try {
+        forceRevealHome();
+      } catch (_) {
+        /* ignore */
+      }
+
+      // Lightweight particles after LCP (no-op on coarse/mobile inside starter).
       try {
         stopBackground =
           startDgsFastBackground(document.querySelector('.dgs-v1215')) || (() => {});
       } catch (err) {
         console.warn('Fast background failed', err);
-      }
-
-      // 2) Wait for a quiet frame before jQuery / Envira / GSAP.
-      await new Promise((resolve) => whenIdle(resolve, 2000));
-      if (cancelled) return;
-
-      if (!window.envira_gallery) {
-        window.envira_gallery = {
-          debug: '',
-          ll_delay: '500',
-          ll_initial: 'false',
-          ll: '1',
-          mobile: '0',
-        };
       }
 
       // Normalize: support legacy string[] or [{src, kind}]
@@ -810,6 +848,56 @@ export default function WpHomeClient({
       // never download ~330KB×2 of unused gstatic JS on first paint.
       const motionScripts = [...byKind('motion'), ...byKind('lib')];
 
+      const configInlines = [];
+      const fluentInlines = [];
+      const earlyInlines = [];
+      const appInlines = [];
+      inlineScripts.forEach((code) => {
+        if (
+          /^\s*var\s+envira_gallery\s*=/.test(code) ||
+          (/envira_gallery\s*=/.test(code) && code.length < 500)
+        ) {
+          configInlines.push(code);
+        } else if (/fluentFormVars|fluent_form_ff_form_instance|fluentformElementor/i.test(code)) {
+          fluentInlines.push(code);
+        } else if (
+          /dgsToggle|dgsSvc|dgsLockScroll|dgsOpenTalkPopup|dgsNav|dgsLogo|dgs-talk/i.test(code) &&
+          !/portfolioData|bootMotion|initPortfolio|__DGS_PORTFOLIO/i.test(code)
+        ) {
+          // Menu / talk popup must work before the user scrolls to the gallery.
+          earlyInlines.push(code);
+        } else {
+          appInlines.push(code);
+        }
+      });
+
+      earlyInlines.forEach((code, i) => {
+        if (cancelled) return;
+        try {
+          runInline(code, `dgs-early-${i}`);
+        } catch (err) {
+          console.warn('DGS early inline failed', i, err);
+        }
+      });
+
+      // 2) jQuery / Envira / portfolio only when the gallery is near — never on
+      // #dgs-v1215-services (that sits under the hero and was false-triggering).
+      await waitForNearViewport(
+        ['.envira-gallery-public', '#dgs-v1215-work', '#dgs-v1215-portfolio'],
+        { rootMargin: '80px 0px', timeoutMs: 22000 }
+      );
+      if (cancelled) return;
+
+      if (!window.envira_gallery) {
+        window.envira_gallery = {
+          debug: '',
+          ll_delay: '500',
+          ll_initial: 'false',
+          ll: '1',
+          mobile: '0',
+        };
+      }
+
       for (const src of jqueryScripts) {
         if (cancelled) return;
         await loadScript(src);
@@ -820,22 +908,6 @@ export default function WpHomeClient({
         await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js');
       }
 
-      const configInlines = [];
-      const fluentInlines = [];
-      const appInlines = [];
-      inlineScripts.forEach((code) => {
-        if (
-          /^\s*var\s+envira_gallery\s*=/.test(code) ||
-          (/envira_gallery\s*=/.test(code) && code.length < 500)
-        ) {
-          configInlines.push(code);
-        } else if (/fluentFormVars|fluent_form_ff_form_instance|fluentformElementor/i.test(code)) {
-          fluentInlines.push(code);
-        } else {
-          appInlines.push(code);
-        }
-      });
-
       configInlines.forEach((code, i) => {
         if (cancelled) return;
         try {
@@ -845,35 +917,36 @@ export default function WpHomeClient({
         }
       });
 
-      // Portfolio / motion scripts only matter below the fold — wait until near viewport.
-      await waitForNearViewport(
-        '.envira-gallery-public, #dgs-v1215-work, #dgs-v1215-portfolio, #dgs-v1215-services',
-        { rootMargin: '400px 0px', timeoutMs: 5500 }
-      );
-      if (cancelled) return;
+      for (const src of enviraScripts) {
+        if (cancelled) return;
+        await loadScript(src);
+      }
 
-      const loadEnvira = (async () => {
-        for (const src of enviraScripts) {
-          if (cancelled) return;
-          await loadScript(src);
-        }
-      })();
-      const loadMotion = (async () => {
+      // GSAP/ScrollTrigger: skip on mobile — reveals are already forced visible.
+      const skipMotion = isCoarseMobile();
+      if (!skipMotion) {
         for (const src of motionScripts) {
           if (cancelled) return;
           await loadScript(src);
         }
-      })();
-      await Promise.all([loadEnvira, loadMotion]);
+      }
 
       appInlines.forEach((code, i) => {
         if (cancelled) return;
+        // bootMotion is a no-op without GSAP; skip the heavy inline on mobile.
+        if (skipMotion && /bootMotion|ScrollTrigger|gsap\./i.test(code)) return;
         try {
           runInline(code, `dgs-inline-${i}`);
         } catch (err) {
           console.warn('DGS inline script failed', i, err);
         }
       });
+
+      try {
+        forceRevealHome();
+      } catch (_) {
+        /* ignore */
+      }
 
       // FluentForm only matters for the talk/contact popup — defer until idle
       // or until the user opens a talk/contact control.
@@ -1004,17 +1077,6 @@ export default function WpHomeClient({
       if (lb) {
         const mo = new MutationObserver(fixLightboxControls);
         mo.observe(lb, { attributes: true, attributeFilter: ['class', 'style'] });
-      }
-
-      const root = document.querySelector('#dgs-v1215, .dgs-v1215');
-      if (root && !root.dataset.dgsV1215Booted) {
-        root.classList.remove('motion-ready');
-        root.classList.add('gsap-active');
-        document.querySelectorAll('.dgs-v1215-reveal').forEach((el) => {
-          el.classList.add('is-visible');
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        });
       }
 
       // Last-paint Syne + flat lightbox controls
