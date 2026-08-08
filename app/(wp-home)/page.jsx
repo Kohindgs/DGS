@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v48'],
+  ['wp-home-mirror-v49'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09h';
+  const cssBundle = '/api/wp-css?bundle=home&v=09i';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -93,6 +93,15 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
             "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,3000);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
+
+      {/* WP inline <style> (custom nav + v1215 theme) — not in the linked CSS bundle. */}
+      {mirror.inlineStyles.map((css, i) => (
+        <style
+          // eslint-disable-next-line react/no-danger
+          key={`inline-style-${i}`}
+          dangerouslySetInnerHTML={{ __html: css }}
+        />
+      ))}
 
       <style>{`
         /* Default scrollable; cooperate with menu/talk/case scroll-lock */
@@ -1025,17 +1034,14 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09h" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09i" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09h"
+        data-dgs-build="wp-mirror-2026-08-09i"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
-
-
-      {/* WP inline/link CSS omitted from first paint — covered by deferred home bundle. */}
 
       {/* JSON-LD after CSS so it does not compete with first paint. */}
       {mirror.schemas.map((json, i) => (
