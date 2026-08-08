@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v13'],
+  ['wp-home-mirror-v14'],
   { revalidate: 300 }
 );
 
@@ -684,6 +684,10 @@ export default async function WpHomePage() {
           object-fit: cover;
           border: 0;
           display: block;
+        }
+        html body .dgs-about-video img {
+          /* Keep cover crisp on the wide band without overserving huge bytes */
+          background: #0a0a0a;
         }
         html body .dgs-about-video-frame {
           object-fit: unset;
