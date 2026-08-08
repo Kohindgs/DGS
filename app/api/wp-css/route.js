@@ -116,14 +116,15 @@ export async function GET(request) {
       const getHomeBundle = unstable_cache(
         async () => {
           const srcs = await collectHomeCssUrls();
+          const css = await buildBundle(srcs);
           // font-display:swap in WP/LiteSpeed faces caused CLS≈0.5 when the
           // deferred bundle applied — optional prevents late font swaps.
-          return buildBundle(srcs)
+          return css
             .replace(/font-display:\s*swap/gi, 'font-display:optional')
             .replace(/font-display:\s*block/gi, 'font-display:optional')
             .replace(/font-display:\s*fallback/gi, 'font-display:optional');
         },
-        ['wp-css-bundle-home-v3'],
+        ['wp-css-bundle-home-v4'],
         { revalidate: 3600 }
       );
       const css = await getHomeBundle();
