@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v39'],
+  ['wp-home-mirror-v40'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08y';
+  const cssBundle = '/api/wp-css?bundle=home&v=08z';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -112,12 +112,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08y" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08z" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08y"
+        data-dgs-build="wp-mirror-2026-08-08z"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
@@ -139,7 +139,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       ))}
 
-      <style media="not all" data-dgs-defer="page">{`
+      <style>{`
         /* Default scrollable; cooperate with menu/talk/case scroll-lock */
         html, body {
           overflow-x: clip !important;
@@ -808,7 +808,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
       {/* After mirror HTML: responsive + contact overrides win on cascade */}
-      <style id="dgs-responsive-overrides" media="not all" data-dgs-defer="responsive">{`
+      <style id="dgs-responsive-overrides">{`
         /* Reinforce pill brand color after mirrored WP CSS */
         html body #dgsPill.dgs-talk-trigger,
         html body #dgsPill {
