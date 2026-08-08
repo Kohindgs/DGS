@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v49'],
+  ['wp-home-mirror-v50'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09i';
+  const cssBundle = '/api/wp-css?bundle=home&v=09j';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -794,10 +794,30 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           max-width: 100% !important;
           box-sizing: border-box !important;
         }
-        html body #dgs-wp-home-mirror .dgs-v1215-rail-line,
-        html body #dgs-wp-home-mirror .dgs-v1215-rail-track {
-          max-width: 100% !important;
+        /* Capability rail: full-bleed tilted strip (must exceed viewport width).
+           Do NOT cap max-width:100% — that clips the band mid-screen. */
+        html body #dgs-wp-home-mirror .dgs-v1215-rail {
+          overflow: visible !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-rail-line {
+          position: relative !important;
+          left: 50% !important;
+          width: 140vw !important;
+          max-width: none !important;
+          margin-left: -70vw !important;
           overflow: hidden !important;
+          transform: rotate(-1deg) !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-rail-track {
+          max-width: none !important;
+          min-width: max-content !important;
+          overflow: visible !important;
+        }
+        @media (max-width: 900px) {
+          html body #dgs-wp-home-mirror .dgs-v1215-rail-line {
+            width: 180vw !important;
+            margin-left: -90vw !important;
+          }
         }
 
         /* Stat line: fluid columns + never mid-word break "Mumbai" */
@@ -1034,12 +1054,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09i" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09j" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09i"
+        data-dgs-build="wp-mirror-2026-08-09j"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
