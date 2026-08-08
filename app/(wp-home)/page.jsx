@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v41'],
+  ['wp-home-mirror-v42'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09a';
+  const cssBundle = '/api/wp-css?bundle=home&v=09b';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -111,21 +111,21 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
         />
       </noscript>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){function enableCss(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css]').forEach(function(l){l.media='all'});}function enableFont(){var l=document.querySelector('link[data-dgs-font]');if(l)l.media='all';}var l=document.querySelector('link[data-dgs-css]');if(l){if(l.addEventListener)l.addEventListener('load',enableCss);if(l.sheet)enableCss()}setTimeout(enableCss,2000);setTimeout(enableFont,12000)})();`,
+        }}
+      />
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09a" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09b" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09a"
+        data-dgs-build="wp-mirror-2026-08-09b"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(function(){function enableCss(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css]').forEach(function(l){l.media='all'});document.querySelectorAll('style[data-dgs-defer]').forEach(function(s){s.media='all'});}function enableFont(){var l=document.querySelector('link[data-dgs-font]');if(l)l.media='all';}var l=document.querySelector('link[data-dgs-css]');if(l){if(l.addEventListener)l.addEventListener('load',enableCss);if(l.sheet)enableCss()}setTimeout(enableCss,2500);setTimeout(enableFont,10000);if(window.requestIdleCallback)requestIdleCallback(function(){},{timeout:10000})})();`,
-        }}
-      />
 
       {/* WP inline/link CSS omitted from first paint — covered by deferred home bundle. */}
 
