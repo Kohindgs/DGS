@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v47'],
+  ['wp-home-mirror-v48'],
   { revalidate: 900 }
 );
 
@@ -58,57 +58,39 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09g';
+  const cssBundle = '/api/wp-css?bundle=home&v=09h';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
 
   return (
     <>
-      {/* Critical first: dark paint before WP CSS. Do NOT min-height the fixed nav
-          (that stretched #dgsNav to 100vh and left a huge empty banner). */}
+      {/* Critical: dark canvas + safe hero shell only. Full look comes from WP CSS. */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
 html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 #dgs-wp-home-mirror,.dgs-v1215,.dgs-v1215-fallback{background:#020202}
 #dgsNav{background:transparent;min-height:0;height:auto}
-#dgsLogo img,#dgsNav img{height:28px;width:auto;display:block}
-.dgs-v1215-shell{width:min(1200px,92vw);margin:0 auto;padding:0 4vw;box-sizing:border-box}
-.dgs-v1215-hero,#dgs-home-start{min-height:100svh;display:flex;align-items:center;padding:88px 0 40px;box-sizing:border-box;width:100%}
-.dgs-v1215-hero-layout{display:grid;gap:28px;align-items:center}
-.dgs-v1215-kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 18px;color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
-.dgs-v1215-copy h1{color:#fff;font-family:system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0;font-size:clamp(2rem,8vw,3.4rem)}
-.dgs-v1215-copy h1 span{color:#69a7ff}
-.dgs-v1215-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;align-items:center}
-.dgs-v1215-actions a{color:#fff;text-decoration:none}
-.dgs-v1215-btn,.dgs-v1215-btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:999px;background:#FD5C62;color:#fff;font-weight:600}
-.dgs-v1215-visual,#dgs-v1215-robot-wrap{display:flex;justify-content:center;align-items:center}
-#dgs-v1215-robot{width:min(92vw,420px);max-width:100%;height:auto;aspect-ratio:1/1;display:block}
-#dgsPill{color:#fff;background:#FD5C62}
 .dgs-v1215-reveal{opacity:1;transform:none}
-#dgs-wp-home-mirror>header.elementor-location-header,header.elementor-location-header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;height:72px!important;max-height:72px!important;overflow:hidden!important;z-index:99999!important;background:transparent!important;margin:0!important;padding:0!important}
-#cmsmasters-scroll-top{display:block!important;height:72px!important;max-height:72px!important;overflow:hidden!important;margin:0!important;padding:0!important}
-#dgsNav,#dgsBar{height:72px!important;max-height:72px!important;box-sizing:border-box}
-#dgsBar{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 4vw!important}
-#dgs-wp-home-mirror .elementor-location-header .elementor-element{margin:0!important;padding:0!important;min-height:0!important;background:transparent!important}
-#dgs-wp-home-mirror>.elementor:not(.elementor-location-header),#dgs-wp-home-mirror .elementor:not(.elementor-location-header)>.e-con,#dgs-wp-home-mirror .elementor:not(.elementor-location-header)>.elementor-element{margin:0!important;padding:0!important;min-height:0!important;height:auto!important;max-height:none!important;position:static!important;transform:none!important}
-#dgs-v1215,main.dgs-v1215{margin:0!important;padding:0!important;min-height:0!important;position:relative!important;top:auto!important}
-#dgs-home-start.dgs-v1215-hero{margin-top:0!important;top:auto!important}
-#dgs-wp-home-mirror .dgs-v1215-shell{width:min(1480px,calc(100% - 32px))!important;max-width:100%!important;margin:0 auto!important;padding:0!important;box-sizing:border-box!important}
-
-#dgs-wp-home-mirror,#dgs-wp-home-mirror .dgs-v1215{font-family:system-ui,sans-serif}
-#dgs-wp-home-mirror .dgs-v1215-hero,#dgs-wp-home-mirror .dgs-v1215-hero *{font-family:system-ui,sans-serif!important}
-@media(min-width:901px){.dgs-v1215-hero-layout{grid-template-columns:1fr 1fr;gap:48px}#dgs-v1215-robot{width:min(480px,42vw)}}
+#dgsPill{color:#fff;background:#FD5C62}
+#dgs-v1215-robot{max-width:100%;height:auto;aspect-ratio:1/1;display:block}
 `.replace(/\n/g, ''),
         }}
       />
-      {/* Single LCP preload */}
       <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
-      {/* No <noscript> stylesheet — Next was hoisting it into a render-blocking <link>. */}
+      {/* Apply home CSS as soon as it loads (media=print avoids render-block; no 12s delay). */}
+      <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
+      <link
+        data-dgs-font="syne"
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
+        media="print"
+      />
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(h){function inject(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;var l=document.createElement('link');l.rel='stylesheet';l.href=h;document.head.appendChild(l);}setTimeout(inject,12000);})("${cssBundle}")`,
+          __html:
+            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,3000);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
 
@@ -138,7 +120,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           top: auto !important;
           width: auto !important;
         }
-        #dgs-wp-home-mirror { min-height: 0; }
+        #dgs-wp-home-mirror { min-height: 100vh; }
         img.lazyload, img.lazyloading { opacity: 1 !important; }
         video { max-width: 100%; }
 
@@ -1043,12 +1025,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09g" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09h" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09g"
+        data-dgs-build="wp-mirror-2026-08-09h"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
