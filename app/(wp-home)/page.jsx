@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v30'],
+  ['wp-home-mirror-v31'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08p';
+  const cssBundle = '/api/wp-css?bundle=home&v=08q';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -80,7 +80,7 @@ html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
 #dgsNav{background:transparent;min-height:0;height:auto}
 .dgs-v1215-copy h1{color:#fff;font-family:Syne,system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0}
 .dgs-v1215-actions a{color:#fff}
-#dgsPill{color:#fff;background:#C73A40}
+#dgsPill{color:#fff;background:#FD5C62}
 `.replace(/\n/g, ''),
         }}
       />
@@ -808,22 +808,22 @@ html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
           color: rgba(255, 255, 255, 0.55) !important;
         }
 
-        /* LET'S TALK pill: white on #FD5C62 is ~3.0:1 — darken for WCAG AA 4.5:1 */
+        /* LET'S TALK pill — brand coral */
         html body #dgsPill.dgs-talk-trigger,
         html body #dgsPill {
           color: #ffffff !important;
           -webkit-text-fill-color: #ffffff !important;
-          background: #C73A40 !important;
-          background-color: #C73A40 !important;
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
           background-image: none !important;
         }
         html body #dgsPill.dgs-talk-trigger:hover,
         html body #dgsPill:hover {
           color: #ffffff !important;
-          background: #B83238 !important;
-          background-color: #B83238 !important;
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
           background-image: none !important;
-          box-shadow: 0 0 18px rgba(199, 58, 64, 0.45) !important;
+          box-shadow: 0 0 18px rgba(253, 92, 98, 0.45) !important;
         }
         html body #dgsPill svg,
         html body #dgsPill svg path {
@@ -832,23 +832,23 @@ html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
 
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08p" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08q" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08p"
+        data-dgs-build="wp-mirror-2026-08-08q"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
       {/* After mirror HTML: responsive + contact overrides win on cascade */}
       <style id="dgs-responsive-overrides">{`
-        /* Reinforce pill contrast after mirrored WP CSS */
+        /* Reinforce pill brand color after mirrored WP CSS */
         html body #dgsPill.dgs-talk-trigger,
         html body #dgsPill {
           color: #ffffff !important;
-          background: #C73A40 !important;
-          background-color: #C73A40 !important;
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
           background-image: none !important;
         }
 
