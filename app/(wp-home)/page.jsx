@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v23'],
+  ['wp-home-mirror-v24'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08i';
+  const cssBundle = '/api/wp-css?bundle=home&v=08j';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -764,14 +764,99 @@ export default async function WpHomePage() {
         html body .dgs-footer-legal-divider {
           color: rgba(255, 255, 255, 0.55) !important;
         }
+
+        /* Contact Us: centered layout, flat submit, one-line CTA */
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 28px !important;
+          text-align: center !important;
+          grid-template-columns: 1fr !important;
+        }
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > div {
+          width: 100% !important;
+          max-width: 720px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          text-align: center !important;
+        }
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > div > span,
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card h2,
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card p {
+          text-align: center !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode {
+          width: 100% !important;
+          max-width: 560px !important;
+          margin: 22px auto 0 !important;
+          text-align: left !important;
+        }
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn,
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn-primary {
+          align-self: center !important;
+          justify-self: center !important;
+          width: auto !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          min-height: 0 !important;
+          height: auto !important;
+          padding: 12px 22px !important;
+          white-space: nowrap !important;
+          text-align: center !important;
+          justify-content: center !important;
+          align-items: center !important;
+          gap: 10px !important;
+          font-size: 13px !important;
+          font-weight: 700 !important;
+          line-height: 1.2 !important;
+          background: #FD5C62 !important;
+          background-image: none !important;
+          background-color: #FD5C62 !important;
+          box-shadow: none !important;
+        }
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn span {
+          margin-left: 0 !important;
+        }
+        html body #contact-form .fluentform .ff-btn-submit,
+        html body #contact-form .fluentform button[type="submit"],
+        html body #contact-form form.fluent_form_1 .ff-btn-submit:not(.ff_btn_no_style) {
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
+          background-image: none !important;
+          border: 0 !important;
+          box-shadow: none !important;
+          color: #fff !important;
+        }
+        html body #contact-form .fluentform .ff-btn-submit:hover,
+        html body #contact-form .fluentform button[type="submit"]:hover,
+        html body #contact-form form.fluent_form_1 .ff-btn-submit:not(.ff_btn_no_style):hover {
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
+          background-image: none !important;
+          opacity: 0.92 !important;
+          box-shadow: none !important;
+        }
+        @media (max-width: 700px) {
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn,
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn-primary {
+            width: auto !important;
+            max-width: 100% !important;
+            font-size: 12px !important;
+            padding: 11px 18px !important;
+          }
+        }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08i" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08j" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08i"
+        data-dgs-build="wp-mirror-2026-08-08j"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
