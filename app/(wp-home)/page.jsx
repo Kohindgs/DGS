@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v31'],
+  ['wp-home-mirror-v32'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08q';
+  const cssBundle = '/api/wp-css?bundle=home&v=08r';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -75,12 +75,19 @@ export default async function WpHomePage() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
-#dgs-wp-home-mirror,.dgs-v1215{background:#020202}
+html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
+#dgs-wp-home-mirror,.dgs-v1215,.dgs-v1215-fallback{background:#020202}
 #dgsNav{background:transparent;min-height:0;height:auto}
-.dgs-v1215-copy h1{color:#fff;font-family:Syne,system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0}
-.dgs-v1215-actions a{color:#fff}
+.dgs-v1215-shell{width:min(1200px,92vw);margin:0 auto;padding:0 4vw}
+.dgs-v1215-hero{min-height:100svh;display:flex;align-items:center;padding:88px 0 40px;box-sizing:border-box}
+.dgs-v1215-hero-layout{display:grid;gap:28px;align-items:center}
+.dgs-v1215-copy h1{color:#fff;font-family:Syne,system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0;font-size:clamp(2rem,8vw,3.4rem)}
+.dgs-v1215-copy p{color:rgba(255,255,255,.74);margin:20px 0 0;line-height:1.6;font-size:1rem}
+.dgs-v1215-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;align-items:center}
+.dgs-v1215-actions a{color:#fff;text-decoration:none}
+.dgs-v1215-btn,.dgs-v1215-btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:999px;background:#FD5C62;color:#fff;font-weight:600}
 #dgsPill{color:#fff;background:#FD5C62}
+@media(min-width:901px){.dgs-v1215-hero-layout{grid-template-columns:1fr 1fr;gap:48px}}
 `.replace(/\n/g, ''),
         }}
       />
@@ -98,36 +105,18 @@ html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
           fetchPriority="high"
         />
       ) : null}
-      {/* Keep CSS render-blocking to avoid CLS; preload once (avoid duplicate). */}
+      {/* Non-blocking home CSS (~227KB gzip): critical hero CSS paints first on Slow 4G. */}
       <link rel="preload" href={cssBundle} as="style" />
-
-      {mirror.stylesheets.map((sheet) => {
-        const href =
-          typeof sheet.href === 'string' && sheet.href.includes('/api/wp-css?bundle=home')
-            ? cssBundle
-            : sheet.href;
-        // Skip duplicate preload/stylesheet entries for the home CSS bundle.
-        if (
-          typeof sheet.href === 'string' &&
-          sheet.href.includes('/api/wp-css?bundle=home') &&
-          sheet.rel === 'preload'
-        ) {
-          return null;
-        }
-        return (
-          <link
-            key={`${sheet.rel}-${href}`}
-            rel={sheet.rel === 'preload' ? 'stylesheet' : sheet.rel}
-            href={href}
-            media={sheet.media || undefined}
-            sizes={sheet.sizes || undefined}
-          />
-        );
-      })}
-
-      {mirror.inlineStyles.map((css, i) => (
-        <style key={`inline-style-${i}`} dangerouslySetInnerHTML={{ __html: css }} />
-      ))}
+      <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
+      <script
+        dangerouslySetInnerHTML={{
+          __html:
+            "(function(){var l=document.querySelector('link[data-dgs-css=\"home\"]');if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,2500);})();",
+        }}
+      />
+      <noscript>
+        <link rel="stylesheet" href={cssBundle} />
+      </noscript>
 
       {/* Non-blocking Syne (RSC-safe: no React onLoad — use media=print + tiny script). */}
       <link
@@ -153,6 +142,41 @@ html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
           href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
         />
       </noscript>
+
+      <meta name="dgs-build" content="wp-mirror-2026-08-08r" />
+
+      <div
+        id="dgs-wp-home-mirror"
+        className="dgs-wp-home-mirror"
+        data-dgs-build="wp-mirror-2026-08-08r"
+        dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
+      />
+
+      {mirror.stylesheets.map((sheet) => {
+        const href =
+          typeof sheet.href === 'string' && sheet.href.includes('/api/wp-css?bundle=home')
+            ? null
+            : sheet.href;
+        if (!href) return null;
+        if (
+          typeof sheet.href === 'string' &&
+          sheet.href.includes('/api/wp-css?bundle=home')
+        ) {
+          return null;
+        }
+        return (
+          <link
+            key={`late-${sheet.rel}-${href}`}
+            rel={sheet.rel === 'preload' ? 'stylesheet' : sheet.rel}
+            href={href}
+            media={sheet.media || undefined}
+            sizes={sheet.sizes || undefined}
+          />
+        );
+      })}
+      {mirror.inlineStyles.map((css, i) => (
+        <style key={`inline-style-${i}`} dangerouslySetInnerHTML={{ __html: css }} />
+      ))}
 
       {/* JSON-LD after CSS so it does not compete with first paint. */}
       {mirror.schemas.map((json, i) => (
@@ -831,15 +855,6 @@ html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
         }
 
       `}</style>
-
-      <meta name="dgs-build" content="wp-mirror-2026-08-08q" />
-
-      <div
-        id="dgs-wp-home-mirror"
-        className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08q"
-        dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
-      />
 
       {/* After mirror HTML: responsive + contact overrides win on cascade */}
       <style id="dgs-responsive-overrides">{`
