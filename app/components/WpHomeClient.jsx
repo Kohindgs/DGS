@@ -37,6 +37,55 @@ function runInline(code, id) {
   document.body.appendChild(s);
 }
 
+function whenIdle(cb, timeout = 2500) {
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(cb, { timeout });
+  } else {
+    setTimeout(cb, Math.min(timeout, 1200));
+  }
+}
+
+function waitForLcpImage(timeoutMs = 1500) {
+  const robot = document.getElementById('dgs-v1215-robot');
+  if (!robot || robot.complete) return Promise.resolve();
+  return Promise.race([
+    new Promise((resolve) => {
+      robot.addEventListener('load', resolve, { once: true });
+      robot.addEventListener('error', resolve, { once: true });
+    }),
+    new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+  ]);
+}
+
+function waitForNearViewport(selector, { rootMargin = '320px 0px', timeoutMs = 6000 } = {}) {
+  const el = document.querySelector(selector);
+  if (!el || typeof IntersectionObserver === 'undefined') {
+    return new Promise((resolve) => whenIdle(resolve, Math.min(timeoutMs, 3000)));
+  }
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      try {
+        io.disconnect();
+      } catch (_) {
+        /* ignore */
+      }
+      resolve();
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) finish();
+      },
+      { rootMargin }
+    );
+    io.observe(el);
+    whenIdle(finish, timeoutMs);
+    setTimeout(finish, timeoutMs);
+  });
+}
+
 function paintFlatControl(el) {
   if (!el) return;
   el.style.setProperty('background', '#111', 'important');
@@ -681,26 +730,21 @@ export default function WpHomeClient({
       /* ignore */
     }
 
-    // Start lightweight particle bg immediately (no Three.js wait)
-    try {
-      stopBackground = startDgsFastBackground(document.querySelector('.dgs-v1215')) || (() => {});
-    } catch (err) {
-      console.warn('Fast background failed', err);
-    }
-
     async function boot() {
-      // Give the hero LCP image a clear runway before jQuery/Envira/GSAP contend
-      // for the same connections (was causing multi-second LCP load delay).
-      const robot = document.getElementById('dgs-v1215-robot');
-      if (robot && !robot.complete) {
-        await Promise.race([
-          new Promise((resolve) => {
-            robot.addEventListener('load', resolve, { once: true });
-            robot.addEventListener('error', resolve, { once: true });
-          }),
-          new Promise((resolve) => setTimeout(resolve, 2000)),
-        ]);
+      // 1) Let the hero LCP image finish (or time out) before any heavy JS.
+      await waitForLcpImage(1500);
+      if (cancelled) return;
+
+      // Lightweight particles after LCP so canvas work does not steal the first paint.
+      try {
+        stopBackground =
+          startDgsFastBackground(document.querySelector('.dgs-v1215')) || (() => {});
+      } catch (err) {
+        console.warn('Fast background failed', err);
       }
+
+      // 2) Wait for a quiet frame before jQuery / Envira / GSAP.
+      await new Promise((resolve) => whenIdle(resolve, 2000));
       if (cancelled) return;
 
       if (!window.envira_gallery) {
@@ -761,7 +805,13 @@ export default function WpHomeClient({
         }
       });
 
-      // Envira (needs jQuery) and GSAP can load in parallel after jQuery.
+      // Portfolio / motion scripts only matter below the fold — wait until near viewport.
+      await waitForNearViewport(
+        '.envira-gallery-public, #dgs-v1215-work, #dgs-v1215-portfolio, #dgs-v1215-services',
+        { rootMargin: '400px 0px', timeoutMs: 5500 }
+      );
+      if (cancelled) return;
+
       const loadEnvira = (async () => {
         for (const src of enviraScripts) {
           if (cancelled) return;
