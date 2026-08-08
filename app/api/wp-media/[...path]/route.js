@@ -15,6 +15,10 @@ function isScriptPath(pathname = '') {
   return /\.(?:js|mjs|css)(?:$|\?)/i.test(pathname);
 }
 
+function isImagePath(pathname = '') {
+  return /\.(?:png|jpe?g|gif|webp|avif)(?:$|\?)/i.test(pathname);
+}
+
 /**
  * Same-origin media proxy for the WP homepage mirror.
  * Next.js rewrites for /wp-content return empty bodies for .webp on Hostinger,
@@ -24,6 +28,8 @@ function isScriptPath(pathname = '') {
  * compressed Content-Length. Streaming that body while forwarding the compressed
  * length truncates jQuery/Envira JS (~29KB of ~87KB) and breaks gallery init.
  * Prefer identity encoding; buffer scripts so length always matches bytes.
+ *
+ * Optional `dgs_w` query resizes images with sharp for PageSpeed "properly size images".
  */
 export async function GET(request, context) {
   const params = await context.params;
@@ -34,16 +40,20 @@ export async function GET(request, context) {
 
   const pathname = '/' + parts.map((p) => encodeURIComponent(p)).join('/');
   const upstreamUrl = new URL(pathname, `${WP_ORIGIN}/`);
-  // Preserve query (cache-busters like ?v=20260707)
+  const resizeW = Number(request.nextUrl.searchParams.get('dgs_w') || 0);
+  // Preserve query (cache-busters like ?v=20260707) but never forward dgs_w upstream.
   request.nextUrl.searchParams.forEach((value, key) => {
+    if (key === 'dgs_w') return;
     upstreamUrl.searchParams.set(key, value);
   });
 
   const range = request.headers.get('range');
   const scriptLike = isScriptPath(pathname);
+  const imageLike = isImagePath(pathname);
+  const wantsResize = imageLike && resizeW >= 40 && resizeW <= 2400 && !range;
 
   const headers = {
-    'User-Agent': 'DGS-NextJS-MediaProxy/1.3',
+    'User-Agent': 'DGS-NextJS-MediaProxy/1.4',
     Accept: request.headers.get('accept') || '*/*',
     // Avoid compressed Content-Length vs decompressed body mismatch.
     'Accept-Encoding': 'identity',
@@ -58,7 +68,7 @@ export async function GET(request, context) {
       // Cache upstream WP bytes in Next's data cache (Range requests stay fresh).
       ...(range && !scriptLike
         ? { cache: 'no-store' }
-        : { next: { revalidate: scriptLike ? 3600 : 86400 } }),
+        : { next: { revalidate: scriptLike ? 3600 : wantsResize ? 604800 : 86400 } }),
     });
   } catch (err) {
     return new NextResponse(`Media proxy failed: ${err?.message || 'error'}`, {
@@ -81,8 +91,10 @@ export async function GET(request, context) {
   // Never forward content-encoding / compressed content-length from upstream.
   out.delete('content-encoding');
   out.delete('content-length');
-  out.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
-  out.set('X-DGS-Media-Proxy', '1.3');
+  // Long cache helps PSI "efficient cache lifetimes" (HTML stays no-store).
+  out.set('Cache-Control', 'public, max-age=31536000, immutable');
+  out.set('CDN-Cache-Control', 'public, max-age=31536000');
+  out.set('X-DGS-Media-Proxy', '1.4');
 
   // Scripts/CSS: buffer full body so clients never see truncated JS.
   // Do NOT set Content-Length — Hostinger/LiteSpeed may re-compress the
@@ -90,20 +102,56 @@ export async function GET(request, context) {
   if (scriptLike) {
     const buf = Buffer.from(await upstream.arrayBuffer());
     out.set('X-DGS-Media-Bytes', String(buf.byteLength));
-    // dgsv query already busts bad CDN HITs — allow longer browser/CDN cache.
     out.set('Cache-Control', 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800');
+    out.set('CDN-Cache-Control', 'public, max-age=86400');
     return new NextResponse(buf, {
       status: upstream.status,
       headers: out,
     });
   }
 
+  if (wantsResize) {
+    try {
+      const sharp = (await import('sharp')).default;
+      const input = Buffer.from(await upstream.arrayBuffer());
+      const resized = await sharp(input)
+        .rotate()
+        .resize({ width: Math.round(resizeW), withoutEnlargement: true })
+        .webp({ quality: 72 })
+        .toBuffer();
+      out.set('Content-Type', 'image/webp');
+      out.set('X-DGS-Media-Resize', String(Math.round(resizeW)));
+      out.set('Cache-Control', 'public, max-age=31536000, immutable');
+      return new NextResponse(resized, { status: 200, headers: out });
+    } catch (err) {
+      // Fall through to streaming original if sharp fails.
+      out.set('X-DGS-Media-Resize-Error', String(err?.message || 'resize-failed').slice(0, 80));
+    }
+  }
+
   // Media (images/video): stream. With identity encoding, length is safe to forward.
+  // If resize failed after buffering, re-fetch once for the body stream.
+  if (wantsResize && !out.get('X-DGS-Media-Resize')) {
+    try {
+      const again = await fetch(upstreamUrl.toString(), {
+        headers,
+        redirect: 'follow',
+        next: { revalidate: 86400 },
+      });
+      if (again.ok) {
+        const contentType = again.headers.get('content-type');
+        if (contentType) out.set('Content-Type', contentType);
+        return new NextResponse(again.body, { status: again.status, headers: out });
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
   const contentRange = upstream.headers.get('content-range');
   const contentLength = upstream.headers.get('content-length');
   const contentEncoding = upstream.headers.get('content-encoding');
   if (contentRange) out.set('Content-Range', contentRange);
-  // Only forward length when upstream did not compress (identity / missing).
   if (contentLength && (!contentEncoding || /^(identity|)$/i.test(contentEncoding))) {
     out.set('Content-Length', contentLength);
   }

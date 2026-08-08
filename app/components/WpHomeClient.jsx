@@ -90,24 +90,13 @@ function ensurePortfolioMedia() {
   const items = Array.from(document.querySelectorAll('.gallery-item, .case-study-item'));
   if (!items.length) return;
 
-  // Align portfolio card accessible names with the visible title text.
+  // Align portfolio card accessible names with the full visible label text.
   items.forEach((item) => {
-    const title = (
-      item.querySelector('.envira-title, .gallery-title, .video-title, h3, h4')?.textContent ||
-      item.getAttribute('data-title') ||
-      ''
-    )
+    const visible = (item.innerText || '')
       .replace(/\s+/g, ' ')
       .trim();
-    if (!title) return;
-    const current = (item.getAttribute('aria-label') || '').trim();
-    if (current && current !== title && !current.toLowerCase().includes(title.toLowerCase())) {
-      item.setAttribute('aria-label', title);
-    } else if (!current) {
-      item.setAttribute('aria-label', title);
-    } else if (current.startsWith('View image:') || current.startsWith('Open case study:')) {
-      item.setAttribute('aria-label', title);
-    }
+    if (!visible) return;
+    item.setAttribute('aria-label', visible);
   });
 
   // Cap concurrent video metadata fetches so case-study images can load.
@@ -404,7 +393,7 @@ function ensureAgentFriendlyMarkup() {
       if (item) item.setAttribute('aria-label', cleaned);
     });
 
-  // Logo tiles: keep accessible name aligned with alt text (no extra "client logo" drift).
+  // Logo tiles: keep accessible name aligned with alt / visible text.
   document.querySelectorAll('.dgs-v1215-logo-tile img[alt]').forEach((img) => {
     const alt = (img.getAttribute('alt') || '').trim();
     if (!alt) return;
@@ -412,6 +401,10 @@ function ensureAgentFriendlyMarkup() {
     if (tile?.hasAttribute('aria-label') && tile.getAttribute('aria-label') !== alt) {
       tile.setAttribute('aria-label', alt);
     }
+  });
+  document.querySelectorAll('a.dgs-v1215-logo-text, a.dgs-v1215-logo-tile').forEach((el) => {
+    const visible = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    if (visible) el.setAttribute('aria-label', visible);
   });
 }
 
