@@ -474,9 +474,35 @@ function ensureAgentFriendlyMarkup() {
   });
 }
 
-/** If a compact Envira mid-size 404s, fall back to the original 1024 asset. */
+/** Keep Envira tiles on proxy-resized URLs; only fall back to the master on error. */
 function bindEnviraCompactFallbacks() {
+  const compactSrc = (img) => {
+    const full = img.getAttribute('data-dgs-full-src');
+    if (!full || !/\/api\/wp-media\//i.test(full)) return null;
+    const bare = full.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '');
+    const join = bare.includes('?') ? '&' : '?';
+    const small = `${bare}${join}dgs_w=320`;
+    const mid = `${bare}${join}dgs_w=640`;
+    return { small, mid, srcset: `${small} 320w, ${mid} 640w` };
+  };
+
+  const assertCompact = (img) => {
+    if (img.dataset.dgsCompactFallback === '1') return;
+    const c = compactSrc(img);
+    if (!c) return;
+    const src = img.getAttribute('src') || '';
+    // If Envira/lazyload swapped back to a master (no dgs_w), restore compact.
+    if (src && /\/api\/wp-media\//i.test(src) && !/[?&]dgs_w=/.test(src)) {
+      img.setAttribute('src', c.small);
+      img.setAttribute('srcset', c.srcset);
+      img.setAttribute('data-envira-src', c.small);
+      img.setAttribute('data-envira-srcset', c.srcset);
+      img.setAttribute('sizes', img.getAttribute('sizes') || '(max-width: 900px) 46vw, 320px');
+    }
+  };
+
   document.querySelectorAll('img.envira-gallery-image[data-dgs-full-src]').forEach((img) => {
+    assertCompact(img);
     if (img.dataset.dgsCompactBound === '1') return;
     img.dataset.dgsCompactBound = '1';
     img.addEventListener(
@@ -491,6 +517,20 @@ function bindEnviraCompactFallbacks() {
       { once: true }
     );
   });
+
+  // Re-assert after Envira justified layout mutates attributes.
+  const root = document.querySelector('.envira-gallery-public');
+  if (root && !root.dataset.dgsCompactGuard) {
+    root.dataset.dgsCompactGuard = '1';
+    const mo = new MutationObserver(() => {
+      root.querySelectorAll('img.envira-gallery-image[data-dgs-full-src]').forEach(assertCompact);
+    });
+    mo.observe(root, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['src', 'srcset', 'data-envira-src', 'data-envira-srcset'],
+    });
+  }
 }
 
 function ensureCaseStudyModal() {

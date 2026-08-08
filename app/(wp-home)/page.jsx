@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v26'],
+  ['wp-home-mirror-v27'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08l';
+  const cssBundle = '/api/wp-css?bundle=home&v=08m';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -84,7 +84,7 @@ export default async function WpHomePage() {
           fetchPriority="high"
         />
       ) : null}
-      {/* Keep CSS render-blocking to avoid CLS; still preload so it starts early. */}
+      {/* Keep CSS render-blocking to avoid CLS; preload once (avoid duplicate). */}
       <link rel="preload" href={cssBundle} as="style" />
 
       {mirror.stylesheets.map((sheet) => {
@@ -92,10 +92,18 @@ export default async function WpHomePage() {
           typeof sheet.href === 'string' && sheet.href.includes('/api/wp-css?bundle=home')
             ? cssBundle
             : sheet.href;
+        // Skip duplicate preload/stylesheet entries for the home CSS bundle.
+        if (
+          typeof sheet.href === 'string' &&
+          sheet.href.includes('/api/wp-css?bundle=home') &&
+          sheet.rel === 'preload'
+        ) {
+          return null;
+        }
         return (
           <link
             key={`${sheet.rel}-${href}`}
-            rel={sheet.rel}
+            rel={sheet.rel === 'preload' ? 'stylesheet' : sheet.rel}
             href={href}
             media={sheet.media || undefined}
             sizes={sheet.sizes || undefined}
@@ -116,10 +124,26 @@ export default async function WpHomePage() {
         />
       ))}
 
+      {/* Non-blocking Syne — media=print then swap to all after load. */}
+      <link
+        rel="preload"
+        as="style"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
+      />
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
+        media="print"
+        onLoad={(e) => {
+          e.currentTarget.media = 'all';
+        }}
       />
+      <noscript>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
+        />
+      </noscript>
 
       <style>{`
         /* Default scrollable; cooperate with menu/talk/case scroll-lock */
@@ -767,12 +791,12 @@ export default async function WpHomePage() {
 
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08l" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08m" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08l"
+        data-dgs-build="wp-mirror-2026-08-08m"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

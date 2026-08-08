@@ -11,15 +11,16 @@ export function middleware(request) {
     return response;
   }
 
-  // Never CDN-cache HTML — stale Hostinger HITs were confusing users with old
-  // site shells. Mirror body is still cached server-side for TTFB.
+  // Short edge cache for HTML: cuts PSI cold-TTFB swings without long stale shells.
+  // Build stamp header lets us confirm which revision the edge served.
   if (path === '/' || request.headers.get('accept')?.includes('text/html')) {
-    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-    response.headers.set('Pragma', 'no-cache');
-    response.headers.set('Expires', '0');
-    response.headers.set('CDN-Cache-Control', 'no-store');
-    response.headers.set('Surrogate-Control', 'no-store');
-    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-08l');
+    response.headers.set(
+      'Cache-Control',
+      'public, max-age=0, s-maxage=120, stale-while-revalidate=600'
+    );
+    response.headers.set('CDN-Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
+    response.headers.set('Surrogate-Control', 'max-age=120');
+    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-08m');
   }
   return response;
 }
