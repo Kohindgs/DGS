@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v36'],
+  ['wp-home-mirror-v37'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08v';
+  const cssBundle = '/api/wp-css?bundle=home&v=08w';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -87,6 +87,9 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 #dgs-v1215-robot{width:min(92vw,420px);max-width:100%;height:auto;aspect-ratio:1/1;display:block}
 #dgsPill{color:#fff;background:#FD5C62}
 .dgs-v1215-reveal{opacity:1;transform:none}
+#cmsmasters-scroll-top{display:none!important;height:0!important;overflow:hidden!important}
+#dgs-wp-home-mirror,#dgs-wp-home-mirror .dgs-v1215{font-family:system-ui,sans-serif}
+#dgs-wp-home-mirror .dgs-v1215-hero,#dgs-wp-home-mirror .dgs-v1215-hero *{font-family:system-ui,sans-serif!important}
 @media(min-width:901px){.dgs-v1215-hero-layout{grid-template-columns:1fr 1fr;gap:48px}#dgs-v1215-robot{width:min(480px,42vw)}}
 `.replace(/\n/g, ''),
         }}
@@ -98,29 +101,29 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       <link
         data-dgs-font="syne"
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
         media="print"
       />
       <noscript>
         <link rel="stylesheet" href={cssBundle} />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08v" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08w" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08v"
+        data-dgs-build="wp-mirror-2026-08-08w"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(){function enableLate(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css],link[data-dgs-font]').forEach(function(l){l.media='all'});document.querySelectorAll('style[data-dgs-defer]').forEach(function(s){s.media='all'});}function afterLcp(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(enableLate,80)})})}var r=document.getElementById('dgs-v1215-robot');if(r&&!r.complete){r.addEventListener('load',afterLcp,{once:true});r.addEventListener('error',afterLcp,{once:true});setTimeout(enableLate,4000)}else{afterLcp()}setTimeout(enableLate,5000)})();`,
+          __html: `(function(){function enableCss(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css]').forEach(function(l){l.media='all'});document.querySelectorAll('style[data-dgs-defer]').forEach(function(s){s.media='all'});}function enableFont(){var l=document.querySelector('link[data-dgs-font]');if(l)l.media='all';}function afterLcp(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(enableCss,80)})})}var r=document.getElementById('dgs-v1215-robot');if(r&&!r.complete){r.addEventListener('load',afterLcp,{once:true});r.addEventListener('error',afterLcp,{once:true});setTimeout(enableCss,4000)}else{afterLcp()}setTimeout(enableCss,5000);setTimeout(enableFont,8000);if(window.requestIdleCallback)requestIdleCallback(enableFont,{timeout:10000})})();`,
         }}
       />
 
