@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v27'],
+  ['wp-home-mirror-v28'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08m';
+  const cssBundle = '/api/wp-css?bundle=home&v=08n';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -124,18 +124,22 @@ export default async function WpHomePage() {
         />
       ))}
 
-      {/* Non-blocking Syne — media=print then swap to all after load. */}
+      {/* Non-blocking Syne (RSC-safe: no React onLoad — use media=print + tiny script). */}
       <link
         rel="preload"
         as="style"
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
       />
       <link
+        data-dgs-font="syne"
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
         media="print"
-        onLoad={(e) => {
-          e.currentTarget.media = 'all';
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html:
+            "(function(){var l=document.querySelector('link[data-dgs-font=\"syne\"]');if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,1200);})();",
         }}
       />
       <noscript>
@@ -791,12 +795,12 @@ export default async function WpHomePage() {
 
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08m" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08n" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08m"
+        data-dgs-build="wp-mirror-2026-08-08n"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
