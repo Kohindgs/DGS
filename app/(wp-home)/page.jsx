@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v29'],
+  ['wp-home-mirror-v30'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08o';
+  const cssBundle = '/api/wp-css?bundle=home&v=08p';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -70,13 +70,14 @@ export default async function WpHomePage() {
 
   return (
     <>
-      {/* Critical first: kill white filmstrip + allow early FCP before the WP CSS bundle. */}
+      {/* Critical first: dark paint before WP CSS. Do NOT min-height the fixed nav
+          (that stretched #dgsNav to 100vh and left a huge empty banner). */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
 html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
-#dgs-wp-home-mirror,.dgs-v1215,#dgsNav{background:#020202;min-height:100vh}
-#dgsNav a,#dgsPill,.dgs-v1215-copy,#dgs-v1215-robot{visibility:visible}
+#dgs-wp-home-mirror,.dgs-v1215{background:#020202}
+#dgsNav{background:transparent;min-height:0;height:auto}
 .dgs-v1215-copy h1{color:#fff;font-family:Syne,system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0}
 .dgs-v1215-actions a{color:#fff}
 #dgsPill{color:#fff;background:#C73A40}
@@ -831,12 +832,12 @@ html,body{background:#020202;color:#e8e8e6;margin:0;padding:0}
 
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08o" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08p" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08o"
+        data-dgs-build="wp-mirror-2026-08-08p"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
