@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v22'],
+  ['wp-home-mirror-v23'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08h';
+  const cssBundle = '/api/wp-css?bundle=home&v=08i';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -68,30 +68,12 @@ export default async function WpHomePage() {
     ? `${lcpMaster}${lcpJoin}dgs_w=640 640w, ${lcpMaster}${lcpJoin}dgs_w=720 720w, ${lcpMaster}${lcpJoin}dgs_w=800 800w`
     : '';
 
-  // Tiny inline WP rules stay in <head>; larger blocks activate after first paint
-  // so they do not compete with the LCP image on the critical path.
-  const earlyInlineStyles = [];
-  const lateInlineStyles = [];
-  for (const css of mirror.inlineStyles || []) {
-    if (!css) continue;
-    if (css.length < 2800) earlyInlineStyles.push(css);
-    else lateInlineStyles.push(css);
-  }
-
-  const deferredStylesheets = (mirror.stylesheets || []).map((sheet) => {
-    const href =
-      typeof sheet.href === 'string' && sheet.href.includes('/api/wp-css?bundle=home')
-        ? cssBundle
-        : sheet.href;
-    return { ...sheet, href };
-  });
-
   return (
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://www.dgeniussolutions.com" />
-      {/* LCP image first — no CSS preload racing it for bandwidth. */}
+      {/* LCP image first so it wins bandwidth vs fonts. */}
       {lcpPreload ? (
         <link
           rel="preload"
@@ -102,36 +84,27 @@ export default async function WpHomePage() {
           fetchPriority="high"
         />
       ) : null}
+      {/* Keep CSS render-blocking to avoid CLS; still preload so it starts early. */}
+      <link rel="preload" href={cssBundle} as="style" />
 
-      {/* Critical shell so the hero paints correctly before the deferred WP CSS. */}
-      <style>{`
-        html, body {
-          margin: 0;
-          background: #050505;
-          color: #fff;
-          font-family: "Syne", "Manrope", system-ui, sans-serif;
-        }
-        #dgs-wp-home-mirror, #dgs-v1215, .dgs-v1215 { min-height: 100vh; background: #050505; }
-        #dgs-v1215-robot-wrap { display: block; }
-        #dgs-v1215-robot {
-          display: block;
-          width: min(100%, 500px);
-          max-width: 100%;
-          height: auto;
-          margin-inline: auto;
-        }
-        .dgs-v1215-hero-layout {
-          display: grid;
-          gap: 1.25rem;
-          align-items: center;
-        }
-        @media (min-width: 900px) {
-          .dgs-v1215-hero-layout { grid-template-columns: 1.1fr 0.9fr; }
-        }
-      `}</style>
+      {mirror.stylesheets.map((sheet) => {
+        const href =
+          typeof sheet.href === 'string' && sheet.href.includes('/api/wp-css?bundle=home')
+            ? cssBundle
+            : sheet.href;
+        return (
+          <link
+            key={`${sheet.rel}-${href}`}
+            rel={sheet.rel}
+            href={href}
+            media={sheet.media || undefined}
+            sizes={sheet.sizes || undefined}
+          />
+        );
+      })}
 
-      {earlyInlineStyles.map((css, i) => (
-        <style key={`inline-style-early-${i}`} dangerouslySetInnerHTML={{ __html: css }} />
+      {mirror.inlineStyles.map((css, i) => (
+        <style key={`inline-style-${i}`} dangerouslySetInnerHTML={{ __html: css }} />
       ))}
 
       {mirror.schemas.map((json, i) => (
@@ -143,46 +116,10 @@ export default async function WpHomePage() {
         />
       ))}
 
-      {/* Defer full WP CSS + fonts until after first paint (same final UI). */}
-      {deferredStylesheets.map((sheet) => (
-        <link
-          key={`deferred-${sheet.rel}-${sheet.href}`}
-          id={sheet.href.includes('/api/wp-css?bundle=home') ? 'dgs-wp-css' : undefined}
-          rel="stylesheet"
-          href={sheet.href}
-          media="print"
-          data-dgs-deferred-css="1"
-          sizes={sheet.sizes || undefined}
-        />
-      ))}
       <link
-        id="dgs-syne-font"
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
-        media="print"
-        data-dgs-deferred-css="1"
       />
-      {lateInlineStyles.map((css, i) => (
-        <style
-          key={`inline-style-late-${i}`}
-          data-dgs-deferred-css="1"
-          media="print"
-          dangerouslySetInnerHTML={{ __html: css }}
-        />
-      ))}
-      <script
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{
-          __html: `(function(){function go(){document.querySelectorAll('[data-dgs-deferred-css]').forEach(function(el){el.media='all';el.removeAttribute('data-dgs-deferred-css');});}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){requestAnimationFrame(go);});});}else{requestAnimationFrame(function(){requestAnimationFrame(go);});}setTimeout(go,2500);})();`,
-        }}
-      />
-      <noscript>
-        <link rel="stylesheet" href={cssBundle} />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
-        />
-      </noscript>
 
       <style>{`
         /* Default scrollable; cooperate with menu/talk/case scroll-lock */
@@ -829,12 +766,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08h" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08i" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08h"
+        data-dgs-build="wp-mirror-2026-08-08i"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
