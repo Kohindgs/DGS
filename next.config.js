@@ -23,11 +23,19 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // Align with middleware — never no-store the homepage at the CDN layer
+        // (that forced DYNAMIC HTML and ~600ms document TTFB on every PSI run).
         source: '/',
         headers: [
-          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
-          { key: 'CDN-Cache-Control', value: 'no-store' },
-          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-08i' },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, s-maxage=300, stale-while-revalidate=900',
+          },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'public, max-age=300, stale-while-revalidate=900',
+          },
+          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-08t' },
         ],
       },
       // Local About cover art and other public/media assets — long cache for PSI.

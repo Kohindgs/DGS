@@ -11,16 +11,16 @@ export function middleware(request) {
     return response;
   }
 
-  // Short edge cache for HTML: cuts PSI cold-TTFB swings without long stale shells.
+  // Edge-cache HTML so PSI "document latency" / TTFB isn't a cold Node hit every run.
   // Build stamp header lets us confirm which revision the edge served.
   if (path === '/' || request.headers.get('accept')?.includes('text/html')) {
     response.headers.set(
       'Cache-Control',
-      'public, max-age=0, s-maxage=120, stale-while-revalidate=600'
+      'public, max-age=0, s-maxage=300, stale-while-revalidate=900'
     );
-    response.headers.set('CDN-Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
-    response.headers.set('Surrogate-Control', 'max-age=120');
-    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-08s');
+    response.headers.set('CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=900');
+    response.headers.set('Surrogate-Control', 'max-age=300');
+    response.headers.set('X-DGS-Build', 'wp-mirror-2026-08-08t');
   }
   return response;
 }

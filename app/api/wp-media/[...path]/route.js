@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
+import { createHash } from 'crypto';
+import { mkdir, readFile, writeFile } from 'fs/promises';
+import path from 'path';
+import { tmpdir } from 'os';
 
 const WP_ORIGIN = process.env.WP_ORIGIN || 'https://www.dgeniussolutions.com';
+const RESIZE_CACHE_DIR = path.join(tmpdir(), 'dgs-wp-media-resize');
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -112,16 +117,36 @@ export async function GET(request, context) {
 
   if (wantsResize) {
     try {
+      const width = Math.round(resizeW);
+      const cacheKey = createHash('sha1')
+        .update(`${pathname}|${width}|q72`)
+        .digest('hex');
+      const cachePath = path.join(RESIZE_CACHE_DIR, `${cacheKey}.webp`);
+      try {
+        const cached = await readFile(cachePath);
+        out.set('Content-Type', 'image/webp');
+        out.set('X-DGS-Media-Resize', String(width));
+        out.set('X-DGS-Media-Resize-Cache', 'HIT');
+        out.set('Cache-Control', 'public, max-age=31536000, immutable');
+        return new NextResponse(cached, { status: 200, headers: out });
+      } catch {
+        /* miss — generate below */
+      }
+
       const sharp = (await import('sharp')).default;
       const input = Buffer.from(await upstream.arrayBuffer());
       const resized = await sharp(input)
         .rotate()
-        .resize({ width: Math.round(resizeW), withoutEnlargement: true })
+        .resize({ width, withoutEnlargement: true })
         .webp({ quality: 72 })
         .toBuffer();
       out.set('Content-Type', 'image/webp');
-      out.set('X-DGS-Media-Resize', String(Math.round(resizeW)));
+      out.set('X-DGS-Media-Resize', String(width));
+      out.set('X-DGS-Media-Resize-Cache', 'MISS');
       out.set('Cache-Control', 'public, max-age=31536000, immutable');
+      mkdir(RESIZE_CACHE_DIR, { recursive: true })
+        .then(() => writeFile(cachePath, resized))
+        .catch(() => {});
       return new NextResponse(resized, { status: 200, headers: out });
     } catch (err) {
       // Fall through to streaming original if sharp fails.

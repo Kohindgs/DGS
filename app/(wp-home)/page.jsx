@@ -1,6 +1,6 @@
 import WpHomeClient from '../components/WpHomeClient';
 import { unstable_cache } from 'next/cache';
-import { getWpHomeMirror } from '../../lib/wp-mirror';
+import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
 
 /**
  * SSR (avoids Hostinger OOM during `next build`) + 15-minute server cache so
@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v33'],
+  ['wp-home-mirror-v34'],
   { revalidate: 900 }
 );
 
@@ -58,17 +58,11 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08s';
-  const lcpPreload = mirror.lcpImage || '';
-  const lcpMaster = lcpPreload
-    ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
-    : '';
-  const lcpJoin = lcpMaster.includes('?') ? '&' : '?';
-  // Prefer 640 as the preload href (mobile LCP); keep 720/800 in srcset for desktop.
-  const lcpPreloadHref = lcpMaster ? `${lcpMaster}${lcpJoin}dgs_w=640` : '';
-  const lcpSrcset = lcpMaster
-    ? `${lcpMaster}${lcpJoin}dgs_w=640 640w, ${lcpMaster}${lcpJoin}dgs_w=720 720w, ${lcpMaster}${lcpJoin}dgs_w=800 800w`
-    : '';
+  const cssBundle = '/api/wp-css?bundle=home&v=08t';
+  // Static local LCP — no WP upstream / sharp on the critical path.
+  const lcp = getHeroRobotLcpPreload();
+  const lcpPreloadHref = lcp.href;
+  const lcpSrcset = lcp.srcSet;
 
   return (
     <>
@@ -93,22 +87,18 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 `.replace(/\n/g, ''),
         }}
       />
+      {/* LCP image first — wins bandwidth vs fonts/CSS on Slow 4G. */}
+      <link
+        rel="preload"
+        as="image"
+        href={lcpPreloadHref}
+        imageSrcSet={lcpSrcset}
+        imageSizes={lcp.sizes}
+        fetchPriority="high"
+      />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link rel="dns-prefetch" href="https://www.dgeniussolutions.com" />
-      {/* LCP image first so it wins bandwidth vs fonts. */}
-      {lcpPreloadHref ? (
-        <link
-          rel="preload"
-          as="image"
-          href={lcpPreloadHref}
-          imageSrcSet={lcpSrcset || undefined}
-          imageSizes="(max-width: 900px) 320px, 480px"
-          fetchPriority="high"
-        />
-      ) : null}
-      {/* Non-blocking home CSS (~227KB gzip): critical hero CSS paints first on Slow 4G. */}
-      <link rel="preload" href={cssBundle} as="style" />
+      {/* Non-blocking home CSS: no style preload (competes with LCP on Slow 4G). */}
       <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
       <script
         dangerouslySetInnerHTML={{
@@ -145,12 +135,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08s" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08t" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08s"
+        data-dgs-build="wp-mirror-2026-08-08t"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
