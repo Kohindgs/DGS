@@ -90,6 +90,26 @@ function ensurePortfolioMedia() {
   const items = Array.from(document.querySelectorAll('.gallery-item, .case-study-item'));
   if (!items.length) return;
 
+  // Align portfolio card accessible names with the visible title text.
+  items.forEach((item) => {
+    const title = (
+      item.querySelector('.envira-title, .gallery-title, .video-title, h3, h4')?.textContent ||
+      item.getAttribute('data-title') ||
+      ''
+    )
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!title) return;
+    const current = (item.getAttribute('aria-label') || '').trim();
+    if (current && current !== title && !current.toLowerCase().includes(title.toLowerCase())) {
+      item.setAttribute('aria-label', title);
+    } else if (!current) {
+      item.setAttribute('aria-label', title);
+    } else if (current.startsWith('View image:') || current.startsWith('Open case study:')) {
+      item.setAttribute('aria-label', title);
+    }
+  });
+
   // Cap concurrent video metadata fetches so case-study images can load.
   const MAX_CONCURRENT = 3;
   let active = 0;
@@ -369,16 +389,49 @@ function ensureAgentFriendlyMarkup() {
   document
     .querySelectorAll("a.envira-gallery-link, a[class*='envira-gallery-']")
     .forEach((link) => {
-      if (link.getAttribute('aria-label')) return;
       const img = link.querySelector('img');
-      const name =
+      const visible =
+        link.querySelector('.envira-title, .envira-gallery-title, figcaption')?.textContent ||
         img?.getAttribute('alt') ||
         link.getAttribute('title') ||
         img?.getAttribute('data-caption') ||
         '';
-      const cleaned = String(name).replace(/<[^>]+>/g, '').trim();
-      if (cleaned) link.setAttribute('aria-label', `View image: ${cleaned}`);
+      const cleaned = String(visible).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+      if (!cleaned) return;
+      // Accessible name must match visible label (PSI label-content-name-mismatch).
+      link.setAttribute('aria-label', cleaned);
+      const item = link.closest('.envira-gallery-item, .gallery-item');
+      if (item) item.setAttribute('aria-label', cleaned);
     });
+
+  // Logo tiles: keep accessible name aligned with alt text (no extra "client logo" drift).
+  document.querySelectorAll('.dgs-v1215-logo-tile img[alt]').forEach((img) => {
+    const alt = (img.getAttribute('alt') || '').trim();
+    if (!alt) return;
+    const tile = img.closest('.dgs-v1215-logo-tile');
+    if (tile?.hasAttribute('aria-label') && tile.getAttribute('aria-label') !== alt) {
+      tile.setAttribute('aria-label', alt);
+    }
+  });
+}
+
+/** If a compact Envira mid-size 404s, fall back to the original 1024 asset. */
+function bindEnviraCompactFallbacks() {
+  document.querySelectorAll('img.envira-gallery-image[data-dgs-full-src]').forEach((img) => {
+    if (img.dataset.dgsCompactBound === '1') return;
+    img.dataset.dgsCompactBound = '1';
+    img.addEventListener(
+      'error',
+      () => {
+        const full = img.getAttribute('data-dgs-full-src');
+        if (!full || img.dataset.dgsCompactFallback === '1') return;
+        img.dataset.dgsCompactFallback = '1';
+        img.removeAttribute('srcset');
+        img.setAttribute('src', full);
+      },
+      { once: true }
+    );
+  });
 }
 
 function ensureCaseStudyModal() {
@@ -611,6 +664,7 @@ export default function WpHomeClient({
     // Agent a11y + flatten case gradients ASAP (before portfolio scripts boot)
     try {
       ensureAgentFriendlyMarkup();
+      bindEnviraCompactFallbacks();
       ensureCaseStudyImages();
       ensureAboutVideo();
     } catch (_) {
@@ -806,6 +860,7 @@ export default function WpHomeClient({
 
       try {
         ensureAgentFriendlyMarkup();
+        bindEnviraCompactFallbacks();
         ensureCaseStudyImages();
         ensureAboutVideo();
         ensureCaseStudyModal();
@@ -816,7 +871,10 @@ export default function WpHomeClient({
           document.getElementById('dgs-wp-home-mirror');
         if (portfolioRoot && !portfolioRoot.dataset.dgsPortfolioObserved) {
           portfolioRoot.dataset.dgsPortfolioObserved = '1';
-          const mo = new MutationObserver(() => ensurePortfolioMedia());
+          const mo = new MutationObserver(() => {
+            ensurePortfolioMedia();
+            ensureAgentFriendlyMarkup();
+          });
           mo.observe(portfolioRoot, { childList: true, subtree: true });
         }
       } catch (err) {

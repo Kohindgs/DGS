@@ -27,7 +27,17 @@ const nextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
           { key: 'CDN-Cache-Control', value: 'no-store' },
-          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-08c' },
+          { key: 'X-DGS-Build', value: 'wp-mirror-2026-08-08d' },
+        ],
+      },
+      // Local About cover art and other public/media assets — long cache for PSI.
+      {
+        source: '/media/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
         ],
       },
     ];

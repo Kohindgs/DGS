@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v14'],
+  ['wp-home-mirror-v15'],
   { revalidate: 300 }
 );
 
@@ -728,14 +728,26 @@ export default async function WpHomePage() {
         .ff-el-group:has(.ff-el-recaptcha) {
           display: none !important;
         }
+
+        /* Footer legal/copyright: WP used rgba(255,255,255,.45) which fails contrast. */
+        html body .dgs-footer-copyright,
+        html body .dgs-footer-legal-link {
+          color: rgba(255, 255, 255, 0.78) !important;
+        }
+        html body .dgs-footer-legal-link:hover {
+          color: rgba(255, 255, 255, 0.95) !important;
+        }
+        html body .dgs-footer-legal-divider {
+          color: rgba(255, 255, 255, 0.55) !important;
+        }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08c" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08d" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08c"
+        data-dgs-build="wp-mirror-2026-08-08d"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
