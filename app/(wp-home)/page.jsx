@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v40'],
+  ['wp-home-mirror-v41'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08z';
+  const cssBundle = '/api/wp-css?bundle=home&v=09a';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -112,18 +112,18 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08z" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09a" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08z"
+        data-dgs-build="wp-mirror-2026-08-09a"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(){function enableCss(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css]').forEach(function(l){l.media='all'});document.querySelectorAll('style[data-dgs-defer]').forEach(function(s){s.media='all'});}function enableFont(){var l=document.querySelector('link[data-dgs-font]');if(l)l.media='all';}function afterLcp(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(enableCss,80)})})}var r=document.getElementById('dgs-v1215-robot');if(r&&!r.complete){r.addEventListener('load',afterLcp,{once:true});r.addEventListener('error',afterLcp,{once:true});setTimeout(enableCss,4000)}else{afterLcp()}setTimeout(enableCss,5000);setTimeout(enableFont,8000);if(window.requestIdleCallback)requestIdleCallback(enableFont,{timeout:10000})})();`,
+          __html: `(function(){function enableCss(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css]').forEach(function(l){l.media='all'});document.querySelectorAll('style[data-dgs-defer]').forEach(function(s){s.media='all'});}function enableFont(){var l=document.querySelector('link[data-dgs-font]');if(l)l.media='all';}var l=document.querySelector('link[data-dgs-css]');if(l){if(l.addEventListener)l.addEventListener('load',enableCss);if(l.sheet)enableCss()}setTimeout(enableCss,2500);setTimeout(enableFont,10000);if(window.requestIdleCallback)requestIdleCallback(function(){},{timeout:10000})})();`,
         }}
       />
 
