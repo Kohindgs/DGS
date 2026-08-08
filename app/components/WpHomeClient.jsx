@@ -90,13 +90,9 @@ function ensurePortfolioMedia() {
   const items = Array.from(document.querySelectorAll('.gallery-item, .case-study-item'));
   if (!items.length) return;
 
-  // Align portfolio card accessible names with the full visible label text.
+  // Prefer visible text as the accessible name (no conflicting aria-label).
   items.forEach((item) => {
-    const visible = (item.innerText || '')
-      .replace(/\s+/g, ' ')
-      .trim();
-    if (!visible) return;
-    item.setAttribute('aria-label', visible);
+    if (item.hasAttribute('aria-label')) item.removeAttribute('aria-label');
   });
 
   // Cap concurrent video metadata fetches so case-study images can load.
