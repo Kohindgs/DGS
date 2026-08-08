@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v45'],
+  ['wp-home-mirror-v46'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09e';
+  const cssBundle = '/api/wp-css?bundle=home&v=09f';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -87,9 +87,11 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 #dgs-v1215-robot{width:min(92vw,420px);max-width:100%;height:auto;aspect-ratio:1/1;display:block}
 #dgsPill{color:#fff;background:#FD5C62}
 .dgs-v1215-reveal{opacity:1;transform:none}
-#cmsmasters-scroll-top{display:none!important;height:0!important;overflow:hidden!important}
-#dgs-wp-home-mirror .elementor,#dgs-wp-home-mirror .elementor-element,#dgs-wp-home-mirror .elementor-widget-html{margin:0!important;padding:0!important;max-width:100%!important;width:100%!important;position:static!important;min-height:0!important;background:transparent!important}
-#dgs-wp-home-mirror .elementor-section,#dgs-wp-home-mirror .elementor-container,#dgs-wp-home-mirror .elementor-column,#dgs-wp-home-mirror .elementor-widget-wrap{margin:0!important;padding:0!important;width:100%!important;max-width:100%!important}
+#dgs-wp-home-mirror>header.elementor-location-header,header.elementor-location-header{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;height:72px!important;max-height:72px!important;overflow:hidden!important;z-index:99999!important;background:transparent!important;margin:0!important;padding:0!important}
+#cmsmasters-scroll-top{display:block!important;height:72px!important;max-height:72px!important;overflow:hidden!important;margin:0!important;padding:0!important}
+#dgsNav,#dgsBar{height:72px!important;max-height:72px!important;box-sizing:border-box}
+#dgsBar{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 4vw!important}
+#dgs-wp-home-mirror .elementor-location-header .elementor-element{margin:0!important;padding:0!important;min-height:0!important;background:transparent!important}
 #dgs-wp-home-mirror,#dgs-wp-home-mirror .dgs-v1215{font-family:system-ui,sans-serif}
 #dgs-wp-home-mirror .dgs-v1215-hero,#dgs-wp-home-mirror .dgs-v1215-hero *{font-family:system-ui,sans-serif!important}
 @media(min-width:901px){.dgs-v1215-hero-layout{grid-template-columns:1fr 1fr;gap:48px}#dgs-v1215-robot{width:min(480px,42vw)}}
@@ -1036,12 +1038,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09e" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09f" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09e"
+        data-dgs-build="wp-mirror-2026-08-09f"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
