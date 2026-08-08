@@ -931,6 +931,8 @@ export default function WpHomeClient({
               /* ignore */
             }
           });
+          // Envira sometimes rewrites src to the master — put compact URLs back.
+          bindEnviraCompactFallbacks();
         } catch (_) {
           /* ignore */
         }
