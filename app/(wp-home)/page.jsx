@@ -1,4 +1,4 @@
-import WpHomeClient from '../components/WpHomeClient';
+import DeferredHomeClient from '../components/DeferredHomeClient';
 import { unstable_cache } from 'next/cache';
 import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
 
@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v35'],
+  ['wp-home-mirror-v36'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08u';
+  const cssBundle = '/api/wp-css?bundle=home&v=08v';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -73,34 +73,33 @@ export default async function WpHomePage() {
 html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
 #dgs-wp-home-mirror,.dgs-v1215,.dgs-v1215-fallback{background:#020202}
 #dgsNav{background:transparent;min-height:0;height:auto}
-.dgs-v1215-shell{width:min(1200px,92vw);margin:0 auto;padding:0 4vw}
+#dgsLogo img,#dgsNav img{height:28px;width:auto;display:block}
+.dgs-v1215-shell{width:min(1200px,92vw);margin:0 auto;padding:0 4vw;box-sizing:border-box}
 .dgs-v1215-hero{min-height:100svh;display:flex;align-items:center;padding:88px 0 40px;box-sizing:border-box}
 .dgs-v1215-hero-layout{display:grid;gap:28px;align-items:center}
-.dgs-v1215-copy h1{color:#fff;font-family:Syne,system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0;font-size:clamp(2rem,8vw,3.4rem)}
-.dgs-v1215-copy p{color:rgba(255,255,255,.74);margin:20px 0 0;line-height:1.6;font-size:1rem}
+.dgs-v1215-kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 18px;color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.dgs-v1215-copy h1{color:#fff;font-family:system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:0;font-size:clamp(2rem,8vw,3.4rem)}
+.dgs-v1215-copy h1 span{color:#69a7ff}
 .dgs-v1215-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;align-items:center}
 .dgs-v1215-actions a{color:#fff;text-decoration:none}
 .dgs-v1215-btn,.dgs-v1215-btn-primary{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:999px;background:#FD5C62;color:#fff;font-weight:600}
+.dgs-v1215-visual,#dgs-v1215-robot-wrap{display:flex;justify-content:center;align-items:center}
+#dgs-v1215-robot{width:min(92vw,420px);max-width:100%;height:auto;aspect-ratio:1/1;display:block}
 #dgsPill{color:#fff;background:#FD5C62}
-@media(min-width:901px){.dgs-v1215-hero-layout{grid-template-columns:1fr 1fr;gap:48px}}
+.dgs-v1215-reveal{opacity:1;transform:none}
+@media(min-width:901px){.dgs-v1215-hero-layout{grid-template-columns:1fr 1fr;gap:48px}#dgs-v1215-robot{width:min(480px,42vw)}}
 `.replace(/\n/g, ''),
         }}
       />
-      {/* Single LCP preload (href only — imageSrcSet made Next emit a duplicate). */}
+      {/* Single LCP preload */}
       <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
-      {/* Non-blocking home CSS / font: no rel=preload (they steal LCP bandwidth on Slow 4G). */}
+      {/* Fetch CSS/font without applying until AFTER LCP (warm cache used to flip media=all instantly). */}
       <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
       <link
         data-dgs-font="syne"
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
         media="print"
-      />
-      <script
-        dangerouslySetInnerHTML={{
-          __html:
-            "(function(){function arm(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,2500);}arm('link[data-dgs-css=\"home\"]');arm('link[data-dgs-font=\"syne\"]');})();",
-        }}
       />
       <noscript>
         <link rel="stylesheet" href={cssBundle} />
@@ -110,40 +109,22 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       </noscript>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08u" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08v" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08u"
+        data-dgs-build="wp-mirror-2026-08-08v"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
-      {mirror.stylesheets.map((sheet) => {
-        const href =
-          typeof sheet.href === 'string' && sheet.href.includes('/api/wp-css?bundle=home')
-            ? null
-            : sheet.href;
-        if (!href) return null;
-        if (
-          typeof sheet.href === 'string' &&
-          sheet.href.includes('/api/wp-css?bundle=home')
-        ) {
-          return null;
-        }
-        return (
-          <link
-            key={`late-${sheet.rel}-${href}`}
-            rel={sheet.rel === 'preload' ? 'stylesheet' : sheet.rel}
-            href={href}
-            media={sheet.media || undefined}
-            sizes={sheet.sizes || undefined}
-          />
-        );
-      })}
-      {mirror.inlineStyles.map((css, i) => (
-        <style key={`inline-style-${i}`} dangerouslySetInnerHTML={{ __html: css }} />
-      ))}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){function enableLate(){if(window.__dgsCssOn)return;window.__dgsCssOn=1;document.querySelectorAll('link[data-dgs-css],link[data-dgs-font]').forEach(function(l){l.media='all'});document.querySelectorAll('style[data-dgs-defer]').forEach(function(s){s.media='all'});}function afterLcp(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(enableLate,80)})})}var r=document.getElementById('dgs-v1215-robot');if(r&&!r.complete){r.addEventListener('load',afterLcp,{once:true});r.addEventListener('error',afterLcp,{once:true});setTimeout(enableLate,4000)}else{afterLcp()}setTimeout(enableLate,5000)})();`,
+        }}
+      />
+
+      {/* WP inline/link CSS omitted from first paint — covered by deferred home bundle. */}
 
       {/* JSON-LD after CSS so it does not compete with first paint. */}
       {mirror.schemas.map((json, i) => (
@@ -155,7 +136,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       ))}
 
-      <style>{`
+      <style media="not all" data-dgs-defer="page">{`
         /* Default scrollable; cooperate with menu/talk/case scroll-lock */
         html, body {
           overflow-x: clip !important;
@@ -824,7 +805,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
       {/* After mirror HTML: responsive + contact overrides win on cascade */}
-      <style id="dgs-responsive-overrides">{`
+      <style id="dgs-responsive-overrides" media="not all" data-dgs-defer="responsive">{`
         /* Reinforce pill brand color after mirrored WP CSS */
         html body #dgsPill.dgs-talk-trigger,
         html body #dgsPill {
@@ -1084,7 +1065,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <WpHomeClient
+      <DeferredHomeClient
         bodyId={mirror.bodyId}
         bodyClass={mirror.bodyClass}
         externalScripts={mirror.externalScripts}
