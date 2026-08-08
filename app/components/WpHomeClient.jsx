@@ -60,6 +60,32 @@ function caseCardTitle(card) {
   return kicker ? `${kicker}: ${title}` : title;
 }
 
+function ensureAboutVideo() {
+  document.querySelectorAll('.dgs-about-video[data-dgs-yt]').forEach((btn) => {
+    if (btn.dataset.dgsBound === '1') return;
+    btn.dataset.dgsBound = '1';
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-dgs-yt');
+      if (!id) return;
+      const wrap = btn.parentElement || btn;
+      const iframe = document.createElement('iframe');
+      // nocookie + rel=0 keeps playback on-site and suppresses "play next" queue.
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(
+        id
+      )}?autoplay=1&rel=0&modestbranding=1&playsinline=1&controls=1&fs=1&iv_load_policy=3&disablekb=0`;
+      iframe.title = "D'Genius Solutions anthem video";
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.setAttribute('frameborder', '0');
+      iframe.className = 'dgs-about-video-frame';
+      wrap.innerHTML = '';
+      wrap.appendChild(iframe);
+    });
+  });
+}
+
 function ensurePortfolioMedia() {
   const items = Array.from(document.querySelectorAll('.gallery-item, .case-study-item'));
   if (!items.length) return;
@@ -586,6 +612,7 @@ export default function WpHomeClient({
     try {
       ensureAgentFriendlyMarkup();
       ensureCaseStudyImages();
+      ensureAboutVideo();
     } catch (_) {
       /* ignore */
     }
@@ -780,6 +807,7 @@ export default function WpHomeClient({
       try {
         ensureAgentFriendlyMarkup();
         ensureCaseStudyImages();
+        ensureAboutVideo();
         ensureCaseStudyModal();
         ensurePortfolioMedia();
         // Portfolio cards are injected async by WP scripts — observe and bind.

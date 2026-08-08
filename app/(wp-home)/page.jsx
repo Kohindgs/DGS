@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v11'],
+  ['wp-home-mirror-v12'],
   { revalidate: 300 }
 );
 
@@ -595,6 +595,119 @@ export default async function WpHomePage() {
           }
         }
 
+        /* About Us band — under hero/rail, matches v1215 section language */
+        html body .dgs-v1215-about {
+          position: relative;
+          z-index: 2;
+          padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+        }
+        html body .dgs-v1215-about-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+          gap: clamp(1.75rem, 4vw, 3.5rem);
+          align-items: center;
+        }
+        html body .dgs-v1215-about-copy .dgs-v1215-section-kicker {
+          margin-bottom: 0.85rem;
+        }
+        html body .dgs-v1215-about-copy h2 {
+          margin: 0 0 1rem;
+          font-size: clamp(1.7rem, 3.2vw, 2.55rem);
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+          color: #fff;
+        }
+        html body .dgs-v1215-about-copy p {
+          margin: 0 0 1rem;
+          max-width: 38rem;
+          color: rgba(255, 255, 255, 0.78);
+        }
+        html body .dgs-v1215-about-founders {
+          color: rgba(255, 255, 255, 0.62) !important;
+          font-size: 0.98rem;
+        }
+        html body .dgs-v1215-about-copy .dgs-v1215-actions {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem 1.35rem;
+          margin-top: 1.5rem;
+        }
+        html body .dgs-v1215-about-inline {
+          color: rgba(255, 255, 255, 0.82);
+          text-decoration: none;
+          font-size: 0.95rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+          padding-bottom: 2px;
+        }
+        html body .dgs-v1215-about-inline:hover {
+          color: #fff;
+          border-bottom-color: rgba(255, 255, 255, 0.8);
+        }
+        html body .dgs-v1215-about-media {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          overflow: hidden;
+          background: #0a0a0a;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+        }
+        html body .dgs-about-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          cursor: pointer;
+          background: #0a0a0a;
+          color: #fff;
+        }
+        html body .dgs-about-video img,
+        html body .dgs-about-video-frame {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border: 0;
+          display: block;
+        }
+        html body .dgs-about-video-frame {
+          object-fit: unset;
+        }
+        html body .dgs-about-video-play {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 4.25rem;
+          height: 4.25rem;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: #111;
+          border: 1px solid rgba(255, 255, 255, 0.45);
+          box-shadow: none;
+          pointer-events: none;
+        }
+        html body .dgs-about-video:hover .dgs-about-video-play,
+        html body .dgs-about-video:focus-visible .dgs-about-video-play {
+          border-color: #fff;
+          background: #161616;
+        }
+        @media (max-width: 900px) {
+          html body .dgs-v1215-about-layout {
+            grid-template-columns: 1fr;
+            gap: 1.75rem;
+          }
+          html body .dgs-v1215-about-media {
+            order: -1;
+          }
+        }
+
         /* Demo host cannot use production Google reCAPTCHA keys — hide widget;
            Hostinger WP mu-plugin skips captcha for proxied demo submits. */
         .ff-el-recaptcha,
@@ -605,12 +718,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-07p" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08a" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-07p"
+        data-dgs-build="wp-mirror-2026-08-08a"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
