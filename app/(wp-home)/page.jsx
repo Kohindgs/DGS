@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v12'],
+  ['wp-home-mirror-v13'],
   { revalidate: 300 }
 );
 
@@ -595,48 +595,52 @@ export default async function WpHomePage() {
           }
         }
 
-        /* About Us band — under hero/rail, matches v1215 section language */
+        /* About Us band — centered copy like other sections + full-bleed video */
         html body .dgs-v1215-about {
           position: relative;
           z-index: 2;
-          padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+          padding: clamp(3.5rem, 7vw, 5.75rem) 0 0;
+          overflow: clip;
         }
-        html body .dgs-v1215-about-layout {
-          display: grid;
-          grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-          gap: clamp(1.75rem, 4vw, 3.5rem);
-          align-items: center;
+        html body .dgs-v1215-about-head {
+          text-align: center;
+          max-width: 52rem;
+          margin: 0 auto clamp(2.25rem, 4.5vw, 3.25rem);
         }
-        html body .dgs-v1215-about-copy .dgs-v1215-section-kicker {
-          margin-bottom: 0.85rem;
+        html body .dgs-v1215-about-head .dgs-v1215-section-kicker {
+          margin-bottom: 0.95rem;
         }
-        html body .dgs-v1215-about-copy h2 {
-          margin: 0 0 1rem;
-          font-size: clamp(1.7rem, 3.2vw, 2.55rem);
-          line-height: 1.15;
+        html body .dgs-v1215-about-head h2 {
+          margin: 0 0 1.15rem;
+          /* Match other dgs-v1215 section titles (do not shrink) */
+          font-size: clamp(2rem, 4.2vw, 3.15rem) !important;
+          line-height: 1.12 !important;
           letter-spacing: -0.02em;
           color: #fff;
         }
-        html body .dgs-v1215-about-copy p {
-          margin: 0 0 1rem;
-          max-width: 38rem;
+        html body .dgs-v1215-about-head p {
+          margin: 0 auto 1rem;
+          max-width: 44rem;
           color: rgba(255, 255, 255, 0.78);
+          font-size: clamp(1.05rem, 1.55vw, 1.2rem) !important;
+          line-height: 1.7 !important;
         }
         html body .dgs-v1215-about-founders {
           color: rgba(255, 255, 255, 0.62) !important;
-          font-size: 0.98rem;
+          font-size: clamp(1rem, 1.4vw, 1.12rem) !important;
         }
-        html body .dgs-v1215-about-copy .dgs-v1215-actions {
+        html body .dgs-v1215-about-actions {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
+          justify-content: center;
           gap: 1rem 1.35rem;
-          margin-top: 1.5rem;
+          margin-top: 1.75rem;
         }
         html body .dgs-v1215-about-inline {
           color: rgba(255, 255, 255, 0.82);
           text-decoration: none;
-          font-size: 0.95rem;
+          font-size: 1rem;
           border-bottom: 1px solid rgba(255, 255, 255, 0.35);
           padding-bottom: 2px;
         }
@@ -644,13 +648,20 @@ export default async function WpHomePage() {
           color: #fff;
           border-bottom-color: rgba(255, 255, 255, 0.8);
         }
+        /* Dedicated end-to-end video plane (breaks out of the content shell) */
         html body .dgs-v1215-about-media {
           position: relative;
-          width: 100%;
-          aspect-ratio: 16 / 9;
+          width: 100vw;
+          max-width: 100vw;
+          margin-left: calc(50% - 50vw);
+          margin-right: calc(50% - 50vw);
+          aspect-ratio: 21 / 9;
+          min-height: clamp(220px, 42vw, 560px);
           overflow: hidden;
           background: #0a0a0a;
-          border: 1px solid rgba(255, 255, 255, 0.14);
+          border: 0;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         html body .dgs-about-video {
           position: absolute;
@@ -682,8 +693,8 @@ export default async function WpHomePage() {
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
-          width: 4.25rem;
-          height: 4.25rem;
+          width: 4.5rem;
+          height: 4.5rem;
           border-radius: 999px;
           display: inline-flex;
           align-items: center;
@@ -699,12 +710,9 @@ export default async function WpHomePage() {
           background: #161616;
         }
         @media (max-width: 900px) {
-          html body .dgs-v1215-about-layout {
-            grid-template-columns: 1fr;
-            gap: 1.75rem;
-          }
           html body .dgs-v1215-about-media {
-            order: -1;
+            aspect-ratio: 16 / 9;
+            min-height: 0;
           }
         }
 
@@ -718,12 +726,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08a" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08b" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08a"
+        data-dgs-build="wp-mirror-2026-08-08b"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
