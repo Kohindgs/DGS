@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v25'],
+  ['wp-home-mirror-v26'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=08k';
+  const cssBundle = '/api/wp-css?bundle=home&v=08l';
   const lcpPreload = mirror.lcpImage || '';
   const lcpMaster = lcpPreload
     ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
@@ -767,29 +767,78 @@ export default async function WpHomePage() {
 
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08k" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08l" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08k"
+        data-dgs-build="wp-mirror-2026-08-08l"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
-      {/* After mirror HTML so these beat WP inline styles on cascade + specificity */}
-      <style id="dgs-contact-overrides">{`
+      {/* After mirror HTML: responsive + contact overrides win on cascade */}
+      <style id="dgs-responsive-overrides">{`
+        /* ——— Global: contain horizontal overflow from 4K → phone ——— */
+        html body #dgs-wp-home-mirror,
+        html body #dgs-wp-home-mirror .dgs-v1215 {
+          overflow-x: clip !important;
+          max-width: 100% !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-shell {
+          width: min(1480px, calc(100% - 32px)) !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-rail-line,
+        html body #dgs-wp-home-mirror .dgs-v1215-rail-track {
+          max-width: 100% !important;
+          overflow: hidden !important;
+        }
+
+        /* Stat line: fluid columns + never mid-word break "Mumbai" */
+        html body #dgs-wp-home-mirror .dgs-v1215-statline {
+          display: grid !important;
+          grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-statline div {
+          min-width: 0 !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-statline strong {
+          white-space: nowrap !important;
+          overflow-wrap: normal !important;
+          word-break: keep-all !important;
+          font-size: clamp(1.35rem, 2.4vw, 2.75rem) !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-statline span {
+          font-size: clamp(11px, 1.05vw, 14px) !important;
+        }
+
+        /* Logo / card grids: never force 150px mins that overflow phones */
+        html body #dgs-wp-home-mirror .dgs-v1215-logo-track {
+          grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        }
+        html body #dgs-wp-home-mirror .dgs-v1215-authority-grid,
+        html body #dgs-wp-home-mirror .dgs-v1215-proof-strip,
+        html body #dgs-wp-home-mirror .dgs-v1215-testimonial-grid,
+        html body #dgs-wp-home-mirror .dgs-v1215-faq-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        }
+
+        /* ——— Contact Us: centered, flat submit, one-line CTA ——— */
         html body #contact-form.dgs-v1215-final .dgs-v1215-final-card {
           display: flex !important;
           flex-direction: column !important;
           align-items: center !important;
           justify-content: center !important;
-          gap: 28px !important;
+          gap: clamp(20px, 2.5vw, 36px) !important;
           text-align: center !important;
           grid-template-columns: 1fr !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
         }
         html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > div {
           width: 100% !important;
-          max-width: 720px !important;
+          max-width: min(720px, 100%) !important;
           margin-left: auto !important;
           margin-right: auto !important;
           text-align: center !important;
@@ -800,12 +849,17 @@ export default async function WpHomePage() {
           text-align: center !important;
           margin-left: auto !important;
           margin-right: auto !important;
+          max-width: 100% !important;
+        }
+        html body #contact-form.dgs-v1215-final .dgs-v1215-final-card h2 {
+          font-size: clamp(1.85rem, 4.2vw, 4.5rem) !important;
+          line-height: 1.05 !important;
         }
         html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode,
         html body #contact-form.dgs-v1215-final .fluentform,
         html body #contact-form.dgs-v1215-final form.fluent_form_1 {
           width: 100% !important;
-          max-width: 560px !important;
+          max-width: min(560px, 100%) !important;
           margin-left: auto !important;
           margin-right: auto !important;
         }
@@ -827,7 +881,7 @@ export default async function WpHomePage() {
           margin-right: auto !important;
           width: auto !important;
           min-width: 0 !important;
-          max-width: none !important;
+          max-width: min(100%, 420px) !important;
           min-height: 0 !important;
           height: auto !important;
           padding: 12px 22px !important;
@@ -836,7 +890,7 @@ export default async function WpHomePage() {
           justify-content: center !important;
           align-items: center !important;
           gap: 10px !important;
-          font-size: 13px !important;
+          font-size: clamp(12px, 1.05vw, 15px) !important;
           font-weight: 700 !important;
           line-height: 1.2 !important;
           background: #FD5C62 !important;
@@ -861,7 +915,6 @@ export default async function WpHomePage() {
           margin-left: auto !important;
           margin-right: auto !important;
         }
-        /* FluentForm paints the gradient on ::before — kill it */
         html body #contact-form .fluentform .ff-btn-submit::before,
         html body #contact-form .fluentform .ff-btn-submit::after,
         html body #contact-form .fluentform button[type="submit"]::before,
@@ -889,14 +942,88 @@ export default async function WpHomePage() {
           opacity: 0.92 !important;
           box-shadow: none !important;
         }
+
+        /* ——— Breakpoints: 4K → tablet → phone ——— */
+        @media (min-width: 1920px) {
+          html body #dgs-wp-home-mirror .dgs-v1215-shell {
+            width: min(1760px, calc(100% - 96px)) !important;
+          }
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > div {
+            max-width: min(900px, 100%) !important;
+          }
+          html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode,
+          html body #contact-form.dgs-v1215-final .fluentform,
+          html body #contact-form.dgs-v1215-final form.fluent_form_1 {
+            max-width: min(640px, 100%) !important;
+          }
+        }
+        @media (min-width: 2560px) {
+          html body #dgs-wp-home-mirror .dgs-v1215-shell {
+            width: min(2200px, calc(100% - 160px)) !important;
+          }
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > div {
+            max-width: min(1100px, 100%) !important;
+          }
+          html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode,
+          html body #contact-form.dgs-v1215-final .fluentform,
+          html body #contact-form.dgs-v1215-final form.fluent_form_1 {
+            max-width: min(720px, 100%) !important;
+          }
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card h2 {
+            font-size: clamp(3.5rem, 3.2vw, 5.5rem) !important;
+          }
+        }
+        @media (max-width: 1180px) {
+          html body #dgs-wp-home-mirror .dgs-v1215-authority-grid,
+          html body #dgs-wp-home-mirror .dgs-v1215-proof-strip,
+          html body #dgs-wp-home-mirror .dgs-v1215-testimonial-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+          html body #dgs-wp-home-mirror .dgs-v1215-logo-track {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+          html body #dgs-wp-home-mirror .dgs-v1215-statline {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+        }
         @media (max-width: 700px) {
+          html body #dgs-wp-home-mirror .dgs-v1215-shell {
+            width: min(100% - 24px, 1480px) !important;
+          }
+          html body #dgs-wp-home-mirror .dgs-v1215-faq-grid,
+          html body #dgs-wp-home-mirror .dgs-v1215-authority-grid,
+          html body #dgs-wp-home-mirror .dgs-v1215-proof-strip,
+          html body #dgs-wp-home-mirror .dgs-v1215-testimonial-grid,
+          html body #dgs-wp-home-mirror .dgs-v1215-logo-track {
+            grid-template-columns: 1fr !important;
+          }
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card {
+            padding: clamp(22px, 5vw, 34px) clamp(16px, 4vw, 24px) !important;
+            border-radius: 24px !important;
+          }
           html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn,
           html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn-primary {
             width: auto !important;
-            max-width: calc(100% - 8px) !important;
+            max-width: 100% !important;
             font-size: 12px !important;
             padding: 11px 18px !important;
             white-space: nowrap !important;
+          }
+        }
+        @media (max-width: 560px) {
+          html body #dgs-wp-home-mirror .dgs-v1215-statline {
+            grid-template-columns: 1fr !important;
+          }
+          html body #dgs-wp-home-mirror .dgs-v1215-logo-track {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+        }
+        @media (max-width: 380px) {
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn,
+          html body #contact-form.dgs-v1215-final .dgs-v1215-final-card > .dgs-v1215-btn-primary {
+            white-space: normal !important;
+            text-align: center !important;
+            line-height: 1.25 !important;
           }
         }
       `}</style>

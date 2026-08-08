@@ -35,10 +35,10 @@
   --dgs-text-sm: 0.875rem;
   --dgs-text-xs: 0.75rem;
 
-  /* Layout & Spacing */
+  /* Layout & Spacing — fluid from phone → 4K */
   --dgs-container-max: 1440px;
-  --dgs-container-padding: clamp(20px, 5vw, 80px);
-  --dgs-section-padding: clamp(80px, 10vw, 160px);
+  --dgs-container-padding: clamp(16px, 4vw, 80px);
+  --dgs-section-padding: clamp(56px, 8vw, 160px);
   --dgs-gap-sm: clamp(16px, 2vw, 24px);
   --dgs-gap-md: clamp(24px, 4vw, 48px);
   --dgs-gap-lg: clamp(48px, 6vw, 80px);
@@ -1545,13 +1545,22 @@ details[open] .dgs-faq-summary {
   display: block;
 }
 
-/* WordPress / Elementor content — dark-theme readable */
+/* WordPress / Elementor content — dark-theme readable + fluid 4K→phone */
 .dgs-wp-content {
   color: var(--dgs-color-text-secondary);
   font-family: var(--dgs-font-family);
   font-size: var(--dgs-text-body);
   font-weight: 400;
   line-height: 1.75;
+  max-width: 100%;
+  overflow-x: clip;
+  box-sizing: border-box;
+}
+
+.dgs-wp-content *,
+.dgs-wp-content *::before,
+.dgs-wp-content *::after {
+  box-sizing: border-box;
 }
 
 .dgs-wp-content :is(h1, h2, h3, h4, h5, h6) {
@@ -1585,9 +1594,24 @@ details[open] .dgs-faq-summary {
 .dgs-wp-content img,
 .dgs-wp-content video,
 .dgs-wp-content iframe {
-  max-width: 100%;
+  max-width: 100% !important;
+  width: auto;
   height: auto;
   border-radius: var(--dgs-radius-md);
+}
+
+.dgs-wp-content iframe {
+  width: 100% !important;
+}
+
+.dgs-wp-content .elementor-section,
+.dgs-wp-content .e-con,
+.dgs-wp-content .e-con-inner,
+.dgs-wp-content .elementor-container,
+.dgs-wp-content .elementor-column-wrap,
+.dgs-wp-content .elementor-widget-wrap {
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 .dgs-wp-content figure {
@@ -1609,9 +1633,13 @@ details[open] .dgs-faq-summary {
 
 .dgs-wp-content table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   margin: 1.5em 0;
   font-size: var(--dgs-text-sm);
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dgs-wp-content th,
@@ -1802,4 +1830,34 @@ details[open] .dgs-faq-summary {
 a.dgs-service-tag:hover {
   border-color: var(--dgs-color-accent-primary);
   color: var(--dgs-color-text-primary);
+}
+
+/* ——— Site shell: scale containers from phone → 4K ——— */
+@media (min-width: 1920px) {
+  :root {
+    --dgs-container-max: 1760px;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --dgs-container-max: 2200px;
+    --dgs-text-h1: clamp(2.75rem, 3.2vw + 1rem, 6.5rem);
+    --dgs-text-h2: clamp(2.15rem, 2.4vw + 1rem, 4.75rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .dgs-page-hero {
+    padding: clamp(96px, 22vw, 140px) 0 clamp(40px, 8vw, 72px);
+  }
+}
+
+@media (max-width: 480px) {
+  .dgs-wp-content h2 {
+    font-size: clamp(1.35rem, 6vw, 1.75rem);
+  }
+  .dgs-wp-content h3 {
+    font-size: clamp(1.15rem, 5vw, 1.35rem);
+  }
 }
