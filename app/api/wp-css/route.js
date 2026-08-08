@@ -122,11 +122,15 @@ export async function GET(request) {
         { revalidate: 3600 }
       );
       const css = await getHomeBundle();
-      return new NextResponse(css, {
+      // Safe minify only: drop comments + collapse blank lines (keep rule syntax).
+      const minified = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\n{3,}/g, '\n\n').trim();
+      return new NextResponse(minified || css, {
         status: 200,
         headers: {
           'Content-Type': 'text/css; charset=utf-8',
-          'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+          // Long cache: bundle URL is versioned from the homepage (?v=).
+          'Cache-Control': 'public, max-age=604800, stale-while-revalidate=2592000',
+          'CDN-Cache-Control': 'public, max-age=604800',
           'X-DGS-Css-Proxy': 'bundle-home',
         },
       });

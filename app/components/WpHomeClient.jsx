@@ -282,24 +282,45 @@ function ensureCaseStudyImages() {
 
   document
     .querySelectorAll('.dgs-v1215-case-media img, .dgs-weavings-case-media img')
-    .forEach((img, index) => {
-      // Keep screenshots visible, but don't compete with the hero LCP image.
-      img.loading = index < 2 ? 'eager' : 'lazy';
+    .forEach((img) => {
+      // Below-fold case screenshots must not compete with the hero LCP image.
+      img.loading = 'lazy';
       img.removeAttribute('fetchpriority');
       img.decoding = 'async';
       img.style.setProperty('opacity', '1', 'important');
       img.style.setProperty('visibility', 'visible', 'important');
       img.style.setProperty('display', 'block', 'important');
       img.style.setProperty('object-position', 'top center', 'important');
-      // Retry once through proxy if the browser aborted under load.
+
+      // Prefer proxy-resized variants when the HTML still points at a huge master.
+      const src = img.getAttribute('src') || '';
+      if (
+        src &&
+        /\/api\/wp-media\//i.test(src) &&
+        !/[?&]dgs_w=/.test(src) &&
+        img.dataset.dgsCaseCompact !== '1'
+      ) {
+        img.dataset.dgsCaseCompact = '1';
+        img.setAttribute('data-dgs-full-src', src);
+        const join = src.includes('?') ? '&' : '?';
+        img.setAttribute(
+          'srcset',
+          `${src}${join}dgs_w=640 640w, ${src}${join}dgs_w=960 960w, ${src} 1600w`
+        );
+        img.setAttribute('sizes', '(max-width: 900px) 92vw, 560px');
+        img.src = `${src}${join}dgs_w=640`;
+      }
+
       img.addEventListener(
         'error',
         () => {
-          const src = img.currentSrc || img.getAttribute('src') || '';
-          if (!src || img.dataset.dgsRetry === '1') return;
+          const full = img.getAttribute('data-dgs-full-src') || img.getAttribute('src') || '';
+          if (!full || img.dataset.dgsRetry === '1') return;
           img.dataset.dgsRetry = '1';
-          const bump = src.includes('?') ? `&_r=${Date.now()}` : `?_r=${Date.now()}`;
-          img.src = `${src}${bump}`;
+          img.removeAttribute('srcset');
+          img.src = full.includes('dgs_w=')
+            ? full.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
+            : full;
         },
         { once: true }
       );

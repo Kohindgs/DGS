@@ -8,7 +8,7 @@ import { getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v19'],
+  ['wp-home-mirror-v20'],
   { revalidate: 300 }
 );
 
@@ -57,27 +57,50 @@ export async function generateMetadata() {
 
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
-  const cssBundle = '/api/wp-css?bundle=home';
+  // Version query so long-lived CSS cache can be busted with deploys.
+  const cssBundle = '/api/wp-css?bundle=home&v=08f';
+  const lcpPreload = mirror.lcpImage || '';
+  const lcpMaster = lcpPreload
+    ? lcpPreload.replace(/([?&])dgs_w=\d+/g, '').replace(/[?&]$/, '')
+    : '';
+  const lcpJoin = lcpMaster.includes('?') ? '&' : '?';
+  const lcpSrcset = lcpMaster
+    ? `${lcpMaster}${lcpJoin}dgs_w=640 640w, ${lcpMaster}${lcpJoin}dgs_w=720 720w, ${lcpMaster}${lcpJoin}dgs_w=800 800w`
+    : '';
 
   return (
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://www.dgeniussolutions.com" />
-      <link rel="preload" href={cssBundle} as="style" />
-      {mirror.lcpImage ? (
-        <link rel="preload" href={mirror.lcpImage} as="image" fetchPriority="high" />
-      ) : null}
-
-      {mirror.stylesheets.map((sheet) => (
+      {/* LCP image first so it wins the connection race against CSS/fonts. */}
+      {lcpPreload ? (
         <link
-          key={`${sheet.rel}-${sheet.href}`}
-          rel={sheet.rel}
-          href={sheet.href}
-          media={sheet.media || undefined}
-          sizes={sheet.sizes || undefined}
+          rel="preload"
+          as="image"
+          href={lcpPreload}
+          imageSrcSet={lcpSrcset || undefined}
+          imageSizes="(max-width: 900px) min(92vw, 420px), 500px"
+          fetchPriority="high"
         />
-      ))}
+      ) : null}
+      <link rel="preload" href={cssBundle} as="style" />
+
+      {mirror.stylesheets.map((sheet) => {
+        const href =
+          typeof sheet.href === 'string' && sheet.href.includes('/api/wp-css?bundle=home')
+            ? cssBundle
+            : sheet.href;
+        return (
+          <link
+            key={`${sheet.rel}-${href}`}
+            rel={sheet.rel}
+            href={href}
+            media={sheet.media || undefined}
+            sizes={sheet.sizes || undefined}
+          />
+        );
+      })}
 
       {mirror.inlineStyles.map((css, i) => (
         <style key={`inline-style-${i}`} dangerouslySetInnerHTML={{ __html: css }} />
@@ -742,12 +765,12 @@ export default async function WpHomePage() {
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-08e" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-08f" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-08e"
+        data-dgs-build="wp-mirror-2026-08-08f"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
