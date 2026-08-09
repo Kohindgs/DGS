@@ -1,6 +1,6 @@
 import DeferredHomeClient from '../../components/DeferredHomeClient';
 import { unstable_cache } from 'next/cache';
-import { getWpAboutMirror } from '../../../lib/wp-mirror';
+import { getAskAiPromptBootScript, getWpAboutMirror } from '../../../lib/wp-mirror';
 
 /**
  * WordPress About Us HTML mirror — same dos/donts as homepage:
@@ -13,7 +13,7 @@ import { getWpAboutMirror } from '../../../lib/wp-mirror';
  */
 const getCachedWpAboutMirror = unstable_cache(
   async () => getWpAboutMirror({ revalidate: 0 }),
-  ['wp-about-mirror-v1'],
+  ['wp-about-mirror-v2'],
   { revalidate: 900 }
 );
 
@@ -103,6 +103,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
             "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,3000);}on('link[data-dgs-css=\"about\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
+      <script dangerouslySetInnerHTML={{ __html: getAskAiPromptBootScript() }} />
 
       {/* WP inline <style> (custom nav) — not in the linked CSS bundle. */}
       {mirror.inlineStyles.map((css, i) => (

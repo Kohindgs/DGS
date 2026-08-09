@@ -1,6 +1,10 @@
 import DeferredHomeClient from '../components/DeferredHomeClient';
 import { unstable_cache } from 'next/cache';
-import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
+import {
+  getAskAiPromptBootScript,
+  getHeroRobotLcpPreload,
+  getWpHomeMirror,
+} from '../../lib/wp-mirror';
 
 /**
  * SSR (avoids Hostinger OOM during `next build`) + 15-minute server cache so
@@ -8,7 +12,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v51'],
+  ['wp-home-mirror-v52'],
   { revalidate: 900 }
 );
 
@@ -58,7 +62,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09m';
+  const cssBundle = '/api/wp-css?bundle=home&v=09n';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -93,6 +97,8 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
             "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,3000);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
+      {/* Ask AI footer icons — must boot before deferred client (href="#" was jumping home). */}
+      <script dangerouslySetInnerHTML={{ __html: getAskAiPromptBootScript() }} />
 
       {/* WP inline <style> (custom nav + v1215 theme) — not in the linked CSS bundle. */}
       {mirror.inlineStyles.map((css, i) => (
@@ -1111,12 +1117,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09m" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09n" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09m"
+        data-dgs-build="wp-mirror-2026-08-09n"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
