@@ -8,7 +8,7 @@ import { getHeroRobotLcpPreload, getWpHomeMirror } from '../../lib/wp-mirror';
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v50'],
+  ['wp-home-mirror-v51'],
   { revalidate: 900 }
 );
 
@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09j';
+  const cssBundle = '/api/wp-css?bundle=home&v=09l';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -654,15 +654,17 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           color: #fff;
           border-bottom-color: rgba(255, 255, 255, 0.8);
         }
-        /* Dedicated end-to-end video plane (breaks out of the content shell) */
+        /* Dedicated end-to-end video plane (breaks out of the content shell).
+           Match the 16:9 cover art — 21:9 + object-fit:cover was cropping
+           "DGS ANTHEM" off the top of the poster. */
         html body .dgs-v1215-about-media {
           position: relative;
           width: 100vw;
           max-width: 100vw;
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
-          aspect-ratio: 21 / 9;
-          min-height: clamp(220px, 42vw, 560px);
+          aspect-ratio: 16 / 9;
+          min-height: 0;
           overflow: hidden;
           background: #0a0a0a;
           border: 0;
@@ -687,7 +689,8 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           inset: 0;
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
+          object-position: center center;
           border: 0;
           display: block;
         }
@@ -887,9 +890,33 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           max-width: min(560px, 100%) !important;
           margin-left: auto !important;
           margin-right: auto !important;
+          text-align: left !important;
         }
         html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode {
           margin-top: 22px !important;
+        }
+        /* Field labels were inheriting section text-align:center — only Full Name
+           stayed left via FluentForm's ff-el-form-top. Force all labels left. */
+        html body #contact-form.dgs-v1215-final .ff-el-group,
+        html body #contact-form.dgs-v1215-final .ff-el-input--label,
+        html body #contact-form.dgs-v1215-final .ff-el-input--label label,
+        html body #contact-form.dgs-v1215-final .ff-el-group > label,
+        html body #contact-form.dgs-v1215-final label,
+        html body #contact-form.dgs-v1215-final .ff-el-form-check,
+        html body #contact-form.dgs-v1215-final .ff-el-form-check-label,
+        html body #contact-form.dgs-v1215-final .ff-el-is-computer,
+        html body #contact-form.dgs-v1215-final .ff-el-input--content,
+        html body #contact-form.dgs-v1215-final input,
+        html body #contact-form.dgs-v1215-final textarea,
+        html body #contact-form.dgs-v1215-final select {
+          text-align: left !important;
+        }
+        html body #contact-form.dgs-v1215-final .ff-el-group > label,
+        html body #contact-form.dgs-v1215-final .ff-el-input--label,
+        html body #contact-form.dgs-v1215-final .ff-el-input--label label {
+          display: block !important;
+          width: 100% !important;
+          text-align: left !important;
         }
         html body #contact-form.dgs-v1215-final .ff-el-group:has(.ff-btn-submit),
         html body #contact-form.dgs-v1215-final .ff-el-group.ff-text-left:has(.ff-btn-submit),
