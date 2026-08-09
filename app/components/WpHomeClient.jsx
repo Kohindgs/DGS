@@ -729,7 +729,8 @@ export default function WpHomeClient({
     const hasMirrorRoot =
       document.getElementById(mirrorRootId) ||
       document.getElementById('dgs-wp-home-mirror') ||
-      document.getElementById('dgs-wp-about-mirror');
+      document.getElementById('dgs-wp-about-mirror') ||
+      document.getElementById('dgs-wp-service-mirror');
     if (!hasMirrorRoot && !sessionStorage.getItem('dgs-force-reload')) {
       sessionStorage.setItem('dgs-force-reload', '1');
       const url = new URL(window.location.href);

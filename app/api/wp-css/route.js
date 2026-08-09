@@ -6,6 +6,9 @@ const WP_ORIGIN = process.env.WP_ORIGIN || 'https://www.dgeniussolutions.com';
 const WP_HOME_URL = process.env.WP_HOME_URL || `${WP_ORIGIN}/`;
 const WP_ABOUT_URL =
   process.env.WP_ABOUT_URL || `${WP_ORIGIN.replace(/\/$/, '')}/about-us/`;
+const WP_AI_PRODUCTION_URL =
+  process.env.WP_AI_PRODUCTION_URL ||
+  `${WP_ORIGIN.replace(/\/$/, '')}/services/ai-video-production-agency/`;
 
 export const runtime = 'nodejs';
 
@@ -92,12 +95,25 @@ async function collectAboutCssUrls() {
   return collectPageCssUrls(WP_ABOUT_URL, 'about');
 }
 
-function softenFontDisplay(css = '') {
+async function collectAiProductionCssUrls() {
+  return collectPageCssUrls(WP_AI_PRODUCTION_URL, 'ai-production');
+}
+
+function softenFontDisplay(css = '', { mapToSyne = false } = {}) {
   // font-display:swap in WP/LiteSpeed faces caused CLS when deferred CSS applied.
-  return css
+  let out = css
     .replace(/font-display:\s*swap/gi, 'font-display:optional')
     .replace(/font-display:\s*block/gi, 'font-display:optional')
     .replace(/font-display:\s*fallback/gi, 'font-display:optional');
+  if (mapToSyne) {
+    // Ranking service pages: only intentional visual change is Syne.
+    out = out
+      .replace(/["']Manrope["']/g, "'Syne'")
+      .replace(/\bManrope\b/g, 'Syne')
+      .replace(/["']Space Grotesk["']/g, "'Syne'")
+      .replace(/\bSpace Grotesk\b/g, 'Syne');
+  }
+  return out;
 }
 
 async function buildBundle(srcs) {
@@ -122,22 +138,32 @@ async function buildBundle(srcs) {
 
 /**
  * Same-origin CSS proxy for WordPress HTML mirrors.
- * Prefer ?bundle=home|about — one cached stylesheet instead of 50+ parallel
- * requests that were rate-limiting Hostinger and making the site look down.
+ * Prefer ?bundle=home|about|ai-production — one cached stylesheet instead of
+ * 50+ parallel requests that were rate-limiting Hostinger.
  */
 export async function GET(request) {
   const { searchParams } = request.nextUrl;
   const bundle = searchParams.get('bundle');
 
-  if (bundle === 'home' || bundle === 'about') {
+  if (bundle === 'home' || bundle === 'about' || bundle === 'ai-production') {
     try {
       const cacheKey =
-        bundle === 'about' ? ['wp-css-bundle-about-v1'] : ['wp-css-bundle-home-v4'];
+        bundle === 'about'
+          ? ['wp-css-bundle-about-v1']
+          : bundle === 'ai-production'
+            ? ['wp-css-bundle-ai-production-v1']
+            : ['wp-css-bundle-home-v4'];
       const getBundle = unstable_cache(
         async () => {
           const srcs =
-            bundle === 'about' ? await collectAboutCssUrls() : await collectHomeCssUrls();
-          return softenFontDisplay(await buildBundle(srcs));
+            bundle === 'about'
+              ? await collectAboutCssUrls()
+              : bundle === 'ai-production'
+                ? await collectAiProductionCssUrls()
+                : await collectHomeCssUrls();
+          return softenFontDisplay(await buildBundle(srcs), {
+            mapToSyne: bundle === 'ai-production',
+          });
         },
         cacheKey,
         { revalidate: 3600 }

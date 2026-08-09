@@ -34,7 +34,9 @@ export default function DeferredHomeClient(props) {
     const robot = document.getElementById('dgs-v1215-robot');
     const lcpImg =
       robot ||
-      document.querySelector('#dgs-wp-about-mirror img[fetchpriority="high"]');
+      document.querySelector(
+        '#dgs-wp-about-mirror img[fetchpriority="high"], #dgs-wp-service-mirror img[fetchpriority="high"]'
+      );
     if (lcpImg && !lcpImg.complete) {
       const onDone = () => {
         // One frame after decode so LCP can commit before we fetch JS.
