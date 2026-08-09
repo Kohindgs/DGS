@@ -58,7 +58,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09l';
+  const cssBundle = '/api/wp-css?bundle=home&v=09m';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -670,6 +670,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           border: 0;
           border-top: 1px solid rgba(255, 255, 255, 0.1);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          box-sizing: border-box;
         }
         html body .dgs-about-video {
           position: absolute;
@@ -689,10 +690,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           inset: 0;
           width: 100%;
           height: 100%;
-          object-fit: contain;
-          object-position: center center;
+          /* Source art is 16:9 — fill (not cover) so DGS ANTHEM / corner DGS stay visible */
+          object-fit: fill;
+          object-position: center top;
           border: 0;
           display: block;
+          box-sizing: border-box;
         }
         html body .dgs-about-video img {
           /* Keep cover crisp on the wide band without overserving huge bytes */
@@ -895,25 +898,52 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode {
           margin-top: 22px !important;
         }
-        /* Field labels were inheriting section text-align:center — only Full Name
-           stayed left via FluentForm's ff-el-form-top. Force all labels left. */
-        html body #contact-form.dgs-v1215-final .ff-el-group,
+        /* Field labels inherited section text-align:center, so short inline-block
+           labels (Email, Phone, …) looked centered while Full Name stayed left.
+           Force the whole field stack left — keep only the submit row centered. */
+        html body #contact-form.dgs-v1215-final .dgs-v1215-form-shortcode,
+        html body #contact-form.dgs-v1215-final .fluentform,
+        html body #contact-form.dgs-v1215-final form.fluent_form_1,
+        html body #contact-form.dgs-v1215-final .ff-el-group:not(:has(.ff-btn-submit)),
+        html body #contact-form.dgs-v1215-final .ff-t-container,
+        html body #contact-form.dgs-v1215-final .ff-t-cell,
+        html body #contact-form.dgs-v1215-final .ff-el-input--label,
+        html body #contact-form.dgs-v1215-final .ff-el-input--content,
+        html body #contact-form.dgs-v1215-final .ff-el-form-check,
+        html body #contact-form.dgs-v1215-final .ff-el-is-computer {
+          text-align: left !important;
+          justify-content: flex-start !important;
+          align-items: stretch !important;
+        }
+        html body #contact-form.dgs-v1215-final .ff-el-group label,
         html body #contact-form.dgs-v1215-final .ff-el-input--label,
         html body #contact-form.dgs-v1215-final .ff-el-input--label label,
-        html body #contact-form.dgs-v1215-final .ff-el-group > label,
-        html body #contact-form.dgs-v1215-final label,
-        html body #contact-form.dgs-v1215-final .ff-el-form-check,
         html body #contact-form.dgs-v1215-final .ff-el-form-check-label,
-        html body #contact-form.dgs-v1215-final .ff-el-is-computer,
-        html body #contact-form.dgs-v1215-final .ff-el-input--content,
+        html body #contact-form.dgs-v1215-final label {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          text-align: left !important;
+          justify-content: flex-start !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          float: none !important;
+        }
         html body #contact-form.dgs-v1215-final input,
         html body #contact-form.dgs-v1215-final textarea,
-        html body #contact-form.dgs-v1215-final select {
+        html body #contact-form.dgs-v1215-final select,
+        html body #contact-form.dgs-v1215-final .ff-el-form-control {
           text-align: left !important;
         }
-        html body #contact-form.dgs-v1215-final .ff-el-group > label,
-        html body #contact-form.dgs-v1215-final .ff-el-input--label,
-        html body #contact-form.dgs-v1215-final .ff-el-input--label label {
+        /* Talk popup form — same left label treatment */
+        html body .dgs-talk-popup .ff-el-group:not(:has(.ff-btn-submit)),
+        html body .dgs-talk-popup .ff-el-input--label,
+        html body .dgs-talk-popup label {
+          text-align: left !important;
+        }
+        html body .dgs-talk-popup .ff-el-group label,
+        html body .dgs-talk-popup .ff-el-input--label,
+        html body .dgs-talk-popup .ff-el-input--label label {
           display: block !important;
           width: 100% !important;
           text-align: left !important;
@@ -1081,12 +1111,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09j" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-09m" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09j"
+        data-dgs-build="wp-mirror-2026-08-09m"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
