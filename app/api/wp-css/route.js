@@ -4,6 +4,8 @@ import { unstable_cache } from 'next/cache';
 const WP_HOSTS = new Set(['www.dgeniussolutions.com', 'dgeniussolutions.com']);
 const WP_ORIGIN = process.env.WP_ORIGIN || 'https://www.dgeniussolutions.com';
 const WP_HOME_URL = process.env.WP_HOME_URL || `${WP_ORIGIN}/`;
+const WP_ABOUT_URL =
+  process.env.WP_ABOUT_URL || `${WP_ORIGIN.replace(/\/$/, '')}/about-us/`;
 
 export const runtime = 'nodejs';
 
@@ -57,15 +59,15 @@ async function fetchCss(src) {
   return rewriteWpUrlsInCss(await upstream.text());
 }
 
-async function collectHomeCssUrls() {
-  const res = await fetch(WP_HOME_URL, {
+async function collectPageCssUrls(pageUrl, label = 'page') {
+  const res = await fetch(pageUrl, {
     headers: {
       Accept: 'text/html',
       'User-Agent': 'DGS-NextJS-CssProxy/1.1',
     },
     next: { revalidate: 300 },
   });
-  if (!res.ok) throw new Error(`Failed to fetch WP home (${res.status})`);
+  if (!res.ok) throw new Error(`Failed to fetch WP ${label} (${res.status})`);
   const html = await res.text();
   const seen = new Set();
   const srcs = [];
@@ -80,6 +82,22 @@ async function collectHomeCssUrls() {
     srcs.push(abs);
   }
   return srcs;
+}
+
+async function collectHomeCssUrls() {
+  return collectPageCssUrls(WP_HOME_URL, 'home');
+}
+
+async function collectAboutCssUrls() {
+  return collectPageCssUrls(WP_ABOUT_URL, 'about');
+}
+
+function softenFontDisplay(css = '') {
+  // font-display:swap in WP/LiteSpeed faces caused CLS when deferred CSS applied.
+  return css
+    .replace(/font-display:\s*swap/gi, 'font-display:optional')
+    .replace(/font-display:\s*block/gi, 'font-display:optional')
+    .replace(/font-display:\s*fallback/gi, 'font-display:optional');
 }
 
 async function buildBundle(srcs) {
@@ -103,43 +121,40 @@ async function buildBundle(srcs) {
 }
 
 /**
- * Same-origin CSS proxy for the WordPress homepage mirror.
- * Prefer ?bundle=home — one cached stylesheet instead of 50+ parallel
+ * Same-origin CSS proxy for WordPress HTML mirrors.
+ * Prefer ?bundle=home|about — one cached stylesheet instead of 50+ parallel
  * requests that were rate-limiting Hostinger and making the site look down.
  */
 export async function GET(request) {
   const { searchParams } = request.nextUrl;
   const bundle = searchParams.get('bundle');
 
-  if (bundle === 'home') {
+  if (bundle === 'home' || bundle === 'about') {
     try {
-      const getHomeBundle = unstable_cache(
+      const cacheKey =
+        bundle === 'about' ? ['wp-css-bundle-about-v1'] : ['wp-css-bundle-home-v4'];
+      const getBundle = unstable_cache(
         async () => {
-          const srcs = await collectHomeCssUrls();
-          const css = await buildBundle(srcs);
-          // font-display:swap in WP/LiteSpeed faces caused CLS≈0.5 when the
-          // deferred bundle applied — optional prevents late font swaps.
-          return css
-            .replace(/font-display:\s*swap/gi, 'font-display:optional')
-            .replace(/font-display:\s*block/gi, 'font-display:optional')
-            .replace(/font-display:\s*fallback/gi, 'font-display:optional');
+          const srcs =
+            bundle === 'about' ? await collectAboutCssUrls() : await collectHomeCssUrls();
+          return softenFontDisplay(await buildBundle(srcs));
         },
-        ['wp-css-bundle-home-v4'],
+        cacheKey,
         { revalidate: 3600 }
       );
-      const css = await getHomeBundle();
+      const css = await getBundle();
       return new NextResponse(css, {
         status: 200,
         headers: {
           'Content-Type': 'text/css; charset=utf-8',
-          // Long cache: bundle URL is versioned from the homepage (?v=).
+          // Long cache: bundle URL is versioned from the page (?v=).
           'Cache-Control': 'public, max-age=604800, stale-while-revalidate=2592000',
           'CDN-Cache-Control': 'public, max-age=604800',
-          'X-DGS-Css-Proxy': 'bundle-home',
+          'X-DGS-Css-Proxy': `bundle-${bundle}`,
         },
       });
     } catch (err) {
-      return new NextResponse(`CSS home bundle failed: ${err?.message || 'error'}`, {
+      return new NextResponse(`CSS ${bundle} bundle failed: ${err?.message || 'error'}`, {
         status: 502,
       });
     }

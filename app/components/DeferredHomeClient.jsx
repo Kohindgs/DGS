@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 /**
  * Load WpHomeClient only after the hero LCP image has a chance to paint.
  * Keeps the heavy client chunk + jQuery/Envira boot off the Lighthouse TBT window.
+ * On About (no robot), waits briefly then idle-loads — same deferral spirit.
  */
 export default function DeferredHomeClient(props) {
   const [Client, setClient] = useState(null);
@@ -31,13 +32,16 @@ export default function DeferredHomeClient(props) {
     };
 
     const robot = document.getElementById('dgs-v1215-robot');
-    if (robot && !robot.complete) {
+    const lcpImg =
+      robot ||
+      document.querySelector('#dgs-wp-about-mirror img[fetchpriority="high"]');
+    if (lcpImg && !lcpImg.complete) {
       const onDone = () => {
         // One frame after decode so LCP can commit before we fetch JS.
         requestAnimationFrame(() => requestAnimationFrame(afterQuiet));
       };
-      robot.addEventListener('load', onDone, { once: true });
-      robot.addEventListener('error', onDone, { once: true });
+      lcpImg.addEventListener('load', onDone, { once: true });
+      lcpImg.addEventListener('error', onDone, { once: true });
       timer = setTimeout(afterQuiet, 2500);
     } else {
       afterQuiet();

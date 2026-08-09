@@ -707,6 +707,7 @@ export default function WpHomeClient({
   externalScripts = [],
   inlineScripts = [],
   demoOrigin = DEMO_ORIGIN,
+  mirrorRootId = 'dgs-wp-home-mirror',
 }) {
   useEffect(() => {
     let cancelled = false;
@@ -725,10 +726,11 @@ export default function WpHomeClient({
 
     // If a stale document somehow loaded without our mirror root, force one
     // hard reload with a cache-buster (prevents loops via session flag).
-    if (
-      !document.getElementById('dgs-wp-home-mirror') &&
-      !sessionStorage.getItem('dgs-force-reload')
-    ) {
+    const hasMirrorRoot =
+      document.getElementById(mirrorRootId) ||
+      document.getElementById('dgs-wp-home-mirror') ||
+      document.getElementById('dgs-wp-about-mirror');
+    if (!hasMirrorRoot && !sessionStorage.getItem('dgs-force-reload')) {
       sessionStorage.setItem('dgs-force-reload', '1');
       const url = new URL(window.location.href);
       url.searchParams.set('_dgs', String(Date.now()));
@@ -1162,7 +1164,7 @@ export default function WpHomeClient({
       document.documentElement.className = prevHtmlClass;
       if (typeof window.dgsUnlockScroll === 'function') window.dgsUnlockScroll();
     };
-  }, [bodyId, bodyClass, externalScripts, inlineScripts, demoOrigin]);
+  }, [bodyId, bodyClass, externalScripts, inlineScripts, demoOrigin, mirrorRootId]);
 
   return null;
 }
