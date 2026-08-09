@@ -31,6 +31,16 @@ export default function DeferredHomeClient(props) {
       }
     };
 
+    const isServiceMirror = props.mirrorRootId === 'dgs-wp-service-mirror';
+    // Service ranking pages need menu/FluentForm soon; skip long idle deferral.
+    if (isServiceMirror) {
+      timer = setTimeout(load, 50);
+      return () => {
+        cancelled = true;
+        if (timer) clearTimeout(timer);
+      };
+    }
+
     const robot = document.getElementById('dgs-v1215-robot');
     const lcpImg =
       robot ||

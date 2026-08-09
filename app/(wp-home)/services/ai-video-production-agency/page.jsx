@@ -1,4 +1,5 @@
 import DeferredHomeClient from '../../../components/DeferredHomeClient';
+import ImmediateServiceScripts from '../../../components/ImmediateServiceScripts';
 import { unstable_cache } from 'next/cache';
 import {
   getAskAiPromptBootScript,
@@ -14,7 +15,7 @@ import {
  */
 const getCachedWpAiProductionMirror = unstable_cache(
   async () => getWpAiProductionMirror({ revalidate: 0 }),
-  ['wp-ai-production-mirror-v2'],
+  ['wp-ai-production-mirror-v3'],
   { revalidate: 900 }
 );
 
@@ -72,8 +73,12 @@ export async function generateMetadata() {
 
 export default async function WpAiProductionPage() {
   const mirror = await getCachedWpAiProductionMirror();
-  const cssBundle = '/api/wp-css?bundle=ai-production&v=09p';
+  const cssBundle = '/api/wp-css?bundle=ai-production&v=09q';
   const lcpPreloadHref = mirror.lcpImage || '';
+  const serviceBootScripts = (mirror.inlineScripts || []).filter(
+    (code) =>
+      /__DGS_AI_VIDEO_PORTFOLIO__|\.faq-q/i.test(code) && /portfolioData/i.test(code)
+  );
 
   return (
     <>
@@ -214,12 +219,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-ai-production-2026-08-09p" />
+      <meta name="dgs-build" content="wp-ai-production-2026-08-09q" />
 
       <div
         id="dgs-wp-service-mirror"
         className="dgs-wp-service-mirror"
-        data-dgs-build="wp-ai-production-2026-08-09p"
+        data-dgs-build="wp-ai-production-2026-08-09q"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
@@ -233,11 +238,18 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       ))}
 
+      {/* Portfolio cards + FAQ must boot before deferred home client idle gate. */}
+      <ImmediateServiceScripts scripts={serviceBootScripts} />
+
       <DeferredHomeClient
         bodyId={mirror.bodyId}
         bodyClass={mirror.bodyClass}
         externalScripts={mirror.externalScripts}
-        inlineScripts={mirror.inlineScripts}
+        // Avoid double-running the AI portfolio/FAQ boot (ImmediateServiceScripts).
+        inlineScripts={(mirror.inlineScripts || []).filter(
+          (code) =>
+            !(/__DGS_AI_VIDEO_PORTFOLIO__|\.faq-q/i.test(code) && /portfolioData/i.test(code))
+        )}
         demoOrigin={mirror.demoOrigin}
         mirrorRootId="dgs-wp-service-mirror"
       />
