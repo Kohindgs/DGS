@@ -854,6 +854,7 @@ export default function WpHomeClient({
       const configInlines = [];
       const fluentInlines = [];
       const earlyInlines = [];
+      const serviceInlines = [];
       const appInlines = [];
       inlineScripts.forEach((code) => {
         if (
@@ -864,8 +865,16 @@ export default function WpHomeClient({
         } else if (/fluentFormVars|fluent_form_ff_form_instance|fluentformElementor/i.test(code)) {
           fluentInlines.push(code);
         } else if (
+          /__DGS_AI_VIDEO_PORTFOLIO__|\.faq-q/i.test(code) &&
+          /portfolioData/i.test(code)
+        ) {
+          // AI Production: portfolio cards + FAQ accordion (no jQuery/Envira).
+          serviceInlines.push(code);
+        } else if (
           /dgsToggle|dgsSvc|dgsLockScroll|dgsOpenTalkPopup|dgsNav|dgsLogo|dgs-talk/i.test(code) &&
-          !/portfolioData|bootMotion|initPortfolio|__DGS_PORTFOLIO/i.test(code)
+          !/portfolioData|bootMotion|initPortfolio|__DGS_PORTFOLIO|__DGS_AI_VIDEO_PORTFOLIO__/i.test(
+            code
+          )
         ) {
           // Menu / talk popup must work before the user scrolls to the gallery.
           earlyInlines.push(code);
@@ -883,10 +892,35 @@ export default function WpHomeClient({
         }
       });
 
+      // Service-page portfolio/FAQ — do not wait on homepage Envira selectors
+      // (those never appear here and previously delayed boot ~22s).
+      serviceInlines.forEach((code, i) => {
+        if (cancelled) return;
+        try {
+          runInline(code, `dgs-service-${i}`);
+        } catch (err) {
+          console.warn('DGS service inline failed', i, err);
+        }
+      });
+      try {
+        ensurePortfolioMedia();
+      } catch (_) {
+        /* ignore */
+      }
+
       // 2) jQuery / Envira / portfolio only when the gallery is near — never on
       // #dgs-v1215-services (that sits under the hero and was false-triggering).
+      // Service mirrors also watch #portfolio / FAQ so we do not idle 22s.
       await waitForNearViewport(
-        ['.envira-gallery-public', '#dgs-v1215-work', '#dgs-v1215-portfolio'],
+        [
+          '.envira-gallery-public',
+          '#dgs-v1215-work',
+          '#dgs-v1215-portfolio',
+          '#portfolio',
+          '#portfolio-gallery',
+          '#faq-section-ai-video',
+          '#featured-ai-video-work',
+        ],
         { rootMargin: '80px 0px', timeoutMs: 22000 }
       );
       if (cancelled) return;
@@ -1045,7 +1079,10 @@ export default function WpHomeClient({
         ensurePortfolioMedia();
         // Portfolio cards are injected async by WP scripts — observe and bind.
         const portfolioRoot =
-          document.querySelector('#portfolio, .dgs-v1215-portfolio, .portfolio-gallery, #work') ||
+          document.querySelector(
+            '#portfolio-gallery, #portfolio, .dgs-v1215-portfolio, .portfolio-gallery, #work'
+          ) ||
+          document.getElementById('dgs-wp-service-mirror') ||
           document.getElementById('dgs-wp-home-mirror');
         if (portfolioRoot && !portfolioRoot.dataset.dgsPortfolioObserved) {
           portfolioRoot.dataset.dgsPortfolioObserved = '1';

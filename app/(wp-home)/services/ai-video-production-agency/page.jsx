@@ -14,7 +14,7 @@ import {
  */
 const getCachedWpAiProductionMirror = unstable_cache(
   async () => getWpAiProductionMirror({ revalidate: 0 }),
-  ['wp-ai-production-mirror-v1'],
+  ['wp-ai-production-mirror-v2'],
   { revalidate: 900 }
 );
 
@@ -72,7 +72,7 @@ export async function generateMetadata() {
 
 export default async function WpAiProductionPage() {
   const mirror = await getCachedWpAiProductionMirror();
-  const cssBundle = '/api/wp-css?bundle=ai-production&v=09n';
+  const cssBundle = '/api/wp-css?bundle=ai-production&v=09p';
   const lcpPreloadHref = mirror.lcpImage || '';
 
   return (
@@ -169,18 +169,57 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           background-image: none !important;
         }
 
+        /* Flat solid submit — kill WP pink→orange gradient on CTA / FluentForm */
+        html body #dgs-wp-service-mirror .dgs-form-wrapper .ff-btn-submit,
+        html body #dgs-wp-service-mirror .dgs-form-wrapper button[type="submit"],
+        html body #dgs-wp-service-mirror .dgs-form-wrapper input[type="submit"],
+        html body #dgs-wp-service-mirror .fluentform .ff-btn-submit,
+        html body #dgs-wp-service-mirror .fluentform button[type="submit"],
+        html body #cta-form .ff-btn-submit,
+        html body #cta-form button[type="submit"],
+        html body .dgs-talk-popup .ff-btn-submit,
+        html body .dgs-talk-popup button[type="submit"] {
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
+          background-image: none !important;
+          color: #fff !important;
+          -webkit-text-fill-color: #fff !important;
+          box-shadow: none !important;
+          filter: none !important;
+          border: 0 !important;
+        }
+        html body #dgs-wp-service-mirror .dgs-form-wrapper .ff-btn-submit::before,
+        html body #dgs-wp-service-mirror .dgs-form-wrapper .ff-btn-submit::after,
+        html body #dgs-wp-service-mirror .fluentform .ff-btn-submit::before,
+        html body #dgs-wp-service-mirror .fluentform .ff-btn-submit::after,
+        html body #cta-form .ff-btn-submit::before,
+        html body #cta-form .ff-btn-submit::after {
+          display: none !important;
+          content: none !important;
+          background: none !important;
+          background-image: none !important;
+        }
+        html body #dgs-wp-service-mirror .dgs-form-wrapper .ff-btn-submit:hover,
+        html body #dgs-wp-service-mirror .fluentform .ff-btn-submit:hover,
+        html body #cta-form .ff-btn-submit:hover {
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
+          background-image: none !important;
+          opacity: 0.92 !important;
+        }
+
         html body #dgs-wp-service-mirror {
           overflow-x: clip !important;
           max-width: 100% !important;
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-ai-production-2026-08-09n" />
+      <meta name="dgs-build" content="wp-ai-production-2026-08-09p" />
 
       <div
         id="dgs-wp-service-mirror"
         className="dgs-wp-service-mirror"
-        data-dgs-build="wp-ai-production-2026-08-09n"
+        data-dgs-build="wp-ai-production-2026-08-09p"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
