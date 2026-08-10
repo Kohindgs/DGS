@@ -16,6 +16,12 @@ export default function ImmediateMirrorScripts({ scripts = [], idPrefix = 'dgs-i
       // Nav already booted from the HTML stream script.
       if (/dgsToggle\s*=/.test(code) && typeof window.dgsToggle === 'function') return;
       if (/__DGS_AI_VIDEO_PORTFOLIO__/.test(code) && window.__DGS_AI_VIDEO_PORTFOLIO__) return;
+      if (
+        /global-webgl-background/.test(code) &&
+        document.querySelector('#global-webgl-background canvas')
+      ) {
+        return;
+      }
       try {
         const s = document.createElement('script');
         s.id = id;

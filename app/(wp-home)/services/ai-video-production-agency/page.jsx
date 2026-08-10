@@ -3,9 +3,11 @@ import ImmediateMirrorScripts from '../../../components/ImmediateMirrorScripts';
 import { unstable_cache } from 'next/cache';
 import {
   getAskAiPromptBootScript,
+  getThreeJsBootScript,
   getWpAiProductionMirror,
   isAiPortfolioBootScript,
   isNavBootScript,
+  isWebglBootScript,
 } from '../../../../lib/wp-mirror';
 
 /**
@@ -17,7 +19,7 @@ import {
  */
 const getCachedWpAiProductionMirror = unstable_cache(
   async () => getWpAiProductionMirror({ revalidate: 0 }),
-  ['wp-ai-production-mirror-v4'],
+  ['wp-ai-production-mirror-v5'],
   { revalidate: 900 }
 );
 
@@ -75,13 +77,13 @@ export async function generateMetadata() {
 
 export default async function WpAiProductionPage() {
   const mirror = await getCachedWpAiProductionMirror();
-  const cssBundle = '/api/wp-css?bundle=ai-production&v=10b';
+  const cssBundle = '/api/wp-css?bundle=ai-production&v=10d';
   const lcpPreloadHref = mirror.lcpImage || '';
   const immediateScripts = (mirror.inlineScripts || []).filter(
-    (code) => isNavBootScript(code) || isAiPortfolioBootScript(code)
+    (code) => isNavBootScript(code) || isAiPortfolioBootScript(code) || isWebglBootScript(code)
   );
   const deferredInlineScripts = (mirror.inlineScripts || []).filter(
-    (code) => !(isNavBootScript(code) || isAiPortfolioBootScript(code))
+    (code) => !(isNavBootScript(code) || isAiPortfolioBootScript(code) || isWebglBootScript(code))
   );
 
   return (
@@ -114,6 +116,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
             "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,100);}on('link[data-dgs-css=\"ai-production\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
+      <script dangerouslySetInnerHTML={{ __html: getThreeJsBootScript() }} />
       <script
         dangerouslySetInnerHTML={{
           __html: `${immediateScripts.filter(isNavBootScript).join('\n;')}\n${getAskAiPromptBootScript()}`,
@@ -157,21 +160,113 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         img.lazyload, img.lazyloading { opacity: 1 !important; }
         video { max-width: 100%; }
 
-        /* ONLY intentional visual change on this ranking page: Syne */
+        /* WebGL particle-sphere background (fixed behind content) */
+        #global-webgl-background {
+          position: fixed !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100vh !important;
+          z-index: 0 !important;
+          pointer-events: none !important;
+          background: #000 !important;
+        }
+        #global-webgl-background canvas {
+          display: block !important;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+        html body #dgs-wp-service-mirror {
+          position: relative !important;
+          z-index: 1 !important;
+        }
+
+        /* Unified Syne — section heads above logos, all weights */
         html body,
         html body #dgs-wp-service-mirror,
         html body #dgs-wp-service-mirror *:not(script):not(style),
         html body .dgs-talk-popup,
-        html body .fluentform {
+        html body .fluentform,
+        html body #dgs-wp-service-mirror .dgs-v1215-section-head,
+        html body #dgs-wp-service-mirror .dgs-v1215-section-head *,
+        html body #dgs-wp-service-mirror .dgs-v1215-section-kicker,
+        html body #dgs-wp-service-mirror .dgs-v1215-eyebrow {
           font-family: 'Syne', system-ui, sans-serif !important;
+          font-style: normal !important;
         }
         html body h1,
         html body h2,
         html body h3,
         html body h4,
         html body .dgs-talk-popup h2,
-        html body .fluentform .ff-btn-submit {
+        html body .fluentform .ff-btn-submit,
+        html body #dgs-wp-service-mirror .dgs-v1215-section-head h2,
+        html body #dgs-wp-service-mirror .dgs-v1215-section-kicker,
+        html body #dgs-wp-service-mirror .dgs-v1215-eyebrow {
           font-family: 'Syne', system-ui, sans-serif !important;
+          font-weight: 500 !important;
+        }
+
+        /* Client logo wall — visible tiles, responsive grid */
+        html body #dgs-wp-service-mirror .dgs-v1215-logo-track {
+          grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        }
+        html body #dgs-wp-service-mirror .dgs-v1215-logo-tile {
+          min-height: 148px !important;
+          overflow: visible !important;
+        }
+        html body #dgs-wp-service-mirror .dgs-v1215-logo-tile img {
+          opacity: 1 !important;
+          visibility: visible !important;
+          display: block !important;
+          max-width: min(82%, 190px) !important;
+          max-height: 78px !important;
+          object-fit: contain !important;
+        }
+
+        /* Prominent Load More — coral pill, full width */
+        html body #dgs-wp-service-mirror #load-more-btn,
+        html body #dgs-wp-service-mirror .dgs-btn-ghost#load-more-btn {
+          display: block !important;
+          width: min(100%, 440px) !important;
+          margin: 32px auto 0 !important;
+          padding: 16px 32px !important;
+          font-family: 'Syne', system-ui, sans-serif !important;
+          font-size: clamp(15px, 1.4vw, 18px) !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.02em !important;
+          color: #fff !important;
+          -webkit-text-fill-color: #fff !important;
+          background: #FD5C62 !important;
+          background-color: #FD5C62 !important;
+          background-image: none !important;
+          border: 2px solid #FD5C62 !important;
+          border-radius: 999px !important;
+          text-align: center !important;
+          cursor: pointer !important;
+          box-shadow: 0 10px 28px rgba(253, 92, 98, 0.38) !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+        html body #dgs-wp-service-mirror #load-more-btn:hover {
+          opacity: 0.92 !important;
+          transform: translateY(-1px) !important;
+        }
+
+        @media (max-width: 1180px) {
+          html body #dgs-wp-service-mirror .dgs-v1215-logo-track {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+        }
+        @media (max-width: 700px) {
+          html body #dgs-wp-service-mirror .dgs-v1215-logo-track {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+        }
+        @media (max-width: 560px) {
+          html body #dgs-wp-service-mirror .dgs-v1215-logo-track {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
         }
 
         html body #dgsPill.dgs-talk-trigger,
@@ -228,12 +323,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-ai-production-2026-08-10b" />
+      <meta name="dgs-build" content="wp-ai-production-2026-08-10d" />
 
       <div
         id="dgs-wp-service-mirror"
         className="dgs-wp-service-mirror"
-        data-dgs-build="wp-ai-production-2026-08-10b"
+        data-dgs-build="wp-ai-production-2026-08-10d"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

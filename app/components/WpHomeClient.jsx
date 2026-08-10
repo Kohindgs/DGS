@@ -818,24 +818,32 @@ export default function WpHomeClient({
       /* ignore */
     }
 
+    const isServiceMirror =
+      mirrorRootId === 'dgs-wp-service-mirror' ||
+      !!document.getElementById('dgs-wp-service-mirror');
+
     async function boot() {
       // 1) Let the hero LCP image finish (or time out) before any heavy JS.
-      await waitForLcpImage(1500);
+      await waitForLcpImage(isServiceMirror ? 400 : 1500);
       if (cancelled) return;
 
       // Show hero/section copy immediately — do not wait on GSAP for opacity.
-      try {
-        forceRevealHome();
-      } catch (_) {
-        /* ignore */
+      if (!isServiceMirror) {
+        try {
+          forceRevealHome();
+        } catch (_) {
+          /* ignore */
+        }
       }
 
-      // Lightweight particles after LCP (no-op on coarse/mobile inside starter).
-      try {
-        stopBackground =
-          startDgsFastBackground(document.querySelector('.dgs-v1215')) || (() => {});
-      } catch (err) {
-        console.warn('Fast background failed', err);
+      // Homepage Canvas2D particles — AI Production uses WP WebGL sphere instead.
+      if (!isServiceMirror && !document.getElementById('global-webgl-background')) {
+        try {
+          stopBackground =
+            startDgsFastBackground(document.querySelector('.dgs-v1215')) || (() => {});
+        } catch (err) {
+          console.warn('Fast background failed', err);
+        }
       }
 
       // Normalize: support legacy string[] or [{src, kind}]
@@ -855,6 +863,7 @@ export default function WpHomeClient({
       const fluentInlines = [];
       const earlyInlines = [];
       const serviceInlines = [];
+      const webglInlines = [];
       const appInlines = [];
       inlineScripts.forEach((code) => {
         if (
@@ -864,6 +873,8 @@ export default function WpHomeClient({
           configInlines.push(code);
         } else if (/fluentFormVars|fluent_form_ff_form_instance|fluentformElementor/i.test(code)) {
           fluentInlines.push(code);
+        } else if (/global-webgl-background/.test(code) && /THREE\.WebGLRenderer/.test(code)) {
+          webglInlines.push(code);
         } else if (
           /__DGS_AI_VIDEO_PORTFOLIO__|\.faq-q/i.test(code) &&
           /portfolioData/i.test(code)
@@ -892,6 +903,22 @@ export default function WpHomeClient({
         }
       });
 
+      // WebGL background — load Three.js then boot (service page only).
+      if (isServiceMirror && webglInlines.length) {
+        const threeSrc =
+          scripts.find((s) => s.kind === 'three' || /three/i.test(s.src))?.src ||
+          'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+        await loadScript(threeSrc);
+        webglInlines.forEach((code, i) => {
+          if (cancelled) return;
+          try {
+            runInline(code, `dgs-webgl-${i}`);
+          } catch (err) {
+            console.warn('DGS webgl inline failed', i, err);
+          }
+        });
+      }
+
       // Service-page portfolio/FAQ — do not wait on homepage Envira selectors
       // (those never appear here and previously delayed boot ~22s).
       serviceInlines.forEach((code, i) => {
@@ -910,19 +937,21 @@ export default function WpHomeClient({
 
       // 2) jQuery / Envira / portfolio only when the gallery is near — never on
       // #dgs-v1215-services (that sits under the hero and was false-triggering).
-      // Service mirrors also watch #portfolio / FAQ so we do not idle 22s.
-      await waitForNearViewport(
-        [
-          '.envira-gallery-public',
-          '#dgs-v1215-work',
-          '#dgs-v1215-portfolio',
-          '#portfolio',
-          '#portfolio-gallery',
-          '#faq-section-ai-video',
-          '#featured-ai-video-work',
-        ],
-        { rootMargin: '80px 0px', timeoutMs: 22000 }
-      );
+      // Service mirrors skip this gate — portfolio boots via ImmediateMirrorScripts.
+      if (!isServiceMirror) {
+        await waitForNearViewport(
+          [
+            '.envira-gallery-public',
+            '#dgs-v1215-work',
+            '#dgs-v1215-portfolio',
+            '#portfolio',
+            '#portfolio-gallery',
+            '#faq-section-ai-video',
+            '#featured-ai-video-work',
+          ],
+          { rootMargin: '80px 0px', timeoutMs: 22000 }
+        );
+      }
       if (cancelled) return;
 
       if (!window.envira_gallery) {

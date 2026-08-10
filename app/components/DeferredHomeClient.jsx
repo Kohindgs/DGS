@@ -24,7 +24,7 @@ export default function DeferredHomeClient(props) {
     };
 
     // Short defer only — long idle timeouts left menu/fonts feeling "broken".
-    const delay = props.mirrorRootId === 'dgs-wp-service-mirror' ? 50 : 120;
+    const delay = props.mirrorRootId === 'dgs-wp-service-mirror' ? 0 : 120;
     timer = setTimeout(load, delay);
 
     return () => {
