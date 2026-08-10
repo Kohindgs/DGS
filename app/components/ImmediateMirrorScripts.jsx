@@ -13,6 +13,9 @@ export default function ImmediateMirrorScripts({ scripts = [], idPrefix = 'dgs-i
     const run = (code, id) => {
       if (!code) return;
       if (document.getElementById(id)) return;
+      // Nav already booted from the HTML stream script.
+      if (/dgsToggle\s*=/.test(code) && typeof window.dgsToggle === 'function') return;
+      if (/__DGS_AI_VIDEO_PORTFOLIO__/.test(code) && window.__DGS_AI_VIDEO_PORTFOLIO__) return;
       try {
         const s = document.createElement('script');
         s.id = id;
