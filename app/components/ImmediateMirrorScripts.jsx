@@ -34,16 +34,18 @@ export default function ImmediateMirrorScripts({ scripts = [], idPrefix = 'dgs-i
 
     scripts.forEach((code, i) => run(code, `${idPrefix}-${i}`));
 
-    // AI Production: retry portfolio boot if gallery stayed empty.
+    // AI Production: retry portfolio boot if gallery stayed empty (once).
     const gallery = document.getElementById('portfolio-gallery');
     const empty = gallery && !gallery.querySelector('.gallery-item');
-    if (empty && typeof window.__dgsAiVideoBoot === 'function') {
+    if (empty && typeof window.__dgsAiVideoBoot === 'function' && !window.__dgsAiVideoBootRetried) {
+      window.__dgsAiVideoBootRetried = true;
       try {
         window.__dgsAiVideoBoot();
       } catch (_) {
         /* ignore */
       }
-    } else if (empty && window.__DGS_AI_VIDEO_PORTFOLIO__) {
+    } else if (empty && window.__DGS_AI_VIDEO_PORTFOLIO__ && !window.__dgsAiVideoBootRetried) {
+      window.__dgsAiVideoBootRetried = true;
       try {
         delete window.__DGS_AI_VIDEO_PORTFOLIO__;
         scripts.forEach((code, i) => {

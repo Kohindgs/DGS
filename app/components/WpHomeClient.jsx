@@ -910,6 +910,8 @@ export default function WpHomeClient({
           'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
         const startWebgl = () => {
           if (cancelled) return;
+          // Only start if the tab is visible — avoid freeze in background tabs.
+          if (typeof document !== 'undefined' && document.hidden) return;
           loadScript(threeSrc).then(() => {
             if (cancelled) return;
             webglInlines.forEach((code, i) => {
@@ -921,11 +923,14 @@ export default function WpHomeClient({
             });
           });
         };
-        if (typeof window.requestIdleCallback === 'function') {
-          window.requestIdleCallback(startWebgl, { timeout: 2800 });
-        } else {
-          setTimeout(startWebgl, 1500);
-        }
+        // Late idle — content + portfolio must win first.
+        setTimeout(() => {
+          if (typeof window.requestIdleCallback === 'function') {
+            window.requestIdleCallback(startWebgl, { timeout: 4000 });
+          } else {
+            startWebgl();
+          }
+        }, 2000);
       }
 
       // Service-page portfolio/FAQ — do not wait on homepage Envira selectors

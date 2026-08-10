@@ -18,7 +18,7 @@ import {
  */
 const getCachedWpAiProductionMirror = unstable_cache(
   async () => getWpAiProductionMirror({ revalidate: 0 }),
-  ['wp-ai-production-mirror-v6'],
+  ['wp-ai-production-mirror-v7'],
   { revalidate: 900 }
 );
 
@@ -76,7 +76,7 @@ export async function generateMetadata() {
 
 export default async function WpAiProductionPage() {
   const mirror = await getCachedWpAiProductionMirror();
-  const cssBundle = '/api/wp-css?bundle=ai-production&v=10e';
+  const cssBundle = '/api/wp-css?bundle=ai-production&v=10f';
   const lcpPreloadHref = mirror.lcpImage || '';
   // Portfolio + nav only — WebGL/Three.js wait until after first paint.
   const immediateScripts = (mirror.inlineScripts || []).filter(
@@ -113,7 +113,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       />
       <script
         dangerouslySetInnerHTML={{
-          __html: `${immediateScripts.filter(isNavBootScript).join('\n;')}\n${getAskAiPromptBootScript()}`,
+          __html: `${immediateScripts.filter(isNavBootScript).join('\n;')}\n${getAskAiPromptBootScript()}\n${immediateScripts.filter(isAiPortfolioBootScript).join('\n;')}`,
         }}
       />
 
@@ -162,7 +162,11 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           height: 100vh !important;
           z-index: 0 !important;
           pointer-events: none !important;
-          background: transparent !important;
+          background:
+            radial-gradient(ellipse 70% 55% at 50% 42%, rgba(253, 92, 98, 0.14), transparent 58%),
+            radial-gradient(ellipse 50% 40% at 70% 60%, rgba(114, 193, 216, 0.1), transparent 55%),
+            radial-gradient(ellipse 45% 35% at 30% 55%, rgba(255, 174, 51, 0.08), transparent 50%),
+            #020202 !important;
         }
         #global-webgl-background canvas {
           display: block !important;
@@ -325,12 +329,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-ai-production-2026-08-10e" />
+      <meta name="dgs-build" content="wp-ai-production-2026-08-10f" />
 
       <div
         id="dgs-wp-service-mirror"
         className="dgs-wp-service-mirror"
-        data-dgs-build="wp-ai-production-2026-08-10e"
+        data-dgs-build="wp-ai-production-2026-08-10f"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
