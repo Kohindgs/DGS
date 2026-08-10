@@ -64,7 +64,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=10a';
+  const cssBundle = '/api/wp-css?bundle=home&v=10b';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -101,8 +101,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
             "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
-      {/* Ask AI footer icons — must boot before deferred client (href="#" was jumping home). */}
-      <script dangerouslySetInnerHTML={{ __html: getAskAiPromptBootScript() }} />
+      {/* Nav + Ask AI in the HTML stream so MENU works before client hydration. */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `${navBootScripts.join('\n;')}\n${getAskAiPromptBootScript()}`,
+        }}
+      />
 
       {/* WP inline <style> (custom nav + v1215 theme) — not in the linked CSS bundle. */}
       {mirror.inlineStyles.map((css, i) => (
@@ -1121,12 +1125,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-10a" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-10b" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-10a"
+        data-dgs-build="wp-mirror-2026-08-10b"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
@@ -1140,6 +1144,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       ))}
 
+      {/* Client backup for nav if stream script was stripped by hydration. */}
       <ImmediateMirrorScripts scripts={navBootScripts} idPrefix="dgs-home-nav" />
 
       <DeferredHomeClient

@@ -75,7 +75,7 @@ export async function generateMetadata() {
 
 export default async function WpAboutPage() {
   const mirror = await getCachedWpAboutMirror();
-  const cssBundle = '/api/wp-css?bundle=about&v=10a';
+  const cssBundle = '/api/wp-css?bundle=about&v=10b';
   const lcpPreloadHref = mirror.lcpImage || '';
   const navBootScripts = (mirror.inlineScripts || []).filter(isNavBootScript);
   const deferredInlineScripts = (mirror.inlineScripts || []).filter((code) => !isNavBootScript(code));
@@ -109,7 +109,11 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
             "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"about\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
-      <script dangerouslySetInnerHTML={{ __html: getAskAiPromptBootScript() }} />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `${navBootScripts.join('\n;')}\n${getAskAiPromptBootScript()}`,
+        }}
+      />
 
       {/* WP inline <style> (custom nav) — not in the linked CSS bundle. */}
       {mirror.inlineStyles.map((css, i) => (
@@ -190,12 +194,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-about-mirror-2026-08-10a" />
+      <meta name="dgs-build" content="wp-about-mirror-2026-08-10b" />
 
       <div
         id="dgs-wp-about-mirror"
         className="dgs-wp-about-mirror"
-        data-dgs-build="wp-about-mirror-2026-08-10a"
+        data-dgs-build="wp-about-mirror-2026-08-10b"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
