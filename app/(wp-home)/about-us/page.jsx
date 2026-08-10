@@ -75,7 +75,7 @@ export async function generateMetadata() {
 
 export default async function WpAboutPage() {
   const mirror = await getCachedWpAboutMirror();
-  const cssBundle = '/api/wp-css?bundle=about&v=10b';
+  const cssBundle = '/api/wp-css?bundle=about&v=10c';
   const lcpPreloadHref = mirror.lcpImage || '';
   const navBootScripts = (mirror.inlineScripts || []).filter(isNavBootScript);
   const deferredInlineScripts = (mirror.inlineScripts || []).filter((code) => !isNavBootScript(code));
@@ -96,6 +96,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       {lcpPreloadHref ? (
         <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
       ) : null}
+      <link rel="preload" as="style" href={cssBundle} />
       <link data-dgs-css="about" rel="stylesheet" href={cssBundle} media="print" />
       <link
         data-dgs-font="syne"
@@ -106,7 +107,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"about\"]');on('link[data-dgs-font=\"syne\"]');})();",
+            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,150);}on('link[data-dgs-css=\"about\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
       <script
@@ -194,12 +195,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-about-mirror-2026-08-10b" />
+      <meta name="dgs-build" content="wp-about-mirror-2026-08-10c" />
 
       <div
         id="dgs-wp-about-mirror"
         className="dgs-wp-about-mirror"
-        data-dgs-build="wp-about-mirror-2026-08-10b"
+        data-dgs-build="wp-about-mirror-2026-08-10c"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

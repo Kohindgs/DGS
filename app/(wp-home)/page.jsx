@@ -64,7 +64,7 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=10b';
+  const cssBundle = '/api/wp-css?bundle=home&v=10c';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
@@ -88,6 +88,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       />
       <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
       {/* Non-blocking CSS; flip to all ASAP (400ms fallback — no multi-second black screen). */}
+      <link rel="preload" as="style" href={cssBundle} />
       <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
       <link
         data-dgs-font="syne"
@@ -98,7 +99,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
+            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,150);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
       {/* Nav + Ask AI in the HTML stream so MENU works before client hydration. */}
@@ -1125,12 +1126,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-10b" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-10c" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-10b"
+        data-dgs-build="wp-mirror-2026-08-10c"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

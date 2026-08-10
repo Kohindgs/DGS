@@ -100,6 +100,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       {lcpPreloadHref ? (
         <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
       ) : null}
+      <link rel="preload" as="style" href={cssBundle} />
       <link data-dgs-css="ai-production" rel="stylesheet" href={cssBundle} media="print" />
       <link
         data-dgs-font="syne"
@@ -110,7 +111,7 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"ai-production\"]');on('link[data-dgs-font=\"syne\"]');})();",
+            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,100);}on('link[data-dgs-css=\"ai-production\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
       <script
