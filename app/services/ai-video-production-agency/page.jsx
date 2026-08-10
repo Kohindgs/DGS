@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 const dataDir = path.join(process.cwd(), 'app/services/ai-video-production-agency/_wp_data');
-
 const links = fs.readFileSync(path.join(dataDir, 'links.html'), 'utf8');
 const styles = fs.readFileSync(path.join(dataDir, 'styles.html'), 'utf8');
 const body = fs.readFileSync(path.join(dataDir, 'body.html'), 'utf8');
