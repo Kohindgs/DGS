@@ -1,21 +1,23 @@
 import DeferredHomeClient from '../../../components/DeferredHomeClient';
-import ImmediateServiceScripts from '../../../components/ImmediateServiceScripts';
+import ImmediateMirrorScripts from '../../../components/ImmediateMirrorScripts';
 import { unstable_cache } from 'next/cache';
 import {
   getAskAiPromptBootScript,
   getWpAiProductionMirror,
+  isAiPortfolioBootScript,
+  isNavBootScript,
 } from '../../../../lib/wp-mirror';
 
 /**
  * AI Video Production service — ranking page mirror.
  * Intentional change: Syne font only.
  * Preserve WP title/description/robots/canonical/schema/content.
- * Safe perf only: one CSS bundle, keep inline nav CSS, defer client JS,
- * font-display:optional, same-origin media proxy.
+ * Safe perf: one CSS bundle, keep inline nav CSS, fast CSS/font apply,
+ * Syne display=swap, same-origin media proxy.
  */
 const getCachedWpAiProductionMirror = unstable_cache(
   async () => getWpAiProductionMirror({ revalidate: 0 }),
-  ['wp-ai-production-mirror-v3'],
+  ['wp-ai-production-mirror-v4'],
   { revalidate: 900 }
 );
 
@@ -73,11 +75,13 @@ export async function generateMetadata() {
 
 export default async function WpAiProductionPage() {
   const mirror = await getCachedWpAiProductionMirror();
-  const cssBundle = '/api/wp-css?bundle=ai-production&v=09q';
+  const cssBundle = '/api/wp-css?bundle=ai-production&v=10a';
   const lcpPreloadHref = mirror.lcpImage || '';
-  const serviceBootScripts = (mirror.inlineScripts || []).filter(
-    (code) =>
-      /__DGS_AI_VIDEO_PORTFOLIO__|\.faq-q/i.test(code) && /portfolioData/i.test(code)
+  const immediateScripts = (mirror.inlineScripts || []).filter(
+    (code) => isNavBootScript(code) || isAiPortfolioBootScript(code)
+  );
+  const deferredInlineScripts = (mirror.inlineScripts || []).filter(
+    (code) => !(isNavBootScript(code) || isAiPortfolioBootScript(code))
   );
 
   return (
@@ -100,13 +104,13 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       <link
         data-dgs-font="syne"
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
         media="print"
       />
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,3000);}on('link[data-dgs-css=\"ai-production\"]');on('link[data-dgs-font=\"syne\"]');})();",
+            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"ai-production\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
       <script dangerouslySetInnerHTML={{ __html: getAskAiPromptBootScript() }} />
@@ -219,12 +223,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-ai-production-2026-08-09q" />
+      <meta name="dgs-build" content="wp-ai-production-2026-08-10a" />
 
       <div
         id="dgs-wp-service-mirror"
         className="dgs-wp-service-mirror"
-        data-dgs-build="wp-ai-production-2026-08-09q"
+        data-dgs-build="wp-ai-production-2026-08-10a"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
@@ -238,18 +242,14 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       ))}
 
-      {/* Portfolio cards + FAQ must boot before deferred home client idle gate. */}
-      <ImmediateServiceScripts scripts={serviceBootScripts} />
+      {/* Nav + portfolio/FAQ before deferred client. */}
+      <ImmediateMirrorScripts scripts={immediateScripts} idPrefix="dgs-ai-imm" />
 
       <DeferredHomeClient
         bodyId={mirror.bodyId}
         bodyClass={mirror.bodyClass}
         externalScripts={mirror.externalScripts}
-        // Avoid double-running the AI portfolio/FAQ boot (ImmediateServiceScripts).
-        inlineScripts={(mirror.inlineScripts || []).filter(
-          (code) =>
-            !(/__DGS_AI_VIDEO_PORTFOLIO__|\.faq-q/i.test(code) && /portfolioData/i.test(code))
-        )}
+        inlineScripts={deferredInlineScripts}
         demoOrigin={mirror.demoOrigin}
         mirrorRootId="dgs-wp-service-mirror"
       />

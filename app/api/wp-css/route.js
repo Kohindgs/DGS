@@ -100,18 +100,23 @@ async function collectAiProductionCssUrls() {
 }
 
 function softenFontDisplay(css = '', { mapToSyne = false } = {}) {
-  // font-display:swap in WP/LiteSpeed faces caused CLS when deferred CSS applied.
+  // Prefer swap so Syne actually paints (optional often skipped → system fallback).
   let out = css
-    .replace(/font-display:\s*swap/gi, 'font-display:optional')
-    .replace(/font-display:\s*block/gi, 'font-display:optional')
-    .replace(/font-display:\s*fallback/gi, 'font-display:optional');
+    .replace(/font-display:\s*optional/gi, 'font-display:swap')
+    .replace(/font-display:\s*block/gi, 'font-display:swap')
+    .replace(/font-display:\s*fallback/gi, 'font-display:swap');
   if (mapToSyne) {
-    // Ranking service pages: only intentional visual change is Syne.
+    // Mirror pages use Syne — remap WP theme faces that fight it.
     out = out
       .replace(/["']Manrope["']/g, "'Syne'")
       .replace(/\bManrope\b/g, 'Syne')
       .replace(/["']Space Grotesk["']/g, "'Syne'")
-      .replace(/\bSpace Grotesk\b/g, 'Syne');
+      .replace(/\bSpace Grotesk\b/g, 'Syne')
+      .replace(/["']DM Sans["']/g, "'Syne'")
+      .replace(/\bDM Sans\b/g, 'Syne')
+      .replace(/["']Inter["']/g, "'Syne'")
+      .replace(/family=Inter:/gi, 'family=Syne:')
+      .replace(/font-family:\s*Inter\b/gi, 'font-family:Syne');
   }
   return out;
 }
@@ -149,10 +154,10 @@ export async function GET(request) {
     try {
       const cacheKey =
         bundle === 'about'
-          ? ['wp-css-bundle-about-v1']
+          ? ['wp-css-bundle-about-v2']
           : bundle === 'ai-production'
-            ? ['wp-css-bundle-ai-production-v1']
-            : ['wp-css-bundle-home-v4'];
+            ? ['wp-css-bundle-ai-production-v2']
+            : ['wp-css-bundle-home-v5'];
       const getBundle = unstable_cache(
         async () => {
           const srcs =
@@ -162,7 +167,7 @@ export async function GET(request) {
                 ? await collectAiProductionCssUrls()
                 : await collectHomeCssUrls();
           return softenFontDisplay(await buildBundle(srcs), {
-            mapToSyne: bundle === 'ai-production',
+            mapToSyne: true,
           });
         },
         cacheKey,

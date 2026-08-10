@@ -1,19 +1,24 @@
 import DeferredHomeClient from '../../components/DeferredHomeClient';
+import ImmediateMirrorScripts from '../../components/ImmediateMirrorScripts';
 import { unstable_cache } from 'next/cache';
-import { getAskAiPromptBootScript, getWpAboutMirror } from '../../../lib/wp-mirror';
+import {
+  getAskAiPromptBootScript,
+  getWpAboutMirror,
+  isNavBootScript,
+} from '../../../lib/wp-mirror';
 
 /**
  * WordPress About Us HTML mirror — same dos/donts as homepage:
  * - Keep WP inline <style> (nav #dgsNav / #dgsTrig lives there)
- * - One CSS bundle, apply on load (media=print → all; no multi-second delay)
+ * - One CSS bundle, apply on load (media=print → all; fast 400ms fallback)
  * - No clipped fixed header / no min-height:100vh on #dgsNav
- * - Dark early paint, Syne optional, CTA #FD5C62
- * - Defer client JS after first paint
+ * - Dark early paint, Syne with display=swap, CTA #FD5C62
+ * - Immediate nav boot; short-defer client JS
  * - force-dynamic + server cache (Hostinger build OOM safety)
  */
 const getCachedWpAboutMirror = unstable_cache(
   async () => getWpAboutMirror({ revalidate: 0 }),
-  ['wp-about-mirror-v2'],
+  ['wp-about-mirror-v3'],
   { revalidate: 900 }
 );
 
@@ -70,8 +75,10 @@ export async function generateMetadata() {
 
 export default async function WpAboutPage() {
   const mirror = await getCachedWpAboutMirror();
-  const cssBundle = '/api/wp-css?bundle=about&v=09k';
+  const cssBundle = '/api/wp-css?bundle=about&v=10a';
   const lcpPreloadHref = mirror.lcpImage || '';
+  const navBootScripts = (mirror.inlineScripts || []).filter(isNavBootScript);
+  const deferredInlineScripts = (mirror.inlineScripts || []).filter((code) => !isNavBootScript(code));
 
   return (
     <>
@@ -89,18 +96,17 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       {lcpPreloadHref ? (
         <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
       ) : null}
-      {/* Apply About CSS as soon as it loads — no 12s delay (that broke layout). */}
       <link data-dgs-css="about" rel="stylesheet" href={cssBundle} media="print" />
       <link
         data-dgs-font="syne"
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
         media="print"
       />
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,3000);}on('link[data-dgs-css=\"about\"]');on('link[data-dgs-font=\"syne\"]');})();",
+            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"about\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
       <script dangerouslySetInnerHTML={{ __html: getAskAiPromptBootScript() }} />
@@ -148,14 +154,14 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         html body #dgs-wp-about-mirror *:not(script):not(style),
         html body .dgs-talk-popup,
         html body .fluentform {
-          font-family: system-ui, 'Syne', sans-serif !important;
+          font-family: 'Syne', system-ui, sans-serif !important;
         }
         html body h1,
         html body h2,
         html body h3,
         html body .dgs-talk-popup h2,
         html body .fluentform .ff-btn-submit {
-          font-family: system-ui, 'Syne', sans-serif !important;
+          font-family: 'Syne', system-ui, sans-serif !important;
           font-weight: 500 !important;
         }
         html body h1 { font-weight: 600 !important; }
@@ -184,12 +190,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-about-mirror-2026-08-09k" />
+      <meta name="dgs-build" content="wp-about-mirror-2026-08-10a" />
 
       <div
         id="dgs-wp-about-mirror"
         className="dgs-wp-about-mirror"
-        data-dgs-build="wp-about-mirror-2026-08-09k"
+        data-dgs-build="wp-about-mirror-2026-08-10a"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
@@ -202,11 +208,13 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       ))}
 
+      <ImmediateMirrorScripts scripts={navBootScripts} idPrefix="dgs-about-nav" />
+
       <DeferredHomeClient
         bodyId={mirror.bodyId}
         bodyClass={mirror.bodyClass}
         externalScripts={mirror.externalScripts}
-        inlineScripts={mirror.inlineScripts}
+        inlineScripts={deferredInlineScripts}
         demoOrigin={mirror.demoOrigin}
         mirrorRootId="dgs-wp-about-mirror"
       />

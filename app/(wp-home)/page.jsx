@@ -1,9 +1,11 @@
 import DeferredHomeClient from '../components/DeferredHomeClient';
+import ImmediateMirrorScripts from '../components/ImmediateMirrorScripts';
 import { unstable_cache } from 'next/cache';
 import {
   getAskAiPromptBootScript,
   getHeroRobotLcpPreload,
   getWpHomeMirror,
+  isNavBootScript,
 } from '../../lib/wp-mirror';
 
 /**
@@ -12,7 +14,7 @@ import {
  */
 const getCachedWpHomeMirror = unstable_cache(
   async () => getWpHomeMirror({ revalidate: 0 }),
-  ['wp-home-mirror-v52'],
+  ['wp-home-mirror-v53'],
   { revalidate: 900 }
 );
 
@@ -62,10 +64,12 @@ export async function generateMetadata() {
 export default async function WpHomePage() {
   const mirror = await getCachedWpHomeMirror();
   // Version query so long-lived CSS cache can be busted with deploys.
-  const cssBundle = '/api/wp-css?bundle=home&v=09n';
+  const cssBundle = '/api/wp-css?bundle=home&v=10a';
   // Static local LCP — no WP upstream / sharp on the critical path.
   const lcp = getHeroRobotLcpPreload();
   const lcpPreloadHref = lcp.href;
+  const navBootScripts = (mirror.inlineScripts || []).filter(isNavBootScript);
+  const deferredInlineScripts = (mirror.inlineScripts || []).filter((code) => !isNavBootScript(code));
 
   return (
     <>
@@ -83,18 +87,18 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }}
       />
       <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
-      {/* Apply home CSS as soon as it loads (media=print avoids render-block; no 12s delay). */}
+      {/* Non-blocking CSS; flip to all ASAP (400ms fallback — no multi-second black screen). */}
       <link data-dgs-css="home" rel="stylesheet" href={cssBundle} media="print" />
       <link
         data-dgs-font="syne"
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=optional"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
         media="print"
       />
       <script
         dangerouslySetInnerHTML={{
           __html:
-            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,3000);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
+            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,400);}on('link[data-dgs-css=\"home\"]');on('link[data-dgs-font=\"syne\"]');})();",
         }}
       />
       {/* Ask AI footer icons — must boot before deferred client (href="#" was jumping home). */}
@@ -1117,12 +1121,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
       `}</style>
 
 
-      <meta name="dgs-build" content="wp-mirror-2026-08-09n" />
+      <meta name="dgs-build" content="wp-mirror-2026-08-10a" />
 
       <div
         id="dgs-wp-home-mirror"
         className="dgs-wp-home-mirror"
-        data-dgs-build="wp-mirror-2026-08-09n"
+        data-dgs-build="wp-mirror-2026-08-10a"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
@@ -1136,11 +1140,13 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         />
       ))}
 
+      <ImmediateMirrorScripts scripts={navBootScripts} idPrefix="dgs-home-nav" />
+
       <DeferredHomeClient
         bodyId={mirror.bodyId}
         bodyClass={mirror.bodyClass}
         externalScripts={mirror.externalScripts}
-        inlineScripts={mirror.inlineScripts}
+        inlineScripts={deferredInlineScripts}
         demoOrigin={mirror.demoOrigin}
       />
     </>

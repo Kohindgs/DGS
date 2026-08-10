@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Load WpHomeClient only after the hero LCP image has a chance to paint.
- * Keeps the heavy client chunk + jQuery/Envira boot off the Lighthouse TBT window.
- * On About (no robot), waits briefly then idle-loads — same deferral spirit.
+ * Load WpHomeClient soon after first paint.
+ * Nav/talk scripts also boot via ImmediateMirrorScripts — keep this snappy
+ * so FluentForm/Envira still arrive without a multi-second black wait.
  */
 export default function DeferredHomeClient(props) {
   const [Client, setClient] = useState(null);
@@ -23,47 +23,15 @@ export default function DeferredHomeClient(props) {
         .catch(() => {});
     };
 
-    const afterQuiet = () => {
-      if (typeof window.requestIdleCallback === 'function') {
-        window.requestIdleCallback(load, { timeout: 3500 });
-      } else {
-        timer = setTimeout(load, 1800);
-      }
-    };
-
-    const isServiceMirror = props.mirrorRootId === 'dgs-wp-service-mirror';
-    // Service ranking pages need menu/FluentForm soon; skip long idle deferral.
-    if (isServiceMirror) {
-      timer = setTimeout(load, 50);
-      return () => {
-        cancelled = true;
-        if (timer) clearTimeout(timer);
-      };
-    }
-
-    const robot = document.getElementById('dgs-v1215-robot');
-    const lcpImg =
-      robot ||
-      document.querySelector(
-        '#dgs-wp-about-mirror img[fetchpriority="high"], #dgs-wp-service-mirror img[fetchpriority="high"]'
-      );
-    if (lcpImg && !lcpImg.complete) {
-      const onDone = () => {
-        // One frame after decode so LCP can commit before we fetch JS.
-        requestAnimationFrame(() => requestAnimationFrame(afterQuiet));
-      };
-      lcpImg.addEventListener('load', onDone, { once: true });
-      lcpImg.addEventListener('error', onDone, { once: true });
-      timer = setTimeout(afterQuiet, 2500);
-    } else {
-      afterQuiet();
-    }
+    // Short defer only — long idle timeouts left menu/fonts feeling "broken".
+    const delay = props.mirrorRootId === 'dgs-wp-service-mirror' ? 50 : 120;
+    timer = setTimeout(load, delay);
 
     return () => {
       cancelled = true;
       if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [props.mirrorRootId]);
 
   if (!Client) return null;
   return <Client {...props} />;
