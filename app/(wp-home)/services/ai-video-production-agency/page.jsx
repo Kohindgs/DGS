@@ -18,7 +18,7 @@ import {
  */
 const getCachedWpAiProductionMirror = unstable_cache(
   async () => getWpAiProductionMirror({ revalidate: 0 }),
-  ['wp-ai-production-mirror-v7'],
+  ['wp-ai-production-mirror-v8'],
   { revalidate: 900 }
 );
 
@@ -76,7 +76,7 @@ export async function generateMetadata() {
 
 export default async function WpAiProductionPage() {
   const mirror = await getCachedWpAiProductionMirror();
-  const cssBundle = '/api/wp-css?bundle=ai-production&v=10f';
+  const cssBundle = '/api/wp-css?bundle=ai-production&v=10g';
   const lcpPreloadHref = mirror.lcpImage || '';
   // Portfolio + nav only — WebGL/Three.js wait until after first paint.
   const immediateScripts = (mirror.inlineScripts || []).filter(
@@ -329,12 +329,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-ai-production-2026-08-10f" />
+      <meta name="dgs-build" content="wp-ai-production-2026-08-10g" />
 
       <div
         id="dgs-wp-service-mirror"
         className="dgs-wp-service-mirror"
-        data-dgs-build="wp-ai-production-2026-08-10f"
+        data-dgs-build="wp-ai-production-2026-08-10g"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 
