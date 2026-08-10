@@ -3,11 +3,9 @@ import ImmediateMirrorScripts from '../../../components/ImmediateMirrorScripts';
 import { unstable_cache } from 'next/cache';
 import {
   getAskAiPromptBootScript,
-  getThreeJsBootScript,
   getWpAiProductionMirror,
   isAiPortfolioBootScript,
   isNavBootScript,
-  isWebglBootScript,
 } from '../../../../lib/wp-mirror';
 
 /**
@@ -16,10 +14,11 @@ import {
  * Preserve WP title/description/robots/canonical/schema/content.
  * Safe perf: one CSS bundle, keep inline nav CSS, fast CSS/font apply,
  * Syne display=swap, same-origin media proxy.
+ * WebGL particle sphere is deferred (idle) so first paint is not blocked.
  */
 const getCachedWpAiProductionMirror = unstable_cache(
   async () => getWpAiProductionMirror({ revalidate: 0 }),
-  ['wp-ai-production-mirror-v5'],
+  ['wp-ai-production-mirror-v6'],
   { revalidate: 900 }
 );
 
@@ -77,13 +76,14 @@ export async function generateMetadata() {
 
 export default async function WpAiProductionPage() {
   const mirror = await getCachedWpAiProductionMirror();
-  const cssBundle = '/api/wp-css?bundle=ai-production&v=10d';
+  const cssBundle = '/api/wp-css?bundle=ai-production&v=10e';
   const lcpPreloadHref = mirror.lcpImage || '';
+  // Portfolio + nav only — WebGL/Three.js wait until after first paint.
   const immediateScripts = (mirror.inlineScripts || []).filter(
-    (code) => isNavBootScript(code) || isAiPortfolioBootScript(code) || isWebglBootScript(code)
+    (code) => isNavBootScript(code) || isAiPortfolioBootScript(code)
   );
   const deferredInlineScripts = (mirror.inlineScripts || []).filter(
-    (code) => !(isNavBootScript(code) || isAiPortfolioBootScript(code) || isWebglBootScript(code))
+    (code) => !(isNavBootScript(code) || isAiPortfolioBootScript(code))
   );
 
   return (
@@ -93,9 +93,11 @@ export default async function WpAiProductionPage() {
         dangerouslySetInnerHTML={{
           __html: `
 html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
-#dgs-wp-service-mirror{background:#020202;min-height:100vh}
+#dgs-wp-service-mirror{background:transparent;min-height:100vh}
 #dgsNav{background:transparent;min-height:0;height:auto}
 #dgsPill{color:#fff;background:#FD5C62}
+.elementor-invisible{visibility:visible!important;opacity:1!important}
+.dgs-hero,.dgs-hero-copy,.dgs-wrap{opacity:1!important;visibility:visible!important}
 `.replace(/\n/g, ''),
         }}
       />
@@ -103,20 +105,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         <link rel="preload" as="image" href={lcpPreloadHref} fetchPriority="high" />
       ) : null}
       <link rel="preload" as="style" href={cssBundle} />
-      <link data-dgs-css="ai-production" rel="stylesheet" href={cssBundle} media="print" />
+      <link data-dgs-css="ai-production" rel="stylesheet" href={cssBundle} />
       <link
         data-dgs-font="syne"
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap"
-        media="print"
       />
-      <script
-        dangerouslySetInnerHTML={{
-          __html:
-            "(function(){function on(sel){var l=document.querySelector(sel);if(!l)return;var go=function(){l.media='all'};if(l.addEventListener)l.addEventListener('load',go);if(l.sheet)go();setTimeout(go,100);}on('link[data-dgs-css=\"ai-production\"]');on('link[data-dgs-font=\"syne\"]');})();",
-        }}
-      />
-      <script dangerouslySetInnerHTML={{ __html: getThreeJsBootScript() }} />
       <script
         dangerouslySetInnerHTML={{
           __html: `${immediateScripts.filter(isNavBootScript).join('\n;')}\n${getAskAiPromptBootScript()}`,
@@ -168,17 +162,25 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
           height: 100vh !important;
           z-index: 0 !important;
           pointer-events: none !important;
-          background: #000 !important;
+          background: transparent !important;
         }
         #global-webgl-background canvas {
           display: block !important;
           position: fixed !important;
           top: 0 !important;
           left: 0 !important;
+          z-index: 0 !important;
         }
         html body #dgs-wp-service-mirror {
           position: relative !important;
           z-index: 1 !important;
+          background: transparent !important;
+        }
+        html body #dgs-wp-service-mirror .dgs-ai-page,
+        html body #dgs-wp-service-mirror .dgs-hero,
+        html body #dgs-wp-service-mirror .elementor-invisible {
+          opacity: 1 !important;
+          visibility: visible !important;
         }
 
         /* Unified Syne — section heads above logos, all weights */
@@ -323,12 +325,12 @@ html,body{background:#020202;color:#e8e8e6;color-scheme:dark;margin:0;padding:0}
         }
       `}</style>
 
-      <meta name="dgs-build" content="wp-ai-production-2026-08-10d" />
+      <meta name="dgs-build" content="wp-ai-production-2026-08-10e" />
 
       <div
         id="dgs-wp-service-mirror"
         className="dgs-wp-service-mirror"
-        data-dgs-build="wp-ai-production-2026-08-10d"
+        data-dgs-build="wp-ai-production-2026-08-10e"
         dangerouslySetInnerHTML={{ __html: mirror.bodyHtml }}
       />
 

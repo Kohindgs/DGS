@@ -903,20 +903,29 @@ export default function WpHomeClient({
         }
       });
 
-      // WebGL background — load Three.js then boot (service page only).
-      if (isServiceMirror && webglInlines.length) {
+      // WebGL background — never block first paint / portfolio on Three.js.
+      if (isServiceMirror && webglInlines.length && !isCoarseMobile()) {
         const threeSrc =
           scripts.find((s) => s.kind === 'three' || /three/i.test(s.src))?.src ||
           'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-        await loadScript(threeSrc);
-        webglInlines.forEach((code, i) => {
+        const startWebgl = () => {
           if (cancelled) return;
-          try {
-            runInline(code, `dgs-webgl-${i}`);
-          } catch (err) {
-            console.warn('DGS webgl inline failed', i, err);
-          }
-        });
+          loadScript(threeSrc).then(() => {
+            if (cancelled) return;
+            webglInlines.forEach((code, i) => {
+              try {
+                runInline(code, `dgs-webgl-${i}`);
+              } catch (err) {
+                console.warn('DGS webgl inline failed', i, err);
+              }
+            });
+          });
+        };
+        if (typeof window.requestIdleCallback === 'function') {
+          window.requestIdleCallback(startWebgl, { timeout: 2800 });
+        } else {
+          setTimeout(startWebgl, 1500);
+        }
       }
 
       // Service-page portfolio/FAQ — do not wait on homepage Envira selectors
