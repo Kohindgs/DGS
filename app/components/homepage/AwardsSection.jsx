@@ -1,69 +1,69 @@
+'use client';
+
 import React from 'react';
 import styles from './homepage.module.css';
-
-const awardsData = [
-  {
-    year: '2024',
-    org: 'Prime Insights',
-    title: 'Best Place to Work',
-    desc: 'Recognition for D\'Genius Solutions as a high-growth, culture-forward and people-first digital marketing company with relentless creative standards.'
-  },
-  {
-    year: '2024-25',
-    org: 'Corporate Connect',
-    title: 'Digital Marketing Agency to Watch Out',
-    desc: 'Awarded for breakthrough multi-channel impact, client-focused execution and scalable generative search & organic visibility frameworks.'
-  },
-  {
-    year: '2025',
-    org: 'GLA Awards',
-    title: 'Excellence in SEO, Content & Performance Marketing',
-    desc: 'Awarded for consistent, measurable ROI delivered across enterprise SEO technical audits, answer engine optimization and performance media.'
-  }
-];
+import { awardsData } from '../../data/homepageData';
 
 export default function AwardsSection() {
   return (
-    <section className={`${styles.awardsSection} dgs-section`} id="awards">
-      <div className="dgs-container">
+    <section className={styles.awardsSection + ' dgs-section'} id="awards">
+      <div className="dgs-container-wide">
         
+        {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
             <span>Industry Recognition</span>
           </div>
           <h2 className={styles.titleMain}>
-            Recognized for <span className={styles.titleGradient}>Excellence & Growth</span>
+            Recognized for <span className={styles.titleGradient}>Excellence &amp; Impact</span>
           </h2>
           <p className={styles.subtitle}>
-            Industry recognition spanning workplace culture, technical search mastery, and full-stack creative execution.
+            Honored across workplace culture, technical search mastery, and full-stack creative execution.
           </p>
         </div>
 
-        <div className={styles.awardsGrid}>
-          {awardsData.map((award, idx) => (
-            <div key={idx} className={styles.awardCard}>
-              <div className={styles.awardBadgeRow}>
-                <span className={styles.awardYearTag}>{award.year}</span>
-                <span className={styles.awardOrg}>{award.org}</span>
+        {/* Awards Trophy Grid */}
+        <div className={styles.awardsTrophyGrid}>
+          {awardsData.map((award) => (
+            <div key={award.id} className={styles.awardTrophyCard}>
+              <div className={styles.awardImageWrap}>
+                <img
+                  src={award.image}
+                  alt={award.issuer + ' ' + award.title + ' award'}
+                  className={styles.awardTrophyImg}
+                  loading="lazy"
+                />
               </div>
-              <h3 className={styles.awardTitle}>{award.title}</h3>
-              <p className={styles.awardDesc}>{award.desc}</p>
+
+              <div className={styles.awardContentWrap}>
+                <div className={styles.awardBadgeLine}>
+                  <span className={styles.awardYearPill}>{award.year}</span>
+                  <span className={styles.awardIssuerName}>{award.issuer}</span>
+                </div>
+
+                <h3 className={styles.awardTrophyTitle}>{award.title}</h3>
+                <div className={styles.awardCategorySub}>{award.category}</div>
+                <p className={styles.awardTrophyDesc}>{award.description}</p>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Clutch Ribbon */}
-        <div className={styles.clutchRibbon}>
-          <img 
-            src="https://www.dgeniussolutions.com/wp-content/uploads/2026/06/t_clutch-5-star3208.logowik.com_.webp" 
-            alt="Clutch 5-star rating verified badge" 
-            className={styles.clutchBadgeImg}
-            loading="lazy"
-          />
-          <span className={styles.clutchText}>
-            5.0 ★★★★★ Verified Client Satisfaction Score on Clutch
-          </span>
+        {/* Verified Clutch Proof Ribbon */}
+        <div className={styles.clutchRibbonContainer}>
+          <div className={styles.clutchRibbonLeft}>
+            <img
+              src="https://www.dgeniussolutions.com/wp-content/uploads/2026/06/t_clutch-5-star3208.logowik.com_.webp"
+              alt="Clutch 5-star verified review badge"
+              className={styles.clutchBadgeLogo}
+              loading="lazy"
+            />
+            <div className={styles.clutchStarsText}>★★★★★</div>
+          </div>
+          <div className={styles.clutchRibbonText}>
+            <strong>5.0 / 5.0 Rating on Clutch</strong> — Verified Independent Client Review Score for Strategic Execution &amp; Agency Culture.
+          </div>
         </div>
 
       </div>

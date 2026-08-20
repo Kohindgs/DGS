@@ -6,7 +6,7 @@ import { industriesData } from '../../data/homepageData';
 
 export default function IndustriesSection() {
   return (
-    <section className={`${styles.industriesSection} dgs-section`} id="industries">
+    <section className={styles.industriesSection + ' dgs-section'} id="industries">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
@@ -16,7 +16,7 @@ export default function IndustriesSection() {
             <span>Industry Specializations</span>
           </div>
           <h2 className={styles.titleMain}>
-            Industries We <span className={styles.titleGradient}>Accelerate</span>
+            Industries We <span className={styles.titleGradient}>Help Grow</span>
           </h2>
           <p className={styles.subtitle}>
             Bespoke digital growth systems tailored for high-consideration, highly-regulated, and category-defining enterprises.
@@ -28,7 +28,7 @@ export default function IndustriesSection() {
           {industriesData.map((ind) => (
             <div key={ind.id} className={styles.industryModularCard}>
               <div className={styles.industryCardTop}>
-                <span className={styles.industryBadge}>DOMAIN EXPERTISE</span>
+                <span className={styles.industryBadge}>DOMAIN MASTERY</span>
                 <span className={styles.industryIconGlyph}>✦</span>
               </div>
 

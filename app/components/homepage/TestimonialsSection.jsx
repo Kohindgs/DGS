@@ -23,18 +23,21 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        {/* References Grid */}
+        {/* Testimonials Grid */}
         <div className={styles.referencesGrid}>
           {clientReferences.map((ref) => (
             <div key={ref.id} className={styles.referenceCard}>
               <div className={styles.referenceTop}>
-                <span className={styles.referenceBadge}>LONG-TERM MANDATE</span>
+                <span className={styles.referenceBadge}>{ref.client}</span>
                 <div className={styles.referenceDomain}>{ref.domain}</div>
               </div>
 
-              <h3 className={styles.referenceClientName}>{ref.client}</h3>
-              <div className={styles.referenceFocus}>{ref.focus}</div>
-              <p className={styles.referenceHighlight}>&ldquo;{ref.highlight}&rdquo;</p>
+              <p className={styles.referenceHighlight}>&ldquo;{ref.quote}&rdquo;</p>
+
+              <div className={styles.referenceAuthorBox}>
+                <div className={styles.referenceAuthorName}>{ref.author}</div>
+                <div className={styles.referenceAuthorRole}>{ref.role} · {ref.client}</div>
+              </div>
 
               <div className={styles.referenceFooter}>
                 <span className={styles.referenceFootDot}></span>

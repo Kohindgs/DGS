@@ -26,7 +26,7 @@ export default function AuditCtaSection() {
   };
 
   return (
-    <section className={`${styles.auditSection} dgs-section`} id="audit-form">
+    <section className={styles.auditSection + ' dgs-section'} id="audit-form">
       <div className="dgs-container-wide">
         
         <div className={styles.auditSpatialCard}>
@@ -40,8 +40,8 @@ export default function AuditCtaSection() {
               </div>
 
               <h2 className={styles.auditMainTitle}>
-                Initiate Your <br />
-                <span className={styles.titleGradient}>Growth Diagnosis</span>
+                Let Us Audit Your Brand, <br />
+                <span className={styles.titleGradient}>Search &amp; Campaign Flow</span>
               </h2>
 
               <p className={styles.auditParagraph}>
@@ -173,8 +173,7 @@ export default function AuditCtaSection() {
 
                   </div>
 
-                  <button type="submit" className={styles.btnSpatialPrimary} style={{ width: '100%', marginTop: '12px' }}>
-                    <span className={styles.btnGlowSweep}></span>
+                  <button type="submit" className={styles.btnPrimary} style={{ width: '100%', marginTop: '12px', justifyContent: 'center' }}>
                     <span>SUBMIT DIAGNOSTIC BRIEF</span>
                     <span>→</span>
                   </button>

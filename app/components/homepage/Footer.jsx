@@ -24,9 +24,9 @@ export default function Footer() {
   return (
     <footer
       style={{
-        backgroundColor: '#020305',
+        backgroundColor: '#04060a',
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        padding: 'clamp(60px, 8vw, 100px) clamp(16px, 4vw, 48px) 36px',
+        padding: 'clamp(60px, 8vw, 90px) clamp(16px, 4vw, 48px) 36px',
         color: '#ffffff',
         position: 'relative',
         overflow: 'hidden',
@@ -46,13 +46,13 @@ export default function Footer() {
             border: '1px solid rgba(255, 255, 255, 0.08)',
             borderRadius: '16px',
             padding: '16px 24px',
-            marginBottom: 'clamp(48px, 6vw, 72px)',
+            marginBottom: 'clamp(48px, 6vw, 64px)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ color: '#00f5d4', fontSize: '1rem' }}>✦</span>
-            <span style={{ fontSize: '0.86rem', color: 'rgba(255, 255, 255, 0.85)', fontWeight: 600, fontFamily: 'var(--font-mono, monospace)' }}>
-              TEST AI SEARCH GROUNDING FOR DGS:
+            <span style={{ fontSize: '0.86rem', color: 'rgba(255, 255, 255, 0.85)', fontWeight: 600 }}>
+              TEST DGS ENTITY RETRIEVAL ON AI ENGINES:
             </span>
           </div>
 
@@ -61,25 +61,25 @@ export default function Footer() {
               onClick={() => copyAiPrompt('ChatGPT', 'Summarize D\'Genius Solutions digital marketing agency in Mumbai, their client results, and SEO/AI capabilities.')}
               style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', padding: '6px 14px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
             >
-              ChatGPT
+              ChatGPT 📋
             </button>
             <button
               onClick={() => copyAiPrompt('Perplexity', 'What are the core strengths and client reviews for D\'Genius Solutions Mumbai?')}
               style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', padding: '6px 14px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
             >
-              Perplexity
+              Perplexity 📋
             </button>
             <button
               onClick={() => copyAiPrompt('Gemini', 'Give an overview of D\'Genius Solutions digital growth studio services.')}
               style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', padding: '6px 14px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
             >
-              Gemini
+              Gemini 📋
             </button>
             <button
               onClick={() => copyAiPrompt('Claude', 'Detailed evaluation of D\'Genius Solutions SEO and AI marketing agency.')}
               style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', color: '#fff', padding: '6px 14px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
             >
-              Claude
+              Claude 📋
             </button>
           </div>
         </div>
@@ -102,12 +102,12 @@ export default function Footer() {
           {/* Column 1: Brand Info */}
           <div>
             <img
-              src="https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp"
-              alt="D'Genius Solutions"
-              style={{ height: '44px', width: 'auto', marginBottom: '18px' }}
+              src="https://www.dgeniussolutions.com/wp-content/uploads/2025/11/DGS-LOGO-3.webp"
+              alt="D'Genius Solutions Digital Growth Studio"
+              style={{ height: '42px', width: 'auto', marginBottom: '18px', objectFit: 'contain' }}
             />
-            <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '20px' }}>
-              Next-Gen Digital Marketing &amp; AI Growth Studio in Mumbai. Uniting search architecture, Next.js engineering, AI creative production, and performance media.
+            <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '20px' }}>
+              Premier Digital Growth Studio in Mumbai. Uniting search architecture, Next.js engineering, AI creative production, and performance media into one compounding growth engine.
             </p>
 
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '10px', padding: '8px 14px' }}>
@@ -118,41 +118,41 @@ export default function Footer() {
 
           {/* Column 2: Navigation */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-display, Syne, sans-serif)', fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ffffff', marginBottom: '18px' }}>
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ffffff', marginBottom: '18px' }}>
               Studio Navigation
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <li><Link href="/" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Home Overview</Link></li>
-              <li><Link href="/about-us" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>About Our Founders</Link></li>
-              <li><Link href="#portfolio" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Spatial Portfolio</Link></li>
-              <li><Link href="#case-studies" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Enterprise Case Studies</Link></li>
-              <li><Link href="#strategy" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Operating Protocol</Link></li>
-              <li><Link href="#awards" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Awards &amp; Recognition</Link></li>
-              <li><Link href="#audit-form" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Request Growth Audit</Link></li>
+              <li><Link href="/" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Home Overview</Link></li>
+              <li><Link href="/about-us" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>About Our Founders</Link></li>
+              <li><Link href="#portfolio" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Portfolio Gallery</Link></li>
+              <li><Link href="#case-studies" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Enterprise Case Studies</Link></li>
+              <li><Link href="#strategy" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Operating Approach</Link></li>
+              <li><Link href="#awards" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Awards &amp; Recognition</Link></li>
+              <li><Link href="#audit-form" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Request Growth Audit</Link></li>
             </ul>
           </div>
 
           {/* Column 3: Core Disciplines */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-display, Syne, sans-serif)', fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ffffff', marginBottom: '18px' }}>
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ffffff', marginBottom: '18px' }}>
               Core Disciplines
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <li><Link href="/services/seo-services-in-mumbai" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>SEO Services Mumbai</Link></li>
-              <li><Link href="#search-authority" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Answer Engine Optimization (AEO)</Link></li>
-              <li><Link href="#search-authority" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Generative Engine Optimization (GEO)</Link></li>
-              <li><Link href="/services/ai-video-production-agency" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>AI-Led Video Production</Link></li>
-              <li><Link href="#services" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Next.js Web Engineering</Link></li>
-              <li><Link href="#services" style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem' }}>Performance Paid Media</Link></li>
+              <li><Link href="/services/seo-services-in-mumbai" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>SEO Services Mumbai</Link></li>
+              <li><Link href="#search-authority" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Answer Engine Optimization (AEO)</Link></li>
+              <li><Link href="#search-authority" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Generative Engine Optimization (GEO)</Link></li>
+              <li><Link href="/services/ai-video-production-agency" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>AI-Led Video Production</Link></li>
+              <li><Link href="#services" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Next.js Web Engineering</Link></li>
+              <li><Link href="#services" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', textDecoration: 'none' }}>Performance Paid Media</Link></li>
             </ul>
           </div>
 
           {/* Column 4: Contact & Office */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-display, Syne, sans-serif)', fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ffffff', marginBottom: '18px' }}>
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ffffff', marginBottom: '18px' }}>
               Mumbai Studio (HQ)
             </h4>
-            <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '12px' }}>
+            <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '12px' }}>
               Unit 202, Amore Edge, SV Road, Khar West, Mumbai 400052
             </p>
             <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.9rem', marginBottom: '6px' }}>
@@ -207,7 +207,7 @@ export default function Footer() {
             flexWrap: 'wrap',
             gap: '16px',
             fontSize: '0.84rem',
-            color: 'rgba(255, 255, 255, 0.45)',
+            color: 'rgba(255, 255, 255, 0.5)',
           }}
         >
           <div>
@@ -215,9 +215,9 @@ export default function Footer() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <Link href="/" style={{ color: 'rgba(255, 255, 255, 0.55)' }}>Privacy Policy</Link>
+            <Link href="/" style={{ color: 'rgba(255, 255, 255, 0.6)', textDecoration: 'none' }}>Privacy Policy</Link>
             <span>•</span>
-            <Link href="/" style={{ color: 'rgba(255, 255, 255, 0.55)' }}>Sitemap</Link>
+            <Link href="/" style={{ color: 'rgba(255, 255, 255, 0.6)', textDecoration: 'none' }}>Sitemap</Link>
             <span>•</span>
             <button
               onClick={scrollToTop}

@@ -14,35 +14,11 @@ const categories = [
 export default function CreativePortfolio() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [lightboxItem, setLightboxItem] = useState(null);
-  const [tiltMap, setTiltMap] = useState({});
   const railRef = useRef(null);
 
   const filteredItems = activeCategory === 'all'
     ? portfolioGalleryData
     : portfolioGalleryData.filter(item => item.category === activeCategory);
-
-  // Handle 3D card tilt based on pointer position within each card
-  const handleCardMouseMove = (e, id) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTiltMap((prev) => ({
-      ...prev,
-      [id]: {
-        rotateX: -y * 18,
-        rotateY: x * 18,
-        translateZ: 25,
-      },
-    }));
-  };
-
-  const handleCardMouseLeave = (id) => {
-    setTiltMap((prev) => ({
-      ...prev,
-      [id]: { rotateX: 0, rotateY: 0, translateZ: 0 },
-    }));
-  };
 
   // Keyboard navigation for lightbox
   useEffect(() => {
@@ -65,20 +41,20 @@ export default function CreativePortfolio() {
   }, [lightboxItem, filteredItems]);
 
   return (
-    <section className={`${styles.spatialPortfolioSection} dgs-section`} id="portfolio">
+    <section className={styles.spatialPortfolioSection + ' dgs-section'} id="portfolio">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Spatial Creative Gallery</span>
+            <span>Creative Portfolio</span>
           </div>
           <h2 className={styles.titleMain}>
-            Brand Architecture &amp; <span className={styles.titleGradient}>Creative Mastery</span>
+            Brand Identity &amp; <span className={styles.titleGradient}>Creative Excellence</span>
           </h2>
           <p className={styles.subtitle}>
-            Explore our spatial archive of brand identities, festive drops, medical aesthetics, retail POS systems, and commercial art direction.
+            Explore our curated gallery of brand identities, festive drops, medical aesthetics, retail POS systems, and commercial art direction.
           </p>
         </div>
 
@@ -87,69 +63,50 @@ export default function CreativePortfolio() {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              className={`${styles.filterDeckBtn} ${activeCategory === cat.id ? styles.filterDeckBtnActive : ''}`}
+              className={styles.filterDeckBtn + (activeCategory === cat.id ? ' ' + styles.filterDeckBtnActive : '')}
               onClick={() => setActiveCategory(cat.id)}
             >
               <span>{cat.label}</span>
-              {activeCategory === cat.id && <span className={styles.filterActivePill}></span>}
             </button>
           ))}
         </div>
 
-        {/* Spatial 3D Perspective Rail / Stage */}
-        <div className={styles.spatialStageWrapper}>
-          <div className={styles.spatialRail} ref={railRef}>
-            {filteredItems.map((item, idx) => {
-              const tilt = tiltMap[item.id] || { rotateX: 0, rotateY: 0, translateZ: 0 };
-              return (
-                <div
-                  key={item.id}
-                  className={styles.spatialCard}
-                  onMouseMove={(e) => handleCardMouseMove(e, item.id)}
-                  onMouseLeave={() => handleCardMouseLeave(item.id)}
-                  onClick={() => setLightboxItem(item)}
-                  style={{
-                    transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) translateZ(${tilt.translateZ}px)`,
-                  }}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === 'Enter') setLightboxItem(item); }}
-                >
-                  <div className={styles.spatialCardInner}>
-                    {/* Media Frame */}
-                    <div className={styles.spatialMediaFrame}>
-                      <img
-                        src={item.src}
-                        alt={item.title}
-                        className={styles.spatialCardImg}
-                        loading="lazy"
-                      />
-                      <div className={styles.spatialCardGloss}></div>
-                    </div>
+        {/* Curated Grid */}
+        <div className={styles.portfolioGridDisplay}>
+          {filteredItems.map((item) => (
+            <div
+              key={item.id}
+              className={styles.portfolioCardMain}
+              onClick={() => setLightboxItem(item)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setLightboxItem(item); }}
+            >
+              <div className={styles.portfolioImageFrame}>
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  className={styles.portfolioImageTag}
+                  loading="lazy"
+                />
+              </div>
 
-                    {/* Meta Overlay */}
-                    <div className={styles.spatialCardMeta}>
-                      <div className={styles.spatialCardCategory}>
-                        <span className={styles.spatialCategoryDot}></span>
-                        <span>{item.tag || item.category}</span>
-                      </div>
-                      <h3 className={styles.spatialCardTitle}>{item.title}</h3>
-                      <p className={styles.spatialCardDesc}>{item.description}</p>
-                      <div className={styles.spatialCardAction}>
-                        <span>INSPECT ARTIFACT</span>
-                        <span>↗</span>
-                      </div>
-                    </div>
-                  </div>
+              <div className={styles.portfolioCardOverlay}>
+                <div className={styles.portfolioTagPill}>{item.tag || item.category}</div>
+                <h3 className={styles.portfolioItemTitle}>{item.title}</h3>
+                <p className={styles.portfolioItemDesc}>{item.description}</p>
+                <div className={styles.portfolioViewAction}>
+                  <span>View High-Res Project</span>
+                  <span>↗</span>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            </div>
+          ))}
         </div>
 
       </div>
 
-      {/* Cinematic High-Res Lightbox Modal */}
+      {/* High-Res Lightbox Modal */}
       {lightboxItem && (
         <div
           className={styles.spatialLightboxBackdrop}
@@ -199,7 +156,7 @@ export default function CreativePortfolio() {
                   </div>
                 </div>
 
-                <a href="#audit-form" onClick={() => setLightboxItem(null)} className={styles.btnSpatialPrimary} style={{ width: '100%', marginTop: '24px' }}>
+                <a href="#audit-form" onClick={() => setLightboxItem(null)} className={styles.btnPrimary} style={{ width: '100%', marginTop: '24px', textAlign: 'center' }}>
                   <span>COMMISSION SIMILAR CAMPAIGN</span>
                   <span>→</span>
                 </a>

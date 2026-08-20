@@ -6,18 +6,17 @@ import { whyDgsPillars } from '../../data/homepageData';
 
 export default function WhyDgsSection() {
   return (
-    <section className={`${styles.whySection} dgs-section`} id="why-dgs">
+    <section className={styles.whySection + ' dgs-section'} id="why-dgs">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Why Brands Choose DGS</span>
+            <span>Why Brands Choose Us</span>
           </div>
           <h2 className={styles.titleMain}>
-            Built On Transparency. <br />
-            <span className={styles.titleGradient}>Engineered For Compounding ROI.</span>
+            Why Brands Choose <span className={styles.titleGradient}>D’Genius Solutions</span>
           </h2>
           <p className={styles.subtitle}>
             We operate as an extended marketing and engineering pod, eliminating conflicting agency incentives and building enduring digital equity.
@@ -64,8 +63,8 @@ export default function WhyDgsSection() {
           </div>
 
           <div className={styles.heritageCtaWrap}>
-            <a href="#audit-form" className={styles.btnSpatialPrimary}>
-              <span>PARTNER WITH OUR STUDIO</span>
+            <a href="#audit-form" className={styles.btnPrimary}>
+              <span>PARTNER WITH OUR LEADERSHIP</span>
               <span>→</span>
             </a>
           </div>

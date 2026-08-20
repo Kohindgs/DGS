@@ -12,7 +12,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section className={`${styles.faqSection} dgs-section`} id="faq">
+    <section className={styles.faqSection + ' dgs-section'} id="faq">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
@@ -22,10 +22,10 @@ export default function FaqSection() {
             <span>Search &amp; Discovery Ready</span>
           </div>
           <h2 className={styles.titleMain}>
-            Frequently Asked <span className={styles.titleGradient}>Questions</span>
+            Questions Brands Ask <span className={styles.titleGradient}>Before Choosing Us</span>
           </h2>
           <p className={styles.subtitle}>
-            Clear, transparent answers on how our connected growth studio works, our engagement models, and delivery timelines.
+            Clear answers for businesses evaluating SEO, AEO, GEO, LLM SEO, website development, social media, performance marketing and AI production.
           </p>
         </div>
 
@@ -34,13 +34,13 @@ export default function FaqSection() {
           {faqData.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div key={idx} className={`${styles.faqAccordionItem} ${isOpen ? styles.faqItemOpen : ''}`}>
+              <div key={idx} className={styles.faqAccordionItem + (isOpen ? ' ' + styles.faqItemOpen : '')}>
                 <button
                   className={styles.faqQuestionTrigger}
                   onClick={() => toggleFaq(idx)}
                   aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${idx}`}
-                  id={`faq-question-${idx}`}
+                  aria-controls={'faq-answer-' + idx}
+                  id={'faq-question-' + idx}
                 >
                   <span className={styles.faqNum}>0{idx + 1}</span>
                   <span className={styles.faqQuestionText}>{faq.question}</span>
@@ -50,9 +50,9 @@ export default function FaqSection() {
                 {isOpen && (
                   <div
                     className={styles.faqAnswerPanel}
-                    id={`faq-answer-${idx}`}
+                    id={'faq-answer-' + idx}
                     role="region"
-                    aria-labelledby={`faq-question-${idx}`}
+                    aria-labelledby={'faq-question-' + idx}
                   >
                     <p className={styles.faqAnswerText}>{faq.answer}</p>
                   </div>

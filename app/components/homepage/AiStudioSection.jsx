@@ -5,7 +5,7 @@ import styles from './homepage.module.css';
 import { aiPortfolioData } from '../../data/homepageData';
 
 const productionProtocol = [
-  { step: '01', title: 'Strategic Brief', desc: 'Brand essence, audience psychographics, and target conversion objective.' },
+  { step: '01', title: 'Strategic Brief', desc: 'Brand essence, audience psychographics, and target commercial conversion objectives.' },
   { step: '02', title: 'Prompt Architecture', desc: 'Custom LoRA weights, cinematic camera scripts, lighting maps, and style direction.' },
   { step: '03', title: 'Neural Generation', desc: 'Ultra-high-definition synthesis of photorealistic visuals, motion sequences, and acoustic layers.' },
   { step: '04', title: 'Human Art Direction', desc: 'Rigorous color grading, typographic curation, sound design, and brand compliance.' },
@@ -17,14 +17,14 @@ export default function AiStudioSection() {
   const activeItem = aiPortfolioData[activeVisualIdx] || aiPortfolioData[0];
 
   return (
-    <section className={`${styles.aiStudioSection} dgs-section`} id="ai-studio">
+    <section className={styles.aiStudioSection + ' dgs-section'} id="ai-studio">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Proprietary Generative AI Studio</span>
+            <span>Generative AI Studio</span>
           </div>
           <h2 className={styles.titleMain}>
             AI-Led Creative <span className={styles.titleGradient}>Velocity &amp; Precision</span>
@@ -37,11 +37,11 @@ export default function AiStudioSection() {
         {/* Interactive Cinematic Stage */}
         <div className={styles.aiCinematicStage}>
           
-          {/* Left: Interactive Visual Viewport with Lens Inspector */}
+          {/* Left: Visual Viewport */}
           <div className={styles.aiVisualViewport}>
             <div className={styles.aiViewportBadge}>
               <span className={styles.aiBadgeDot}></span>
-              <span>{activeItem.tag} // STAGE 0{activeVisualIdx + 1}</span>
+              <span>{activeItem.tag}</span>
             </div>
 
             <div className={styles.aiImageWrapper}>
@@ -51,12 +51,11 @@ export default function AiStudioSection() {
                 className={styles.aiHeroImg}
                 loading="lazy"
               />
-              <div className={styles.aiImageScanline}></div>
             </div>
 
             {/* Prompt & Technical Blueprint Bar */}
             <div className={styles.aiPromptBar}>
-              <div className={styles.aiPromptLabel}>PROMPT INSIGHT:</div>
+              <div className={styles.aiPromptLabel}>CREATIVE PROMPT DIRECTION:</div>
               <div className={styles.aiPromptText}>&ldquo;{activeItem.promptInsight}&rdquo;</div>
               <div className={styles.aiPromptMetric}>{activeItem.metrics}</div>
             </div>
@@ -64,14 +63,14 @@ export default function AiStudioSection() {
 
           {/* Right: Dynamic Selection Track */}
           <div className={styles.aiSelectionTrack}>
-            <div className={styles.aiTrackKicker}>SELECT AI PRODUCTION CAPABILITY:</div>
+            <div className={styles.aiTrackKicker}>SELECT AI PRODUCTION DISCIPLINE:</div>
             
             {aiPortfolioData.map((item, idx) => {
               const isActive = activeVisualIdx === idx;
               return (
                 <div 
                   key={item.id}
-                  className={`${styles.aiTrackItem} ${isActive ? styles.aiTrackItemActive : ''}`}
+                  className={styles.aiTrackItem + (isActive ? ' ' + styles.aiTrackItemActive : '')}
                   onClick={() => setActiveVisualIdx(idx)}
                   role="button"
                   tabIndex={0}
@@ -94,7 +93,7 @@ export default function AiStudioSection() {
         {/* The 5-Step AI Production Protocol */}
         <div className={styles.protocolContainer}>
           <div className={styles.protocolHeader}>
-            <span className={styles.protocolEyebrow}>SYSTEMATIC EXECUTION</span>
+            <span className={styles.protocolEyebrow}>SYSTEMATIC PRODUCTION</span>
             <h3 className={styles.protocolMainTitle}>The DGS AI Production Protocol</h3>
             <p className={styles.protocolSub}>From strategic brief to multichannel campaign readiness in days, not months.</p>
           </div>

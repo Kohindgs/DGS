@@ -1,47 +1,28 @@
+'use client';
+
 import React from 'react';
 import styles from './homepage.module.css';
 
-const capabilitiesRow1 = [
-  'Search Engine Optimisation',
-  'Answer Engine Optimisation',
-  'Generative Search Visibility (GEO)',
-  'LLM Brand Visibility',
-  'Voice Search Readiness',
-  'AI-Led Creative Production'
-];
-
-const capabilitiesRow2 = [
-  'Full-Stack Web Development',
-  'Performance Marketing & Meta Ads',
-  'Google Ads & Shopping ROI',
-  '360° Social Media Strategy',
-  'Brand Identity & Creative Systems',
-  'Conversion Rate Optimization'
+const marqueeItems = [
+  'Enterprise SEO & AEO Dominance',
+  'Next.js High-Performance Engineering',
+  'Cinema-Grade Generative AI Video',
+  'Brand Architecture & Visual Systems',
+  'Multi-Channel Performance Paid Media',
+  '200+ Brands Scaled on Word-of-Mouth',
+  '100% Operational Transparency',
+  'Khar West Mumbai • Dubai • Global',
 ];
 
 export default function MarqueeRail() {
   return (
-    <div className={styles.marqueeSection} aria-hidden="true">
-      <div className={styles.marqueeEdgeLeft}></div>
-      <div className={styles.marqueeEdgeRight}></div>
-
-      {/* Row 1: Left */}
-      <div className={`${styles.marqueeTrack} ${styles.marqueeRowLeft}`}>
-        {[...capabilitiesRow1, ...capabilitiesRow1, ...capabilitiesRow1].map((item, idx) => (
-          <span key={idx} className={styles.marqueeItem}>
+    <div className={styles.marqueeContainer} aria-hidden="true">
+      <div className={styles.marqueeTrack}>
+        {[...marqueeItems, ...marqueeItems].map((item, idx) => (
+          <div key={idx} className={styles.marqueeItem}>
+            <span className={styles.marqueeBullet}>✦</span>
             <span>{item}</span>
-            <span className={styles.marqueeDivider}>✦</span>
-          </span>
-        ))}
-      </div>
-
-      {/* Row 2: Right */}
-      <div className={`${styles.marqueeTrack} ${styles.marqueeRowRight}`}>
-        {[...capabilitiesRow2, ...capabilitiesRow2, ...capabilitiesRow2].map((item, idx) => (
-          <span key={idx} className={styles.marqueeItem}>
-            <span>{item}</span>
-            <span className={styles.marqueeDivider}>✦</span>
-          </span>
+          </div>
         ))}
       </div>
     </div>

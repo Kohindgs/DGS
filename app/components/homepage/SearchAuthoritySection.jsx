@@ -24,41 +24,41 @@ export default function SearchAuthoritySection() {
   };
 
   return (
-    <section className={`${styles.searchSection} dgs-section`} id="search-authority">
+    <section className={styles.searchSection + ' dgs-section'} id="search-authority">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Search &amp; AI Dominance</span>
+            <span>Search Authority</span>
           </div>
           <h2 className={styles.titleMain}>
-            Triple-Engine <span className={styles.titleGradient}>Search Authority</span>
+            Built for Google Search, <span className={styles.titleGradient}>AI Answers &amp; LLM Citations</span>
           </h2>
           <p className={styles.subtitle}>
-            Traditional Google algorithms rank keywords. AI engines cite verified knowledge graphs. We engineer your brand to dominate both human search queries and autonomous LLM citations.
+            Traditional Google algorithms rank keywords. Modern AI answer engines cite structured knowledge. We engineer your brand to dominate both human search queries and autonomous LLM citations.
           </p>
         </div>
 
         {/* Triple-Engine Comparison Matrix */}
-        <div className={styles.matrixWrapper}>
-          <div className={styles.matrixHeaderRow}>
-            <div className={styles.matrixColHead}>DIMENSION</div>
-            <div className={styles.matrixColHead}>TRADITIONAL SEO</div>
-            <div className={styles.matrixColHead}>ANSWER ENGINES (AEO)</div>
-            <div className={styles.matrixColHead}>GENERATIVE SEARCH (GEO)</div>
-            <div className={`${styles.matrixColHead} ${styles.matrixDgsHead}`}>THE DGS ADVANTAGE</div>
+        <div className={styles.matrixContainer}>
+          <div className={styles.matrixHeader}>
+            <div className={styles.matrixColTitle}>DIMENSION</div>
+            <div className={styles.matrixColTitle}>TRADITIONAL SEO</div>
+            <div className={styles.matrixColTitle}>ANSWER ENGINES (AEO)</div>
+            <div className={styles.matrixColTitle}>GENERATIVE SEARCH (GEO)</div>
+            <div className={styles.matrixColTitle + ' ' + styles.matrixDgsColTitle}>THE DGS ADVANTAGE</div>
           </div>
 
-          <div className={styles.matrixBody}>
+          <div className={styles.matrixRowsList}>
             {searchAuthorityMatrix.map((row, idx) => (
-              <div key={idx} className={styles.matrixRow}>
-                <div className={styles.matrixCellDimension}>{row.dimension}</div>
-                <div className={styles.matrixCell}>{row.traditionalSeo}</div>
-                <div className={styles.matrixCell}>{row.answerEngine}</div>
-                <div className={styles.matrixCell}>{row.generativeSeo}</div>
-                <div className={`${styles.matrixCell} ${styles.matrixDgsCell}`}>
+              <div key={idx} className={styles.matrixRowItem}>
+                <div className={styles.matrixDimensionName}>{row.dimension}</div>
+                <div className={styles.matrixCellText}>{row.traditionalSeo}</div>
+                <div className={styles.matrixCellText}>{row.answerEngine}</div>
+                <div className={styles.matrixCellText}>{row.generativeSeo}</div>
+                <div className={styles.matrixCellText + ' ' + styles.matrixDgsCellText}>
                   <span className={styles.matrixCheckIcon}>✓</span>
                   <span>{row.dgsAdvantage}</span>
                 </div>
@@ -67,32 +67,32 @@ export default function SearchAuthoritySection() {
           </div>
         </div>
 
-        {/* Live LLM Query Simulator */}
-        <div className={styles.aiQuerySimulator}>
-          <div className={styles.simulatorTop}>
-            <div className={styles.simulatorRadar}>
-              <span className={styles.radarPing}></span>
-              <span>LIVE AI ENGINE CITATION TESTER</span>
+        {/* AI Engine Grounding Citation Tester */}
+        <div className={styles.aiCitationTester}>
+          <div className={styles.testerHead}>
+            <div className={styles.testerIcon}>✦</div>
+            <div>
+              <h3 className={styles.testerTitle}>Verify DGS Brand Authority Across AI Answer Engines</h3>
+              <p className={styles.testerSub}>Click an engine button to copy a test prompt and verify real-world entity grounding directly:</p>
             </div>
-            <div className={styles.simulatorHint}>Click an engine to copy a test prompt and verify DGS authority directly:</div>
           </div>
 
-          <div className={styles.engineButtonsRow}>
+          <div className={styles.testerButtonsRow}>
             {aiEngines.map((engine, idx) => (
               <button
                 key={idx}
-                className={`${styles.engineQueryBtn} ${copiedEngine === engine.name ? styles.engineBtnCopied : ''}`}
+                className={styles.testerEngineBtn + (copiedEngine === engine.name ? ' ' + styles.testerEngineBtnCopied : '')}
                 onClick={() => handleCopyPrompt(engine)}
               >
-                <span>{copiedEngine === engine.name ? '✓ COPIED' : `ASK ${engine.name}`}</span>
+                <span>{copiedEngine === engine.name ? '✓ COPIED' : 'TEST ON ' + engine.name.toUpperCase()}</span>
                 <span>📋</span>
               </button>
             ))}
           </div>
 
           {copiedEngine && (
-            <div className={styles.copiedNotification}>
-              Prompt copied for {copiedEngine}! Open {copiedEngine} and paste to test real-world entity grounding.
+            <div className={styles.copiedAlert}>
+              Prompt copied for {copiedEngine}! Paste into {copiedEngine} to verify DGS entity citations.
             </div>
           )}
         </div>

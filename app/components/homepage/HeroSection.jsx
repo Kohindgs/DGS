@@ -1,157 +1,129 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import styles from './homepage.module.css';
 import ThreeDgsCanvas from './ThreeDgsCanvas';
 
 export default function HeroSection() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
     <section className={styles.heroSection} id="home-hero">
-      {/* 1. Interactive 3D WebGL Centerpiece Layer */}
+      {/* 1. Signature 3D Growth Prism Layer */}
       <ThreeDgsCanvas />
 
-      {/* 2. Giant Architectural Background Typography Watermark */}
-      <div 
-        className={styles.heroWatermark}
-        style={{
-          transform: `translate3d(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px, 0)`,
-        }}
-        aria-hidden="true"
-      >
+      {/* 2. Architectural Watermark */}
+      <div className={styles.heroWatermark} aria-hidden="true">
         D&apos;GENIUS
       </div>
 
-      {/* 3. Ambient Atmospheric Grid & Depth Grain */}
-      <div className={styles.heroGridOverlay} aria-hidden="true"></div>
+      {/* 3. Controlled Background Gradient Backdrop (Ensures WCAG AAA Readability) */}
+      <div className={styles.heroBackdropGradient} aria-hidden="true"></div>
 
       {/* 4. Foreground Content Container */}
-      <div className="dgs-container-wide" style={{ position: 'relative', zIndex: 10 }}>
+      <div className="dgs-container-wide" style={{ position: 'relative', zIndex: 10, width: '100%' }}>
         
-        {/* Spatial HUD Topline */}
-        <div className={styles.heroHudTop}>
-          <div className={styles.hudCoord}>
-            <span className={styles.hudRadarDot}></span>
-            <span>19.0728° N, 72.8359° E • MUMBAI • KHAR WEST</span>
+        {/* Top Studio Identification Bar */}
+        <div className={styles.heroTopBar}>
+          <div className={styles.heroStudioPill}>
+            <span className={styles.studioStatusDot}></span>
+            <span>MUMBAI (KHAR WEST) • DUBAI • EST. 2021</span>
           </div>
-          <div className={styles.hudBadge}>
-            <span>DIGITAL GROWTH & AI STUDIO • EST. 2021</span>
-          </div>
-          <div className={styles.hudStatus}>
-            <span className={styles.hudStatusTag}>200+ BRANDS SCALED</span>
+          <div className={styles.heroTrustBadge}>
+            <span>200+ BRANDS SCALED ON REFERRALS</span>
           </div>
         </div>
 
-        {/* Asymmetric Editorial Hero Core */}
-        <div className={styles.heroMainLayout}>
-          <div className={styles.heroCopyCol}>
+        {/* Main Editorial Hero Layout */}
+        <div className={styles.heroMainGrid}>
+          <div className={styles.heroContentCol}>
             
+            {/* Kicker */}
             <div className={styles.heroKicker}>
-              <span className={styles.heroKickerNumber}>01 //</span>
-              <span className={styles.heroKickerText}>THE NEW FRONTIER OF DIGITAL ACCELERATION</span>
+              <span className={styles.kickerIcon}>✦</span>
+              <span>PREMIUM DIGITAL GROWTH STUDIO</span>
             </div>
 
-            <h1 className={styles.heroSpatialTitle}>
-              <span className={styles.titleLine1}>COGNITIVE AI</span>
-              <span className={styles.titleLine2}>MEETS SPATIAL</span>
-              <span className={styles.titleLine3}>
-                <span className={styles.titleGradientText}>GROWTH.</span>
-              </span>
+            {/* Main H1 Headline */}
+            <h1 className={styles.heroMainTitle}>
+              Full-Service <br />
+              <span className={styles.heroTitleGradient}>Digital Marketing</span> <br />
+              Agency in Mumbai
             </h1>
 
-            <p className={styles.heroEditorialPara}>
-              D’Genius Solutions is a Next-Gen Digital Marketing &amp; AI Studio in Mumbai. We unite Enterprise SEO, Generative Engine Optimization (GEO/AEO), high-performance Next.js engineering, Hollywood-grade AI creative production, and precision performance media into one compounding growth engine.
+            {/* Approved Brand Value Proposition */}
+            <p className={styles.heroDescription}>
+              One connected team uniting <strong>Search Authority (SEO / AEO / GEO)</strong>, high-performance <strong>Next.js web engineering</strong>, cinema-grade <strong>AI creative production</strong>, and <strong>performance marketing</strong> into one compounding growth engine.
             </p>
 
-            {/* Magnetic Interactive CTA Deck */}
-            <div className={styles.heroCtaDeck}>
-              <a href="#audit-form" className={styles.btnSpatialPrimary}>
-                <span className={styles.btnGlowSweep}></span>
-                <span className={styles.btnLabel}>INITIATE GROWTH AUDIT</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+            {/* Action Buttons */}
+            <div className={styles.heroActionsRow}>
+              <a href="#audit-form" className={styles.btnPrimary}>
+                <span>REQUEST GROWTH AUDIT</span>
+                <span className={styles.btnArrow}>→</span>
               </a>
 
-              <a href="#services" className={styles.btnSpatialGhost}>
+              <a href="#services" className={styles.btnSecondary}>
                 <span>EXPLORE CAPABILITIES</span>
-                <span className={styles.btnGhostBorder}></span>
+                <span className={styles.btnArrowDown}>↓</span>
               </a>
             </div>
 
-            {/* Spatial Capability Rail Anchors */}
-            <div className={styles.heroCapabilityAnchors}>
-              <a href="#services" className={styles.heroCapItem}>
-                <span className={styles.capDot}></span>
-                <span>SEO &amp; AEO Authority</span>
+            {/* Quick Capability Anchors */}
+            <div className={styles.heroCapPills}>
+              <a href="#services" className={styles.capPill}>
+                <span className={styles.capPillDot}></span>
+                <span>SEO &amp; AI Discovery</span>
               </a>
-              <a href="#ai-studio" className={styles.heroCapItem}>
-                <span className={styles.capDot}></span>
+              <a href="#ai-studio" className={styles.capPill}>
+                <span className={styles.capPillDot}></span>
                 <span>Generative AI Studio</span>
               </a>
-              <a href="#portfolio" className={styles.heroCapItem}>
-                <span className={styles.capDot}></span>
-                <span>Spatial Brand Identity</span>
+              <a href="#portfolio" className={styles.capPill}>
+                <span className={styles.capPillDot}></span>
+                <span>Creative Portfolio</span>
               </a>
-              <a href="#strategy" className={styles.heroCapItem}>
-                <span className={styles.capDot}></span>
-                <span>Connected Growth</span>
+              <a href="#case-studies" className={styles.capPill}>
+                <span className={styles.capPillDot}></span>
+                <span>Case Studies</span>
               </a>
             </div>
 
           </div>
 
-          {/* Right Spatial Depth Anchor with Live Diagnostic Telemetry */}
-          <div className={styles.heroTelemetryCol}>
-            <div className={styles.telemetryCard}>
-              <div className={styles.telemetryHeader}>
-                <span className={styles.telemetryTag}>SYSTEM DIAGNOSTIC</span>
-                <span className={styles.telemetryPulse}>LIVE</span>
-              </div>
-              <div className={styles.telemetryDivider}></div>
-              
-              <div className={styles.telemetryMetric}>
-                <div className={styles.telemetryLabel}>CAPABILITY CORE</div>
-                <div className={styles.telemetryValue}>Search + AI + Web + Performance</div>
+          {/* Right Column: Executive Summary & Trust Anchor */}
+          <div className={styles.heroSummaryCol}>
+            <div className={styles.heroSummaryCard}>
+              <div className={styles.summaryCardHeader}>
+                <span className={styles.summaryCardTag}>STUDIO PILLARS</span>
+                <span className={styles.summaryCardClutch}>★★★★★ 5.0 Clutch</span>
               </div>
 
-              <div className={styles.telemetryMetric}>
-                <div className={styles.telemetryLabel}>FOUNDING LEADERSHIP</div>
-                <div className={styles.telemetryValue}>34+ Combined Yrs · Kohin &amp; Sneha Bellara</div>
+              <div className={styles.summaryDivider}></div>
+
+              <div className={styles.summaryItem}>
+                <div className={styles.summaryLabel}>FOUNDING LEADERSHIP</div>
+                <div className={styles.summaryValue}>Sneha &amp; Kohin Bellara (34+ Combined Yrs)</div>
               </div>
 
-              <div className={styles.telemetryMetric}>
-                <div className={styles.telemetryLabel}>GROWTH PHILOSOPHY</div>
-                <div className={styles.telemetryValue}>100% Transparency · Pure Word-of-Mouth</div>
+              <div className={styles.summaryItem}>
+                <div className={styles.summaryLabel}>OPERATING MODEL</div>
+                <div className={styles.summaryValue}>100% Transparency • Senior Strategic Pods</div>
               </div>
 
-              <div className={styles.telemetryFooter}>
-                <span className={styles.telemetryFootCoord}>KHAR W, MUMBAI // DUBAI UAE</span>
+              <div className={styles.summaryItem}>
+                <div className={styles.summaryLabel}>SEARCH &amp; AI MASTERY</div>
+                <div className={styles.summaryValue}>Traditional SEO + Perplexity / ChatGPT AEO</div>
+              </div>
+
+              <div className={styles.summaryCardFooter}>
+                <a href="#clients" className={styles.summaryLink}>
+                  <span>Trusted by Kotak, Eureka Forbes, Novotel &amp; 200+ brands</span>
+                  <span>→</span>
+                </a>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Bottom Spatial Navigation Cue */}
-        <div className={styles.heroBottomBar}>
-          <a href="#clients" className={styles.heroScrollCue}>
-            <span className={styles.scrollCueLine}></span>
-            <span className={styles.scrollCueText}>SCROLL TO EXPLORE SPATIAL SYSTEM</span>
-            <span className={styles.scrollCueIcon}>↓</span>
-          </a>
         </div>
 
       </div>

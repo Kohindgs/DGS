@@ -1,68 +1,62 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import styles from './homepage.module.css';
 import { servicesData } from '../../data/homepageData';
 
 export default function ServicesSection() {
-  const [hoveredIdx, setHoveredIdx] = useState(null);
-
   return (
-    <section className={`${styles.servicesSection} dgs-section`} id="services">
+    <section className={styles.servicesSection + ' dgs-section'} id="services">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Comprehensive Growth Capabilities</span>
+            <span>Comprehensive Capabilities</span>
           </div>
           <h2 className={styles.titleMain}>
-            Connected Growth <span className={styles.titleGradient}>Ecosystem</span>
+            One Team for <span className={styles.titleGradient}>Search, Web &amp; AI Production</span>
           </h2>
           <p className={styles.subtitle}>
-            A unified suite of digital capabilities engineered to eliminate vendor friction and compound brand equity across traditional search, autonomous AI engines, and high-conversion funnels.
+            A connected growth system engineered to eliminate vendor friction and compound brand equity across traditional search, autonomous AI engines, and high-conversion funnels.
           </p>
         </div>
 
-        {/* 6-Pillar Interactive Service Grid */}
-        <div className={styles.servicesGrid6}>
-          {servicesData.map((svc, idx) => {
-            const isHovered = hoveredIdx === idx;
-            return (
-              <div 
-                key={svc.id} 
-                className={`${styles.serviceModularCard} ${isHovered ? styles.serviceCardActive : ''}`}
-                onMouseEnter={() => setHoveredIdx(idx)}
-                onMouseLeave={() => setHoveredIdx(null)}
-              >
-                <div className={styles.serviceCardTop}>
-                  <span className={styles.serviceModularNum}>{svc.number}</span>
-                  <span className={styles.serviceModularBadge}>{svc.badge}</span>
-                </div>
+        {/* 4 Pillars Grid */}
+        <div className={styles.servicesPillarsGrid}>
+          {servicesData.map((svc) => (
+            <div key={svc.id} className={styles.servicePillarCard}>
+              <div className={styles.servicePillarTop}>
+                <span className={styles.serviceNum}>{svc.number}</span>
+                <span className={styles.serviceBadgeTag}>{svc.badge}</span>
+              </div>
 
-                <h3 className={styles.serviceModularTitle}>{svc.title}</h3>
-                <div className={styles.serviceModularSub}>{svc.subtitle}</div>
-                <p className={styles.serviceModularDesc}>{svc.description}</p>
+              <h3 className={styles.serviceTitle}>{svc.title}</h3>
+              <div className={styles.serviceSubtitle}>{svc.subtitle}</div>
+              <p className={styles.serviceDesc}>{svc.description}</p>
 
-                <div className={styles.serviceCapList}>
-                  <div className={styles.serviceCapLabel}>KEY CAPABILITIES:</div>
+              <div className={styles.serviceCapListWrap}>
+                <div className={styles.serviceCapHeader}>CORE DELIVERABLES:</div>
+                <ul className={styles.serviceCapUl}>
                   {svc.capabilities.map((cap, cIdx) => (
-                    <div key={cIdx} className={styles.serviceCapItem}>
-                      <span className={styles.serviceCapDot}>✦</span>
+                    <li key={cIdx} className={styles.serviceCapLi}>
+                      <span className={styles.serviceCheck}>✦</span>
                       <span>{cap}</span>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
+              </div>
 
-                <Link href={svc.link} className={styles.serviceActionBtn}>
-                  <span>EXPLORE DISCIPLINE</span>
-                  <span className={styles.serviceActionArrow}>→</span>
+              <div className={styles.servicePillarFooter}>
+                <Link href={svc.link} className={styles.servicePillarLink}>
+                  <span>Explore Discipline</span>
+                  <span>→</span>
                 </Link>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
 
       </div>

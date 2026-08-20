@@ -9,7 +9,7 @@ export default function StrategySection() {
   const activeStep = operatingApproachSteps[activeStepIdx] || operatingApproachSteps[0];
 
   return (
-    <section className={`${styles.strategySection} dgs-section`} id="strategy">
+    <section className={styles.strategySection + ' dgs-section'} id="strategy">
       <div className="dgs-container-wide">
         
         {/* Section Header */}
@@ -22,84 +22,62 @@ export default function StrategySection() {
             The Connected <span className={styles.titleGradient}>Growth Protocol</span>
           </h2>
           <p className={styles.subtitle}>
-            A rigorous 4-phase operating framework that aligns technical search architecture, full-stack web development, and AI creative velocity toward measurable brand equity.
+            A rigorous 4-phase operating framework that aligns technical search architecture, full-stack web engineering, and AI creative velocity toward measurable brand equity.
           </p>
         </div>
 
-        {/* Sticky Narrative Dual-Stage System */}
-        <div className={styles.stickyNarrativeGrid}>
+        {/* Narrative Flow Grid */}
+        <div className={styles.strategyFlowGrid}>
           
-          {/* Left: Sticky Holographic Diagnostic Terminal */}
-          <div className={styles.stickyStageCol}>
-            <div className={styles.diagnosticTerminal}>
-              <div className={styles.terminalHeader}>
-                <div className={styles.terminalWindowDots}>
-                  <span></span><span></span><span></span>
-                </div>
-                <div className={styles.terminalTitle}>PROTOCOL DIAGNOSTIC // {activeStep.phase}</div>
-                <div className={styles.terminalLivePill}>ACTIVE</div>
-              </div>
+          {/* Left: Active Phase Detailed Focus */}
+          <div className={styles.strategyDetailCol}>
+            <div className={styles.strategyFocusCard}>
+              <div className={styles.strategyFocusTag}>{activeStep.phase} // STRATEGIC FOCUS</div>
+              <h3 className={styles.strategyFocusTitle}>{activeStep.title}</h3>
+              <div className={styles.strategyFocusSub}>{activeStep.subtitle}</div>
+              <p className={styles.strategyFocusDesc}>{activeStep.description}</p>
 
-              <div className={styles.terminalBody}>
-                <div className={styles.terminalPhaseNum}>STAGE 0{activeStepIdx + 1}</div>
-                <h3 className={styles.terminalPhaseTitle}>{activeStep.title}</h3>
-                <div className={styles.terminalSub}>{activeStep.subtitle}</div>
-
-                <div className={styles.terminalDeliverables}>
-                  <div className={styles.terminalSectionHeader}>ACTIVE DELIVERABLES:</div>
-                  {activeStep.deliverables.map((item, dIdx) => (
-                    <div key={dIdx} className={styles.terminalDelItem}>
-                      <span className={styles.terminalDelDot}>❯</span>
-                      <span>{item}</span>
+              <div className={styles.strategyDeliverablesBox}>
+                <div className={styles.strategyDelivLabel}>PHASE DELIVERABLES:</div>
+                <div className={styles.strategyDelivList}>
+                  {activeStep.deliverables.map((del, dIdx) => (
+                    <div key={dIdx} className={styles.strategyDelivItem}>
+                      <span className={styles.strategyDelivDot}>✓</span>
+                      <span>{del}</span>
                     </div>
                   ))}
                 </div>
+              </div>
 
-                <div className={styles.terminalTelemetryGrid}>
-                  <div className={styles.telemetryBox}>
-                    <div className={styles.telemetryBoxLabel}>NODE VELOCITY</div>
-                    <div className={styles.telemetryBoxVal}>{activeStep.telemetry.nodesFound}</div>
-                  </div>
-                  <div className={styles.telemetryBox}>
-                    <div className={styles.telemetryBoxLabel}>SYSTEM HEALTH</div>
-                    <div className={styles.telemetryBoxVal}>{activeStep.telemetry.healthScore}</div>
-                  </div>
-                </div>
-
-                <div className={styles.terminalFootStatus}>
-                  STATUS: <span>{activeStep.telemetry.status}</span>
-                </div>
+              <div className={styles.strategyCardAction}>
+                <a href="#audit-form" className={styles.btnPrimary}>
+                  <span>DISCUSS YOUR PHASES</span>
+                  <span>→</span>
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Right: Scrollable Step Cards Track */}
-          <div className={styles.stepsTrackCol}>
+          {/* Right: Step Selector Track */}
+          <div className={styles.strategyStepsCol}>
             {operatingApproachSteps.map((step, idx) => {
               const isActive = activeStepIdx === idx;
               return (
                 <div
                   key={step.phase}
-                  className={`${styles.narrativeStepCard} ${isActive ? styles.narrativeStepCardActive : ''}`}
+                  className={styles.strategyStepItem + (isActive ? ' ' + styles.strategyStepItemActive : '')}
                   onClick={() => setActiveStepIdx(idx)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === 'Enter') setActiveStepIdx(idx); }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveStepIdx(idx); }}
                 >
-                  <div className={styles.stepCardHeader}>
-                    <span className={styles.stepCardPhaseTag}>{step.phase}</span>
-                    <span className={styles.stepCardIndicator}>{isActive ? '● ACTIVE' : 'CLICK TO VIEW'}</span>
+                  <div className={styles.stepItemNumber}>0{idx + 1}</div>
+                  <div className={styles.stepItemContent}>
+                    <div className={styles.stepItemPhase}>{step.phase}</div>
+                    <h4 className={styles.stepItemTitle}>{step.title}</h4>
+                    <p className={styles.stepItemSub}>{step.subtitle}</p>
                   </div>
-
-                  <h3 className={styles.stepCardTitle}>{step.title}</h3>
-                  <div className={styles.stepCardSub}>{step.subtitle}</div>
-                  <p className={styles.stepCardDesc}>{step.description}</p>
-
-                  <div className={styles.stepCardDeliverables}>
-                    {step.deliverables.map((del, dIdx) => (
-                      <span key={dIdx} className={styles.stepMiniTag}>✓ {del}</span>
-                    ))}
-                  </div>
+                  <div className={styles.stepItemIndicator}>{isActive ? '●' : '→'}</div>
                 </div>
               );
             })}
