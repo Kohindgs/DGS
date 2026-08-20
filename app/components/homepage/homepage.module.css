@@ -2688,3 +2688,557 @@
   display: flex;
   justify-content: center;
 }
+
+/* ==========================================================================
+   SUPPLEMENTARY SECTION STYLES & COMPLETE GRID COVERAGE
+   ========================================================================== */
+
+/* Logo Wall Grid & Cards */
+.logoWallSection {
+  position: relative;
+  padding: clamp(60px, 8vw, 100px) 0;
+  background-color: #06080e;
+}
+
+.logoFilterTabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.logoFilterBtn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoFilterBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.logoFilterBtnActive {
+  background: #00d2b4 !important;
+  color: #06080e !important;
+  border-color: #00d2b4 !important;
+  font-weight: 700 !important;
+}
+
+.logoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .logoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+.logoCard {
+  background: rgba(13, 18, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.logoCard:hover {
+  background: rgba(20, 28, 48, 0.9);
+  border-color: rgba(0, 210, 180, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.logoImg {
+  max-height: 44px;
+  max-width: 130px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(1) contrast(1) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  transition: transform 0.2s ease;
+}
+
+.logoCard:hover .logoImg {
+  transform: scale(1.05);
+}
+
+.logoLabelText {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+  display: block;
+}
+
+/* Awards Section Styles */
+.awardImgWrap {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.awardImg {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.awardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.awardCategory {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.awardHonorTag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  margin-left: auto;
+}
+
+.clutchTextBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Case Studies Grid */
+.casesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: clamp(24px, 3.5vw, 36px);
+  margin-bottom: clamp(48px, 6vw, 64px);
+}
+
+.caseEditorialCard {
+  background: rgba(13, 18, 30, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.caseEditorialCard:hover {
+  background: rgba(18, 25, 42, 0.95);
+  border-color: rgba(0, 210, 180, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.caseCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.caseLogoWrap {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.caseLogoImg {
+  max-height: 36px;
+  max-width: 120px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.caseIndustryBadge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.caseHeadline {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+
+.caseSummary {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 24px;
+}
+
+.caseDeliverablesBox {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.deliverablesTitle {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+.deliverablesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.deliverableItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.deliverableCheck {
+  color: #00d2b4;
+  font-weight: 700;
+}
+
+.caseServicesWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 18px;
+}
+
+.caseServiceTag {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.enterpriseStrip {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.enterpriseStripLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #00d2b4;
+}
+
+.enterpriseStripClients {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+.enterpriseStripClients span {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Testimonials / References Styles */
+.referencesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(24px, 3.5vw, 36px);
+  margin-bottom: clamp(48px, 6vw, 64px);
+}
+
+.referenceCard {
+  background: rgba(13, 18, 30, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.referenceCard:hover {
+  background: rgba(18, 25, 42, 0.95);
+  border-color: rgba(0, 210, 180, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.referenceTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.referenceBadge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #00d2b4;
+  background: rgba(0, 210, 180, 0.1);
+  border: 1px solid rgba(0, 210, 180, 0.25);
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+.referenceDomain {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.referenceHighlight {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+.referenceAuthorBox {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+  margin-bottom: 12px;
+}
+
+.referenceAuthorName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.referenceAuthorRole {
+  font-size: 0.84rem;
+  color: #38bdf8;
+  font-weight: 500;
+}
+
+.referenceFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+.referenceFootDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00d2b4;
+}
+
+.clutchProofAnchor {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.clutchBadgeBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.clutchStars {
+  color: #f59e0b;
+  font-size: 1.1rem;
+}
+
+.clutchScoreText {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.clutchDescText {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Why DGS & Founders Heritage */
+.founderHeritageContent {
+  flex: 1;
+}
+
+.heritageEyebrow {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #00d2b4;
+  margin-bottom: 12px;
+}
+
+.heritageTitle {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+
+.heritageText {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 24px;
+}
+
+.heritageStatsRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 32px);
+  flex-wrap: wrap;
+}
+
+.heritageStat {
+  display: flex;
+  flex-direction: column;
+}
+
+.heritageStatNum {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #00d2b4;
+  line-height: 1;
+}
+
+.heritageStatLabel {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 4px;
+}
+
+.heritageStatDivider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.heritageCtaWrap {
+  display: flex;
+  align-items: center;
+}
+
+/* Audit CTA Section Form */
+.auditLeftCol {
+  flex: 1;
+}
+
+.auditRightCol {
+  flex: 1.2;
+}
+
+.auditFormElement {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formInput, .formSelect, .formTextarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.formInput:focus, .formSelect:focus, .formTextarea:focus {
+  outline: none;
+  border-color: #00d2b4;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 16px rgba(0, 210, 180, 0.2);
+}
+
+.formGroupFull {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
