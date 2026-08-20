@@ -1,30 +1,45 @@
 import fs from 'fs';
 import path from 'path';
+import HomepageClient from './components/homepage/HomepageClient';
 
 const dataDir = path.join(process.cwd(), 'app/_wp_data');
-const links = fs.readFileSync(path.join(dataDir, 'links.html'), 'utf8');
-const styles = fs.readFileSync(path.join(dataDir, 'styles.html'), 'utf8');
-const body = fs.readFileSync(path.join(dataDir, 'body.html'), 'utf8');
-const { title, desc, canonical, bodyClass, schemas } = JSON.parse(
-  fs.readFileSync(path.join(dataDir, 'meta.json'), 'utf8')
-);
+let pageMeta = {
+  title: "Digital Marketing Agency in Mumbai | D'Genius Solutions",
+  desc: "D'Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
+  canonical: "/",
+  schemas: []
+};
+
+try {
+  const metaRaw = JSON.parse(fs.readFileSync(path.join(dataDir, 'meta.json'), 'utf8'));
+  pageMeta.title = metaRaw.title || pageMeta.title;
+  pageMeta.desc = metaRaw.desc || pageMeta.desc;
+  pageMeta.canonical = metaRaw.canonical || pageMeta.canonical;
+  pageMeta.schemas = metaRaw.schemas || [];
+} catch (e) {
+  // fallback
+}
 
 export const metadata = {
-  title,
-  description: desc,
-  alternates: { canonical },
+  title: pageMeta.title,
+  description: pageMeta.desc,
+  alternates: { canonical: pageMeta.canonical },
   robots: { index: true, follow: true },
 };
 
 export default function Page() {
   return (
     <>
-      {schemas.map((s, i) => (
+      <link 
+        rel="preload" 
+        href="https://www.dgeniussolutions.com/wp-content/uploads/2026/01/thoughtful-logo-concept-featuring-ai-meaningful-way.webp" 
+        as="image" 
+        fetchPriority="high" 
+      />
+      {pageMeta.schemas.map((s, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: s }} />
       ))}
-      <div dangerouslySetInnerHTML={{ __html: links }} />
-      <div dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className={bodyClass} dangerouslySetInnerHTML={{ __html: body }} />
+      <HomepageClient />
     </>
   );
 }
