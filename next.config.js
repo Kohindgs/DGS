@@ -10,12 +10,17 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.dgeniussolutions.com',
-        pathname: '/wp-content/uploads/**',
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'dgeniussolutions.com',
-        pathname: '/wp-content/uploads/**',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.simpleicons.org',
+        pathname: '/**',
       },
     ],
   },
