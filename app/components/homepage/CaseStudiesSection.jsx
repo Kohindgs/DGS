@@ -1,88 +1,76 @@
+'use client';
+
 import React from 'react';
 import styles from './homepage.module.css';
-
-const featuredCases = [
-  {
-    client: 'TheWorldGrad',
-    category: 'SEO • Higher Education',
-    summary: 'Overseas education platform helping thousands of students study in Australia, the UK, and the USA. DGS re-architected their organic discovery framework from ground up.',
-    metrics: [
-      { val: '+95%', label: 'Keyword Growth' },
-      { val: '2.5x', label: 'Domain Authority' },
-      { val: '6x', label: 'Organic Traffic' }
-    ]
-  },
-  {
-    client: 'Weavings Manpower',
-    category: 'SEO + Web Architecture + Performance',
-    summary: 'National staffing powerhouse providing contract staffing and payroll outsourcing across 100+ cities in India. Dominating generic and answer-engine search queries.',
-    metrics: [
-      { val: '17.4K', label: 'Organic Clicks' },
-      { val: '1.82M', label: 'Impressions' },
-      { val: '#1', label: 'AI Answer Ranking' }
-    ]
-  }
-];
-
-const miniCases = [
-  { brand: 'Kotak Mahindra Bank', service: 'Web Architecture & AMC' },
-  { brand: 'Eureka Forbes', service: 'Retail Creative Strategy' },
-  { brand: 'Onida', service: 'Full UI/UX Web Platform' },
-  { brand: 'Pantaloons ABFRL', service: '360° Creative & Social Media' },
-  { brand: 'DSP Mutual Fund', service: 'AI Production & Video' },
-  { brand: 'Home Credit', service: 'Integrated Campaign Rollouts' },
-  { brand: 'Saint Gobain', service: 'Digital Engagement' },
-  { brand: 'Aditya Birla Education', service: 'Search & Lead Growth' }
-];
+import { caseStudiesData } from '../../data/homepageData';
 
 export default function CaseStudiesSection() {
   return (
     <section className={`${styles.caseStudiesSection} dgs-section`} id="case-studies">
-      <div className="dgs-container">
+      <div className="dgs-container-wide">
         
+        {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Proven Business Impact</span>
+            <span>Enterprise Case Studies</span>
           </div>
           <h2 className={styles.titleMain}>
-            SEO, Website & <span className={styles.titleGradient}>Growth Case Studies</span>
+            Architected For <span className={styles.titleGradient}>Category Leadership</span>
           </h2>
           <p className={styles.subtitle}>
-            Real verified data from enterprise and challenger brands where search visibility, technical architecture, and creative execution worked in unison.
+            A deep-dive into how our connected search architectures, web engineering, and high-velocity creative engines scale enterprise brands.
           </p>
         </div>
 
-        {/* Featured Case Cards */}
-        <div className={styles.caseStudiesGrid}>
-          {featuredCases.map((c, idx) => (
-            <div key={idx} className={styles.caseStudyCard}>
-              <div className={styles.caseStudyHeader}>
-                <span className={styles.caseStudyTag}>{c.category}</span>
+        {/* Case Studies Editorial Grid */}
+        <div className={styles.casesGrid}>
+          {caseStudiesData.map((study) => (
+            <div key={study.id} className={styles.caseEditorialCard}>
+              <div className={styles.caseCardHeader}>
+                <div className={styles.caseLogoWrap}>
+                  <img 
+                    src={study.logo} 
+                    alt={`${study.client} logo`} 
+                    className={styles.caseLogoImg}
+                    loading="lazy"
+                  />
+                </div>
+                <div className={styles.caseIndustryBadge}>{study.industry}</div>
               </div>
-              <h3 className={styles.caseStudyClient}>{c.client}</h3>
-              <p className={styles.caseStudySummary}>{c.summary}</p>
-              
-              <div className={styles.metricsGrid}>
-                {c.metrics.map((m, mIdx) => (
-                  <div key={mIdx} className={styles.metricBox}>
-                    <div className={styles.metricValue}>{m.val}</div>
-                    <div className={styles.metricLabel}>{m.label}</div>
-                  </div>
+
+              <h3 className={styles.caseHeadline}>{study.headline}</h3>
+              <p className={styles.caseSummary}>{study.summary}</p>
+
+              <div className={styles.caseDeliverablesBox}>
+                <div className={styles.deliverablesTitle}>CORE SYSTEMS DEPLOYED:</div>
+                <ul className={styles.deliverablesList}>
+                  {study.deliverables.map((del, dIdx) => (
+                    <li key={dIdx} className={styles.deliverableItem}>
+                      <span className={styles.deliverableCheck}>✓</span>
+                      <span>{del}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className={styles.caseServicesWrap}>
+                {study.services.map((svc, sIdx) => (
+                  <span key={sIdx} className={styles.caseServiceTag}>{svc}</span>
                 ))}
               </div>
             </div>
           ))}
         </div>
 
-        {/* Secondary Case Grid */}
-        <div className={styles.miniCaseGrid}>
-          {miniCases.map((item, idx) => (
-            <div key={idx} className={styles.miniCaseCard}>
-              <span className={styles.miniCaseService}>{item.service}</span>
-              <span className={styles.miniCaseBrand}>{item.brand}</span>
-            </div>
-          ))}
+        {/* Secondary Enterprise Proof Strip */}
+        <div className={styles.enterpriseStrip}>
+          <div className={styles.enterpriseStripLabel}>
+            <span>EXTENDED CLIENT PARTNERSHIPS</span>
+          </div>
+          <div className={styles.enterpriseStripClients}>
+            <span>Saint Gobain</span> • <span>LG Electronics</span> • <span>Novotel</span> • <span>Club Med</span> • <span>Druva</span> • <span>Raymond</span> • <span>Aditya Birla Education</span> • <span>Hanwha Techwin</span> • <span>Planet Smart City</span>
+          </div>
         </div>
 
       </div>

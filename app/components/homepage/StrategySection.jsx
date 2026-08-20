@@ -1,66 +1,108 @@
-import React from 'react';
-import styles from './homepage.module.css';
+'use client';
 
-const growthPhases = [
-  {
-    phase: 'Phase 01',
-    title: 'Diagnostic Audit & Entity Mapping',
-    body: 'We dissect your technical web infrastructure, brand entity signals in knowledge graphs, search rankings, organic share-of-voice, and creative bottlenecks to pinpoint high-leverage growth opportunities.'
-  },
-  {
-    phase: 'Phase 02',
-    title: 'Architectural Modeling & Content Blueprints',
-    body: 'We architect modern Next.js experiences, structured JSON-LD schemas, search intent clusters, and conversion funnels tailored to how both algorithms and humans evaluate authority.'
-  },
-  {
-    phase: 'Phase 03',
-    title: 'Omnichannel Activation & AI Production',
-    body: 'We launch high-velocity search campaigns, generative AI video assets, festive moments, and paid performance funnels, continuously measuring click-through and cost-per-acquisition.'
-  },
-  {
-    phase: 'Phase 04',
-    title: 'Algorithmic Calibration & Scale',
-    body: 'We continuously calibrate content for Google AI Overviews, Perplexity answers, and LLM citations while scaling profitable performance media channels.'
-  }
-];
+import React, { useState } from 'react';
+import styles from './homepage.module.css';
+import { operatingApproachSteps } from '../../data/homepageData';
 
 export default function StrategySection() {
+  const [activeStepIdx, setActiveStepIdx] = useState(0);
+  const activeStep = operatingApproachSteps[activeStepIdx] || operatingApproachSteps[0];
+
   return (
     <section className={`${styles.strategySection} dgs-section`} id="strategy">
-      <div className="dgs-container">
+      <div className="dgs-container-wide">
         
-        <div className={styles.strategyGrid}>
+        {/* Section Header */}
+        <div className={styles.sectionHeader}>
+          <div className={styles.eyebrow}>
+            <span className={styles.eyebrowDot}></span>
+            <span>Operating Methodology</span>
+          </div>
+          <h2 className={styles.titleMain}>
+            The Connected <span className={styles.titleGradient}>Growth Protocol</span>
+          </h2>
+          <p className={styles.subtitle}>
+            A rigorous 4-phase operating framework that aligns technical search architecture, full-stack web development, and AI creative velocity toward measurable brand equity.
+          </p>
+        </div>
+
+        {/* Sticky Narrative Dual-Stage System */}
+        <div className={styles.stickyNarrativeGrid}>
           
-          {/* Left Sticky Column */}
-          <div className={styles.strategyStickyCol}>
-            <div className={styles.eyebrow}>
-              <span className={styles.eyebrowDot}></span>
-              <span>Our Operating Approach</span>
+          {/* Left: Sticky Holographic Diagnostic Terminal */}
+          <div className={styles.stickyStageCol}>
+            <div className={styles.diagnosticTerminal}>
+              <div className={styles.terminalHeader}>
+                <div className={styles.terminalWindowDots}>
+                  <span></span><span></span><span></span>
+                </div>
+                <div className={styles.terminalTitle}>PROTOCOL DIAGNOSTIC // {activeStep.phase}</div>
+                <div className={styles.terminalLivePill}>ACTIVE</div>
+              </div>
+
+              <div className={styles.terminalBody}>
+                <div className={styles.terminalPhaseNum}>STAGE 0{activeStepIdx + 1}</div>
+                <h3 className={styles.terminalPhaseTitle}>{activeStep.title}</h3>
+                <div className={styles.terminalSub}>{activeStep.subtitle}</div>
+
+                <div className={styles.terminalDeliverables}>
+                  <div className={styles.terminalSectionHeader}>ACTIVE DELIVERABLES:</div>
+                  {activeStep.deliverables.map((item, dIdx) => (
+                    <div key={dIdx} className={styles.terminalDelItem}>
+                      <span className={styles.terminalDelDot}>❯</span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className={styles.terminalTelemetryGrid}>
+                  <div className={styles.telemetryBox}>
+                    <div className={styles.telemetryBoxLabel}>NODE VELOCITY</div>
+                    <div className={styles.telemetryBoxVal}>{activeStep.telemetry.nodesFound}</div>
+                  </div>
+                  <div className={styles.telemetryBox}>
+                    <div className={styles.telemetryBoxLabel}>SYSTEM HEALTH</div>
+                    <div className={styles.telemetryBoxVal}>{activeStep.telemetry.healthScore}</div>
+                  </div>
+                </div>
+
+                <div className={styles.terminalFootStatus}>
+                  STATUS: <span>{activeStep.telemetry.status}</span>
+                </div>
+              </div>
             </div>
-            <h2 className={styles.titleMain}>
-              The DGS Connected <br />
-              <span className={styles.titleGradient}>Growth Protocol</span>
-            </h2>
-            <p className={styles.subtitle} style={{ marginBottom: '32px' }}>
-              We eliminate the fragmentation between creative agencies, tech developers, and search specialists by executing through a unified 4-phase operating framework.
-            </p>
-            <a href="#audit-form" className={styles.btnPrimary}>
-              <span>Start Growth Diagnosis</span>
-              <span>→</span>
-            </a>
           </div>
 
-          {/* Right Steps Column */}
-          <div className={styles.strategyStepsCol}>
-            {growthPhases.map((phase, idx) => (
-              <div key={idx} className={styles.strategyStepCard}>
-                <div className={styles.stepHeaderRow}>
-                  <span className={styles.phaseTag}>{phase.phase}</span>
+          {/* Right: Scrollable Step Cards Track */}
+          <div className={styles.stepsTrackCol}>
+            {operatingApproachSteps.map((step, idx) => {
+              const isActive = activeStepIdx === idx;
+              return (
+                <div
+                  key={step.phase}
+                  className={`${styles.narrativeStepCard} ${isActive ? styles.narrativeStepCardActive : ''}`}
+                  onClick={() => setActiveStepIdx(idx)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter') setActiveStepIdx(idx); }}
+                >
+                  <div className={styles.stepCardHeader}>
+                    <span className={styles.stepCardPhaseTag}>{step.phase}</span>
+                    <span className={styles.stepCardIndicator}>{isActive ? '● ACTIVE' : 'CLICK TO VIEW'}</span>
+                  </div>
+
+                  <h3 className={styles.stepCardTitle}>{step.title}</h3>
+                  <div className={styles.stepCardSub}>{step.subtitle}</div>
+                  <p className={styles.stepCardDesc}>{step.description}</p>
+
+                  <div className={styles.stepCardDeliverables}>
+                    {step.deliverables.map((del, dIdx) => (
+                      <span key={dIdx} className={styles.stepMiniTag}>✓ {del}</span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className={styles.stepTitle}>{phase.title}</h3>
-                <p className={styles.stepBody}>{phase.body}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>

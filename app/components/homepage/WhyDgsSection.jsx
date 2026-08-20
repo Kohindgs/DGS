@@ -1,70 +1,74 @@
+'use client';
+
 import React from 'react';
 import styles from './homepage.module.css';
-
-const pillars = [
-  {
-    num: '01',
-    title: 'Strategy First',
-    desc: 'No random tactics or vanity metrics. Every campaign, line of code, and creative asset is anchored in measurable revenue growth.'
-  },
-  {
-    num: '02',
-    title: 'Search Authority',
-    desc: 'Deep mastery of traditional SEO combined with cutting-edge AEO, GEO, and LLM entity positioning to future-proof your discovery.'
-  },
-  {
-    num: '03',
-    title: 'Creative Velocity',
-    desc: 'Generative AI workflows paired with human art direction to produce cinematic videos, 3D assets, and festive posts at unmatched speed.'
-  },
-  {
-    num: '04',
-    title: 'Full-Stack Synergy',
-    desc: 'Strategy, design, code, search, and paid media housed under one roof — eliminating vendor friction and conflicting agendas.'
-  }
-];
+import { whyDgsPillars } from '../../data/homepageData';
 
 export default function WhyDgsSection() {
   return (
     <section className={`${styles.whySection} dgs-section`} id="why-dgs">
-      <div className="dgs-container">
+      <div className="dgs-container-wide">
         
+        {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Why Choose DGS</span>
+            <span>Why Brands Choose DGS</span>
           </div>
           <h2 className={styles.titleMain}>
-            Built For Growth. <br />
-            <span className={styles.titleGradient}>Engineered For Velocity.</span>
+            Built On Transparency. <br />
+            <span className={styles.titleGradient}>Engineered For Compounding ROI.</span>
           </h2>
           <p className={styles.subtitle}>
-            Why forward-thinking enterprises and fast-growing brands partner with D'Genius Solutions.
+            We operate as an extended marketing and engineering pod, eliminating conflicting agency incentives and building enduring digital equity.
           </p>
         </div>
 
-        <div className={styles.whyGrid}>
-          {pillars.map((p, idx) => (
-            <div key={idx} className={styles.whyCard}>
-              <div className={styles.whyNum}>{p.num}</div>
-              <h3 className={styles.whyTitle}>{p.title}</h3>
-              <p className={styles.whyDesc}>{p.desc}</p>
+        {/* 4 Pillars */}
+        <div className={styles.whyPillarsGrid}>
+          {whyDgsPillars.map((p) => (
+            <div key={p.number} className={styles.whyPillarCard}>
+              <div className={styles.whyPillarNum}>{p.number}</div>
+              <h3 className={styles.whyPillarTitle}>{p.title}</h3>
+              <div className={styles.whyPillarTagline}>{p.tagline}</div>
+              <p className={styles.whyPillarDesc}>{p.description}</p>
             </div>
           ))}
         </div>
 
-        {/* Founder & Tribe Story */}
-        <div className={styles.founderBox}>
-          <div className={styles.founderInfo}>
-            <h3 className={styles.founderTitle}>Founded by Sneha & Kohin Bellara in 2021</h3>
-            <p className={styles.founderText}>
-              D'Genius Solutions was founded with a singular conviction: that modern digital growth demands an integrated tribe of creators, tech engineers, and search strategists moving together. Based in Khar West, Mumbai, our team delivers high-impact marketing across India, Dubai, and global markets.
+        {/* Authentic Founder & Studio Heritage Spotlight */}
+        <div className={styles.founderHeritageBox}>
+          <div className={styles.founderHeritageContent}>
+            <div className={styles.heritageEyebrow}>STUDIO HERITAGE • EST. 2021</div>
+            <h3 className={styles.heritageTitle}>Founded by Sneha &amp; Kohin Bellara</h3>
+            <p className={styles.heritageText}>
+              After witnessing years of broken promises and fragmented vendor silos in traditional agencies, Sneha and Kohin founded D&apos;Genius Solutions on a radical principle: <strong>100% operational transparency and partnership</strong>. With 34+ years of combined executive experience across animation production, brand strategy, search architecture, and performance engineering, they have scaled 200+ brands entirely through client references and word-of-mouth.
             </p>
+
+            <div className={styles.heritageStatsRow}>
+              <div className={styles.heritageStat}>
+                <div className={styles.heritageStatNum}>34+</div>
+                <div className={styles.heritageStatLabel}>Combined Yrs Experience</div>
+              </div>
+              <div className={styles.heritageStatDivider}></div>
+              <div className={styles.heritageStat}>
+                <div className={styles.heritageStatNum}>200+</div>
+                <div className={styles.heritageStatLabel}>Brands Grown on Referrals</div>
+              </div>
+              <div className={styles.heritageStatDivider}></div>
+              <div className={styles.heritageStat}>
+                <div className={styles.heritageStatNum}>100%</div>
+                <div className={styles.heritageStatLabel}>Operational Transparency</div>
+              </div>
+            </div>
           </div>
-          <a href="#audit-form" className={styles.btnPrimary}>
-            <span>Work With Our Tribe</span>
-            <span>→</span>
-          </a>
+
+          <div className={styles.heritageCtaWrap}>
+            <a href="#audit-form" className={styles.btnSpatialPrimary}>
+              <span>PARTNER WITH OUR STUDIO</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
 
       </div>

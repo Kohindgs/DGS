@@ -7,7 +7,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [talkModalOpen, setTalkModalOpen] = useState(false);
-  const [talkFormSubmitted, setTalkFormSubmitted] = useState(false);
+  const [talkSubmitted, setTalkSubmitted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,16 +29,6 @@ export default function Header() {
     };
   }, []);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const openTalkModal = (e) => {
-    if (e) e.preventDefault();
-    setTalkModalOpen(true);
-    setMobileMenuOpen(false);
-  };
-
   return (
     <>
       <header
@@ -47,30 +37,38 @@ export default function Header() {
           top: 0,
           left: 0,
           right: 0,
-          height: 'var(--header-height, 88px)',
+          height: 'var(--header-height, 84px)',
           zIndex: 9999,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '0 clamp(16px, 4vw, 48px)',
-          backgroundColor: scrolled || mobileMenuOpen ? 'rgba(6, 7, 9, 0.94)' : 'transparent',
-          backdropFilter: scrolled || mobileMenuOpen ? 'blur(18px)' : 'none',
-          WebkitBackdropFilter: scrolled || mobileMenuOpen ? 'blur(18px)' : 'none',
+          backgroundColor: scrolled || mobileMenuOpen ? 'rgba(4, 6, 10, 0.92)' : 'transparent',
+          backdropFilter: scrolled || mobileMenuOpen ? 'blur(20px)' : 'none',
+          WebkitBackdropFilter: scrolled || mobileMenuOpen ? 'blur(20px)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
-          transition: 'all 0.35s ease',
+          transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
-        {/* Brand Logo */}
+        {/* Brand Logo & Studio HUD Dot */}
         <Link 
           href="/" 
-          style={{ display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10001 }}
+          style={{ display: 'flex', alignItems: 'center', gap: '14px', zIndex: 10001, textDecoration: 'none' }}
           onClick={() => setMobileMenuOpen(false)}
         >
           <img
             src="https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp"
             alt="D'Genius Solutions Digital Growth Studio Logo"
-            style={{ height: 'clamp(38px, 4.5vw, 52px)', width: 'auto', objectFit: 'contain' }}
+            style={{ height: 'clamp(36px, 4vw, 48px)', width: 'auto', objectFit: 'contain' }}
           />
+          <div style={{ display: 'none', flexDirection: 'column', gap: '2px' }} className="dgs-logo-hud">
+            <span style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '0.68rem', letterSpacing: '0.12em', color: '#00f5d4', fontWeight: 600 }}>
+              ● LIVE STUDIO
+            </span>
+            <span style={{ fontSize: '0.68rem', color: 'rgba(255, 255, 255, 0.45)', letterSpacing: '0.06em' }}>
+              MUMBAI // DUBAI
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -78,171 +76,171 @@ export default function Header() {
           style={{
             display: 'none',
             alignItems: 'center',
-            gap: 'clamp(18px, 2vw, 32px)',
+            gap: 'clamp(16px, 1.8vw, 28px)',
           }}
           className="dgs-desktop-nav"
         >
-          <Link href="#services" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
+          <Link href="#services" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
             Services
           </Link>
-          <Link href="#clients" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
-            Clients
-          </Link>
-          <Link href="#awards" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
-            Awards
-          </Link>
-          <Link href="#ai-studio" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
+          <Link href="#ai-studio" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
             AI Studio
           </Link>
-          <Link href="#portfolio" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
+          <Link href="#portfolio" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
             Portfolio
           </Link>
-          <Link href="#case-studies" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
-            Results
+          <Link href="#case-studies" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
+            Case Studies
           </Link>
-          <Link href="#testimonials" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
-            Reviews
+          <Link href="#strategy" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
+            Protocol
           </Link>
-          <Link href="#faq" style={{ fontSize: '0.88rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.85)' }}>
+          <Link href="#search-authority" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
+            Search &amp; AEO
+          </Link>
+          <Link href="#clients" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
+            Clients
+          </Link>
+          <Link href="#faq" style={{ fontSize: '0.84rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255, 255, 255, 0.8)' }}>
             FAQ
           </Link>
         </nav>
 
-        {/* Right Action CTAs */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', zIndex: 10001 }}>
+        {/* Right CTAs */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10001 }}>
           <button
-            onClick={openTalkModal}
+            onClick={() => setTalkModalOpen(true)}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              backgroundColor: 'var(--dgs-primary, #FD5C62)',
-              color: '#ffffff',
-              fontFamily: 'var(--font-heading, Space Grotesk, sans-serif)',
-              fontSize: 'clamp(0.78rem, 1vw, 0.88rem)',
-              fontWeight: 700,
+              backgroundColor: '#00f5d4',
+              color: '#04060a',
+              fontFamily: 'var(--font-display, Syne, sans-serif)',
+              fontSize: 'clamp(0.78rem, 0.95vw, 0.86rem)',
+              fontWeight: 800,
               textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              padding: 'clamp(8px, 1.2vw, 12px) clamp(16px, 2vw, 24px)',
+              letterSpacing: '0.06em',
+              padding: '10px 22px',
               borderRadius: '9999px',
               border: 'none',
               cursor: 'pointer',
-              boxShadow: '0 4px 18px rgba(253, 92, 98, 0.35)',
-              transition: 'transform 0.2s ease, background-color 0.2s ease',
+              boxShadow: '0 4px 20px rgba(0, 245, 212, 0.3)',
+              transition: 'all 0.25s ease',
             }}
           >
-            <span>Let's Talk</span>
+            <span>GET AUDIT</span>
             <span>→</span>
           </button>
 
-          {/* Mobile Menu Trigger Button */}
+          {/* Mobile Menu Button */}
           <button
-            onClick={toggleMobileMenu}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Navigation Menu'}
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'rgba(255, 255, 255, 0.06)',
+              background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.15)',
               borderRadius: '50%',
-              width: '44px',
-              height: '44px',
+              width: '42px',
+              height: '42px',
               color: '#ffffff',
               cursor: 'pointer',
             }}
             className="dgs-mobile-menu-btn"
           >
             {mobileMenuOpen ? (
-              <span style={{ fontSize: '20px', lineHeight: 1 }}>✕</span>
+              <span style={{ fontSize: '18px', lineHeight: 1 }}>✕</span>
             ) : (
-              <span style={{ fontSize: '20px', lineHeight: 1 }}>☰</span>
+              <span style={{ fontSize: '18px', lineHeight: 1 }}>☰</span>
             )}
           </button>
         </div>
       </header>
 
-      {/* Full-Screen Mobile Navigation Overlay */}
+      {/* Full-Screen Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div
           style={{
             position: 'fixed',
             inset: 0,
-            backgroundColor: 'rgba(6, 7, 9, 0.98)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
+            backgroundColor: 'rgba(4, 6, 10, 0.98)',
+            backdropFilter: 'blur(28px)',
+            WebkitBackdropFilter: 'blur(28px)',
             zIndex: 9998,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            padding: 'calc(var(--header-height, 88px) + 24px) clamp(20px, 6vw, 48px) 36px',
+            padding: 'calc(var(--header-height, 84px) + 20px) clamp(20px, 6vw, 40px) 36px',
             overflowY: 'auto',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <Link 
               href="#services" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
             >
-              Services & Capabilities
-            </Link>
-            <Link 
-              href="#clients" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
-            >
-              200+ Client Logos
-            </Link>
-            <Link 
-              href="#awards" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
-            >
-              Awards & Recognition
+              Services &amp; Capabilities
             </Link>
             <Link 
               href="#ai-studio" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
             >
               Generative AI Studio
             </Link>
             <Link 
               href="#portfolio" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
             >
               Creative Portfolio
             </Link>
             <Link 
               href="#case-studies" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
             >
-              Growth Case Studies
+              Enterprise Case Studies
             </Link>
             <Link 
-              href="#testimonials" 
+              href="#strategy" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
             >
-              Client Endorsements
+              Operating Protocol
+            </Link>
+            <Link 
+              href="#search-authority" 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
+            >
+              Search &amp; AEO Authority
+            </Link>
+            <Link 
+              href="#clients" 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
+            >
+              200+ Client Logos
             </Link>
             <Link 
               href="#faq" 
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff' }}
+              style={{ fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff' }}
             >
               Frequently Asked Questions
             </Link>
           </div>
 
-          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '24px', marginTop: '32px' }}>
-            <div style={{ color: 'var(--dgs-primary)', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', marginBottom: '8px' }}>
-              Mumbai HQ
+          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '20px', marginTop: '28px' }}>
+            <div style={{ color: '#00f5d4', fontWeight: 700, fontSize: '0.82rem', textTransform: 'uppercase', marginBottom: '6px', fontFamily: 'var(--font-mono)' }}>
+              MUMBAI HEADQUARTERS
             </div>
-            <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: 1.6 }}>
+            <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.88rem', lineHeight: 1.6 }}>
               Unit 202, Amore Edge, SV Road, Khar West, Mumbai 400052 <br />
               +91 99879 22901 / business@dgeniussolutions.com
             </div>
@@ -250,15 +248,15 @@ export default function Header() {
         </div>
       )}
 
-      {/* Talk / Consultation Modal */}
+      {/* Quick Consultation Modal */}
       {talkModalOpen && (
         <div
           style={{
             position: 'fixed',
             inset: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.88)',
-            backdropFilter: 'blur(18px)',
-            WebkitBackdropFilter: 'blur(18px)',
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
             zIndex: 100000,
             display: 'flex',
             alignItems: 'center',
@@ -269,14 +267,14 @@ export default function Header() {
         >
           <div
             style={{
-              backgroundColor: '#0d0f14',
+              backgroundColor: '#0a0e16',
               border: '1px solid rgba(255, 255, 255, 0.15)',
               borderRadius: '20px',
-              maxWidth: '520px',
+              maxWidth: '500px',
               width: '100%',
-              padding: 'clamp(24px, 5vw, 40px)',
+              padding: 'clamp(24px, 5vw, 36px)',
               position: 'relative',
-              boxShadow: '0 24px 60px rgba(0, 0, 0, 0.7)',
+              boxShadow: '0 30px 80px rgba(0, 0, 0, 0.8)',
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -284,55 +282,55 @@ export default function Header() {
               onClick={() => setTalkModalOpen(false)}
               style={{
                 position: 'absolute',
-                top: '18px',
-                right: '20px',
+                top: '16px',
+                right: '18px',
                 background: 'none',
                 border: 'none',
                 color: '#ffffff',
-                fontSize: '24px',
+                fontSize: '22px',
                 cursor: 'pointer',
               }}
             >
               ✕
             </button>
 
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', fontWeight: 700, textTransform: 'uppercase', color: '#ffffff', marginBottom: '8px' }}>
-              Start A Conversation
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 800, textTransform: 'uppercase', color: '#ffffff', marginBottom: '6px' }}>
+              Initiate Consultation
             </h3>
-            <p style={{ color: 'var(--dgs-text-secondary)', fontSize: '0.95rem', lineHeight: 1.5, marginBottom: '24px' }}>
-              Tell us about your brand goals and we'll connect you directly with a senior growth strategist.
+            <p style={{ color: 'rgba(255, 255, 255, 0.65)', fontSize: '0.9rem', lineHeight: 1.5, marginBottom: '20px' }}>
+              Direct dialogue with DGS strategy leadership. Response within 24 hours.
             </p>
 
-            {talkFormSubmitted ? (
-              <div style={{ backgroundColor: 'rgba(0, 212, 255, 0.1)', border: '1px solid var(--dgs-accent-cyan)', borderRadius: '12px', padding: '20px', textAlign: 'center', color: '#ffffff' }}>
-                <div style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '6px' }}>Message Sent!</div>
-                <div style={{ fontSize: '0.9rem', color: 'var(--dgs-text-secondary)' }}>We will contact you shortly.</div>
+            {talkSubmitted ? (
+              <div style={{ backgroundColor: 'rgba(0, 245, 212, 0.08)', border: '1px solid #00f5d4', borderRadius: '12px', padding: '20px', textAlign: 'center', color: '#ffffff' }}>
+                <div style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '6px' }}>Message Dispatched!</div>
+                <div style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.7)' }}>A senior strategist will contact you directly.</div>
               </div>
             ) : (
-              <form onSubmit={(e) => { e.preventDefault(); setTalkFormSubmitted(true); }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
+              <form onSubmit={(e) => { e.preventDefault(); setTalkSubmitted(true); }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '18px' }}>
                   <input
                     type="text"
                     required
-                    placeholder="Your Full Name"
-                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 16px', color: '#ffffff', fontSize: '0.95rem' }}
+                    placeholder="Full Name"
+                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 14px', color: '#ffffff', fontSize: '0.92rem', outline: 'none' }}
                   />
                   <input
                     type="email"
                     required
-                    placeholder="Your Work Email"
-                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 16px', color: '#ffffff', fontSize: '0.95rem' }}
+                    placeholder="Work Email"
+                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 14px', color: '#ffffff', fontSize: '0.92rem', outline: 'none' }}
                   />
                   <input
                     type="tel"
                     required
-                    placeholder="Phone / Mobile"
-                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 16px', color: '#ffffff', fontSize: '0.95rem' }}
+                    placeholder="Phone / WhatsApp"
+                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 14px', color: '#ffffff', fontSize: '0.92rem', outline: 'none' }}
                   />
                   <textarea
-                    placeholder="Tell us what you want to scale or build..."
+                    placeholder="Brief description of brand objectives..."
                     rows={3}
-                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 16px', color: '#ffffff', fontSize: '0.95rem', resize: 'none' }}
+                    style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '8px', padding: '12px 14px', color: '#ffffff', fontSize: '0.92rem', resize: 'none', outline: 'none' }}
                   ></textarea>
                 </div>
 
@@ -340,20 +338,20 @@ export default function Header() {
                   type="submit"
                   style={{
                     width: '100%',
-                    backgroundColor: 'var(--dgs-primary, #FD5C62)',
-                    color: '#ffffff',
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: '0.95rem',
-                    fontWeight: 700,
+                    backgroundColor: '#00f5d4',
+                    color: '#04060a',
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '0.92rem',
+                    fontWeight: 800,
                     textTransform: 'uppercase',
-                    padding: '14px',
+                    padding: '13px',
                     borderRadius: '9999px',
                     border: 'none',
                     cursor: 'pointer',
-                    boxShadow: '0 6px 20px rgba(253, 92, 98, 0.4)',
+                    boxShadow: '0 4px 20px rgba(0, 245, 212, 0.35)',
                   }}
                 >
-                  Send Message →
+                  Send Brief →
                 </button>
               </form>
             )}
@@ -361,10 +359,13 @@ export default function Header() {
         </div>
       )}
 
-      {/* Media query styling for desktop vs mobile nav */}
+      {/* Media query styling for header */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @media (min-width: 1024px) {
+        @media (min-width: 1100px) {
           .dgs-desktop-nav {
+            display: flex !important;
+          }
+          .dgs-logo-hud {
             display: flex !important;
           }
           .dgs-mobile-menu-btn {

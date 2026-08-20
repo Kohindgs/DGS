@@ -1,218 +1,212 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './homepage.module.css';
+import { portfolioGalleryData } from '../../data/homepageData';
 
-const portfolioItems = [
-  {
-    id: 1,
-    title: 'Luxury Ethnic Fashion & Wedding Narrative',
-    category: 'fashion',
-    catLabel: 'Fashion & Retail',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Wedding-Story6-576x1024.jpg.webp'
-  },
-  {
-    id: 2,
-    title: 'Festive Dandiya Grid Campaign',
-    category: 'festive',
-    catLabel: 'Festive & Topical',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/New-Dandiya-Grid-1-1024x683.png.webp'
-  },
-  {
-    id: 3,
-    title: 'Diwali Festive Brand Story',
-    category: 'festive',
-    catLabel: 'Festive & Topical',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Diwali-GridOpt1.1-1-1024x1024.jpg.webp'
-  },
-  {
-    id: 4,
-    title: 'Tussar Silk Handcrafted Collection',
-    category: 'fashion',
-    catLabel: 'Fashion & Retail',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Tussar-Silk-Digital-Printed-Zari-Embroidered-Kurta-With-Palazzo-And-Dupatta-1-576x1024.png.webp'
-  },
-  {
-    id: 5,
-    title: 'Retail Visual Merchandising Standee',
-    category: 'retail',
-    catLabel: 'Retail & POS',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Standee-Option-5-512x1024.jpg.webp'
-  },
-  {
-    id: 6,
-    title: 'Aesthetic Healthcare Clinical Series',
-    category: 'healthcare',
-    catLabel: 'Healthcare & Aesthetics',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Lip-Filler1-819x1024.png.webp'
-  },
-  {
-    id: 7,
-    title: 'Wellness & Mindful Movement Concept',
-    category: 'lifestyle',
-    catLabel: 'Lifestyle & Wellness',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/international_yoga_day-819x1024.png.webp'
-  },
-  {
-    id: 8,
-    title: 'Amazonia High-Energy Social Editorial',
-    category: 'lifestyle',
-    catLabel: 'Lifestyle & Hospitality',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Amazonia-grid7-1024x683.png.webp'
-  },
-  {
-    id: 9,
-    title: 'Pursuit of Performance Enterprise E-Learning',
-    category: 'corporate',
-    catLabel: 'Corporate & Learning',
-    src: 'https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/IN-PURSUIT-OF-SUPER-PERFORMANCE-E-Learning1-1-819x1024.png.webp'
-  }
+const categories = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'Brand Identity', label: 'Brand Identity' },
+  { id: 'Social Campaigns', label: 'Social Campaigns' },
+  { id: 'Packaging & Print', label: 'Packaging & POS' },
 ];
 
 export default function CreativePortfolio() {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [lightboxItem, setLightboxItem] = useState(null);
+  const [tiltMap, setTiltMap] = useState({});
+  const railRef = useRef(null);
 
-  const filtered = activeFilter === 'all'
-    ? portfolioItems
-    : portfolioItems.filter(item => item.category === activeFilter);
+  const filteredItems = activeCategory === 'all'
+    ? portfolioGalleryData
+    : portfolioGalleryData.filter(item => item.category === activeCategory);
+
+  // Handle 3D card tilt based on pointer position within each card
+  const handleCardMouseMove = (e, id) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTiltMap((prev) => ({
+      ...prev,
+      [id]: {
+        rotateX: -y * 18,
+        rotateY: x * 18,
+        translateZ: 25,
+      },
+    }));
+  };
+
+  const handleCardMouseLeave = (id) => {
+    setTiltMap((prev) => ({
+      ...prev,
+      [id]: { rotateX: 0, rotateY: 0, translateZ: 0 },
+    }));
+  };
 
   // Keyboard navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (lightboxIndex === null) return;
-      if (e.key === 'Escape') setLightboxIndex(null);
-      if (e.key === 'ArrowRight') setLightboxIndex((prev) => (prev + 1) % filtered.length);
-      if (e.key === 'ArrowLeft') setLightboxIndex((prev) => (prev - 1 + filtered.length) % filtered.length);
+      if (!lightboxItem) return;
+      if (e.key === 'Escape') setLightboxItem(null);
+      const curIdx = filteredItems.findIndex(item => item.id === lightboxItem.id);
+      if (curIdx === -1) return;
+      if (e.key === 'ArrowRight') {
+        const nextIdx = (curIdx + 1) % filteredItems.length;
+        setLightboxItem(filteredItems[nextIdx]);
+      }
+      if (e.key === 'ArrowLeft') {
+        const prevIdx = (curIdx - 1 + filteredItems.length) % filteredItems.length;
+        setLightboxItem(filteredItems[prevIdx]);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex, filtered.length]);
+  }, [lightboxItem, filteredItems]);
 
   return (
-    <section className={`${styles.portfolioSection} dgs-section`} id="portfolio">
-      <div className="dgs-container">
+    <section className={`${styles.spatialPortfolioSection} dgs-section`} id="portfolio">
+      <div className="dgs-container-wide">
         
+        {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Creative Showcase</span>
+            <span>Spatial Creative Gallery</span>
           </div>
           <h2 className={styles.titleMain}>
-            Brand Identity & <span className={styles.titleGradient}>Creative Excellence</span>
+            Brand Architecture &amp; <span className={styles.titleGradient}>Creative Mastery</span>
           </h2>
           <p className={styles.subtitle}>
-            A curated view of campaigns, visual identities, festive moment marketing, retail standees, and AI-led productions.
+            Explore our spatial archive of brand identities, festive drops, medical aesthetics, retail POS systems, and commercial art direction.
           </p>
         </div>
 
-        {/* Category Tabs */}
-        <div className={styles.portfolioTabs}>
-          <button 
-            className={`${styles.portfolioTabBtn} ${activeFilter === 'all' ? styles.portfolioTabBtnActive : ''}`}
-            onClick={() => setActiveFilter('all')}
-          >
-            All Work ({portfolioItems.length})
-          </button>
-          <button 
-            className={`${styles.portfolioTabBtn} ${activeFilter === 'fashion' ? styles.portfolioTabBtnActive : ''}`}
-            onClick={() => setActiveFilter('fashion')}
-          >
-            Fashion & Retail
-          </button>
-          <button 
-            className={`${styles.portfolioTabBtn} ${activeFilter === 'festive' ? styles.portfolioTabBtnActive : ''}`}
-            onClick={() => setActiveFilter('festive')}
-          >
-            Festive Campaigns
-          </button>
-          <button 
-            className={`${styles.portfolioTabBtn} ${activeFilter === 'lifestyle' ? styles.portfolioTabBtnActive : ''}`}
-            onClick={() => setActiveFilter('lifestyle')}
-          >
-            Lifestyle & Hospitality
-          </button>
-          <button 
-            className={`${styles.portfolioTabBtn} ${activeFilter === 'corporate' ? styles.portfolioTabBtnActive : ''}`}
-            onClick={() => setActiveFilter('corporate')}
-          >
-            Corporate & B2B
-          </button>
+        {/* Filter Navigation Deck */}
+        <div className={styles.portfolioFilterDeck}>
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              className={`${styles.filterDeckBtn} ${activeCategory === cat.id ? styles.filterDeckBtnActive : ''}`}
+              onClick={() => setActiveCategory(cat.id)}
+            >
+              <span>{cat.label}</span>
+              {activeCategory === cat.id && <span className={styles.filterActivePill}></span>}
+            </button>
+          ))}
         </div>
 
-        {/* Grid */}
-        <div className={styles.portfolioGrid}>
-          {filtered.map((item, idx) => (
-            <div 
-              key={item.id} 
-              className={styles.portfolioItem}
-              onClick={() => setLightboxIndex(idx)}
-            >
-              <img 
-                src={item.src} 
-                alt={item.title} 
-                className={styles.portfolioImg}
-                loading="lazy"
-              />
-              <div className={styles.portfolioOverlay}>
-                <span className={styles.portfolioCategory}>{item.catLabel}</span>
-                <h3 className={styles.portfolioItemTitle}>{item.title}</h3>
-              </div>
-            </div>
-          ))}
+        {/* Spatial 3D Perspective Rail / Stage */}
+        <div className={styles.spatialStageWrapper}>
+          <div className={styles.spatialRail} ref={railRef}>
+            {filteredItems.map((item, idx) => {
+              const tilt = tiltMap[item.id] || { rotateX: 0, rotateY: 0, translateZ: 0 };
+              return (
+                <div
+                  key={item.id}
+                  className={styles.spatialCard}
+                  onMouseMove={(e) => handleCardMouseMove(e, item.id)}
+                  onMouseLeave={() => handleCardMouseLeave(item.id)}
+                  onClick={() => setLightboxItem(item)}
+                  style={{
+                    transform: `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) translateZ(${tilt.translateZ}px)`,
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter') setLightboxItem(item); }}
+                >
+                  <div className={styles.spatialCardInner}>
+                    {/* Media Frame */}
+                    <div className={styles.spatialMediaFrame}>
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className={styles.spatialCardImg}
+                        loading="lazy"
+                      />
+                      <div className={styles.spatialCardGloss}></div>
+                    </div>
+
+                    {/* Meta Overlay */}
+                    <div className={styles.spatialCardMeta}>
+                      <div className={styles.spatialCardCategory}>
+                        <span className={styles.spatialCategoryDot}></span>
+                        <span>{item.tag || item.category}</span>
+                      </div>
+                      <h3 className={styles.spatialCardTitle}>{item.title}</h3>
+                      <p className={styles.spatialCardDesc}>{item.description}</p>
+                      <div className={styles.spatialCardAction}>
+                        <span>INSPECT ARTIFACT</span>
+                        <span>↗</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
       </div>
 
-      {/* Lightbox Modal */}
-      {lightboxIndex !== null && (
-        <div 
-          className={styles.lightboxBackdrop}
-          onClick={() => setLightboxIndex(null)}
+      {/* Cinematic High-Res Lightbox Modal */}
+      {lightboxItem && (
+        <div
+          className={styles.spatialLightboxBackdrop}
+          onClick={() => setLightboxItem(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Portfolio item details"
         >
-          <button 
-            className={styles.lightboxCloseBtn}
-            onClick={() => setLightboxIndex(null)}
-            aria-label="Close Lightbox"
-          >
-            &times;
-          </button>
-
-          <button 
-            className={`${styles.lightboxNavBtn} ${styles.lightboxPrev}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              setLightboxIndex((prev) => (prev - 1 + filtered.length) % filtered.length);
-            }}
-            aria-label="Previous Image"
-          >
-            &#8249;
-          </button>
-
-          <div 
-            className={styles.lightboxImgContainer}
+          <div
+            className={styles.spatialLightboxContent}
             onClick={(e) => e.stopPropagation()}
           >
-            <img 
-              src={filtered[lightboxIndex].src} 
-              alt={filtered[lightboxIndex].title} 
-              className={styles.lightboxMainImg}
-            />
-            <div className={styles.lightboxCounter}>
-              {filtered[lightboxIndex].title} — ({lightboxIndex + 1} of {filtered.length})
-            </div>
-          </div>
+            <button
+              className={styles.spatialLightboxClose}
+              onClick={() => setLightboxItem(null)}
+              aria-label="Close Lightbox"
+            >
+              ✕
+            </button>
 
-          <button 
-            className={`${styles.lightboxNavBtn} ${styles.lightboxNext}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              setLightboxIndex((prev) => (prev + 1) % filtered.length);
-            }}
-            aria-label="Next Image"
-          >
-            &#8250;
-          </button>
+            <div className={styles.lightboxSplitGrid}>
+              <div className={styles.lightboxVisualSide}>
+                <img
+                  src={lightboxItem.src}
+                  alt={lightboxItem.title}
+                  className={styles.lightboxLargeImg}
+                />
+              </div>
+
+              <div className={styles.lightboxInfoSide}>
+                <div className={styles.lightboxTag}>{lightboxItem.category} // {lightboxItem.tag}</div>
+                <h3 className={styles.lightboxTitle}>{lightboxItem.title}</h3>
+                <p className={styles.lightboxDesc}>{lightboxItem.description}</p>
+
+                <div className={styles.lightboxDetailsBox}>
+                  <div className={styles.lightboxDetailRow}>
+                    <span className={styles.lightboxDetailKey}>DISCIPLINE:</span>
+                    <span className={styles.lightboxDetailVal}>{lightboxItem.category}</span>
+                  </div>
+                  <div className={styles.lightboxDetailRow}>
+                    <span className={styles.lightboxDetailKey}>STUDIO POD:</span>
+                    <span className={styles.lightboxDetailVal}>Brand Architecture &amp; Creative</span>
+                  </div>
+                  <div className={styles.lightboxDetailRow}>
+                    <span className={styles.lightboxDetailKey}>STANDARDS:</span>
+                    <span className={styles.lightboxDetailVal}>100% Bespoke Art Direction</span>
+                  </div>
+                </div>
+
+                <a href="#audit-form" onClick={() => setLightboxItem(null)} className={styles.btnSpatialPrimary} style={{ width: '100%', marginTop: '24px' }}>
+                  <span>COMMISSION SIMILAR CAMPAIGN</span>
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
         </div>
       )}
     </section>

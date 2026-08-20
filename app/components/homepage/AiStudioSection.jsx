@@ -1,79 +1,110 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import styles from './homepage.module.css';
+import { aiPortfolioData } from '../../data/homepageData';
 
-const aiPillars = [
-  {
-    num: '01',
-    title: 'AI Video Production',
-    desc: 'Short-form videos, cinematic reels, dynamic campaign films, and TVC-style concepts produced at 5x conventional agency velocity.'
-  },
-  {
-    num: '02',
-    title: 'AI Product Visuals',
-    desc: 'Flawless product-led imagery and 3D motion for jewellery, FMCG, luxury retail, lifestyle, and ecommerce product launches.'
-  },
-  {
-    num: '03',
-    title: 'Mascot & Character AI',
-    desc: 'Proprietary AI-generated mascot systems and distinct character models designed for long-term brand recall and narrative continuity.'
-  },
-  {
-    num: '04',
-    title: 'Festival & Topical Content',
-    desc: 'Rapid turnarounds for festival campaigns, moment marketing, and social calendars without sacrificing brand integrity.'
-  }
-];
-
-const pipelineSteps = [
-  { step: '01', title: 'Brief', desc: 'Brand essence, audience psychographics, and target conversion objective.' },
-  { step: '02', title: 'Concept', desc: 'Prompt architecture, cinematic script, visual direction, and moodboard.' },
-  { step: '03', title: 'Generate', desc: 'High-definition neural generation of visuals, animations, and voice synthesis.' },
-  { step: '04', title: 'Refine', desc: 'Human-led art direction, sound engineering, color grade, and typography.' },
-  { step: '05', title: 'Deliver', desc: 'Multi-aspect exports formatted for omnichannel social, paid ads, and web.' }
+const productionProtocol = [
+  { step: '01', title: 'Strategic Brief', desc: 'Brand essence, audience psychographics, and target conversion objective.' },
+  { step: '02', title: 'Prompt Architecture', desc: 'Custom LoRA weights, cinematic camera scripts, lighting maps, and style direction.' },
+  { step: '03', title: 'Neural Generation', desc: 'Ultra-high-definition synthesis of photorealistic visuals, motion sequences, and acoustic layers.' },
+  { step: '04', title: 'Human Art Direction', desc: 'Rigorous color grading, typographic curation, sound design, and brand compliance.' },
+  { step: '05', title: 'Omnichannel Delivery', desc: 'Multi-aspect ratio exports optimized for programmatic paid media, social, and web.' },
 ];
 
 export default function AiStudioSection() {
+  const [activeVisualIdx, setActiveVisualIdx] = useState(0);
+  const activeItem = aiPortfolioData[activeVisualIdx] || aiPortfolioData[0];
+
   return (
     <section className={`${styles.aiStudioSection} dgs-section`} id="ai-studio">
-      <div className="dgs-container">
+      <div className="dgs-container-wide">
         
+        {/* Section Header */}
         <div className={styles.sectionHeader}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot}></span>
-            <span>Generative AI Production Lab</span>
+            <span>Proprietary Generative AI Studio</span>
           </div>
           <h2 className={styles.titleMain}>
-            AI-Led Creative <span className={styles.titleGradient}>Velocity & Scale</span>
+            AI-Led Creative <span className={styles.titleGradient}>Velocity &amp; Precision</span>
           </h2>
           <p className={styles.subtitle}>
-            We combine strategic brand stewardship with generative AI workflows to create campaign assets, TVC concepts, and product narratives in days, not months.
+            We combine rigorous human art direction with cutting-edge neural pipelines to produce cinema-grade video, 3D product stills, and high-velocity cultural campaigns.
           </p>
         </div>
 
-        {/* 4 Pillars Grid */}
-        <div className={styles.aiPillarsGrid}>
-          {aiPillars.map((p, idx) => (
-            <div key={idx} className={styles.aiPillarCard}>
-              <div className={styles.aiPillarNum}>{p.num}</div>
-              <h3 className={styles.aiPillarTitle}>{p.title}</h3>
-              <p className={styles.aiPillarDesc}>{p.desc}</p>
+        {/* Interactive Cinematic Stage */}
+        <div className={styles.aiCinematicStage}>
+          
+          {/* Left: Interactive Visual Viewport with Lens Inspector */}
+          <div className={styles.aiVisualViewport}>
+            <div className={styles.aiViewportBadge}>
+              <span className={styles.aiBadgeDot}></span>
+              <span>{activeItem.tag} // STAGE 0{activeVisualIdx + 1}</span>
             </div>
-          ))}
-        </div>
 
-        {/* 5-Step Pipeline */}
-        <div className={styles.pipelineWrapper}>
-          <div className={styles.pipelineHeader}>
-            <h3 className={styles.pipelineTitle}>The DGS AI Production Protocol</h3>
-            <p className={styles.subtitle}>How we turn strategic creative briefs into campaign-ready assets</p>
+            <div className={styles.aiImageWrapper}>
+              <img 
+                src={activeItem.image} 
+                alt={activeItem.title} 
+                className={styles.aiHeroImg}
+                loading="lazy"
+              />
+              <div className={styles.aiImageScanline}></div>
+            </div>
+
+            {/* Prompt & Technical Blueprint Bar */}
+            <div className={styles.aiPromptBar}>
+              <div className={styles.aiPromptLabel}>PROMPT INSIGHT:</div>
+              <div className={styles.aiPromptText}>&ldquo;{activeItem.promptInsight}&rdquo;</div>
+              <div className={styles.aiPromptMetric}>{activeItem.metrics}</div>
+            </div>
           </div>
 
-          <div className={styles.pipelineStepsGrid}>
-            {pipelineSteps.map((s, idx) => (
-              <div key={idx} className={styles.pipelineStep}>
-                <div className={styles.stepNumberCircle}>{s.step}</div>
-                <h4 className={styles.stepName}>{s.title}</h4>
-                <p className={styles.stepDesc}>{s.desc}</p>
+          {/* Right: Dynamic Selection Track */}
+          <div className={styles.aiSelectionTrack}>
+            <div className={styles.aiTrackKicker}>SELECT AI PRODUCTION CAPABILITY:</div>
+            
+            {aiPortfolioData.map((item, idx) => {
+              const isActive = activeVisualIdx === idx;
+              return (
+                <div 
+                  key={item.id}
+                  className={`${styles.aiTrackItem} ${isActive ? styles.aiTrackItemActive : ''}`}
+                  onClick={() => setActiveVisualIdx(idx)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveVisualIdx(idx); }}
+                >
+                  <div className={styles.aiTrackItemNum}>0{idx + 1}</div>
+                  <div className={styles.aiTrackItemBody}>
+                    <div className={styles.aiTrackItemCat}>{item.category}</div>
+                    <h3 className={styles.aiTrackItemTitle}>{item.title}</h3>
+                    <p className={styles.aiTrackItemDesc}>{item.description}</p>
+                  </div>
+                  <div className={styles.aiTrackItemArrow}>{isActive ? '●' : '→'}</div>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+
+        {/* The 5-Step AI Production Protocol */}
+        <div className={styles.protocolContainer}>
+          <div className={styles.protocolHeader}>
+            <span className={styles.protocolEyebrow}>SYSTEMATIC EXECUTION</span>
+            <h3 className={styles.protocolMainTitle}>The DGS AI Production Protocol</h3>
+            <p className={styles.protocolSub}>From strategic brief to multichannel campaign readiness in days, not months.</p>
+          </div>
+
+          <div className={styles.protocolGrid}>
+            {productionProtocol.map((p, idx) => (
+              <div key={idx} className={styles.protocolCard}>
+                <div className={styles.protocolStepNum}>{p.step}</div>
+                <h4 className={styles.protocolStepTitle}>{p.title}</h4>
+                <p className={styles.protocolStepDesc}>{p.desc}</p>
               </div>
             ))}
           </div>

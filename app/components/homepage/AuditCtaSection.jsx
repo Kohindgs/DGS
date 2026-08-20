@@ -10,9 +10,9 @@ export default function AuditCtaSection() {
     email: '',
     phone: '',
     company: '',
-    service: 'Search Engine Optimization',
+    service: 'Search Engine Optimization (SEO)',
     source: 'Google Search',
-    message: ''
+    message: '',
   });
 
   const handleChange = (e) => {
@@ -27,60 +27,60 @@ export default function AuditCtaSection() {
 
   return (
     <section className={`${styles.auditSection} dgs-section`} id="audit-form">
-      <div className="dgs-container">
+      <div className="dgs-container-wide">
         
-        <div className={styles.auditCard}>
+        <div className={styles.auditSpatialCard}>
           <div className={styles.auditGrid}>
             
-            {/* Left Copy */}
-            <div>
+            {/* Left: Strategic Consultation Overview */}
+            <div className={styles.auditLeftCol}>
               <div className={styles.eyebrow}>
                 <span className={styles.eyebrowDot}></span>
-                <span>Complimentary Consultation</span>
+                <span>Direct Executive Consultation</span>
               </div>
-              <h2 className={styles.auditFormTitle}>
-                Ready To Scale <br />
-                <span className={styles.titleGradient}>Your Brand?</span>
+
+              <h2 className={styles.auditMainTitle}>
+                Initiate Your <br />
+                <span className={styles.titleGradient}>Growth Diagnosis</span>
               </h2>
-              <p className={styles.auditFormDesc}>
-                Let our senior growth strategists audit your website performance, search visibility, entity authority, and paid acquisition funnel.
+
+              <p className={styles.auditParagraph}>
+                Partner directly with our senior strategy and engineering leadership. We perform an exhaustive forensic analysis of your organic search graph, AI entity citations, website speed, and paid media funnels.
               </p>
 
-              <div className={styles.auditContactItem}>
-                <span className={styles.auditContactIcon}>📍</span>
-                <span>Unit 202, Amore Edge, SV Road, Khar West, Mumbai 400052</span>
-              </div>
-              <div className={styles.auditContactItem}>
-                <span className={styles.auditContactIcon}>📞</span>
-                <span>+91 99879 22901 / +91 85919 50238</span>
-              </div>
-              <div className={styles.auditContactItem}>
-                <span className={styles.auditContactIcon}>✉️</span>
-                <span>business@dgeniussolutions.com</span>
+              <div className={styles.auditHqCard}>
+                <div className={styles.auditHqTitle}>MUMBAI HEADQUARTERS // STUDIO</div>
+                <div className={styles.auditHqAddr}>
+                  Unit 202, Amore Edge, Swami Vivekanand Road, Govind Dham, Khar West, Mumbai 400052
+                </div>
+                <div className={styles.auditHqContacts}>
+                  <span>📞 +91 99879 22901 / +91 85919 50238</span>
+                  <span>✉️ business@dgeniussolutions.com</span>
+                </div>
               </div>
             </div>
 
-            {/* Right Form */}
-            <div>
+            {/* Right: Interactive Consultation Form */}
+            <div className={styles.auditRightCol}>
               {submitted ? (
-                <div className={styles.formSuccessBox}>
-                  <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '12px' }}>
-                    Growth Audit Request Received!
-                  </h3>
-                  <p style={{ color: 'var(--dgs-text-secondary)', lineHeight: 1.6 }}>
-                    Thank you, <strong>{formData.name}</strong>. A senior strategist from our Mumbai team will review your brand assets and reach out at <strong>{formData.email}</strong> within 24 hours.
+                <div className={styles.auditSuccessBox}>
+                  <div className={styles.auditSuccessIcon}>✓</div>
+                  <h3 className={styles.auditSuccessTitle}>Diagnostic Request Confirmed</h3>
+                  <p className={styles.auditSuccessText}>
+                    Thank you, <strong>{formData.name}</strong>. Our Mumbai strategy leadership has received your brief for <strong>{formData.company || 'your brand'}</strong>. We will review your digital footprint and reach out at <strong>{formData.email}</strong> within 24 hours.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className={styles.auditFormElement}>
                   <div className={styles.formInputsGrid}>
+                    
                     <div className={styles.formGroup}>
-                      <label className={styles.formLabel}>Full Name *</label>
-                      <input 
-                        type="text" 
-                        name="name" 
-                        required 
-                        placeholder="John Doe" 
+                      <label className={styles.formLabel}>FULL NAME *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        placeholder="Kohin Bellara"
                         className={styles.formInput}
                         value={formData.name}
                         onChange={handleChange}
@@ -88,12 +88,12 @@ export default function AuditCtaSection() {
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.formLabel}>Work Email *</label>
-                      <input 
-                        type="email" 
-                        name="email" 
-                        required 
-                        placeholder="john@company.com" 
+                      <label className={styles.formLabel}>WORK EMAIL *</label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        placeholder="leadership@brand.com"
                         className={styles.formInput}
                         value={formData.email}
                         onChange={handleChange}
@@ -101,12 +101,12 @@ export default function AuditCtaSection() {
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.formLabel}>Phone Number *</label>
-                      <input 
-                        type="tel" 
-                        name="phone" 
-                        required 
-                        placeholder="+91 99879 22901" 
+                      <label className={styles.formLabel}>PHONE / WHATSAPP *</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        placeholder="+91 99879 22901"
                         className={styles.formInput}
                         value={formData.phone}
                         onChange={handleChange}
@@ -114,11 +114,11 @@ export default function AuditCtaSection() {
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.formLabel}>Company Name</label>
-                      <input 
-                        type="text" 
-                        name="company" 
-                        placeholder="Company Pvt Ltd" 
+                      <label className={styles.formLabel}>BRAND / COMPANY NAME</label>
+                      <input
+                        type="text"
+                        name="company"
+                        placeholder="Acme Enterprises"
                         className={styles.formInput}
                         value={formData.company}
                         onChange={handleChange}
@@ -126,53 +126,56 @@ export default function AuditCtaSection() {
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.formLabel}>Service Needed</label>
-                      <select 
-                        name="service" 
+                      <label className={styles.formLabel}>CORE CAPABILITY NEEDED</label>
+                      <select
+                        name="service"
                         className={styles.formSelect}
                         value={formData.service}
                         onChange={handleChange}
                       >
-                        <option value="Search Engine Optimization">Search Engine Optimization (SEO)</option>
-                        <option value="AEO & Generative Engine Optimization">AEO & GEO Search Visibility</option>
-                        <option value="AI Video Production">AI Video Production</option>
-                        <option value="Website Development & AMC">Website Development & AMC</option>
-                        <option value="Performance Marketing & Ads">Performance Marketing & Ads</option>
-                        <option value="Brand Identity & Social Media">Brand Identity & Social Media</option>
+                        <option value="Search Engine Optimization (SEO)">Search Engine Optimization (SEO)</option>
+                        <option value="AEO & Generative Engine Optimization">AEO &amp; Generative Engine Optimization (GEO)</option>
+                        <option value="AI-Led Creative & Video Production">AI-Led Creative &amp; Video Production</option>
+                        <option value="Next.js Web & Application Engineering">Next.js Web &amp; Application Engineering</option>
+                        <option value="Performance Marketing & Paid Ads">Performance Marketing &amp; Paid Ads</option>
+                        <option value="Brand Strategy & Social Systems">Brand Strategy &amp; Social Systems</option>
                       </select>
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.formLabel}>How Did You Hear About Us?</label>
-                      <select 
-                        name="source" 
+                      <label className={styles.formLabel}>HOW DID YOU HEAR ABOUT US?</label>
+                      <select
+                        name="source"
                         className={styles.formSelect}
                         value={formData.source}
                         onChange={handleChange}
                       >
-                        <option value="Google Search">Google Search</option>
+                        <option value="Client Referral / Reference">Client Referral / Word-of-Mouth</option>
+                        <option value="Google Search">Google Organic Search</option>
+                        <option value="AI Engine (Perplexity/ChatGPT)">AI Engine (Perplexity / ChatGPT)</option>
                         <option value="LinkedIn">LinkedIn</option>
-                        <option value="Client Referral">Client Referral</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Clutch / Reviews">Clutch / Reviews</option>
-                        <option value="Other">Other</option>
+                        <option value="Clutch / Ratings">Clutch Verified Reviews</option>
+                        <option value="Other">Other Strategic Channel</option>
                       </select>
                     </div>
 
                     <div className={styles.formGroupFull}>
-                      <label className={styles.formLabel}>Your Growth Goals or Message</label>
-                      <textarea 
-                        name="message" 
-                        placeholder="Tell us what you want to build, improve, or scale..."
+                      <label className={styles.formLabel}>GROWTH GOALS / PROJECT BRIEF</label>
+                      <textarea
+                        name="message"
+                        rows={3}
+                        placeholder="Tell us what challenges you're experiencing, your target markets, and timelines..."
                         className={styles.formTextarea}
                         value={formData.message}
                         onChange={handleChange}
                       ></textarea>
                     </div>
+
                   </div>
 
-                  <button type="submit" className={styles.btnPrimary} style={{ width: '100%' }}>
-                    <span>Request Growth Audit Now</span>
+                  <button type="submit" className={styles.btnSpatialPrimary} style={{ width: '100%', marginTop: '12px' }}>
+                    <span className={styles.btnGlowSweep}></span>
+                    <span>SUBMIT DIAGNOSTIC BRIEF</span>
                     <span>→</span>
                   </button>
                 </form>
