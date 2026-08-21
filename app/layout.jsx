@@ -1,14 +1,30 @@
+import { Syne, Outfit } from 'next/font/google';
+import SiteChrome from '@/app/components/site/SiteChrome';
 import './globals.css';
 
+const display = Syne({
+  subsets: ['latin'],
+  variable: '--font-syne',
+  weight: ['500', '600', '700', '800'],
+});
+
+const sans = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+});
+
 export const metadata = {
-  title: 'DGS Next.js App',
-  description: 'A beautiful demo page built with Next.js',
+  title: 'Digital Marketing Agency in Mumbai | D’Genius Solutions',
+  description:
+    'D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en-IN">
+      <body className={`${display.variable} ${sans.variable} antialiased`} data-dgs-ui="cinematic-v2">
+        <SiteChrome>{children}</SiteChrome>
+      </body>
     </html>
   );
 }
