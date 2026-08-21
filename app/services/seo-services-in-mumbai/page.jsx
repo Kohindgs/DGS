@@ -1,48 +1,49 @@
-import fs from 'fs';
-import path from 'path';
-
-const dataDir = path.join(process.cwd(), 'app/services/seo-services-in-mumbai/_wp_data');
-const links = fs.readFileSync(path.join(dataDir, 'links.html'), 'utf8');
-const styles = fs.readFileSync(path.join(dataDir, 'styles.html'), 'utf8');
-let body = fs.readFileSync(path.join(dataDir, 'body.html'), 'utf8');
-const { title, desc, canonical, bodyClass, schemas } = JSON.parse(
-  fs.readFileSync(path.join(dataDir, 'meta.json'), 'utf8')
-);
-
-// Images must be visible always: swap every lazyload data-src placeholder to a
-// real src, drop the lazyload class and Smush placeholder style so no image is
-// hidden behind a 1x1 transparent gif + opacity:0 waiting on JS.
-body = body.replace(/<img\s[^>]*>/g, (tag) => {
-  const dataSrc = tag.match(/data-src="([^"]+)"/);
-  if (!dataSrc) return tag;
-  const url = dataSrc[1];
-  let out = tag.replace(/\s+data-src="[^"]*"/, '');
-  if (/src="data:image\/(?:gif|svg\+xml);[^"]*"/.test(out)) {
-    out = out.replace(/src="data:image\/(?:gif|svg\+xml);[^"]*"/, `src="${url}"`);
-  } else {
-    out = out.replace(/^<img/, `<img src="${url}"`);
-  }
-  out = out.replace(/\s+class="lazyload(?: [^"]*)?"/, '');
-  out = out.replace(/\s+style="--smush-placeholder[^"]*"/, '');
-  return out;
-});
+import PageHero from '@/app/components/site/PageHero';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/accordion';
+import { SEO_PAGE } from '@/lib/content';
 
 export const metadata = {
-  title,
-  description: desc,
-  alternates: { canonical },
-  robots: { index: true, follow: true },
+  title: SEO_PAGE.title,
+  description: SEO_PAGE.description,
+  alternates: { canonical: '/services/seo-services-in-mumbai' },
 };
 
-export default function Page() {
+const faqs = [
+  {
+    id: 'what',
+    q: "What SEO services does D'Genius Solutions offer in Mumbai?",
+    a: "D'Genius Solutions offers SEO services in Mumbai for businesses that want stronger Google rankings, local visibility, website traffic, and qualified leads. The agency also supports AI search readiness through AEO, GEO, LLM SEO, structured content, and voice-search-friendly FAQ optimization.",
+  },
+  {
+    id: 'local',
+    q: 'Is D’Genius Solutions an SEO agency in Mumbai?',
+    a: 'Yes. D’Genius Solutions is located in Khar West, Mumbai and offers SEO services for businesses across Mumbai, India, and international markets.',
+  },
+];
+
+export default function SeoServicesPage() {
   return (
     <>
-      {schemas.map((s, i) => (
-        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: s }} />
-      ))}
-      <div dangerouslySetInnerHTML={{ __html: links }} />
-      <div dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className={bodyClass} dangerouslySetInnerHTML={{ __html: body }} />
+      <PageHero
+        kicker="SEO Services in Mumbai"
+        title={SEO_PAGE.h1}
+        lede="Technical audits, local SEO, content strategy, AEO, GEO and LLM SEO — hardcoded into this route so ranking structure can stay while the UI changes."
+      />
+      <div className="mx-auto max-w-3xl px-6 pb-24 md:px-10">
+        <h2 className="font-display text-3xl">Local SEO in Mumbai</h2>
+        <p className="mt-4 text-white/65">
+          D&apos;Genius Solutions offers SEO services in Mumbai for businesses that want stronger visibility on Google
+          Search, Google AI Overviews, featured snippets, voice search, and AI-led discovery platforms.
+        </p>
+        <Accordion type="single" collapsible className="mt-10">
+          {faqs.map((faq) => (
+            <AccordionItem key={faq.id} value={faq.id}>
+              <AccordionTrigger>{faq.q}</AccordionTrigger>
+              <AccordionContent>{faq.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
     </>
   );
 }
