@@ -21,6 +21,7 @@ export default function Page() {
 
   return (
     <>
+      <div data-dgs-home="cinematic-v2" hidden />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <HomeView />

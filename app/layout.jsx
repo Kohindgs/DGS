@@ -22,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en-IN">
-      <body className={`${display.variable} ${sans.variable} antialiased`}>
+      <body className={`${display.variable} ${sans.variable} antialiased`} data-dgs-ui="cinematic-v2">
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

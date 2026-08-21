@@ -1,5 +1,5 @@
 import PageHero from '@/app/components/site/PageHero';
-import { ABOUT_PAGE } from '@/lib/content';
+import { ABOUT_PAGE, PROOF } from '@/lib/content';
 
 export const metadata = {
   title: ABOUT_PAGE.title,
@@ -32,9 +32,17 @@ export default function AboutPage() {
         <article className="md:col-span-2 rounded-[2rem] border border-white/10 bg-white/[0.03] p-8">
           <h2 className="font-display text-2xl">Mumbai, with work across India, Dubai and the UAE</h2>
           <p className="mt-4 max-w-3xl text-white/65">
-            Unit 202, Amore Edge, Swami Vivekanand Road, Govind Dham, Khar West. 20+ people. 200+ brands. Same facts as
-            the live site — presented as editorial cinema instead of a WordPress template.
+            Unit 202, Amore Edge, Swami Vivekanand Road, Govind Dham, Khar West. Same facts as the live site — presented
+            as editorial cinema instead of a WordPress template.
           </p>
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {PROOF.map((item) => (
+              <div key={item.v}>
+                <p className="font-display text-3xl">{item.k}</p>
+                <p className="text-xs text-white/45">{item.v}</p>
+              </div>
+            ))}
+          </div>
         </article>
       </div>
     </>

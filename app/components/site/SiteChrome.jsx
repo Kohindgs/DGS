@@ -2,129 +2,111 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { BRAND, NAV } from '@/lib/content';
-import { Button } from '@/app/components/ui/button';
-import CursorGlow from '@/app/components/site/CursorGlow';
+import CinematicCursor from '@/app/components/site/CinematicCursor';
+import { TalkProvider, useTalk } from '@/app/components/site/TalkContext';
 
-export default function SiteChrome({ children }) {
+function ChromeInner({ children }) {
   const [open, setOpen] = useState(false);
-  const [talk, setTalk] = useState(false);
+  const { open: talk, setOpen: setTalk, openTalk } = useTalk();
 
   return (
-    <div className="relative min-h-screen bg-[#05060a] text-[#f4f1ea]">
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute inset-0 dgs-spectrum opacity-25" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,transparent,rgba(5,6,10,0.92)_58%)]" />
-        <div className="absolute inset-0 dgs-noise opacity-40" />
-      </div>
-      <CursorGlow />
+    <div className="dgs-root relative min-h-screen text-[#f3efe6]" data-dgs-ui="cinematic-v2">
+      <CinematicCursor />
 
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8">
-        <div className="dgs-glass mx-auto flex max-w-6xl items-center justify-between rounded-full px-3 py-2 pl-4">
-          <Link href="/" className="flex items-center gap-3">
-            <img src={BRAND.logo} alt={BRAND.name} width={36} height={36} className="size-9 rounded-full object-cover" />
-            <span className="font-display text-sm tracking-[0.18em] uppercase">{BRAND.short}</span>
+      <header className="fixed inset-x-0 top-0 z-50">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-5 md:px-10">
+          <Link href="/" data-cursor="Home" className="flex items-center gap-3">
+            <img src={BRAND.logo} alt="" width={34} height={34} className="size-8 rounded-full object-cover" />
+            <span className="font-display text-sm tracking-[0.28em] uppercase">{BRAND.short}</span>
           </Link>
-          <nav className="hidden items-center gap-7 text-sm text-white/70 md:flex">
-            {NAV.map((item) => (
-              <Link key={item.href} href={item.href} className="transition hover:text-white">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="spectrum" onClick={() => setTalk(true)}>
-              Talk to DGS
-            </Button>
-            <button
-              className="grid size-10 place-items-center rounded-full border border-white/10 md:hidden"
-              onClick={() => setOpen((v) => !v)}
-              aria-label="Menu"
-            >
-              {open ? <X size={18} /> : <Menu size={18} />}
+          <div className="flex items-center gap-6">
+            <button type="button" data-cursor="Talk" className="hidden text-xs tracking-[0.28em] uppercase md:block" onClick={openTalk}>
+              Talk
+            </button>
+            <button type="button" data-cursor="Menu" className="text-xs tracking-[0.32em] uppercase" onClick={() => setOpen(true)}>
+              Index
             </button>
           </div>
         </div>
-        {open && (
-          <div className="dgs-glass mx-auto mt-2 max-w-6xl rounded-3xl p-6 md:hidden">
-            <div className="flex flex-col gap-4 text-lg">
-              {NAV.map((item) => (
-                <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
       </header>
+
+      {open && (
+        <div className="fixed inset-0 z-[70] overflow-auto bg-[#05060a] p-6 md:p-12">
+          <div className="mx-auto flex max-w-[1400px] items-start justify-between">
+            <p className="text-[11px] tracking-[0.4em] text-white/40 uppercase">Index</p>
+            <button type="button" className="text-xs tracking-[0.32em] uppercase" onClick={() => setOpen(false)}>
+              Close
+            </button>
+          </div>
+          <nav className="mx-auto mt-16 flex max-w-[1400px] flex-col">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                data-cursor="Go"
+                onClick={() => setOpen(false)}
+                className="flex items-baseline justify-between border-b border-white/10 py-5"
+              >
+                <span className="font-display text-5xl tracking-[-0.05em] md:text-8xl">{item.label}</span>
+                <span className="text-sm text-white/35">{item.index}</span>
+              </Link>
+            ))}
+          </nav>
+          <button type="button" className="dgs-pill dgs-pill-hot mt-10" onClick={() => { setOpen(false); openTalk(); }}>
+            Talk to DGS
+          </button>
+        </div>
+      )}
 
       <main>{children}</main>
 
-      <footer className="relative mx-auto mt-24 max-w-6xl px-6 pb-12 md:px-8">
-        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 md:p-12">
-          <p className="font-display text-4xl leading-[0.95] md:text-6xl">
-            Search, sites, social,
-            <span className="dgs-spectrum bg-clip-text text-transparent"> cinema.</span>
-          </p>
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
-            <div>
-              <p className="text-xs tracking-[0.2em] text-white/40 uppercase">Studio</p>
-              <p className="mt-3 text-white/70">{BRAND.city}</p>
-              <a className="mt-2 block text-white/70 hover:text-white" href={`mailto:${BRAND.email}`}>
-                {BRAND.email}
-              </a>
-              <a className="mt-1 block text-white/70 hover:text-white" href={`tel:${BRAND.phone.replace(/\s/g, '')}`}>
-                {BRAND.phone}
-              </a>
-            </div>
-            <div className="flex flex-col gap-2 text-white/70">
-              <Link href="/about-us">About</Link>
-              <Link href="/services/seo-services-in-mumbai">SEO Services in Mumbai</Link>
-              <Link href="/services/ai-video-production-agency">AI Video Production</Link>
-            </div>
-            <div>
-              <Button asChild variant="outline">
-                <a href={BRAND.whatsapp} target="_blank" rel="noreferrer">
-                  WhatsApp <ArrowUpRight size={16} />
-                </a>
-              </Button>
-            </div>
+      <footer className="mx-auto max-w-[1400px] px-5 pb-12 pt-24 md:px-10">
+        <p className="font-display text-[12vw] leading-[0.8] tracking-[-0.07em] md:text-9xl">
+          Search into
+          <br />
+          <span className="dgs-spectrum bg-clip-text text-transparent">cinema.</span>
+        </p>
+        <div className="mt-12 grid gap-8 border-t border-white/10 pt-8 md:grid-cols-3">
+          <div>
+            <p className="text-[11px] tracking-[0.3em] text-white/35 uppercase">Studio</p>
+            <p className="mt-3">{BRAND.city}</p>
+            <a className="mt-2 block" href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
+            <a className="mt-1 block" href="tel:+919987922901">{BRAND.phone}</a>
           </div>
-          <p className="mt-10 text-xs text-white/35">© {new Date().getFullYear()} {BRAND.name}. New UI on Dimgrey. Content unchanged.</p>
+          <div className="flex flex-col gap-2 text-white/70">
+            {NAV.map((item) => (
+              <Link key={item.href} href={item.href}>{item.label}</Link>
+            ))}
+          </div>
+          <a data-cursor="WhatsApp" href={BRAND.whatsapp} target="_blank" rel="noreferrer" className="dgs-pill w-fit">
+            WhatsApp <ArrowUpRight size={16} />
+          </a>
         </div>
       </footer>
 
       {talk && (
-        <div className="fixed inset-0 z-[80] grid place-items-center bg-black/70 p-4" onClick={() => setTalk(false)}>
-          <div
-            className="dgs-glass w-full max-w-md rounded-3xl p-8"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-labelledby="talk-title"
-          >
-            <h2 id="talk-title" className="font-display text-3xl">
-              Talk to DGS
-            </h2>
-            <p className="mt-3 text-sm text-white/65">
-              Same Mumbai team. New surface. Email or WhatsApp — no plugin form.
-            </p>
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-black/75 p-4" onClick={() => setTalk(false)}>
+          <div className="w-full max-w-md rounded-[2rem] border border-white/10 bg-[#0b0c12] p-8" onClick={(e) => e.stopPropagation()}>
+            <h2 className="font-display text-4xl">Talk to DGS</h2>
+            <p className="mt-3 text-white/60">Hardcoded contact. No Fluent Forms.</p>
             <div className="mt-6 flex flex-col gap-3">
-              <Button asChild variant="spectrum">
-                <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
-              </Button>
-              <Button asChild variant="outline">
-                <a href={BRAND.whatsapp} target="_blank" rel="noreferrer">
-                  WhatsApp
-                </a>
-              </Button>
-              <Button variant="ghost" onClick={() => setTalk(false)}>
-                Close
-              </Button>
+              <a className="dgs-pill dgs-pill-hot justify-center" href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
+              <a className="dgs-pill justify-center" href={BRAND.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
+              <button type="button" className="text-sm text-white/40" onClick={() => setTalk(false)}>Close</button>
             </div>
           </div>
         </div>
       )}
     </div>
+  );
+}
+
+export default function SiteChrome({ children }) {
+  return (
+    <TalkProvider>
+      <ChromeInner>{children}</ChromeInner>
+    </TalkProvider>
   );
 }
