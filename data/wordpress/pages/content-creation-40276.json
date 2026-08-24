@@ -1,0 +1,30 @@
+{
+  "wordpressId": 40276,
+  "type": "service",
+  "slug": "content-creation",
+  "canonical": "/services/content-creation/",
+  "title": "Content Creation Services | 100+ Clients | D'Genius Solutions",
+  "modified": "2026-05-08T13:35:58",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM live rendered page (VERIFIED BY ARENA 2026-08-24). Wording preserved verbatim. Note: this route's content.rendered carries a very large inline <style>/<script> hero module (verified ~23 REST chunks).",
+  "headings": [
+    "Content that transforms brands (H1)",
+    "Content writing services (H2)",
+    "Why Content Writing Matters in 2026 (H2)",
+    "Our Content Creation Process (H2)",
+    "Mumbai content writing agency delivering proven results (H2)",
+    "Content that drives results (H2)"
+  ],
+  "paragraphs": [
+    "Strategic content creation for modern brands.",
+    "Social media, copywriting, storytelling.",
+    "We create strategic content writing that drives engagement, builds authority, and converts your audience into loyal customers."
+  ],
+  "lists": ["SEO Content Writing", "Website Copywriting", "Social Media Content", "Video Content Production", "Email Marketing & Newsletters", "Technical Writing & White Papers", "E-commerce Product Content", "Brand Storytelling & Thought Leadership"],
+  "links": {"internal": ["#portfolio", "#contact-form"], "external": ["https://contentmarketinginstitute.com/", "https://developers.google.com/search", "https://moz.com/", "https://www.searchenginejournal.com/"]},
+  "images": [],
+  "faq": [],
+  "forms": ["Get Started / Start Your Project (#contact-form) — Fluent Forms reference; backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD likely; NOT VERIFIABLE via REST"]
+}

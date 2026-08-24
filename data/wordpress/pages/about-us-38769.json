@@ -1,0 +1,19 @@
+{
+  "wordpressId": 38769,
+  "type": "page",
+  "slug": "about-us",
+  "canonical": "/about-us/",
+  "title": "About Us",
+  "modified": "2026-06-10T10:35:00+05:30",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM app/about-us/_wp_data/body.html (PREVIOUSLY CAPTURED full rendered HTML). Wording preserved verbatim.",
+  "headings": ["About D'Genius Solutions (H1)", "mission/values/team sections (H2/H3 in body.html)"],
+  "paragraphs": ["Full company story, founders, mission, capabilities, values. See app/about-us/_wp_data/body.html for complete copy."],
+  "lists": ["Founders: Kohin Bellara, Sneha Bellara (from schema)"],
+  "links": {"internal": ["/", "/services/...", "/contact-us/"], "external": []},
+  "images": [],
+  "faq": [],
+  "forms": ["Contact/enquiry form present in body.html — backend REQUIRES ACCESS"],
+  "schema": ["Organization (from meta.json, PREVIOUSLY CAPTURED)"]
+}

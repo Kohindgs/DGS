@@ -1,0 +1,19 @@
+{
+  "wordpressId": 40114,
+  "type": "service",
+  "slug": "ai-video-production-agency",
+  "canonical": "/services/ai-video-production-agency/",
+  "title": "AI Video Production Agency | D'Genius Solutions",
+  "modified": "2026-08-04T10:34:24",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM app/services/ai-video-production-agency/_wp_data/body.html (PREVIOUSLY CAPTURED full rendered HTML). Wording preserved verbatim.",
+  "headings": ["AI Video Production (H1)", "service sections (H2/H3 in body.html)"],
+  "paragraphs": ["AI video production services, workflows, creative, ad creative, proof. See app/services/ai-video-production-agency/_wp_data/body.html for full copy."],
+  "lists": [],
+  "links": {"internal": [], "external": []},
+  "images": [],
+  "faq": [],
+  "forms": ["Enquiry form in body.html — backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD (from meta.json, PREVIOUSLY CAPTURED)"]
+}

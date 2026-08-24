@@ -102,3 +102,27 @@ No `rank_math_*`, no `_elementor_data`, no Yoast/SEO meta.
 See `docs/DGS-ARENA-CAPABILITY-MAP.md` §5 for the Tier-1 ranking route table. Next step is
 to pull each Tier-1 route's full REST record into `data/wordpress/` and produce
 `docs/DGS-CONTENT-PARITY.md`.
+
+---
+
+## 12. PHASE 1 EXTRACTION LIMITATION (verified 2026-08-24)
+
+During Tier-1 extraction a concrete capture limitation was confirmed:
+- Sandbox `bash`/`curl` egress to `dgeniussolutions.com` is blocked (HTTP 000) — **byte-faithful
+  raw JSON snapshots of `content.rendered` cannot be written to disk by curl**.
+- The Arena page-fetch tool CAN reach the site, but it returns **markdown/text, not raw HTML**,
+  and it **chunks** large bodies. Several Tier-1 service pages embed very large inline
+  `<style>`/`<script>` blocks inside `content.rendered` (e.g. content-creation verified ~23
+  REST chunks), so the tool cannot faithfully reconstruct the raw HTML.
+- **What was captured instead (all written to Git):**
+  - `data/wordpress/raw/*.json` — clean REST **metadata** (id, slug, type, link, title, status,
+    parent, modified, meta) for all 12 core Tier-1 routes + a geo-targeted manifest, plus a
+    faithful **visible-content snapshot** per route (preserving wording) marked by provenance.
+  - For the 4 prototype routes, the **previously captured full rendered HTML**
+    (`app/*/_wp_data/body.html`) remains the strongest raw migration source and is referenced.
+  - `data/wordpress/pages/*.json` — normalised structured content (headings, paragraphs, lists,
+    links, images+alt, FAQ, forms, schema notes) per route. Wording preserved verbatim.
+- **Honest consequence:** the raw-snapshot set is best-effort given the environment. Full
+  byte-exact REST dumps of `content.rendered` for all routes would require a machine with normal
+  outbound network (e.g. the production/Hostinger host or a CI runner) or authenticated REST
+  access. This is recorded as a limitation, not bypassed or fabricated.
