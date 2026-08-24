@@ -1,0 +1,38 @@
+{
+  "wordpressId": 62317,
+  "type": "service",
+  "slug": "geo",
+  "canonical": "/services/geo/",
+  "title": "GEO Services in Mumbai | D'Genius Solutions",
+  "modified": "2026-08-07T12:49:23",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM live rendered page (VERIFIED BY ARENA 2026-08-24). Wording preserved verbatim.",
+  "headings": [
+    "Generative Engine Optimization (GEO) Services in Mumbai (H1)",
+    "Generative Engine Optimization Services in Mumbai (H2)",
+    "What Is Generative Engine Optimization? (H2)",
+    "GEO Services We Provide in Mumbai (H2)",
+    "How GEO Helps You Rank in AI Search Results (H2)",
+    "How D'Genius Solutions Builds GEO Visibility (H2)",
+    "How We Measure GEO Performance (H2)",
+    "GEO for Measurable Growth (H2)"
+  ],
+  "paragraphs": [
+    "D'Genius Solutions provides Generative Engine Optimization services in Mumbai to help businesses improve visibility across Google AI Overviews, ChatGPT, Gemini, Perplexity and other AI-powered search experiences through entity optimization, answer-ready content, structured data, authority building and AI-search strategy.",
+    "GEO is not a replacement for SEO. It is the next visibility layer built for AI-generated answers, AI summaries, citations, and conversational search journeys.",
+    "GEO helps your brand become visible when users ask AI tools for recommendations, comparisons, expert opinions, or vendor shortlists."
+  ],
+  "lists": [
+    "Google AI Overview visibility and source inclusion",
+    "AI-assisted brand and agency recommendations",
+    "ChatGPT, Gemini and Perplexity discovery",
+    "Entity clarity and trusted brand citations",
+    "Commercial search visibility for Mumbai buyers"
+  ],
+  "links": {"internal": ["/services/seo-services-in-mumbai/", "/services/aeo-services-in-mumbai/", "/services/llm-seo-service/"], "external": ["tel:+919987922901", "https://wa.me/919987922901"]},
+  "images": ["https://www.dgeniussolutions.com/wp-content/uploads/2025/12/Weavings.webp | Weavings", "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/logo_v2.webp | TheWorldGrad", "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/Mka.webp | MKA", "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/Candour_london.webp | Candour London", "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/Plush_puppy.webp | Plush Puppy", "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/6cc96d6bca74009d4368.png.webp | Aertrip"],
+  "faq": [],
+  "forms": ["Get Free GEO Audit (#contact-form) — Fluent Forms reference; backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD likely; NOT VERIFIABLE via REST"]
+}

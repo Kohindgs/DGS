@@ -1,0 +1,37 @@
+{
+  "wordpressId": 64616,
+  "type": "service",
+  "slug": "performance-marketing",
+  "canonical": "/services/performance-marketing/",
+  "title": "Performance Marketing - D'Genius Solutions",
+  "modified": "2026-08-10T12:15:23",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM live rendered page (VERIFIED BY ARENA 2026-08-24). Wording preserved verbatim.",
+  "headings": [
+    "Performance Marketing for Qualified Leads, Sales & ROI (H1)",
+    "Platform Trust Signals That Support Performance Marketing (H2)",
+    "Brands That Have Trusted D’Genius Solutions (H2)",
+    "Visibility Data That Supports Paid Growth (H2)",
+    "What We Improve Before Scaling Ad Spend (H2)"
+  ],
+  "paragraphs": [
+    "D’Genius Solutions creates full-funnel performance marketing systems using Google Ads, Meta Ads, PPC campaigns, landing page optimisation, remarketing, conversion tracking and campaign reporting.",
+    "Google Ads — Search, PMax, PPC and remarketing campaigns.",
+    "Meta Ads — Facebook, Instagram and retargeting funnels.",
+    "Tracking — GA4, lead source, CTR, CPL and ROI reporting."
+  ],
+  "lists": ["Google Ads: Search, PMax, PPC, remarketing", "Meta Ads: Facebook, Instagram, retargeting", "Tracking: GA4, lead source, CTR, CPL, ROI"],
+  "links": {"internal": ["#dgs-performance-form", "#dgs-proof"], "external": []},
+  "images": [
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/new-Google-Partner-logo-png-large-size.png | Google Partner",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/Meta-Business-logo.webp | Meta Business Partner",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/t_clutch-5-star3208.logowik.com_.webp | Clutch 5 Star",
+    "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/06/goodfirms-logo-png_seeklogo-388492.png.webp | GoodFirms",
+    "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/06/Weavings-1.png.webp | Search Console performance chart",
+    "+ ~40 client logos (see raw snapshot)"
+  ],
+  "faq": [],
+  "forms": ["Get Free Campaign Audit (#dgs-performance-form) — Fluent Forms reference; backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD likely; NOT VERIFIABLE via REST"]
+}

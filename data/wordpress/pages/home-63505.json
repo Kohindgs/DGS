@@ -1,0 +1,20 @@
+{
+  "wordpressId": 63505,
+  "type": "page",
+  "slug": "best-digital-marketing-agency-in-mumbai",
+  "canonical": "/",
+  "title": "Digital Marketing Agency in Mumbai | D’Genius Solutions",
+  "modified": "2026-07-30T17:23:00+05:30",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM app/_wp_data/body.html (PREVIOUSLY CAPTURED full rendered HTML) + app/_wp_data/meta.json",
+  "note": "Normaliser does not change visible wording. Full source of truth = app/_wp_data/body.html.",
+  "headings": ["Digital Marketing Agency in Mumbai (H1)", "service sections (H2/H3 in body.html)", "client/portfolio/proof section", "FAQ section"],
+  "paragraphs": ["Full service digital marketing agency in Mumbai: connected search, websites, social, performance marketing, branding, AI-led creative production.", "See app/_wp_data/body.html for complete paragraph-level copy."],
+  "lists": ["SEO / AEO / GEO / LLM SEO", "Website Development", "Social Media Marketing", "Performance Marketing", "Branding", "Content Creation", "AI Video Production"],
+  "links": {"internal": ["/services/seo-services-in-mumbai/", "/services/aeo-services-in-mumbai/", "/services/geo/", "/services/llm-seo-service/", "/services/ai-video-production-agency/", "/about-us/", "/contact-us/", "/blogs/", "/portfolio/", "/our-services/"], "external": ["facebook", "instagram", "linkedin", "pinterest", "youtube", "wikidata", "crunchbase"]},
+  "images": ["https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Eureka-forbes_White.png (primaryImageOfPage)", "cropped-DGS-LOGO-1.webp (logo)", "client logos in body.html"],
+  "faq": ["What does D'Genius Solutions do?", "Why choose a full service digital marketing agency?", "How do your digital marketing services work together?", "Can you support both organic and paid growth?", "Where is D'Genius Solutions located?", "Do you provide website, creative and AI-led production under one team?"],
+  "forms": ["Contact/enquiry form present (Fluent Forms) — reference in body.html; backend integration REQUIRES ACCESS"],
+  "schema": ["Organization", "Place", "LocalBusiness", "WebSite", "WebPage", "Service", "FAQPage", "HowTo"] 
+}

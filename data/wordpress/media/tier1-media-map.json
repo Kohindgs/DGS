@@ -1,0 +1,37 @@
+{
+  "note": "Tier-1 referenced media mapping (brief §9). Attachment IDs confirmed where the REST media search was run; otherwise marked PENDING-FULL-MEDIA-PASS. source_url/alt captured from rendered Tier-1 content (CURRENTLY VERIFIED BY ARENA 2026-08-24). Many media URLs are Smush/WebP rewritten. Full 1,850-file download is NOT performed (brief §9).",
+  "confirmedById": [
+    {"id": 57659, "slug": "eureka-forbes_white", "source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Eureka-forbes_White.png", "alt": "D'Genius Solutions_Client", "mime": "image/png", "usedOn": ["aeo", "performance-marketing", "home"]},
+    {"id": 63751, "slug": "eureka_21_3_23", "source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Eureka_21_3_23.webp", "alt": "", "mime": "image/webp"}
+  ],
+  "referencedByUrl": [
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/ABEA-1.png", "alt": "Aditya Birla Education Academy client logo", "mime": "image/png", "usedOn": ["aeo", "performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Saint-gobian.png", "alt": "Saint Gobain client logo", "mime": "image/png", "usedOn": ["aeo", "performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Pantaloons.png", "alt": "Pantaloons client logo", "mime": "image/png", "usedOn": ["aeo", "performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Raymond.png", "alt": "Raymond client logo", "mime": "image/png", "usedOn": ["aeo", "performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Onida.png", "alt": "Onida client logo", "mime": "image/png", "usedOn": ["aeo", "performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Plush-puppy.png", "alt": "Plush Puppy client logo", "mime": "image/png", "usedOn": ["aeo", "performance-marketing", "geo", "llm", "social"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Candour-london.png", "alt": "Candour London client logo", "mime": "image/png", "usedOn": ["aeo", "performance-marketing", "geo", "llm", "social"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/Weavings.webp", "alt": "Weavings client logo", "mime": "image/webp", "usedOn": ["geo", "llm", "social", "performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/logo_v2.webp", "alt": "TheWorldGrad client logo", "mime": "image/webp", "usedOn": ["geo", "llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/Mka.webp", "alt": "MKA client logo", "mime": "image/webp", "usedOn": ["geo", "llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/6cc96d6bca74009d4368.png.webp", "alt": "Aertrip client logo", "mime": "image/webp", "usedOn": ["geo", "llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp", "alt": "D'Genius Solutions logo", "mime": "image/webp", "usedOn": ["all", "brand-logo"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp", "alt": "DGS Google AI Overview visibility result screenshot", "mime": "image/webp", "usedOn": ["aeo"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/03/LLM-SEO-1.webp", "alt": "LLM SEO proof — #1 on ChatGPT", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/03/AEO-SEO-1.webp", "alt": "Google AI Overview Ranking", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/03/AEO-SEO-2.webp", "alt": "Featured Snippet Capture", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/03/GEO-SEO_1.webp", "alt": "AI Overview Citation", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/03/GEO-SEO_2.webp", "alt": "Perplexity AI Citation", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/03/Local-SEO-1.webp", "alt": "Google Maps Local SEO visibility", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/06/Prime-Insights1.png.webp", "alt": "Prime Insights award", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/06/Corporate-Connect1.png.webp", "alt": "Corporate Connect award", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/06/GLA1.png.webp", "alt": "GLA award", "mime": "image/webp", "usedOn": ["llm"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/new-Google-Partner-logo-png-large-size.png", "alt": "Google Partner", "mime": "image/png", "usedOn": ["performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/Meta-Business-logo.webp", "alt": "Meta Business Partner", "mime": "image/webp", "usedOn": ["performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/06/Weavings-1.png.webp", "alt": "Search Console performance chart", "mime": "image/webp", "usedOn": ["performance-marketing"], "id": "PENDING"},
+    {"source_url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/dwybnftbrwz1gblk7rx4.webp", "alt": "Brand Guidelines", "mime": "image/webp", "usedOn": ["branding"], "id": "PENDING"},
+    {"source_url": "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600", "alt": "Weavings website preview", "mime": "image/jpeg", "usedOn": ["website-development-amc"], "id": "EXTERNAL-SHOT"}
+  ],
+  "summary": "Identified 20+ distinct Tier-1 referenced assets (client logos, trust badges, proof screenshots, award badges, portfolio previews). Full attachment-ID mapping requires a complete media-REST pass (recommended next extraction step). Do NOT copy all media; reference via CDN/Next Image with proper sizing in the rebuild."
+}

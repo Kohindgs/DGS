@@ -1,0 +1,14 @@
+{
+  "note": "Geo-targeted service pages identified in the capability map (Tier-1 extension). Metadata VERIFIED BY ARENA 2026-08-24 via REST /wp/v2/services. Deep rendered-content extraction for these routes is PARTIAL in this phase and deferred to a follow-up extraction pass.",
+  "fidelity": "Metadata current (id/slug/link/modified). Visible content snapshot NOT yet captured for these routes in this phase.",
+  "items": [
+    {"id": 64509, "slug": "seo-service-pune", "route": "/services/seo-service-pune/", "modified": "2026-07-31T19:00:48"},
+    {"id": 64533, "slug": "seo-services-in-hyderabad", "route": "/services/seo-services-in-hyderabad/", "modified": "2026-07-31T19:08:11"},
+    {"id": 64528, "slug": "seo-service-in-banglore", "route": "/services/seo-service-in-banglore/", "modified": "2026-07-31T19:04:28"},
+    {"id": 64543, "slug": "seo-service-in-gurugram", "route": "/services/seo-service-in-gurugram/", "modified": "2026-07-31T19:10:52"},
+    {"id": 64285, "slug": "dubai-seo", "route": "/services/dubai-seo/", "modified": "2026-06-09T19:57:41"},
+    {"id": 65132, "slug": "website-development-pune-page", "route": "/services/website-development-pune-page/", "modified": "2026-08-04T18:57:54"},
+    {"id": 64236, "slug": "ai-production-dubai-page", "route": "/services/ai-production-dubai-page/", "modified": "2026-06-09T17:13:15"}
+  ],
+  "status": "All routes exist in /wp/v2/services (VERIFIED BY ARENA). Content extraction PARTIAL — REQUIRES follow-up pass to capture full rendered copy per route."
+}

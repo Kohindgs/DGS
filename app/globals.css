@@ -1,73 +1,529 @@
-* {
+/* ==========================================================================
+   DGS — Spatial DGS Universe (First Experience: Header + Hero + Transition)
+   Base: near-black. Accent colours are treated as emitted light, not flat fills.
+   Typography: Manrope (editorial, large scale).
+   ========================================================================== */
+
+:root {
+  --ink: #07070a;
+  --ink-2: #0b0b10;
+  --ink-3: #101018;
+  --cyan: #00d4ff;
+  --purple: #9d4edd;
+  --coral: #fd5c62;
+  --yellow: #f7d757;
+  --text: #f4f5f7;
+  --text-dim: rgba(244, 245, 247, 0.62);
+  --text-faint: rgba(244, 245, 247, 0.42);
+  --line: rgba(255, 255, 255, 0.1);
+  --font: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
 }
 
+html {
+  scroll-behavior: auto;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #0f172a;
-  color: #f8fafc;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  font-family: var(--font);
+  background: var(--ink);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  line-height: 1.5;
 }
 
-.hero-container {
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* --- Accessibility: visually-hidden skip link (appears on keyboard focus) --- */
+.dgs-skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 10000;
+  padding: 12px 20px;
+  background: var(--coral);
+  color: #0a0a0d;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: top 0.2s ease;
+}
+.dgs-skip-link:focus {
+  top: 16px;
+}
+
+/* Focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.dgs-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex: 1;
-  padding: 2rem;
-  text-align: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px clamp(20px, 4vw, 56px);
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease,
+    padding 0.4s ease;
+  border-bottom: 1px solid transparent;
 }
-
-.title {
-  font-size: 4rem;
+.dgs-header.is-scrolled {
+  background: rgba(7, 7, 10, 0.68);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.dgs-header__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.dgs-header__logo img {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+.dgs-header__logo-text {
   font-weight: 800;
-  background: linear-gradient(135deg, #38bdf8, #818cf8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 1rem;
-  animation: fade-in-up 0.8s ease-out;
+  letter-spacing: -0.01em;
+  font-size: 15px;
+  white-space: nowrap;
 }
-
-.subtitle {
-  font-size: 1.5rem;
-  color: #94a3b8;
-  max-width: 600px;
-  margin-bottom: 2rem;
-  animation: fade-in-up 1s ease-out;
+.dgs-header__nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 34px);
 }
-
-.cta-button {
-  padding: 0.75rem 2rem;
-  font-size: 1.125rem;
+.dgs-header__link {
+  font-size: 14px;
   font-weight: 600;
-  color: #ffffff;
-  background: #6366f1;
+  color: var(--text-dim);
+  letter-spacing: 0.01em;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.25s ease;
+}
+.dgs-header__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dgs-header__link:hover {
+  color: var(--text);
+}
+.dgs-header__link:hover::after {
+  transform: scaleX(1);
+}
+.dgs-header__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a0a0d;
+  background: var(--text);
+  padding: 11px 18px;
+  border-radius: 999px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+.dgs-header__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0, 212, 255, 0.25);
+}
+.dgs-header__cta svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ==========================================================================
+   HERO (experience travel = 200vh, sticky inner = 100svh)
+   ========================================================================== */
+.dgs-hero {
+  position: relative;
+  height: 200vh;
+}
+.dgs-hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* WebGL / 3D background fills the viewport */
+.dgs-hero-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.dgs-hero-scene canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+/* Static fallback shown when WebGL is unavailable / reduced motion */
+.dgs-hero-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(60% 50% at 78% 30%, rgba(0, 212, 255, 0.16), transparent 60%),
+    radial-gradient(50% 46% at 18% 78%, rgba(253, 92, 98, 0.14), transparent 60%),
+    radial-gradient(50% 50% at 55% 45%, rgba(157, 78, 221, 0.12), transparent 60%),
+    var(--ink);
+}
+
+/* Foreground content (left / foreground) */
+.dgs-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(96px, 14vh, 140px) clamp(20px, 5vw, 72px) 40px;
+  max-width: 100%;
+  will-change: transform, opacity;
+}
+.dgs-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: clamp(18px, 3vh, 30px);
+}
+.dgs-hero-badge::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--coral);
+}
+.dgs-hero-title {
+  margin: 0;
+  font-size: clamp(2.6rem, 6.6vw, 6.1rem);
+  line-height: 0.98;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  max-width: 12ch;
+  will-change: transform, opacity;
+}
+.dgs-hero-title .hl {
+  color: var(--coral);
+  text-shadow: 0 0 30px rgba(253, 92, 98, 0.45);
+}
+.dgs-hero-support {
+  margin: clamp(18px, 3vh, 28px) 0 0;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--text-dim);
+  font-weight: 400;
+  max-width: 52ch;
+  will-change: transform, opacity;
+}
+.dgs-hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: clamp(26px, 4vh, 38px);
+}
+.dgs-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a0a0d;
+  background: var(--cyan);
+  padding: 15px 26px;
+  border-radius: 999px;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.28);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: none;
-  border-radius: 9999px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
-  animation: fade-in-up 1.2s ease-out;
 }
-
-.cta-button:hover {
-  background: #4f46e5;
+.dgs-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.5);
+  box-shadow: 0 8px 34px rgba(0, 212, 255, 0.45);
+}
+.dgs-btn-primary svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+.dgs-btn-primary:hover svg {
+  transform: translateX(4px);
+}
+.dgs-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  padding: 15px 6px;
+  border-bottom: 1px solid var(--line);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.dgs-btn-secondary:hover {
+  border-color: var(--text);
 }
 
-@keyframes fade-in-up {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
+/* Stat line */
+.dgs-hero-statline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 4vw, 56px);
+  margin-top: clamp(30px, 6vh, 52px);
+  border-top: 1px solid var(--line);
+  padding-top: clamp(18px, 3vh, 26px);
+}
+.dgs-hero-statline > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dgs-hero-statline strong {
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.dgs-hero-statline span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Scroll cue */
+.dgs-scroll-cue {
+  position: absolute;
+  left: clamp(20px, 5vw, 72px);
+  bottom: 26px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.dgs-scroll-cue::after {
+  content: "";
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(var(--text-faint), transparent);
+}
+
+/* Floating real-work media cards (DOM over canvas — no CORS texture issues) */
+.dgs-hero-media {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.dgs-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.dgs-hero-media .dgs-media-cap {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #0a0a0d;
+  background: var(--yellow);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.dgs-hero-media--a { top: 16%; right: 8%; width: min(15vw, 210px); aspect-ratio: 4/3; transform: rotate(3deg); }
+.dgs-hero-media--b { top: 52%; right: 20%; width: min(13vw, 180px); aspect-ratio: 4/3; transform: rotate(-3deg); }
+.dgs-hero-media--c { top: 30%; right: 34%; width: min(11vw, 150px); aspect-ratio: 4/3; transform: rotate(1deg); }
+
+/* ==========================================================================
+   NEXT SECTION (the experience the first scroll resolves into)
+   Minimal teaser of the "Search becomes dominant" system — NOT the full
+   services section.
+   ========================================================================== */
+.dgs-next {
+  position: relative;
+  z-index: 5;
+  background: var(--ink);
+  padding: clamp(80px, 12vh, 140px) clamp(20px, 5vw, 72px);
+  border-top: 1px solid var(--line);
+}
+.dgs-next__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 18px;
+}
+.dgs-next h2 {
+  font-size: clamp(1.9rem, 4.2vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  max-width: 24ch;
+  margin: 0 0 34px;
+}
+.dgs-next h2 .hl {
+  color: var(--coral);
+}
+.dgs-sys-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.dgs-sys {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px;
+  background: var(--ink-2);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.dgs-sys:hover {
+  border-color: var(--accent, var(--cyan));
+  transform: translateY(-3px);
+}
+.dgs-sys .num {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--accent, var(--cyan));
+}
+.dgs-sys h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 10px 0 0;
+  letter-spacing: -0.01em;
+}
+.dgs-sys p {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  margin: 8px 0 0;
+  line-height: 1.55;
+}
+.dgs-sys--cyan { --accent: var(--cyan); }
+.dgs-sys--coral { --accent: var(--coral); }
+.dgs-sys--purple { --accent: var(--purple); }
+.dgs-sys--yellow { --accent: var(--yellow); }
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 900px) {
+  .dgs-header__nav {
+    display: none;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  .dgs-sys-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dgs-hero-media--a { right: 4%; width: 34vw; top: 12%; }
+  .dgs-hero-media--b { right: 10%; width: 30vw; top: 40%; }
+  .dgs-hero-media--c { display: none; }
+}
+
+@media (max-width: 560px) {
+  .dgs-header {
+    padding: 14px 18px;
+  }
+  .dgs-header__logo-text {
+    font-size: 13px;
+  }
+  .dgs-hero-content {
+    padding: 92px 18px 24px;
+  }
+  .dgs-hero-title {
+    font-size: clamp(2.2rem, 13vw, 3rem);
+  }
+  .dgs-sys-grid {
+    grid-template-columns: 1fr;
+  }
+  .dgs-hero-media--a,
+  .dgs-hero-media--b {
+    opacity: 0.85;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION — elegant static state, all content available.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .dgs-hero {
+    height: 100svh;
+  }
+  .dgs-hero-sticky {
+    position: relative;
+    top: auto;
+    height: 100svh;
+  }
+  .dgs-hero-title,
+  .dgs-hero-support,
+  .dgs-hero-content {
+    will-change: auto;
+  }
+  .dgs-hero-media {
+    display: none;
   }
 }

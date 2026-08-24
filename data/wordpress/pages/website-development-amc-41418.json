@@ -1,0 +1,31 @@
+{
+  "wordpressId": 41418,
+  "type": "service",
+  "slug": "website-development-amc",
+  "canonical": "/services/website-development-amc/",
+  "title": "Website Development Company in Mumbai | Web Design & AMC",
+  "modified": "2026-07-31T18:26:53",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM live rendered page (VERIFIED BY ARENA 2026-08-24). Wording preserved verbatim.",
+  "headings": [
+    "Website Development Company in Mumbai Built for Leads, SEO & Growth (H1)",
+    "Website Delivery Supported by Strategy, Search and Ongoing Care (H2)",
+    "Selected Website Projects Across Industries (H2)",
+    "Start a Website Project (H2)",
+    "What Does a Website Development Company in Mumbai Do? (H2)",
+    "Your Website May Be Losing Leads Before You Speak (H2)",
+    "Complete Website Development Expertise on One Authoritative Page (H2)"
+  ],
+  "paragraphs": [
+    "D'Genius Solutions is a website development company in Mumbai creating responsive, conversion-focused and SEO-ready websites with WordPress, HTML, Next.js, React, PHP and SCSS.",
+    "A website development company plans, designs, develops, launches and maintains websites that help businesses communicate clearly, appear in search and convert visitors into enquiries.",
+    "A slow, outdated or poorly structured website can reduce trust, weaken search visibility and make high-intent visitors leave before they understand your offer."
+  ],
+  "lists": ["Onida — Website development and ongoing AMC support", "Weavings — Website development, AMC, SEO and performance support", "HumanXT — Website revamp", "Better Ceasons — Modern Next.js and headless website development"],
+  "links": {"internal": ["#website-project-form", "#recent-work", "/services/seo-services-in-mumbai/", "/services/aeo-services-in-mumbai/", "/services/geo/", "/services/llm-seo-service/"], "external": ["https://humanxt.com/", "https://www.weavings.in/", "https://katherinesgallery.in/", "https://betterceasons.com/"]},
+  "images": ["https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600 | Weavings website preview"],
+  "faq": [],
+  "forms": ["Book Strategy Call / Discuss Your Website Project (#website-project-form) — Fluent Forms reference; backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD likely; NOT VERIFIABLE via REST"]
+}

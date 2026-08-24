@@ -1,0 +1,19 @@
+{
+  "wordpressId": 40278,
+  "type": "service",
+  "slug": "seo-services-in-mumbai",
+  "canonical": "/services/seo-services-in-mumbai/",
+  "title": "SEO Services in Mumbai | D'Genius Solutions",
+  "modified": "2026-08-06T19:10:12",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM app/services/seo-services-in-mumbai/_wp_data/body.html (PREVIOUSLY CAPTURED full rendered HTML). Wording preserved verbatim.",
+  "headings": ["SEO Services in Mumbai (H1)", "service sections (H2/H3 in body.html)"],
+  "paragraphs": ["Complete SEO service sections (on-page, off-page, technical, content, local SEO, reporting, proof). See app/services/seo-services-in-mumbai/_wp_data/body.html for full copy."],
+  "lists": [],
+  "links": {"internal": [], "external": []},
+  "images": [],
+  "faq": [],
+  "forms": ["Enquiry form in body.html — backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD (from meta.json, PREVIOUSLY CAPTURED)"]
+}

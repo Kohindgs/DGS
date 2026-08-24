@@ -1,0 +1,29 @@
+{
+  "wordpressId": 40112,
+  "type": "service",
+  "slug": "social-media-marketing",
+  "canonical": "/services/social-media-marketing/",
+  "title": "Social Media Marketing | 100+ Clients | D'Genius Solutions",
+  "modified": "2026-06-26T10:57:13",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM live rendered page (VERIFIED BY ARENA 2026-08-24). Wording preserved verbatim.",
+  "headings": [
+    "Transform Your Social Media Into a Strategic Revenue Channel (H1)",
+    "Most Brands Are Hemorrhaging Opportunities (H2)",
+    "We Only Accept 5 New Clients This Quarter (H2)",
+    "Premium Social Media Marketing Services (H2)",
+    "Case Studies That Speak Results (H2)",
+    "Why Leading Brands Choose Our Social Media Marketing Agency (H2)"
+  ],
+  "paragraphs": [
+    "Mumbai's leading social media marketing agency delivering expert social media marketing services for ambitious brands.",
+    "We architect data-driven social media strategies that deliver 3X engagement, premium leads, and measurable business results."
+  ],
+  "lists": ["Strategic Social Management", "Premium Content Creation", "Performance Advertising", "Influencer Marketing", "Community Management", "Analytics & Reporting"],
+  "links": {"internal": ["#smm-form"], "external": ["https://wa.me/919987922901"]},
+  "images": ["https://www.dgeniussolutions.com/wp-content/uploads/2025/12/Weavings.webp | Weavings client logo", "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/logo_v2-300x86.png | The WorldGrad client logo", "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/logo-300x109.png | MKA client logo", "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Candour-london.png | Candour London", "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Plush-puppy.png | Plush Puppy", "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/6cc96d6bca74009d4368.png.webp | Aertrip"],
+  "faq": [],
+  "forms": ["Schedule Strategy Call (#smm-form) — Fluent Forms reference; backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD likely; NOT VERIFIABLE via REST"]
+}

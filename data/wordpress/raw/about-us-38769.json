@@ -1,0 +1,18 @@
+{
+  "wordpressId": 38769,
+  "type": "page",
+  "slug": "about-us",
+  "route": "/about-us/",
+  "link": "https://www.dgeniussolutions.com/about-us/",
+  "title": "About Us",
+  "status": "publish",
+  "parent": 0,
+  "modified": "2026-06-10T10:35:00+05:30",
+  "featuredMedia": 0,
+  "meta": ["_acf_changed", "om_disable_all_campaigns", "_monsterinsights_skip_tracking", "footnotes"],
+  "canonical": "/about-us/",
+  "fidelity": "PREVIOUSLY CAPTURED — full rendered HTML committed at app/about-us/_wp_data/body.html. REST meta exposed only the 4 keys listed.",
+  "migrationSource": "app/about-us/_wp_data/body.html",
+  "schemaSource": "app/about-us/_wp_data/meta.json (PREVIOUSLY CAPTURED — NOT CURRENTLY VERIFIED)",
+  "contentSnapshot": "About D'Genius Solutions — company story, founders (Kohin Bellara, Sneha Bellara), mission, capabilities, values, team/approach. Full visible copy preserved in app/about-us/_wp_data/body.html."
+}

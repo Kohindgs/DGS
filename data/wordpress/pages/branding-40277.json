@@ -1,0 +1,41 @@
+{
+  "wordpressId": 40277,
+  "type": "service",
+  "slug": "branding",
+  "canonical": "/services/branding/",
+  "title": "Branding Services | 100+ Clients | D'Genius Solutions",
+  "modified": "2026-05-08T13:36:39",
+  "parent": 0,
+  "featuredMedia": null,
+  "provenance": "NORMALISED FROM live rendered page (VERIFIED BY ARENA 2026-08-24). Wording preserved verbatim.",
+  "headings": [
+    "Transform Your Brand Identity Into Market Dominance (H1)",
+    "Why Brand Identity Design Matters for Mumbai Businesses (H2)",
+    "Brand Identity Excellence Portfolio (H2)",
+    "Corporate Communication & Brand Identity (H3)",
+    "Employer Branding That Attracts Talent (H3)",
+    "Offline Branding & Physical Brand Experiences (H3)",
+    "The Real Cost of Inconsistent Brand Identity (H2)",
+    "2026 Brand Trends (H2)"
+  ],
+  "paragraphs": [
+    "Strategic brand design delivering 39.7% higher recognition and measurable business growth across India.",
+    "The corporate branding landscape in India is transforming rapidly, with Mumbai, Bangalore, and Delhi leading 69% of design studio distribution."
+  ],
+  "lists": ["Brand Guidelines & Visual Standards Documentation", "Corporate Presentation Design Systems", "Investor Relations & Communication Materials", "Internal Brand Activation Programs", "Stakeholder Communication Frameworks"],
+  "links": {"internal": ["#bpContactModule", "#bpPremiumModule"], "external": []},
+  "images": [
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/dwybnftbrwz1gblk7rx4.webp | Brand Guidelines",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Screenshot-2026-01-09-113255.webp | Corporate Presentation",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Screenshot-2026-01-09-175222-1.webp | Corporate Profile",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Picture1.webp | Communication Materials",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Wonder-Visiting-Card_Mockup1.webp | Brand Standards",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/qd8lvn62midfefpxh9cx.webp | EVP Design",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/th9tcqslku0adiwks2st.webp | Career Portal",
+    "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/wli88npu4bcbpkpjtv9h.webp | Talent Materials",
+    "+ packaging/signage/environmental mockups (see raw snapshot)"
+  ],
+  "faq": [],
+  "forms": ["Build Your Brand Identity (#bpContactModule) — Fluent Forms reference; backend REQUIRES ACCESS"],
+  "schema": ["Service JSON-LD likely; NOT VERIFIABLE via REST"]
+}
