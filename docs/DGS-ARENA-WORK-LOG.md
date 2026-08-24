@@ -106,6 +106,58 @@ out of the box" brief; its service worlds map directly onto the verified service
 
 ---
 
+## 4b. BUILD — First Experience (Header + Hero + First Scroll Transition)
+
+**Approved direction (visual language):** A. Spatial DGS Universe + selective Cinematic
+Work-First elements.
+
+Built and committed on `arena/01a034c2-dgs` (preview served from the workspace — do not deploy):
+
+| File | Purpose |
+| --- | --- |
+| `app/page.jsx` | Composes SkipLink + Header + Hero + NextSection (server) |
+| `app/layout.jsx` | Global metadata (WP title/desc), Manrope font link |
+| `app/globals.css` | Design system: emitted-light palette, editorial Manrope, header, hero, next-section, responsive, reduced-motion |
+| `app/lib/dgs-content.js` | Verified WP homepage copy + real DGS asset URLs (source of truth) |
+| `app/lib/sceneState.js` | Shared mutable state bridging GSAP scroll → WebGL scene |
+| `app/lib/webgl.js` | WebGL support + reduced-motion detection |
+| `app/components/dgs3d/Scene3D.jsx` | R3F spatial universe: core light-structure, SEARCH network, CREATIVE colour surfaces, TECHNOLOGY grid, AI particles, connectors, starfield |
+| `app/components/dgs3d/HeroScene.jsx` | Canvas wrapper + error boundary + static fallback |
+| `app/components/dgs3d/Hero.jsx` | Hero composition + GSAP/ScrollTrigger first-scroll transition |
+| `app/components/dgs3d/Header.jsx` | Premium minimal header (real DGS logo, nav, CTA, translucent on scroll) |
+| `app/components/dgs3d/NextSection.jsx` | Minimal "Search becomes dominant" landing (WP H2 + four capability tiles) |
+| `app/components/dgs3d/SkipLink.jsx` | Accessible skip link (hidden until focus) |
+
+**WordPress content used (WP ID 63505, verbatim):** H1 "Full Service Digital Marketing Agency
+In Mumbai"; supporting paragraph; CTAs "Get A Growth Audit" / "View Services"; statline
+(200+ Brands Worked With · 20K+ Customers Reached · 4.5 Average User Rating · Mumbai Based
+Full Service Team); H2 "One team for search, web, creative, performance and AI production." and
+its four H3 items.
+
+**Assets used (verified WP):** DGS logo `DGS-LOGO-3.webp`; DGS proof glimpses — Google AI
+Overview screenshot (`SS-1.png.webp`), LLM/ChatGPT proof (`LLM-SEO-1.webp`), Google AI Overview
+ranking (`AEO-SEO-1.webp`). Referenced by absolute URL (loads in viewer's browser).
+
+**Three.js architecture:** single procedural R3F scene — CoreStructure (wireframe icosahedron +
+glow + orbital rings), SearchSystem (points + line network), CreativeSystem (colour planes),
+TechSystem (grid + wireframe boxes), AiSystem (generative particle field), Connectors, Starfield.
+No textures, no post-processing, DPR capped `[1,1.75]`, controlled particle counts, camera
+approach driven by `sceneState`.
+
+**GSAP/ScrollTrigger architecture:** one scrub timeline on the 200vh `.dgs-hero`; `onUpdate`
+writes `progress/separation/searchDominant/rotY` into `sceneState` (read each frame by the
+scene); the timeline also moves hero typography/media out and the NextSection slides over the
+sticky hero — a spatial "travel through the universe" rather than a fade.
+
+**Behaviour & limits:** SSR 200 with exact WP copy; `npm run build` passes with zero errors;
+reduced-motion shows an elegant static state (all content available); WebGL failure falls back
+to a static scene. Known limitation: raw live-page HTML/head not capturable in this sandbox, so
+JSON-LD re-verification still relies on the PREVIOUSLY CAPTURED snapshots; the first-load JS for
+the `/` route is ~347 kB (three/r3f/gsap) — acceptable for the 3D hero, and content is server-
+rendered regardless.
+
+---
+
 ## 5. Deliverable file index
 
 | File | Purpose |
