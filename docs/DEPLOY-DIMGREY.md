@@ -6,7 +6,7 @@
 
 ## What is live right now
 
-The demo is **not** the old cinematic 3D prototype and **not** the `Kohindgs/DGS` `cursor/dgs-next-mirror-755d` HTML-mirror branch.
+The demo is **not** the old cinematic 3D prototype. As of **2026-08-27 (pending deploy)**, the **homepage (`/`)** uses the **WordPress HTML mirror** (`WpMirrorPage` + synced Elementor HTML/CSS). Inner pages still use semantic content blocks via `app/(site)/[...slug]`.
 
 It runs a **separate Next.js 16 rebuild** (`dgs-nextjs`) deployed via **Hostinger Builds**:
 
@@ -22,7 +22,7 @@ It runs a **separate Next.js 16 rebuild** (`dgs-nextjs`) deployed via **Hostinge
 
 ### Verified live URLs (200)
 
-- `/` — custom hero (`page.module.css`), correct WP H1/title
+- `/` — **WordPress HTML mirror** (`dgs-v1215` homepage; no custom Next header/footer)
 - `/services/seo-services-in-mumbai/`
 - `/services/aeo-services-in-mumbai/` — title correct; tier0 data already flags WP canonical bug
 - `/services/geo/`
@@ -84,7 +84,7 @@ Or use existing `~/rebuild.sh` (points at old `nodejs/` path — **update it** t
 
 ## After deploy — verify
 
-1. Homepage loads with semantic hero (not Elementor dump)
+1. Homepage loads with **WordPress `dgs-v1215` layout** (view-source should contain `dgs-v1215`, not custom Next `SiteHeader` / robot hero)
 2. `/services/aeo-services-in-mumbai/` — view-source canonical should be **this URL**, not `/services/aeo/`
 3. `/services/geo/`, `/services/llm-seo-service/` — interlink cluster intact
 4. Blog post loads with 200
