@@ -1,12 +1,15 @@
 {
   "name": "dgs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync:wp": "node scripts/sync-wordpress.mjs",
+    "generate:routes": "node scripts/generate-routes.mjs",
+    "mirror": "npm run sync:wp && npm run generate:routes"
   },
   "dependencies": {
     "@react-three/drei": "9.114.3",
