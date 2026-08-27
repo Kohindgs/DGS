@@ -53,6 +53,14 @@ It runs a **separate Next.js 16 rebuild** (`dgs-nextjs`) deployed via **Hostinge
 
 ## Deploy / update dimgrey
 
+### Latest deploy (2026-08-27)
+
+- **26 SEO redirects** added to `data/migration/redirects.approved.json` (AEO, GEO, LLM, SEO shortcuts, city slug fixes, junk routes)
+- **Migration baseline** re-run from live WordPress (`npm run migration:baseline`)
+- **91 static pages** built and uploaded to `releases/5c39c859`
+- **Verified live:** `/services/aeo/` → AEO service, `/seo-services/` → Mumbai SEO, AEO canonical correct
+- **`~/rebuild.sh`** updated to point at `releases/5c39c859` (was stale `nodejs/` path)
+
 ### Option A — Hostinger Builds (current method)
 
 1. hPanel → **Websites → dimgrey → Builds**
