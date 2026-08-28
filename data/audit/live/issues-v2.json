@@ -1,0 +1,38 @@
+[
+  {
+    "severity": "warning",
+    "path": "/blogs/ai-search-optimization-ecommerce/",
+    "code": "MULTIPLE_H1",
+    "issue": "2 H1 elements"
+  },
+  {
+    "severity": "warning",
+    "path": "/blogs/brand-mentions-for-ai-tools/",
+    "code": "MULTIPLE_H1",
+    "issue": "2 H1 elements"
+  },
+  {
+    "severity": "warning",
+    "path": "/blogs/core-update-strategy/",
+    "code": "MULTIPLE_H1",
+    "issue": "2 H1 elements"
+  },
+  {
+    "severity": "warning",
+    "path": "/blogs/llm-seo-ai-search/",
+    "code": "MULTIPLE_H1",
+    "issue": "2 H1 elements"
+  },
+  {
+    "severity": "error",
+    "path": "/contact-us/",
+    "code": "MISSING_H1",
+    "issue": "Missing H1"
+  },
+  {
+    "severity": "source-defect",
+    "path": "/services/aeo-services-in-mumbai/",
+    "code": "PROTECTED_CANONICAL_MISMATCH",
+    "issue": "Protected source canonical points to /services/aeo/; desired migration canonical is /services/aeo-services-in-mumbai/"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "systems": [
+    {
+      "id": "ai-production",
+      "label": "AI Production Portfolio",
+      "purpose": "Verified AI-generated or AI-assisted production work and related video/visual projects."
+    },
+    {
+      "id": "brand-creative",
+      "label": "Brand & Creative Portfolio",
+      "purpose": "Verified branding, campaign, design and creative execution work."
+    },
+    {
+      "id": "case-study",
+      "label": "Case Studies & Results",
+      "purpose": "Verified case studies where strategy, execution and outcomes are presented as a result narrative."
+    }
+  ],
+  "policy": "These systems remain separate. Individual items must not be assigned to a system, client or category without authenticated source metadata or explicit review."
+}

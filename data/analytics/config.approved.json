@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "policy": "Populate only after current live tag evidence and the authoritative Google/advertising account configuration are verified. Do not infer the production tracking setup from a single page or from legacy code alone.",
+  "googleTagManager": null,
+  "googleAnalytics4": [],
+  "googleAds": [],
+  "metaPixel": null,
+  "linkedinInsight": null,
+  "events": [],
+  "conversions": []
+}

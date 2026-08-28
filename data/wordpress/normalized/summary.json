@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-08-27T19:45:05.173Z",
+  "source": "WordPress REST content.rendered used only as migration evidence",
+  "rule": "Normalized evidence must not be rendered as Elementor HTML in the final Next.js frontend.",
+  "totals": {
+    "pages": 27,
+    "services": 18,
+    "posts": 61
+  }
+}

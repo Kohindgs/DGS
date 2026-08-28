@@ -1,0 +1,144 @@
+{
+  "capturedAt": "2026-08-25",
+  "policy": "These are review suggestions, not approved SEO/indexability decisions. Do not copy suggestions into route-decisions.approved.json without verification.",
+  "items": [
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "priority": "TIER0",
+      "suggestedClassification": "PROTECTED_INDEXABLE_FIX_SOURCE_DEFECTS",
+      "reason": "Protected ranking route is live/indexable but missing from discovered sitemap and has a mismatched source canonical."
+    },
+    {
+      "path": "/contact-us/",
+      "priority": "HIGH",
+      "suggestedClassification": "INDEXABLE_SEMANTIC_FIX",
+      "reason": "Current indexable page is missing an H1."
+    },
+    {
+      "path": "/services/",
+      "priority": "HIGH",
+      "suggestedClassification": "PUBLIC_HUB_LINK_REVIEW",
+      "reason": "Services hub was in sitemap but had zero inbound links in the crawl; verify intended navigation role."
+    },
+    {
+      "path": "/seo-pricing/",
+      "priority": "HIGH",
+      "suggestedClassification": "GROWTH_PAGE_INTERNAL_LINK_REVIEW",
+      "reason": "Indexable sitemap route had zero inbound links in the crawl; pricing intent may be commercially valuable."
+    },
+    {
+      "path": "/better-ceasons-case-study/",
+      "priority": "MEDIUM",
+      "suggestedClassification": "CASE_STUDY_DISCOVERY_REVIEW",
+      "reason": "Indexable sitemap route had zero inbound links; verify inclusion in the case-study architecture."
+    },
+    {
+      "path": "/motion-graphics/",
+      "priority": "MEDIUM",
+      "suggestedClassification": "PORTFOLIO_OR_SERVICE_DISCOVERY_REVIEW",
+      "reason": "Indexable sitemap route had zero inbound links; determine whether it belongs in services, portfolio or another work cluster."
+    },
+    {
+      "path": "/aeo-dubai/",
+      "priority": "HIGH",
+      "suggestedClassification": "GEO_LOCATION_GROWTH_REVIEW",
+      "reason": "Indexable location/service route had zero inbound links in the crawled set."
+    },
+    {
+      "path": "/us-landing-page/",
+      "priority": "MEDIUM",
+      "suggestedClassification": "LOCATION_OR_CAMPAIGN_REVIEW",
+      "reason": "Indexable route had zero inbound links; verify whether it is organic location content or a campaign landing page."
+    },
+    {
+      "path": "/australia-page/",
+      "priority": "MEDIUM",
+      "suggestedClassification": "LOCATION_OR_CAMPAIGN_REVIEW",
+      "reason": "Indexable route had zero inbound links; verify search intent and duplication risk."
+    },
+    {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "priority": "MEDIUM",
+      "suggestedClassification": "BLOG_INTERNAL_LINK_REVIEW",
+      "reason": "Indexable blog route had zero inbound links from the crawled set."
+    },
+    {
+      "path": "/thank-you/",
+      "priority": "UTILITY",
+      "suggestedClassification": "UTILITY_NOINDEX_REVIEW",
+      "reason": "Thank-you routes are commonly conversion utilities, but current intent/indexability must be verified before changing."
+    },
+    {
+      "path": "/indriya-test/",
+      "priority": "UTILITY",
+      "suggestedClassification": "TEST_ROUTE_REVIEW",
+      "reason": "Route name indicates test content and it is orphaned; verify whether it should remain public/indexable."
+    },
+    {
+      "path": "/locations.kml",
+      "priority": "RESOURCE",
+      "suggestedClassification": "NON_HTML_LOCAL_SEARCH_RESOURCE",
+      "reason": "KML is machine-readable and must not be treated as an HTML content page."
+    },
+    {
+      "path": "/career/",
+      "priority": "UTILITY",
+      "suggestedClassification": "CAREERS_ARCHITECTURE_REVIEW",
+      "reason": "Published WordPress route currently redirects to homepage; verify whether a real careers route is needed."
+    },
+    {
+      "path": "/wp-file-download-search/",
+      "priority": "UTILITY",
+      "suggestedClassification": "LEGACY_REDIRECT_OR_RETIRE_REVIEW",
+      "reason": "Current source uses a two-hop redirect chain to the homepage."
+    },
+    {
+      "path": "/aeo-services-mumbai-google-ads-landing-page/",
+      "priority": "CAMPAIGN",
+      "suggestedClassification": "PAID_LANDING_INDEXABILITY_REVIEW",
+      "reason": "Published WordPress route is absent from discovered sitemap; route name indicates Google Ads intent."
+    },
+    {
+      "path": "/seo-services-mumbai-google-ads-landing-page/",
+      "priority": "CAMPAIGN",
+      "suggestedClassification": "PAID_LANDING_INDEXABILITY_REVIEW",
+      "reason": "Published WordPress route is absent from discovered sitemap; route name indicates Google Ads intent."
+    },
+    {
+      "path": "/ai-production-videos-google-ads-landing-page/",
+      "priority": "CAMPAIGN",
+      "suggestedClassification": "PAID_LANDING_INDEXABILITY_REVIEW",
+      "reason": "Published WordPress route is absent from discovered sitemap; route name indicates Google Ads intent."
+    },
+    {
+      "path": "/seo-executive-assessment/",
+      "priority": "INTERNAL_WORKFLOW",
+      "suggestedClassification": "ASSESSMENT_INDEXABILITY_REVIEW",
+      "reason": "Published route is absent from discovered sitemap and appears to be a recruitment assessment workflow."
+    },
+    {
+      "path": "/seo-manager-assessment/",
+      "priority": "INTERNAL_WORKFLOW",
+      "suggestedClassification": "ASSESSMENT_INDEXABILITY_REVIEW",
+      "reason": "Published route is absent from discovered sitemap and appears to be a recruitment assessment workflow."
+    },
+    {
+      "path": "/ai-motion-graphic-designer/",
+      "priority": "INTERNAL_WORKFLOW",
+      "suggestedClassification": "HIRING_OR_CAMPAIGN_INDEXABILITY_REVIEW",
+      "reason": "Published route is absent from discovered sitemap and appears hiring/campaign related."
+    }
+  ],
+  "publishedBlogSitemapGapReview": [
+    "/blogs/ai-content-optimization/",
+    "/blogs/ai-marketing-strategies-2026/",
+    "/blogs/ai-tools-marketing-agencies/",
+    "/blogs/content-strategy-high-intent-traffic/",
+    "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+    "/blogs/seo-services-india-2026/",
+    "/blogs/topical-authority-seo/",
+    "/blogs/website-development-leads/",
+    "/blogs/website-development-mistakes/",
+    "/blogs/website-performance-conversions/"
+  ]
+}

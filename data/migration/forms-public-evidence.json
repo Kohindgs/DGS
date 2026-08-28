@@ -1,0 +1,99 @@
+{
+  "capturedAt": "2026-08-25",
+  "source": "Public WordPress rendered HTML",
+  "warning": "This records public form markup evidence only. It does not prove Fluent Forms validation, conditional logic, notifications, integrations, CAPTCHA configuration or submission endpoints. Authenticated WordPress extraction is still required before implementation.",
+  "forms": [
+    {
+      "route": "/",
+      "wordpressPageId": 63505,
+      "fluentFormId": 1,
+      "anchorEvidence": "contact-form",
+      "fields": ["names[first_name]", "email", "phone", "input_text", "dropdown_1", "subject", "dropdown", "message", "Home_Page", "Home_Page_form"]
+    },
+    {
+      "route": "/contact-us/",
+      "wordpressPageId": 62460,
+      "fluentFormId": 1,
+      "anchorEvidence": "dgContact",
+      "fields": ["names[first_name]", "email", "phone", "input_text", "dropdown_1", "subject", "dropdown", "message", "Home_Page", "Home_Page_form"]
+    },
+    {
+      "route": "/services/ai-video-production-agency/",
+      "wordpressPageId": 40114,
+      "fluentFormId": 9,
+      "anchorEvidence": "cta-form",
+      "fields": ["names[first_name]", "names[last_name]", "email", "input_text", "input_text_1", "dropdown", "dropdown_1", "description", "hidden"]
+    },
+    {
+      "route": "/services/seo-services-in-mumbai/",
+      "wordpressPageId": 40278,
+      "fluentFormId": 3,
+      "anchorEvidence": "contact-form",
+      "captchaMarkupEvidence": "recaptcha",
+      "fields": ["names[first_name]", "names[last_name]", "email", "input_text", "url", "phone", "dropdown", "dropdown_1", "hidden"]
+    },
+    {
+      "route": "/services/aeo-services-in-mumbai/",
+      "wordpressPageId": 62373,
+      "fluentFormId": 19,
+      "anchorEvidence": "contact-form",
+      "captchaMarkupEvidence": "recaptcha",
+      "fields": ["names[first_name]", "names[last_name]", "email", "input_text", "url", "phone", "dropdown", "dropdown_1", "hidden"]
+    },
+    {
+      "route": "/services/geo/",
+      "wordpressPageId": 62317,
+      "fluentFormId": 21,
+      "anchorEvidence": "contact-form",
+      "captchaMarkupEvidence": "recaptcha",
+      "fields": ["names[first_name]", "names[last_name]", "email", "input_text", "url", "phone", "dropdown", "dropdown_1", "hidden"]
+    },
+    {
+      "route": "/services/llm-seo-service/",
+      "wordpressPageId": 62322,
+      "fluentFormId": 20,
+      "anchorEvidence": "contact-form",
+      "captchaMarkupEvidence": "recaptcha",
+      "fields": ["names[first_name]", "names[last_name]", "email", "input_text", "url", "phone", "dropdown", "dropdown_1", "hidden"]
+    },
+    {
+      "route": "/services/performance-marketing/",
+      "wordpressPageId": 64616,
+      "fluentFormId": 26,
+      "anchorEvidence": "dgs-performance-form",
+      "fields": ["full_name[first_name]", "full_name[last_name]", "email", "phone", "input_text", "company_website", "role", "budget", "start_timeline", "requirement", "business_confirmation[]", "contact_consent", "service_name", "lead_source", "landing_page_url", "referrer_url", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "campaignid", "adgroupid", "creative", "matchtype", "device"]
+    },
+    {
+      "route": "/services/social-media-marketing/",
+      "wordpressPageId": 40112,
+      "fluentFormId": 4,
+      "anchorEvidence": "smm-form",
+      "captchaMarkupEvidence": "turnstile",
+      "fields": ["names[first_name]", "names[last_name]", "email", "url", "phone", "hidden"]
+    },
+    {
+      "route": "/services/branding/",
+      "wordpressPageId": 40277,
+      "fluentFormId": 10,
+      "anchorEvidence": "bpContactModule",
+      "captchaMarkupEvidence": "turnstile",
+      "fields": ["input_text_1", "email", "url", "phone", "dropdown_3", "dropdown", "dropdown_1", "description", "Branding_Page", "hidden", "dropdown_2"]
+    },
+    {
+      "route": "/services/content-creation/",
+      "wordpressPageId": 40276,
+      "fluentFormId": 11,
+      "anchorEvidence": "contact-form",
+      "captchaMarkupEvidence": "turnstile",
+      "fields": ["input_text_1", "email", "url", "phone", "dropdown", "dropdown_1", "dropdown_2", "description", "Content_creation"]
+    },
+    {
+      "route": "/services/website-development-amc/",
+      "wordpressPageId": 41418,
+      "fluentFormId": 6,
+      "anchorEvidence": "website-project-form",
+      "captchaMarkupEvidence": "turnstile",
+      "fields": ["names[first_name]", "names[last_name]", "email", "input_text", "phone", "dropdown", "dropdown_1", "hidden"]
+    }
+  ]
+}

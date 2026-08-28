@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "coreWebVitals": {
+    "lcpMs": 2500,
+    "inpMs": 200,
+    "cls": 0.1
+  },
+  "principles": {
+    "criticalContentServerRendered": true,
+    "reserveMediaDimensions": true,
+    "avoidRenderBlockingThirdPartyScripts": true,
+    "lazyLoadBelowFoldMedia": true,
+    "progressiveEnhancementFor3D": true,
+    "reducedMotionSupported": true
+  },
+  "reviewBudgets": {
+    "initialClientJavaScriptGzipKB": 220,
+    "thirdPartyOriginsAboveFold": 4,
+    "notes": "Implementation budgets are review thresholds, not permission to trade away functionality. Three.js/GSAP must be route/section scoped and must not block semantic content or Tier-0 rendering."
+  }
+}

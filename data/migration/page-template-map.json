@@ -1,0 +1,895 @@
+{
+  "generatedAt": "2026-08-28T07:06:38.645Z",
+  "routes": [
+    {
+      "route": "/",
+      "wordpressId": 63505,
+      "contentType": "page",
+      "template": "Homepage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/about-us/",
+      "wordpressId": 38769,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/aeo-dubai/",
+      "wordpressId": 64225,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/australia-page/",
+      "wordpressId": 64701,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/better-ceasons-case-study/",
+      "wordpressId": 64367,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/",
+      "wordpressId": 26492,
+      "contentType": "page",
+      "template": "BlogArchive",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/3-3-3-rule-in-marketing/",
+      "wordpressId": 64475,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/aeo-business/",
+      "wordpressId": 64292,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-generated-summaries-in-search-ads/",
+      "wordpressId": 64739,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-overview-ranking/",
+      "wordpressId": 62485,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-overview-seo/",
+      "wordpressId": 64815,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-readiness-for-websites/",
+      "wordpressId": 63861,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-search-behavior-2026/",
+      "wordpressId": 62433,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-search-checklist-2026/",
+      "wordpressId": 65235,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-search-optimization-ecommerce/",
+      "wordpressId": 64964,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-video-production-cost-india/",
+      "wordpressId": 65240,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-video-production-for-business/",
+      "wordpressId": 64465,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/ai-video-vs-traditional-video/",
+      "wordpressId": 65256,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "wordpressId": 64389,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/brand-mentions-for-ai-tools/",
+      "wordpressId": 64968,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/brand-visibility-in-ai-search/",
+      "wordpressId": 65091,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/chatgpt-brand-visibility/",
+      "wordpressId": 65264,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/content-strategy-for-seo/",
+      "wordpressId": 64446,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/content-writing-for-seo/",
+      "wordpressId": 64352,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/core-update-strategy/",
+      "wordpressId": 64990,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/future-of-seo/",
+      "wordpressId": 63952,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/generative-engine-optimization-business/",
+      "wordpressId": 64846,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/generative-engine-optimization/",
+      "wordpressId": 64204,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/geo-vs-seo-google-ai-search/",
+      "wordpressId": 64039,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-ads-vs-meta-ads/",
+      "wordpressId": 65259,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-agentic-browsing/",
+      "wordpressId": 64921,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-ai-overviews-image-generation/",
+      "wordpressId": 64909,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-ai-search-update/",
+      "wordpressId": 63706,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-algorithm-business/",
+      "wordpressId": 63943,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-io-2026/",
+      "wordpressId": 63881,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-ranking-fixes/",
+      "wordpressId": 64112,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-search-console-social-media/",
+      "wordpressId": 64856,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/google-spam-update/",
+      "wordpressId": 64728,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/llm-seo-ai-search/",
+      "wordpressId": 64620,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/llm-seo-services-mumbai/",
+      "wordpressId": 62568,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/local-seo-business-growth/",
+      "wordpressId": 62447,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/low-social-media-reach/",
+      "wordpressId": 65251,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/modern-seo-business-growth/",
+      "wordpressId": 62452,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/optimize-content-ai-search/",
+      "wordpressId": 64866,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/optimize-for-ai-overviews/",
+      "wordpressId": 63959,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/schema-seo-for-small-business/",
+      "wordpressId": 64938,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/search-generative-ai-performance-reports/",
+      "wordpressId": 64213,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/seo-friendly-website/",
+      "wordpressId": 64348,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/seo-rankings-up-but-traffic-down/",
+      "wordpressId": 64859,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/seo-strategies-business-growth/",
+      "wordpressId": 63547,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "wordpressId": 65270,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/social-media-marketing-strategy/",
+      "wordpressId": 64561,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/voice-search-seo/",
+      "wordpressId": 64942,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/website-design-lead-generation-mumbai/",
+      "wordpressId": 63343,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/website-development-quality-leads/",
+      "wordpressId": 63657,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/website-traffic-but-no-leads/",
+      "wordpressId": 65280,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/blogs/what-is-llm-seo/",
+      "wordpressId": 64217,
+      "contentType": "post",
+      "template": "BlogPost",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/case_studies/",
+      "wordpressId": 64415,
+      "contentType": "page",
+      "template": "CaseStudyArchive",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/contact-us/",
+      "wordpressId": 62460,
+      "contentType": "page",
+      "template": "ContactForm",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/indriya-test/",
+      "wordpressId": 64455,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/motion-graphics/",
+      "wordpressId": 64436,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/our-services/",
+      "wordpressId": 55355,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/portfolio/",
+      "wordpressId": 55736,
+      "contentType": "page",
+      "template": "Portfolio",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/privacy-policy/",
+      "wordpressId": 3,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/seo-pricing/",
+      "wordpressId": 62632,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/aeo-services-in-mumbai/",
+      "wordpressId": 62373,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "tier-0",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": [
+        "release-blocker",
+        "self-canonical",
+        "preserve-internal-links"
+      ]
+    },
+    {
+      "route": "/services/ai-production-dubai-page/",
+      "wordpressId": 64236,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/ai-video-production-agency/",
+      "wordpressId": 40114,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "tier-0",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": [
+        "release-blocker",
+        "self-canonical",
+        "preserve-internal-links"
+      ]
+    },
+    {
+      "route": "/services/branding/",
+      "wordpressId": 40277,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/content-creation/",
+      "wordpressId": 40276,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/dubai-seo/",
+      "wordpressId": 64285,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/geo/",
+      "wordpressId": 62317,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "tier-0",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": [
+        "release-blocker",
+        "self-canonical",
+        "preserve-internal-links"
+      ]
+    },
+    {
+      "route": "/services/llm-seo-service/",
+      "wordpressId": 62322,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "tier-0",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": [
+        "release-blocker",
+        "self-canonical",
+        "preserve-internal-links"
+      ]
+    },
+    {
+      "route": "/services/performance-marketing/",
+      "wordpressId": 64616,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/seo-service-in-banglore/",
+      "wordpressId": 64528,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/seo-service-in-gurugram/",
+      "wordpressId": 64543,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/seo-service-pune/",
+      "wordpressId": 64509,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/seo-services-in-hyderabad/",
+      "wordpressId": 64533,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/seo-services-in-mumbai/",
+      "wordpressId": 40278,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "tier-0",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": [
+        "release-blocker",
+        "self-canonical",
+        "preserve-internal-links"
+      ]
+    },
+    {
+      "route": "/services/shirdi-se-sai-tak-case-study/",
+      "wordpressId": 64259,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/social-media-marketing/",
+      "wordpressId": 40112,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/website-development-amc/",
+      "wordpressId": 41418,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/website-development-pune-page/",
+      "wordpressId": 65132,
+      "contentType": "service",
+      "template": "ServicePage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/sitemap/",
+      "wordpressId": 39184,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/thank-you/",
+      "wordpressId": 62421,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/us-landing-page/",
+      "wordpressId": 63974,
+      "contentType": "page",
+      "template": "StandardPage",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    },
+    {
+      "route": "/services/",
+      "wordpressId": null,
+      "contentType": "page",
+      "template": "ServicesArchive",
+      "tier": "standard",
+      "indexability": "indexable",
+      "includeInSitemap": true,
+      "specialRequirements": []
+    }
+  ]
+}

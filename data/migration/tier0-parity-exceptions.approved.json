@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "policy": "Tier-0 parity exceptions must be explicit and narrowly scoped. Empty by default. Never use this file to broadly waive ranking protection.",
+  "exceptions": []
+}

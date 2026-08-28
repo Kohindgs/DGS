@@ -1,0 +1,63 @@
+name: DGS Migration Guard
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  code-quality:
+    name: Build and code quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Lint, typecheck and build
+        run: npm run check
+
+  live-migration-baseline:
+    name: Live WordPress migration baseline
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Capture WordPress, crawl and Tier-0 baseline
+        run: npm run migration:baseline
+        env:
+          DGS_SOURCE_URL: https://www.dgeniussolutions.com
+          WP_REST_BASE_URL: https://www.dgeniussolutions.com/wp-json/wp/v2
+          AUDIT_CONCURRENCY: 5
+
+      - name: Upload migration audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dgs-live-migration-audit
+          path: |
+            data/audit/live
+            data/wordpress
+            data/migration/route-parity.generated.json
+            data/migration/tier0-content-baseline.generated.json
+          if-no-files-found: warn
+          retention-days: 30

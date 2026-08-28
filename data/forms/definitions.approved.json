@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "policy": "Populate only from authenticated Fluent Forms configuration and verified live behavior. Public rendered field names are evidence, not sufficient backend configuration.",
+  "forms": []
+}

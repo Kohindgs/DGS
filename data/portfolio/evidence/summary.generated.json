@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-08-27T19:45:05.327Z",
+  "source": "Public WordPress content.rendered",
+  "warning": "Public Envira markup is evidence only. Client/category/project-type classification requires authenticated Envira/WordPress data or explicit review. Do not invent metadata.",
+  "totals": {
+    "sourceRecordsWithEnvira": 3,
+    "galleries": 2,
+    "items": 62,
+    "itemsMissingAlt": 62,
+    "itemsMissingTitle": 0,
+    "unclassifiedItems": 62
+  }
+}

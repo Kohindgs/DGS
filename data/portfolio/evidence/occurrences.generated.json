@@ -1,0 +1,35 @@
+[
+  {
+    "wordpressId": 64701,
+    "wordpressType": "page",
+    "path": "/australia-page/",
+    "title": "Australia Page",
+    "galleryIds": [
+      0,
+      63155
+    ],
+    "candidateItemCount": 62
+  },
+  {
+    "wordpressId": 63505,
+    "wordpressType": "page",
+    "path": "/",
+    "title": "Digital Marketing Agency in Mumbai",
+    "galleryIds": [
+      0,
+      63155
+    ],
+    "candidateItemCount": 62
+  },
+  {
+    "wordpressId": 55736,
+    "wordpressType": "page",
+    "path": "/portfolio/",
+    "title": "Portfolio",
+    "galleryIds": [
+      0,
+      63155
+    ],
+    "candidateItemCount": 62
+  }
+]

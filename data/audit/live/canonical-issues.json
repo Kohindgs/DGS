@@ -1,0 +1,11 @@
+[
+  {
+    "severity": "review",
+    "sourcePath": "/services/aeo-services-in-mumbai/",
+    "canonical": "https://www.dgeniussolutions.com/services/aeo/",
+    "canonicalPath": "/services/aeo/",
+    "targetStatus": 200,
+    "targetFinalUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "issue": "Canonical points to a different same-site path. Verify whether this is deliberate consolidation or a misconfiguration before migration."
+  }
+]

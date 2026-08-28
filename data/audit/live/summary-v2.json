@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-08-27T19:45:21.905Z",
+  "source": "https://www.dgeniussolutions.com",
+  "totals": {
+    "sitemaps": 5,
+    "sitemapUrls": 89,
+    "auditedResources": 90,
+    "htmlResources": 89,
+    "nonHtmlResources": 1,
+    "indexableHtmlPages": 89,
+    "redirects": 2,
+    "internalLinkEdges": 5137,
+    "orphans": 9,
+    "protectedSitemapGaps": 1,
+    "errors": 1,
+    "warnings": 4,
+    "sourceDefects": 1
+  }
+}

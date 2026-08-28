@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "policy": "Portfolio collections and item classification must come from authenticated WordPress/Envira metadata or explicit human review. Do not infer clients, categories or work types from filenames alone.",
+  "collections": [],
+  "items": []
+}

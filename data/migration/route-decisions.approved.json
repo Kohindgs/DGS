@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "policy": "Only explicitly reviewed non-protected route decisions belong here. Tier-0 protected routes are controlled by tier0-routes.json and cannot be noindexed, retired or redirected without an explicit approved exception.",
+  "decisions": []
+}

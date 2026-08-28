@@ -1,0 +1,2423 @@
+[
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/career/",
+    "finalUrl": "https://www.dgeniussolutions.com/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/career/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/about-us/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/about-us/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/aeo-dubai/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/aeo-dubai/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/australia-page/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/australia-page/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/better-ceasons-case-study/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/better-ceasons-case-study/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/3-3-3-rule-in-marketing/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/3-3-3-rule-in-marketing/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/aeo-business/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/aeo-business/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-overview-seo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-overview-seo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-search-checklist-2026/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-search-checklist-2026/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-search-optimization-ecommerce/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-search-optimization-ecommerce/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-video-production-cost-india/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-video-production-cost-india/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-video-vs-traditional-video/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-video-vs-traditional-video/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/brand-mentions-for-ai-tools/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/brand-mentions-for-ai-tools/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/brand-visibility-in-ai-search/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/brand-visibility-in-ai-search/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/chatgpt-brand-visibility/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/chatgpt-brand-visibility/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/content-strategy-for-seo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/content-strategy-for-seo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/core-update-strategy/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/core-update-strategy/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/future-of-seo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/future-of-seo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/generative-engine-optimization-business/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/generative-engine-optimization-business/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/geo-vs-seo-google-ai-search/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/geo-vs-seo-google-ai-search/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ads-vs-meta-ads/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ads-vs-meta-ads/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-agentic-browsing/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-agentic-browsing/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ai-overviews-image-generation/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ai-overviews-image-generation/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-algorithm-business/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-algorithm-business/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-io-2026/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-io-2026/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-search-console-social-media/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-search-console-social-media/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-spam-update/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-spam-update/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/llm-seo-ai-search/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/llm-seo-ai-search/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/local-seo-business-growth/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/local-seo-business-growth/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/low-social-media-reach/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/low-social-media-reach/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/optimize-content-ai-search/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/optimize-content-ai-search/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/optimize-for-ai-overviews/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/optimize-for-ai-overviews/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/schema-seo-for-small-business/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/schema-seo-for-small-business/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/seo-friendly-website/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/seo-friendly-website/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/seo-rankings-up-but-traffic-down/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/seo-rankings-up-but-traffic-down/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/seo-strategies-business-growth/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/seo-strategies-business-growth/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/social-media-marketing-strategy/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/social-media-marketing-strategy/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/voice-search-seo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/voice-search-seo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/website-development-quality-leads/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/website-development-quality-leads/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/website-traffic-but-no-leads/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/website-traffic-but-no-leads/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/case_studies/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/case_studies/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/contact-us/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/contact-us/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/indriya-test/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/indriya-test/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/motion-graphics/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/motion-graphics/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/our-services/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/our-services/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/portfolio/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/portfolio/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/privacy-policy/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/privacy-policy/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/seo-pricing/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/seo-pricing/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/aeo-services-in-mumbai/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/aeo-services-in-mumbai/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/ai-production-dubai-page/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/ai-production-dubai-page/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/ai-video-production-agency/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/ai-video-production-agency/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/branding/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/branding/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/content-creation/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/content-creation/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/geo/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/geo/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/llm-seo-service/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/llm-seo-service/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/performance-marketing/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/performance-marketing/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-service-in-banglore/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-service-in-banglore/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-service-in-gurugram/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-service-in-gurugram/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-service-pune/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-service-pune/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-services-in-hyderabad/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-services-in-hyderabad/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-services-in-mumbai/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-services-in-mumbai/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/shirdi-se-sai-tak-case-study/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/shirdi-se-sai-tak-case-study/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/social-media-marketing/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/social-media-marketing/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/website-development-amc/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/website-development-amc/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/services/website-development-pune-page/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/services/website-development-pune-page/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/thank-you/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/thank-you/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/us-landing-page/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/us-landing-page/",
+        "anchor": "Career",
+        "rel": ""
+      },
+      {
+        "from": "/",
+        "anchor": "Careers",
+        "rel": ""
+      },
+      {
+        "from": "/",
+        "anchor": "Career",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/website-development/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/website-development-amc/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/website-development/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/website-development-amc/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/aeo-dubai/",
+        "anchor": "website development",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "anchor": "Website Development Services",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "Website Development Services",
+        "rel": ""
+      },
+      {
+        "from": "/services/ai-production-dubai-page/",
+        "anchor": "Website Development Company In Dubai",
+        "rel": ""
+      },
+      {
+        "from": "/services/ai-video-production-agency/",
+        "anchor": "Website Development Company In Mumbai",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/aeo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/australia-page/",
+        "anchor": "AEO Services",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "anchor": "Answer Engine Optimization",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "AEO",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "anchor": "Answer Engine Optimization",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "AEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "AEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "AEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "AEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "AEO Services",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "AEO Services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/geo",
+    "finalUrl": "https://www.dgeniussolutions.com/services/geo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/geo",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/geo/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/geo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/australia-page/",
+        "anchor": "GEO Services",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "GEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "GEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "GEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "GEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "GEO",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "GEO Services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/generative-ai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/generative-ai/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/ai-video-production-agency/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/australia-page/",
+        "anchor": "AI Production",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "anchor": "generative AI services",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "Generative AI",
+        "rel": ""
+      },
+      {
+        "from": "/sitemap/",
+        "anchor": "Generative AI",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/category/digital-marketing/",
+    "finalUrl": "https://www.dgeniussolutions.com/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/category/digital-marketing/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/3-3-3-rule-in-marketing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/3-3-3-rule-in-marketing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/3-3-3-rule-in-marketing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/3-3-3-rule-in-marketing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/aeo-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/aeo-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/aeo-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/aeo-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-overview-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-checklist-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-checklist-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-checklist-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-checklist-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-optimization-ecommerce/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-optimization-ecommerce/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-optimization-ecommerce/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-search-optimization-ecommerce/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-cost-india/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-cost-india/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-cost-india/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-cost-india/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-vs-traditional-video/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-vs-traditional-video/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-vs-traditional-video/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/ai-video-vs-traditional-video/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-mentions-for-ai-tools/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-mentions-for-ai-tools/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-mentions-for-ai-tools/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-mentions-for-ai-tools/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-visibility-in-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-visibility-in-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-visibility-in-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/brand-visibility-in-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/chatgpt-brand-visibility/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/chatgpt-brand-visibility/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/chatgpt-brand-visibility/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/chatgpt-brand-visibility/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-strategy-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-strategy-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-strategy-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-strategy-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/core-update-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/core-update-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/core-update-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/core-update-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/future-of-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/future-of-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/future-of-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/future-of-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/geo-vs-seo-google-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/geo-vs-seo-google-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/geo-vs-seo-google-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/geo-vs-seo-google-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ads-vs-meta-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ads-vs-meta-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ads-vs-meta-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ads-vs-meta-ads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-agentic-browsing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-agentic-browsing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-agentic-browsing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-agentic-browsing/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-overviews-image-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-overviews-image-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-overviews-image-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-overviews-image-generation/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-algorithm-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-algorithm-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-algorithm-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-algorithm-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-io-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-io-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-io-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-io-2026/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-search-console-social-media/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-search-console-social-media/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-search-console-social-media/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-search-console-social-media/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-spam-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-spam-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-spam-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/google-spam-update/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/local-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/local-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/local-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/local-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/low-social-media-reach/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/low-social-media-reach/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/low-social-media-reach/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/low-social-media-reach/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-content-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-content-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-content-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-content-ai-search/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-for-ai-overviews/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-for-ai-overviews/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-for-ai-overviews/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/optimize-for-ai-overviews/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/schema-seo-for-small-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/schema-seo-for-small-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/schema-seo-for-small-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/schema-seo-for-small-business/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-friendly-website/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-friendly-website/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-friendly-website/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-friendly-website/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-rankings-up-but-traffic-down/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-rankings-up-but-traffic-down/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-rankings-up-but-traffic-down/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-rankings-up-but-traffic-down/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-strategies-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-strategies-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-strategies-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/seo-strategies-business-growth/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-marketing-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-marketing-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-marketing-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/social-media-marketing-strategy/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/voice-search-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/voice-search-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/voice-search-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/voice-search-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-development-quality-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-development-quality-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-development-quality-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-development-quality-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-traffic-but-no-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-traffic-but-no-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-traffic-but-no-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/website-traffic-but-no-leads/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "Digital Marketing",
+        "rel": "category tag"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/seo-services-in-mumbai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/seo-services-in-mumbai/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "anchor": "",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "anchor": "Zero-click searches",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/aeo-services/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo-services/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "anchor": "AEO Services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/llm-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/llm-seo/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/llm-seo-service/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "anchor": "LLM SEO services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/aeo/?utm_source=chatgpt.com",
+    "finalUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo/?utm_source=chatgpt.com",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "anchor": "AEO services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://dgeniussolutions.com/",
+    "finalUrl": "https://www.dgeniussolutions.com/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://dgeniussolutions.com/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "D’Genius Solutions",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "D’Genius Solutions",
+        "rel": ""
+      },
+      {
+        "from": "/privacy-policy/",
+        "anchor": "dgeniussolutions.com",
+        "rel": ""
+      },
+      {
+        "from": "/privacy-policy/",
+        "anchor": "www.dgeniussolutions.com",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/why-local-seo-is-important-for-business-growth/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/why-local-seo-is-important-for-business-growth/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "local SEO expertise",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/llm-seo-services/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/llm-seo-services/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/llm-seo-service/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "LLM SEO services",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "LLM SEO services",
+        "rel": ""
+      }
+    ]
+  }
+]

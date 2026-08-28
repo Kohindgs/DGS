@@ -1,0 +1,56 @@
+{
+  "verifiedAt": "2026-08-25T16:45:00+05:30",
+  "source": "https://www.dgeniussolutions.com",
+  "routes": [
+    {
+      "path": "/services/ai-video-production-agency/",
+      "wordpressId": 40114,
+      "label": "AI Video Production",
+      "observedTitle": "AI Video Production Agency in Mumbai | D’Genius Solutions",
+      "observedH1": "AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
+      "observedCanonical": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "desiredCanonicalPath": "/services/ai-video-production-agency/",
+      "sourceKnownIssues": []
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "wordpressId": 62373,
+      "label": "AEO",
+      "observedTitle": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
+      "observedH1": "AEO Services in Mumbai from a Mumbai-Based AEO Agency",
+      "observedCanonical": "https://www.dgeniussolutions.com/services/aeo/",
+      "desiredCanonicalPath": "/services/aeo-services-in-mumbai/",
+      "sourceKnownIssues": ["canonical-mismatch", "omitted-from-services-sitemap"]
+    },
+    {
+      "path": "/services/geo/",
+      "wordpressId": 62317,
+      "label": "GEO",
+      "observedTitle": "GEO Services in Mumbai | D'Genius Solutions",
+      "observedH1": "Generative Engine Optimization (GEO) Services in Mumbai",
+      "observedCanonical": "https://www.dgeniussolutions.com/services/geo/",
+      "desiredCanonicalPath": "/services/geo/",
+      "sourceKnownIssues": []
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "wordpressId": 62322,
+      "label": "LLM SEO",
+      "observedTitle": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
+      "observedH1": "LLM SEO Services in Mumbai for AI Search Visibility",
+      "observedCanonical": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "desiredCanonicalPath": "/services/llm-seo-service/",
+      "sourceKnownIssues": []
+    },
+    {
+      "path": "/services/seo-services-in-mumbai/",
+      "wordpressId": 40278,
+      "label": "SEO Mumbai",
+      "observedTitle": "SEO Services in Mumbai | SEO Agency for Rankings & Leads | DGS",
+      "observedH1": "SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
+      "observedCanonical": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "desiredCanonicalPath": "/services/seo-services-in-mumbai/",
+      "sourceKnownIssues": []
+    }
+  ]
+}

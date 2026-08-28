@@ -1,0 +1,41 @@
+[
+  {
+    "sourceUrl": "https://www.dgeniussolutions.com/career/",
+    "finalUrl": "https://www.dgeniussolutions.com/",
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/career/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "protected": false
+  },
+  {
+    "sourceUrl": "https://www.dgeniussolutions.com/wp-file-download-search/",
+    "finalUrl": "https://www.dgeniussolutions.com/",
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/wp-file-download-search/",
+        "status": 301,
+        "location": "https://dgeniussolutions.com/"
+      },
+      {
+        "url": "https://dgeniussolutions.com/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "protected": false
+  }
+]

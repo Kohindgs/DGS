@@ -1,0 +1,110 @@
+{
+  "capturedAt": "2026-08-25T11:24:05Z",
+  "source": "https://www.dgeniussolutions.com",
+  "status": "SOURCE-SITE-DEFECTS-DO-NOT-COPY-BLINDLY",
+  "findings": [
+    {
+      "id": "AEO-CANONICAL-MISMATCH",
+      "severity": "critical-migration",
+      "path": "/services/aeo-services-in-mumbai/",
+      "finding": "The live page returns 200 and is indexable, but its canonical points to /services/aeo/ instead of its own ranking URL.",
+      "migrationRule": "Keep /services/aeo-services-in-mumbai/ as the protected public route and self-canonicalize it unless later Search Console evidence explicitly supports a different canonical strategy. Do not copy the source canonical mismatch."
+    },
+    {
+      "id": "AEO-SITEMAP-OMISSION",
+      "severity": "critical-migration",
+      "path": "/services/aeo-services-in-mumbai/",
+      "finding": "The protected AEO route is published in WordPress REST but was not present in the discovered sitemap URL set during the baseline crawl.",
+      "migrationRule": "Include the protected AEO route in the new indexable sitemap unless an explicit approved SEO decision says otherwise."
+    },
+    {
+      "id": "CONTACT-MISSING-H1",
+      "severity": "technical-seo",
+      "path": "/contact-us/",
+      "finding": "The current indexable contact page has no H1 in the rendered HTML baseline.",
+      "migrationRule": "Rebuild with a single semantically correct H1 while preserving the visible source copy."
+    },
+    {
+      "id": "MULTIPLE-H1-AI-SEARCH-ECOMMERCE",
+      "severity": "semantic-html",
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "finding": "Two H1 elements were detected.",
+      "migrationRule": "Rebuild with one primary H1 and preserve the remaining heading text at an appropriate semantic level."
+    },
+    {
+      "id": "MULTIPLE-H1-BRAND-MENTIONS",
+      "severity": "semantic-html",
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "finding": "Two H1 elements were detected.",
+      "migrationRule": "Rebuild with one primary H1 and preserve the remaining heading text at an appropriate semantic level."
+    },
+    {
+      "id": "MULTIPLE-H1-CORE-UPDATE",
+      "severity": "semantic-html",
+      "path": "/blogs/core-update-strategy/",
+      "finding": "Two H1 elements were detected.",
+      "migrationRule": "Rebuild with one primary H1 and preserve the remaining heading text at an appropriate semantic level."
+    },
+    {
+      "id": "MULTIPLE-H1-LLM-BLOG",
+      "severity": "semantic-html",
+      "path": "/blogs/llm-seo-ai-search/",
+      "finding": "Two H1 elements were detected.",
+      "migrationRule": "Rebuild with one primary H1 and preserve the remaining heading text at an appropriate semantic level."
+    },
+    {
+      "id": "WP-DOWNLOAD-SEARCH-REDIRECT-CHAIN",
+      "severity": "redirect",
+      "path": "/wp-file-download-search/",
+      "finding": "The current route redirects through the non-www homepage before reaching the canonical www homepage, creating two redirect hops.",
+      "migrationRule": "If this legacy source is retained, normalize it to a single approved redirect hop. Do not copy the chain."
+    },
+    {
+      "id": "CAREER-REDIRECT-REVIEW",
+      "severity": "redirect-review",
+      "path": "/career/",
+      "finding": "The published WordPress career page currently redirects directly to the homepage.",
+      "migrationRule": "Do not assume the homepage redirect is correct. Verify intended careers architecture before approving any redirect."
+    },
+    {
+      "id": "NONHTML-KML-QA-FALSE-POSITIVE",
+      "severity": "audit-quality",
+      "path": "/locations.kml",
+      "finding": "The sitemap crawl treated the KML resource like an HTML page and therefore reported missing title/H1.",
+      "migrationRule": "Classify non-HTML resources separately and never apply HTML title/H1 requirements to KML/XML/assets."
+    }
+  ],
+  "orphanReview": [
+    "/aeo-dubai/",
+    "/australia-page/",
+    "/better-ceasons-case-study/",
+    "/blogs/website-design-lead-generation-mumbai/",
+    "/indriya-test/",
+    "/locations.kml",
+    "/motion-graphics/",
+    "/seo-pricing/",
+    "/services/",
+    "/thank-you/",
+    "/us-landing-page/"
+  ],
+  "publishedButMissingFromSitemapReview": [
+    "/aeo-services-mumbai-google-ads-landing-page/",
+    "/ai-motion-graphic-designer/",
+    "/ai-production-videos-google-ads-landing-page/",
+    "/blogs/ai-content-optimization/",
+    "/blogs/ai-marketing-strategies-2026/",
+    "/blogs/ai-tools-marketing-agencies/",
+    "/blogs/content-strategy-high-intent-traffic/",
+    "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+    "/blogs/seo-services-india-2026/",
+    "/blogs/topical-authority-seo/",
+    "/blogs/website-development-leads/",
+    "/blogs/website-development-mistakes/",
+    "/blogs/website-performance-conversions/",
+    "/seo-executive-assessment/",
+    "/seo-manager-assessment/",
+    "/seo-services-mumbai-google-ads-landing-page/",
+    "/services/aeo-services-in-mumbai/",
+    "/website-development-services-in-mumbai-dgenius-solutions/"
+  ]
+}

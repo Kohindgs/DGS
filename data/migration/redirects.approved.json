@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "policy": "Reviewed one-hop permanent redirects for the Next.js demo. Tier-0 protected routes are never redirect sources.",
+  "reviewedAt": "2026-08-27",
+  "redirects": [
+    { "source": "/services/aeo/", "destination": "/services/aeo-services-in-mumbai/", "statusCode": 301, "reason": "Legacy short slug; tier-0 canonical is the long URL" },
+    { "source": "/aeo/", "destination": "/services/aeo-services-in-mumbai/", "statusCode": 301, "reason": "Root shortcut must land on AEO service, not blog" },
+    { "source": "/geo/", "destination": "/services/geo/", "statusCode": 301, "reason": "Root GEO shortcut" },
+    { "source": "/llm-seo/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "Root LLM SEO shortcut must land on service" },
+    { "source": "/services/llm-seo/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "Legacy slug alias" },
+    { "source": "/services/llm/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "Legacy slug alias" },
+    { "source": "/services/generative-engine-optimization/", "destination": "/services/geo/", "statusCode": 301, "reason": "GEO service alias" },
+    { "source": "/seo-services/", "destination": "/services/seo-services-in-mumbai/", "statusCode": 301, "reason": "WP wrongly redirected to Hyderabad; fix for Mumbai flagship" },
+    { "source": "/seo-services-in-mumbai/", "destination": "/services/seo-services-in-mumbai/", "statusCode": 301, "reason": "Legacy path without services prefix" },
+    { "source": "/services/seo/", "destination": "/services/seo-services-in-mumbai/", "statusCode": 301, "reason": "WP wrongly redirected to Bangalore typo slug" },
+    { "source": "/seo/", "destination": "/services/seo-services-in-mumbai/", "statusCode": 301, "reason": "Root SEO shortcut to flagship service" },
+    { "source": "/contact/", "destination": "/contact-us/", "statusCode": 301, "reason": "Contact alias" },
+    { "source": "/blog/", "destination": "/blogs/", "statusCode": 301, "reason": "Blog archive alias" },
+    { "source": "/case-studies/", "destination": "/case_studies/", "statusCode": 301, "reason": "Underscore canonical for case studies hub" },
+    { "source": "/dubai-seo/", "destination": "/services/dubai-seo/", "statusCode": 301, "reason": "Dubai SEO service alias" },
+    { "source": "/services/ai-production-dubai/", "destination": "/services/ai-production-dubai-page/", "statusCode": 301, "reason": "Page-suffix slug alias" },
+    { "source": "/services/website-development-pune/", "destination": "/services/website-development-pune-page/", "statusCode": 301, "reason": "Page-suffix slug alias" },
+    { "source": "/services/seo-service-in-bangalore/", "destination": "/services/seo-service-in-banglore/", "statusCode": 301, "reason": "Spelling variant until WP slug renamed" },
+    { "source": "/services/seo-services-in-bangalore/", "destination": "/services/seo-service-in-banglore/", "statusCode": 301, "reason": "Spelling variant until WP slug renamed" },
+    { "source": "/services/seo-services-in-pune/", "destination": "/services/seo-service-pune/", "statusCode": 301, "reason": "City slug normalization" },
+    { "source": "/services/seo-services-in-gurugram/", "destination": "/services/seo-service-in-gurugram/", "statusCode": 301, "reason": "City slug normalization" },
+    { "source": "/australia/", "destination": "/australia-page/", "statusCode": 301, "reason": "Landing page alias" },
+    { "source": "/us/", "destination": "/us-landing-page/", "statusCode": 301, "reason": "US landing alias" },
+    { "source": "/wp-file-download-search/", "destination": "/", "statusCode": 301, "reason": "Junk plugin route; single hop to home" },
+    { "source": "/index.php/", "destination": "/", "statusCode": 301, "reason": "WordPress index alias" },
+    { "source": "/home/", "destination": "/", "statusCode": 301, "reason": "Home alias" }
+  ]
+}

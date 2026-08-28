@@ -1,0 +1,41 @@
+[
+  {
+    "requestedUrl": "https://dgeniussolutions.com/",
+    "finalUrl": "https://www.dgeniussolutions.com/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://dgeniussolutions.com/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "anchor": "D’Genius Solutions",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "anchor": "D’Genius Solutions",
+        "rel": ""
+      },
+      {
+        "from": "/privacy-policy/",
+        "anchor": "dgeniussolutions.com",
+        "rel": ""
+      },
+      {
+        "from": "/privacy-policy/",
+        "anchor": "www.dgeniussolutions.com",
+        "rel": ""
+      }
+    ]
+  }
+]

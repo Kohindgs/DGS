@@ -1,0 +1,1581 @@
+[
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/",
+    "finalUrl": "https://www.dgeniussolutions.com/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/",
+        "pageUrl": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "from": "/",
+        "pageUrl": "https://www.dgeniussolutions.com/"
+      },
+      {
+        "from": "/",
+        "pageUrl": "https://www.dgeniussolutions.com/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/about-us/",
+    "finalUrl": "https://www.dgeniussolutions.com/about-us/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/about-us/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/about-us/",
+        "pageUrl": "https://www.dgeniussolutions.com/about-us/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/aeo-dubai/",
+    "finalUrl": "https://www.dgeniussolutions.com/aeo-dubai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/aeo-dubai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/aeo-dubai/",
+        "pageUrl": "https://www.dgeniussolutions.com/aeo-dubai/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/australia-page/",
+    "finalUrl": "https://www.dgeniussolutions.com/australia-page/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/australia-page/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/australia-page/",
+        "pageUrl": "https://www.dgeniussolutions.com/australia-page/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/better-ceasons-case-study/",
+    "finalUrl": "https://www.dgeniussolutions.com/better-ceasons-case-study/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/better-ceasons-case-study/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/better-ceasons-case-study/",
+        "pageUrl": "https://www.dgeniussolutions.com/better-ceasons-case-study/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/3-3-3-rule-in-marketing/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/aeo-business/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/aeo-business/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/aeo-business/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/aeo-business/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/aeo-business/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-generated-summaries-in-search-ads/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-overview-ranking/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-overview-seo/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-readiness-for-websites/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-search-behavior-2026/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-search-checklist-2026/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-search-optimization-ecommerce/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-video-production-cost-india/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-video-vs-traditional-video/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/brand-identity-seo-trust-lead-generation/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/brand-mentions-for-ai-tools/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/brand-visibility-in-ai-search/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/chatgpt-brand-visibility/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/content-strategy-for-seo/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/content-writing-for-seo/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/core-update-strategy/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/core-update-strategy/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/future-of-seo/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/future-of-seo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/generative-engine-optimization-business/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/generative-engine-optimization/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/geo-vs-seo-google-ai-search/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-ads-vs-meta-ads/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-agentic-browsing/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-ai-overviews-image-generation/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-ai-search-update/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-algorithm-business/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-io-2026/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-io-2026/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-io-2026/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-io-2026/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-io-2026/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-search-console-social-media/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-spam-update/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/google-spam-update/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/llm-seo-ai-search/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/llm-seo-services-mumbai/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/local-seo-business-growth/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/low-social-media-reach/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/modern-seo-business-growth/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/optimize-content-ai-search/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/optimize-for-ai-overviews/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/schema-seo-for-small-business/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/seo-friendly-website/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/seo-rankings-up-but-traffic-down/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/seo-strategies-business-growth/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/social-media-marketing-strategy/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/voice-search-seo/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/voice-search-seo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/website-design-lead-generation-mumbai/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/website-development-quality-leads/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/website-traffic-but-no-leads/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "pageUrl": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/case_studies/",
+    "finalUrl": "https://www.dgeniussolutions.com/case_studies/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/case_studies/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/case_studies/",
+        "pageUrl": "https://www.dgeniussolutions.com/case_studies/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/contact-us/",
+    "finalUrl": "https://www.dgeniussolutions.com/contact-us/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/contact-us/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/contact-us/",
+        "pageUrl": "https://www.dgeniussolutions.com/contact-us/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/indriya-test/",
+    "finalUrl": "https://www.dgeniussolutions.com/indriya-test/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/indriya-test/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/indriya-test/",
+        "pageUrl": "https://www.dgeniussolutions.com/indriya-test/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/motion-graphics/",
+    "finalUrl": "https://www.dgeniussolutions.com/motion-graphics/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/motion-graphics/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/motion-graphics/",
+        "pageUrl": "https://www.dgeniussolutions.com/motion-graphics/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/our-services/",
+    "finalUrl": "https://www.dgeniussolutions.com/our-services/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/our-services/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/our-services/",
+        "pageUrl": "https://www.dgeniussolutions.com/our-services/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/portfolio/",
+    "finalUrl": "https://www.dgeniussolutions.com/portfolio/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/portfolio/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/portfolio/",
+        "pageUrl": "https://www.dgeniussolutions.com/portfolio/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/privacy-policy/",
+    "finalUrl": "https://www.dgeniussolutions.com/privacy-policy/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/privacy-policy/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/privacy-policy/",
+        "pageUrl": "https://www.dgeniussolutions.com/privacy-policy/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/seo-pricing/",
+    "finalUrl": "https://www.dgeniussolutions.com/seo-pricing/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/seo-pricing/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/seo-pricing/",
+        "pageUrl": "https://www.dgeniussolutions.com/seo-pricing/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/aeo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo/",
+        "status": 301,
+        "location": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/aeo-services-in-mumbai/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/ai-production-dubai-page/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/ai-video-production-agency/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/ai-video-production-agency/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/branding/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/branding/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/branding/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/branding/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/branding/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/content-creation/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/content-creation/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/content-creation/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/content-creation/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/content-creation/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/dubai-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/dubai-seo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/dubai-seo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/dubai-seo/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/dubai-seo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/geo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/geo/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/geo/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/geo/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/geo/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/llm-seo-service/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/llm-seo-service/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/performance-marketing/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/performance-marketing/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/performance-marketing/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/performance-marketing/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/performance-marketing/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/seo-service-in-banglore/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/seo-service-in-gurugram/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/seo-service-pune/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/seo-service-pune/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/seo-services-in-hyderabad/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/seo-services-in-mumbai/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/shirdi-se-sai-tak-case-study/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/social-media-marketing/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/social-media-marketing/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/social-media-marketing/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/social-media-marketing/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/social-media-marketing/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/website-development-amc/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/website-development-amc/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/website-development-amc/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/website-development-amc/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/website-development-pune-page/",
+        "pageUrl": "https://www.dgeniussolutions.com/services/website-development-pune-page/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/sitemap/",
+    "finalUrl": "https://www.dgeniussolutions.com/sitemap/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/sitemap/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/sitemap/",
+        "pageUrl": "https://www.dgeniussolutions.com/sitemap/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/thank-you/",
+    "finalUrl": "https://www.dgeniussolutions.com/thank-you/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/thank-you/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/thank-you/",
+        "pageUrl": "https://www.dgeniussolutions.com/thank-you/"
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/us-landing-page/",
+    "finalUrl": "https://www.dgeniussolutions.com/us-landing-page/",
+    "status": 200,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/us-landing-page/",
+        "status": 200,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/us-landing-page/",
+        "pageUrl": "https://www.dgeniussolutions.com/us-landing-page/"
+      }
+    ]
+  }
+]

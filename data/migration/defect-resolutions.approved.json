@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "policy": "Source-site defects are unresolved until a verified migration fix is implemented and evidence is recorded here. Do not mark a defect approved merely to satisfy a release check.",
+  "resolutions": []
+}

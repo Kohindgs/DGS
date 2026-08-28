@@ -1,0 +1,32 @@
+[
+  {
+    "url": "https://www.dgeniussolutions.com/sitemap_index.xml",
+    "status": 200,
+    "locCount": 4,
+    "isIndex": true
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/post-sitemap.xml",
+    "status": 200,
+    "locCount": 52,
+    "isIndex": false
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/page-sitemap.xml",
+    "status": 200,
+    "locCount": 18,
+    "isIndex": false
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services-sitemap.xml",
+    "status": 200,
+    "locCount": 18,
+    "isIndex": false
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/local-sitemap.xml",
+    "status": 200,
+    "locCount": 1,
+    "isIndex": false
+  }
+]

@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-08-26T12:45:45.588Z",
+  "totalSitemapUrls": 86,
+  "tier0UrlsPresent": [
+    {
+      "path": "/services/ai-video-production-agency/",
+      "present": true
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "present": true
+    },
+    {
+      "path": "/services/geo/",
+      "present": true
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "present": true
+    },
+    {
+      "path": "/services/seo-services-in-mumbai/",
+      "present": true
+    }
+  ],
+  "reviewOnlyRoutesAbsent": [
+    {
+      "path": "/career/",
+      "proposedAction": "REDIRECT_REVIEW",
+      "absent": true
+    },
+    {
+      "path": "/wp-file-download-search/",
+      "proposedAction": "REDIRECT_REVIEW",
+      "absent": true
+    }
+  ],
+  "publishedNotInSitemapReviewAbsent": [
+    {
+      "path": "/aeo-services-mumbai-google-ads-landing-page/",
+      "absent": true
+    },
+    {
+      "path": "/ai-motion-graphic-designer/",
+      "absent": true
+    },
+    {
+      "path": "/ai-production-videos-google-ads-landing-page/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/ai-content-optimization/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/seo-services-india-2026/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/topical-authority-seo/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/website-development-leads/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/website-development-mistakes/",
+      "absent": true
+    },
+    {
+      "path": "/blogs/website-performance-conversions/",
+      "absent": true
+    },
+    {
+      "path": "/seo-executive-assessment/",
+      "absent": true
+    },
+    {
+      "path": "/seo-manager-assessment/",
+      "absent": true
+    },
+    {
+      "path": "/seo-services-mumbai-google-ads-landing-page/",
+      "absent": true
+    },
+    {
+      "path": "/website-development-services-in-mumbai-dgenius-solutions/",
+      "absent": true
+    }
+  ],
+  "redirectReviewRoutesAbsent": [
+    {
+      "path": "/career/",
+      "absent": true
+    },
+    {
+      "path": "/wp-file-download-search/",
+      "absent": true
+    }
+  ]
+}

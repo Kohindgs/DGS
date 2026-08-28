@@ -1,0 +1,317 @@
+[
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/answer-engine-optimization-aeo-service/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/answer-engine-optimization-aeo-service/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/answer-engine-optimization-aeo-service/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/ai-video-production-for-business/",
+        "anchor": "AEO Services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/content-creation-agency-mumbai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/content-creation-agency-mumbai/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/content-creation-agency-mumbai/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "content creation",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/google-ranking-fixes/",
+        "anchor": "content creation services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/digital-marketing-services/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/digital-marketing-services/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/digital-marketing-services/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/search-generative-ai-performance-reports/",
+        "anchor": "digital marketing services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/llm-seo-services-in-mumbai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/llm-seo-services-in-mumbai/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/llm-seo-services-in-mumbai/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "LLM SEO services",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "LLM SEO services",
+        "rel": ""
+      },
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "LLM SEO services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/generative-engine-optimization-services-in-mumbai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/generative-engine-optimization-services-in-mumbai/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/generative-engine-optimization-services-in-mumbai/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/blogs/what-is-llm-seo/",
+        "anchor": "GEO services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/seo-services-dubai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-services-dubai/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-services-dubai/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/ai-production-dubai-page/",
+        "anchor": "SEO Services In Dubai",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-dubai/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/aeo-services-in-dubai/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/aeo-services-in-dubai/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/ai-production-dubai-page/",
+        "anchor": "AEO Services In Dubai",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/google-ads/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/google-ads/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/google-ads/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/ai-production-dubai-page/",
+        "anchor": "Google Ads Services",
+        "rel": ""
+      },
+      {
+        "from": "/services/ai-video-production-agency/",
+        "anchor": "Google Ads Services",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/ecommerce-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/ecommerce-seo/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/ecommerce-seo/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Explore our specialized E-commerce SEO frameworks for Dubai brands →",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/real-estate-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/real-estate-seo/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/real-estate-seo/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Explore our specialized Real Estate SEO frameworks for Dubai developers →",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/education-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/education-seo/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/education-seo/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Explore our specialized Education SEO frameworks for Dubai institutes →",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/finance-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/finance-seo/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/finance-seo/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Explore our specialized Finance SEO frameworks for UAE firms →",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/hospitality-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/hospitality-seo/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/hospitality-seo/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Explore our specialized Hospitality SEO frameworks for Dubai venues →",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/saas-seo/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/saas-seo/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/saas-seo/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/dubai-seo/",
+        "anchor": "Explore our specialized SaaS SEO frameworks for B2B growth teams →",
+        "rel": ""
+      }
+    ]
+  },
+  {
+    "requestedUrl": "https://www.dgeniussolutions.com/services/seo-services-in-pune/",
+    "finalUrl": "https://www.dgeniussolutions.com/services/seo-services-in-pune/",
+    "status": 404,
+    "chain": [
+      {
+        "url": "https://www.dgeniussolutions.com/services/seo-services-in-pune/",
+        "status": 404,
+        "location": null
+      }
+    ],
+    "sources": [
+      {
+        "from": "/services/seo-service-in-banglore/",
+        "anchor": "02 / Pune ↗ SEO Services in Pune Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers. Pune Search Local Leads",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-service-in-gurugram/",
+        "anchor": "02 / Pune ↗ SEO Services in Pune Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers. Pune Search Local Leads",
+        "rel": ""
+      },
+      {
+        "from": "/services/seo-services-in-hyderabad/",
+        "anchor": "02 / Pune ↗ SEO Services in Pune Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers. Pune Search Local Leads",
+        "rel": ""
+      }
+    ]
+  }
+]

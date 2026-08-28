@@ -1,0 +1,515 @@
+{
+  "generatedAt": "2026-08-26T12:45:45.559Z",
+  "path": "/services/",
+  "status": 200,
+  "title": "Services - D'Genius Solutions",
+  "description": "Services Archive - D'Genius Solutions",
+  "descriptionMetadataReview": false,
+  "canonical": "https://www.dgeniussolutions.com/services/",
+  "robots": "index, follow",
+  "h1": "Archives: Services",
+  "h1Count": 1,
+  "hasArticleMarker": true,
+  "wordpressId": null,
+  "liveHeadings": [
+    {
+      "level": "h1",
+      "text": "Archives: Services"
+    },
+    {
+      "level": "h4",
+      "text": "Website Development Pune Page"
+    },
+    {
+      "level": "h4",
+      "text": "Performance Marketing"
+    },
+    {
+      "level": "h4",
+      "text": "SEO services in Gurugram"
+    },
+    {
+      "level": "h4",
+      "text": "SEO services in Hyderabad"
+    },
+    {
+      "level": "h4",
+      "text": "SEO service in Banglore"
+    },
+    {
+      "level": "h4",
+      "text": "SEO service Pune"
+    },
+    {
+      "level": "h4",
+      "text": "Dubai SEO"
+    },
+    {
+      "level": "h4",
+      "text": "Shirdi Se Sai Tak Case Study"
+    },
+    {
+      "level": "h4",
+      "text": "AI Production Dubai page"
+    },
+    {
+      "level": "h4",
+      "text": "AEO"
+    }
+  ],
+  "liveInternalLinks": [
+    {
+      "href": "https://www.dgeniussolutions.com/",
+      "path": "/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/",
+      "path": "/",
+      "internal": true,
+      "anchor": "Home",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/about-us/",
+      "path": "/about-us/",
+      "internal": true,
+      "anchor": "About Us",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "path": "/services/ai-video-production-agency/",
+      "internal": true,
+      "anchor": "AI Video Production",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "path": "/services/seo-services-in-mumbai/",
+      "internal": true,
+      "anchor": "SEO",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "path": "/services/aeo-services-in-mumbai/",
+      "internal": true,
+      "anchor": "AEO",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/geo/",
+      "path": "/services/geo/",
+      "internal": true,
+      "anchor": "GEO",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "path": "/services/llm-seo-service/",
+      "internal": true,
+      "anchor": "LLM SEO",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/social-media-marketing/",
+      "path": "/services/social-media-marketing/",
+      "internal": true,
+      "anchor": "Social Media",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/performance-marketing/",
+      "path": "/services/performance-marketing/",
+      "internal": true,
+      "anchor": "Performance Marketing",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "path": "/services/website-development-amc/",
+      "internal": true,
+      "anchor": "Website Dev",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/branding/",
+      "path": "/services/branding/",
+      "internal": true,
+      "anchor": "Branding",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/content-creation/",
+      "path": "/services/content-creation/",
+      "internal": true,
+      "anchor": "Content Creation",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/portfolio/",
+      "path": "/portfolio/",
+      "internal": true,
+      "anchor": "Portfolio",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/case_studies/",
+      "path": "/case_studies/",
+      "internal": true,
+      "anchor": "Case Studies",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/blogs/",
+      "path": "/blogs/",
+      "internal": true,
+      "anchor": "Blogs",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/career/",
+      "path": "/career/",
+      "internal": true,
+      "anchor": "Careers",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/contact-us/",
+      "path": "/contact-us/",
+      "internal": true,
+      "anchor": "Contact Us",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/privacy-policy/",
+      "path": "/privacy-policy/",
+      "internal": true,
+      "anchor": "Privacy Policy",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/sitemap/",
+      "path": "/sitemap/",
+      "internal": true,
+      "anchor": "Sitemap",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/",
+      "path": "/",
+      "internal": true,
+      "anchor": "Home",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+      "path": "/services/website-development-pune-page/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+      "path": "/services/website-development-pune-page/",
+      "internal": true,
+      "anchor": "Website Development Pune Page",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/performance-marketing/",
+      "path": "/services/performance-marketing/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/performance-marketing/",
+      "path": "/services/performance-marketing/",
+      "internal": true,
+      "anchor": "Performance Marketing",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+      "path": "/services/seo-service-in-gurugram/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+      "path": "/services/seo-service-in-gurugram/",
+      "internal": true,
+      "anchor": "SEO services in Gurugram",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+      "path": "/services/seo-services-in-hyderabad/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+      "path": "/services/seo-services-in-hyderabad/",
+      "internal": true,
+      "anchor": "SEO services in Hyderabad",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+      "path": "/services/seo-service-in-banglore/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+      "path": "/services/seo-service-in-banglore/",
+      "internal": true,
+      "anchor": "SEO service in Banglore",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+      "path": "/services/seo-service-pune/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+      "path": "/services/seo-service-pune/",
+      "internal": true,
+      "anchor": "SEO service Pune",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/dubai-seo/",
+      "path": "/services/dubai-seo/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/dubai-seo/",
+      "path": "/services/dubai-seo/",
+      "internal": true,
+      "anchor": "Dubai SEO",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
+      "path": "/services/shirdi-se-sai-tak-case-study/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
+      "path": "/services/shirdi-se-sai-tak-case-study/",
+      "internal": true,
+      "anchor": "Shirdi Se Sai Tak Case Study",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+      "path": "/services/ai-production-dubai-page/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+      "path": "/services/ai-production-dubai-page/",
+      "internal": true,
+      "anchor": "AI Production Dubai page",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "path": "/services/aeo-services-in-mumbai/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "path": "/services/aeo-services-in-mumbai/",
+      "internal": true,
+      "anchor": "AEO",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/page/2/",
+      "path": "/services/page/2/",
+      "internal": true,
+      "anchor": "2",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/page/2/",
+      "path": "/services/page/2/",
+      "internal": true,
+      "anchor": "",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/",
+      "path": "/",
+      "internal": true,
+      "anchor": "Home",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/about-us/",
+      "path": "/about-us/",
+      "internal": true,
+      "anchor": "About Us",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/blogs/",
+      "path": "/blogs/",
+      "internal": true,
+      "anchor": "Blogs",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/career/",
+      "path": "/career/",
+      "internal": true,
+      "anchor": "Career",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/portfolio/",
+      "path": "/portfolio/",
+      "internal": true,
+      "anchor": "Portfolio",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/contact-us/",
+      "path": "/contact-us/",
+      "internal": true,
+      "anchor": "Contact",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "path": "/services/seo-services-in-mumbai/",
+      "internal": true,
+      "anchor": "SEO Services",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "path": "/services/website-development-amc/",
+      "internal": true,
+      "anchor": "Website Development",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/social-media-marketing/",
+      "path": "/services/social-media-marketing/",
+      "internal": true,
+      "anchor": "Social Media Marketing",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/performance-marketing/",
+      "path": "/services/performance-marketing/",
+      "internal": true,
+      "anchor": "Performance Marketing",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "path": "/services/ai-video-production-agency/",
+      "internal": true,
+      "anchor": "AI Video Production",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/content-creation/",
+      "path": "/services/content-creation/",
+      "internal": true,
+      "anchor": "Content Creation",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/branding/",
+      "path": "/services/branding/",
+      "internal": true,
+      "anchor": "Branding",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "path": "/services/aeo-services-in-mumbai/",
+      "internal": true,
+      "anchor": "AEO Services",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/geo/",
+      "path": "/services/geo/",
+      "internal": true,
+      "anchor": "GEO Services",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "path": "/services/llm-seo-service/",
+      "internal": true,
+      "anchor": "LLM SEO Services",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/privacy-policy/",
+      "path": "/privacy-policy/",
+      "internal": true,
+      "anchor": "Privacy Policy",
+      "rel": ""
+    },
+    {
+      "href": "https://www.dgeniussolutions.com/sitemap/",
+      "path": "/sitemap/",
+      "internal": true,
+      "anchor": "Sitemap",
+      "rel": ""
+    }
+  ],
+  "renderedServiceCount": 18,
+  "renderedProtectedServiceCount": 5,
+  "allProtectedServicesPresent": true,
+  "serviceOrder": [
+    "/services/website-development-pune-page/",
+    "/services/performance-marketing/",
+    "/services/seo-service-in-gurugram/",
+    "/services/seo-services-in-hyderabad/",
+    "/services/seo-service-in-banglore/",
+    "/services/seo-service-pune/",
+    "/services/dubai-seo/",
+    "/services/shirdi-se-sai-tak-case-study/",
+    "/services/ai-production-dubai-page/",
+    "/services/aeo-services-in-mumbai/",
+    "/services/llm-seo-service/",
+    "/services/geo/",
+    "/services/ai-video-production-agency/",
+    "/services/seo-services-in-mumbai/",
+    "/services/social-media-marketing/",
+    "/services/branding/",
+    "/services/content-creation/",
+    "/services/website-development-amc/"
+  ],
+  "page2LinkPresentInSource": true,
+  "page2CurrentStatus": 404,
+  "page2Resolution": "Broken source pagination removed; verified services flattened into /services/"
+}
