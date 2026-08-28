@@ -8,7 +8,7 @@ export const verifiedOrganization = {
   name: "D'Genius Solutions",
   legalName: "D'Genius Solutions",
   url: siteConfig.url,
-  logoUrl: "https://www.dgeniussolutions.com/wp-content/uploads/2024/06/DGenius-Solutions-Logo.png",
+  logoUrl: "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp",
   email: "business@dgeniussolutions.com",
   telephone: ["+91-99879-22901", "+91-85919-50238"],
   address: {
