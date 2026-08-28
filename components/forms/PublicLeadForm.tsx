@@ -13,6 +13,12 @@ const FIELD_LABELS: Record<string, string> = {
   message: "Your Message",
 };
 
+const PLACEHOLDERS: Record<string, string> = {
+  "names[first_name]": "Enter Your First Name",
+  email: "Email Address",
+  phone: "Mobile Number",
+};
+
 const HOMEPAGE_FIELDS = [
   "names[first_name]",
   "email",
@@ -40,10 +46,6 @@ export function PublicLeadForm({ id = "contact-form", route }: PublicLeadFormPro
       data-submission="disabled"
       onSubmit={(event) => event.preventDefault()}
     >
-      <p className={styles.notice}>
-        Form preview only. Fluent Forms submission remains disabled until authenticated backend configuration is available.
-      </p>
-
       {HOMEPAGE_FIELDS.map((name) => {
         const label = FIELD_LABELS[name] || name;
         const isTextarea = name === "message";
@@ -53,24 +55,23 @@ export function PublicLeadForm({ id = "contact-form", route }: PublicLeadFormPro
           <label key={name} className={styles.field} data-migration-field={name}>
             <span className={styles.label}>{label}</span>
             {isTextarea ? (
-              <textarea name={name} rows={5} readOnly aria-readonly="true" />
+              <textarea name={name} rows={5} placeholder={label} />
             ) : isSelect ? (
-              <select name={name} disabled aria-disabled="true" defaultValue="">
+              <select name={name} defaultValue="">
                 <option value="">{label}</option>
               </select>
             ) : (
               <input
                 type={name === "email" ? "email" : name === "phone" ? "tel" : "text"}
                 name={name}
-                readOnly
-                aria-readonly="true"
+                placeholder={PLACEHOLDERS[name] || label}
               />
             )}
           </label>
         );
       })}
 
-      <button type="submit" className={styles.submit} disabled>
+      <button type="submit" className={styles.submit} disabled aria-disabled="true">
         Submit Form
       </button>
     </form>

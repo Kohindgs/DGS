@@ -1,0 +1,131 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(2, 2, 2, 0.96);
+  backdrop-filter: blur(12px);
+  animation: menu-fade 0.35s ease;
+}
+
+.panel {
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--space-6) var(--page-gutter) var(--space-10);
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-10);
+}
+
+.logoLink {
+  display: inline-flex;
+}
+
+.closeBtn {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: var(--space-10);
+  max-width: var(--wide-max);
+  margin-inline: auto;
+}
+
+.primaryNav ul,
+.serviceList,
+.socialList {
+  list-style: none;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.navLink {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-family: var(--font-display);
+  color: var(--color-text);
+}
+
+.sectionTitle {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: var(--space-4);
+}
+
+.serviceList a,
+.socialList a,
+.reachBlock a {
+  color: var(--color-text-muted);
+}
+
+.reachBlock a:hover,
+.serviceList a:hover,
+.navLink:hover {
+  color: var(--color-accent);
+}
+
+.address {
+  font-style: normal;
+  display: grid;
+  gap: 0.15rem;
+  margin: var(--space-4) 0 var(--space-6);
+  color: var(--color-text-muted);
+}
+
+.ctaBtn {
+  display: inline-flex;
+  margin-top: var(--space-4);
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.bottom {
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: space-between;
+  color: var(--color-text-dim);
+  font-size: 0.9rem;
+}
+
+.legal {
+  display: flex;
+  gap: var(--space-4);
+}
+
+@keyframes menu-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    animation: none;
+  }
+}

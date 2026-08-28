@@ -1,0 +1,24 @@
+.section {
+  margin-block: var(--space-12);
+}
+
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  margin-bottom: var(--space-6);
+}
+
+.ctaWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
+.cta {
+  display: inline-flex;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  font-weight: 600;
+}

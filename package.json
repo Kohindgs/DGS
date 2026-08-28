@@ -30,6 +30,8 @@
     "validate:search": "node scripts/validate-search-architecture.mjs",
     "validate:forms": "node scripts/validate-forms-readiness.mjs",
     "validate:portfolio": "node scripts/validate-portfolio-readiness.mjs",
+    "validate:envira-runtime": "node scripts/validate-envira-runtime.mjs",
+    "build:portfolio-alt-review": "node scripts/build-portfolio-alt-review.mjs",
     "validate:analytics": "node scripts/validate-analytics-readiness.mjs",
     "release:validate:search": "node scripts/validate-release-readiness.mjs",
     "release:validate": "npm run release:validate:search && npm run validate:forms && npm run validate:portfolio && npm run validate:analytics",
@@ -40,6 +42,7 @@
     "@gsap/react": "^2.1.2",
     "gsap": "^3.15.0",
     "next": "16.3.3",
+    "ogl": "^1.0.11",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

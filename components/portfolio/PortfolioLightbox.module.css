@@ -1,0 +1,75 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  background: rgba(2, 2, 2, 0.92);
+  display: grid;
+  place-items: center;
+  padding: var(--space-6);
+}
+
+.dialog {
+  position: relative;
+  width: min(100%, 1100px);
+  max-height: 90vh;
+  outline: none;
+}
+
+.closeBtn,
+.prevBtn,
+.nextBtn {
+  position: absolute;
+  z-index: 2;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.closeBtn {
+  top: -0.5rem;
+  right: -0.5rem;
+  font-size: 1.5rem;
+}
+
+.prevBtn {
+  left: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.nextBtn {
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.figure {
+  margin: 0;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.figure figcaption {
+  margin-top: var(--space-3);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .prevBtn {
+    left: 0.25rem;
+  }
+  .nextBtn {
+    right: 0.25rem;
+  }
+}
