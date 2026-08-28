@@ -11,6 +11,7 @@ import { assertProtectedRouteSearchPolicy } from "@/lib/migration/search-policy"
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
 import { resolvePageH1 } from "@/lib/migration/page-h1";
 import { getRetiredRoute } from "@/lib/migration/retired-routes";
+import { getRouteDecision, shouldExcludeFromStaticGeneration } from "@/lib/migration/route-decisions";
 import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
 import Link from "next/link";
 
@@ -20,6 +21,7 @@ export async function generateStaticParams() {
     .filter((r) => r.proposedAction === "KEEP_SAME_URL" || r.proposedAction === "PROTECTED")
     .filter((r) => r.path !== "/")
     .filter((r) => !getRetiredRoute(r.path))
+    .filter((r) => !shouldExcludeFromStaticGeneration(r.path))
     .map((r) => ({ slug: r.path.split("/").filter(Boolean) }));
 }
 
@@ -32,17 +34,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
     return { title: "Not Found" };
   }
 
+  const decision = getRouteDecision(path);
   const title = route.title || "Page";
   const description = route.description || "";
+  const canonicalFromRoute = route.desiredCanonicalPath || route.canonical || path;
+  const canonicalPath = decision?.canonicalPath || canonicalFromRoute;
 
   return buildPageMetadata({
     title,
     description,
     path,
-    canonicalPath: (route.desiredCanonicalPath || route.canonical || path).startsWith("http")
-      ? new URL(route.desiredCanonicalPath || route.canonical || path).pathname
-      : (route.desiredCanonicalPath || route.canonical || path),
-    indexable: route.indexable,
+    canonicalPath: canonicalPath.startsWith("http")
+      ? new URL(canonicalPath).pathname
+      : canonicalPath,
+    indexable: decision?.indexable ?? route.indexable,
     metadataReview: !description,
   });
 }
@@ -73,7 +78,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   const breadcrumbs = buildBreadcrumbs(path, route);
   const schemaBlocks = buildRouteSchemas({ route, path, blocks, breadcrumbs });
 
-  const pageH1 = resolvePageH1(route);
+  const pageH1 = resolvePageH1(route, blocks);
   const isH1 = (b: ContentBlock): b is HeadingBlock => b.type === "heading" && b.level === 1;
   const isDuplicateHeading = (b: ContentBlock): b is HeadingBlock =>
     b.type === "heading" && b.text.trim() === pageH1.trim();
