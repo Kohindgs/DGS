@@ -33,12 +33,17 @@
     "validate:envira-runtime": "node scripts/validate-envira-runtime.mjs",
     "build:portfolio-alt-review": "node scripts/build-portfolio-alt-review.mjs",
     "build:portfolio-review": "node scripts/build-portfolio-review.mjs",
-    "build:indexability": "node scripts/build-indexability-manifest.mjs",
     "validate:analytics": "node scripts/validate-analytics-readiness.mjs",
     "release:validate:search": "node scripts/validate-release-readiness.mjs",
     "release:validate": "npm run release:validate:search && npm run validate:forms && npm run validate:portfolio && npm run validate:analytics",
     "migration:baseline": "npm run extract:wordpress && npm run normalize:wordpress && npm run extract:envira && npm run audit:live && npm run audit:targets && npm run audit:tier0 && npm run audit:analytics && npm run audit:performance && npm run audit:accessibility && npm run build:content-blocks && npm run build:tier0-content && npm run build:route-parity && npm run build:indexability && npm run build:links && npm run build:route-registry && npm run verify:tier0 && npm run validate:redirects && npm run validate:search",
-    "check": "npm run validate:redirects && npm run validate:search && npm run lint && npm run typecheck && npm run build"
+    "check": "npm run validate:redirects && npm run validate:search && npm run lint && npm run typecheck && npm run build",
+    "capture:wp-visual": "node scripts/capture-wp-visual-reference.mjs",
+    "capture:next-visual": "node scripts/capture-next-visual-reference.mjs",
+    "compare:visual": "node scripts/compare-visual-reference.mjs",
+    "compare:homepage-content": "node scripts/compare-homepage-content.mjs",
+    "visual-parity:capture": "npm run capture:wp-visual && npm run capture:next-visual",
+    "visual-parity:compare": "npm run compare:homepage-content && npm run compare:visual"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -55,6 +60,9 @@
     "cheerio": "1.2.0",
     "eslint": "9.32.0",
     "eslint-config-next": "16.3.3",
+    "pixelmatch": "^7.2.0",
+    "playwright": "^1.62.1",
+    "pngjs": "^7.0.0",
     "typescript": "5.9.3"
   }
 }

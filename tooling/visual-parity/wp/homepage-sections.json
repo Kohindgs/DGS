@@ -1,0 +1,898 @@
+{
+  "390x844": [
+    {
+      "index": 0,
+      "id": "7f5ae55",
+      "className": "elementor-element elementor-element-7f5ae55 e-con-full e-flex",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 40,
+      "height": 32426.390625,
+      "width": 390
+    },
+    {
+      "index": 1,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 40,
+      "height": 1376.078125,
+      "width": 390
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "top": 1416.078125,
+      "height": 130.796875,
+      "width": 390
+    },
+    {
+      "index": 3,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 1546.875,
+      "height": 5334.53125,
+      "width": 390
+    },
+    {
+      "index": 4,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 6881.40625,
+      "height": 1836.59375,
+      "width": 390
+    },
+    {
+      "index": 5,
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 8718,
+      "height": 4995.234375,
+      "width": 390
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 13713.234375,
+      "height": 2877.328125,
+      "width": 390
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 16590.5625,
+      "height": 7110.796875,
+      "width": 390
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 23701.359375,
+      "height": 1772.953125,
+      "width": 390
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 25474.3125,
+      "height": 2093.0625,
+      "width": 390
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "top": 27567.375,
+      "height": 490.171875,
+      "width": 390
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 28057.546875,
+      "height": 1464.421875,
+      "width": 390
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 29521.96875,
+      "height": 1315,
+      "width": 390
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 30836.96875,
+      "height": 1629.421875,
+      "width": 390
+    }
+  ],
+  "768x1024": [
+    {
+      "index": 0,
+      "id": "7f5ae55",
+      "className": "elementor-element elementor-element-7f5ae55 e-con-full e-flex",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 60,
+      "height": 24491.890625,
+      "width": 768
+    },
+    {
+      "index": 1,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 60,
+      "height": 1415.484375,
+      "width": 768
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "top": 1475.484375,
+      "height": 137.125,
+      "width": 768
+    },
+    {
+      "index": 3,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 1612.609375,
+      "height": 4561.625,
+      "width": 768
+    },
+    {
+      "index": 4,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 6174.234375,
+      "height": 1478.1875,
+      "width": 768
+    },
+    {
+      "index": 5,
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 7652.421875,
+      "height": 4168.875,
+      "width": 768
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 11821.296875,
+      "height": 2093.6875,
+      "width": 768
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 13914.984375,
+      "height": 3055.3125,
+      "width": 768
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 16970.296875,
+      "height": 1108.796875,
+      "width": 768
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 18079.09375,
+      "height": 1986.375,
+      "width": 768
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "top": 20065.46875,
+      "height": 387.125,
+      "width": 768
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 20452.59375,
+      "height": 1420.375,
+      "width": 768
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 21872.96875,
+      "height": 973.5,
+      "width": 768
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 22846.46875,
+      "height": 1705.421875,
+      "width": 768
+    }
+  ],
+  "1440x900": [
+    {
+      "index": 0,
+      "id": "7f5ae55",
+      "className": "elementor-element elementor-element-7f5ae55 e-con-full e-flex",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 17439.421875,
+      "width": 1440
+    },
+    {
+      "index": 1,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 996.03125,
+      "width": 1440
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "top": 996.03125,
+      "height": 197.90625,
+      "width": 1440
+    },
+    {
+      "index": 3,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 1193.9375,
+      "height": 3165.703125,
+      "width": 1440
+    },
+    {
+      "index": 4,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 4359.640625,
+      "height": 1109.484375,
+      "width": 1440
+    },
+    {
+      "index": 5,
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 5469.125,
+      "height": 2752.21875,
+      "width": 1440
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 8221.34375,
+      "height": 1419.90625,
+      "width": 1440
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 9641.25,
+      "height": 1806.03125,
+      "width": 1440
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 11447.28125,
+      "height": 897.125,
+      "width": 1440
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 12344.40625,
+      "height": 1178.78125,
+      "width": 1440
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "top": 13523.1875,
+      "height": 426.1875,
+      "width": 1440
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 13949.375,
+      "height": 783.609375,
+      "width": 1440
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 14732.984375,
+      "height": 1058.09375,
+      "width": 1440
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 15791.078125,
+      "height": 1648.34375,
+      "width": 1440
+    }
+  ],
+  "1920x1080": [
+    {
+      "index": 0,
+      "id": "7f5ae55",
+      "className": "elementor-element elementor-element-7f5ae55 e-con-full e-flex",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 19276.859375,
+      "width": 1920
+    },
+    {
+      "index": 1,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 1023.25,
+      "width": 1920
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "top": 1023.25,
+      "height": 197.90625,
+      "width": 1920
+    },
+    {
+      "index": 3,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 1221.15625,
+      "height": 3448.765625,
+      "width": 1920
+    },
+    {
+      "index": 4,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 4669.921875,
+      "height": 1259.328125,
+      "width": 1920
+    },
+    {
+      "index": 5,
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 5929.25,
+      "height": 3157.515625,
+      "width": 1920
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 9086.765625,
+      "height": 1575.984375,
+      "width": 1920
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 10662.75,
+      "height": 1713.796875,
+      "width": 1920
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 12376.546875,
+      "height": 1189.421875,
+      "width": 1920
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 13565.96875,
+      "height": 1364.859375,
+      "width": 1920
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "top": 14930.828125,
+      "height": 475.21875,
+      "width": 1920
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 15406.046875,
+      "height": 885.625,
+      "width": 1920
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 16291.671875,
+      "height": 1135.296875,
+      "width": 1920
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 17426.96875,
+      "height": 1849.890625,
+      "width": 1920
+    }
+  ],
+  "2560x1440": [
+    {
+      "index": 0,
+      "id": "7f5ae55",
+      "className": "elementor-element elementor-element-7f5ae55 e-con-full e-flex",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 20594.0625,
+      "width": 2560
+    },
+    {
+      "index": 1,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 1360,
+      "width": 2560
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "top": 1360,
+      "height": 197.90625,
+      "width": 2560
+    },
+    {
+      "index": 3,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 1557.90625,
+      "height": 3787.296875,
+      "width": 2560
+    },
+    {
+      "index": 4,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 5345.203125,
+      "height": 1306.046875,
+      "width": 2560
+    },
+    {
+      "index": 5,
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 6651.25,
+      "height": 3474.375,
+      "width": 2560
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 10125.625,
+      "height": 1589.234375,
+      "width": 2560
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 11714.859375,
+      "height": 1571.625,
+      "width": 2560
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 13286.484375,
+      "height": 1286.75,
+      "width": 2560
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 14573.234375,
+      "height": 1367.59375,
+      "width": 2560
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "top": 15940.828125,
+      "height": 494.109375,
+      "width": 2560
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 16434.9375,
+      "height": 907.40625,
+      "width": 2560
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 17342.34375,
+      "height": 1149.96875,
+      "width": 2560
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 18492.3125,
+      "height": 2101.75,
+      "width": 2560
+    }
+  ],
+  "3440x1440": [
+    {
+      "index": 0,
+      "id": "7f5ae55",
+      "className": "elementor-element elementor-element-7f5ae55 e-con-full e-flex",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 20683.09375,
+      "width": 3440
+    },
+    {
+      "index": 1,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 1360,
+      "width": 3440
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "top": 1360,
+      "height": 197.90625,
+      "width": 3440
+    },
+    {
+      "index": 3,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 1557.90625,
+      "height": 3787.296875,
+      "width": 3440
+    },
+    {
+      "index": 4,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 5345.203125,
+      "height": 1306.046875,
+      "width": 3440
+    },
+    {
+      "index": 5,
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 6651.25,
+      "height": 3489.71875,
+      "width": 3440
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 10140.96875,
+      "height": 1589.234375,
+      "width": 3440
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 11730.203125,
+      "height": 1571.625,
+      "width": 3440
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 13301.828125,
+      "height": 1286.75,
+      "width": 3440
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 14588.578125,
+      "height": 1367.59375,
+      "width": 3440
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "top": 15956.171875,
+      "height": 494.109375,
+      "width": 3440
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 16450.28125,
+      "height": 907.40625,
+      "width": 3440
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 17357.6875,
+      "height": 1149.96875,
+      "width": 3440
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 18507.65625,
+      "height": 2175.4375,
+      "width": 3440
+    }
+  ],
+  "3840x2160": [
+    {
+      "index": 0,
+      "id": "7f5ae55",
+      "className": "elementor-element elementor-element-7f5ae55 e-con-full e-flex",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 21656.421875,
+      "width": 3840
+    },
+    {
+      "index": 1,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "top": 0,
+      "height": 2080,
+      "width": 3840
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "top": 2080,
+      "height": 197.90625,
+      "width": 3840
+    },
+    {
+      "index": 3,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 2277.90625,
+      "height": 3787.296875,
+      "width": 3840
+    },
+    {
+      "index": 4,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 6065.203125,
+      "height": 1306.046875,
+      "width": 3840
+    },
+    {
+      "index": 5,
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 7371.25,
+      "height": 3529.78125,
+      "width": 3840
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 10901.03125,
+      "height": 1589.234375,
+      "width": 3840
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 12490.265625,
+      "height": 1571.625,
+      "width": 3840
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 14061.890625,
+      "height": 1286.75,
+      "width": 3840
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 15348.640625,
+      "height": 1367.59375,
+      "width": 3840
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "top": 16716.234375,
+      "height": 494.109375,
+      "width": 3840
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 17210.34375,
+      "height": 907.40625,
+      "width": 3840
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 18117.75,
+      "height": 1149.96875,
+      "width": 3840
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 19267.71875,
+      "height": 2388.703125,
+      "width": 3840
+    }
+  ]
+}

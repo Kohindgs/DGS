@@ -1,0 +1,394 @@
+{
+  "390x844": [
+    {
+      "index": 0,
+      "id": "",
+      "className": "HomeHero-module__NRzLjq__hero wide-container",
+      "heading": "Full Service Digital Marketing Agency In Mumbai",
+      "top": 178,
+      "height": 1081.875,
+      "width": 374
+    },
+    {
+      "index": 1,
+      "id": "",
+      "className": "HomeHeroSignals-module__rdfFaW__section container",
+      "heading": "Search Visibility",
+      "top": 1279.78125,
+      "height": 506.53125,
+      "width": 374
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 3606.03125,
+      "height": 5975.90625,
+      "width": 374
+    },
+    {
+      "index": 3,
+      "id": "",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 11481.53125,
+      "height": 3976.90625,
+      "width": 374
+    },
+    {
+      "index": 4,
+      "id": "",
+      "className": "",
+      "heading": "",
+      "top": 21116.5,
+      "height": 126,
+      "width": 374
+    },
+    {
+      "index": 5,
+      "id": "",
+      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 21258.5,
+      "height": 428.8125,
+      "width": 374
+    }
+  ],
+  "768x1024": [
+    {
+      "index": 0,
+      "id": "",
+      "className": "HomeHero-module__NRzLjq__hero wide-container",
+      "heading": "Full Service Digital Marketing Agency In Mumbai",
+      "top": 178,
+      "height": 971.875,
+      "width": 752
+    },
+    {
+      "index": 1,
+      "id": "",
+      "className": "HomeHeroSignals-module__rdfFaW__section container",
+      "heading": "Search Visibility",
+      "top": 1169.78125,
+      "height": 506.53125,
+      "width": 752
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 3424.03125,
+      "height": 5921.90625,
+      "width": 752
+    },
+    {
+      "index": 3,
+      "id": "",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 10949.53125,
+      "height": 3976.90625,
+      "width": 752
+    },
+    {
+      "index": 4,
+      "id": "",
+      "className": "",
+      "heading": "",
+      "top": 19770.5,
+      "height": 108,
+      "width": 752
+    },
+    {
+      "index": 5,
+      "id": "",
+      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 19894.5,
+      "height": 304.8125,
+      "width": 752
+    }
+  ],
+  "1440x900": [
+    {
+      "index": 0,
+      "id": "",
+      "className": "HomeHero-module__NRzLjq__hero wide-container",
+      "heading": "Full Service Digital Marketing Agency In Mumbai",
+      "top": 178,
+      "height": 953.875,
+      "width": 1424
+    },
+    {
+      "index": 1,
+      "id": "",
+      "className": "HomeHeroSignals-module__rdfFaW__section container",
+      "heading": "Search Visibility",
+      "top": 1151.78125,
+      "height": 506.53125,
+      "width": 1424
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 3361.03125,
+      "height": 5894.90625,
+      "width": 1424
+    },
+    {
+      "index": 3,
+      "id": "",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 10769.53125,
+      "height": 2020.90625,
+      "width": 1424
+    },
+    {
+      "index": 4,
+      "id": "",
+      "className": "",
+      "heading": "",
+      "top": 17418.5,
+      "height": 108,
+      "width": 1424
+    },
+    {
+      "index": 5,
+      "id": "",
+      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 17542.5,
+      "height": 244.8125,
+      "width": 1424
+    }
+  ],
+  "1920x1080": [
+    {
+      "index": 0,
+      "id": "",
+      "className": "HomeHero-module__NRzLjq__hero wide-container",
+      "heading": "Full Service Digital Marketing Agency In Mumbai",
+      "top": 178,
+      "height": 953.875,
+      "width": 1904
+    },
+    {
+      "index": 1,
+      "id": "",
+      "className": "HomeHeroSignals-module__rdfFaW__section container",
+      "heading": "Search Visibility",
+      "top": 1151.78125,
+      "height": 506.53125,
+      "width": 1904
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 3361.03125,
+      "height": 5894.90625,
+      "width": 1904
+    },
+    {
+      "index": 3,
+      "id": "",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 10769.53125,
+      "height": 2020.90625,
+      "width": 1904
+    },
+    {
+      "index": 4,
+      "id": "",
+      "className": "",
+      "heading": "",
+      "top": 17382.5,
+      "height": 108,
+      "width": 1904
+    },
+    {
+      "index": 5,
+      "id": "",
+      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 17506.5,
+      "height": 244.8125,
+      "width": 1904
+    }
+  ],
+  "2560x1440": [
+    {
+      "index": 0,
+      "id": "",
+      "className": "HomeHero-module__NRzLjq__hero wide-container",
+      "heading": "Full Service Digital Marketing Agency In Mumbai",
+      "top": 178,
+      "height": 953.875,
+      "width": 2544
+    },
+    {
+      "index": 1,
+      "id": "",
+      "className": "HomeHeroSignals-module__rdfFaW__section container",
+      "heading": "Search Visibility",
+      "top": 1151.78125,
+      "height": 506.53125,
+      "width": 2544
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 3361.03125,
+      "height": 5894.90625,
+      "width": 2544
+    },
+    {
+      "index": 3,
+      "id": "",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 10769.53125,
+      "height": 1531.90625,
+      "width": 2544
+    },
+    {
+      "index": 4,
+      "id": "",
+      "className": "",
+      "heading": "",
+      "top": 16893.5,
+      "height": 108,
+      "width": 2544
+    },
+    {
+      "index": 5,
+      "id": "",
+      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 17017.5,
+      "height": 223.8125,
+      "width": 2544
+    }
+  ],
+  "3440x1440": [
+    {
+      "index": 0,
+      "id": "",
+      "className": "HomeHero-module__NRzLjq__hero wide-container",
+      "heading": "Full Service Digital Marketing Agency In Mumbai",
+      "top": 178,
+      "height": 953.875,
+      "width": 3424
+    },
+    {
+      "index": 1,
+      "id": "",
+      "className": "HomeHeroSignals-module__rdfFaW__section container",
+      "heading": "Search Visibility",
+      "top": 1151.78125,
+      "height": 506.53125,
+      "width": 3424
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 3361.03125,
+      "height": 5894.90625,
+      "width": 3424
+    },
+    {
+      "index": 3,
+      "id": "",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 10769.53125,
+      "height": 1042.90625,
+      "width": 3424
+    },
+    {
+      "index": 4,
+      "id": "",
+      "className": "",
+      "heading": "",
+      "top": 16404.5,
+      "height": 108,
+      "width": 3424
+    },
+    {
+      "index": 5,
+      "id": "",
+      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 16528.5,
+      "height": 223.8125,
+      "width": 3424
+    }
+  ],
+  "3840x2160": [
+    {
+      "index": 0,
+      "id": "",
+      "className": "HomeHero-module__NRzLjq__hero wide-container",
+      "heading": "Full Service Digital Marketing Agency In Mumbai",
+      "top": 178,
+      "height": 953.875,
+      "width": 3824
+    },
+    {
+      "index": 1,
+      "id": "",
+      "className": "HomeHeroSignals-module__rdfFaW__section container",
+      "heading": "Search Visibility",
+      "top": 1151.78125,
+      "height": 506.53125,
+      "width": 3824
+    },
+    {
+      "index": 2,
+      "id": "",
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
+      "top": 3361.03125,
+      "height": 5894.90625,
+      "width": 3824
+    },
+    {
+      "index": 3,
+      "id": "",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 10769.53125,
+      "height": 1042.90625,
+      "width": 3824
+    },
+    {
+      "index": 4,
+      "id": "",
+      "className": "",
+      "heading": "",
+      "top": 16404.5,
+      "height": 108,
+      "width": 3824
+    },
+    {
+      "index": 5,
+      "id": "",
+      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "top": 16528.5,
+      "height": 223.8125,
+      "width": 3824
+    }
+  ]
+}

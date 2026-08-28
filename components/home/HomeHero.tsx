@@ -1,49 +1,52 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Reveal } from "@/components/motion/Reveal";
+import type { ImageBlock } from "@/lib/content/types";
+import { WP_HERO_TOKENS } from "@/lib/home/wp-visual-tokens";
 import styles from "./HomeHero.module.css";
 
-const HERO_IMAGE = {
-  src: "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/thoughtful-logo-concept-featuring-ai-meaningful-way.webp",
-  alt: "Digital marketing, SEO, AEO, GEO, LLM SEO and AI production agency visual for D'Genius Solutions",
-  width: 1200,
-  height: 800,
-};
-
 type HomeHeroProps = {
+  eyebrow: string;
   h1: string;
+  lead: string;
+  image?: ImageBlock;
 };
 
-export function HomeHero({ h1 }: HomeHeroProps) {
+export function HomeHero({ eyebrow, h1, lead, image }: HomeHeroProps) {
+  const heroImage = image || {
+    src: "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/thoughtful-logo-concept-featuring-ai-meaningful-way.webp",
+    alt: "Digital marketing, SEO, AEO, GEO, LLM SEO and AI production agency visual for D'Genius Solutions",
+    width: WP_HERO_TOKENS.image.width,
+    height: WP_HERO_TOKENS.image.height,
+  };
+
   return (
-    <section className={`${styles.hero} wide-container`}>
-      <div className={`${styles.copy} readable-copy`}>
-        <p className={styles.eyebrow}>Mumbai Based Full Service Digital Marketing Agency</p>
-        <h1>{h1}</h1>
-        <p className={styles.lead}>
-          D&apos;Genius Solutions is a full service digital marketing agency in Mumbai helping brands grow through
-          connected search, websites, social media, paid campaigns, branding and AI-led creative production.
-        </p>
-        <div className={styles.ctas}>
-          <Link href="/contact-us/" className={styles.primaryCta}>
-            Get A Growth Audit →
-          </Link>
-          <Link href="/services/" className={styles.secondaryCta}>
-            View Services
-          </Link>
+    <section className={styles.hero} id="dgs-home-start">
+      <div className={styles.inner}>
+        <div className={styles.copy}>
+          <p className={styles.eyebrow}>{eyebrow}</p>
+          <h1>{h1}</h1>
+          <p className={styles.lead}>{lead}</p>
+          <div className={styles.ctas}>
+            <Link href="/contact-us/" className={styles.primaryCta}>
+              Get A Growth Audit →
+            </Link>
+            <Link href="/services/" className={styles.secondaryCta}>
+              View Services
+            </Link>
+          </div>
+        </div>
+        <div className={styles.visual}>
+          <Image
+            src={heroImage.src}
+            alt={heroImage.alt || ""}
+            width={heroImage.width || WP_HERO_TOKENS.image.width}
+            height={heroImage.height || WP_HERO_TOKENS.image.height}
+            preload
+            sizes="(max-width: 900px) 100vw, 500px"
+            className={styles.image}
+          />
         </div>
       </div>
-      <Reveal variant="parallax" parallaxAmount={28} className={styles.visual}>
-        <Image
-          src={HERO_IMAGE.src}
-          alt={HERO_IMAGE.alt}
-          width={HERO_IMAGE.width}
-          height={HERO_IMAGE.height}
-          preload
-          sizes="(max-width: 768px) 100vw, (max-width: 1920px) 60vw, 960px"
-          className={styles.image}
-        />
-      </Reveal>
     </section>
   );
 }

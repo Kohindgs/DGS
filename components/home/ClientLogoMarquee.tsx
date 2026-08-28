@@ -12,23 +12,26 @@ export type ClientLogo = {
 
 type ClientLogoMarqueeProps = {
   logos: ClientLogo[];
+  showHeading?: boolean;
 };
 
 const DEFAULT_WIDTH = 160;
 const DEFAULT_HEIGHT = 64;
 
-export function ClientLogoMarquee({ logos }: ClientLogoMarqueeProps) {
+export function ClientLogoMarquee({ logos, showHeading = false }: ClientLogoMarqueeProps) {
   if (!logos.length) return null;
 
   const track = [...logos, ...logos];
 
   return (
     <section className={styles.section} aria-labelledby="client-logo-marquee-heading">
-      <div className="container">
-        <h2 id="client-logo-marquee-heading" className={styles.heading}>
-          Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.
-        </h2>
-      </div>
+      {showHeading ? (
+        <div className="container">
+          <h2 id="client-logo-marquee-heading" className={styles.heading}>
+            Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.
+          </h2>
+        </div>
+      ) : null}
 
       <div className={styles.viewport} aria-hidden={false}>
         <div className={styles.track}>

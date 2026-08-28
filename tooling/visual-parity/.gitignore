@@ -1,0 +1,4 @@
+# Visual parity capture artifacts (regenerate via npm run visual-parity:capture)
+tooling/visual-parity/wp/**/*.png
+tooling/visual-parity/next/**/*.png
+tooling/visual-parity/diffs/**/*.png

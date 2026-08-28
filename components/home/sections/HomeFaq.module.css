@@ -1,0 +1,41 @@
+.section {
+  padding: 88px 0;
+}
+
+.inner {
+  width: min(calc(100% - 36px), 900px);
+  margin: 0 auto;
+}
+
+.inner h2 {
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 800;
+  margin-bottom: 32px;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.item {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 20px;
+  font-weight: 700;
+}
+
+.item summary::-webkit-details-marker {
+  display: none;
+}
+
+.answer {
+  padding: 0 20px 18px;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.6;
+}

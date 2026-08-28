@@ -1,0 +1,481 @@
+{
+  "viewports": {
+    "1440x900": {
+      "screenshots": {
+        "full-page.png": {
+          "width": 1584,
+          "height": 18264,
+          "mismatchedPixels": 26726876,
+          "mismatchPercent": 92.38
+        },
+        "header.png": {
+          "status": "skipped",
+          "reason": "missing capture"
+        },
+        "hero.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1082338,
+          "mismatchPercent": 83.51
+        },
+        "menu-open.png": {
+          "status": "skipped",
+          "reason": "missing capture"
+        },
+        "footer.png": {
+          "width": 1440,
+          "height": 837,
+          "mismatchedPixels": 621881,
+          "mismatchPercent": 51.6
+        },
+        "section-scroll-00.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1063974,
+          "mismatchPercent": 82.1
+        },
+        "section-scroll-01.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1278378,
+          "mismatchPercent": 98.64
+        },
+        "section-scroll-02.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1174001,
+          "mismatchPercent": 90.59
+        },
+        "section-scroll-03.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1220179,
+          "mismatchPercent": 94.15
+        },
+        "section-scroll-04.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1059216,
+          "mismatchPercent": 81.73
+        },
+        "section-scroll-05.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1054588,
+          "mismatchPercent": 81.37
+        },
+        "section-scroll-06.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1041713,
+          "mismatchPercent": 80.38
+        },
+        "section-scroll-07.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1126218,
+          "mismatchPercent": 86.9
+        },
+        "section-scroll-08.png": {
+          "width": 1440,
+          "height": 900,
+          "mismatchedPixels": 1227606,
+          "mismatchPercent": 94.72
+        }
+      },
+      "metrics": {
+        "header": {
+          "boundingBox": {
+            "width": {
+              "wp": 1440,
+              "next": 1440,
+              "deltaPercent": 0
+            },
+            "height": {
+              "wp": 0,
+              "next": 76.1875,
+              "deltaPercent": 7618.75
+            },
+            "x": {
+              "wp": 0,
+              "next": 0,
+              "deltaPercent": 0
+            },
+            "y": {
+              "wp": -17375,
+              "next": 0,
+              "deltaPercent": 100
+            }
+          }
+        },
+        "hero": {
+          "boundingBox": {
+            "width": {
+              "wp": 666,
+              "next": 1424,
+              "deltaPercent": 113.81
+            },
+            "height": {
+              "wp": 233.578125,
+              "next": 37,
+              "deltaPercent": -84.16
+            },
+            "x": {
+              "wp": 18,
+              "next": 8,
+              "deltaPercent": -55.56
+            },
+            "y": {
+              "wp": -17156.4375,
+              "next": -17082.5625,
+              "deltaPercent": 0.43
+            }
+          }
+        },
+        "footer": {
+          "boundingBox": {
+            "width": {
+              "wp": 1440,
+              "next": 1424,
+              "deltaPercent": -1.11
+            },
+            "height": {
+              "wp": 835.59375,
+              "next": 405.125,
+              "deltaPercent": -51.52
+            },
+            "x": {
+              "wp": 0,
+              "next": 8,
+              "deltaPercent": 800
+            },
+            "y": {
+              "wp": 64.421875,
+              "next": 487.3125,
+              "deltaPercent": 656.44
+            }
+          }
+        }
+      }
+    },
+    "390x844": {
+      "screenshots": {
+        "full-page.png": {
+          "width": 1584,
+          "height": 34202,
+          "mismatchedPixels": 39283363,
+          "mismatchPercent": 72.51
+        },
+        "header.png": {
+          "width": 390,
+          "height": 65,
+          "mismatchedPixels": 22973,
+          "mismatchPercent": 90.62
+        },
+        "hero.png": {
+          "width": 390,
+          "height": 828,
+          "mismatchedPixels": 262974,
+          "mismatchPercent": 81.44
+        },
+        "menu-open.png": {
+          "status": "skipped",
+          "reason": "missing capture"
+        },
+        "footer.png": {
+          "width": 390,
+          "height": 1802,
+          "mismatchedPixels": 307954,
+          "mismatchPercent": 43.82
+        },
+        "section-scroll-00.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 267635,
+          "mismatchPercent": 81.31
+        },
+        "section-scroll-01.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 304614,
+          "mismatchPercent": 92.54
+        },
+        "section-scroll-02.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 298829,
+          "mismatchPercent": 90.79
+        },
+        "section-scroll-03.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 280984,
+          "mismatchPercent": 85.36
+        },
+        "section-scroll-04.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 282701,
+          "mismatchPercent": 85.89
+        },
+        "section-scroll-05.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 270821,
+          "mismatchPercent": 82.28
+        },
+        "section-scroll-06.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 289984,
+          "mismatchPercent": 88.1
+        },
+        "section-scroll-07.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 277700,
+          "mismatchPercent": 84.37
+        },
+        "section-scroll-08.png": {
+          "width": 390,
+          "height": 844,
+          "mismatchedPixels": 227411,
+          "mismatchPercent": 69.09
+        }
+      },
+      "metrics": {
+        "header": {
+          "boundingBox": {
+            "width": {
+              "wp": 390,
+              "next": 390,
+              "deltaPercent": 0
+            },
+            "height": {
+              "wp": 40,
+              "next": 65,
+              "deltaPercent": 62.5
+            },
+            "x": {
+              "wp": 0,
+              "next": 0,
+              "deltaPercent": 0
+            },
+            "y": {
+              "wp": -33423,
+              "next": 0,
+              "deltaPercent": 100
+            }
+          }
+        },
+        "hero": {
+          "boundingBox": {
+            "width": {
+              "wp": 366,
+              "next": 374,
+              "deltaPercent": 2.19
+            },
+            "height": {
+              "wp": 134.53125,
+              "next": 111,
+              "deltaPercent": -17.49
+            },
+            "x": {
+              "wp": 12,
+              "next": 8,
+              "deltaPercent": -33.33
+            },
+            "y": {
+              "wp": -33254,
+              "next": -21654.5625,
+              "deltaPercent": 34.88
+            }
+          }
+        },
+        "footer": {
+          "boundingBox": {
+            "width": {
+              "wp": 390,
+              "next": 374,
+              "deltaPercent": -4.1
+            },
+            "height": {
+              "wp": 1800.71875,
+              "next": 1028.6875,
+              "deltaPercent": -42.87
+            },
+            "x": {
+              "wp": 0,
+              "next": 8,
+              "deltaPercent": 800
+            },
+            "y": {
+              "wp": -956.609375,
+              "next": -184.6875,
+              "deltaPercent": 80.69
+            }
+          }
+        }
+      }
+    },
+    "1920x1080": {
+      "screenshots": {
+        "full-page.png": {
+          "width": 1920,
+          "height": 20088,
+          "mismatchedPixels": 35622149,
+          "mismatchPercent": 92.36
+        },
+        "header.png": {
+          "status": "skipped",
+          "reason": "missing capture"
+        },
+        "hero.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1758228,
+          "mismatchPercent": 84.79
+        },
+        "menu-open.png": {
+          "status": "skipped",
+          "reason": "missing capture"
+        },
+        "footer.png": {
+          "width": 1920,
+          "height": 837,
+          "mismatchedPixels": 826764,
+          "mismatchPercent": 51.45
+        },
+        "section-scroll-00.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1735861,
+          "mismatchPercent": 83.71
+        },
+        "section-scroll-01.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 2047044,
+          "mismatchPercent": 98.72
+        },
+        "section-scroll-02.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1878499,
+          "mismatchPercent": 90.59
+        },
+        "section-scroll-03.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1957204,
+          "mismatchPercent": 94.39
+        },
+        "section-scroll-04.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1711870,
+          "mismatchPercent": 82.56
+        },
+        "section-scroll-05.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1532758,
+          "mismatchPercent": 73.92
+        },
+        "section-scroll-06.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1690384,
+          "mismatchPercent": 81.52
+        },
+        "section-scroll-07.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1758889,
+          "mismatchPercent": 84.82
+        },
+        "section-scroll-08.png": {
+          "width": 1920,
+          "height": 1080,
+          "mismatchedPixels": 1994910,
+          "mismatchPercent": 96.21
+        }
+      },
+      "metrics": {
+        "header": {
+          "boundingBox": {
+            "width": {
+              "wp": 1920,
+              "next": 1920,
+              "deltaPercent": 0
+            },
+            "height": {
+              "wp": 0,
+              "next": 77,
+              "deltaPercent": 7700
+            },
+            "x": {
+              "wp": 0,
+              "next": 0,
+              "deltaPercent": 0
+            },
+            "y": {
+              "wp": -19032,
+              "next": 0,
+              "deltaPercent": 100
+            }
+          }
+        },
+        "hero": {
+          "boundingBox": {
+            "width": {
+              "wp": 820,
+              "next": 1904,
+              "deltaPercent": 132.2
+            },
+            "height": {
+              "wp": 311.484375,
+              "next": 37,
+              "deltaPercent": -88.12
+            },
+            "x": {
+              "wp": 80,
+              "next": 8,
+              "deltaPercent": -90
+            },
+            "y": {
+              "wp": -18837,
+              "next": -16866.5625,
+              "deltaPercent": 10.46
+            }
+          }
+        },
+        "footer": {
+          "boundingBox": {
+            "width": {
+              "wp": 1920,
+              "next": 1904,
+              "deltaPercent": -0.83
+            },
+            "height": {
+              "wp": 835.59375,
+              "next": 405.125,
+              "deltaPercent": -51.52
+            },
+            "x": {
+              "wp": 0,
+              "next": 8,
+              "deltaPercent": 800
+            },
+            "y": {
+              "wp": 244.859375,
+              "next": 667.3125,
+              "deltaPercent": 172.53
+            }
+          }
+        }
+      }
+    }
+  },
+  "generatedAt": "2026-08-28T14:00:58.600Z"
+}

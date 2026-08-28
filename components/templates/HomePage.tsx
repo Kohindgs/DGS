@@ -1,23 +1,23 @@
 import { notFound } from "next/navigation";
 import { getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
-import type { ContentBlock } from "@/lib/content/types";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SemanticContent } from "@/components/content/SemanticContent";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
-import { ClientLogoMarquee } from "@/components/home/ClientLogoMarquee";
-import { loadHomepageClientLogos } from "@/lib/home/load-client-logos";
-import { splitHomepageBlocks } from "@/lib/home/split-homepage-blocks";
+import { extractHeroCopy, parseHomepageSections } from "@/lib/home/parse-homepage-sections";
 import { HomeHero } from "@/components/home/HomeHero";
-import { HomeHeroSignals } from "@/components/home/HomeHeroSignals";
+import { HomeHeroRail } from "@/components/home/HomeHeroRail";
 import { HomePortfolioPreview } from "@/components/portfolio/HomePortfolioPreview";
 import { HomeFinalCta } from "@/components/home/HomeFinalCta";
-import { Reveal } from "@/components/motion/Reveal";
-
-function withoutForms(blocks: ContentBlock[]) {
-  return blocks.filter((block) => block.type !== "form");
-}
+import { HomeProofStack } from "@/components/home/sections/HomeProofStack";
+import { HomeCapabilities } from "@/components/home/sections/HomeCapabilities";
+import { HomeCaseStudies } from "@/components/home/sections/HomeCaseStudies";
+import { HomeCreativeGallery } from "@/components/home/sections/HomeCreativeGallery";
+import { HomeTestimonials } from "@/components/home/sections/HomeTestimonials";
+import { HomeSearchAuthority } from "@/components/home/sections/HomeSearchAuthority";
+import { HomeIndustries } from "@/components/home/sections/HomeIndustries";
+import { HomeWhyDgs } from "@/components/home/sections/HomeWhyDgs";
+import { HomeFaq } from "@/components/home/sections/HomeFaq";
 
 export async function HomePageTemplate() {
   const route = await getRouteByPath("/");
@@ -25,9 +25,8 @@ export async function HomePageTemplate() {
 
   const allBlocks = (await loadContentBlocks())["/"]?.blocks || [];
   const gallery = loadHomepageGallery();
-  const logos = loadHomepageClientLogos();
-  const sections = splitHomepageBlocks(allBlocks);
-  const pageH1 = route.h1 || route.title || "Full Service Digital Marketing Agency In Mumbai";
+  const sections = parseHomepageSections(allBlocks);
+  const hero = extractHeroCopy(sections.hero);
 
   const schemas = buildRouteSchemas({
     route,
@@ -39,46 +38,19 @@ export async function HomePageTemplate() {
   return (
     <main className="page-main home-page" id="main-content">
       <article data-migration-content data-wordpress-id={route?.wordpressId ?? 63505}>
-        <HomeHero h1={pageH1} />
-        <HomeHeroSignals />
-
-        <Reveal variant="reveal-up">
-          <div className="container">
-            <SemanticContent blocks={withoutForms(sections.afterHero)} demoteSecondaryHeadings />
-          </div>
-        </Reveal>
-
-        <Reveal variant="reveal-up">
-          <ClientLogoMarquee logos={logos} />
-        </Reveal>
-
-        <Reveal variant="reveal-side" motionFrom="left">
-          <div className="container">
-            <SemanticContent blocks={withoutForms(sections.prePortfolio)} demoteSecondaryHeadings />
-          </div>
-        </Reveal>
-
-        <Reveal variant="reveal-up">
-          <HomePortfolioPreview items={gallery.items} />
-        </Reveal>
-
-        {sections.portfolioIntro.length > 0 ? (
-          <Reveal variant="reveal-up">
-            <div className="container">
-              <SemanticContent blocks={withoutForms(sections.portfolioIntro)} demoteSecondaryHeadings />
-            </div>
-          </Reveal>
-        ) : null}
-
-        <Reveal variant="reveal-side" motionFrom="right">
-          <div className="container">
-            <SemanticContent blocks={withoutForms(sections.beforeFinalCta)} demoteSecondaryHeadings />
-          </div>
-        </Reveal>
-
-        <Reveal variant="reveal-up">
-          <HomeFinalCta />
-        </Reveal>
+        <HomeHero eyebrow={hero.eyebrow} h1={hero.h1} lead={hero.lead} image={hero.image} />
+        <HomeHeroRail />
+        <HomeProofStack blocks={sections.proof} />
+        <HomeCapabilities blocks={sections.capabilities} />
+        <HomePortfolioPreview items={gallery.items} />
+        <HomeCaseStudies blocks={sections.caseStudies} />
+        <HomeCreativeGallery blocks={sections.creativeGallery} />
+        <HomeTestimonials blocks={sections.testimonials} />
+        <HomeSearchAuthority blocks={sections.searchAuthority} />
+        <HomeIndustries blocks={sections.industries} />
+        <HomeWhyDgs blocks={sections.whyDgs} />
+        <HomeFaq blocks={sections.faq} />
+        <HomeFinalCta blocks={sections.finalCta} />
       </article>
 
       <JsonLd id="page-jsonld" value={schemas} />

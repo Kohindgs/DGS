@@ -1,0 +1,61 @@
+.section {
+  padding: 80px 0 96px;
+}
+
+.intro {
+  width: min(calc(100% - 36px), 1404px);
+  margin: 0 auto 48px;
+}
+
+.intro h2 {
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  max-width: 920px;
+  margin-bottom: 16px;
+}
+
+.intro p {
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 760px;
+}
+
+.awards {
+  width: min(calc(100% - 36px), 1404px);
+  margin: 96px auto 0;
+}
+
+.awards h2 {
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-weight: 800;
+  margin-bottom: 32px;
+}
+
+.awardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.awardCard {
+  min-height: 180px;
+  padding: 28px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: flex-end;
+}
+
+.awardCard h3 {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .awardGrid {
+    grid-template-columns: 1fr;
+  }
+}

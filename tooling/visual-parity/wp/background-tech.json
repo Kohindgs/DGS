@@ -1,0 +1,9 @@
+{
+  "canvas": 1,
+  "video": 5,
+  "webgl": true,
+  "three": true,
+  "gsap": true,
+  "elementor": 3,
+  "bodyBg": "none"
+}

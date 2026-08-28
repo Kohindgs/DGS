@@ -1,0 +1,1141 @@
+{
+  "generatedAt": "2026-08-28T14:00:58.562Z",
+  "wpUrl": "https://www.dgeniussolutions.com/",
+  "nextUrl": "http://127.0.0.1:3010/",
+  "headingCount": {
+    "wp": 51,
+    "next": 46
+  },
+  "paragraphCount": {
+    "wp": 56,
+    "next": 102
+  },
+  "headingOrderIssues": [
+    {
+      "type": "mismatch",
+      "index": 1,
+      "label": "heading",
+      "wp": "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+      "next": "Search Visibility"
+    },
+    {
+      "type": "mismatch",
+      "index": 2,
+      "label": "heading",
+      "wp": "Recognized for SEO, Content & Performance Marketing",
+      "next": "Digital Growth"
+    },
+    {
+      "type": "mismatch",
+      "index": 3,
+      "label": "heading",
+      "wp": "Best Place to Work",
+      "next": "AI Production"
+    },
+    {
+      "type": "mismatch",
+      "index": 4,
+      "label": "heading",
+      "wp": "Highly Regarded Digital Marketing Agency to Watch Out",
+      "next": "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories."
+    },
+    {
+      "type": "mismatch",
+      "index": 5,
+      "label": "heading",
+      "wp": "Excellence in SEO, Content & Performance Marketing",
+      "next": "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories."
+    },
+    {
+      "type": "mismatch",
+      "index": 6,
+      "label": "heading",
+      "wp": "One team for search, web, creative, performance and AI production.",
+      "next": "Recognized for SEO, Content & Performance Marketing"
+    },
+    {
+      "type": "mismatch",
+      "index": 7,
+      "label": "heading",
+      "wp": "Search Visibility & AI Discovery",
+      "next": "Best Place to Work"
+    },
+    {
+      "type": "mismatch",
+      "index": 8,
+      "label": "heading",
+      "wp": "Website Development & AMC",
+      "next": "Highly Regarded Digital Marketing Agency to Watch Out"
+    },
+    {
+      "type": "mismatch",
+      "index": 9,
+      "label": "heading",
+      "wp": "Social Media & Performance Marketing",
+      "next": "Excellence in SEO, Content & Performance Marketing"
+    },
+    {
+      "type": "mismatch",
+      "index": 10,
+      "label": "heading",
+      "wp": "Branding, Content & AI Production",
+      "next": "One team for search, web, creative, performance and AI production."
+    },
+    {
+      "type": "mismatch",
+      "index": 11,
+      "label": "heading",
+      "wp": "AI-Led Creative Portfolio",
+      "next": "Search Visibility & AI Discovery"
+    },
+    {
+      "type": "mismatch",
+      "index": 12,
+      "label": "heading",
+      "wp": "Creative production for campaigns, product stories and social content.",
+      "next": "Website Development & AMC"
+    },
+    {
+      "type": "mismatch",
+      "index": 13,
+      "label": "heading",
+      "wp": "Makar Sankranti & Pongal",
+      "next": "Social Media & Performance Marketing"
+    },
+    {
+      "type": "mismatch",
+      "index": 14,
+      "label": "heading",
+      "wp": "Wonder Introduction",
+      "next": "Branding, Content & AI Production"
+    },
+    {
+      "type": "mismatch",
+      "index": 15,
+      "label": "heading",
+      "wp": "Baisakhi Celebration",
+      "next": "AI-Led Creative Portfolio"
+    },
+    {
+      "type": "mismatch",
+      "index": 16,
+      "label": "heading",
+      "wp": "Happy Holi",
+      "next": "Creative production for campaigns, product stories and social content."
+    },
+    {
+      "type": "mismatch",
+      "index": 17,
+      "label": "heading",
+      "wp": "Festival Campaign",
+      "next": "SEO, Website And Digital Growth Case Studies"
+    },
+    {
+      "type": "mismatch",
+      "index": 18,
+      "label": "heading",
+      "wp": "Festive Story",
+      "next": "TheWorldGrad"
+    },
+    {
+      "type": "mismatch",
+      "index": 19,
+      "label": "heading",
+      "wp": "Happy Easter",
+      "next": "Weavings Manpower"
+    },
+    {
+      "type": "mismatch",
+      "index": 20,
+      "label": "heading",
+      "wp": "Hanuman Jayanti",
+      "next": "Kotak Mahindra"
+    },
+    {
+      "type": "mismatch",
+      "index": 21,
+      "label": "heading",
+      "wp": "SEO, Website And Digital Growth Case Studies",
+      "next": "Eureka Forbes"
+    },
+    {
+      "type": "mismatch",
+      "index": 22,
+      "label": "heading",
+      "wp": "TheWorldGrad",
+      "next": "Onida"
+    },
+    {
+      "type": "mismatch",
+      "index": 23,
+      "label": "heading",
+      "wp": "Weavings Manpower",
+      "next": "Pantaloons"
+    },
+    {
+      "type": "mismatch",
+      "index": 24,
+      "label": "heading",
+      "wp": "Kotak Mahindra",
+      "next": "DSP Mutual Fund"
+    },
+    {
+      "type": "mismatch",
+      "index": 25,
+      "label": "heading",
+      "wp": "Eureka Forbes",
+      "next": "Home Credit"
+    },
+    {
+      "type": "mismatch",
+      "index": 26,
+      "label": "heading",
+      "wp": "Onida",
+      "next": "Brand Identity & Creative Excellence"
+    },
+    {
+      "type": "mismatch",
+      "index": 27,
+      "label": "heading",
+      "wp": "Pantaloons",
+      "next": "Trusted By Brands Worldwide"
+    },
+    {
+      "type": "mismatch",
+      "index": 28,
+      "label": "heading",
+      "wp": "DSP Mutual Fund",
+      "next": "Aparna Singh"
+    },
+    {
+      "type": "mismatch",
+      "index": 29,
+      "label": "heading",
+      "wp": "Home Credit",
+      "next": "Dujon Fernandes"
+    },
+    {
+      "type": "mismatch",
+      "index": 30,
+      "label": "heading",
+      "wp": "Brand Identity & Creative Excellence",
+      "next": "Chaitali Nandi"
+    },
+    {
+      "type": "mismatch",
+      "index": 31,
+      "label": "heading",
+      "wp": "Trusted By Brands Worldwide",
+      "next": "Suneel Kadekar"
+    },
+    {
+      "type": "mismatch",
+      "index": 32,
+      "label": "heading",
+      "wp": "Aparna Singh",
+      "next": "Built For Google Search, AI Answers And Voice Discovery"
+    },
+    {
+      "type": "mismatch",
+      "index": 33,
+      "label": "heading",
+      "wp": "Dujon Fernandes",
+      "next": "Rank-ready website and content foundations."
+    },
+    {
+      "type": "mismatch",
+      "index": 34,
+      "label": "heading",
+      "wp": "Chaitali Nandi",
+      "next": "Built for answer-first discovery."
+    },
+    {
+      "type": "mismatch",
+      "index": 35,
+      "label": "heading",
+      "wp": "Suneel Kadekar",
+      "next": "Visibility for generative search experiences."
+    },
+    {
+      "type": "mismatch",
+      "index": 36,
+      "label": "heading",
+      "wp": "Built For Google Search, AI Answers And Voice Discovery",
+      "next": "Clear entities, services and brand context."
+    },
+    {
+      "type": "mismatch",
+      "index": 37,
+      "label": "heading",
+      "wp": "Rank-ready website and content foundations.",
+      "next": "Natural answers for spoken queries."
+    },
+    {
+      "type": "mismatch",
+      "index": 38,
+      "label": "heading",
+      "wp": "Built for answer-first discovery.",
+      "next": "Faster creative output with brand control."
+    },
+    {
+      "type": "mismatch",
+      "index": 39,
+      "label": "heading",
+      "wp": "Visibility for generative search experiences.",
+      "next": "Industries We Help Grow"
+    },
+    {
+      "type": "mismatch",
+      "index": 40,
+      "label": "heading",
+      "wp": "Clear entities, services and brand context.",
+      "next": "Why Brands Choose D’Genius Solutions"
+    },
+    {
+      "type": "mismatch",
+      "index": 41,
+      "label": "heading",
+      "wp": "Natural answers for spoken queries.",
+      "next": "Strategy"
+    },
+    {
+      "type": "mismatch",
+      "index": 42,
+      "label": "heading",
+      "wp": "Faster creative output with brand control.",
+      "next": "Search"
+    },
+    {
+      "type": "mismatch",
+      "index": 43,
+      "label": "heading",
+      "wp": "Industries We Help Grow",
+      "next": "Creative"
+    },
+    {
+      "type": "mismatch",
+      "index": 44,
+      "label": "heading",
+      "wp": "Why Brands Choose D’Genius Solutions",
+      "next": "Scale"
+    },
+    {
+      "type": "mismatch",
+      "index": 45,
+      "label": "heading",
+      "wp": "Strategy",
+      "next": "Let us audit your brand, website, search visibility and campaign flow."
+    },
+    {
+      "type": "missing",
+      "index": 46,
+      "label": "heading",
+      "wp": "Search"
+    },
+    {
+      "type": "missing",
+      "index": 47,
+      "label": "heading",
+      "wp": "Creative"
+    },
+    {
+      "type": "missing",
+      "index": 48,
+      "label": "heading",
+      "wp": "Scale"
+    },
+    {
+      "type": "missing",
+      "index": 49,
+      "label": "heading",
+      "wp": "Questions Brands Ask Before Choosing A Digital Marketing Agency"
+    },
+    {
+      "type": "missing",
+      "index": 50,
+      "label": "heading",
+      "wp": "Let us audit your brand, website, search visibility and campaign flow."
+    }
+  ],
+  "paragraphOrderIssues": [
+    {
+      "type": "mismatch",
+      "index": 0,
+      "label": "paragraph",
+      "wp": "D’Genius Solutions is a full service digital marketing agency in Mumbai helping brands grow through connected search, websites, social media, paid campaigns, branding and AI-led creative production.",
+      "next": "Mumbai Based Full Service Digital Marketing Agency"
+    },
+    {
+      "type": "mismatch",
+      "index": 1,
+      "label": "paragraph",
+      "wp": "Real brand work across digital marketing, websites, SEO, creative design, social media, performance marketing and AI production.",
+      "next": "D'Genius Solutions is a full service digital marketing agency in Mumbai helping brands grow through connected search, websites, social media, paid campaigns, branding and AI-led creative production."
+    },
+    {
+      "type": "mismatch",
+      "index": 2,
+      "label": "paragraph",
+      "wp": "Recognition across workplace excellence, SEO execution, content quality and performance-led digital marketing.",
+      "next": "SEO AEO GEO"
+    },
+    {
+      "type": "mismatch",
+      "index": 3,
+      "label": "paragraph",
+      "wp": "Recognition for D'Genius Solutions as a growth-focused and people-first digital marketing company.",
+      "next": "Social Ads Web"
+    },
+    {
+      "type": "mismatch",
+      "index": 4,
+      "label": "paragraph",
+      "wp": "Recognition for digital marketing impact, client-focused execution and scalable organic growth strategies.",
+      "next": "Video Creative Content"
+    },
+    {
+      "type": "mismatch",
+      "index": 5,
+      "label": "paragraph",
+      "wp": "Awarded for consistent work across SEO execution, content strategy and performance-driven digital growth.",
+      "next": "200+"
+    },
+    {
+      "type": "mismatch",
+      "index": 6,
+      "label": "paragraph",
+      "wp": "We are not only a content or design team. D’Genius Solutions works across the complete digital growth stack so your website, search, ads, social and creative output move in one direction.",
+      "next": "Brands Worked With"
+    },
+    {
+      "type": "mismatch",
+      "index": 7,
+      "label": "paragraph",
+      "wp": "Search strategy, technical foundations, content structure and AI-search readiness designed to improve how brands are discovered across Google and emerging answer platforms.",
+      "next": "20K+"
+    },
+    {
+      "type": "mismatch",
+      "index": 8,
+      "label": "paragraph",
+      "wp": "Website design, development, maintenance, landing pages, UX improvements, conversion journeys and SEO-friendly page structures.",
+      "next": "Customers Reached"
+    },
+    {
+      "type": "mismatch",
+      "index": 9,
+      "label": "paragraph",
+      "wp": "Social strategy, content calendars, creative design, Google Ads, Meta Ads, lead generation and campaign optimization.",
+      "next": "Average User Rating"
+    },
+    {
+      "type": "mismatch",
+      "index": 10,
+      "label": "paragraph",
+      "wp": "Brand identity, campaign content, AI videos, product visuals, mascots, festival posts, TVC concepts and scalable creative output.",
+      "next": "Mumbai Based"
+    },
+    {
+      "type": "mismatch",
+      "index": 11,
+      "label": "paragraph",
+      "wp": "Videos, product visuals, mascots, festival campaigns, TVC concepts and AI-led creative assets for brands that need faster content production.",
+      "next": "Full Service Team"
+    },
+    {
+      "type": "mismatch",
+      "index": 12,
+      "label": "paragraph",
+      "wp": "AI-Led Creative Production",
+      "next": "Trusted By 200+ Brands"
+    },
+    {
+      "type": "mismatch",
+      "index": 13,
+      "label": "paragraph",
+      "wp": "This portfolio shows how strategy, AI-led workflows, editing and brand control can support faster creative output across campaigns, products and social content.",
+      "next": "Real brand work across digital marketing, websites, SEO, creative design, social media, performance marketing and AI production."
+    },
+    {
+      "type": "mismatch",
+      "index": 14,
+      "label": "paragraph",
+      "wp": "Short-form videos, reels, campaign films, product stories and TVC-style concepts for faster content output.",
+      "next": "Awards & Recognition"
+    },
+    {
+      "type": "mismatch",
+      "index": 15,
+      "label": "paragraph",
+      "wp": "Product-led imagery and motion for jewellery, FMCG, lifestyle, retail, ecommerce and campaign launches.",
+      "next": "Recognition across workplace excellence, SEO execution, content quality and performance-led digital marketing."
+    },
+    {
+      "type": "mismatch",
+      "index": 16,
+      "label": "paragraph",
+      "wp": "AI-generated mascots and character systems that help brands build recall, storytelling and social media consistency.",
+      "next": "Prime Insights · 2024"
+    },
+    {
+      "type": "mismatch",
+      "index": 17,
+      "label": "paragraph",
+      "wp": "High-speed creative production for festive campaigns, topical posts, social calendars and moment-led brand communication.",
+      "next": "Recognition for D'Genius Solutions as a growth-focused and people-first digital marketing company."
+    },
+    {
+      "type": "mismatch",
+      "index": 18,
+      "label": "paragraph",
+      "wp": "MASCOT AI",
+      "next": "Corporate Connect · 2024-25"
+    },
+    {
+      "type": "mismatch",
+      "index": 19,
+      "label": "paragraph",
+      "wp": "MASCOT AI",
+      "next": "Recognition for digital marketing impact, client-focused execution and scalable organic growth strategies."
+    },
+    {
+      "type": "mismatch",
+      "index": 20,
+      "label": "paragraph",
+      "wp": "FESTIVAL POSTS",
+      "next": "GLA · 2025"
+    },
+    {
+      "type": "mismatch",
+      "index": 21,
+      "label": "paragraph",
+      "wp": "FESTIVAL POSTS",
+      "next": "Awarded for consistent work across SEO execution, content strategy and performance-driven digital growth."
+    },
+    {
+      "type": "mismatch",
+      "index": 22,
+      "label": "paragraph",
+      "wp": "FESTIVAL POSTS",
+      "next": "What You Can Hire Us For"
+    },
+    {
+      "type": "mismatch",
+      "index": 23,
+      "label": "paragraph",
+      "wp": "FESTIVAL POSTS",
+      "next": "We are not only a content or design team. D’Genius Solutions works across the complete digital growth stack so your website, search, ads, social and creative output move in one direction."
+    },
+    {
+      "type": "mismatch",
+      "index": 24,
+      "label": "paragraph",
+      "wp": "FESTIVAL POSTS",
+      "next": "Search strategy, technical foundations, content structure and AI-search readiness designed to improve how brands are discovered across Google and emerging answer platforms."
+    },
+    {
+      "type": "mismatch",
+      "index": 25,
+      "label": "paragraph",
+      "wp": "FESTIVAL POSTS",
+      "next": "SEO Services"
+    },
+    {
+      "type": "mismatch",
+      "index": 26,
+      "label": "paragraph",
+      "wp": "Real results from brands where search visibility, content structure, website experience and digital execution worked together.",
+      "next": "AEO Services"
+    },
+    {
+      "type": "mismatch",
+      "index": 27,
+      "label": "paragraph",
+      "wp": "Overseas education platform helping Indian students study in Australia, UK and USA.",
+      "next": "GEO Services"
+    },
+    {
+      "type": "mismatch",
+      "index": 28,
+      "label": "paragraph",
+      "wp": "Staffing company offering contract staffing and payroll outsourcing across India.",
+      "next": "LLM SEO"
+    },
+    {
+      "type": "mismatch",
+      "index": 29,
+      "label": "paragraph",
+      "wp": "Campaigns, websites, creatives and AI production work across categories.",
+      "next": "Website design, development, maintenance, landing pages, UX improvements, conversion journeys and SEO-friendly page structures."
+    },
+    {
+      "type": "mismatch",
+      "index": 30,
+      "label": "paragraph",
+      "wp": "Client feedback across creative design, website development, social media, SEO and full-stack digital marketing execution.",
+      "next": "Website Development"
+    },
+    {
+      "type": "mismatch",
+      "index": 31,
+      "label": "paragraph",
+      "wp": "D'Genius Solutions has been a game-changer for our retail marketing efforts. Their team understood our brand aesthetics instantly and delivered high-impact creatives that significantly improved in-store visibility and customer engagement.",
+      "next": "Social strategy, content calendars, creative design, Google Ads, Meta Ads, lead generation and campaign optimization."
+    },
+    {
+      "type": "mismatch",
+      "index": 32,
+      "label": "paragraph",
+      "wp": "Working with D'Genius Solutions on our website has been an exceptional experience. From UI/UX structuring to backend functionality, the team ensured seamless execution and timely updates throughout.",
+      "next": "Social Media"
+    },
+    {
+      "type": "mismatch",
+      "index": 33,
+      "label": "paragraph",
+      "wp": "D'Genius Solutions has become an extended arm of our brand team. From daily creative requirements to high-stakes campaign rollouts, they handle everything with finesse, speed and deep brand understanding.",
+      "next": "Performance Marketing"
+    },
+    {
+      "type": "mismatch",
+      "index": 34,
+      "label": "paragraph",
+      "wp": "Their 360° mandate covering social media, SEO, website updates, 2D animation and content creation has brought structure, creativity and measurable growth to our digital presence.",
+      "next": "Brand identity, campaign content, AI videos, product visuals, mascots, festival posts, TVC concepts and scalable creative output."
+    },
+    {
+      "type": "mismatch",
+      "index": 35,
+      "label": "paragraph",
+      "wp": "As a digital marketing agency in Mumbai, we structure websites, content and campaigns for how people search today across Google, AI answer engines, LLM platforms and voice-led discovery.",
+      "next": "Branding"
+    },
+    {
+      "type": "mismatch",
+      "index": 36,
+      "label": "paragraph",
+      "wp": "Technical SEO, content structure, internal links and search intent mapping for stronger organic visibility.",
+      "next": "Content Creation"
+    },
+    {
+      "type": "mismatch",
+      "index": 37,
+      "label": "paragraph",
+      "wp": "Content designed to answer real customer questions clearly across featured snippets, AI answers and search journeys.",
+      "next": "AI Production"
+    },
+    {
+      "type": "mismatch",
+      "index": 38,
+      "label": "paragraph",
+      "wp": "Brand, service and topical signals structured for AI-led search environments and generative discovery.",
+      "next": "Videos, product visuals, mascots, festival campaigns, TVC concepts and AI-led creative assets for brands that need faster content production."
+    },
+    {
+      "type": "mismatch",
+      "index": 39,
+      "label": "paragraph",
+      "wp": "We make your website easier for search systems and large language models to understand, summarize and recommend.",
+      "next": "AI-Led Creative Production"
+    },
+    {
+      "type": "mismatch",
+      "index": 40,
+      "label": "paragraph",
+      "wp": "Local, conversational and question-led content that supports mobile and voice-led customer discovery.",
+      "next": "This portfolio shows how strategy, AI-led workflows, editing and brand control can support faster creative output across campaigns, products and social content."
+    },
+    {
+      "type": "mismatch",
+      "index": 41,
+      "label": "paragraph",
+      "wp": "AI videos, campaign assets and creative production workflows built around strategy, not random automation.",
+      "next": "Short-form videos, reels, campaign films, product stories and TVC-style concepts for faster content output."
+    },
+    {
+      "type": "mismatch",
+      "index": 42,
+      "label": "paragraph",
+      "wp": "Digital systems built for high-trust, high-consideration and growth-focused brands.",
+      "next": "Product-led imagery and motion for jewellery, FMCG, lifestyle, retail, ecommerce and campaign launches."
+    },
+    {
+      "type": "mismatch",
+      "index": 43,
+      "label": "paragraph",
+      "wp": "One connected team for strategy, search, creative, websites, performance marketing and AI-led production.",
+      "next": "AI-generated mascots and character systems that help brands build recall, storytelling and social media consistency."
+    },
+    {
+      "type": "mismatch",
+      "index": 44,
+      "label": "paragraph",
+      "wp": "We plan before execution.",
+      "next": "High-speed creative production for festive campaigns, topical posts, social calendars and moment-led brand communication."
+    },
+    {
+      "type": "mismatch",
+      "index": 45,
+      "label": "paragraph",
+      "wp": "SEO, AEO, GEO and LLM SEO thinking built into content and websites.",
+      "next": "Brief Brand, product, audience and campaign goal. Concept Script, visual direction and production style. Generate AI visuals, videos, characters and creative assets. Refine Editing, motion, sound, copy and brand control. Deliver Campaign-ready assets for social, ads and web."
+    },
+    {
+      "type": "mismatch",
+      "index": 46,
+      "label": "paragraph",
+      "wp": "Branding, content, social and AI production under one roof.",
+      "next": "Proven Results"
+    },
+    {
+      "type": "mismatch",
+      "index": 47,
+      "label": "paragraph",
+      "wp": "Performance campaigns, websites and reporting aligned for growth.",
+      "next": "Real results from brands where search visibility, content structure, website experience and digital execution worked together."
+    },
+    {
+      "type": "mismatch",
+      "index": 48,
+      "label": "paragraph",
+      "wp": "Clear answers for businesses looking at SEO, AEO, GEO, LLM SEO, voice search optimization, website development, social media, performance marketing and AI production.",
+      "next": "SEO Case Study · Education"
+    },
+    {
+      "type": "mismatch",
+      "index": 49,
+      "label": "paragraph",
+      "wp": "D’Genius Solutions is a full service digital marketing agency in Mumbai that connects search, websites, social media, performance marketing, branding, content and AI-led creative production.",
+      "next": "Overseas education platform helping Indian students study in Australia, UK and USA."
+    },
+    {
+      "type": "mismatch",
+      "index": 50,
+      "label": "paragraph",
+      "wp": "A full service agency helps strategy, creative, technology, media and measurement work together instead of operating as disconnected activities.",
+      "next": "95% Keyword Growth 2.5x Backlinks 6x Traffic"
+    },
+    {
+      "type": "mismatch",
+      "index": 51,
+      "label": "paragraph",
+      "wp": "We align your website, organic visibility, paid campaigns, social content and creative production around shared business goals, audience journeys and measurable outcomes.",
+      "next": "SEO + Website + Performance · Staffing"
+    },
+    {
+      "type": "mismatch",
+      "index": 52,
+      "label": "paragraph",
+      "wp": "Yes. We support long-term organic visibility through search and content while also building paid campaigns for lead generation, reach and conversion.",
+      "next": "Staffing company offering contract staffing and payroll outsourcing across India."
+    },
+    {
+      "type": "mismatch",
+      "index": 53,
+      "label": "paragraph",
+      "wp": "D’Genius Solutions is based in Khar West, Mumbai and works with brands across India, Dubai and the UAE.",
+      "next": "17.4K Clicks 1.82M Impressions #1 AI Ranking"
+    },
+    {
+      "type": "mismatch",
+      "index": 54,
+      "label": "paragraph",
+      "wp": "Yes. Our connected team supports website development, branding, content, social media, campaign creative and AI-led production as part of one digital growth system.",
+      "next": "Website Development & AMC"
+    },
+    {
+      "type": "mismatch",
+      "index": 55,
+      "label": "paragraph",
+      "wp": "Start with a focused growth audit from a Mumbai based digital marketing team across SEO, AEO, GEO, LLM SEO, website performance, content, social media, ads and creative output.",
+      "next": "Creative Designing"
+    },
+    {
+      "type": "extra",
+      "index": 56,
+      "label": "paragraph",
+      "next": "Website Development & AMC"
+    },
+    {
+      "type": "extra",
+      "index": 57,
+      "label": "paragraph",
+      "next": "Social Media & Creative Designing"
+    },
+    {
+      "type": "extra",
+      "index": 58,
+      "label": "paragraph",
+      "next": "Creative Designing"
+    },
+    {
+      "type": "extra",
+      "index": 59,
+      "label": "paragraph",
+      "next": "AI Production Video"
+    },
+    {
+      "type": "extra",
+      "index": 60,
+      "label": "paragraph",
+      "next": "Portfolio Gallery"
+    },
+    {
+      "type": "extra",
+      "index": 61,
+      "label": "paragraph",
+      "next": "Campaigns, websites, creatives and AI production work across categories."
+    },
+    {
+      "type": "extra",
+      "index": 62,
+      "label": "paragraph",
+      "next": "Testimonials"
+    },
+    {
+      "type": "extra",
+      "index": 63,
+      "label": "paragraph",
+      "next": "Client feedback across creative design, website development, social media, SEO and full-stack digital marketing execution."
+    },
+    {
+      "type": "extra",
+      "index": 64,
+      "label": "paragraph",
+      "next": "D'Genius Solutions has been a game-changer for our retail marketing efforts. Their team understood our brand aesthetics instantly and delivered high-impact creatives that significantly improved in-store visibility and customer engagement."
+    },
+    {
+      "type": "extra",
+      "index": 65,
+      "label": "paragraph",
+      "next": "Marketing Manager · Eureka Forbes"
+    },
+    {
+      "type": "extra",
+      "index": 66,
+      "label": "paragraph",
+      "next": "Working with D'Genius Solutions on our website has been an exceptional experience. From UI/UX structuring to backend functionality, the team ensured seamless execution and timely updates throughout."
+    },
+    {
+      "type": "extra",
+      "index": 67,
+      "label": "paragraph",
+      "next": "Digital Marketing Manager · Onida"
+    },
+    {
+      "type": "extra",
+      "index": 68,
+      "label": "paragraph",
+      "next": "D'Genius Solutions has become an extended arm of our brand team. From daily creative requirements to high-stakes campaign rollouts, they handle everything with finesse, speed and deep brand understanding."
+    },
+    {
+      "type": "extra",
+      "index": 69,
+      "label": "paragraph",
+      "next": "Brand Head · Pantaloons ABFRL"
+    },
+    {
+      "type": "extra",
+      "index": 70,
+      "label": "paragraph",
+      "next": "Their 360° mandate covering social media, SEO, website updates, 2D animation and content creation has brought structure, creativity and measurable growth to our digital presence."
+    },
+    {
+      "type": "extra",
+      "index": 71,
+      "label": "paragraph",
+      "next": "Marketing Manager · Kreedo Solutions"
+    },
+    {
+      "type": "extra",
+      "index": 72,
+      "label": "paragraph",
+      "next": "Search Authority"
+    },
+    {
+      "type": "extra",
+      "index": 73,
+      "label": "paragraph",
+      "next": "As a digital marketing agency in Mumbai, we structure websites, content and campaigns for how people search today across Google, AI answer engines, LLM platforms and voice-led discovery."
+    },
+    {
+      "type": "extra",
+      "index": 74,
+      "label": "paragraph",
+      "next": "Search Engine Optimisation"
+    },
+    {
+      "type": "extra",
+      "index": 75,
+      "label": "paragraph",
+      "next": "Technical SEO, content structure, internal links and search intent mapping for stronger organic visibility."
+    },
+    {
+      "type": "extra",
+      "index": 76,
+      "label": "paragraph",
+      "next": "Answer Engine Optimisation"
+    },
+    {
+      "type": "extra",
+      "index": 77,
+      "label": "paragraph",
+      "next": "Content designed to answer real customer questions clearly across featured snippets, AI answers and search journeys."
+    },
+    {
+      "type": "extra",
+      "index": 78,
+      "label": "paragraph",
+      "next": "Generative Search Visibility"
+    },
+    {
+      "type": "extra",
+      "index": 79,
+      "label": "paragraph",
+      "next": "Brand, service and topical signals structured for AI-led search environments and generative discovery."
+    },
+    {
+      "type": "extra",
+      "index": 80,
+      "label": "paragraph",
+      "next": "LLM Brand Visibility"
+    },
+    {
+      "type": "extra",
+      "index": 81,
+      "label": "paragraph",
+      "next": "We make your website easier for search systems and large language models to understand, summarize and recommend."
+    },
+    {
+      "type": "extra",
+      "index": 82,
+      "label": "paragraph",
+      "next": "Voice Search Readiness"
+    },
+    {
+      "type": "extra",
+      "index": 83,
+      "label": "paragraph",
+      "next": "Local, conversational and question-led content that supports mobile and voice-led customer discovery."
+    },
+    {
+      "type": "extra",
+      "index": 84,
+      "label": "paragraph",
+      "next": "AI-Led Creative Production"
+    },
+    {
+      "type": "extra",
+      "index": 85,
+      "label": "paragraph",
+      "next": "AI videos, campaign assets and creative production workflows built around strategy, not random automation."
+    },
+    {
+      "type": "extra",
+      "index": 86,
+      "label": "paragraph",
+      "next": "Digital systems built for high-trust, high-consideration and growth-focused brands."
+    },
+    {
+      "type": "extra",
+      "index": 87,
+      "label": "paragraph",
+      "next": "Healthcare Finance Retail Real Estate Education Recruitment Consumer Brands Technology"
+    },
+    {
+      "type": "extra",
+      "index": 88,
+      "label": "paragraph",
+      "next": "Why D’Genius Solutions"
+    },
+    {
+      "type": "extra",
+      "index": 89,
+      "label": "paragraph",
+      "next": "One connected team for strategy, search, creative, websites, performance marketing and AI-led production."
+    },
+    {
+      "type": "extra",
+      "index": 90,
+      "label": "paragraph",
+      "next": "We plan before execution."
+    },
+    {
+      "type": "extra",
+      "index": 91,
+      "label": "paragraph",
+      "next": "SEO, AEO, GEO and LLM SEO thinking built into content and websites."
+    },
+    {
+      "type": "extra",
+      "index": 92,
+      "label": "paragraph",
+      "next": "Branding, content, social and AI production under one roof."
+    },
+    {
+      "type": "extra",
+      "index": 93,
+      "label": "paragraph",
+      "next": "Performance campaigns, websites and reporting aligned for growth."
+    },
+    {
+      "type": "extra",
+      "index": 94,
+      "label": "paragraph",
+      "next": "D’Genius Solutions is a full service digital marketing agency in Mumbai that connects search, websites, social media, performance marketing, branding, content and AI-led creative production."
+    },
+    {
+      "type": "extra",
+      "index": 95,
+      "label": "paragraph",
+      "next": "A full service agency helps strategy, creative, technology, media and measurement work together instead of operating as disconnected activities."
+    },
+    {
+      "type": "extra",
+      "index": 96,
+      "label": "paragraph",
+      "next": "We align your website, organic visibility, paid campaigns, social content and creative production around shared business goals, audience journeys and measurable outcomes."
+    },
+    {
+      "type": "extra",
+      "index": 97,
+      "label": "paragraph",
+      "next": "Yes. We support long-term organic visibility through search and content while also building paid campaigns for lead generation, reach and conversion."
+    },
+    {
+      "type": "extra",
+      "index": 98,
+      "label": "paragraph",
+      "next": "D’Genius Solutions is based in Khar West, Mumbai and works with brands across India, Dubai and the UAE."
+    },
+    {
+      "type": "extra",
+      "index": 99,
+      "label": "paragraph",
+      "next": "Yes. Our connected team supports website development, branding, content, social media, campaign creative and AI-led production as part of one digital growth system."
+    },
+    {
+      "type": "extra",
+      "index": 100,
+      "label": "paragraph",
+      "next": "Ready To Fix The Gaps?"
+    },
+    {
+      "type": "extra",
+      "index": 101,
+      "label": "paragraph",
+      "next": "Start with a focused growth audit from a Mumbai based digital marketing team across SEO, AEO, GEO, LLM SEO, website performance, content, social media, ads and creative output."
+    }
+  ],
+  "wpHeadings": [
+    "Full Service Digital Marketing Agency In Mumbai",
+    "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+    "Recognized for SEO, Content & Performance Marketing",
+    "Best Place to Work",
+    "Highly Regarded Digital Marketing Agency to Watch Out",
+    "Excellence in SEO, Content & Performance Marketing",
+    "One team for search, web, creative, performance and AI production.",
+    "Search Visibility & AI Discovery",
+    "Website Development & AMC",
+    "Social Media & Performance Marketing",
+    "Branding, Content & AI Production",
+    "AI-Led Creative Portfolio",
+    "Creative production for campaigns, product stories and social content.",
+    "Makar Sankranti & Pongal",
+    "Wonder Introduction",
+    "Baisakhi Celebration",
+    "Happy Holi",
+    "Festival Campaign",
+    "Festive Story",
+    "Happy Easter",
+    "Hanuman Jayanti",
+    "SEO, Website And Digital Growth Case Studies",
+    "TheWorldGrad",
+    "Weavings Manpower",
+    "Kotak Mahindra",
+    "Eureka Forbes",
+    "Onida",
+    "Pantaloons",
+    "DSP Mutual Fund",
+    "Home Credit",
+    "Brand Identity & Creative Excellence",
+    "Trusted By Brands Worldwide",
+    "Aparna Singh",
+    "Dujon Fernandes",
+    "Chaitali Nandi",
+    "Suneel Kadekar",
+    "Built For Google Search, AI Answers And Voice Discovery",
+    "Rank-ready website and content foundations.",
+    "Built for answer-first discovery.",
+    "Visibility for generative search experiences.",
+    "Clear entities, services and brand context.",
+    "Natural answers for spoken queries.",
+    "Faster creative output with brand control.",
+    "Industries We Help Grow",
+    "Why Brands Choose D’Genius Solutions",
+    "Strategy",
+    "Search",
+    "Creative",
+    "Scale",
+    "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+    "Let us audit your brand, website, search visibility and campaign flow."
+  ],
+  "nextHeadings": [
+    "Full Service Digital Marketing Agency In Mumbai",
+    "Search Visibility",
+    "Digital Growth",
+    "AI Production",
+    "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+    "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+    "Recognized for SEO, Content & Performance Marketing",
+    "Best Place to Work",
+    "Highly Regarded Digital Marketing Agency to Watch Out",
+    "Excellence in SEO, Content & Performance Marketing",
+    "One team for search, web, creative, performance and AI production.",
+    "Search Visibility & AI Discovery",
+    "Website Development & AMC",
+    "Social Media & Performance Marketing",
+    "Branding, Content & AI Production",
+    "AI-Led Creative Portfolio",
+    "Creative production for campaigns, product stories and social content.",
+    "SEO, Website And Digital Growth Case Studies",
+    "TheWorldGrad",
+    "Weavings Manpower",
+    "Kotak Mahindra",
+    "Eureka Forbes",
+    "Onida",
+    "Pantaloons",
+    "DSP Mutual Fund",
+    "Home Credit",
+    "Brand Identity & Creative Excellence",
+    "Trusted By Brands Worldwide",
+    "Aparna Singh",
+    "Dujon Fernandes",
+    "Chaitali Nandi",
+    "Suneel Kadekar",
+    "Built For Google Search, AI Answers And Voice Discovery",
+    "Rank-ready website and content foundations.",
+    "Built for answer-first discovery.",
+    "Visibility for generative search experiences.",
+    "Clear entities, services and brand context.",
+    "Natural answers for spoken queries.",
+    "Faster creative output with brand control.",
+    "Industries We Help Grow",
+    "Why Brands Choose D’Genius Solutions",
+    "Strategy",
+    "Search",
+    "Creative",
+    "Scale",
+    "Let us audit your brand, website, search visibility and campaign flow."
+  ],
+  "summary": {
+    "extraHeadings": 0,
+    "missingHeadings": 5,
+    "mismatchedHeadings": 45,
+    "intentionalHeadingDiffs": 0,
+    "extraParagraphs": 46,
+    "missingParagraphs": 0,
+    "mismatchedParagraphs": 56,
+    "intentionalParagraphDiffs": 0
+  }
+}
