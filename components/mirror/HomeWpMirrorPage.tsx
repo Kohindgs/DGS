@@ -5,11 +5,15 @@ import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
 import { loadHomepageMirrorContent } from "@/lib/wordpress/load-homepage-mirror";
-import { prepareHomepageMirror } from "@/lib/wordpress/prepare-homepage-mirror";
+import {
+  NATIVE_CREATIVE_GALLERY_MOUNT,
+  NATIVE_HOME_FORM_MOUNT,
+  prepareHomepageMirror,
+} from "@/lib/wordpress/prepare-homepage-mirror";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
+import { buildCreativeGalleryHtml, buildHomeFormHtml } from "@/lib/wp-exact/build-mirror-swap-html";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
-import { WpMirrorNativeMounts } from "@/components/wp-exact/WpMirrorNativeMounts";
 
 async function loadMirrorOverridesCss(): Promise<string> {
   try {
@@ -30,6 +34,10 @@ export async function HomeWpMirrorPage() {
 
   const prepared = prepareHomepageMirror(content);
   const gallery = loadHomepageGallery();
+
+  const mainHtml = prepared.mainHtml
+    .replace(NATIVE_CREATIVE_GALLERY_MOUNT, buildCreativeGalleryHtml(gallery.items))
+    .replace(NATIVE_HOME_FORM_MOUNT, buildHomeFormHtml());
 
   const schemas = buildRouteSchemas({
     route: route!,
@@ -53,12 +61,7 @@ export async function HomeWpMirrorPage() {
 
       <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} />
 
-      <div
-        className="dgs-wp-mirror-home"
-        dangerouslySetInnerHTML={{ __html: prepared.mainHtml }}
-      />
-
-      <WpMirrorNativeMounts galleryItems={gallery.items} />
+      <div className="dgs-wp-mirror-home" dangerouslySetInnerHTML={{ __html: mainHtml }} />
 
       <div dangerouslySetInnerHTML={{ __html: assets.footerHtml }} />
 

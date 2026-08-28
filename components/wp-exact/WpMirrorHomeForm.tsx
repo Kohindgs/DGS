@@ -1,5 +1,3 @@
-"use client";
-
 /** Visual-only homepage form matching FluentForm / WP #contact-form chrome. */
 export function WpMirrorHomeForm() {
   return (
@@ -11,7 +9,6 @@ export function WpMirrorHomeForm() {
           data-form_id="1"
           method="POST"
           data-submission="disabled"
-          onSubmit={(event) => event.preventDefault()}
         >
           <fieldset>
             <div className="ff-field_container ff-name-field-wrapper" data-type="name-element" data-name="names">
@@ -29,6 +26,7 @@ export function WpMirrorHomeForm() {
                         className="ff-el-form-control"
                         placeholder="Enter Your First Name"
                         aria-required
+                        readOnly
                       />
                     </div>
                   </div>
@@ -48,6 +46,7 @@ export function WpMirrorHomeForm() {
                   className="ff-el-form-control"
                   placeholder="Email Address"
                   aria-required
+                  readOnly
                 />
               </div>
             </div>
@@ -64,6 +63,7 @@ export function WpMirrorHomeForm() {
                   className="ff-el-form-control ff-el-phone"
                   placeholder="Mobile Number"
                   aria-required
+                  readOnly
                 />
               </div>
             </div>
@@ -79,6 +79,7 @@ export function WpMirrorHomeForm() {
                   id="ff_home_company"
                   className="ff-el-form-control"
                   aria-required
+                  readOnly
                 />
               </div>
             </div>
@@ -89,10 +90,17 @@ export function WpMirrorHomeForm() {
               </div>
               <div className="ff-el-input--content">
                 <select name="dropdown_1" id="ff_home_hear" className="ff-el-form-control" defaultValue="" aria-required>
-                  <option value="">How did you hear about us ?</option>
+                  <option value="">- Select -</option>
+                  <option value="Google Ads">Google Ads</option>
                   <option value="Google Search">Google Search</option>
-                  <option value="Social Media">Social Media</option>
-                  <option value="Referral">Referral</option>
+                  <option value="Friend / Colleague">Friend / Colleague</option>
+                  <option value="Twitter">Twitter</option>
+                  <option value="Youtube">Youtube</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="Podcast">Podcast</option>
+                  <option value="Blog / Article">Blog / Article</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
@@ -103,7 +111,14 @@ export function WpMirrorHomeForm() {
                 <label htmlFor="ff_home_subject">Subject</label>
               </div>
               <div className="ff-el-input--content">
-                <input type="text" name="subject" id="ff_home_subject" className="ff-el-form-control" aria-required />
+                <input
+                  type="text"
+                  name="subject"
+                  id="ff_home_subject"
+                  className="ff-el-form-control"
+                  aria-required
+                  readOnly
+                />
               </div>
             </div>
 
@@ -134,12 +149,13 @@ export function WpMirrorHomeForm() {
                   className="ff-el-form-control"
                   rows={5}
                   aria-required
+                  readOnly
                 />
               </div>
             </div>
 
             <div className="ff-el-group ff-text-left ff_submit_btn_wrapper">
-              <button type="submit" className="ff-btn ff-btn-submit ff-btn-md ff_btn_style" disabled aria-disabled="true">
+              <button type="button" className="ff-btn ff-btn-submit ff-btn-md ff_btn_style" disabled aria-disabled="true">
                 Submit Form
               </button>
             </div>

@@ -106,6 +106,11 @@ export function prepareHomepageMirror(content: WpMirrorContent): PreparedHomepag
     mainHtml = mainHtml.replace(FORM_SHORTCODE_RE, NATIVE_HOME_FORM_MOUNT);
   }
 
+  mainHtml = mainHtml.replace(
+    /dgs-v1215-final-card dgs-v1215-reveal/g,
+    "dgs-v1215-final-card dgs-v1215-reveal is-visible",
+  );
+
   mainHtml = rewriteWpUrls(mainHtml);
   const segments = buildSegments(mainHtml);
 
