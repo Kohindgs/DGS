@@ -1,103 +1,37 @@
 .rail {
   padding: 68px 0;
-  position: relative;
   overflow: hidden;
 }
 
-.signalTrack {
-  position: absolute;
-  inset: 0;
+.line {
+  overflow: hidden;
+}
+
+.track {
   display: flex;
   align-items: center;
-  pointer-events: none;
+  gap: 0;
+  width: max-content;
+  animation: capabilityRail 45s linear infinite;
 }
 
-.signalMarquee {
-  display: flex;
-  gap: 48px;
+.track span {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 25px;
+  font-size: 19.44px;
+  font-weight: 800;
+  color: #fff;
   white-space: nowrap;
-  animation: railMarquee 40s linear infinite;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.18);
 }
 
-.signalMarquee span {
-  flex-shrink: 0;
+.track span::after {
+  content: "•";
+  margin-left: 25px;
+  color: rgba(255, 255, 255, 0.28);
 }
 
-.inner {
-  width: min(calc(100% - 36px), 1404px);
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-.signalGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.signalCard {
-  padding: 26px 24px;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.signalCard:last-child {
-  border-right: none;
-}
-
-.signalTitle {
-  font-size: 13.68px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.88);
-  margin-bottom: 8px;
-}
-
-.signalCard p {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.62);
-}
-
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  margin-top: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: none;
-}
-
-.statCard {
-  padding: 22px 24px;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.statCard:last-child {
-  border-right: none;
-}
-
-.statValue {
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1.1;
-  color: rgba(255, 255, 255, 0.96);
-  margin-bottom: 6px;
-}
-
-.statLabel {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.62);
-}
-
-@keyframes railMarquee {
+@keyframes capabilityRail {
   from {
     transform: translateX(0);
   }
@@ -106,37 +40,12 @@
   }
 }
 
-@media (max-width: 900px) {
-  .signalGrid,
-  .statsGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .signalCard:nth-child(2),
-  .statCard:nth-child(2) {
-    border-right: none;
-  }
-
-  .signalCard,
-  .statCard {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-}
-
-@media (max-width: 520px) {
-  .signalGrid,
-  .statsGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .signalCard,
-  .statCard {
-    border-right: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .signalMarquee {
+  .track {
     animation: none;
+    flex-wrap: wrap;
+    width: min(calc(100% - 36px), 1404px);
+    margin-inline: auto;
+    justify-content: center;
   }
 }

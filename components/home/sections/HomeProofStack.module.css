@@ -3,26 +3,32 @@
 }
 
 .intro {
-  width: min(calc(100% - 36px), 1404px);
+  width: min(calc(100% - 36px), 1240px);
   margin: 0 auto 48px;
+  padding-inline: 20px;
 }
 
 .intro h2 {
-  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  font-size: clamp(2rem, 5vw, 72px);
   font-weight: 800;
-  line-height: 1.15;
-  max-width: 920px;
+  line-height: 1.04;
+  letter-spacing: -0.06em;
+  max-width: 1240px;
   margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .intro p {
   color: rgba(255, 255, 255, 0.68);
   max-width: 760px;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 .awards {
   width: min(calc(100% - 36px), 1404px);
   margin: 96px auto 0;
+  padding-inline: 18px;
 }
 
 .awards h2 {
@@ -38,10 +44,13 @@
 }
 
 .awardCard {
-  min-height: 180px;
+  min-height: 659px;
   padding: 28px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 34px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.027)),
+    rgba(2, 2, 2, 0.36);
   display: flex;
   align-items: flex-end;
 }
@@ -57,5 +66,9 @@
 @media (max-width: 900px) {
   .awardGrid {
     grid-template-columns: 1fr;
+  }
+
+  .awardCard {
+    min-height: 220px;
   }
 }

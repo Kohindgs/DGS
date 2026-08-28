@@ -1,4 +1,23 @@
 /** Measured WordPress homepage tokens at 1440×900 (scroll 0). Source: live WP capture. */
+export const WP_HEADER_TOKENS = {
+  barHeight: "100px",
+  paddingInline: "48px",
+  logoSize: 117,
+  letsTalk: {
+    background: "#FD5C62",
+    fontSize: "12px",
+    fontWeight: 600,
+    letterSpacing: "0.12em",
+    padding: "11px 22px",
+    borderRadius: "100px",
+  },
+  menu: {
+    border: "1px solid rgba(255, 255, 255, 0.22)",
+    padding: "10px 18px",
+    borderRadius: "100px",
+  },
+} as const;
+
 export const WP_HERO_TOKENS = {
   sectionPadding: "115.2px 0 82px",
   h1: {
