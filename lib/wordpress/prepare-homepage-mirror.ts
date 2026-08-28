@@ -8,6 +8,10 @@ const ENVIRA_INNER_RE =
 const FORM_SHORTCODE_RE =
   /<div class="dgs-v1215-form-shortcode">[\s\S]*?<!-- If this appears as plain text[\s\S]*?-->\s*<\/div>/i;
 
+/** Duplicate final-card CTA — form section already captures the growth audit intent. */
+const DUPLICATE_FINAL_GROWTH_AUDIT_CTA_RE =
+  /\s*<a href="#contact-form" class="dgs-v1215-btn dgs-v1215-btn-primary">\s*(?:Get A Growth Audit|Start With A Growth Audit)\s*<span>→<\/span>\s*<\/a>(?=\s*<\/div>\s*<\/div>\s*<\/section>)/i;
+
 const INLINE_STYLE_TAIL_RE = /<!-- STRUCTURED DATA -->[\s\S]*$/i;
 const MAIN_RE = /<main class="dgs-v1215"[\s\S]*<\/main>/i;
 const INLINE_STYLES_RE = /<\/main>\s*(<style>[\s\S]*?<\/style>)/i;
@@ -110,6 +114,8 @@ export function prepareHomepageMirror(content: WpMirrorContent): PreparedHomepag
     /dgs-v1215-final-card dgs-v1215-reveal/g,
     "dgs-v1215-final-card dgs-v1215-reveal is-visible",
   );
+
+  mainHtml = mainHtml.replace(DUPLICATE_FINAL_GROWTH_AUDIT_CTA_RE, "");
 
   mainHtml = rewriteWpUrls(mainHtml);
   const segments = buildSegments(mainHtml);

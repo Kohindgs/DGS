@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
-import { buildRouteSchemas } from "@/lib/schema/page-schemas";
 import { loadHomepageMirrorContent } from "@/lib/wordpress/load-homepage-mirror";
 import {
   NATIVE_CREATIVE_GALLERY_MOUNT,
@@ -12,8 +11,11 @@ import {
 } from "@/lib/wordpress/prepare-homepage-mirror";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { buildCreativeGalleryHtml, buildHomeFormHtml } from "@/lib/wp-exact/build-mirror-swap-html";
-import { JsonLd } from "@/components/seo/JsonLd";
+import { buildHomepageMirrorJsonLd } from "@/lib/schema/homepage-mirror-schemas";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
+
+const WP_CDN_ORIGIN = "https://www.dgeniussolutions.com";
+const THREE_CDN_ORIGIN = "https://cdn.jsdelivr.net";
 
 async function loadMirrorOverridesCss(): Promise<string> {
   try {
@@ -39,15 +41,23 @@ export async function HomeWpMirrorPage() {
     .replace(NATIVE_CREATIVE_GALLERY_MOUNT, buildCreativeGalleryHtml(gallery.items))
     .replace(NATIVE_HOME_FORM_MOUNT, buildHomeFormHtml());
 
-  const schemas = buildRouteSchemas({
+  const jsonLdScripts = buildHomepageMirrorJsonLd({
+    content,
     route: route!,
-    path: "/",
     blocks: allBlocks["/"]?.blocks || [],
-    breadcrumbs: [],
   });
 
   return (
     <>
+      <link rel="preconnect" href={WP_CDN_ORIGIN} />
+      <link rel="dns-prefetch" href={WP_CDN_ORIGIN} />
+      <link rel="preconnect" href={THREE_CDN_ORIGIN} crossOrigin="anonymous" />
+      <link rel="dns-prefetch" href={THREE_CDN_ORIGIN} />
+
+      {jsonLdScripts.map((schema, index) => (
+        <script key={`schema-${index}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
+      ))}
+
       {prepared.fontLinks?.map((linkHtml, index) => (
         <div key={`font-${index}`} dangerouslySetInnerHTML={{ __html: linkHtml }} />
       ))}
@@ -70,8 +80,6 @@ export async function HomeWpMirrorPage() {
         bootV1215={assets.bootV1215}
         bootPortfolio={assets.bootPortfolioHome}
       />
-
-      <JsonLd id="page-jsonld" value={schemas} />
     </>
   );
 }
