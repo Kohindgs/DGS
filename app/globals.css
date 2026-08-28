@@ -134,6 +134,14 @@ button {
   }
 }
 
+@media (min-width: 3840px) {
+  :root {
+    --content-max: 2200px;
+    --wide-max: 2560px;
+    --text-max: 72ch;
+  }
+}
+
 .container {
   width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
   margin-inline: auto;

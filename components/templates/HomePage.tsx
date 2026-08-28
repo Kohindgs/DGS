@@ -42,37 +42,43 @@ export async function HomePageTemplate() {
         <HomeHero h1={pageH1} />
         <HomeHeroSignals />
 
-        <Reveal>
+        <Reveal variant="reveal-up">
           <div className="container">
             <SemanticContent blocks={withoutForms(sections.afterHero)} demoteSecondaryHeadings />
           </div>
         </Reveal>
 
-        <ClientLogoMarquee logos={logos} />
+        <Reveal variant="reveal-up">
+          <ClientLogoMarquee logos={logos} />
+        </Reveal>
 
-        <Reveal>
+        <Reveal variant="reveal-side" motionFrom="left">
           <div className="container">
             <SemanticContent blocks={withoutForms(sections.prePortfolio)} demoteSecondaryHeadings />
           </div>
         </Reveal>
 
-        <HomePortfolioPreview items={gallery.items} />
+        <Reveal variant="reveal-up">
+          <HomePortfolioPreview items={gallery.items} />
+        </Reveal>
 
         {sections.portfolioIntro.length > 0 ? (
-          <Reveal>
+          <Reveal variant="reveal-up">
             <div className="container">
               <SemanticContent blocks={withoutForms(sections.portfolioIntro)} demoteSecondaryHeadings />
             </div>
           </Reveal>
         ) : null}
 
-        <Reveal>
+        <Reveal variant="reveal-side" motionFrom="right">
           <div className="container">
             <SemanticContent blocks={withoutForms(sections.beforeFinalCta)} demoteSecondaryHeadings />
           </div>
         </Reveal>
 
-        <HomeFinalCta />
+        <Reveal variant="reveal-up">
+          <HomeFinalCta />
+        </Reveal>
       </article>
 
       <JsonLd id="page-jsonld" value={schemas} />

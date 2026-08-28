@@ -52,7 +52,6 @@ export function PortfolioGallery({
               height={item.height}
               loading="lazy"
               decoding="async"
-              sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, (max-width: 2560px) 25vw, 20vw"
               className={styles.image}
             />
           </button>

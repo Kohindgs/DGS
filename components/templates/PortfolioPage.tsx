@@ -4,6 +4,7 @@ import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PortfolioGallery } from "@/components/portfolio/PortfolioGallery";
+import { PortfolioCategoryLabels } from "@/components/portfolio/PortfolioCategoryLabels";
 import { Reveal } from "@/components/motion/Reveal";
 
 export async function PortfolioPageTemplate() {
@@ -23,7 +24,7 @@ export async function PortfolioPageTemplate() {
       <article data-migration-content data-wordpress-id={route.wordpressId}>
         <div className="container readable-copy">
           <h1>{route.h1 || "PORTFOLIO"}</h1>
-          {route.description ? <p>{route.description}</p> : null}
+          <PortfolioCategoryLabels />
         </div>
         <Reveal>
           <div className="wide-container">

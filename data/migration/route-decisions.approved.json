@@ -161,6 +161,43 @@
       "indexable": false,
       "includeInSitemap": false,
       "reason": "Legacy plugin route retired with HTTP 410 via retired-routes.approved.json."
+    },
+    {
+      "path": "/website-development-services-in-mumbai-dgenius-solutions/",
+      "classification": "LEGACY_SERVICE_REDIRECT",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": null,
+      "redirectTo": "/services/website-development-amc/",
+      "reason": "Permanent one-hop redirect to authoritative Website Development Company in Mumbai service page."
+    },
+    {
+      "path": "/ai-motion-graphic-designer/",
+      "classification": "HIRING_WORKFLOW_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/ai-motion-graphic-designer/",
+      "reason": "Recruitment assessment workflow; not intended for organic discovery."
+    },
+    {
+      "path": "/social-media-executive/",
+      "classification": "HIRING_WORKFLOW_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/social-media-executive/",
+      "reason": "Recruitment assessment workflow; not intended for organic discovery."
+    },
+    {
+      "path": "/career/",
+      "classification": "CAREERS_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/career/",
+      "reason": "Approved indexable careers hub from verified WordPress source content."
     }
   ]
 }

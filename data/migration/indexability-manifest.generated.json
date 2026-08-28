@@ -1,14 +1,14 @@
 {
   "summary": {
-    "generatedAt": "2026-08-28T07:50:03.005Z",
+    "generatedAt": "2026-08-28T11:08:05.160Z",
     "totals": {
       "routes": 108,
-      "deployable": 104,
-      "reviewRequired": 4,
+      "deployable": 108,
+      "reviewRequired": 0,
       "protected": 5,
-      "sitemap": 95,
-      "noindex": 9,
-      "redirects": 0
+      "sitemap": 96,
+      "noindex": 12,
+      "redirects": 1
     }
   },
   "routes": [
@@ -58,13 +58,13 @@
     },
     {
       "path": "/ai-motion-graphic-designer/",
-      "classification": "REVIEW_REQUIRED",
-      "deployable": false,
-      "indexable": null,
-      "includeInSitemap": null,
-      "canonicalPath": null,
+      "classification": "HIRING_WORKFLOW_NOINDEX",
+      "deployable": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/ai-motion-graphic-designer/",
       "redirectTo": null,
-      "reason": "Published WordPress REST route was not found in the discovered sitemap crawl; classify before migration.",
+      "reason": "Recruitment assessment workflow; not intended for organic discovery.",
       "sourceSitemapGap": true
     },
     {
@@ -784,13 +784,13 @@
     },
     {
       "path": "/career/",
-      "classification": "REVIEW_REQUIRED",
-      "deployable": false,
-      "indexable": null,
-      "includeInSitemap": null,
-      "canonicalPath": null,
+      "classification": "CAREERS_INDEXABLE",
+      "deployable": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/career/",
       "redirectTo": null,
-      "reason": "Existing redirect detected. Do not copy blindly; approve a direct one-hop destination if the legacy source has value.",
+      "reason": "Approved indexable careers hub from verified WordPress source content.",
       "sourceSitemapGap": false
     },
     {
@@ -1147,13 +1147,13 @@
     },
     {
       "path": "/social-media-executive/",
-      "classification": "REVIEW_REQUIRED",
-      "deployable": false,
-      "indexable": null,
-      "includeInSitemap": null,
-      "canonicalPath": null,
+      "classification": "HIRING_WORKFLOW_NOINDEX",
+      "deployable": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/social-media-executive/",
       "redirectTo": null,
-      "reason": "Published WordPress REST route was not found in the discovered sitemap crawl; classify before migration.",
+      "reason": "Recruitment assessment workflow; not intended for organic discovery.",
       "sourceSitemapGap": true
     },
     {
@@ -1180,13 +1180,13 @@
     },
     {
       "path": "/website-development-services-in-mumbai-dgenius-solutions/",
-      "classification": "REVIEW_REQUIRED",
-      "deployable": false,
-      "indexable": null,
-      "includeInSitemap": null,
+      "classification": "LEGACY_SERVICE_REDIRECT",
+      "deployable": true,
+      "indexable": false,
+      "includeInSitemap": false,
       "canonicalPath": null,
-      "redirectTo": null,
-      "reason": "Published WordPress REST route was not found in the discovered sitemap crawl; classify before migration.",
+      "redirectTo": "/services/website-development-amc/",
+      "reason": "Permanent one-hop redirect to authoritative Website Development Company in Mumbai service page.",
       "sourceSitemapGap": true
     },
     {

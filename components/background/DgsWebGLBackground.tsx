@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Triangle, Vec2 } from "ogl";
+import { interpolateScrollProgress } from "@/lib/motion/scroll-progress";
 import styles from "./DgsWebGLBackground.module.css";
 
 function getDpr() {
@@ -53,9 +54,10 @@ export function DgsWebGLBackground() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
 
+    let currentDpr = getDpr();
     const renderer = new Renderer({
       canvas,
-      dpr: getDpr(),
+      dpr: currentDpr,
       alpha: true,
       antialias: false,
       powerPreference: "low-power",
@@ -72,47 +74,67 @@ export function DgsWebGLBackground() {
     const program = new Program(gl, { vertex, fragment, uniforms });
     const mesh = new Mesh(gl, { geometry, program });
 
-    let raf = 0;
-    let running = true;
+    let rafId = 0;
+    let running = document.visibilityState === "visible";
     let lastTime = performance.now();
 
     const resize = () => {
+      const nextDpr = getDpr();
+      if (Math.abs(nextDpr - currentDpr) > 0.05) {
+        currentDpr = nextDpr;
+        renderer.dpr = nextDpr;
+      }
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
     const onPointerMove = (event: PointerEvent) => {
-      uniforms.uPointer.value.set(event.clientX / window.innerWidth, 1 - event.clientY / window.innerHeight);
+      uniforms.uPointer.value.set(
+        event.clientX / window.innerWidth,
+        1 - event.clientY / window.innerHeight,
+      );
+    };
+
+    const scheduleFrame = () => {
+      if (!running || rafId) return;
+      rafId = requestAnimationFrame(render);
     };
 
     const onVisibility = () => {
-      running = document.visibilityState === "visible";
-      if (running) {
+      const visible = document.visibilityState === "visible";
+      running = visible;
+      if (visible) {
         lastTime = performance.now();
-        raf = requestAnimationFrame(render);
+        scheduleFrame();
+      } else if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
       }
     };
 
     const render = (now: number) => {
+      rafId = 0;
       if (!running) return;
+
       const delta = now - lastTime;
-      if (delta > 32) {
+      if (delta >= 32) {
         uniforms.uTime.value += delta * 0.001;
-        uniforms.uProgress.value = Math.min(1, window.scrollY / (document.body.scrollHeight - window.innerHeight || 1));
+        uniforms.uProgress.value = interpolateScrollProgress();
         renderer.render({ scene: mesh });
         lastTime = now;
       }
-      raf = requestAnimationFrame(render);
+
+      scheduleFrame();
     };
 
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
-    raf = requestAnimationFrame(render);
+    scheduleFrame();
 
     return () => {
       running = false;
-      cancelAnimationFrame(raf);
+      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", onVisibility);

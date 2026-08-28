@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/components/motion/Reveal";
 import styles from "./HomeHero.module.css";
 
 const HERO_IMAGE = {
@@ -32,7 +33,7 @@ export function HomeHero({ h1 }: HomeHeroProps) {
           </Link>
         </div>
       </div>
-      <div className={styles.visual}>
+      <Reveal variant="parallax" parallaxAmount={28} className={styles.visual}>
         <Image
           src={HERO_IMAGE.src}
           alt={HERO_IMAGE.alt}
@@ -42,7 +43,7 @@ export function HomeHero({ h1 }: HomeHeroProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1920px) 60vw, 960px"
           className={styles.image}
         />
-      </div>
+      </Reveal>
     </section>
   );
 }

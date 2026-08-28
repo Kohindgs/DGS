@@ -27,6 +27,7 @@
     { "source": "/australia/", "destination": "/australia-page/", "statusCode": 301, "reason": "Landing page alias" },
     { "source": "/us/", "destination": "/us-landing-page/", "statusCode": 301, "reason": "US landing alias" },
     { "source": "/index.php/", "destination": "/", "statusCode": 301, "reason": "WordPress index alias" },
-    { "source": "/home/", "destination": "/", "statusCode": 301, "reason": "Home alias" }
+    { "source": "/home/", "destination": "/", "statusCode": 301, "reason": "Home alias" },
+    { "source": "/website-development-services-in-mumbai-dgenius-solutions/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "Legacy website development slug; authoritative service is website-development-amc" }
   ]
 }

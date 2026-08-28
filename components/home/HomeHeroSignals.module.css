@@ -51,3 +51,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 2560px) {
+  .signalGrid {
+    max-width: var(--content-max);
+  }
+
+  .statsGrid {
+    max-width: var(--content-max);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 3840px) {
+  .signalGrid,
+  .statsGrid {
+    max-width: var(--wide-max);
+  }
+}

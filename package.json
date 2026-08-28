@@ -32,6 +32,8 @@
     "validate:portfolio": "node scripts/validate-portfolio-readiness.mjs",
     "validate:envira-runtime": "node scripts/validate-envira-runtime.mjs",
     "build:portfolio-alt-review": "node scripts/build-portfolio-alt-review.mjs",
+    "build:portfolio-review": "node scripts/build-portfolio-review.mjs",
+    "build:indexability": "node scripts/build-indexability-manifest.mjs",
     "validate:analytics": "node scripts/validate-analytics-readiness.mjs",
     "release:validate:search": "node scripts/validate-release-readiness.mjs",
     "release:validate": "npm run release:validate:search && npm run validate:forms && npm run validate:portfolio && npm run validate:analytics",

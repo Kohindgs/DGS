@@ -104,3 +104,16 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 2560px) {
+  .inner {
+    max-width: var(--wide-max);
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 3840px) {
+  .inner {
+    grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
+  }
+}

@@ -124,6 +124,20 @@
   }
 }
 
+@media (min-width: 3440px) {
+  .grid {
+    max-width: var(--wide-max);
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 3840px) {
+  .panel {
+    max-width: var(--wide-max);
+    margin-inline: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .overlay {
     animation: none;

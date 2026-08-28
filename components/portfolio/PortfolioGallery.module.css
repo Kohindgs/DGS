@@ -61,5 +61,12 @@
   .gallery {
     max-width: var(--wide-max);
     margin-inline: auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 3840px) {
+  .gallery {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
