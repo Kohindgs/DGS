@@ -42,6 +42,9 @@
     "capture:next-visual": "node scripts/capture-next-visual-reference.mjs",
     "compare:visual": "node scripts/compare-visual-reference.mjs",
     "compare:homepage-content": "node scripts/compare-homepage-content.mjs",
+    "inventory:homepage-structure": "node scripts/inventory-homepage-structure.mjs",
+    "diff:homepage-structure": "node scripts/diff-homepage-structure.mjs",
+    "wp-mirror:inventory": "node scripts/inventory-homepage-structure.mjs both && node scripts/diff-homepage-structure.mjs",
     "visual-parity:capture": "npm run capture:wp-visual && npm run capture:next-visual",
     "visual-parity:compare": "npm run compare:homepage-content && npm run compare:visual"
   },
