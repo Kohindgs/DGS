@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
@@ -7,14 +9,23 @@ import { prepareHomepageMirror } from "@/lib/wordpress/prepare-homepage-mirror";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
-import { WpMirrorCreativeGallery } from "@/components/wp-exact/WpMirrorCreativeGallery";
+import { WpMirrorNativeMounts } from "@/components/wp-exact/WpMirrorNativeMounts";
+
+async function loadMirrorOverridesCss(): Promise<string> {
+  try {
+    return await readFile(join(process.cwd(), "lib/wp-exact/wp-mirror-overrides.css"), "utf8");
+  } catch {
+    return "";
+  }
+}
 
 export async function HomeWpMirrorPage() {
-  const [content, assets, route, allBlocks] = await Promise.all([
+  const [content, assets, route, allBlocks, mirrorOverrides] = await Promise.all([
     loadHomepageMirrorContent(),
     loadWpExtractedAssets(),
     getRouteByPath("/"),
     loadContentBlocks(),
+    loadMirrorOverridesCss(),
   ]);
 
   const prepared = prepareHomepageMirror(content);
@@ -36,18 +47,18 @@ export async function HomeWpMirrorPage() {
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       <style dangerouslySetInnerHTML={{ __html: prepared.combinedStyles }} />
       <style dangerouslySetInnerHTML={{ __html: assets.fluentformStyles }} />
+      <style dangerouslySetInnerHTML={{ __html: assets.homeFluentformStyles }} />
       <style dangerouslySetInnerHTML={{ __html: assets.footerStyles }} />
+      <style dangerouslySetInnerHTML={{ __html: mirrorOverrides }} />
 
       <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} />
 
-      <div className="dgs-wp-mirror-home">
-        {prepared.segments.map((segment, index) => {
-          if (segment.type === "html") {
-            return <div key={`html-${index}`} dangerouslySetInnerHTML={{ __html: segment.html }} />;
-          }
-          return <WpMirrorCreativeGallery key="creative" items={gallery.items} />;
-        })}
-      </div>
+      <div
+        className="dgs-wp-mirror-home"
+        dangerouslySetInnerHTML={{ __html: prepared.mainHtml }}
+      />
+
+      <WpMirrorNativeMounts galleryItems={gallery.items} />
 
       <div dangerouslySetInnerHTML={{ __html: assets.footerHtml }} />
 

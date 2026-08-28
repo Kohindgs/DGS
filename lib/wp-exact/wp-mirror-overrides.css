@@ -1,0 +1,113 @@
+/* Static background layers — only Three.js particles should animate. */
+.dgs-v1215-bg {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+.dgs-v1215-fallback {
+  animation: none !important;
+  transform: none !important;
+}
+
+.dgs-v1215-grid,
+.dgs-v1215-vignette {
+  transform: none !important;
+}
+
+.dgs-v1215 {
+  --v1215-bg-x: 0px !important;
+  --v1215-bg-y: 0px !important;
+  --v1215-grid-x: 0px !important;
+  --v1215-grid-y: 0px !important;
+}
+
+/* Native creative gallery — always visible inside the WP frame. */
+.dgs-v1215-gallery-frame.dgs-native-gallery-frame {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+.dgs-v1215-gallery-frame.dgs-native-gallery-frame,
+.dgs-v1215-gallery-frame.dgs-native-gallery-frame .dgs-native-gallery,
+.dgs-v1215-gallery-frame.dgs-native-gallery-frame .dgs-native-gallery * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dgs-v1215-gallery-frame.dgs-native-gallery-frame .dgs-native-gallery a,
+.dgs-v1215-gallery-frame.dgs-native-gallery-frame .dgs-native-gallery img {
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.dgs-v1215-gallery-frame.dgs-native-gallery-frame:hover {
+  transform: none !important;
+}
+
+/* Final CTA card + native form always visible. */
+#contact-form {
+  --fluentform-primary: #fd5c62;
+}
+
+#contact-form .dgs-v1215-final-card.dgs-v1215-reveal,
+#contact-form .dgs-v1215-form-shortcode {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode .ff-el-group {
+  margin-bottom: 16px !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode label,
+#contact-form .dgs-v1215-form-shortcode .ff-el-input--label label {
+  display: block !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  margin-bottom: 7px !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode .ff-el-form-control {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 46px !important;
+  padding: 10px 14px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #fff !important;
+  font: inherit !important;
+  box-sizing: border-box !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode textarea.ff-el-form-control {
+  min-height: 120px !important;
+  resize: vertical !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode select.ff-el-form-control {
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode .ff-el-form-control:focus {
+  outline: none !important;
+  border-color: rgba(253, 92, 98, 0.55) !important;
+  box-shadow: 0 0 0 3px rgba(253, 92, 98, 0.15) !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode .ff-btn-submit {
+  width: 100% !important;
+  min-height: 52px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: #fd5c62 !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  cursor: not-allowed !important;
+  opacity: 0.72 !important;
+}
