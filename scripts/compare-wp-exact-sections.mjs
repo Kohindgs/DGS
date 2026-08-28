@@ -29,6 +29,7 @@ const SECTIONS = [
   { key: "faq", wp: "#dgs-v1215-faq", next: "#dgs-v1215-faq" },
   { key: "finalCta", wp: "#contact-form", next: "#contact-form" },
   { key: "footer", wp: ".dgs-footer-wrapper, footer", next: ".dgs-footer-wrapper, footer" },
+  { key: "menu", wp: "#dgsPanel", next: "#dgsPanel", openMenu: true },
 ];
 
 function comparePng(aPath, bPath, diffPath) {
@@ -76,8 +77,25 @@ async function main() {
   await wp.waitForTimeout(3000);
   await next.waitForTimeout(3000);
 
-  const report = { sections: {}, fullPage: {} };
-  for (const { key, wp: wpSel, next: nextSel } of SECTIONS) {
+  const pageHeights = {
+    wp: await wp.evaluate(() => document.documentElement.scrollHeight),
+    next: await next.evaluate(() => document.documentElement.scrollHeight),
+  };
+
+  const report = { sections: {}, fullPage: {}, pageHeights };
+  for (const { key, wp: wpSel, next: nextSel, openMenu } of SECTIONS) {
+    if (openMenu) {
+      await wp.evaluate(() => {
+        const nav = document.getElementById("dgsNav");
+        if (nav && !nav.classList.contains("nav-open") && window.dgsToggle) window.dgsToggle();
+      });
+      await next.evaluate(() => {
+        const nav = document.getElementById("dgsNav");
+        if (nav && !nav.classList.contains("nav-open") && window.dgsToggle) window.dgsToggle();
+      });
+      await wp.waitForTimeout(900);
+      await next.waitForTimeout(900);
+    }
     const dir = path.join(OUT, key);
     fs.mkdirSync(dir, { recursive: true });
     const wpOk = await capture(wp, wpSel, path.join(dir, "wp.png"));

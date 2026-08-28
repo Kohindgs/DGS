@@ -3,82 +3,91 @@
     "header": {
       "width": 1440,
       "height": 100,
-      "mismatchPercent": 3.3
+      "mismatchPercent": 3.36
     },
     "hero": {
       "width": 1440,
       "height": 997,
-      "mismatchPercent": 7.48
+      "mismatchPercent": 7.47
     },
     "rail": {
       "width": 1440,
       "height": 202,
-      "mismatchPercent": 6.33
+      "mismatchPercent": 6.07
     },
     "proof": {
       "width": 1440,
       "height": 3167,
-      "mismatchPercent": 2.91
+      "mismatchPercent": 2.74
     },
     "capabilities": {
       "width": 1440,
       "height": 1111,
-      "mismatchPercent": 7.51
+      "mismatchPercent": 7.52
     },
     "portfolio": {
       "width": 1440,
       "height": 2753,
-      "mismatchPercent": 50.7
+      "mismatchPercent": 14.65
     },
     "caseStudies": {
       "width": 1440,
       "height": 1421,
-      "mismatchPercent": 21.94
+      "mismatchPercent": 22.69
     },
     "creativeGallery": {
       "width": 1440,
       "height": 1807,
-      "mismatchPercent": 66.5
+      "mismatchPercent": 63.1
     },
     "testimonials": {
       "width": 1440,
       "height": 898,
-      "mismatchPercent": 6.48
+      "mismatchPercent": 6.39
     },
     "searchAuthority": {
       "width": 1440,
       "height": 1180,
-      "mismatchPercent": 8.51
+      "mismatchPercent": 8.63
     },
     "industries": {
       "width": 1440,
       "height": 427,
-      "mismatchPercent": 7.2
+      "mismatchPercent": 7.27
     },
     "whyDgs": {
       "width": 1440,
-      "height": 784,
-      "mismatchPercent": 5.58
+      "height": 785,
+      "mismatchPercent": 5.94
     },
     "faq": {
       "width": 1440,
       "height": 1060,
-      "mismatchPercent": 6.67
+      "mismatchPercent": 6.71
     },
     "finalCta": {
       "width": 1440,
       "height": 1649,
-      "mismatchPercent": 36.95
+      "mismatchPercent": 36.97
     },
     "footer": {
       "width": 1440,
       "height": 837,
-      "mismatchPercent": 8.95
+      "mismatchPercent": 9.16
+    },
+    "menu": {
+      "width": 1440,
+      "height": 800,
+      "mismatchPercent": 5.27
     }
   },
   "fullPage": {
     "width": 1440,
     "height": 18275,
-    "mismatchPercent": 23.19
+    "mismatchPercent": 4.28
+  },
+  "pageHeights": {
+    "wp": 18264,
+    "next": 17538
   }
 }

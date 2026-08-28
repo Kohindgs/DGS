@@ -7,7 +7,7 @@ type Props = {
   bootNav: string;
   bootV1215: string;
   bootPortfolio: string;
-  runPortfolio: boolean;
+  runPortfolio?: boolean;
 };
 
 function runInlineScript(source: string, label: string) {
@@ -28,7 +28,7 @@ export function DgsWpBoot({ bootNav, bootV1215, bootPortfolio, runPortfolio }: P
     runInlineScript(bootNav, "nav");
     runInlineScript(bootV1215, "v1215");
 
-    if (runPortfolio) {
+    if (runPortfolio !== false) {
       runInlineScript(bootPortfolio, "portfolio");
     }
 

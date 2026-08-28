@@ -8,7 +8,6 @@ import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
 import { WpMirrorCreativeGallery } from "@/components/wp-exact/WpMirrorCreativeGallery";
-import { WpMirrorPortfolioPreview } from "@/components/wp-exact/WpMirrorPortfolioPreview";
 
 export async function HomeWpMirrorPage() {
   const [content, assets, route, allBlocks] = await Promise.all([
@@ -36,6 +35,7 @@ export async function HomeWpMirrorPage() {
 
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       <style dangerouslySetInnerHTML={{ __html: prepared.combinedStyles }} />
+      <style dangerouslySetInnerHTML={{ __html: assets.fluentformStyles }} />
       <style dangerouslySetInnerHTML={{ __html: assets.footerStyles }} />
 
       <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} />
@@ -43,18 +43,8 @@ export async function HomeWpMirrorPage() {
       <div className="dgs-wp-mirror-home">
         {prepared.segments.map((segment, index) => {
           if (segment.type === "html") {
-            return (
-              <div
-                key={`html-${index}`}
-                dangerouslySetInnerHTML={{ __html: segment.html }}
-              />
-            );
+            return <div key={`html-${index}`} dangerouslySetInnerHTML={{ __html: segment.html }} />;
           }
-
-          if (segment.type === "portfolio") {
-            return <WpMirrorPortfolioPreview key="portfolio" items={gallery.items} />;
-          }
-
           return <WpMirrorCreativeGallery key="creative" items={gallery.items} />;
         })}
       </div>
@@ -64,8 +54,7 @@ export async function HomeWpMirrorPage() {
       <DgsWpBoot
         bootNav={assets.bootNav}
         bootV1215={assets.bootV1215}
-        bootPortfolio={assets.bootPortfolio}
-        runPortfolio={!prepared.hasPortfolioSplit}
+        bootPortfolio={assets.bootPortfolioHome}
       />
 
       <JsonLd id="page-jsonld" value={schemas} />

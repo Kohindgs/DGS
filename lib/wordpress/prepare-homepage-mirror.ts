@@ -1,54 +1,34 @@
 import type { WpMirrorContent } from "./mirror-types";
 import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
 
-
-/** Envira dump inside the creative gallery frame. */
+/** Envira dump inside the creative gallery frame — replaced with native gallery. */
 const ENVIRA_INNER_RE =
   /<div class="dgs-v1215-gallery-frame dgs-v1215-reveal">[\s\S]*?<\/div>\s*(?=<\/div>\s*<\/section>)/i;
-
-/** Empty portfolio gallery mount — replaced with native 8-item preview. */
-const PORTFOLIO_GALLERY_RE =
-  /(<div id="portfolio-gallery-view" class="content-view active-view">)\s*<div id="portfolio-gallery"><\/div>[\s\S]*?<\/div>\s*(?=<div id="mascot-view")/i;
 
 const INLINE_STYLE_TAIL_RE = /<!-- STRUCTURED DATA -->[\s\S]*$/i;
 const MAIN_RE = /<main class="dgs-v1215"[\s\S]*<\/main>/i;
 const INLINE_STYLES_RE = /<\/main>\s*(<style>[\s\S]*?<\/style>)/i;
 
 export const NATIVE_CREATIVE_GALLERY_MARKER = "<!--DGS_NATIVE_CREATIVE_GALLERY-->";
-export const NATIVE_PORTFOLIO_MARKER = "<!--DGS_NATIVE_PORTFOLIO_GALLERY-->";
 
 export type HomepageMirrorSegment =
   | { type: "html"; html: string }
-  | { type: "portfolio" }
   | { type: "creativeGallery" };
 
 export type PreparedHomepageMirror = WpMirrorContent & {
   mainHtml: string;
   combinedStyles: string;
   segments: HomepageMirrorSegment[];
-  hasCreativeGallerySplit: boolean;
-  hasPortfolioSplit: boolean;
 };
 
 function buildSegments(mainHtml: string): HomepageMirrorSegment[] {
-  const ordered = [
-    { marker: NATIVE_PORTFOLIO_MARKER, type: "portfolio" as const },
-    { marker: NATIVE_CREATIVE_GALLERY_MARKER, type: "creativeGallery" as const },
+  const idx = mainHtml.indexOf(NATIVE_CREATIVE_GALLERY_MARKER);
+  if (idx < 0) return [{ type: "html", html: mainHtml }];
+  return [
+    { type: "html", html: mainHtml.slice(0, idx) },
+    { type: "creativeGallery" },
+    { type: "html", html: mainHtml.slice(idx + NATIVE_CREATIVE_GALLERY_MARKER.length) },
   ];
-
-  const segments: HomepageMirrorSegment[] = [];
-  let remaining = mainHtml;
-
-  for (const { marker, type } of ordered) {
-    const idx = remaining.indexOf(marker);
-    if (idx < 0) continue;
-    segments.push({ type: "html", html: remaining.slice(0, idx) });
-    segments.push({ type });
-    remaining = remaining.slice(idx + marker.length);
-  }
-
-  segments.push({ type: "html", html: remaining });
-  return segments;
 }
 
 function extractMainBlock(body: string): { mainHtml: string; inlineStyles: string; rest: string } {
@@ -76,24 +56,14 @@ export function prepareHomepageMirror(content: WpMirrorContent): PreparedHomepag
   const { mainHtml: rawMain, inlineStyles } = extractMainBlock(body);
   let mainHtml = rawMain;
 
-  const hasCreativeGallerySplit = ENVIRA_INNER_RE.test(mainHtml);
-  if (hasCreativeGallerySplit) {
+  if (ENVIRA_INNER_RE.test(mainHtml)) {
     mainHtml = mainHtml.replace(
       ENVIRA_INNER_RE,
       `<div class="dgs-v1215-gallery-frame dgs-v1215-reveal">${NATIVE_CREATIVE_GALLERY_MARKER}`,
     );
   }
 
-  const hasPortfolioSplit = PORTFOLIO_GALLERY_RE.test(mainHtml);
-  if (hasPortfolioSplit) {
-    mainHtml = mainHtml.replace(
-      PORTFOLIO_GALLERY_RE,
-      `$1\n          ${NATIVE_PORTFOLIO_MARKER}\n        </div>\n\n        `,
-    );
-  }
-
   mainHtml = rewriteWpUrls(mainHtml);
-
   const segments = buildSegments(mainHtml);
 
   const combinedStyles = rewriteWpUrls(
@@ -105,7 +75,5 @@ export function prepareHomepageMirror(content: WpMirrorContent): PreparedHomepag
     mainHtml,
     combinedStyles,
     segments,
-    hasCreativeGallerySplit,
-    hasPortfolioSplit,
   };
 }
