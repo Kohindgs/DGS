@@ -2,7 +2,12 @@ import Image from "next/image";
 import type { ContentBlock } from "@/lib/content/types";
 import { RichText } from "./RichText";
 
-export function SemanticContent({ blocks }: { blocks: ContentBlock[] }) {
+type SemanticContentProps = {
+  blocks: ContentBlock[];
+  demoteSecondaryHeadings?: boolean;
+};
+
+export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: SemanticContentProps) {
   return (
     <div className="semantic-content">
       {blocks.map((block, index) => {
@@ -16,8 +21,9 @@ export function SemanticContent({ blocks }: { blocks: ContentBlock[] }) {
               </p>
             );
           case "heading": {
-            if (block.level === 1) return null;
-            const Tag = `h${block.level}` as "h2" | "h3" | "h4" | "h5" | "h6";
+            const level = demoteSecondaryHeadings && block.level === 1 ? 2 : block.level;
+            if (level === 1) return null;
+            const Tag = `h${level}` as "h2" | "h3" | "h4" | "h5" | "h6";
             return (
               <Tag key={key} id={block.id}>
                 {block.text}
@@ -44,8 +50,8 @@ export function SemanticContent({ blocks }: { blocks: ContentBlock[] }) {
                   alt={block.alt}
                   width={block.width ?? 16}
                   height={block.height ?? 9}
-                  priority={block.priority}
-                  loading={block.priority ? undefined : "lazy"}
+                  preload={block.preload === true}
+                  loading={block.preload ? undefined : "lazy"}
                   sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 960px"
                 />
                 {block.caption ? <figcaption>{block.caption}</figcaption> : null}

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "policy": "HTTP 410 Gone routes. redirects.approved.json cannot express 410; use this registry and middleware enforcement instead.",
+  "retired": [
+    {
+      "path": "/wp-file-download-search/",
+      "statusCode": 410,
+      "reason": "Legacy WordPress download-search plugin route retired. Do not redirect to homepage."
+    }
+  ]
+}

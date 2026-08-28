@@ -18,11 +18,12 @@ export const verifiedOrganization = {
     addressRegion: "Maharashtra",
     addressCountry: "IN",
   },
-  /** Verify against source evidence before adding URLs. */
+  /** Verified from live homepage/footer social links in pages-v2.json. */
   sameAs: [
-    "https://www.linkedin.com/company/dgenius-solutions/",
+    "https://www.linkedin.com/company/d-genius-solutions/",
     "https://www.facebook.com/dgeniussolutions/",
     "https://www.instagram.com/dgeniussolutions/",
-    "https://www.youtube.com/@dgeniussolutions",
+    "https://www.youtube.com/@dgeniussolutionspvtltd4060",
+    "https://in.pinterest.com/dgeniussolutions/",
   ],
 } as const;

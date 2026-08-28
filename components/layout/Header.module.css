@@ -13,15 +13,14 @@
 
 .scrolled {
   padding: 0.75rem 0;
-  background: rgba(8, 9, 10, 0.85);
+  background: rgba(2, 2, 2, 0.92);
   backdrop-filter: blur(16px) saturate(1.2);
-  border-bottom-color: var(--color-border-subtle);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
 }
 
 .inner {
-  max-width: var(--container-max);
+  width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
   margin: 0 auto;
-  padding: 0 var(--space-8);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,7 +44,7 @@
 }
 
 .logoAccent {
-  color: var(--color-cyan);
+  color: var(--color-accent);
 }
 
 .logoText {
@@ -74,7 +73,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background: var(--color-cyan);
+  background: var(--color-accent);
   transition: width var(--duration-normal) var(--ease-out-expo);
 }
 
@@ -84,6 +83,7 @@
 
 .navLink:hover::after {
   width: 100%;
+  background: var(--color-accent);
 }
 
 .services {
@@ -103,7 +103,7 @@
 }
 
 .serviceLink:hover {
-  color: var(--color-cyan);
+  color: var(--color-accent);
 }
 
 .menuToggle {

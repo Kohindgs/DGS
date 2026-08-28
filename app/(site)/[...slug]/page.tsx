@@ -9,6 +9,9 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { SemanticContent } from "@/components/content/SemanticContent";
 import { assertProtectedRouteSearchPolicy } from "@/lib/migration/search-policy";
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
+import { resolvePageH1 } from "@/lib/migration/page-h1";
+import { getRetiredRoute } from "@/lib/migration/retired-routes";
+import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
 import Link from "next/link";
 
 export async function generateStaticParams() {
@@ -16,6 +19,7 @@ export async function generateStaticParams() {
   return routes
     .filter((r) => r.proposedAction === "KEEP_SAME_URL" || r.proposedAction === "PROTECTED")
     .filter((r) => r.path !== "/")
+    .filter((r) => !getRetiredRoute(r.path))
     .map((r) => ({ slug: r.path.split("/").filter(Boolean) }));
 }
 
@@ -69,9 +73,12 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   const breadcrumbs = buildBreadcrumbs(path, route);
   const schemaBlocks = buildRouteSchemas({ route, path, blocks, breadcrumbs });
 
-  const pageH1 = route.h1 || route.title || "Page";
+  const pageH1 = resolvePageH1(route);
   const isH1 = (b: ContentBlock): b is HeadingBlock => b.type === "heading" && b.level === 1;
-  const contentBlocks = blocks.filter((b) => !isH1(b));
+  const isDuplicateHeading = (b: ContentBlock): b is HeadingBlock =>
+    b.type === "heading" && b.text.trim() === pageH1.trim();
+  const contentBlocks = blocks.filter((b) => !isH1(b) && !isDuplicateHeading(b));
+  const showContactForm = path === "/contact-us/";
 
   return (
     <main className="page-main" id="main-content">
@@ -97,8 +104,16 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
           <h1>{pageH1}</h1>
         </div>
         <div className="container semantic-content-wrap">
-          <SemanticContent blocks={contentBlocks} />
+          <SemanticContent blocks={contentBlocks} demoteSecondaryHeadings />
         </div>
+        {showContactForm ? (
+          <section className="container contact-form-section" aria-labelledby="contact-form-heading">
+            <h2 id="contact-form-heading" className="visually-hidden">
+              Contact form
+            </h2>
+            <PublicLeadForm id="dgContact" route="/contact-us/" />
+          </section>
+        ) : null}
       </article>
 
       <JsonLd id="page-jsonld" value={schemaBlocks} />

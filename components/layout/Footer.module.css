@@ -6,9 +6,8 @@
 }
 
 .inner {
-  max-width: var(--container-max);
+  width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
   margin: 0 auto;
-  padding: 0 var(--space-8);
 }
 
 .brand {
@@ -31,7 +30,7 @@
 }
 
 .logoAccent {
-  color: var(--color-cyan);
+  color: var(--color-accent);
 }
 
 .logoText {

@@ -12,11 +12,13 @@ export function buildRobotsManifest(): MetadataRoute.Robots {
   const publicIndexing = isPublicIndexingEnabled();
 
   if (!publicIndexing) {
+    // Staging must not block crawlers via robots.txt when X-Robots-Tag carries noindex.
+    // Password protection at the CDN/host layer is the preferred staging guard.
     return {
       rules: [
         {
           userAgent: "*",
-          disallow: "/",
+          allow: "/",
         },
       ],
     };

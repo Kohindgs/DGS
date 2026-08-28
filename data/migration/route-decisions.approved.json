@@ -1,5 +1,166 @@
 {
   "schemaVersion": 1,
   "policy": "Only explicitly reviewed non-protected route decisions belong here. Tier-0 protected routes are controlled by tier0-routes.json and cannot be noindexed, retired or redirected without an explicit approved exception.",
-  "decisions": []
+  "decisions": [
+    {
+      "path": "/contact-us/",
+      "classification": "INDEXABLE_SEMANTIC_FIX",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/contact-us/",
+      "reason": "Approved indexable contact route. Visible heading promoted to single H1."
+    },
+    {
+      "path": "/services/",
+      "classification": "PUBLIC_HUB_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/services/",
+      "reason": "Approved services hub remains indexable."
+    },
+    {
+      "path": "/seo-pricing/",
+      "classification": "GROWTH_PAGE_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/seo-pricing/",
+      "reason": "Approved indexable pricing page."
+    },
+    {
+      "path": "/better-ceasons-case-study/",
+      "classification": "CASE_STUDY_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/better-ceasons-case-study/",
+      "reason": "Approved indexable case study."
+    },
+    {
+      "path": "/motion-graphics/",
+      "classification": "PORTFOLIO_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/motion-graphics/",
+      "reason": "Approved indexable portfolio/service page."
+    },
+    {
+      "path": "/aeo-dubai/",
+      "classification": "GEO_LOCATION_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/aeo-dubai/",
+      "reason": "Approved indexable location growth page."
+    },
+    {
+      "path": "/us-landing-page/",
+      "classification": "LOCATION_LANDING_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/us-landing-page/",
+      "reason": "Approved indexable US landing page."
+    },
+    {
+      "path": "/australia-page/",
+      "classification": "LOCATION_LANDING_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/australia-page/",
+      "reason": "Approved indexable Australia landing page."
+    },
+    {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "classification": "BLOG_INDEXABLE",
+      "approved": true,
+      "indexable": true,
+      "includeInSitemap": true,
+      "canonicalPath": "/blogs/website-design-lead-generation-mumbai/",
+      "reason": "Approved indexable blog route."
+    },
+    {
+      "path": "/thank-you/",
+      "classification": "UTILITY_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/thank-you/",
+      "reason": "Conversion utility page excluded from search discovery."
+    },
+    {
+      "path": "/indriya-test/",
+      "classification": "TEST_ROUTE_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/indriya-test/",
+      "reason": "Test route excluded from search discovery."
+    },
+    {
+      "path": "/aeo-services-mumbai-google-ads-landing-page/",
+      "classification": "PAID_LANDING_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/aeo-services-mumbai-google-ads-landing-page/",
+      "reason": "Google Ads landing page excluded from organic sitemap/indexing."
+    },
+    {
+      "path": "/seo-services-mumbai-google-ads-landing-page/",
+      "classification": "PAID_LANDING_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/seo-services-mumbai-google-ads-landing-page/",
+      "reason": "Google Ads landing page excluded from organic sitemap/indexing."
+    },
+    {
+      "path": "/ai-production-videos-google-ads-landing-page/",
+      "classification": "PAID_LANDING_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/ai-production-videos-google-ads-landing-page/",
+      "reason": "Google Ads landing page excluded from organic sitemap/indexing."
+    },
+    {
+      "path": "/seo-executive-assessment/",
+      "classification": "ASSESSMENT_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/seo-executive-assessment/",
+      "reason": "Recruitment assessment workflow excluded from search discovery."
+    },
+    {
+      "path": "/seo-manager-assessment/",
+      "classification": "ASSESSMENT_NOINDEX",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "canonicalPath": "/seo-manager-assessment/",
+      "reason": "Recruitment assessment workflow excluded from search discovery."
+    },
+    {
+      "path": "/locations.kml",
+      "classification": "NON_HTML_RESOURCE",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "reason": "Machine-readable KML resource. HTML title/H1 validation does not apply."
+    },
+    {
+      "path": "/wp-file-download-search/",
+      "classification": "RETIRED_GONE",
+      "approved": true,
+      "indexable": false,
+      "includeInSitemap": false,
+      "reason": "Legacy plugin route retired with HTTP 410 via retired-routes.approved.json."
+    }
+  ]
 }

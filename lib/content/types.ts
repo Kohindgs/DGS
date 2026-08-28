@@ -30,7 +30,7 @@ export type ImageBlock = {
   width?: number;
   height?: number;
   caption?: string;
-  priority?: boolean;
+  preload?: boolean;
   dimensionSource?: "verified" | "fallback";
 };
 

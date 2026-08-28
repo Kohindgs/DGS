@@ -1,5 +1,60 @@
 {
   "schemaVersion": 1,
   "policy": "Source-site defects are unresolved until a verified migration fix is implemented and evidence is recorded here. Do not mark a defect approved merely to satisfy a release check.",
-  "resolutions": []
+  "resolutions": [
+    {
+      "id": "AEO-CANONICAL-MISMATCH",
+      "approved": true,
+      "action": "Protected /services/aeo-services-in-mumbai/ now self-canonicalizes via tier-0 policy and buildPageMetadata canonicalPath.",
+      "evidence": "lib/migration/search-policy.ts assertProtectedRouteSearchPolicy; app/(site)/[...slug]/page.tsx generateMetadata uses route.desiredCanonicalPath; data/migration/tier0-routes.json desiredCanonicalPath=/services/aeo-services-in-mumbai/."
+    },
+    {
+      "id": "AEO-SITEMAP-OMISSION",
+      "approved": true,
+      "action": "Protected AEO route is included in sitemap generation through tier-0 protected indexability defaults.",
+      "evidence": "scripts/build-indexability-manifest.mjs PROTECTED_INDEXABLE branch; app/sitemap.ts getIndexableRoutes includes protected routes with includeInSitemap=true."
+    },
+    {
+      "id": "CONTACT-MISSING-H1",
+      "approved": true,
+      "action": "Promoted existing visible heading \"Let's build together.\" to the page H1 via resolvePageH1.",
+      "evidence": "lib/migration/page-h1.ts; app/(site)/[...slug]/page.tsx uses resolvePageH1 for /contact-us/."
+    },
+    {
+      "id": "MULTIPLE-H1-AI-SEARCH-ECOMMERCE",
+      "approved": true,
+      "action": "Primary blog title remains the sole page H1; secondary FAQ H1 demoted to H2 in SemanticContent.",
+      "evidence": "components/content/SemanticContent.tsx demoteSecondaryHeadings; app/(site)/[...slug]/page.tsx filters duplicate page-level H1 blocks."
+    },
+    {
+      "id": "MULTIPLE-H1-BRAND-MENTIONS",
+      "approved": true,
+      "action": "Primary blog title remains the sole page H1; secondary FAQ H1 demoted to H2 in SemanticContent.",
+      "evidence": "components/content/SemanticContent.tsx demoteSecondaryHeadings; app/(site)/[...slug]/page.tsx filters duplicate page-level H1 blocks."
+    },
+    {
+      "id": "MULTIPLE-H1-CORE-UPDATE",
+      "approved": true,
+      "action": "Primary blog title remains the sole page H1; secondary FAQ H1 demoted to H2 in SemanticContent.",
+      "evidence": "components/content/SemanticContent.tsx demoteSecondaryHeadings; app/(site)/[...slug]/page.tsx filters duplicate page-level H1 blocks."
+    },
+    {
+      "id": "MULTIPLE-H1-LLM-BLOG",
+      "approved": true,
+      "action": "Primary blog title remains the sole page H1; secondary FAQ H1 demoted to H2 in SemanticContent.",
+      "evidence": "components/content/SemanticContent.tsx demoteSecondaryHeadings; app/(site)/[...slug]/page.tsx filters duplicate page-level H1 blocks."
+    },
+    {
+      "id": "NONHTML-KML-QA-FALSE-POSITIVE",
+      "approved": true,
+      "action": "Classified /locations.kml as NON_HTML_RESOURCE in route decisions; HTML H1/title validators skip non-HTML resources.",
+      "evidence": "data/migration/route-decisions.approved.json NON_HTML_RESOURCE decision; scripts/build-route-parity-v2.mjs resourceType !== html branch."
+    },
+    {
+      "id": "WP-DOWNLOAD-SEARCH-REDIRECT-CHAIN",
+      "approved": true,
+      "action": "Removed homepage redirect chain and retired /wp-file-download-search/ with a single HTTP 410 response via middleware and retired-routes.approved.json.",
+      "evidence": "data/migration/redirects.approved.json no longer contains /wp-file-download-search/; data/migration/retired-routes.approved.json statusCode 410; middleware.ts getRetiredRoute handler."
+    }
+  ]
 }

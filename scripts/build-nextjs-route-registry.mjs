@@ -11,13 +11,14 @@ async function readJson(file) {
   return JSON.parse(await readFile(file, "utf8"));
 }
 
-const [pages, services, posts, pagesV2, tier0, parity] = await Promise.all([
+const [pages, services, posts, pagesV2, tier0, parity, routeDecisionsFile] = await Promise.all([
   readJson(path.join(WP_NORM, "pages.json")),
   readJson(path.join(WP_NORM, "services.json")),
   readJson(path.join(WP_NORM, "posts.json")),
   readJson(path.join(AUDIT, "pages-v2.json")),
   readJson(path.join(MIGRATION, "tier0-routes.json")),
   readJson(path.join(MIGRATION, "route-parity-v2.generated.json")),
+  readJson(path.join(MIGRATION, "route-decisions.approved.json")),
 ]);
 
 const allWp = [...pages, ...services, ...posts];
@@ -33,6 +34,11 @@ for (const page of pagesV2) {
 
 const tier0ByPath = new Map(tier0.routes.map((r) => [r.path, r]));
 const parityByPath = new Map(parity.routes.map((r) => [r.path, r]));
+const decisionsByPath = new Map((routeDecisionsFile.decisions || []).map((item) => [item.path, item]));
+
+function isPublishedBlogCandidate(wp, parityRoute) {
+  return wp?.type === "post" && wp?.status === "publish" && parityRoute?.proposedAction === "PUBLISHED_NOT_IN_SITEMAP_REVIEW";
+}
 
 const registry = [];
 for (const [path, wp] of wpByPath) {
@@ -44,7 +50,7 @@ for (const [path, wp] of wpByPath) {
   if (t0) {
     proposedAction = "PROTECTED";
   } else if (parityRoute?.proposedAction) {
-    proposedAction = parityRoute.proposedAction;
+    proposedAction = isPublishedBlogCandidate(wp, parityRoute) ? "KEEP_SAME_URL" : parityRoute.proposedAction;
   } else if (live && live.redirectChain && live.redirectChain.length > 1) {
     proposedAction = "REDIRECT_REVIEW";
   } else if (live && live.status === 404) {
@@ -88,7 +94,24 @@ for (const [path, wp] of wpByPath) {
   });
 }
 
-  registry.sort((a, b) => a.path.localeCompare(b.path));
+for (const entry of registry) {
+  const decision = decisionsByPath.get(entry.path);
+  if (!decision?.approved) continue;
+  entry.indexable = decision.indexable;
+  entry.includeInSitemap = decision.includeInSitemap;
+  if (decision.canonicalPath) {
+    entry.canonical = `https://www.dgeniussolutions.com${decision.canonicalPath}`;
+  }
+  if (decision.classification === "RETIRED_GONE") {
+    entry.proposedAction = "RETIRE_REVIEW";
+    entry.indexable = false;
+    entry.includeInSitemap = false;
+  } else if (decision.indexable === false) {
+    entry.proposedAction = "KEEP_SAME_URL";
+  }
+}
+
+registry.sort((a, b) => a.path.localeCompare(b.path));
 
   const seen = new Set(registry.map((r) => r.path));
   for (const route of parity.routes) {

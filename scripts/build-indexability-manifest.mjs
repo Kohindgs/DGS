@@ -37,6 +37,24 @@ const routes = parity.routes.map((route) => {
     };
   }
 
+  if (
+    route.wordpress?.type === "post" &&
+    route.wordpress?.status === "publish" &&
+    route.proposedAction === "PUBLISHED_NOT_IN_SITEMAP_REVIEW"
+  ) {
+    return {
+      path: route.path,
+      classification: "PUBLISHED_BLOG_INDEXABLE",
+      deployable: true,
+      indexable: true,
+      includeInSitemap: true,
+      canonicalPath: route.path,
+      redirectTo: null,
+      reason: "Published blog post is indexable, self-canonical and included in sitemap by default policy.",
+      sourceSitemapGap: true,
+    };
+  }
+
   if (route.proposedAction === "KEEP_SAME_URL") {
     return {
       path: route.path,
