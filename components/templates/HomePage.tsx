@@ -36,7 +36,7 @@ export async function HomePageTemplate() {
   });
 
   return (
-    <main className="page-main home-page" id="main-content">
+    <main className="page-main home-page" id="main-content" style={{ paddingBlock: 0 }}>
       <article data-migration-content data-wordpress-id={route?.wordpressId ?? 63505}>
         <HomeHero eyebrow={hero.eyebrow} h1={hero.h1} lead={hero.lead} image={hero.image} />
         <HomeHeroRail />

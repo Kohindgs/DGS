@@ -19,8 +19,8 @@ export function SiteHeader() {
 
   return (
     <header id="dgsNav" className={`${styles.header} ${scrolled || menuOpen ? styles.scrolled : ""}`}>
-      <div className={styles.bar}>
-        <Link href="/" className={styles.logoLink} aria-label="D'Genius Solutions home">
+      <nav id="dgsBar" className={styles.bar} aria-label="Primary">
+        <Link href="/" id="dgsLogo" className={styles.logoLink} aria-label="D'Genius Solutions home">
           <Image
             src={DGS_NAV_LOGO.src}
             alt={DGS_NAV_LOGO.alt}
@@ -30,8 +30,8 @@ export function SiteHeader() {
           />
         </Link>
 
-        <div className={styles.actions}>
-          <button type="button" className={styles.letsTalkBtn} onClick={openLetsTalk}>
+        <div id="dgsRight" className={styles.actions}>
+          <button type="button" id="dgsPill" className={styles.letsTalkBtn} onClick={openLetsTalk}>
             <svg viewBox="0 0 14 14" aria-hidden="true" className={styles.talkIcon}>
               <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -39,12 +39,12 @@ export function SiteHeader() {
           </button>
           <button
             type="button"
+            id="dgsTrig"
             className={styles.menuBtn}
             onClick={toggleMenu}
             aria-expanded={menuOpen}
             aria-controls="site-menu-panel"
             aria-label="Open site menu"
-            id="site-menu-trigger"
           >
             <span className={styles.menuLines} aria-hidden="true">
               <em />
@@ -54,7 +54,7 @@ export function SiteHeader() {
             MENU
           </button>
         </div>
-      </div>
+      </nav>
     </header>
   );
 }

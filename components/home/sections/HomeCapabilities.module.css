@@ -1,52 +1,106 @@
 .section {
-  padding: 88px 0;
+  padding: 144px 0;
 }
 
-.inner {
+.shell {
   width: min(calc(100% - 36px), 1404px);
   margin: 0 auto;
 }
 
-.inner h2 {
-  font-size: clamp(1.6rem, 2.5vw, 2.35rem);
-  font-weight: 800;
-  max-width: 760px;
-  margin-bottom: 40px;
+.sectionHead {
+  margin-bottom: 48px;
 }
 
-.grid {
+.kicker {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: 11.52px;
+  font-weight: 800;
+  letter-spacing: 1.2672px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sectionHead h2 {
+  font-size: clamp(1.8rem, 4vw, 56px);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.96);
+  max-width: 1100px;
+}
+
+.sectionHead p {
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.menu {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
 }
 
 .card {
-  min-height: 220px;
-  padding: 28px 26px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 463px;
+  padding: 28px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
   background: rgba(255, 255, 255, 0.03);
-  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.card:hover {
-  border-color: rgba(253, 92, 98, 0.45);
-  background: rgba(255, 255, 255, 0.05);
+.number {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .card h3 {
   font-size: 18px;
   font-weight: 800;
-  margin-bottom: 12px;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .card p {
-  color: rgba(255, 255, 255, 0.68);
   font-size: 14px;
   line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 20px;
 }
 
-@media (max-width: 900px) {
-  .grid {
+.links {
+  display: grid;
+  gap: 8px;
+}
+
+.links a {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+  .menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .menu {
     grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: auto;
   }
 }

@@ -1,6 +1,8 @@
+import Image from "next/image";
 import type { ContentBlock } from "@/lib/content/types";
-import { ClientLogoMarquee } from "@/components/home/ClientLogoMarquee";
+import { HomeTrustedBrandsGrid } from "@/components/home/HomeTrustedBrandsGrid";
 import { loadHomepageClientLogos } from "@/lib/home/load-client-logos";
+import { WP_AWARD_CARDS } from "@/lib/wp-exact/awards";
 import styles from "./HomeProofStack.module.css";
 
 type Props = {
@@ -24,27 +26,36 @@ export function HomeProofStack({ blocks }: Props) {
   const awardsHeading = blocks.find(
     (b) => b.type === "heading" && blockText(b).includes("Recognized for SEO"),
   );
-  const awardCards = blocks.filter(
-    (b) => b.type === "heading" && b.level === 3 && /Work|Regarded|Excellence/i.test(blockText(b)),
-  );
 
   return (
-    <section className={styles.section} id="dgs-proof">
-      <div className={styles.intro}>
-        <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
-        {subcopy?.type === "paragraph" ? <p>{blockText(subcopy)}</p> : null}
-      </div>
+    <section className={`${styles.section} dgs-v1215-proof-stack`} id="dgs-proof">
+      <div className={styles.shell}>
+        <div className={styles.sectionHead}>
+          <span className={styles.kicker}>Trusted by 200+ brands</span>
+          <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
+          {subcopy?.type === "paragraph" ? <p>{blockText(subcopy)}</p> : null}
+        </div>
 
-      <ClientLogoMarquee logos={logos} />
+        <HomeTrustedBrandsGrid logos={logos} />
 
-      <div className={styles.awards}>
-        <h2>{awardsHeading?.type === "heading" ? awardsHeading.text : ""}</h2>
-        <div className={styles.awardGrid}>
-          {awardCards.map((card) => (
-            <article key={card.type === "heading" ? card.text : ""} className={styles.awardCard}>
-              <h3>{card.type === "heading" ? card.text : ""}</h3>
-            </article>
-          ))}
+        <div className={styles.awardsBlock} id="awards">
+          <div className={styles.sectionHead}>
+            <span className={styles.kicker}>Awards &amp; Recognition</span>
+            <h2>{awardsHeading?.type === "heading" ? awardsHeading.text : ""}</h2>
+          </div>
+          <div className={`${styles.awardGrid} dgs-v1215-awards-grid`}>
+            {WP_AWARD_CARDS.map((card) => (
+              <article key={card.title} className={`${styles.awardCard} dgs-v1215-award-card`}>
+                <div className={styles.awardImage}>
+                  <Image src={card.image} alt={card.title} width={454} height={390} className={styles.awardImg} />
+                </div>
+                <div className={styles.awardBody}>
+                  <span>{card.kicker}</span>
+                  <h3>{card.title}</h3>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

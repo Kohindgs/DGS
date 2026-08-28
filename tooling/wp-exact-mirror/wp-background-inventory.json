@@ -1,0 +1,60 @@
+{
+  "body": {
+    "background": "rgb(0, 0, 0) none no-repeat scroll 50% 50% / auto padding-box border-box",
+    "backgroundColor": "rgb(0, 0, 0)",
+    "backgroundImage": "none"
+  },
+  "html": {
+    "background": "rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box",
+    "backgroundColor": "rgba(0, 0, 0, 0)"
+  },
+  "pseudo": {},
+  "canvases": 1,
+  "videos": 9,
+  "hasThreeJs": true,
+  "hasGsap": true,
+  "fixedLayers": [
+    {
+      "tag": "nav",
+      "id": "dgsBar",
+      "className": "",
+      "zIndex": "99999",
+      "background": "none"
+    },
+    {
+      "tag": "div",
+      "id": "dgsOverlay",
+      "className": "",
+      "zIndex": "99998",
+      "background": "none"
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "className": "dgs-v1215-bg",
+      "zIndex": "-2",
+      "background": "none"
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "className": "qlwapp__container qlwapp__container--bottom-right qlwapp__container--rounded",
+      "zIndex": "9999999",
+      "background": "none"
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "zIndex": "2147483647",
+      "background": "none"
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "zIndex": "2147483647",
+      "background": "none"
+    }
+  ]
+}

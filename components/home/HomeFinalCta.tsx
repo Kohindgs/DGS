@@ -18,7 +18,7 @@ export function HomeFinalCta({ blocks }: HomeFinalCtaProps) {
   const lead = blocks.find((b) => b.type === "paragraph");
 
   return (
-    <section className={styles.section} id="contact-form" aria-labelledby="home-final-cta-heading">
+    <section className={`${styles.section} dgs-v1215-final`} id="contact-form" aria-labelledby="home-final-cta-heading">
       <div className={styles.inner}>
         <div className={styles.copy}>
           <h2 id="home-final-cta-heading">

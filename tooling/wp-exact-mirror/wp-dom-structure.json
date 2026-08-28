@@ -1,0 +1,1151 @@
+{
+  "capturedAt": "2026-08-28T17:45:28.781Z",
+  "liveDomOrder": [
+    {
+      "index": 0,
+      "tag": "section",
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "y": 0,
+      "height": 996
+    },
+    {
+      "index": 1,
+      "tag": "section",
+      "id": null,
+      "className": "dgs-v1215-rail",
+      "heading": "",
+      "y": 996,
+      "height": 198
+    },
+    {
+      "index": 2,
+      "tag": "section",
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+      "y": 1194,
+      "height": 3166
+    },
+    {
+      "index": 3,
+      "tag": "section",
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "y": 4360,
+      "height": 1109
+    },
+    {
+      "index": 4,
+      "tag": "section",
+      "id": "portfolio",
+      "className": "dgs-v1215-ai-portfolio",
+      "heading": "AI-Led Creative Portfolio",
+      "y": 5469,
+      "height": 2752
+    },
+    {
+      "index": 5,
+      "tag": "section",
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "y": 8221,
+      "height": 1420
+    },
+    {
+      "index": 6,
+      "tag": "section",
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "y": 9641,
+      "height": 1806
+    },
+    {
+      "index": 7,
+      "tag": "section",
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "y": 11447,
+      "height": 897
+    },
+    {
+      "index": 8,
+      "tag": "section",
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "y": 12344,
+      "height": 1179
+    },
+    {
+      "index": 9,
+      "tag": "section",
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "y": 13523,
+      "height": 426
+    },
+    {
+      "index": 10,
+      "tag": "section",
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "y": 13949,
+      "height": 784
+    },
+    {
+      "index": 11,
+      "tag": "section",
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "y": 14733,
+      "height": 1058
+    },
+    {
+      "index": 12,
+      "tag": "section",
+      "id": "contact-form",
+      "className": "dgs-v1215-final",
+      "heading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "y": 15791,
+      "height": 1648
+    },
+    {
+      "index": 13,
+      "tag": "footer",
+      "id": null,
+      "className": "elementor elementor-61373 elementor-location-footer",
+      "heading": "",
+      "y": 17439,
+      "height": 824
+    },
+    {
+      "index": 14,
+      "tag": "footer",
+      "id": null,
+      "className": "dgs-footer-wrapper",
+      "heading": "",
+      "y": 17439,
+      "height": 824
+    }
+  ],
+  "sections": [
+    {
+      "key": "header",
+      "present": true,
+      "order": 1,
+      "selector": "#dgsNav",
+      "heading": "",
+      "dom": {
+        "tag": "div",
+        "id": "dgsNav",
+        "className": "",
+        "text": "Let's Talk\n\n\nMENU\n\nHome\nAI Marketing Agency • Digital Excellence • Mumbai Based ",
+        "children": [
+          {
+            "tag": "nav",
+            "id": "dgsBar",
+            "className": "",
+            "text": "Let's Talk\n\n\nMENU",
+            "children": [
+              {
+                "tag": "a",
+                "id": "dgsLogo",
+                "className": "",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "img",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": "dgsRight",
+                "className": "",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "a",
+                    "id": "dgsPill",
+                    "className": "dgs-talk-trigger",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": "dgsTrig",
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "dgsOverlay",
+            "className": "",
+            "text": "Home\nAI Marketing Agency • Digital Excellence • Mumbai Based • Founded 2021 • AI",
+            "children": [
+              {
+                "tag": "div",
+                "id": "dgsPanel",
+                "className": "",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "dgsPanelBody",
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": "dgsFoot",
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "hero",
+      "present": true,
+      "order": 2,
+      "selector": ".dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "dom": {
+        "tag": "section",
+        "id": "dgs-home-start",
+        "className": "dgs-v1215-hero",
+        "text": "Mumbai Based Full Service Digital Marketing Agency\nFull Service\nDigital Marketin",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-shell",
+            "text": "Mumbai Based Full Service Digital Marketing Agency\nFull Service\nDigital Marketin",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-hero-layout",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-copy dgs-v1215-reveal is-visible",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-visual dgs-v1215-reveal is-visible",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-statline dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "rail",
+      "present": true,
+      "order": 3,
+      "selector": ".dgs-v1215-rail",
+      "heading": "",
+      "dom": {
+        "tag": "section",
+        "id": null,
+        "className": "dgs-v1215-rail",
+        "text": "Digital Marketing Agency In Mumbai\nSearch Engine Optimisation\nAnswer Engine Opti",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-rail-line",
+            "text": "Digital Marketing Agency In Mumbai\nSearch Engine Optimisation\nAnswer Engine Opti",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-rail-track",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-rail-track",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "trustedBrands",
+      "present": false,
+      "selector": ".dgs-v1215-proof, .dgs-v1215-trusted"
+    },
+    {
+      "key": "awards",
+      "present": false,
+      "selector": ".dgs-v1215-awards"
+    },
+    {
+      "key": "capabilities",
+      "present": false,
+      "selector": ".dgs-v1215-services"
+    },
+    {
+      "key": "portfolio",
+      "present": true,
+      "order": 4,
+      "selector": ".dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "dom": {
+        "tag": "section",
+        "id": "dgs-v1215-work",
+        "className": "dgs-v1215-portfolio",
+        "text": "Portfolio GalleryBrand Identity & Creative ExcellenceCampaigns, websites, creati",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-shell",
+            "text": "Portfolio GalleryBrand Identity & Creative ExcellenceCampaigns, websites, creati",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-section-head dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-section-kicker",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "h2",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "p",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-gallery-frame dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "envira-gallery-wrap-63155",
+                    "className": "envira-gallery-wrap envira-lazy-loading-enabled envira-layout-automatic",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "noscript",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "caseStudies",
+      "present": false,
+      "selector": ".dgs-v1215-case-studies"
+    },
+    {
+      "key": "creativeGallery",
+      "present": false,
+      "selector": ".dgs-v1215-work"
+    },
+    {
+      "key": "testimonials",
+      "present": true,
+      "order": 5,
+      "selector": ".dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "dom": {
+        "tag": "section",
+        "id": "testimonials",
+        "className": "dgs-v1215-testimonials",
+        "text": "TestimonialsTrusted By Brands WorldwideClient feedback across creative design, w",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-shell",
+            "text": "TestimonialsTrusted By Brands WorldwideClient feedback across creative design, w",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-section-head dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-section-kicker",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "h2",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "p",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-testimonial-grid dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-testimonial-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-testimonial-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-testimonial-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-testimonial-card",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "searchAuthority",
+      "present": true,
+      "order": 6,
+      "selector": ".dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "dom": {
+        "tag": "section",
+        "id": "dgs-v1215-search-authority",
+        "className": "dgs-v1215-search-authority",
+        "text": "Search AuthorityBuilt For Google Search, AI Answers And Voice DiscoveryAs a digi",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-shell",
+            "text": "Search AuthorityBuilt For Google Search, AI Answers And Voice DiscoveryAs a digi",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-section-head dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-section-kicker",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "h2",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "p",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-authority-grid dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-authority-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-authority-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-authority-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-authority-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-authority-card",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "dgs-v1215-authority-card",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "industries",
+      "present": true,
+      "order": 7,
+      "selector": ".dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "dom": {
+        "tag": "section",
+        "id": "dgs-v1215-industries",
+        "className": "dgs-v1215-industries",
+        "text": "IndustriesIndustries We Help GrowDigital systems built for high-trust, high-cons",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-shell",
+            "text": "IndustriesIndustries We Help GrowDigital systems built for high-trust, high-cons",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-section-head dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-section-kicker",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "h2",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "p",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-industry-pills dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "whyDgs",
+      "present": true,
+      "order": 8,
+      "selector": ".dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "dom": {
+        "tag": "section",
+        "id": "dgs-v1215-why",
+        "className": "dgs-v1215-why",
+        "text": "Why D’Genius SolutionsWhy Brands Choose D’Genius SolutionsOne connected team for",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-shell",
+            "text": "Why D’Genius SolutionsWhy Brands Choose D’Genius SolutionsOne connected team for",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-section-head dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-section-kicker",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "h2",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "p",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-proof-strip dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "article",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "faq",
+      "present": true,
+      "order": 9,
+      "selector": ".dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "dom": {
+        "tag": "section",
+        "id": "dgs-v1215-faq",
+        "className": "dgs-v1215-faq",
+        "text": "Search Ready AnswersQuestions Brands Ask Before Choosing A Digital Marketing Age",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "dgs-v1215-shell",
+            "text": "Search Ready AnswersQuestions Brands Ask Before Choosing A Digital Marketing Age",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-section-head dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": null,
+                    "className": "dgs-v1215-section-kicker",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "h2",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "p",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "div",
+                "id": null,
+                "className": "dgs-v1215-faq-grid dgs-v1215-reveal is-visible",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "details",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "details",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "details",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "details",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "details",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "details",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "finalCta",
+      "present": false,
+      "selector": ".dgs-v1215-final-cta, .dgs-v1215-cta"
+    },
+    {
+      "key": "footer",
+      "present": true,
+      "order": 10,
+      "selector": "footer, .site-footer",
+      "heading": "",
+      "dom": {
+        "tag": "footer",
+        "id": null,
+        "className": "elementor elementor-61373 elementor-location-footer",
+        "text": "/* ========================================\n   FOOTER - LIGHTWEIGHT & SEXY DESIG",
+        "children": [
+          {
+            "tag": "div",
+            "id": null,
+            "className": "elementor-element elementor-element-2efa958a e-con-full e-flex cmsmasters-block-default e-con e-parent",
+            "text": "/* ========================================\n   FOOTER - LIGHTWEIGHT & SEXY DESIG",
+            "children": [
+              {
+                "tag": "div",
+                "id": null,
+                "className": "elementor-element elementor-element-7c4676d cmsmasters-block-default cmsmasters-sticky-default elementor-widget elemento",
+                "text": "",
+                "children": [
+                  {
+                    "tag": "style",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "svg",
+                    "id": null,
+                    "className": "[object SVGAnimatedString]",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "footer",
+                    "id": null,
+                    "className": "dgs-footer-wrapper",
+                    "text": "",
+                    "children": []
+                  },
+                  {
+                    "tag": "script",
+                    "id": null,
+                    "className": "",
+                    "text": "",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@ export function HomeCreativeGallery({ blocks }: Props) {
   const images = blocks.filter((b) => b.type === "image").slice(0, 8);
 
   return (
-    <section className={styles.section} id="dgs-v1215-work">
+    <section className={`${styles.section} dgs-v1215-portfolio`} id="dgs-v1215-work">
       <div className={styles.inner}>
         <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
         <div className={styles.grid}>

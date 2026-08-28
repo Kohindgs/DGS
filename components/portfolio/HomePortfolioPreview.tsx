@@ -13,7 +13,7 @@ export function HomePortfolioPreview({ items }: HomePortfolioPreviewProps) {
   const previewItems = items.slice(0, HOMEPAGE_PREVIEW_COUNT);
 
   return (
-    <section className={styles.section} aria-labelledby="home-portfolio-heading">
+    <section className={`${styles.section} dgs-v1215-ai-portfolio`} id="portfolio" aria-labelledby="home-portfolio-heading">
       <div className="container">
         <h2 id="home-portfolio-heading">AI-Led Creative Portfolio</h2>
       </div>

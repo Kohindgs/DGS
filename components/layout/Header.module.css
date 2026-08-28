@@ -5,21 +5,23 @@
   right: 0;
   z-index: 99999;
   height: 100px;
-  transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
-  background: transparent;
-}
-
-.scrolled {
-  background: rgba(8, 8, 8, 0.93);
-  backdrop-filter: blur(14px);
+  pointer-events: none;
 }
 
 .bar {
-  height: 100%;
+  pointer-events: auto;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 48px;
+  transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+  background: transparent;
+}
+
+.scrolled .bar {
+  background: rgba(8, 8, 8, 0.93);
+  backdrop-filter: blur(14px);
 }
 
 .logoLink {

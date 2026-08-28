@@ -1,0 +1,84 @@
+{
+  "sections": {
+    "header": {
+      "status": "skipped",
+      "wpOk": true,
+      "nextOk": false
+    },
+    "hero": {
+      "width": 1440,
+      "height": 997,
+      "mismatchPercent": 19.75
+    },
+    "rail": {
+      "width": 1440,
+      "height": 198,
+      "mismatchPercent": 62.52
+    },
+    "proof": {
+      "width": 1440,
+      "height": 5697,
+      "mismatchPercent": 67.79
+    },
+    "capabilities": {
+      "width": 1440,
+      "height": 1111,
+      "mismatchPercent": 76.24
+    },
+    "portfolio": {
+      "status": "skipped",
+      "wpOk": true,
+      "nextOk": false
+    },
+    "caseStudies": {
+      "width": 1440,
+      "height": 1421,
+      "mismatchPercent": 67.81
+    },
+    "creativeGallery": {
+      "width": 1440,
+      "height": 1807,
+      "mismatchPercent": 93.35
+    },
+    "testimonials": {
+      "width": 1440,
+      "height": 898,
+      "mismatchPercent": 71.41
+    },
+    "searchAuthority": {
+      "width": 1440,
+      "height": 1180,
+      "mismatchPercent": 70.23
+    },
+    "industries": {
+      "width": 1440,
+      "height": 427,
+      "mismatchPercent": 81.82
+    },
+    "whyDgs": {
+      "width": 1440,
+      "height": 784,
+      "mismatchPercent": 68.17
+    },
+    "faq": {
+      "width": 1440,
+      "height": 1060,
+      "mismatchPercent": 79.77
+    },
+    "finalCta": {
+      "width": 1440,
+      "height": 1649,
+      "mismatchPercent": 88.73
+    },
+    "footer": {
+      "width": 1440,
+      "height": 937,
+      "mismatchPercent": 13.84
+    }
+  },
+  "fullPage": {
+    "width": 1440,
+    "height": 18275,
+    "mismatchPercent": 53.06
+  }
+}

@@ -12,7 +12,7 @@
   align-items: center;
   gap: 0;
   width: max-content;
-  animation: capabilityRail 45s linear infinite;
+  animation: capabilityRail 42s linear infinite;
 }
 
 .track span {

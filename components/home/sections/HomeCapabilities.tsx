@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ContentBlock } from "@/lib/content/types";
+import { WP_CAPABILITY_GROUPS } from "@/lib/wp-exact/capability-groups";
 import styles from "./HomeCapabilities.module.css";
 
 type Props = { blocks: ContentBlock[] };
@@ -10,35 +11,33 @@ function blockText(block: ContentBlock): string {
   return "";
 }
 
-const SERVICE_LINKS: Record<string, string> = {
-  "Search Visibility & AI Discovery": "/services/seo-services-in-mumbai/",
-  "Website Development & AMC": "/services/website-development-amc/",
-  "Social Media & Performance Marketing": "/services/social-media-marketing/",
-  "Branding, Content & AI Production": "/services/branding/",
-};
-
 export function HomeCapabilities({ blocks }: Props) {
   const heading = blocks.find((b) => b.type === "heading" && b.level === 2);
-  const cards = blocks.filter((b) => b.type === "heading" && b.level === 3);
+  const lead = blocks.find((b) => b.type === "paragraph" && blockText(b).length > 40);
 
   return (
-    <section className={styles.section} id="dgs-v1215-services">
-      <div className={styles.inner}>
-        <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
-        <div className={styles.grid}>
-          {cards.map((card) => {
-            const title = card.type === "heading" ? card.text : "";
-            const body = blocks
-              .slice(blocks.indexOf(card) + 1)
-              .find((b) => b.type === "paragraph");
-            const href = SERVICE_LINKS[title] || "/services/";
-            return (
-              <Link key={title} href={href} className={styles.card}>
-                <h3>{title}</h3>
-                {body?.type === "paragraph" ? <p>{blockText(body)}</p> : null}
-              </Link>
-            );
-          })}
+    <section className={`${styles.section} dgs-v1215-service-clarity`} id="dgs-v1215-services">
+      <div className={styles.shell}>
+        <div className={styles.sectionHead}>
+          <span className={styles.kicker}>Capabilities</span>
+          <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
+          {lead?.type === "paragraph" ? <p>{blockText(lead)}</p> : null}
+        </div>
+        <div className={`${styles.menu} dgs-v1215-service-menu`}>
+          {WP_CAPABILITY_GROUPS.map((group) => (
+            <article key={group.number} className={styles.card}>
+              <span className={styles.number}>{group.number}</span>
+              <h3>{group.title}</h3>
+              <p>{group.description}</p>
+              <div className={styles.links}>
+                {group.links.map((link) => (
+                  <Link key={link.href} href={link.href}>
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

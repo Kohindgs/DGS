@@ -1,0 +1,788 @@
+{
+  "images": [
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/DGS-LOGO-3.webp",
+      "alt": "D'Genius Solutions",
+      "width": 117,
+      "height": 117
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/thoughtful-logo-concept-featuring-ai-meaningful-way.webp",
+      "alt": "Digital marketing, SEO, AEO, GEO, LLM SEO and AI production agency visual for D'",
+      "width": 2000,
+      "height": 2000
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Eureka Forbes client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Aditya Birla Education Academy client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Saint Gobain client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Pantaloons client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Jaipur Kurti client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Nutriuits client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Raymond client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Plush Puppy client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Candour London client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Styleup client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Onida client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Aaram client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Trazact client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "M Power Aditya Birla Education Trust client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Compuage client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Solco client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Structural Specialties client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "MKA client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Club Med client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Druva client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Farm Classics client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Kreedo client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Marigold Lane client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Kotak Mahindra Bank client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Ujaas client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Aditya Birla Integrated School client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Aditya Birla World Academy client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Aditya Birla Education Trust client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "TheWorldGrad client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Humanxt client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "ClearFX Academy client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "IND client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Weavings client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Sir Brandzalot client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Planet Smart City client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Novotel client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Meryl client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "MedArtha client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "LG client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Hanwha Techwin client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/f43e05c46553d32c6f3c2e40726b7070_1742972415.avif",
+      "alt": "Client brand logo",
+      "width": 1772,
+      "height": 1772
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Compuage client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/c7a0b6_7b153a1579c943279fffb93ca08b39b1mv2-1.avif",
+      "alt": "Client brand logo",
+      "width": 273,
+      "height": 319
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Client brand logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Blanco client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Amazonia client logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Client brand logo",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Prime Insights Best Place to Work award for D'Genius Solutions Pvt. Ltd.",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Corporate Connect highly regarded digital marketing agency award for D'Genius So",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "GLA award for excellence in SEO content and performance marketing for D'Genius S",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "TheWorldGrad website SEO case study visual",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Weavings-Home-page-.png?v=20260707-header-visible",
+      "alt": "Weavings website SEO and performance marketing case study visual",
+      "width": 1600,
+      "height": 779
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+      "alt": "",
+      "width": 1,
+      "height": 1
+    },
+    {
+      "src": "https://cdn.simpleicons.org/openai/FFFFFF",
+      "alt": "ChatGPT",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "src": "https://cdn.simpleicons.org/perplexity/FFFFFF",
+      "alt": "Perplexity",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "src": "https://cdn.simpleicons.org/googlegemini/FFFFFF",
+      "alt": "Gemini",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "src": "https://cdn.simpleicons.org/anthropic/FFFFFF",
+      "alt": "Claude",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "src": "https://cdn.simpleicons.org/microsoftcopilot/FFFFFF",
+      "alt": "Copilot",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO.png",
+      "alt": "D'Genius Solutions digital marketing agency logo",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+      "alt": "Clutch 5-star rating badge",
+      "width": 1,
+      "height": 1
+    }
+  ],
+  "canvases": [
+    {
+      "id": "dgs-v1215-canvas",
+      "className": "",
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "videos": [
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Makar-Sankranti-And-Pongal-Final-1.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wonder-Introduction11.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/BaisakhiV1.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Happy-Holi_New.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Non-Intro-1.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik__continue-this-video-showing-the-other-lady-taking-__50626.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Easter.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Hanuman-Jayanti-Final.mp4#t=0.08",
+      "poster": ""
+    },
+    {
+      "src": "",
+      "poster": ""
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { SkipLink } from "@/components/layout/SkipLink";
 import { ChromeProvider } from "@/components/layout/ChromeProvider";
 import { SiteMenu } from "@/components/layout/SiteMenu";
 import { LetsTalkModal } from "@/components/layout/LetsTalkModal";
-import { DgsWebGLBackground } from "@/components/background/DgsWebGLBackground";
+import { WpMirrorBackground } from "@/components/background/WpMirrorBackground";
 import { ScrollProvider } from "@/components/motion/ScrollProvider";
 
 export default function SiteChromeLayout({
@@ -14,7 +14,7 @@ export default function SiteChromeLayout({
 }>) {
   return (
     <ChromeProvider>
-      <DgsWebGLBackground />
+      <WpMirrorBackground />
       <ScrollProvider>
         <SkipLink />
         <SiteHeader />

@@ -1,0 +1,72 @@
+[
+  {
+    "key": "header",
+    "x": 0,
+    "y": 0,
+    "width": 0,
+    "height": 0
+  },
+  {
+    "key": "hero",
+    "x": 0,
+    "y": 0,
+    "width": 1440,
+    "height": 996.03125
+  },
+  {
+    "key": "rail",
+    "x": 0,
+    "y": 996.03125,
+    "width": 1440,
+    "height": 197.90625
+  },
+  {
+    "key": "portfolio",
+    "x": 0,
+    "y": 9641.25,
+    "width": 1440,
+    "height": 1806.03125
+  },
+  {
+    "key": "testimonials",
+    "x": 0,
+    "y": 11447.28125,
+    "width": 1440,
+    "height": 897.125
+  },
+  {
+    "key": "searchAuthority",
+    "x": 0,
+    "y": 12344.40625,
+    "width": 1440,
+    "height": 1178.78125
+  },
+  {
+    "key": "industries",
+    "x": 0,
+    "y": 13523.1875,
+    "width": 1440,
+    "height": 426.1875
+  },
+  {
+    "key": "whyDgs",
+    "x": 0,
+    "y": 13949.375,
+    "width": 1440,
+    "height": 783.609375
+  },
+  {
+    "key": "faq",
+    "x": 0,
+    "y": 14732.984375,
+    "width": 1440,
+    "height": 1058.09375
+  },
+  {
+    "key": "footer",
+    "x": 0,
+    "y": 17439.421875,
+    "width": 1440,
+    "height": 824.328125
+  }
+]
