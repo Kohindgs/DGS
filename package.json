@@ -46,6 +46,7 @@
     "diff:homepage-structure": "node scripts/diff-homepage-structure.mjs",
     "wp-mirror:inventory": "node scripts/inventory-homepage-structure.mjs both && node scripts/diff-homepage-structure.mjs",
     "wp-exact:extract": "node scripts/extract-wp-exact-mirror.mjs",
+    "wp-exact:extract-assets": "node scripts/extract-wp-homepage-assets.mjs",
     "wp-exact:compare": "node scripts/compare-wp-exact-sections.mjs",
     "visual-parity:capture": "npm run capture:wp-visual && npm run capture:next-visual",
     "visual-parity:compare": "npm run compare:homepage-content && npm run compare:visual"

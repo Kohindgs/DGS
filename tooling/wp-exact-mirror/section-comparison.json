@@ -1,84 +1,84 @@
 {
   "sections": {
     "header": {
-      "status": "skipped",
-      "wpOk": true,
-      "nextOk": false
+      "width": 1440,
+      "height": 100,
+      "mismatchPercent": 3.3
     },
     "hero": {
       "width": 1440,
       "height": 997,
-      "mismatchPercent": 19.75
+      "mismatchPercent": 7.48
     },
     "rail": {
       "width": 1440,
-      "height": 198,
-      "mismatchPercent": 62.52
+      "height": 202,
+      "mismatchPercent": 6.33
     },
     "proof": {
       "width": 1440,
-      "height": 5697,
-      "mismatchPercent": 67.79
+      "height": 3167,
+      "mismatchPercent": 2.91
     },
     "capabilities": {
       "width": 1440,
       "height": 1111,
-      "mismatchPercent": 76.24
+      "mismatchPercent": 7.51
     },
     "portfolio": {
-      "status": "skipped",
-      "wpOk": true,
-      "nextOk": false
+      "width": 1440,
+      "height": 2753,
+      "mismatchPercent": 50.7
     },
     "caseStudies": {
       "width": 1440,
       "height": 1421,
-      "mismatchPercent": 67.81
+      "mismatchPercent": 21.94
     },
     "creativeGallery": {
       "width": 1440,
       "height": 1807,
-      "mismatchPercent": 93.35
+      "mismatchPercent": 66.5
     },
     "testimonials": {
       "width": 1440,
       "height": 898,
-      "mismatchPercent": 71.41
+      "mismatchPercent": 6.48
     },
     "searchAuthority": {
       "width": 1440,
       "height": 1180,
-      "mismatchPercent": 70.23
+      "mismatchPercent": 8.51
     },
     "industries": {
       "width": 1440,
       "height": 427,
-      "mismatchPercent": 81.82
+      "mismatchPercent": 7.2
     },
     "whyDgs": {
       "width": 1440,
       "height": 784,
-      "mismatchPercent": 68.17
+      "mismatchPercent": 5.58
     },
     "faq": {
       "width": 1440,
       "height": 1060,
-      "mismatchPercent": 79.77
+      "mismatchPercent": 6.67
     },
     "finalCta": {
       "width": 1440,
       "height": 1649,
-      "mismatchPercent": 88.73
+      "mismatchPercent": 36.95
     },
     "footer": {
       "width": 1440,
-      "height": 937,
-      "mismatchPercent": 13.84
+      "height": 837,
+      "mismatchPercent": 8.95
     }
   },
   "fullPage": {
     "width": 1440,
     "height": 18275,
-    "mismatchPercent": 53.06
+    "mismatchPercent": 23.19
   }
 }

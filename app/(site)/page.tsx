@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getRouteByPath } from "@/lib/nextjs/routes";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { HomePageTemplate } from "@/components/templates/HomePage";
+import { HomeWpMirrorPage } from "@/components/mirror/HomeWpMirrorPage";
 
 export async function generateMetadata(): Promise<Metadata> {
   const route = await getRouteByPath("/");
@@ -21,5 +21,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function HomePage() {
-  return <HomePageTemplate />;
+  return <HomeWpMirrorPage />;
 }
