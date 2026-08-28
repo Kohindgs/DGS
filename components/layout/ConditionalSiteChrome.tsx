@@ -1,14 +1,8 @@
-"use client";
-
-import { usePathname } from "next/navigation";
-
 type Props = {
   children: React.ReactNode;
 };
 
-/** Hides default site chrome on the homepage — WP mirror supplies its own nav/footer. */
+/** Site chrome is always shown — native homepage uses Header/Footer, not WP mirror nav. */
 export function ConditionalSiteChrome({ children }: Props) {
-  const pathname = usePathname();
-  if (pathname === "/") return null;
   return <>{children}</>;
 }

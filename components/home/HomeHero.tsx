@@ -61,7 +61,7 @@ export function HomeHero({ eyebrow, h1, lead, image }: HomeHeroProps) {
             </h1>
             <p className={styles.lead}>{lead}</p>
             <div className={styles.ctas}>
-              <Link href="/contact-us/" className={styles.primaryCta}>
+              <Link href="#contact-form" className={styles.primaryCta}>
                 Get A Growth Audit <span aria-hidden="true">→</span>
               </Link>
               <Link href="/services/" className={styles.secondaryCta}>
@@ -71,7 +71,7 @@ export function HomeHero({ eyebrow, h1, lead, image }: HomeHeroProps) {
           </div>
 
           <div className={styles.visual}>
-            <div className={styles.robotWrap}>
+            <div className={styles.robotWrap} id="dgs-v1215-robot-wrap">
               <div className={styles.robotAura} aria-hidden="true" />
               <Image
                 src={heroImage.src}
@@ -81,6 +81,7 @@ export function HomeHero({ eyebrow, h1, lead, image }: HomeHeroProps) {
                 preload
                 sizes="(max-width: 900px) 100vw, 666px"
                 className={styles.image}
+                id="dgs-v1215-robot"
               />
               {HERO_CHIPS.map((chip) => (
                 <div key={chip.title} className={`${styles.chip} ${chip.className}`}>

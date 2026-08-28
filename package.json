@@ -31,6 +31,7 @@
     "validate:forms": "node scripts/validate-forms-readiness.mjs",
     "validate:portfolio": "node scripts/validate-portfolio-readiness.mjs",
     "validate:envira-runtime": "node scripts/validate-envira-runtime.mjs",
+    "validate:homepage-stack": "node scripts/validate-homepage-stack.mjs",
     "build:portfolio-alt-review": "node scripts/build-portfolio-alt-review.mjs",
     "build:portfolio-review": "node scripts/build-portfolio-review.mjs",
     "validate:analytics": "node scripts/validate-analytics-readiness.mjs",

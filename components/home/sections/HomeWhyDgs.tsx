@@ -14,7 +14,7 @@ export function HomeWhyDgs({ blocks }: Props) {
   const pillars = blocks.filter((b) => b.type === "heading" && b.level === 3);
 
   return (
-    <section className={styles.section} id="dgs-v1215-why">
+    <section className={styles.section} id="dgs-v1215-why" data-reveal>
       <div className={styles.inner}>
         <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
         <div className={styles.grid}>

@@ -16,7 +16,7 @@ export function HomeCapabilities({ blocks }: Props) {
   const lead = blocks.find((b) => b.type === "paragraph" && blockText(b).length > 40);
 
   return (
-    <section className={`${styles.section} dgs-v1215-service-clarity`} id="dgs-v1215-services">
+    <section className={`${styles.section} dgs-v1215-service-clarity`} id="dgs-v1215-services" data-reveal>
       <div className={styles.shell}>
         <div className={styles.sectionHead}>
           <span className={styles.kicker}>Capabilities</span>

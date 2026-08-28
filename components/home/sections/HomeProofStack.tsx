@@ -28,7 +28,7 @@ export function HomeProofStack({ blocks }: Props) {
   );
 
   return (
-    <section className={`${styles.section} dgs-v1215-proof-stack`} id="dgs-proof">
+    <section className={`${styles.section} dgs-v1215-proof-stack`} id="dgs-proof" data-reveal>
       <div className={styles.shell}>
         <div className={styles.sectionHead}>
           <span className={styles.kicker}>Trusted by 200+ brands</span>
