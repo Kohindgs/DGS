@@ -49,7 +49,10 @@
     "wp-exact:extract-assets": "node scripts/extract-wp-homepage-assets.mjs",
     "wp-exact:compare": "node scripts/compare-wp-exact-sections.mjs",
     "visual-parity:capture": "npm run capture:wp-visual && npm run capture:next-visual",
-    "visual-parity:compare": "npm run compare:homepage-content && npm run compare:visual"
+    "visual-parity:compare": "npm run compare:homepage-content && npm run compare:visual",
+    "capture:ui-lock-baseline": "node scripts/capture-ui-lock-baseline.mjs",
+    "validate:ui-lock": "node scripts/validate-ui-lock.mjs",
+    "audit:tier0-migration": "node scripts/audit-tier0-migration.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
