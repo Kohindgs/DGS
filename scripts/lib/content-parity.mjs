@@ -131,3 +131,9 @@ export function filterDuplicatePageH1Block(blocks, pageH1) {
 export function listApprovedHeadingNormalizations() {
   return APPROVED_HEADING_NORMALIZATIONS.normalizations;
 }
+
+/** Strict internal link parity: visible anchor text alone is not sufficient. */
+export function internalLinkIsPresent(expectedLink, renderedLinks) {
+  const renderedPaths = new Set(renderedLinks.map((link) => link.path));
+  return renderedPaths.has(expectedLink.path);
+}

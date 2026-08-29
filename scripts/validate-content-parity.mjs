@@ -17,6 +17,7 @@ import {
   collapseComparableText,
   findApprovedHeadingNormalization,
   headingIsPresent,
+  internalLinkIsPresent,
   listApprovedHeadingNormalizations,
   textIsPresent,
 } from "./lib/content-parity.mjs";
@@ -158,15 +159,10 @@ for (const routePath of retainedRoutes) {
   }
 
   const renderedLinks = extractContextualLinks(article || html, new URL(routePath, TARGET).href);
-  const renderedPaths = new Set(renderedLinks.map((link) => link.path));
   for (const link of expected.links.filter((item) => item.path.startsWith("/") && !/wp-content/i.test(item.path))) {
-    const anchorNeedle = normalizeText(link.anchor).slice(0, 40);
-    const present =
-      renderedPaths.has(link.path) ||
-      (anchorNeedle.length > 3 && renderedText.includes(anchorNeedle));
-    if (!present) {
+    if (!internalLinkIsPresent(link, renderedLinks)) {
       summary.unexplainedLinkGaps += 1;
-      failures.push(`${routePath}: missing internal link ${link.path}`);
+      failures.push(`${routePath}: missing internal link ${link.path} (anchor: ${link.anchor?.slice(0, 60) || "n/a"})`);
       routeOk = false;
     } else {
       summary.linkParity += 1;

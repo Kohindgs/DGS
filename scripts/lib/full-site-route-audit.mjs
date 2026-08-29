@@ -106,6 +106,15 @@ function extractPageH1Text(html) {
   return match ? normalizeHeadingText(match[1]) : "";
 }
 
+function isTrackableInternalHref(href) {
+  if (!href) return false;
+  const value = href.trim();
+  if (!value || value === "#" || value.startsWith("javascript:") || value.startsWith("mailto:") || value.startsWith("tel:")) {
+    return false;
+  }
+  return true;
+}
+
 export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = {}) {
   const headings = [];
   const paragraphs = [];
@@ -119,7 +128,7 @@ export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = 
     const blockRef = { index, type: block.type, id: block.id || null, wordpressId };
     if (block.type === "heading" && block.text) {
       headings.push({ ...blockRef, level: `h${block.level}`, text: block.text.trim() });
-      if (block.href) {
+      if (block.href && isTrackableInternalHref(block.href)) {
         links.push({ ...blockRef, anchor: block.text.trim(), path: cleanPath(block.href) });
       }
     }
@@ -127,7 +136,7 @@ export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = 
       const text = spanText(block.content);
       if (text) paragraphs.push({ ...blockRef, text, spans: block.content || [] });
       for (const span of block.content || []) {
-        if (span.href) {
+        if (span.href && isTrackableInternalHref(span.href)) {
           links.push({ ...blockRef, anchor: span.text?.trim() || text, path: cleanPath(span.href) });
         }
       }
@@ -137,7 +146,7 @@ export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = 
         const text = spanText(item);
         if (text) lists.push({ ...blockRef, text, spans: item });
         for (const span of item || []) {
-          if (span.href) {
+          if (span.href && isTrackableInternalHref(span.href)) {
             links.push({ ...blockRef, anchor: span.text?.trim() || text, path: cleanPath(span.href) });
           }
         }
@@ -291,11 +300,7 @@ export function compareRenderedContent(expected, html, pageUrl, routePath = "") 
     (l) => l.path.startsWith("/") && !/wp-content/i.test(l.path),
   );
   const renderedPaths = new Set(renderedLinks.map((l) => l.path));
-  const missingLinks = internalExpectedLinks.filter((l) => {
-    if (renderedPaths.has(l.path)) return false;
-    const anchorNeedle = normalizeText(l.anchor).slice(0, 40);
-    return anchorNeedle.length > 3 && !renderedText.includes(anchorNeedle);
-  });
+  const missingLinks = internalExpectedLinks.filter((l) => !renderedPaths.has(l.path));
 
   const missingImages = expected.images.filter((img) => {
     if (!img.alt?.trim()) return false;

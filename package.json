@@ -59,7 +59,17 @@
     "validate:content-parity": "node scripts/validate-content-parity.mjs",
     "validate:content-parity-restoration-plan": "node scripts/validate-content-parity-restoration-plan.mjs",
     "test:content-parity": "node --test scripts/test-content-parity.mjs",
-    "build:ranking-protection-baseline": "node scripts/build-ranking-protection-baseline.mjs"
+    "build:ranking-protection-baseline": "node scripts/build-ranking-protection-baseline.mjs",
+    "audit:robots-forensic": "node scripts/audit-robots-forensic.mjs",
+    "audit:plugin-runtime": "node scripts/audit-plugin-runtime.mjs",
+    "audit:entity-consistency": "node scripts/audit-entity-consistency.mjs",
+    "audit:forms-plugin-exit": "node scripts/audit-forms-plugin-exit.mjs",
+    "audit:full-site-ranking-readiness": "node scripts/audit-full-site-ranking-readiness.mjs",
+    "audit:internal-link-ranking-graph": "node scripts/audit-internal-link-ranking-graph.mjs",
+    "audit:hostinger-crawler-safety": "node scripts/audit-hostinger-crawler-safety.mjs",
+    "validate:plugin-runtime": "node scripts/validate-plugin-runtime.mjs",
+    "validate:crawler-files": "node scripts/validate-crawler-files.mjs",
+    "validate:full-site-ranking-readiness": "node scripts/validate-full-site-ranking-readiness.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

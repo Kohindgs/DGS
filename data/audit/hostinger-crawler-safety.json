@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-08-29T16:58:43.942Z",
+  "probes": {
+    "defaultCurl": {
+      "status": 200,
+      "xRobots": "noindex, nofollow, noarchive"
+    },
+    "chromeBrowser": {
+      "status": 200,
+      "xRobots": "noindex, nofollow, noarchive"
+    },
+    "auditAgent": {
+      "status": 200,
+      "xRobots": "noindex, nofollow, noarchive"
+    },
+    "googlebot": {
+      "status": 200,
+      "xRobots": "noindex, nofollow, noarchive"
+    }
+  },
+  "observations": {
+    "http429Reproduced": false,
+    "origin403Note": "Server-side curl to http://127.0.0.1/ with Host header returned 403 during Phase 1 deploy — LiteSpeed origin guard, not Next.js app logic",
+    "crawlerRiskAssessment": "Intermittent Hostinger CDN/WAF may return 429 for some browser-like automated probes. Repository validators use audit UA. Do not infer crawler support from UA spoofing alone.",
+    "hostChangeRequired": false,
+    "proposedHostChange": null,
+    "rollback": null,
+    "securityImplications": "No WAF weakening recommended in Phase 2A"
+  }
+}

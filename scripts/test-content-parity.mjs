@@ -5,6 +5,7 @@ import {
   collapseComparableText,
   filterDuplicatePageH1Block,
   headingIsPresent,
+  internalLinkIsPresent,
   orderedSpanSequencePresent,
   spanText,
   textIsPresent,
@@ -50,6 +51,28 @@ test("orderedSpanSequencePresent rejects spans found far apart", () => {
   );
   const spans = [{ text: "Alpha segment" }, { text: "Omega segment" }];
   assert.equal(orderedSpanSequencePresent(spans, rendered, { maxGap: 48 }), false);
+});
+
+test("internalLinkIsPresent requires matching href path", () => {
+  const rendered = [
+    { anchor: "SEO Services", path: "/services/seo-services-in-mumbai/" },
+    { anchor: "Contact", path: "/contact-us/" },
+  ];
+  assert.equal(
+    internalLinkIsPresent({ anchor: "SEO Services", path: "/services/seo-services-in-mumbai/" }, rendered),
+    true,
+  );
+  assert.equal(
+    internalLinkIsPresent({ anchor: "SEO Services", path: "/services/seo-services-in-mumbai/" }, [
+      { anchor: "SEO Services", path: "/services/seo/" },
+    ]),
+    false,
+  );
+  assert.equal(
+    internalLinkIsPresent({ anchor: "SEO Services", path: "/services/seo-services-in-mumbai/" }, []),
+    false,
+    "anchor-only text without href must fail",
+  );
 });
 
 test("headingIsPresent requires exact level unless approved normalization applies", () => {

@@ -1,6 +1,6 @@
 {
   "approvedSha": "5002966",
-  "generatedAt": "2026-08-29T11:47:39.315Z",
+  "generatedAt": "2026-08-29T17:08:06.031Z",
   "purpose": "SHA-256 integrity lock for homepage mirror visual implementation",
   "fileCount": 34,
   "files": [
@@ -42,7 +42,7 @@
     },
     {
       "path": "components/mirror/HomeWpMirrorPage.tsx",
-      "sha256": "7b841a7c7ad53bf6c4bcb69145ed402825d459a3fd720eb8b249c48fcfb7525f"
+      "sha256": "ca93ff4532a2e06d3ea9b1202374e258d98dad3d65bed12cf9a926d62ced0892"
     },
     {
       "path": "components/wp-exact/DgsWpBoot.tsx",
@@ -90,7 +90,7 @@
     },
     {
       "path": "lib/wp-exact/extracted/footer.html",
-      "sha256": "4b02ba3ff8d74402f88af510ab66d10e03e9f97435a0e80a23b43ba2cbc48f46"
+      "sha256": "d2d7ed281960e60a2225abe793b07b9954acfb24cfdf7951cccd2504ae11839c"
     },
     {
       "path": "lib/wp-exact/extracted/footer-styles.css",
