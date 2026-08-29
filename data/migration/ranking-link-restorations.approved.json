@@ -29,9 +29,10 @@
         "headingId": "google-ads-services",
         "anchor": "Google Ads Services",
         "wordpressDestination": "/services/google-ads/",
-        "requiredNextDestination": "/services/google-ads/",
-        "classification": "F",
-        "stopReason": "CASE C — live WordPress /services/google-ads/ returns 404 with no authoritative redirect; Next registry has no /services/google-ads/ route. Do not invent a destination."
+        "requiredNextDestination": null,
+        "action": "REMOVE_BROKEN_HREF",
+        "classification": "B",
+        "reason": "Frozen WordPress destination returns 404 with no authoritative redirect or migrated canonical route."
       },
       {
         "headingId": "website-development-company-in-mumbai",

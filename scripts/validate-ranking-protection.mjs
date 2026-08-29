@@ -15,6 +15,7 @@ import {
   buildExpectedContextualLinks,
   collectRequiredDestinations,
   loadApprovedLinkRestorations,
+  removedHrefCorrections,
   restorationsForPath,
 } from "./lib/ranking-link-restorations.mjs";
 import {
@@ -79,6 +80,7 @@ function classify(kind, detail) {
     "staging-noindex": { class: "A", label: "EXPECTED_STAGING_DIFFERENCE" },
     "aeo-canonical": { class: "B", label: "APPROVED_TECHNICAL_CORRECTION" },
     "link-target": { class: "B", label: "APPROVED_TECHNICAL_LINK_TARGET_CORRECTION" },
+    "broken-link-removal": { class: "B", label: "APPROVED_BROKEN_SOURCE_LINK_REMOVAL" },
     artifact: { class: "C", label: "AUDITOR_NORMALIZATION_ARTIFACT" },
     drift: { class: "D", label: "REAL_VISIBLE_CONTENT_DRIFT" },
     link: { class: "E", label: "REAL_INTERNAL_LINK_PARITY_DEFECT" },
@@ -143,6 +145,53 @@ async function checkDestinationHealth(requiredPath) {
     issues,
     healthy: issues.length === 0,
   };
+}
+
+function verifyRemovedHrefCorrections(routePath, restorations, nextHeadings, nextLinks, nextArticleHtml, record) {
+  for (const item of removedHrefCorrections(restorations)) {
+    const heading = nextHeadings.find((h) => h.text === item.anchor);
+    if (!heading) {
+      record("drift", `approved broken-link removal requires visible heading "${item.anchor}"`, true);
+      continue;
+    }
+
+    const wordpressPath = normalizePath(item.wordpressDestination, TARGET);
+    const linkedMatches = nextLinks.filter(
+      (link) =>
+        link.anchor === item.anchor || normalizePath(link.path, TARGET) === wordpressPath,
+    );
+    if (linkedMatches.length) {
+      record(
+        "link",
+        `"${item.anchor}" must not retain href (found ${linkedMatches.map((l) => l.path).join(", ")})`,
+        true,
+      );
+    }
+
+    if (item.headingId) {
+      const linkedHeadingPattern = new RegExp(
+        `<h[1-6][^>]*id=["']${item.headingId}["'][^>]*>\\s*<a\\b`,
+        "i",
+      );
+      if (linkedHeadingPattern.test(nextArticleHtml)) {
+        record("link", `"${item.anchor}" heading still wraps anchor markup`, true);
+      }
+    }
+
+    const strayHrefPattern = new RegExp(
+      `href=["'][^"']*${wordpressPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`,
+      "i",
+    );
+    if (strayHrefPattern.test(nextArticleHtml)) {
+      record("link", `article still contains href to removed destination ${wordpressPath}`, true);
+    }
+
+    record(
+      "broken-link-removal",
+      `"${item.anchor}" — frozen WordPress ${wordpressPath}; href removed, visible text preserved`,
+      false,
+    );
+  }
 }
 
 const baselineSerialized = await readFile(BASELINE_PATH, "utf8");
@@ -289,17 +338,16 @@ for (const [routePath, snapshot] of Object.entries(frozenBaseline.routes)) {
   }
 
   for (const expected of baselineLinks) {
-    if (expected.classification === "B") {
+    if (expected.classification === "B" && expected.action !== "REMOVE_BROKEN_HREF") {
       record(
         "link-target",
         `"${expected.anchor}" WordPress ${expected.wordpressPath} -> required Next ${expected.path}`,
         false,
       );
     }
-    if (expected.classification === "F" && expected.stopReason) {
-      record("unknown", expected.stopReason, false);
-    }
   }
+
+  verifyRemovedHrefCorrections(routePath, routeRestorations, nextHeadings, nextLinks, nextArticleHtml, record);
 
   if (altDiffs.length) {
     record("drift", `${altDiffs.length} meaningful image alt text differences`, true);

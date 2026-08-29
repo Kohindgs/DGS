@@ -16,6 +16,10 @@ export function restorationsForPath(approved, routePath) {
   return approved.restorations?.[routePath] || [];
 }
 
+export function removedHrefCorrections(restorations) {
+  return restorations.filter((item) => item.action === "REMOVE_BROKEN_HREF");
+}
+
 export function correctionByWordpressPath(restorations, wordpressPath, base) {
   const normalized = normalizePath(wordpressPath, base);
   return restorations.find((item) => normalizePath(item.wordpressDestination, base) === normalized) || null;
@@ -29,6 +33,7 @@ export function requiredNextPathForBaselineLink(link, restorations, base) {
   const byPath = correctionByWordpressPath(restorations, link.path, base);
   const byAnchor = correctionByAnchor(restorations, link.anchor);
   const correction = byPath || byAnchor;
+  if (correction?.action === "REMOVE_BROKEN_HREF") return null;
   if (correction?.requiredNextDestination) {
     return normalizePath(correction.requiredNextDestination, base);
   }
@@ -54,21 +59,25 @@ export function buildExpectedContextualLinks(baselineLinks, restorations, base) 
   return baselineLinks
     .filter((link) => isSiteInternalHref(link.href || link.path))
     .map((link) => {
-    const correction = correctionByWordpressPath(restorations, link.path, base) || correctionByAnchor(restorations, link.anchor);
-    const requiredPath = correction?.requiredNextDestination
-      ? normalizePath(correction.requiredNextDestination, base)
-      : normalizePath(link.path, base);
-    return {
-      anchor: link.anchor,
-      href: requiredPath,
-      path: requiredPath,
-      scope: link.scope || "body",
-      destination: requiredPath,
-      wordpressPath: normalizePath(link.path, base),
-      classification: correction?.classification || null,
-      stopReason: correction?.stopReason || null,
-    };
-  });
+      const correction = correctionByWordpressPath(restorations, link.path, base) || correctionByAnchor(restorations, link.anchor);
+      if (correction?.action === "REMOVE_BROKEN_HREF") return null;
+
+      const requiredPath = correction?.requiredNextDestination
+        ? normalizePath(correction.requiredNextDestination, base)
+        : normalizePath(link.path, base);
+      return {
+        anchor: link.anchor,
+        href: requiredPath,
+        path: requiredPath,
+        scope: link.scope || "body",
+        destination: requiredPath,
+        wordpressPath: normalizePath(link.path, base),
+        classification: correction?.classification || null,
+        action: correction?.action || null,
+        reason: correction?.reason || null,
+      };
+    })
+    .filter(Boolean);
 }
 
 export function collectRequiredDestinations(approved, frozenBaseline, base) {
@@ -87,7 +96,8 @@ export function collectRequiredDestinations(approved, frozenBaseline, base) {
         wordpressPath: link.wordpressPath,
         requiredPath: link.path,
         classification: link.classification,
-        stopReason: link.stopReason,
+        action: link.action,
+        reason: link.reason,
       });
     }
   }
