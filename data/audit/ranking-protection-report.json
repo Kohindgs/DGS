@@ -1,9 +1,9 @@
 {
-  "checkedAt": "2026-08-29T11:23:22.873Z",
+  "checkedAt": "2026-08-29T11:45:02.055Z",
   "target": "http://127.0.0.1:3025",
   "baselineOverallSha256": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
   "baselineIntegrity": "pass",
-  "expectStagingNoindex": false,
+  "expectStagingNoindex": true,
   "protectedRouteCount": 4,
   "routes": [
     {
@@ -11,8 +11,8 @@
       "baselineRouteSha256": "0072eddb298dddeed5891aeddb36e8c4e26ffe53a28b55431583ca3539bce11f",
       "httpStatus": 200,
       "indexable": false,
-      "noindexClassification": "UNEXPECTED_NOINDEX",
-      "expectStagingNoindex": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
       "title": "AI Video Production Agency in Mumbai | D’Genius Solutions",
       "description": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
       "h1": "AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
@@ -69,9 +69,9 @@
       },
       "findings": [
         {
-          "class": "D",
-          "label": "REAL_VISIBLE_CONTENT_DRIFT",
-          "detail": "UNEXPECTED_NOINDEX"
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
         },
         {
           "class": "B",
@@ -94,17 +94,15 @@
           "detail": "normalized content hash differs without structural heading/FAQ/link loss"
         }
       ],
-      "blocking": [
-        "/services/ai-video-production-agency/: [D] UNEXPECTED_NOINDEX"
-      ]
+      "blocking": []
     },
     {
       "path": "/services/aeo-services-in-mumbai/",
       "baselineRouteSha256": "2f5465c259ccc1705192373eedb10b2316aaffc47bff7d9ce3325c8b5ab5cf28",
       "httpStatus": 200,
       "indexable": false,
-      "noindexClassification": "UNEXPECTED_NOINDEX",
-      "expectStagingNoindex": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
       "title": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
       "description": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
       "h1": "AEO Services in Mumbai from a Mumbai-Based AEO Agency",
@@ -154,9 +152,9 @@
       },
       "findings": [
         {
-          "class": "D",
-          "label": "REAL_VISIBLE_CONTENT_DRIFT",
-          "detail": "UNEXPECTED_NOINDEX"
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
         },
         {
           "class": "B",
@@ -174,17 +172,15 @@
           "detail": "normalized content hash differs without structural heading/FAQ/link loss"
         }
       ],
-      "blocking": [
-        "/services/aeo-services-in-mumbai/: [D] UNEXPECTED_NOINDEX"
-      ]
+      "blocking": []
     },
     {
       "path": "/services/geo/",
       "baselineRouteSha256": "ad32afe2e6b85bf3e93cc22a779831dea541fa2df549ab1061c469bec1b6ce84",
       "httpStatus": 200,
       "indexable": false,
-      "noindexClassification": "UNEXPECTED_NOINDEX",
-      "expectStagingNoindex": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
       "title": "GEO Services in Mumbai | D'Genius Solutions",
       "description": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
       "h1": "Generative Engine Optimization (GEO) Services in Mumbai",
@@ -227,9 +223,9 @@
       },
       "findings": [
         {
-          "class": "D",
-          "label": "REAL_VISIBLE_CONTENT_DRIFT",
-          "detail": "UNEXPECTED_NOINDEX"
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
         },
         {
           "class": "C",
@@ -242,17 +238,15 @@
           "detail": "normalized content hash differs without structural heading/FAQ/link loss"
         }
       ],
-      "blocking": [
-        "/services/geo/: [D] UNEXPECTED_NOINDEX"
-      ]
+      "blocking": []
     },
     {
       "path": "/services/llm-seo-service/",
       "baselineRouteSha256": "3f52bed0d090203560874c4fdd5e9d3fe3544689615d3d377218c5dffe5af141",
       "httpStatus": 200,
       "indexable": false,
-      "noindexClassification": "UNEXPECTED_NOINDEX",
-      "expectStagingNoindex": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
       "title": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
       "description": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get a free AI search audit by D'Genius Solutions.",
       "h1": "LLM SEO Services in Mumbai for AI Search Visibility",
@@ -302,9 +296,9 @@
       },
       "findings": [
         {
-          "class": "D",
-          "label": "REAL_VISIBLE_CONTENT_DRIFT",
-          "detail": "UNEXPECTED_NOINDEX"
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
         },
         {
           "class": "C",
@@ -317,9 +311,7 @@
           "detail": "normalized content hash differs without structural heading/FAQ/link loss"
         }
       ],
-      "blocking": [
-        "/services/llm-seo-service/: [D] UNEXPECTED_NOINDEX"
-      ]
+      "blocking": []
     }
   ],
   "destinationChecks": [
@@ -336,10 +328,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/ai-video-production-agency/",
@@ -354,10 +344,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/ai-video-production-agency/",
@@ -372,10 +360,8 @@
       "redirectHops": 0,
       "canonicalPath": "/blogs/optimize-for-ai-overviews/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/ai-video-production-agency/",
@@ -390,10 +376,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/website-development-amc/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/ai-video-production-agency/",
@@ -408,10 +392,8 @@
       "redirectHops": 0,
       "canonicalPath": "/blogs/future-of-seo/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -426,10 +408,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -444,10 +424,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -462,10 +440,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -480,10 +456,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -498,10 +472,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -516,10 +488,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -534,10 +504,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -552,10 +520,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -570,10 +536,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -588,10 +552,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -606,10 +568,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/aeo-services-in-mumbai/",
@@ -624,10 +584,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/geo/",
@@ -642,10 +600,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/geo/",
@@ -660,10 +616,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/geo/",
@@ -678,10 +632,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/geo/",
@@ -696,10 +648,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/geo/",
@@ -714,10 +664,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/geo/",
@@ -732,10 +680,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -750,10 +696,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -768,10 +712,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -786,10 +728,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -804,10 +744,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -822,10 +760,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -840,10 +776,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -858,10 +792,8 @@
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     },
     {
       "sourceRoute": "/services/llm-seo-service/",
@@ -876,92 +808,28 @@
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
       "indexable": false,
-      "issues": [
-        "destination not indexable (UNEXPECTED_NOINDEX)"
-      ],
-      "healthy": false
+      "issues": [],
+      "healthy": true
     }
   ],
   "explainedFindings": [
+    "/services/ai-video-production-agency/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
     "/services/ai-video-production-agency/: [B] \"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved",
     "/services/ai-video-production-agency/: [C] 45 image alt differences are lazy-load/placeholder normalization only",
     "/services/ai-video-production-agency/: [C] normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/aeo-services-in-mumbai/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/aeo-services-in-mumbai/: [B] Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)",
     "/services/aeo-services-in-mumbai/: [C] 77 image alt differences are lazy-load/placeholder normalization only",
     "/services/aeo-services-in-mumbai/: [C] normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/geo/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/geo/: [C] 20 image alt differences are lazy-load/placeholder normalization only",
     "/services/geo/: [C] normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/llm-seo-service/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/llm-seo-service/: [C] 49 image alt differences are lazy-load/placeholder normalization only",
     "/services/llm-seo-service/: [C] normalized content hash differs without structural heading/FAQ/link loss",
-    "/services/ai-video-production-agency/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO Services In Mumbai\" on /services/ai-video-production-agency/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"AEO Services In Mumbai\" on /services/ai-video-production-agency/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Optimize For AI Overviews\" on /services/ai-video-production-agency/ -> /blogs/optimize-for-ai-overviews/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Website Development Company In Mumbai\" on /services/ai-video-production-agency/ -> /services/website-development-amc/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Future Of SEO\" on /services/ai-video-production-agency/ -> /blogs/future-of-seo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO services in Mumbai\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Generative Engine Optimization services\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"LLM SEO services in Mumbai\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO services\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"GEO services\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"LLM SEO services\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Builds Search Foundations\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Supports AI Citations\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Clarifies Brand Entities\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"GEO\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"LLM SEO\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO services in Mumbai\" on /services/geo/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Answer Engine Optimization\" on /services/geo/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"LLM SEO services\" on /services/geo/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO\" on /services/geo/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"AEO\" on /services/geo/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"LLM SEO\" on /services/geo/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"traditional SEO services in Mumbai\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO services in Mumbai\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"AEO services in Mumbai\" on /services/llm-seo-service/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"GEO services\" on /services/llm-seo-service/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"SEO\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"AEO\" on /services/llm-seo-service/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"GEO\" on /services/llm-seo-service/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] BROKEN_INTERNAL_LINK_DESTINATION — \"Traditional SEO\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)"
+    "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" approved link-target correction /services/website-development/ -> /services/website-development-amc/"
   ],
-  "blockingFailures": [
-    "/services/ai-video-production-agency/: [D] UNEXPECTED_NOINDEX",
-    "/services/aeo-services-in-mumbai/: [D] UNEXPECTED_NOINDEX",
-    "/services/geo/: [D] UNEXPECTED_NOINDEX",
-    "/services/llm-seo-service/: [D] UNEXPECTED_NOINDEX",
-    "/services/ai-video-production-agency/: [E] \"SEO Services In Mumbai\" on /services/ai-video-production-agency/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] \"AEO Services In Mumbai\" on /services/ai-video-production-agency/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] \"Optimize For AI Overviews\" on /services/ai-video-production-agency/ -> /blogs/optimize-for-ai-overviews/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] \"Website Development Company In Mumbai\" on /services/ai-video-production-agency/ -> /services/website-development-amc/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/ai-video-production-agency/: [E] \"Future Of SEO\" on /services/ai-video-production-agency/ -> /blogs/future-of-seo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"SEO services in Mumbai\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"Generative Engine Optimization services\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"LLM SEO services in Mumbai\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"SEO services\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"GEO services\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"LLM SEO services\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"Builds Search Foundations\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"Supports AI Citations\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"Clarifies Brand Entities\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"SEO\" on /services/aeo-services-in-mumbai/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"GEO\" on /services/aeo-services-in-mumbai/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/aeo-services-in-mumbai/: [E] \"LLM SEO\" on /services/aeo-services-in-mumbai/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] \"SEO services in Mumbai\" on /services/geo/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] \"Answer Engine Optimization\" on /services/geo/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] \"LLM SEO services\" on /services/geo/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] \"SEO\" on /services/geo/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] \"AEO\" on /services/geo/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/geo/: [E] \"LLM SEO\" on /services/geo/ -> /services/llm-seo-service/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"traditional SEO services in Mumbai\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"SEO services in Mumbai\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"AEO services in Mumbai\" on /services/llm-seo-service/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"GEO services\" on /services/llm-seo-service/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"SEO\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"AEO\" on /services/llm-seo-service/ -> /services/aeo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"GEO\" on /services/llm-seo-service/ -> /services/geo/: destination not indexable (UNEXPECTED_NOINDEX)",
-    "/services/llm-seo-service/: [E] \"Traditional SEO\" on /services/llm-seo-service/ -> /services/seo-services-in-mumbai/: destination not indexable (UNEXPECTED_NOINDEX)"
-  ],
-  "passed": false
+  "blockingFailures": [],
+  "passed": true
 }
