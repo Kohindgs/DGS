@@ -83,7 +83,7 @@ for (const route of incomplete) {
     html = "";
   }
   const comparison = html
-    ? compareRenderedContent(expected, html, new URL(route.path, TARGET).href)
+    ? compareRenderedContent(expected, html, new URL(route.path, TARGET).href, route.path)
     : route.liveChecks?.content || { contentComplete: false };
 
   const findings = [];

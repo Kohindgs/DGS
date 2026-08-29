@@ -56,6 +56,9 @@
     "diagnose:tier0-parity": "node scripts/diagnose-tier0-parity.mjs",
     "validate:ranking-protection": "node scripts/validate-ranking-protection.mjs",
     "validate:technical-link-corrections": "node scripts/validate-technical-link-corrections.mjs",
+    "validate:content-parity": "node scripts/validate-content-parity.mjs",
+    "validate:content-parity-restoration-plan": "node scripts/validate-content-parity-restoration-plan.mjs",
+    "test:content-parity": "node --test scripts/test-content-parity.mjs",
     "build:ranking-protection-baseline": "node scripts/build-ranking-protection-baseline.mjs"
   },
   "dependencies": {

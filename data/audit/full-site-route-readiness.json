@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T15:27:33.180Z",
+  "generatedAt": "2026-08-29T15:57:14.692Z",
   "target": "http://127.0.0.1:3025",
   "expectStagingNoindex": true,
   "rankingBaselineDigest": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
@@ -2615,7 +2615,7 @@
           "missingLists": [],
           "missingLinks": [],
           "missingImages": [],
-          "renderedHeadingCount": 32,
+          "renderedHeadingCount": 33,
           "renderedImageCount": 0
         },
         "imageAudit": {
@@ -4098,7 +4098,7 @@
           "missingLists": [],
           "missingLinks": [],
           "missingImages": [],
-          "renderedHeadingCount": 18,
+          "renderedHeadingCount": 19,
           "renderedImageCount": 0
         },
         "imageAudit": {
@@ -7460,7 +7460,7 @@
           "missingLists": [],
           "missingLinks": [],
           "missingImages": [],
-          "renderedHeadingCount": 3,
+          "renderedHeadingCount": 4,
           "renderedImageCount": 0
         },
         "imageAudit": {

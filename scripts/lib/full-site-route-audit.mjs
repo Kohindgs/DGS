@@ -24,6 +24,16 @@ import {
   isBrokenLinkClassification,
 } from "./media-link-audit.mjs";
 import { applyTechnicalLinkCorrections } from "./technical-link-corrections.mjs";
+import {
+  collapseComparableText,
+  decodeHtmlEntities,
+  headingIsPresent,
+  normalizeHeadingText,
+  spanText,
+  textIsPresent,
+} from "./content-parity.mjs";
+
+export { spanText, collapseComparableText, textIsPresent, headingIsPresent };
 
 export const MIGRATION_CLASSES = [
   "200_RETAINED",
@@ -77,6 +87,8 @@ const TIER0_PATHS = new Set([
   "/services/seo-services-in-mumbai/",
 ]);
 
+export { TIER0_PATHS };
+
 const EXPLICIT_NON_HTML = new Set([
   "/robots.txt",
   "/sitemap.xml",
@@ -89,40 +101,9 @@ export function cleanPath(input, base = "https://www.dgeniussolutions.com") {
   return normalizePath(input, base);
 }
 
-export function spanText(spans = []) {
-  if (!spans.length) return "";
-  if (spans.length === 1) return (spans[0].text || "").trim();
-  return spans
-    .map((s) => s.text || "")
-    .join(" ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-export function collapseComparableText(value = "") {
-  return normalizeText(value)
-    .replace(/\s+([,.;:!?])/g, "$1")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 function extractPageH1Text(html) {
   const match = html.match(/<div class="container readable-copy"[^>]*>[\s\S]*?<h1[^>]*>([\s\S]*?)<\/h1>/i);
   return match ? normalizeHeadingText(match[1]) : "";
-}
-
-function textIsPresent(entry, renderedComparable, { minLength = 20, slice = 80 } = {}) {
-  const comparable = collapseComparableText(entry.text);
-  const needle = comparable.slice(0, slice);
-  if (needle.length <= minLength) return true;
-  if (renderedComparable.includes(needle)) return true;
-  if (entry.spans?.length > 1) {
-    return entry.spans.every((span) => {
-      const spanNeedle = collapseComparableText(span.text || "");
-      return spanNeedle.length <= 3 || renderedComparable.includes(spanNeedle);
-    });
-  }
-  return false;
 }
 
 export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = {}) {
@@ -217,32 +198,6 @@ export function isHomepageUiLockedExternalIcon(src) {
   }
 }
 
-function decodeHtmlEntities(text = "") {
-  return text
-    .replace(/&#x27;/gi, "'")
-    .replace(/&#0*39;/gi, "'")
-    .replace(/&apos;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/&amp;/gi, "&")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">");
-}
-
-function normalizeHeadingText(text = "") {
-  return collapseComparableText(decodeHtmlEntities(text));
-}
-
-function headingIsPresent(sourceHeading, renderedHeadings) {
-  const sourceText = normalizeHeadingText(sourceHeading.text);
-  return renderedHeadings.some((rendered) => {
-    const renderedText = normalizeHeadingText(rendered.text);
-    if (renderedText !== sourceText) return false;
-    if (rendered.level === sourceHeading.level) return true;
-    const levels = new Set([rendered.level, sourceHeading.level]);
-    return levels.has("h1") && levels.has("h2");
-  });
-}
-
 function isNonBlockingExternalImage(src, routePath) {
   if (isMshotsExternalDependency(src)) return true;
   if (routePath === "/" && isHomepageUiLockedExternalIcon(src)) return true;
@@ -284,7 +239,7 @@ export function classifyMigration({
   return "NOT_MIGRATED";
 }
 
-export function compareRenderedContent(expected, html, pageUrl) {
+export function compareRenderedContent(expected, html, pageUrl, routePath = "") {
   const article = extractArticleHtml(html);
   const pageH1Text = extractPageH1Text(html);
   const renderedHeadings = extractHeadings(article || html);
@@ -305,7 +260,7 @@ export function compareRenderedContent(expected, html, pageUrl) {
   const missingHeadings = meaningfulMissingHeadings(headingDiff.missing).filter(
     (h) =>
       !isTemplateLiteralHeading(h.text) &&
-      !headingIsPresent({ level: h.level, text: h.text }, renderedHeadings),
+      !headingIsPresent(routePath, { level: h.level, text: h.text }, renderedHeadings),
   );
 
   const missingParagraphs = expected.paragraphs.filter(
@@ -492,7 +447,7 @@ export async function auditRetainedHtml({
     const expected = extractExpectedFromBlocks(correctedBlocks, {
       wordpressId: registryRoute?.wordpressId || approvedDecision?.wordpressId || null,
     });
-    content = compareRenderedContent(expected, html, url.href);
+    content = compareRenderedContent(expected, html, url.href, path);
     if (!content.contentComplete) warnings.push("WordPress visible content incomplete");
   }
 

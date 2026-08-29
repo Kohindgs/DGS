@@ -4,7 +4,7 @@
   "classificationCounts": {
     "A": 0,
     "B": 2,
-    "C": 9,
+    "C": 7,
     "D": 192,
     "E": 0,
     "F": 0,
@@ -16,13 +16,13 @@
     ],
     "extractionLevelFixes": [
       "/blogs/ and /our-services/ archive headings corrected to live WordPress titles",
-      "FAQ section headings normalized from h1 to h2 in extracted blocks"
+      "FAQ section headings reverted to live WordPress H1 source evidence; renderer demotes to H2 explicitly"
     ],
     "auditLevelFixes": [
       "spanText joins multi-span content with spaces",
       "collapseComparableText normalizes punctuation whitespace around inline links",
-      "heading compare accepts h1/h2 equivalence and page-level H1",
-      "per-span presence fallback for multi-span paragraphs/lists"
+      "ordered multi-span sequence matching with bounded adjacency",
+      "strict heading-level parity with explicit APPROVED_SEMANTIC_HEADING_NORMALIZATION records"
     ],
     "pageSpecificFixes": 0
   },
@@ -115,10 +115,10 @@
           "wordpressId": 26492,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "B",
           "sourceBlockType": null,
           "exactSourceText": "Archives",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Correct archive hub heading in content-blocks to live WordPress visible title",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -715,10 +715,10 @@
           "wordpressId": 64964,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "C",
           "sourceBlockType": null,
           "exactSourceText": "Frequently Asked Questions",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Preserve source H1 evidence; render secondary FAQ heading as H2 via approved semantic normalization",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -818,10 +818,10 @@
           "wordpressId": 65256,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "C",
           "sourceBlockType": null,
           "exactSourceText": "AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Omit only first duplicate page-level H1 block; preserve later same-text headings at source levels",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -837,10 +837,10 @@
           "wordpressId": 64968,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "C",
           "sourceBlockType": null,
           "exactSourceText": "Frequently Asked Questions",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Preserve source H1 evidence; render secondary FAQ heading as H2 via approved semantic normalization",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -933,10 +933,10 @@
           "wordpressId": 64990,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "C",
           "sourceBlockType": null,
           "exactSourceText": "Frequently Asked Questions",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Preserve source H1 evidence; render secondary FAQ heading as H2 via approved semantic normalization",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -1309,10 +1309,10 @@
           "wordpressId": 61956,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "C",
           "sourceBlockType": null,
           "exactSourceText": "Google AI Overviews and the Growth of Zero-Click Searches",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Omit only first duplicate page-level H1 block; preserve later same-text headings at source levels",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -1727,10 +1727,10 @@
           "wordpressId": 64620,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "C",
           "sourceBlockType": null,
           "exactSourceText": "FAQs",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Preserve source H1 evidence; render secondary FAQ heading as H2 via approved semantic normalization",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -2656,10 +2656,10 @@
           "wordpressId": 62460,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "C",
           "sourceBlockType": null,
           "exactSourceText": "Let's build together.",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Promote verified visible contact hero line to sole page H1; preserve source H2 evidence",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -2675,10 +2675,10 @@
           "wordpressId": 55355,
           "currentStatus": "CONTENT_INCOMPLETE",
           "missingBlockCount": 1,
-          "findingClassification": "G",
+          "findingClassification": "B",
           "sourceBlockType": null,
           "exactSourceText": "Archives",
-          "proposedTechnicalFix": "Render verified source block at source order",
+          "proposedTechnicalFix": "Correct archive hub heading in content-blocks to live WordPress visible title",
           "pageSpecificFixRequired": false,
           "rankingProtected": false
         }
@@ -3223,5 +3223,10 @@
         }
       ]
     }
-  ]
+  ],
+  "documentType": "HISTORICAL_PHASE_1F_DIAGNOSIS",
+  "sourceStartingSha": "cd14affe65eab63cb4abdd8dbb74a6a160bdbf10",
+  "restorationSha": "ad6e36d258d0c2a44d27ae49ac37c19cebe9db2b",
+  "sourceAuditGeneratedAt": "2026-08-29T15:28:03.160Z",
+  "note": "Historical Phase 1F diagnosis snapshot captured before Phase 1F.1 strict parity hardening. Not regenerated after restoration because post-restoration audit has zero CONTENT_INCOMPLETE routes."
 }

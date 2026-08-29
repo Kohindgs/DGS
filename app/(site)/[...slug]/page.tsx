@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { loadRouteRegistry, getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
-import type { ContentBlock, HeadingBlock } from "@/lib/content/types";
+import type { ContentBlock } from "@/lib/content/types";
+import { filterDuplicatePageH1Block } from "@/lib/migration/filter-page-h1-duplicate";
 import { slugToPath } from "@/lib/nextjs/path";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -85,11 +86,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   const schemaBlocks = buildRouteSchemas({ route, path, blocks: restoredBlocks, breadcrumbs });
 
   const pageH1 = resolvePageH1(route, restoredBlocks);
-  const isPageH1Duplicate = (b: ContentBlock): b is HeadingBlock =>
-    b.type === "heading" && b.level === 1 && b.text.trim() === pageH1.trim();
-  const isDuplicateHeading = (b: ContentBlock): b is HeadingBlock =>
-    b.type === "heading" && b.text.trim() === pageH1.trim();
-  const contentBlocks = restoredBlocks.filter((b) => !isPageH1Duplicate(b) && !isDuplicateHeading(b));
+  const contentBlocks = filterDuplicatePageH1Block(restoredBlocks, pageH1);
   const showContactForm = path === "/contact-us/";
 
   return (
