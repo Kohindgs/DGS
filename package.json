@@ -55,6 +55,7 @@
     "audit:full-site-readiness": "node scripts/audit-full-site-route-readiness.mjs",
     "diagnose:tier0-parity": "node scripts/diagnose-tier0-parity.mjs",
     "validate:ranking-protection": "node scripts/validate-ranking-protection.mjs",
+    "validate:technical-link-corrections": "node scripts/validate-technical-link-corrections.mjs",
     "build:ranking-protection-baseline": "node scripts/build-ranking-protection-baseline.mjs"
   },
   "dependencies": {

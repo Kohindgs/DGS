@@ -16,7 +16,8 @@ import {
   contentStatusFor,
 } from "./lib/full-site-route-audit.mjs";
 import { loadTechnicalLinkCorrections } from "./lib/technical-link-corrections.mjs";
-import { createProbeCache } from "./lib/media-link-audit.mjs";
+import { createProbeCache, validateInternalLink, isBrokenLinkClassification } from "./lib/media-link-audit.mjs";
+import { deduplicatedGlobalChromeInternalLinks } from "./lib/global-chrome-links.mjs";
 
 const ROOT = process.cwd();
 const TARGET = new URL(process.env.MIGRATION_TARGET_URL || "https://dimgrey-goat-473970.hostingersite.com");
@@ -140,7 +141,7 @@ for (const routePath of [...allPaths].sort()) {
   });
   classCounts[migrationClass] = (classCounts[migrationClass] || 0) + 1;
 
-  const visualMirrorStatus = classifyVisualMirror(routePath, template);
+  const visualMirrorStatus = classifyVisualMirror(routePath, template, migrationClass);
   visualCounts[visualMirrorStatus] = (visualCounts[visualMirrorStatus] || 0) + 1;
 
   const entry = {
@@ -222,7 +223,6 @@ for (const routePath of [...allPaths].sort()) {
       routePath,
       migrationClass,
       audit.checks.content,
-      visualMirrorStatus,
     );
     retainedResults.push({
       path: routePath,
@@ -249,12 +249,41 @@ for (const routePath of [...allPaths].sort()) {
   inventory.push(entry);
 }
 
+const globalChromeLinks = deduplicatedGlobalChromeInternalLinks();
+const globalChromeResults = await Promise.all(
+  globalChromeLinks.map(async (link) => {
+    const result = await validateInternalLink(link, TARGET, probeCache);
+    return { ...link, ...result };
+  }),
+);
+const globalChrome404 = globalChromeResults.filter((r) => r.classification === "404");
+const globalChrome410 = globalChromeResults.filter((r) => r.classification === "410");
+const globalChrome5xx = globalChromeResults.filter((r) => r.classification === "5XX");
+const globalChromeAvoidableRedirects = globalChromeResults.filter(
+  (r) => r.classification === "AVOIDABLE_INTERNAL_REDIRECT",
+);
+const globalChromeBroken = globalChromeResults.filter((r) => isBrokenLinkClassification(r.classification));
+for (const broken of globalChromeBroken) {
+  blockingFailures.push(`global-chrome ${broken.path}: ${broken.classification}`);
+}
+
 const unclassified = inventory.filter((item) => !MIGRATION_CLASSES.includes(item.migrationClass));
 const retainedChecked = retainedResults.length;
 const retainedPassing = retainedResults.filter((r) => r.passed).length;
 const contentComplete = retainedResults.filter((r) => r.contentStatus === "CONTENT_COMPLETE").length;
 const contentIncomplete = retainedResults.filter((r) => r.contentStatus === "CONTENT_INCOMPLETE").length;
 const rankingProtected = retainedResults.filter((r) => r.contentStatus === "RANKING_PROTECTED").length;
+const intentionallyNative = retainedResults.filter((r) => r.contentStatus === "INTENTIONALLY_NATIVE").length;
+const contentReviewRequired = retainedResults.filter((r) => r.contentStatus === "CONTENT_REVIEW_REQUIRED").length;
+const contentStatusTotal =
+  contentComplete + contentIncomplete + rankingProtected + intentionallyNative + contentReviewRequired;
+const visualStatusTotal = Object.values(visualCounts).reduce((sum, count) => sum + count, 0);
+const retainedHtmlVisualCounts = Object.fromEntries(
+  VISUAL_STATUSES.map((status) => [
+    status,
+    retainedResults.filter((r) => r.visualMirrorStatus === status).length,
+  ]),
+);
 
 const output = {
   generatedAt: new Date().toISOString(),
@@ -272,6 +301,36 @@ const output = {
     contentComplete,
     contentIncomplete,
     rankingProtected,
+    intentionallyNative,
+    contentReviewRequired,
+    contentStatusReconciles: contentStatusTotal === retainedChecked,
+    visualStatusReconciles: visualStatusTotal === inventory.length,
+    retainedHtmlVisualCounts,
+    globalChromeAudit: {
+      uniqueInternalLinks: globalChromeLinks.length,
+      checked: globalChromeResults.length,
+      notFound404: globalChrome404.length,
+      gone410: globalChrome410.length,
+      serverError5xx: globalChrome5xx.length,
+      avoidableRedirects: globalChromeAvoidableRedirects.length,
+      broken: globalChromeBroken.map((r) => ({ path: r.path, classification: r.classification })),
+      avoidableRedirectDetails: globalChromeAvoidableRedirects.map((r) => ({
+        path: r.path,
+        redirectHops: r.redirectHops,
+      })),
+    },
+    externalMediaDependencies: {
+      mshots: {
+        label: "EXTERNAL MEDIA RUNTIME DEPENDENCY — PHASE 2 PLUGIN/ASSET EXIT",
+        hosts: ["s.wordpress.com/mshots"],
+        note: "WordPress mshots thumbnails are migration technical debt; not plugin-free.",
+      },
+      homepageSimpleIcons: {
+        label: "UI-LOCKED HOMEPAGE EXTERNAL ICON CDN",
+        hosts: ["cdn.simpleicons.org"],
+        note: "Homepage AI icon row uses external CDN assets excluded from blocking audit on /.",
+      },
+    },
     visualMirrorPending: visualCounts.VISUAL_MIRROR_PENDING || 0,
     blockingFailureCount: blockingFailures.length,
     contentFindingCount: contentFindings.length,
@@ -326,7 +385,12 @@ console.log(
       contentComplete: output.summary.contentComplete,
       contentIncomplete: output.summary.contentIncomplete,
       rankingProtected: output.summary.rankingProtected,
+      intentionallyNative: output.summary.intentionallyNative,
+      contentReviewRequired: output.summary.contentReviewRequired,
+      contentStatusReconciles: output.summary.contentStatusReconciles,
+      visualStatusReconciles: output.summary.visualStatusReconciles,
       visualMirrorPending: output.summary.visualMirrorPending,
+      globalChrome404: output.summary.globalChromeAudit.notFound404,
       blockingFailures: output.summary.blockingFailureCount,
       contentFindings: output.summary.contentFindingCount,
       sampleFailures: blockingFailures.slice(0, 15),

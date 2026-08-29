@@ -44,8 +44,16 @@ export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: Sem
             );
           }
           case "image": {
-            const useNativeImage =
-              /mshots|s\.wordpress\.com/i.test(block.src) || !block.src.includes("dgeniussolutions.com");
+            // EXTERNAL MEDIA RUNTIME DEPENDENCY — PHASE 2 PLUGIN/ASSET EXIT
+            // s.wordpress.com/mshots thumbnails require native <img>; not plugin-free migration debt.
+            const useNativeImage = (() => {
+              try {
+                const url = new URL(block.src, "https://www.dgeniussolutions.com");
+                return url.hostname === "s.wordpress.com" && url.pathname.startsWith("/mshots/");
+              } catch {
+                return /s\.wordpress\.com\/mshots/i.test(block.src);
+              }
+            })();
             return (
               <figure key={key}>
                 {useNativeImage ? (

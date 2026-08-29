@@ -30,9 +30,11 @@ function correctionsForPath(routePath: string): Correction[] {
 function findCorrection(corrections: Correction[], href: string, anchor?: string) {
   const normalized = normalizeHref(href);
   return (
-    corrections.find((item) => normalizeHref(item.wordpressDestination) === normalized) ||
-    corrections.find((item) => item.anchor && item.anchor === anchor) ||
-    null
+    corrections.find((item) => {
+      if (normalizeHref(item.wordpressDestination) !== normalized) return false;
+      if (item.anchor && anchor && item.anchor !== anchor) return false;
+      return true;
+    }) || null
   );
 }
 

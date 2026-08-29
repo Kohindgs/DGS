@@ -25,6 +25,7 @@
       "wordpressDestination": "/services/answer-engine-optimization-aeo-service/",
       "action": "REMOVE_BROKEN_HREF",
       "classification": "C",
+      "observedWordPressStatus": 404,
       "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
     },
     {
@@ -62,6 +63,7 @@
       "wordpressDestination": "/services/content-creation-agency-mumbai/",
       "action": "REMOVE_BROKEN_HREF",
       "classification": "C",
+      "observedWordPressStatus": 404,
       "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
     },
     {
@@ -70,6 +72,7 @@
       "wordpressDestination": "/services/content-creation-agency-mumbai/",
       "action": "REMOVE_BROKEN_HREF",
       "classification": "C",
+      "observedWordPressStatus": 404,
       "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
     },
     {
@@ -84,6 +87,7 @@
       "wordpressDestination": "/services/digital-marketing-services/",
       "action": "REMOVE_BROKEN_HREF",
       "classification": "C",
+      "observedWordPressStatus": 404,
       "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
     },
     {
@@ -124,37 +128,48 @@
       "wordpressDestination": "/services/ecommerce-seo/",
       "action": "REMOVE_BROKEN_HREF",
       "classification": "C",
-      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/ecommerce-seo/ returns HTTP 404 with no authoritative redirect"
     },
     {
       "path": "/services/dubai-seo/",
       "wordpressDestination": "/services/real-estate-seo/",
       "action": "REMOVE_BROKEN_HREF",
-      "classification": "C"
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/real-estate-seo/ returns HTTP 404 with no authoritative redirect"
     },
     {
       "path": "/services/dubai-seo/",
       "wordpressDestination": "/services/education-seo/",
       "action": "REMOVE_BROKEN_HREF",
-      "classification": "C"
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/education-seo/ returns HTTP 404 with no authoritative redirect"
     },
     {
       "path": "/services/dubai-seo/",
       "wordpressDestination": "/services/finance-seo/",
       "action": "REMOVE_BROKEN_HREF",
-      "classification": "C"
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/finance-seo/ returns HTTP 404 with no authoritative redirect"
     },
     {
       "path": "/services/dubai-seo/",
       "wordpressDestination": "/services/hospitality-seo/",
       "action": "REMOVE_BROKEN_HREF",
-      "classification": "C"
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/hospitality-seo/ returns HTTP 404 with no authoritative redirect"
     },
     {
       "path": "/services/dubai-seo/",
       "wordpressDestination": "/services/saas-seo/",
       "action": "REMOVE_BROKEN_HREF",
-      "classification": "C"
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/saas-seo/ returns HTTP 404 with no authoritative redirect"
     }
   ]
 }

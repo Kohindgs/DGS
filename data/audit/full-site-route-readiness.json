@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T14:35:48.944Z",
+  "generatedAt": "2026-08-29T14:54:48.857Z",
   "target": "http://127.0.0.1:3025",
   "expectStagingNoindex": true,
   "rankingBaselineDigest": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
@@ -18,20 +18,57 @@
     "unclassified": 0,
     "visualMirrorStatus": {
       "VISUAL_MIRROR_COMPLETE": 1,
-      "VISUAL_MIRROR_PARTIAL": 2,
-      "VISUAL_MIRROR_PENDING": 129,
+      "VISUAL_MIRROR_PARTIAL": 3,
+      "VISUAL_MIRROR_PENDING": 96,
       "RANKING_PROTECTED": 5,
-      "NOT_APPLICABLE": 4
+      "NOT_APPLICABLE": 36
     },
     "retainedRoutesChecked": 105,
     "retainedPassing": 105,
     "retainedFailing": 0,
     "contentComplete": 41,
-    "contentIncomplete": 58,
+    "contentIncomplete": 57,
     "rankingProtected": 5,
-    "visualMirrorPending": 129,
+    "intentionallyNative": 2,
+    "contentReviewRequired": 0,
+    "contentStatusReconciles": true,
+    "visualStatusReconciles": true,
+    "retainedHtmlVisualCounts": {
+      "VISUAL_MIRROR_COMPLETE": 1,
+      "VISUAL_MIRROR_PARTIAL": 3,
+      "VISUAL_MIRROR_PENDING": 96,
+      "RANKING_PROTECTED": 5,
+      "NOT_APPLICABLE": 0
+    },
+    "globalChromeAudit": {
+      "uniqueInternalLinks": 20,
+      "checked": 20,
+      "notFound404": 0,
+      "gone410": 0,
+      "serverError5xx": 0,
+      "avoidableRedirects": 0,
+      "broken": [],
+      "avoidableRedirectDetails": []
+    },
+    "externalMediaDependencies": {
+      "mshots": {
+        "label": "EXTERNAL MEDIA RUNTIME DEPENDENCY — PHASE 2 PLUGIN/ASSET EXIT",
+        "hosts": [
+          "s.wordpress.com/mshots"
+        ],
+        "note": "WordPress mshots thumbnails are migration technical debt; not plugin-free."
+      },
+      "homepageSimpleIcons": {
+        "label": "UI-LOCKED HOMEPAGE EXTERNAL ICON CDN",
+        "hosts": [
+          "cdn.simpleicons.org"
+        ],
+        "note": "Homepage AI icon row uses external CDN assets excluded from blocking audit on /."
+      }
+    },
+    "visualMirrorPending": 96,
     "blockingFailureCount": 0,
-    "contentFindingCount": 58,
+    "contentFindingCount": 57,
     "tier0Paths": [
       "/services/ai-video-production-agency/",
       "/services/aeo-services-in-mumbai/",
@@ -43,7 +80,7 @@
       "allImagesChecked": true,
       "allLinksChecked": true,
       "uniqueImageUrlsChecked": 76,
-      "uniqueInternalUrlsChecked": 32,
+      "uniqueInternalUrlsChecked": 37,
       "displayedSummaryCapsOnly": {
         "brokenImagesPerRoute": 8,
         "brokenLinksPerRoute": 8,
@@ -62,10 +99,10 @@
     },
     "counts": {
       "VISUAL_MIRROR_COMPLETE": 1,
-      "VISUAL_MIRROR_PARTIAL": 2,
-      "VISUAL_MIRROR_PENDING": 129,
+      "VISUAL_MIRROR_PARTIAL": 3,
+      "VISUAL_MIRROR_PENDING": 96,
       "RANKING_PROTECTED": 5,
-      "NOT_APPLICABLE": 4
+      "NOT_APPLICABLE": 36
     }
   },
   "inventory": [
@@ -628,7 +665,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -945,7 +982,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -1067,7 +1104,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -8416,7 +8453,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -8648,7 +8685,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -8673,7 +8710,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -8698,7 +8735,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -8723,7 +8760,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -8748,7 +8785,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 308,
@@ -8870,7 +8907,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -8940,11 +8977,11 @@
         "canonicalPath": null
       },
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 200,
-        "contentType": "application/vnd.google-earth.kml+xml"
+        "contentType": "application/vnd.google-earth.kml+xml; charset=utf-8"
       },
       "failures": [],
       "warnings": []
@@ -9194,7 +9231,7 @@
       },
       "template": "Portfolio",
       "visualMirrorStatus": "VISUAL_MIRROR_PARTIAL",
-      "contentStatus": "CONTENT_INCOMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Portfolio D’Genius Solutions Digital Marketing Case Studies",
@@ -9215,25 +9252,7 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": false,
-          "missingHeadings": [],
-          "missingParagraphs": [
-            {
-              "text": "Fashion•\n            Edtech•\n            Banking•\n            Finance•\n            FMCG•\n            Fintech•\n          ",
-              "wordpressId": 55736,
-              "blockIndex": 1,
-              "blockType": "paragraph"
-            }
-          ],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 1,
-          "renderedImageCount": 14
-        },
+        "content": null,
         "imageAudit": {
           "checkedCount": 14,
           "brokenCount": 0,
@@ -9258,9 +9277,7 @@
         "brokenInternalLinks": []
       },
       "failures": [],
-      "warnings": [
-        "WordPress visible content incomplete"
-      ]
+      "warnings": []
     },
     {
       "path": "/privacy-policy/",
@@ -9717,7 +9734,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -9838,7 +9855,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -9863,7 +9880,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -9901,8 +9918,8 @@
         "canonicalPath": "/services/"
       },
       "template": "ServicesArchive",
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_UNKNOWN",
+      "visualMirrorStatus": "VISUAL_MIRROR_PARTIAL",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Services - D'Genius Solutions",
@@ -10048,7 +10065,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -10073,7 +10090,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -10195,7 +10212,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -10615,7 +10632,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -10640,7 +10657,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -10837,7 +10854,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -10862,7 +10879,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -10887,7 +10904,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -11009,7 +11026,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -11475,7 +11492,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -11500,7 +11517,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -11763,7 +11780,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -11788,7 +11805,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -12245,7 +12262,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -12270,7 +12287,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -12726,7 +12743,7 @@
       "retired": null,
       "indexability": null,
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -12776,7 +12793,7 @@
         "canonicalPath": null
       },
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 301,
@@ -12825,7 +12842,7 @@
         "canonicalPath": null
       },
       "template": null,
-      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
         "status": 410
@@ -14752,30 +14769,6 @@
       }
     },
     {
-      "path": "/portfolio/",
-      "contentStatus": "CONTENT_INCOMPLETE",
-      "visualMirrorStatus": "VISUAL_MIRROR_PARTIAL",
-      "details": {
-        "contentComplete": false,
-        "missingHeadings": [],
-        "missingParagraphs": [
-          {
-            "text": "Fashion•\n            Edtech•\n            Banking•\n            Finance•\n            FMCG•\n            Fintech•\n          ",
-            "wordpressId": 55736,
-            "blockIndex": 1,
-            "blockType": "paragraph"
-          }
-        ],
-        "missingFaqs": [],
-        "faqAnswerDiffs": [],
-        "missingLists": [],
-        "missingLinks": [],
-        "missingImages": [],
-        "renderedHeadingCount": 1,
-        "renderedImageCount": 14
-      }
-    },
-    {
       "path": "/seo-pricing/",
       "contentStatus": "CONTENT_INCOMPLETE",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
@@ -15435,12 +15428,6 @@
       "passed": true,
       "contentStatus": "CONTENT_INCOMPLETE",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING"
-    },
-    {
-      "path": "/portfolio/",
-      "passed": true,
-      "contentStatus": "CONTENT_INCOMPLETE",
-      "visualMirrorStatus": "VISUAL_MIRROR_PARTIAL"
     },
     {
       "path": "/seo-pricing/",

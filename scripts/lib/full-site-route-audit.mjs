@@ -44,6 +44,27 @@ export const VISUAL_STATUSES = [
   "NOT_APPLICABLE",
 ];
 
+export const CONTENT_STATUSES = [
+  "CONTENT_COMPLETE",
+  "CONTENT_INCOMPLETE",
+  "RANKING_PROTECTED",
+  "INTENTIONALLY_NATIVE",
+  "CONTENT_REVIEW_REQUIRED",
+  "NOT_APPLICABLE",
+];
+
+/** Approved native Next routes — not compared against WordPress block parity. */
+export const INTENTIONALLY_NATIVE_PATHS = new Set(["/portfolio/", "/services/"]);
+
+const NON_RETAINED_MIGRATION_CLASSES = new Set([
+  "301_REDIRECT",
+  "308_REDIRECT",
+  "410_RETIRED",
+  "NON_HTML",
+  "NOT_MIGRATED",
+  "BROKEN",
+]);
+
 const PROTECTED_RANKING_PATHS = new Set([
   "/services/ai-video-production-agency/",
   "/services/aeo-services-in-mumbai/",
@@ -129,15 +150,45 @@ export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = 
   return { headings, paragraphs, lists, faqs, links, images, ctas };
 }
 
-export function classifyVisualMirror(path, template) {
+export function classifyVisualMirror(path, template, migrationClass) {
+  if (NON_RETAINED_MIGRATION_CLASSES.has(migrationClass) || EXPLICIT_NON_HTML.has(path)) {
+    return "NOT_APPLICABLE";
+  }
+
   if (path === "/") return "VISUAL_MIRROR_COMPLETE";
   if (PROTECTED_RANKING_PATHS.has(path)) return "RANKING_PROTECTED";
   if (path === "/services/seo-services-in-mumbai/") return "RANKING_PROTECTED";
   if (template === "ContactForm") return "VISUAL_MIRROR_PARTIAL";
   if (template === "Portfolio") return "VISUAL_MIRROR_PARTIAL";
+  if (template === "ServicesArchive") return "VISUAL_MIRROR_PARTIAL";
   if (template === "Homepage") return "VISUAL_MIRROR_COMPLETE";
-  if (EXPLICIT_NON_HTML.has(path)) return "NOT_APPLICABLE";
   return "VISUAL_MIRROR_PENDING";
+}
+
+export function isMshotsExternalDependency(src) {
+  if (!src) return false;
+  try {
+    const url = new URL(src, "https://www.dgeniussolutions.com");
+    return url.hostname === "s.wordpress.com" && url.pathname.startsWith("/mshots/");
+  } catch {
+    return /s\.wordpress\.com\/mshots/i.test(src);
+  }
+}
+
+/** UI-locked homepage CDN icons — external but non-blocking in Phase 1 audit. */
+export function isHomepageUiLockedExternalIcon(src) {
+  if (!src) return false;
+  try {
+    return new URL(src).hostname === "cdn.simpleicons.org";
+  } catch {
+    return /cdn\.simpleicons\.org/i.test(src);
+  }
+}
+
+function isNonBlockingExternalImage(src, routePath) {
+  if (isMshotsExternalDependency(src)) return true;
+  if (routePath === "/" && isHomepageUiLockedExternalIcon(src)) return true;
+  return false;
 }
 
 export function classifyMigration({
@@ -372,7 +423,7 @@ export async function auditRetainedHtml({
   if (!schemaTypes.length && !isHome) warnings.push("no JSON-LD schema detected");
 
   let content = null;
-  if (expectedBlocks?.length && !TIER0_PATHS.has(path)) {
+  if (expectedBlocks?.length && !TIER0_PATHS.has(path) && !INTENTIONALLY_NATIVE_PATHS.has(path)) {
     const correctedBlocks = technicalLinkCorrections
       ? applyTechnicalLinkCorrections(path, expectedBlocks, technicalLinkCorrections)
       : expectedBlocks;
@@ -399,20 +450,12 @@ export async function auditRetainedHtml({
   );
   const brokenImages = imageResults.filter((result) => isBrokenImageClassification(result.classification));
   const rateLimitedImages = imageResults.filter((result) => result.classification === "RATE_LIMITED");
-  const externalDependencyImages = imageResults.filter((result) => {
-    if (result.classification === "INLINE_DATA") return false;
-    try {
-      const origin = new URL(result.sourceUrl).origin;
-      const targetOrigin = new URL(target).origin;
-      return origin !== targetOrigin && !/dgeniussolutions\.com$/i.test(new URL(result.sourceUrl).hostname);
-    } catch {
-      return false;
-    }
-  });
-  const blockingBrokenImages =
-    path === "/"
-      ? brokenImages.filter((result) => !externalDependencyImages.includes(result))
-      : brokenImages;
+  const externalDependencyImages = imageResults.filter((result) =>
+    isNonBlockingExternalImage(result.sourceUrl, path),
+  );
+  const blockingBrokenImages = brokenImages.filter(
+    (result) => !isNonBlockingExternalImage(result.sourceUrl, path),
+  );
   if (blockingBrokenImages.length) failures.push(`${blockingBrokenImages.length} broken in-content image(s)`);
 
   const internalLinks = extractContextualLinks(article || html, url.href)
@@ -482,10 +525,11 @@ export async function auditRetainedHtml({
   };
 }
 
-export function contentStatusFor(path, migrationClass, contentAudit, visualStatus) {
+export function contentStatusFor(path, migrationClass, contentAudit) {
   if (TIER0_PATHS.has(path)) return "RANKING_PROTECTED";
   if (migrationClass !== "200_RETAINED" && migrationClass !== "NOINDEX_RETAINED") return "NOT_APPLICABLE";
-  if (!contentAudit) return visualStatus === "VISUAL_MIRROR_PENDING" ? "CONTENT_UNKNOWN" : "CONTENT_UNKNOWN";
+  if (INTENTIONALLY_NATIVE_PATHS.has(path)) return "INTENTIONALLY_NATIVE";
+  if (!contentAudit) return "CONTENT_REVIEW_REQUIRED";
   if (contentAudit.contentComplete) return "CONTENT_COMPLETE";
   return "CONTENT_INCOMPLETE";
 }

@@ -1,8 +1,7 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { buildLocationsKml } from "@/lib/schema/locations-kml";
 
-export async function GET() {
-  const kml = await readFile(path.join(process.cwd(), "public/locations.kml"), "utf8");
+export function GET() {
+  const kml = buildLocationsKml();
   return new Response(kml, {
     headers: {
       "Content-Type": "application/vnd.google-earth.kml+xml; charset=utf-8",
