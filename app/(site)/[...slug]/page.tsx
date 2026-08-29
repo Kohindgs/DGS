@@ -14,6 +14,7 @@ import { getRetiredRoute } from "@/lib/migration/retired-routes";
 import { getRouteDecision, shouldExcludeFromStaticGeneration } from "@/lib/migration/route-decisions";
 import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
 import Link from "next/link";
+import { applyRankingLinkRestorations } from "@/lib/migration/ranking-link-restorations";
 
 export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
@@ -75,14 +76,15 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   }
 
   const blocks = (await loadContentBlocks())[path]?.blocks || [];
+  const restoredBlocks = applyRankingLinkRestorations(path, blocks);
   const breadcrumbs = buildBreadcrumbs(path, route);
-  const schemaBlocks = buildRouteSchemas({ route, path, blocks, breadcrumbs });
+  const schemaBlocks = buildRouteSchemas({ route, path, blocks: restoredBlocks, breadcrumbs });
 
-  const pageH1 = resolvePageH1(route, blocks);
+  const pageH1 = resolvePageH1(route, restoredBlocks);
   const isH1 = (b: ContentBlock): b is HeadingBlock => b.type === "heading" && b.level === 1;
   const isDuplicateHeading = (b: ContentBlock): b is HeadingBlock =>
     b.type === "heading" && b.text.trim() === pageH1.trim();
-  const contentBlocks = blocks.filter((b) => !isH1(b) && !isDuplicateHeading(b));
+  const contentBlocks = restoredBlocks.filter((b) => !isH1(b) && !isDuplicateHeading(b));
   const showContactForm = path === "/contact-us/";
 
   return (

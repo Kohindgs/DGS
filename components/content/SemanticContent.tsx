@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ContentBlock } from "@/lib/content/types";
 import { RichText } from "./RichText";
 
@@ -26,7 +27,7 @@ export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: Sem
             const Tag = `h${level}` as "h2" | "h3" | "h4" | "h5" | "h6";
             return (
               <Tag key={key} id={block.id}>
-                {block.text}
+                {block.href ? <Link href={block.href}>{block.text}</Link> : block.text}
               </Tag>
             );
           }

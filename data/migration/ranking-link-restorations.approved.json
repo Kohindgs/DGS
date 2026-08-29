@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "approvedAt": "2026-08-29T09:50:00.000Z",
+  "policy": "Human-approved href-only restorations for ranking-protected routes. Anchor wording must not change.",
+  "restorations": {
+    "/services/ai-video-production-agency/": [
+      {
+        "headingId": "seo-services-in-mumbai",
+        "anchor": "SEO Services In Mumbai",
+        "href": "/services/seo-services-in-mumbai/",
+        "wordpressDestination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/"
+      },
+      {
+        "headingId": "aeo-services-in-mumbai",
+        "anchor": "AEO Services In Mumbai",
+        "href": "/services/aeo-services-in-mumbai/",
+        "wordpressDestination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
+      },
+      {
+        "headingId": "optimize-for-ai-overviews",
+        "anchor": "Optimize For AI Overviews",
+        "href": "/blogs/optimize-for-ai-overviews/",
+        "wordpressDestination": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/"
+      },
+      {
+        "headingId": "google-ads-services",
+        "anchor": "Google Ads Services",
+        "href": "/services/google-ads/",
+        "wordpressDestination": "https://www.dgeniussolutions.com/services/google-ads/"
+      },
+      {
+        "headingId": "website-development-company-in-mumbai",
+        "anchor": "Website Development Company In Mumbai",
+        "href": "/services/website-development/",
+        "wordpressDestination": "https://www.dgeniussolutions.com/services/website-development/"
+      },
+      {
+        "headingId": "future-of-seo",
+        "anchor": "Future Of SEO",
+        "href": "/blogs/future-of-seo/",
+        "wordpressDestination": "https://www.dgeniussolutions.com/blogs/future-of-seo/"
+      }
+    ]
+  }
+}

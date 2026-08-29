@@ -61,4 +61,7 @@ Integrated into: `npm run release:validate:search`
 ## Configuration
 
 - `data/migration/ranking-protected-routes.json` — frozen route list and policy metadata
+- `data/migration/ranking-protection-baseline.json` — **immutable** WordPress snapshot (manual update only)
+- `data/migration/ranking-protection-baseline.integrity.json` — SHA-256 integrity lock
+- Manual baseline rebuild: `ALLOW_RANKING_BASELINE_UPDATE=1 npm run build:ranking-protection-baseline`
 - Do **not** update baselines merely to make tests pass

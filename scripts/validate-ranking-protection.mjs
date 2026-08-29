@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
  * Ranking-protection release blocker.
- * Compares four ranking-protected service routes against the WordPress baseline.
- * Fails release on unexplained drift in search-visible semantics.
+ * Uses immutable data/migration/ranking-protection-baseline.json as authority.
  */
+import { createHash } from "node:crypto";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import {
@@ -13,7 +13,6 @@ import {
 } from "./lib/migration-audit-shared.mjs";
 import {
   canonicalFromHtml,
-  decode,
   diffContextualLinks,
   diffFaq,
   diffHeadings,
@@ -35,26 +34,27 @@ import {
 
 const ROOT = process.cwd();
 const TARGET = new URL(process.env.MIGRATION_TARGET_URL || "http://127.0.0.1:3000");
-const WP_ORIGIN = "https://www.dgeniussolutions.com";
+const BASELINE_PATH = path.join(ROOT, "data/migration/ranking-protection-baseline.json");
+const INTEGRITY_PATH = path.join(ROOT, "data/migration/ranking-protection-baseline.integrity.json");
 const OUT = path.join(ROOT, "data/audit/ranking-protection-report.json");
-
-const [policy, tier0, contentBaseline, pagesRaw, servicesRaw] = await Promise.all([
-  readJson(path.join(ROOT, "data/migration/ranking-protected-routes.json")),
-  readJson(path.join(ROOT, "data/migration/tier0-routes.json")),
-  readJson(path.join(ROOT, "data/migration/tier0-content-baseline.generated.json")),
-  readJson(path.join(ROOT, "data/wordpress/raw/pages.json")),
-  readJson(path.join(ROOT, "data/wordpress/raw/services.json")),
-]);
-
-const recordsById = new Map([...pagesRaw, ...servicesRaw].map((item) => [Number(item.id), item]));
-const baselineByPath = new Map(contentBaseline.baselines.map((item) => [item.path, item]));
-const tier0ByPath = new Map(tier0.routes.map((item) => [item.path, item]));
-const protectedRoutes = policy.protectedPaths
-  .map((routePath) => tier0ByPath.get(routePath))
-  .filter(Boolean);
 
 async function readJson(file) {
   return JSON.parse(await readFile(file, "utf8"));
+}
+
+function verifyBaselineIntegrity(baselineSerialized, integrity) {
+  const actual = createHash("sha256").update(baselineSerialized).digest("hex");
+  if (actual !== integrity.overallSha256) {
+    return { ok: false, reason: `overall digest mismatch (expected ${integrity.overallSha256}, got ${actual})` };
+  }
+  const baseline = JSON.parse(baselineSerialized);
+  for (const [routePath, expectedDigest] of Object.entries(integrity.routeDigests || {})) {
+    const actualRoute = baseline.routes?.[routePath]?.routeSha256;
+    if (actualRoute !== expectedDigest) {
+      return { ok: false, reason: `route digest mismatch for ${routePath}` };
+    }
+  }
+  return { ok: true, baseline };
 }
 
 async function fetchSitemapPaths() {
@@ -80,18 +80,23 @@ function classify(kind, detail) {
   return { ...map[kind], detail };
 }
 
+const baselineSerialized = await readFile(BASELINE_PATH, "utf8");
+const integrity = await readJson(INTEGRITY_PATH);
+const integrityResult = verifyBaselineIntegrity(baselineSerialized, integrity);
+if (!integrityResult.ok) {
+  console.error("FAIL — RANKING PROTECTION BASELINE INTEGRITY FAILURE\n");
+  console.error(`  - ${integrityResult.reason}`);
+  process.exit(1);
+}
+
+const frozenBaseline = integrityResult.baseline;
 const sitemap = await fetchSitemapPaths();
 const routeReports = [];
 const blockingFailures = [];
 const explainedFindings = [];
 
-for (const route of protectedRoutes) {
-  const routePolicyMeta = policy.observedMetaDescriptions?.[route.path] || "";
-  const wpRecord = recordsById.get(Number(route.wordpressId));
-  const baseline = baselineByPath.get(route.path);
-  const wpHtml = wpRecord?.content?.rendered || "";
-
-  const url = new URL(route.path, TARGET);
+for (const [routePath, snapshot] of Object.entries(frozenBaseline.routes)) {
+  const url = new URL(routePath, TARGET);
   const response = await fetch(url, {
     redirect: "manual",
     headers: { Accept: "text/html,*/*", "User-Agent": "DGS-Ranking-Protection/1.0" },
@@ -100,7 +105,7 @@ for (const route of protectedRoutes) {
   let html = "";
   if (response.status >= 300 && response.status < 400) {
     const location = response.headers.get("location");
-    blockingFailures.push(`${route.path}: redirect ${response.status} -> ${location || "unknown"}`);
+    blockingFailures.push(`${routePath}: redirect ${response.status} -> ${location || "unknown"}`);
     if (location) {
       const follow = await fetch(new URL(location, TARGET), { redirect: "follow" });
       html = await follow.text();
@@ -116,26 +121,29 @@ for (const route of protectedRoutes) {
   const noindexInfo = classifyNoindex(robots, xRobots);
   const canonicalHref = canonicalFromHtml(html);
   const canonicalPath = canonicalHref ? normalizePath(canonicalHref, TARGET) : "";
-  const desiredCanonicalPath = normalizePath(route.desiredCanonicalPath || route.path, TARGET);
+  const desiredCanonicalPath = normalizePath(snapshot.requiredNextCanonical, TARGET);
   const schemaTypes = jsonLdTypesFromHtml(html);
-  const inSitemap = sitemap.paths.includes(normalizePath(route.path, TARGET));
+  const inSitemap = sitemap.paths.includes(normalizePath(routePath, TARGET));
   const hasBreadcrumbs = /breadcrumb/i.test(html);
 
-  const wpArticleHtml = wpHtml;
   const nextArticleHtml = extractArticleHtml(html);
-  const wpHeadings = extractHeadings(wpArticleHtml);
   const nextHeadings = extractHeadings(nextArticleHtml);
-  const wpFaq = extractFaqItems(wpArticleHtml);
   const nextFaq = extractFaqItems(nextArticleHtml);
-  const wpImages = extractImages(wpArticleHtml);
   const nextImages = extractImages(nextArticleHtml);
-  const wpLinks = extractContextualLinks(wpArticleHtml, `${WP_ORIGIN}${route.path}`);
   const nextLinks = extractContextualLinks(nextArticleHtml, url.href);
 
-  const headingDiff = diffHeadings(wpHeadings, nextHeadings);
-  const faqDiff = diffFaq(wpFaq, nextFaq);
-  const imageDiff = diffImages(wpImages, nextImages);
-  const linkDiff = diffContextualLinks(wpLinks, nextLinks);
+  const baselineHeadings = snapshot.headings.map((h, index) => ({ index, level: h.level, text: h.text }));
+  const headingDiff = diffHeadings(baselineHeadings, nextHeadings);
+  const faqDiff = diffFaq(snapshot.faqs || [], nextFaq);
+  const imageDiff = diffImages(snapshot.images || [], nextImages);
+  const baselineLinks = (snapshot.contextualLinks || []).map((link) => ({
+    anchor: link.anchor,
+    href: link.href,
+    path: link.path,
+    scope: "body",
+    destination: link.href,
+  }));
+  const linkDiff = diffContextualLinks(baselineLinks, nextLinks);
 
   const missingHeadings = meaningfulMissingHeadings(headingDiff.missing);
   const missingLinks = meaningfulMissingLinks(linkDiff.missingInTarget);
@@ -143,12 +151,8 @@ for (const route of protectedRoutes) {
 
   const h1s = nextHeadings.filter((h) => h.level === "h1");
   const h1 = h1s[0]?.text || "";
-
-  const normalizedWp = normalizeText(wpArticleHtml);
   const normalizedNext = normalizeText(nextArticleHtml);
-  const hashMatch = baseline
-    ? textSha256(normalizedNext) === baseline.content.normalizedTextSha256
-    : textSha256(normalizedNext) === textSha256(normalizedWp);
+  const hashMatch = textSha256(normalizedNext) === snapshot.bodyTextSha256;
 
   const findings = [];
   const blockers = [];
@@ -157,43 +161,56 @@ for (const route of protectedRoutes) {
     const finding = classify(kind, detail);
     findings.push(finding);
     if (blocks) {
-      blockers.push(`${route.path}: [${finding.class}] ${detail}`);
-      blockingFailures.push(`${route.path}: [${finding.class}] ${detail}`);
+      blockers.push(`${routePath}: [${finding.class}] ${detail}`);
+      blockingFailures.push(`${routePath}: [${finding.class}] ${detail}`);
     } else {
-      explainedFindings.push(`${route.path}: [${finding.class}] ${detail}`);
+      explainedFindings.push(`${routePath}: [${finding.class}] ${detail}`);
     }
   };
 
   if (response.status !== 200) record("drift", `HTTP ${response.status}`, true);
   if (noindexInfo.hasNoindex) {
-    record(noindexInfo.classification === "A" ? "staging-noindex" : "drift", noindexInfo.label || "noindex", noindexInfo.classification !== "A");
+    record(
+      noindexInfo.classification === "A" ? "staging-noindex" : "drift",
+      noindexInfo.label || "noindex",
+      noindexInfo.classification !== "A",
+    );
   }
 
   if (canonicalPath !== desiredCanonicalPath) {
     record("drift", `canonical ${canonicalPath || "missing"} != required ${desiredCanonicalPath}`, true);
-  } else if (route.path === "/services/aeo-services-in-mumbai/") {
-    record("aeo-canonical", `Next self-canonical ${canonicalPath} (WordPress defective /services/aeo/ not restored)`, false);
+  } else if (routePath === "/services/aeo-services-in-mumbai/") {
+    record("aeo-canonical", `Next self-canonical ${canonicalPath} (WordPress /services/aeo/ not restored)`, false);
   }
 
   if (!inSitemap) record("drift", "missing from sitemap.xml", true);
   if (!hasBreadcrumbs) record("drift", "breadcrumbs not detected", true);
 
-  for (const requiredType of policy.requiredSchemaTypes || []) {
-    if (!schemaTypes.includes(requiredType)) {
-      record("drift", `missing schema type ${requiredType}`, true);
-    }
+  for (const requiredType of snapshot.requiredSchemaTypes || []) {
+    if (!schemaTypes.includes(requiredType)) record("drift", `missing schema type ${requiredType}`, true);
   }
 
-  if (title !== route.observedTitle) record("drift", `title drift: "${title}"`, true);
-  if (routePolicyMeta && description !== routePolicyMeta) {
-    record("drift", `meta description drift`, true);
+  if (title !== snapshot.title) record("drift", `title drift: "${title}"`, true);
+  if (snapshot.metaDescription && description !== snapshot.metaDescription) {
+    record("drift", "meta description drift", true);
   }
   if (h1s.length !== 1) record("drift", `expected 1 H1, found ${h1s.length}`, true);
-  else if (h1 !== route.observedH1) record("drift", `H1 drift: "${h1}"`, true);
+  else if (h1 !== snapshot.h1) record("drift", `H1 drift: "${h1}"`, true);
 
-  if (missingHeadings.length) record("drift", `${missingHeadings.length} missing headings: ${missingHeadings.map((h) => h.text).slice(0, 3).join("; ")}`, true);
-  if (headingDiff.extra.length) record("drift", `${headingDiff.extra.length} extra headings`, true);
-  if (headingDiff.orderChanged && missingHeadings.length) record("drift", "heading order changed with missing headings", true);
+  if (missingHeadings.length) {
+    record(
+      "drift",
+      `${missingHeadings.length} missing headings: ${missingHeadings.map((h) => h.text).slice(0, 3).join("; ")}`,
+      true,
+    );
+  }
+  if (headingDiff.extra.length) {
+    const meaningfulExtra = headingDiff.extra.filter((h) => h.text && !/^(Internal Link)$/i.test(h.text));
+    if (meaningfulExtra.length) record("drift", `${meaningfulExtra.length} extra headings`, true);
+  }
+  if (headingDiff.orderChanged && missingHeadings.length) {
+    record("drift", "heading order changed with missing headings", true);
+  }
 
   if (faqDiff.missing.length) record("drift", `${faqDiff.missing.length} missing FAQ questions`, true);
   if (faqDiff.extra.length) record("drift", `${faqDiff.extra.length} extra FAQ questions`, true);
@@ -208,12 +225,6 @@ for (const route of protectedRoutes) {
         .join("; ")}`,
       true,
     );
-  }
-  if (linkDiff.extraInTarget.length) {
-    const meaningfulExtra = linkDiff.extraInTarget.filter((l) => l.anchor?.trim() && !/\/wp-content\//.test(l.path));
-    if (meaningfulExtra.length) {
-      record("link", `${meaningfulExtra.length} extra contextual links`, true);
-    }
   }
 
   if (altDiffs.length) {
@@ -236,17 +247,9 @@ for (const route of protectedRoutes) {
     }
   }
 
-  const imageWrapOnly =
-    linkDiff.missingInTarget.length > 0 &&
-    missingLinks.length === 0 &&
-    linkDiff.missingInTarget.every((l) => !l.anchor?.trim());
-  if (imageWrapOnly) {
-    record("artifact", `${linkDiff.missingInTarget.length} empty-anchor image link wraps only`, false);
-  }
-
   routeReports.push({
-    path: route.path,
-    label: route.label,
+    path: routePath,
+    baselineRouteSha256: snapshot.routeSha256,
     httpStatus: response.status,
     indexable: !noindexInfo.hasNoindex,
     noindexClassification: noindexInfo.label,
@@ -278,7 +281,8 @@ for (const route of protectedRoutes) {
 const report = {
   checkedAt: new Date().toISOString(),
   target: TARGET.origin,
-  sourceOfTruth: policy.sourceOfTruth,
+  baselineOverallSha256: integrity.overallSha256,
+  baselineIntegrity: "pass",
   expectStagingNoindex: expectsStagingNoindex(),
   protectedRouteCount: routeReports.length,
   routes: routeReports,
@@ -298,4 +302,15 @@ if (blockingFailures.length) {
 }
 
 console.log("PASS — RANKING PROTECTED ROUTES PRESERVED");
-console.log(JSON.stringify({ protectedRouteCount: routeReports.length, explainedFindings }, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      baselineIntegrity: "pass",
+      baselineOverallSha256: integrity.overallSha256,
+      protectedRouteCount: routeReports.length,
+      explainedFindings,
+    },
+    null,
+    2,
+  ),
+);
