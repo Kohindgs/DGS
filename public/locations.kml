@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document>
+    <name>Locations for D'Genius Solutions</name>
+    <open>1</open>
+    <Folder>
+      <atom:link href="https://www.dgeniussolutions.com" />
+      <Placemark>
+        <name><![CDATA[D'Genius Solutions]]></name>
+        <description><![CDATA[D'Genius Solutions - Creative & Digital Marketing Agency In India]]></description>
+        <address><![CDATA[SV Road, Khar W, Mumbai, 400050, IN]]></address>
+        <phoneNumber><![CDATA[9987922901]]></phoneNumber>
+        <atom:link href="https://www.dgeniussolutions.com"/>
+        <LookAt>
+          <altitude>0</altitude>
+          <range></range>
+          <tilt>0</tilt>
+        </LookAt>
+        <Point>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

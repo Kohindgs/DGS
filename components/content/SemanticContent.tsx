@@ -43,21 +43,37 @@ export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: Sem
               </Tag>
             );
           }
-          case "image":
+          case "image": {
+            const useNativeImage =
+              /mshots|s\.wordpress\.com/i.test(block.src) || !block.src.includes("dgeniussolutions.com");
             return (
               <figure key={key}>
-                <Image
-                  src={block.src}
-                  alt={block.alt}
-                  width={block.width ?? 16}
-                  height={block.height ?? 9}
-                  preload={block.preload === true}
-                  loading={block.preload ? undefined : "lazy"}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 960px"
-                />
+                {useNativeImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={block.src}
+                    alt={block.alt}
+                    width={block.width ?? 16}
+                    height={block.height ?? 9}
+                    loading={block.preload ? "eager" : "lazy"}
+                    decoding="async"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 960px"
+                  />
+                ) : (
+                  <Image
+                    src={block.src}
+                    alt={block.alt}
+                    width={block.width ?? 16}
+                    height={block.height ?? 9}
+                    preload={block.preload === true}
+                    loading={block.preload ? undefined : "lazy"}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 960px"
+                  />
+                )}
                 {block.caption ? <figcaption>{block.caption}</figcaption> : null}
               </figure>
             );
+          }
           case "quote":
             return (
               <blockquote key={key}>

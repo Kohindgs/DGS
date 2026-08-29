@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import {
   canonicalFromHtml,
   extractArticleHtml,
@@ -16,6 +15,15 @@ import {
 } from "./tier0-parity-compare.mjs";
 import { classifyNoindex, expectsStagingNoindex, jsonLdTypesFromHtml } from "./migration-audit-shared.mjs";
 import { isSiteInternalHref } from "./ranking-link-restorations.mjs";
+import {
+  createProbeCache,
+  mapWithConcurrency,
+  validateImageAsset,
+  validateInternalLink,
+  isBrokenImageClassification,
+  isBrokenLinkClassification,
+} from "./media-link-audit.mjs";
+import { applyTechnicalLinkCorrections } from "./technical-link-corrections.mjs";
 
 export const MIGRATION_CLASSES = [
   "200_RETAINED",
@@ -64,7 +72,7 @@ export function spanText(spans = []) {
   return spans.map((s) => s.text || "").join("").trim();
 }
 
-export function extractExpectedFromBlocks(blocks = []) {
+export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = {}) {
   const headings = [];
   const paragraphs = [];
   const lists = [];
@@ -73,37 +81,48 @@ export function extractExpectedFromBlocks(blocks = []) {
   const images = [];
   const ctas = [];
 
-  for (const block of blocks) {
+  for (const [index, block] of blocks.entries()) {
+    const blockRef = { index, type: block.type, id: block.id || null, wordpressId };
     if (block.type === "heading" && block.text) {
-      headings.push({ level: `h${block.level}`, text: block.text.trim() });
-      if (block.href) links.push({ anchor: block.text.trim(), path: cleanPath(block.href) });
+      headings.push({ ...blockRef, level: `h${block.level}`, text: block.text.trim() });
+      if (block.href) {
+        links.push({ ...blockRef, anchor: block.text.trim(), path: cleanPath(block.href) });
+      }
     }
     if (block.type === "paragraph") {
       const text = spanText(block.content);
-      if (text) paragraphs.push(text);
+      if (text) paragraphs.push({ ...blockRef, text });
       for (const span of block.content || []) {
-        if (span.href) links.push({ anchor: span.text?.trim() || text, path: cleanPath(span.href) });
+        if (span.href) {
+          links.push({ ...blockRef, anchor: span.text?.trim() || text, path: cleanPath(span.href) });
+        }
       }
     }
     if (block.type === "list") {
       for (const item of block.items || []) {
         const text = spanText(item);
-        if (text) lists.push(text);
+        if (text) lists.push({ ...blockRef, text });
         for (const span of item || []) {
-          if (span.href) links.push({ anchor: span.text?.trim() || text, path: cleanPath(span.href) });
+          if (span.href) {
+            links.push({ ...blockRef, anchor: span.text?.trim() || text, path: cleanPath(span.href) });
+          }
         }
       }
     }
     if (block.type === "faq") {
       for (const item of block.items || []) {
-        faqs.push({ question: item.question?.trim() || "", answer: spanText(item.answer) });
+        faqs.push({
+          ...blockRef,
+          question: item.question?.trim() || "",
+          answer: spanText(item.answer),
+        });
       }
     }
     if (block.type === "image" && block.src) {
-      images.push({ src: block.src, alt: block.alt || "" });
+      images.push({ ...blockRef, src: block.src, alt: block.alt || "" });
     }
     if (block.type === "cta" && block.label) {
-      ctas.push(block.label.trim());
+      ctas.push({ ...blockRef, label: block.label.trim() });
     }
   }
 
@@ -174,8 +193,8 @@ export function compareRenderedContent(expected, html, pageUrl) {
     (h) => !isTemplateLiteralHeading(h.text),
   );
 
-  const missingParagraphs = expected.paragraphs.filter((p) => {
-    const needle = normalizeText(p).slice(0, 80);
+  const missingParagraphs = expected.paragraphs.filter((entry) => {
+    const needle = normalizeText(entry.text).slice(0, 80);
     return needle.length > 20 && !renderedText.includes(needle);
   });
 
@@ -188,10 +207,15 @@ export function compareRenderedContent(expected, html, pageUrl) {
       const match = renderedFaq.find((r) => r.question === f.question);
       return match && normalizeText(match.answer) !== normalizeText(f.answer);
     })
-    .map((f) => f.question);
+    .map((f) => ({
+      question: f.question,
+      wordpressId: f.wordpressId,
+      blockIndex: f.index,
+      blockType: f.type,
+    }));
 
-  const missingLists = expected.lists.filter((item) => {
-    const needle = normalizeText(item).slice(0, 60);
+  const missingLists = expected.lists.filter((entry) => {
+    const needle = normalizeText(entry.text).slice(0, 60);
     return needle.length > 15 && !renderedText.includes(needle);
   });
 
@@ -219,13 +243,43 @@ export function compareRenderedContent(expected, html, pageUrl) {
 
   return {
     contentComplete: structuralMissing === false && missingLinks.length === 0,
-    missingHeadings: missingHeadings.map((h) => h.text),
-    missingParagraphs: missingParagraphs.slice(0, 8),
-    missingFaqs: missingFaqs.map((f) => f.question),
+    missingHeadings: missingHeadings.map((h) => ({
+      text: h.text,
+      evidence: expected.headings.find((entry) => entry.text === h.text) || null,
+    })),
+    missingParagraphs: missingParagraphs.slice(0, 8).map((entry) => ({
+      text: entry.text.slice(0, 120),
+      wordpressId: entry.wordpressId,
+      blockIndex: entry.index,
+      blockType: entry.type,
+    })),
+    missingFaqs: missingFaqs.map((f) => ({
+      question: f.question,
+      wordpressId: f.wordpressId,
+      blockIndex: f.index,
+      blockType: f.type,
+    })),
     faqAnswerDiffs,
-    missingLists: missingLists.slice(0, 5),
-    missingLinks: missingLinks.slice(0, 8).map((l) => ({ anchor: l.anchor, path: l.path })),
-    missingImages: missingImages.slice(0, 5).map((i) => i.alt),
+    missingLists: missingLists.slice(0, 5).map((entry) => ({
+      text: entry.text.slice(0, 120),
+      wordpressId: entry.wordpressId,
+      blockIndex: entry.index,
+      blockType: entry.type,
+    })),
+    missingLinks: missingLinks.slice(0, 8).map((l) => ({
+      anchor: l.anchor,
+      path: l.path,
+      wordpressId: l.wordpressId,
+      blockIndex: l.index,
+      blockType: l.type,
+    })),
+    missingImages: missingImages.slice(0, 5).map((i) => ({
+      alt: i.alt,
+      src: i.src,
+      wordpressId: i.wordpressId,
+      blockIndex: i.index,
+      blockType: i.type,
+    })),
     renderedHeadingCount: renderedHeadings.length,
     renderedImageCount: renderedImages.length,
   };
@@ -256,6 +310,8 @@ export async function auditRetainedHtml({
   sitemapPaths,
   expectedBlocks,
   target,
+  technicalLinkCorrections = null,
+  probeCache = null,
 }) {
   const failures = [];
   const warnings = [];
@@ -317,48 +373,71 @@ export async function auditRetainedHtml({
 
   let content = null;
   if (expectedBlocks?.length && !TIER0_PATHS.has(path)) {
-    const expected = extractExpectedFromBlocks(expectedBlocks);
+    const correctedBlocks = technicalLinkCorrections
+      ? applyTechnicalLinkCorrections(path, expectedBlocks, technicalLinkCorrections)
+      : expectedBlocks;
+    const expected = extractExpectedFromBlocks(correctedBlocks, {
+      wordpressId: registryRoute?.wordpressId || approvedDecision?.wordpressId || null,
+    });
     content = compareRenderedContent(expected, html, url.href);
     if (!content.contentComplete) warnings.push("WordPress visible content incomplete");
   }
 
-  const images = extractImages(article || html).slice(0, 12);
-  const brokenImages = [];
+  const cache = probeCache || createProbeCache();
+  const images = extractImages(article || html).filter((img) => img.src && !/^data:/i.test(img.src));
+  const uniqueImages = [];
+  const seenImageSrc = new Set();
   for (const img of images) {
-    if (!img.src || /^data:/i.test(img.src)) continue;
-    try {
-      const imgUrl = new URL(img.src, target);
-      const imgRes = await fetch(imgUrl, { method: "HEAD", redirect: "follow" });
-      if (imgRes.status >= 400) brokenImages.push({ src: img.src, status: imgRes.status });
-    } catch {
-      brokenImages.push({ src: img.src, status: "fetch-error" });
-    }
+    const key = img.src;
+    if (seenImageSrc.has(key)) continue;
+    seenImageSrc.add(key);
+    uniqueImages.push(img);
   }
-  if (brokenImages.length) failures.push(`${brokenImages.length} broken in-content image(s)`);
+
+  const imageResults = await mapWithConcurrency(uniqueImages, async (img) =>
+    validateImageAsset(img.src, target, cache, path),
+  );
+  const brokenImages = imageResults.filter((result) => isBrokenImageClassification(result.classification));
+  const rateLimitedImages = imageResults.filter((result) => result.classification === "RATE_LIMITED");
+  const externalDependencyImages = imageResults.filter((result) => {
+    if (result.classification === "INLINE_DATA") return false;
+    try {
+      const origin = new URL(result.sourceUrl).origin;
+      const targetOrigin = new URL(target).origin;
+      return origin !== targetOrigin && !/dgeniussolutions\.com$/i.test(new URL(result.sourceUrl).hostname);
+    } catch {
+      return false;
+    }
+  });
+  const blockingBrokenImages =
+    path === "/"
+      ? brokenImages.filter((result) => !externalDependencyImages.includes(result))
+      : brokenImages;
+  if (blockingBrokenImages.length) failures.push(`${blockingBrokenImages.length} broken in-content image(s)`);
 
   const internalLinks = extractContextualLinks(article || html, url.href)
     .filter((l) => isSiteInternalHref(l.href || l.path))
     .filter((l) => !/wp-content/i.test(l.path || ""))
-    .slice(0, 20);
-  const brokenInternalLinks = [];
-  if (!TIER0_PATHS.has(path)) {
-    for (const link of internalLinks) {
-      try {
-        const linkRes = await fetch(new URL(link.path, target), { redirect: "manual" });
-        if (linkRes.status === 404) brokenInternalLinks.push({ path: link.path, anchor: link.anchor });
-        else if (linkRes.status >= 300 && linkRes.status < 400) {
-          const hopRes = await fetch(new URL(link.path, target), { redirect: "follow" });
-          if (hopRes.status === 404) brokenInternalLinks.push({ path: link.path, anchor: link.anchor, status: 404 });
-        } else if (linkRes.status >= 500) {
-          brokenInternalLinks.push({ path: link.path, anchor: link.anchor, status: linkRes.status });
-        }
-      } catch {
-        brokenInternalLinks.push({ path: link.path, anchor: link.anchor, status: "fetch-error" });
-      }
-    }
-    if (!isHome && brokenInternalLinks.length) {
-      failures.push(`${brokenInternalLinks.length} broken internal link(s) in article`);
-    }
+    .filter((l) => !String(l.path || "").includes("#"));
+  const uniqueLinks = [];
+  const seenLinkPaths = new Set();
+  for (const link of internalLinks) {
+    const key = link.path;
+    if (seenLinkPaths.has(key)) continue;
+    seenLinkPaths.add(key);
+    uniqueLinks.push(link);
+  }
+
+  const linkResults = !TIER0_PATHS.has(path)
+    ? await mapWithConcurrency(uniqueLinks, async (link) => validateInternalLink(link, target, cache))
+    : [];
+  const brokenInternalLinks = linkResults.filter((result) => isBrokenLinkClassification(result.classification));
+  const avoidableRedirects = linkResults.filter((result) => result.classification === "AVOIDABLE_INTERNAL_REDIRECT");
+  const ambiguousLinks = linkResults.filter((result) => result.classification === "AMBIGUOUS");
+  const rateLimitedLinks = linkResults.filter((result) => result.classification === "RATE_LIMITED");
+
+  if (!isHome && brokenInternalLinks.length) {
+    failures.push(`${brokenInternalLinks.length} broken internal link(s) in article`);
   }
 
   return {
@@ -377,8 +456,28 @@ export async function auditRetainedHtml({
       hasFooter,
       usesWpMirror: isHome ? usesWpMirror : null,
       content,
-      brokenImages,
-      brokenInternalLinks: brokenInternalLinks.slice(0, 5),
+      imageAudit: {
+        checkedCount: uniqueImages.length,
+        brokenCount: brokenImages.length,
+        blockingBrokenCount: blockingBrokenImages.length,
+        rateLimitedCount: rateLimitedImages.length,
+        externalDependencyCount: externalDependencyImages.length,
+        brokenImages: brokenImages.slice(0, 8),
+        rateLimitedImages: rateLimitedImages.slice(0, 8),
+        externalDependencyImages: externalDependencyImages.slice(0, 8),
+      },
+      linkAudit: {
+        checkedCount: uniqueLinks.length,
+        brokenCount: brokenInternalLinks.length,
+        avoidableRedirectCount: avoidableRedirects.length,
+        ambiguousCount: ambiguousLinks.length,
+        rateLimitedCount: rateLimitedLinks.length,
+        brokenInternalLinks: brokenInternalLinks.slice(0, 8),
+        avoidableRedirects: avoidableRedirects.slice(0, 8),
+        ambiguousLinks: ambiguousLinks.slice(0, 8),
+      },
+      brokenImages: blockingBrokenImages.slice(0, 8),
+      brokenInternalLinks: brokenInternalLinks.slice(0, 8),
     },
   };
 }

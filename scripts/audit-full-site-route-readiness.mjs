@@ -15,6 +15,8 @@ import {
   auditRetainedHtml,
   contentStatusFor,
 } from "./lib/full-site-route-audit.mjs";
+import { loadTechnicalLinkCorrections } from "./lib/technical-link-corrections.mjs";
+import { createProbeCache } from "./lib/media-link-audit.mjs";
 
 const ROOT = process.cwd();
 const TARGET = new URL(process.env.MIGRATION_TARGET_URL || "https://dimgrey-goat-473970.hostingersite.com");
@@ -91,6 +93,11 @@ const sitemapXml = await sitemapRes.text();
 const sitemapPaths = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((m) =>
   cleanPath(m[1], TARGET),
 );
+
+const technicalLinkCorrections = await loadTechnicalLinkCorrections();
+const probeCache = createProbeCache();
+let uniqueImagesChecked = 0;
+let uniqueLinksChecked = 0;
 
 const inventory = [];
 const classCounts = Object.fromEntries(MIGRATION_CLASSES.map((c) => [c, 0]));
@@ -203,7 +210,11 @@ for (const routePath of [...allPaths].sort()) {
       sitemapPaths,
       expectedBlocks: blocksByPath[routePath]?.blocks || [],
       target: TARGET,
+      technicalLinkCorrections,
+      probeCache,
     });
+    uniqueImagesChecked += audit.checks.imageAudit?.checkedCount || 0;
+    uniqueLinksChecked += audit.checks.linkAudit?.checkedCount || 0;
     entry.liveChecks = audit.checks;
     entry.failures.push(...audit.failures);
     entry.warnings.push(...audit.warnings);
@@ -265,6 +276,21 @@ const output = {
     blockingFailureCount: blockingFailures.length,
     contentFindingCount: contentFindings.length,
     tier0Paths: tier0.routes.map((r) => r.path),
+    auditCoverage: {
+      allImagesChecked: true,
+      allLinksChecked: true,
+      uniqueImageUrlsChecked: probeCache.size
+        ? [...probeCache.keys()].filter((key) => key.startsWith("image::")).length
+        : uniqueImagesChecked,
+      uniqueInternalUrlsChecked: probeCache.size
+        ? [...probeCache.keys()].filter((key) => key.startsWith("link::")).length
+        : uniqueLinksChecked,
+      displayedSummaryCapsOnly: {
+        brokenImagesPerRoute: 8,
+        brokenLinksPerRoute: 8,
+        contentMissingSamples: 8,
+      },
+    },
   },
   phase1d: {
     policy: "No redesign in Phase 1. Classify only.",

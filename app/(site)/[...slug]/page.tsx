@@ -15,6 +15,7 @@ import { getRouteDecision, shouldExcludeFromStaticGeneration } from "@/lib/migra
 import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
 import Link from "next/link";
 import { applyRankingLinkRestorations } from "@/lib/migration/ranking-link-restorations";
+import { applyTechnicalLinkCorrections } from "@/lib/migration/technical-link-corrections";
 
 export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
@@ -76,7 +77,10 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   }
 
   const blocks = (await loadContentBlocks())[path]?.blocks || [];
-  const restoredBlocks = applyRankingLinkRestorations(path, blocks);
+  const restoredBlocks = applyTechnicalLinkCorrections(
+    path,
+    applyRankingLinkRestorations(path, blocks),
+  );
   const breadcrumbs = buildBreadcrumbs(path, route);
   const schemaBlocks = buildRouteSchemas({ route, path, blocks: restoredBlocks, breadcrumbs });
 
