@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { classifyNoindex, expectsStagingNoindex } from "./lib/migration-audit-shared.mjs";
 
 const ROOT = process.cwd();
 const TARGET = new URL(process.env.MIGRATION_TARGET_URL || "http://127.0.0.1:3000");
@@ -63,6 +64,8 @@ function internalLinks(html, pageUrl) {
 
 const reports = [];
 const failures = [];
+const expectedStaging = [];
+const realFailures = [];
 for (const route of tier0.routes) {
   const source = sourceByPath.get(route.path);
   const exception = exceptionsByPath.get(route.path) || {};
@@ -73,6 +76,8 @@ for (const route of tier0.routes) {
   const h1 = first(html, /<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
   const canonicalUrl = canonical(html);
   const robots = meta(html, "robots");
+  const xRobots = response.headers.get("x-robots-tag") || "";
+  const noindexInfo = classifyNoindex(robots, xRobots);
   const articleMatch = html.match(/<article\b[^>]*data-migration-content[^>]*>([\s\S]*?)<\/article>/i);
   const articleHtml = articleMatch?.[1] || "";
   const articleText = text(articleHtml);
@@ -84,16 +89,23 @@ for (const route of tier0.routes) {
   const exactContent = source ? articleSha === source.content.normalizedTextSha256 : false;
 
   const itemFailures = [];
-  if (response.status !== 200) itemFailures.push(`expected 200, received ${response.status}`);
-  if (response.status >= 300 && response.status < 400) itemFailures.push(`protected route redirects to ${response.headers.get("location") || "unknown"}`);
-  if (/noindex/i.test(robots)) itemFailures.push("noindex detected");
-  if (title !== route.observedTitle && exception.allowTitleChange !== true) itemFailures.push("title differs from protected baseline");
-  if (h1 !== route.observedH1 && exception.allowH1Change !== true) itemFailures.push("H1 differs from protected baseline");
-  if (!canonicalUrl) itemFailures.push("canonical missing");
-  else if (normalizePath(canonicalUrl) !== normalizePath(route.desiredCanonicalPath || route.path)) itemFailures.push(`canonical points to ${canonicalUrl}`);
-  if (!articleMatch) itemFailures.push("semantic migration article marker missing");
-  if (source && !exactContent && exception.allowContentHashChange !== true) itemFailures.push("normalized visible content hash differs from WordPress baseline");
-  if (missingInternalLinks.length) itemFailures.push(`missing ${missingInternalLinks.length} protected source internal-link destinations`);
+  const recordFailure = (message, expected = false) => {
+    itemFailures.push(message);
+    failures.push(`${route.path}: ${message}`);
+    if (expected) expectedStaging.push(`${route.path}: ${message}`);
+    else realFailures.push(`${route.path}: ${message}`);
+  };
+
+  if (response.status !== 200) recordFailure(`expected 200, received ${response.status}`);
+  if (response.status >= 300 && response.status < 400) recordFailure(`protected route redirects to ${response.headers.get("location") || "unknown"}`);
+  if (noindexInfo.hasNoindex) recordFailure(noindexInfo.label || "noindex detected", noindexInfo.classification === "A");
+  if (title !== route.observedTitle && exception.allowTitleChange !== true) recordFailure("title differs from protected baseline");
+  if (h1 !== route.observedH1 && exception.allowH1Change !== true) recordFailure("H1 differs from protected baseline");
+  if (!canonicalUrl) recordFailure("canonical missing");
+  else if (normalizePath(canonicalUrl) !== normalizePath(route.desiredCanonicalPath || route.path)) recordFailure(`canonical points to ${canonicalUrl}`);
+  if (!articleMatch) recordFailure("semantic migration article marker missing");
+  if (source && !exactContent && exception.allowContentHashChange !== true) recordFailure("normalized visible content hash differs from WordPress baseline");
+  if (missingInternalLinks.length) recordFailure(`missing ${missingInternalLinks.length} protected source internal-link destinations`);
 
   reports.push({
     path: route.path,
@@ -102,6 +114,9 @@ for (const route of tier0.routes) {
     h1,
     canonical: canonicalUrl,
     robots,
+    xRobotsTag: xRobots,
+    noindexClassification: noindexInfo.label,
+    expectStagingNoindex: expectsStagingNoindex(),
     articleCharacterCount: articleText.length,
     articleSha256: articleSha,
     sourceArticleSha256: source?.content.normalizedTextSha256 || null,
@@ -112,13 +127,33 @@ for (const route of tier0.routes) {
     approvedExceptions: exception,
     failures: itemFailures,
   });
-  itemFailures.forEach((failure) => failures.push(`${route.path}: ${failure}`));
 }
 
-const output = { checkedAt: new Date().toISOString(), target: TARGET.origin, reports, failures };
+const output = {
+  checkedAt: new Date().toISOString(),
+  target: TARGET.origin,
+  expectStagingNoindex: expectsStagingNoindex(),
+  reports,
+  failures,
+  expectedStagingFailures: expectedStaging,
+  realFailures,
+};
 await mkdir(OUT_DIR, { recursive: true });
 await writeFile(path.join(OUT_DIR, "tier0-parity.json"), `${JSON.stringify(output, null, 2)}\n`, "utf8");
-console.log(JSON.stringify({ target: TARGET.origin, protectedPages: reports.length, failures }, null, 2));
-if (failures.length) process.exitCode = 1;
+console.log(
+  JSON.stringify(
+    {
+      target: TARGET.origin,
+      protectedPages: reports.length,
+      expectStagingNoindex: expectsStagingNoindex(),
+      expectedStagingFailures: expectedStaging,
+      realFailures,
+      failures,
+    },
+    null,
+    2,
+  ),
+);
+if (realFailures.length) process.exitCode = 1;
 
 async function readJson(file) { return JSON.parse(await readFile(file, "utf8")); }

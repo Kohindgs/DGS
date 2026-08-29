@@ -1,0 +1,1278 @@
+{
+  "path": "/services/aeo-services-in-mumbai/",
+  "slug": "aeo",
+  "checkedAt": "2026-08-29T07:45:49.701Z",
+  "target": "http://127.0.0.1:3025",
+  "wordpressSource": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+  "httpStatus": 200,
+  "indexability": {
+    "robots": "noindex, nofollow",
+    "xRobotsTag": "noindex, nofollow, noarchive",
+    "hasNoindex": true,
+    "classification": "A",
+    "label": "EXPECTED_STAGING_NOINDEX",
+    "expectStagingNoindex": true
+  },
+  "canonical": {
+    "next": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "nextPath": "/services/aeo-services-in-mumbai/",
+    "desiredPath": "/services/aeo-services-in-mumbai/",
+    "wordpressObservedPath": "/services/aeo/",
+    "selfCanonical": true
+  },
+  "schemaTypes": [
+    "BreadcrumbList",
+    "ImageObject",
+    "ListItem",
+    "Organization",
+    "PostalAddress",
+    "Service",
+    "WebPage",
+    "WebSite"
+  ],
+  "content": {
+    "hashMatch": false,
+    "sourceSha256": "6a8d08bd4985ebdf65ca5fe164841bc30e96376e7777a7253d5cde0f678e9ce7",
+    "targetSha256": "b8d646f445d8b6a5bf665ef931fbe62f252eeb9e5d25764406018cc85d61eb2a",
+    "headings": {
+      "missing": [],
+      "extra": [],
+      "textDifferences": [],
+      "order": {
+        "orderChanged": false,
+        "sourceOrder": [
+          "h1:AEO Services in Mumbai from a Mumbai-Based AEO Agency",
+          "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+          "h2:Real Search Results Supporting SEO and AI Visibility",
+          "h3:DGS Search and AI Visibility Screenshots",
+          "h3:Brand visibility strengthened inside Google AI Overviews",
+          "h3:Structured content earned stronger AI-assisted discovery",
+          "h3:Brand information surfaced as a relevant AI Overview source",
+          "h3:Answer engine optimization connected visibility with buyer intent",
+          "h3:Weavings Search and AI Visibility Screenshots",
+          "h3:Search strategy connected authority with qualified demand",
+          "h3:Search visibility improved through coordinated SEO execution",
+          "h3:Answer-ready content strengthened AI-assisted discovery",
+          "h3:AI search visibility reinforced brand authority and discovery",
+          "h2:Detailed Client SEO Case Studies",
+          "h3:TheWorldGrad",
+          "h3:Weavings Manpower Solutions",
+          "h2:Recognized for Search, Content and Digital Growth",
+          "h3:Best Place to Work",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h2:What Does an AEO Agency in Mumbai Do?",
+          "h3:AEO services turn service pages into useful, answer-ready resources",
+          "h3:Where AEO services in Mumbai create business value",
+          "h2:AEO Services in Mumbai for Local Search and AI Visibility",
+          "h3:AEO service in Mumbai for high-intent local searches",
+          "h3:AEO services for Mumbai, Thane and Navi Mumbai",
+          "h3:AEO agency in Mumbai with integrated SEO expertise",
+          "h2:What Our AEO Service in Mumbai Includes",
+          "h3:AI Overview and AI Mode Readiness",
+          "h3:Featured Snippet Optimization",
+          "h3:People Also Ask Content Mapping",
+          "h3:Relevant Structured Data",
+          "h3:Service Page Content Optimization",
+          "h3:GEO and LLM Search Support",
+          "h2:How to Compare AEO Agencies in Mumbai",
+          "h3:What to check before choosing an AEO agency",
+          "h3:Why businesses choose DGS for AEO services in Mumbai",
+          "h2:SEO, AEO, GEO and LLM SEO Build One Search Visibility System",
+          "h2:Google AI Overview Optimization by an AEO Agency in Mumbai",
+          "h3:Commercial intent and query journey mapping",
+          "h3:Clear answers supported by depth and evidence",
+          "h3:Entity, local and credibility signals",
+          "h2:Why Businesses Need AEO Services in Mumbai",
+          "h3:Broader Search Visibility",
+          "h3:Faster Buyer Understanding",
+          "h3:Stronger Mumbai Relevance",
+          "h3:More Credible Decisions",
+          "h3:Better-Qualified Enquiries",
+          "h3:Long-Term Search Resilience",
+          "h2:Brand Presence and Authority Signals",
+          "h2:Choose an AEO Agency in Mumbai Built for Search and AI Visibility",
+          "h2:AEO Agency and AEO Services in Mumbai FAQs",
+          "h2:Get a Free Audit from an AEO Agency in Mumbai"
+        ],
+        "targetOrder": [
+          "h1:AEO Services in Mumbai from a Mumbai-Based AEO Agency",
+          "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+          "h2:Real Search Results Supporting SEO and AI Visibility",
+          "h3:DGS Search and AI Visibility Screenshots",
+          "h3:Brand visibility strengthened inside Google AI Overviews",
+          "h3:Structured content earned stronger AI-assisted discovery",
+          "h3:Brand information surfaced as a relevant AI Overview source",
+          "h3:Answer engine optimization connected visibility with buyer intent",
+          "h3:Weavings Search and AI Visibility Screenshots",
+          "h3:Search strategy connected authority with qualified demand",
+          "h3:Search visibility improved through coordinated SEO execution",
+          "h3:Answer-ready content strengthened AI-assisted discovery",
+          "h3:AI search visibility reinforced brand authority and discovery",
+          "h2:Detailed Client SEO Case Studies",
+          "h3:TheWorldGrad",
+          "h3:Weavings Manpower Solutions",
+          "h2:Recognized for Search, Content and Digital Growth",
+          "h3:Best Place to Work",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h2:What Does an AEO Agency in Mumbai Do?",
+          "h3:AEO services turn service pages into useful, answer-ready resources",
+          "h3:Where AEO services in Mumbai create business value",
+          "h2:AEO Services in Mumbai for Local Search and AI Visibility",
+          "h3:AEO service in Mumbai for high-intent local searches",
+          "h3:AEO services for Mumbai, Thane and Navi Mumbai",
+          "h3:AEO agency in Mumbai with integrated SEO expertise",
+          "h2:What Our AEO Service in Mumbai Includes",
+          "h3:AI Overview and AI Mode Readiness",
+          "h3:Featured Snippet Optimization",
+          "h3:People Also Ask Content Mapping",
+          "h3:Relevant Structured Data",
+          "h3:Service Page Content Optimization",
+          "h3:GEO and LLM Search Support",
+          "h2:How to Compare AEO Agencies in Mumbai",
+          "h3:What to check before choosing an AEO agency",
+          "h3:Why businesses choose DGS for AEO services in Mumbai",
+          "h2:SEO, AEO, GEO and LLM SEO Build One Search Visibility System",
+          "h2:Google AI Overview Optimization by an AEO Agency in Mumbai",
+          "h3:Commercial intent and query journey mapping",
+          "h3:Clear answers supported by depth and evidence",
+          "h3:Entity, local and credibility signals",
+          "h2:Why Businesses Need AEO Services in Mumbai",
+          "h3:Broader Search Visibility",
+          "h3:Faster Buyer Understanding",
+          "h3:Stronger Mumbai Relevance",
+          "h3:More Credible Decisions",
+          "h3:Better-Qualified Enquiries",
+          "h3:Long-Term Search Resilience",
+          "h2:Brand Presence and Authority Signals",
+          "h2:Choose an AEO Agency in Mumbai Built for Search and AI Visibility",
+          "h2:AEO Agency and AEO Services in Mumbai FAQs",
+          "h2:Get a Free Audit from an AEO Agency in Mumbai"
+        ]
+      }
+    },
+    "paragraphs": {
+      "missing": [],
+      "extra": [
+        "Answer Engine Optimization Agency in Mumbai for Google and AI Search",
+        "Updated July 2026 • Mumbai-focused AEO strategy • Google AI search ready • Built for qualified enquiries",
+        "AEO Agency in Mumbai AEO Services in Mumbai AEO Service in Mumbai",
+        "Call +91-99879 22901",
+        "WhatsApp",
+        "Trusted By 200+ Brands",
+        "Case Studies & Results",
+        "DGS",
+        "DGS · AI Overview",
+        "DGS · AI Search",
+        "DGS · AEO Growth",
+        "DGS · Commercial AEO",
+        "Weavings",
+        "Weavings · Commercial SEO",
+        "Weavings · SEO Authority",
+        "Weavings · AEO Results",
+        "Weavings · AI Visibility",
+        "Case Studies",
+        "Education SEO · Ongoing",
+        "95% KW Growth 2.5x Backlinks 6x Traffic",
+        "View full case study →",
+        "TWG TheWorldGrad SEO Growth",
+        "B2B Staffing · Ongoing",
+        "17.4K Clicks 1.82M Impressions 918 Organic KWs",
+        "View full case study →",
+        "WM Weavings Manpower B2B SEO",
+        "× Education SEO · Ongoing TheWorldGrad Organic growth campaign for student enquiry journeys",
+        "Key Results 95% Keyword Growth 2.5x Backlink Growth 6x Organic Traffic SEO Authority",
+        "Achievements",
+        "× B2B Staffing · Ongoing Weavings Manpower Solutions Search visibility campaign for B2B staffing leads"
+      ],
+      "wordingDifferences": [
+        {
+          "source": "D'Genius Solutions is an AEO agency in Mumbai helping businesses improve visibility across Google AI Overviews, AI Mode, featured snippets, People Also Ask, voice search and conversational platforms such as ChatGPT, Gemini and Perplexity.",
+          "target": "Answer Engine Optimization Agency in Mumbai for Google and AI Search"
+        },
+        {
+          "source": "Our AEO services in Mumbai combine technical SEO, answer-focused content, structured data, entity optimization, local relevance, internal linking and first-hand business proof. Every campaign is built to make your website easier for search systems to understand and more useful for buyers comparing providers.",
+          "target": "D'Genius Solutions is an AEO agency in Mumbai helping businesses improve visibility across Google AI Overviews, AI Mode, featured snippets, People Also Ask, voice search and conversational platforms such as ChatGPT, Gemini and Perplexity."
+        },
+        {
+          "source": "Whether you need a complete AEO service in Mumbai or support alongside SEO, GEO and LLM SEO, DGS develops a practical roadmap around commercial keywords, customer questions, service-page quality and qualified lead generation.",
+          "target": "Our AEO services in Mumbai combine technical SEO, answer-focused content, structured data, entity optimization, local relevance, internal linking and first-hand business proof. Every campaign is built to make your website easier for search systems to understand and more useful for buyers comparing providers."
+        },
+        {
+          "source": "Real brand work across digital marketing, websites, SEO, creative design, social media, performance marketing and AI production.",
+          "target": "Whether you need a complete AEO service in Mumbai or support alongside SEO, GEO and LLM SEO, DGS develops a practical roadmap around commercial keywords, customer questions, service-page quality and qualified lead generation."
+        },
+        {
+          "source": "Explore selected SEO, AEO and AI-search work that demonstrates how D'Genius Solutions builds visibility, authority and stronger paths to qualified enquiries.",
+          "target": "Updated July 2026 • Mumbai-focused AEO strategy • Google AI search ready • Built for qualified enquiries"
+        },
+        {
+          "source": "If we can do it for ourselves, we can do it for your brand.",
+          "target": "AEO Agency in Mumbai AEO Services in Mumbai AEO Service in Mumbai"
+        },
+        {
+          "source": "These campaign snapshots show how D'Genius Solutions applies structured content, technical SEO, internal linking, authority development and answer-ready page improvements.",
+          "target": "Call +91-99879 22901"
+        },
+        {
+          "source": "The examples demonstrate relevant execution experience; they do not imply that identical rankings or AI visibility can be guaranteed for every website.",
+          "target": "WhatsApp"
+        },
+        {
+          "source": "Selected proof from D'Genius Solutions showing SEO, AEO, Google AI Overview and AI-search visibility outcomes.",
+          "target": "Trusted By 200+ Brands"
+        },
+        {
+          "source": "Answer-focused content, entity signals and supporting SEO improvements helped strengthen visibility for a commercially relevant search query.",
+          "target": "Real brand work across digital marketing, websites, SEO, creative design, social media, performance marketing and AI production."
+        },
+        {
+          "source": "Clear service information, logical headings and crawlable page structure improved how search systems understood and surfaced the business.",
+          "target": "Case Studies & Results"
+        },
+        {
+          "source": "Buyer questions, direct answers, internal links and topical context were aligned to support AI Overview source inclusion.",
+          "target": "Explore selected SEO, AEO and AI-search work that demonstrates how D'Genius Solutions builds visibility, authority and stronger paths to qualified enquiries."
+        },
+        {
+          "source": "Commercial keyword targeting, evidence-led content and service-page optimization created a clearer path to qualified discovery.",
+          "target": "If we can do it for ourselves, we can do it for your brand."
+        },
+        {
+          "source": "Selected proof showing the SEO, search visibility and AI-discovery work delivered for Weavings Manpower Solutions.",
+          "target": "These campaign snapshots show how D'Genius Solutions applies structured content, technical SEO, internal linking, authority development and answer-ready page improvements."
+        },
+        {
+          "source": "Commercial keyword coverage, evidence-led content and conversion-ready service sections supported stronger discovery and enquiries.",
+          "target": "The examples demonstrate relevant execution experience; they do not imply that identical rankings or AI visibility can be guaranteed for every website."
+        },
+        {
+          "source": "Intent-led content, technical SEO, internal linking and authority signals strengthened performance across relevant searches.",
+          "target": "DGS"
+        },
+        {
+          "source": "Direct answers, structured headings, entity context and supporting proof improved how search and AI systems understood the brand.",
+          "target": "Selected proof from D'Genius Solutions showing SEO, AEO, Google AI Overview and AI-search visibility outcomes."
+        },
+        {
+          "source": "Structured service content, entity clarity, internal linking and credible proof strengthened visibility across AI-assisted search journeys.",
+          "target": "DGS · AI Overview"
+        },
+        {
+          "source": "Result screenshots are selected campaign references and should be read with context.",
+          "target": "Answer-focused content, entity signals and supporting SEO improvements helped strengthen visibility for a commercially relevant search query."
+        },
+        {
+          "source": "Actual performance depends on competition, website authority, content quality, technical health, indexing, location and search algorithm changes.",
+          "target": "DGS · AI Search"
+        }
+      ],
+      "sourceCount": 81,
+      "targetCount": 155
+    },
+    "listItems": {
+      "missing": [],
+      "extra": [],
+      "sourceCount": 20,
+      "targetCount": 20
+    },
+    "faq": {
+      "missing": [],
+      "extra": [],
+      "answerDiffs": []
+    },
+    "images": {
+      "missing": [
+        {
+          "index": 40,
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/f43e05c46553d32c6f3c2e40726b7070_1742972415.avif",
+          "alt": "Client brand logo"
+        },
+        {
+          "index": 42,
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/c7a0b6_7b153a1579c943279fffb93ca08b39b1mv2-1.avif",
+          "alt": "Client brand logo"
+        }
+      ],
+      "extra": [
+        {
+          "index": 40,
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2026%2F06%2Ff43e05c46553d32c6f3c2e40726b7070_1742972415.avif&w=3840&q=75",
+          "alt": "Client brand logo"
+        },
+        {
+          "index": 42,
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2026%2F06%2Fc7a0b6_7b153a1579c943279fffb93ca08b39b1mv2-1.avif&w=3840&q=75",
+          "alt": "Client brand logo"
+        }
+      ],
+      "altDiffs": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla Education Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Saint Gobain client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Pantaloons client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Jaipur Kurti client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Nutriuits client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Raymond client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Plush Puppy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Candour London client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Styleup client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Onida client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aaram client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Trazact client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "M Power Aditya Birla Education Trust client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Compuage client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Solco client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Structural Specialties client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "MKA client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Club Med client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Druva client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Farm Classics client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Kreedo client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Marigold Lane client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Kotak Mahindra Bank client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Ujaas client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla Integrated School client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla World Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla Education Trust client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Humanxt client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "ClearFX Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "IND client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Sir Brandzalot client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Planet Smart City client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Novotel client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Meryl client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "MedArtha client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "LG client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Hanwha Techwin client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Compuage client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Client brand logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Blanco client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Amazonia client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Client brand logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS Google AI Overview visibility result screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS AI search citation visibility result screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS AI Overview source inclusion result screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS answer engine optimization search visibility screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings commercial SEO and lead generation result screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings SEO search visibility result screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings AEO and AI search visibility result screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings AI search visibility and authority result screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad SEO case study website screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings Manpower SEO case study website screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad website SEO performance",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings Manpower website SEO performance",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Prime Insights Best Place to Work award for D",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Corporate Connect highly regarded digital marketing agency award for D",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "GLA award for excellence in SEO content and performance marketing for D",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Eureka Forbes client logo"
+        }
+      ]
+    },
+    "order": {
+      "orderChanged": false,
+      "sourceOrder": [
+        "h1:AEO Services in Mumbai from a Mumbai-Based AEO Agency",
+        "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+        "h2:Real Search Results Supporting SEO and AI Visibility",
+        "h3:DGS Search and AI Visibility Screenshots",
+        "h3:Brand visibility strengthened inside Google AI Overviews",
+        "h3:Structured content earned stronger AI-assisted discovery",
+        "h3:Brand information surfaced as a relevant AI Overview source",
+        "h3:Answer engine optimization connected visibility with buyer intent",
+        "h3:Weavings Search and AI Visibility Screenshots",
+        "h3:Search strategy connected authority with qualified demand",
+        "h3:Search visibility improved through coordinated SEO execution",
+        "h3:Answer-ready content strengthened AI-assisted discovery",
+        "h3:AI search visibility reinforced brand authority and discovery",
+        "h2:Detailed Client SEO Case Studies",
+        "h3:TheWorldGrad",
+        "h3:Weavings Manpower Solutions",
+        "h2:Recognized for Search, Content and Digital Growth",
+        "h3:Best Place to Work",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h2:What Does an AEO Agency in Mumbai Do?",
+        "h3:AEO services turn service pages into useful, answer-ready resources",
+        "h3:Where AEO services in Mumbai create business value",
+        "h2:AEO Services in Mumbai for Local Search and AI Visibility",
+        "h3:AEO service in Mumbai for high-intent local searches",
+        "h3:AEO services for Mumbai, Thane and Navi Mumbai",
+        "h3:AEO agency in Mumbai with integrated SEO expertise",
+        "h2:What Our AEO Service in Mumbai Includes",
+        "h3:AI Overview and AI Mode Readiness",
+        "h3:Featured Snippet Optimization",
+        "h3:People Also Ask Content Mapping",
+        "h3:Relevant Structured Data",
+        "h3:Service Page Content Optimization",
+        "h3:GEO and LLM Search Support",
+        "h2:How to Compare AEO Agencies in Mumbai",
+        "h3:What to check before choosing an AEO agency",
+        "h3:Why businesses choose DGS for AEO services in Mumbai",
+        "h2:SEO, AEO, GEO and LLM SEO Build One Search Visibility System",
+        "h2:Google AI Overview Optimization by an AEO Agency in Mumbai",
+        "h3:Commercial intent and query journey mapping",
+        "h3:Clear answers supported by depth and evidence",
+        "h3:Entity, local and credibility signals",
+        "h2:Why Businesses Need AEO Services in Mumbai",
+        "h3:Broader Search Visibility",
+        "h3:Faster Buyer Understanding",
+        "h3:Stronger Mumbai Relevance",
+        "h3:More Credible Decisions",
+        "h3:Better-Qualified Enquiries",
+        "h3:Long-Term Search Resilience",
+        "h2:Brand Presence and Authority Signals",
+        "h2:Choose an AEO Agency in Mumbai Built for Search and AI Visibility",
+        "h2:AEO Agency and AEO Services in Mumbai FAQs",
+        "h2:Get a Free Audit from an AEO Agency in Mumbai"
+      ],
+      "targetOrder": [
+        "h1:AEO Services in Mumbai from a Mumbai-Based AEO Agency",
+        "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+        "h2:Real Search Results Supporting SEO and AI Visibility",
+        "h3:DGS Search and AI Visibility Screenshots",
+        "h3:Brand visibility strengthened inside Google AI Overviews",
+        "h3:Structured content earned stronger AI-assisted discovery",
+        "h3:Brand information surfaced as a relevant AI Overview source",
+        "h3:Answer engine optimization connected visibility with buyer intent",
+        "h3:Weavings Search and AI Visibility Screenshots",
+        "h3:Search strategy connected authority with qualified demand",
+        "h3:Search visibility improved through coordinated SEO execution",
+        "h3:Answer-ready content strengthened AI-assisted discovery",
+        "h3:AI search visibility reinforced brand authority and discovery",
+        "h2:Detailed Client SEO Case Studies",
+        "h3:TheWorldGrad",
+        "h3:Weavings Manpower Solutions",
+        "h2:Recognized for Search, Content and Digital Growth",
+        "h3:Best Place to Work",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h2:What Does an AEO Agency in Mumbai Do?",
+        "h3:AEO services turn service pages into useful, answer-ready resources",
+        "h3:Where AEO services in Mumbai create business value",
+        "h2:AEO Services in Mumbai for Local Search and AI Visibility",
+        "h3:AEO service in Mumbai for high-intent local searches",
+        "h3:AEO services for Mumbai, Thane and Navi Mumbai",
+        "h3:AEO agency in Mumbai with integrated SEO expertise",
+        "h2:What Our AEO Service in Mumbai Includes",
+        "h3:AI Overview and AI Mode Readiness",
+        "h3:Featured Snippet Optimization",
+        "h3:People Also Ask Content Mapping",
+        "h3:Relevant Structured Data",
+        "h3:Service Page Content Optimization",
+        "h3:GEO and LLM Search Support",
+        "h2:How to Compare AEO Agencies in Mumbai",
+        "h3:What to check before choosing an AEO agency",
+        "h3:Why businesses choose DGS for AEO services in Mumbai",
+        "h2:SEO, AEO, GEO and LLM SEO Build One Search Visibility System",
+        "h2:Google AI Overview Optimization by an AEO Agency in Mumbai",
+        "h3:Commercial intent and query journey mapping",
+        "h3:Clear answers supported by depth and evidence",
+        "h3:Entity, local and credibility signals",
+        "h2:Why Businesses Need AEO Services in Mumbai",
+        "h3:Broader Search Visibility",
+        "h3:Faster Buyer Understanding",
+        "h3:Stronger Mumbai Relevance",
+        "h3:More Credible Decisions",
+        "h3:Better-Qualified Enquiries",
+        "h3:Long-Term Search Resilience",
+        "h2:Brand Presence and Authority Signals",
+        "h2:Choose an AEO Agency in Mumbai Built for Search and AI Visibility",
+        "h2:AEO Agency and AEO Services in Mumbai FAQs",
+        "h2:Get a Free Audit from an AEO Agency in Mumbai"
+      ]
+    }
+  },
+  "links": {
+    "wordpressContextual": [
+      {
+        "anchor": "WhatsApp",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20AEO%20services",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20AEO%20services",
+        "path": "/919987922901/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Generative Engine Optimization services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Google Search Central guidance for generative AI search",
+        "href": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+        "destination": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+        "path": "/search/docs/fundamentals/ai-optimization-guide/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Builds Search Foundations",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Supports AI Citations",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Clarifies Brand Entities",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      }
+    ],
+    "nextContextual": [
+      {
+        "anchor": "WhatsApp",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20AEO%20services",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20AEO%20services",
+        "path": "/919987922901/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Generative Engine Optimization services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Google Search Central guidance for generative AI search",
+        "href": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+        "destination": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+        "path": "/search/docs/fundamentals/ai-optimization-guide/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Builds Search Foundations",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Supports AI Citations",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Clarifies Brand Entities",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      }
+    ],
+    "nextGlobal": [],
+    "missingInNext": [
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "scope": "body"
+      }
+    ],
+    "extraInNext": [],
+    "destinationStatus": [
+      {
+        "path": "/919987922901/",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/geo/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/llm-seo-service/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/search/docs/fundamentals/ai-optimization-guide/",
+        "httpStatus": 404,
+        "redirect": null
+      }
+    ]
+  },
+  "findings": [
+    {
+      "class": "A",
+      "label": "EXPECTED_STAGING_DIFFERENCE",
+      "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+    },
+    {
+      "class": "B",
+      "label": "APPROVED_TECHNICAL_CORRECTION",
+      "detail": "WordPress canonical /services/aeo/ vs Next /services/aeo-services-in-mumbai/ (desired /services/aeo-services-in-mumbai/)"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "74 extra paragraphs"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "image/alt differences detected"
+    },
+    {
+      "class": "E",
+      "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+      "detail": "8 contextual links missing in Next"
+    },
+    {
+      "class": "C",
+      "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+      "detail": "normalized text hash differs but structured diff shows no major heading/paragraph loss — likely wrapper/normalization artifact"
+    }
+  ],
+  "classifications": {
+    "A": 1,
+    "B": 1,
+    "D": 2,
+    "E": 1,
+    "C": 1
+  }
+}
