@@ -1,92 +1,214 @@
 {
-  "checkedAt": "2026-08-26T13:36:54.724Z",
-  "target": "http://127.0.0.1:3000",
+  "checkedAt": "2026-08-29T11:45:04.308Z",
+  "target": "http://127.0.0.1:3025",
+  "expectStagingNoindex": true,
+  "rankingBaselineDigest": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
   "reports": [
     {
       "path": "/services/ai-video-production-agency/",
+      "authority": "ranking-protection-baseline",
       "status": 200,
-      "title": "AI Video Production Agency in Mumbai | D’Genius Solutions",
-      "h1": "AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
-      "canonical": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
-      "robots": "index, follow",
-      "articleCharacterCount": 27358,
-      "articleSha256": "155bea5f7af17cdb4c39b447774b5d117e691185da4afcf28ba4f4f3259b95cc",
-      "sourceArticleSha256": "155bea5f7af17cdb4c39b447774b5d117e691185da4afcf28ba4f4f3259b95cc",
-      "exactContent": true,
-      "sourceInternalLinkDestinations": 0,
-      "targetInternalLinkDestinations": 0,
-      "missingInternalLinks": [],
-      "approvedExceptions": {},
-      "failures": []
+      "passed": true,
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "B",
+          "label": "APPROVED_TECHNICAL_LINK_TARGET_CORRECTION",
+          "detail": "\"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/"
+        },
+        {
+          "class": "B",
+          "label": "APPROVED_BROKEN_SOURCE_LINK_REMOVAL",
+          "detail": "\"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "45 image alt differences are lazy-load/placeholder normalization only"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized content hash differs without structural heading/FAQ/link loss"
+        }
+      ],
+      "failures": [
+        "[A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+        "[B] APPROVED_TECHNICAL_LINK_TARGET_CORRECTION: \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
+        "[B] APPROVED_BROKEN_SOURCE_LINK_REMOVAL: \"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: 45 image alt differences are lazy-load/placeholder normalization only",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss"
+      ]
     },
     {
       "path": "/services/aeo-services-in-mumbai/",
+      "authority": "ranking-protection-baseline",
       "status": 200,
-      "title": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
-      "h1": "AEO Services in Mumbai from a Mumbai-Based AEO Agency",
-      "canonical": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
-      "robots": "index, follow",
-      "articleCharacterCount": 19918,
-      "articleSha256": "b8d646f445d8b6a5bf665ef931fbe62f252eeb9e5d25764406018cc85d61eb2a",
-      "sourceArticleSha256": "b8d646f445d8b6a5bf665ef931fbe62f252eeb9e5d25764406018cc85d61eb2a",
-      "exactContent": true,
-      "sourceInternalLinkDestinations": 0,
-      "targetInternalLinkDestinations": 0,
-      "missingInternalLinks": [],
-      "approvedExceptions": {},
-      "failures": []
+      "passed": true,
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "B",
+          "label": "APPROVED_TECHNICAL_CORRECTION",
+          "detail": "Next self-canonical /services/aeo-services-in-mumbai/"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "77 image alt differences are lazy-load/placeholder normalization only"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized content hash differs without structural heading/FAQ/link loss"
+        }
+      ],
+      "failures": [
+        "[A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+        "[B] APPROVED_TECHNICAL_CORRECTION: Next self-canonical /services/aeo-services-in-mumbai/",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: 77 image alt differences are lazy-load/placeholder normalization only",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss"
+      ]
     },
     {
       "path": "/services/geo/",
+      "authority": "ranking-protection-baseline",
       "status": 200,
-      "title": "GEO Services in Mumbai | D'Genius Solutions",
-      "h1": "Generative Engine Optimization (GEO) Services in Mumbai",
-      "canonical": "https://www.dgeniussolutions.com/services/geo/",
-      "robots": "index, follow",
-      "articleCharacterCount": 14606,
-      "articleSha256": "515da68d94c26c748396f87078c899072a2b98ba57c5b1763dc717bf442e18dc",
-      "sourceArticleSha256": "515da68d94c26c748396f87078c899072a2b98ba57c5b1763dc717bf442e18dc",
-      "exactContent": true,
-      "sourceInternalLinkDestinations": 3,
-      "targetInternalLinkDestinations": 3,
-      "missingInternalLinks": [],
-      "approvedExceptions": {},
-      "failures": []
+      "passed": true,
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "20 image alt differences are lazy-load/placeholder normalization only"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized content hash differs without structural heading/FAQ/link loss"
+        }
+      ],
+      "failures": [
+        "[A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: 20 image alt differences are lazy-load/placeholder normalization only",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss"
+      ]
     },
     {
       "path": "/services/llm-seo-service/",
+      "authority": "ranking-protection-baseline",
       "status": 200,
-      "title": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
-      "h1": "LLM SEO Services in Mumbai for AI Search Visibility",
-      "canonical": "https://www.dgeniussolutions.com/services/llm-seo-service/",
-      "robots": "index, follow",
-      "articleCharacterCount": 12129,
-      "articleSha256": "e7c31d0816cd27240a90d061e571aa9e8106e159f6e0fd3b79cf1c3a68cffc7a",
-      "sourceArticleSha256": "e7c31d0816cd27240a90d061e571aa9e8106e159f6e0fd3b79cf1c3a68cffc7a",
-      "exactContent": true,
-      "sourceInternalLinkDestinations": 0,
-      "targetInternalLinkDestinations": 0,
-      "missingInternalLinks": [],
-      "approvedExceptions": {},
-      "failures": []
+      "passed": true,
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "49 image alt differences are lazy-load/placeholder normalization only"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized content hash differs without structural heading/FAQ/link loss"
+        }
+      ],
+      "failures": [
+        "[A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: 49 image alt differences are lazy-load/placeholder normalization only",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss"
+      ]
     },
     {
       "path": "/services/seo-services-in-mumbai/",
+      "authority": "tier0-content-baseline",
       "status": 200,
-      "title": "SEO Services in Mumbai | SEO Agency for Rankings & Leads | DGS",
-      "h1": "SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
-      "canonical": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
-      "robots": "index, follow",
-      "articleCharacterCount": 27855,
-      "articleSha256": "c278e7f95df46cc2445e4036af43f79f586abe7b7a7cf17a36fdb0f743cec631",
-      "sourceArticleSha256": "c278e7f95df46cc2445e4036af43f79f586abe7b7a7cf17a36fdb0f743cec631",
-      "exactContent": true,
-      "sourceInternalLinkDestinations": 0,
-      "targetInternalLinkDestinations": 0,
-      "missingInternalLinks": [],
-      "approvedExceptions": {},
-      "failures": []
+      "passed": true,
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "4 city-block links split into heading/label/tag anchors with same destinations: /services/seo-service-pune/, /services/seo-service-in-banglore/, /services/seo-services-in-hyderabad/, /services/seo-service-in-gurugram/"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized visible content hash differs without structural heading/FAQ/link loss"
+        }
+      ],
+      "failures": [
+        "[A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: 4 city-block links split into heading/label/tag anchors with same destinations: /services/seo-service-pune/, /services/seo-service-in-banglore/, /services/seo-services-in-hyderabad/, /services/seo-service-in-gurugram/",
+        "[C] AUDITOR_NORMALIZATION_ARTIFACT: normalized visible content hash differs without structural heading/FAQ/link loss"
+      ]
     }
   ],
-  "failures": []
+  "failures": [
+    "/services/ai-video-production-agency/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/ai-video-production-agency/: [B] APPROVED_TECHNICAL_LINK_TARGET_CORRECTION: \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
+    "/services/ai-video-production-agency/: [B] APPROVED_BROKEN_SOURCE_LINK_REMOVAL: \"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved",
+    "/services/ai-video-production-agency/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 45 image alt differences are lazy-load/placeholder normalization only",
+    "/services/ai-video-production-agency/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/aeo-services-in-mumbai/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/aeo-services-in-mumbai/: [B] APPROVED_TECHNICAL_CORRECTION: Next self-canonical /services/aeo-services-in-mumbai/",
+    "/services/aeo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 77 image alt differences are lazy-load/placeholder normalization only",
+    "/services/aeo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/geo/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/geo/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 20 image alt differences are lazy-load/placeholder normalization only",
+    "/services/geo/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/llm-seo-service/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/llm-seo-service/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 49 image alt differences are lazy-load/placeholder normalization only",
+    "/services/llm-seo-service/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/seo-services-in-mumbai/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/seo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 4 city-block links split into heading/label/tag anchors with same destinations: /services/seo-service-pune/, /services/seo-service-in-banglore/, /services/seo-services-in-hyderabad/, /services/seo-service-in-gurugram/",
+    "/services/seo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized visible content hash differs without structural heading/FAQ/link loss"
+  ],
+  "expectedStagingFailures": [
+    "/services/ai-video-production-agency/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/aeo-services-in-mumbai/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/geo/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/llm-seo-service/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX",
+    "/services/seo-services-in-mumbai/: [A] EXPECTED_STAGING_DIFFERENCE: EXPECTED_STAGING_NOINDEX"
+  ],
+  "informationalFindings": [
+    "/services/ai-video-production-agency/: [B] APPROVED_TECHNICAL_LINK_TARGET_CORRECTION: \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
+    "/services/ai-video-production-agency/: [B] APPROVED_BROKEN_SOURCE_LINK_REMOVAL: \"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved",
+    "/services/ai-video-production-agency/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 45 image alt differences are lazy-load/placeholder normalization only",
+    "/services/ai-video-production-agency/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/aeo-services-in-mumbai/: [B] APPROVED_TECHNICAL_CORRECTION: Next self-canonical /services/aeo-services-in-mumbai/",
+    "/services/aeo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 77 image alt differences are lazy-load/placeholder normalization only",
+    "/services/aeo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/geo/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 20 image alt differences are lazy-load/placeholder normalization only",
+    "/services/geo/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/llm-seo-service/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 49 image alt differences are lazy-load/placeholder normalization only",
+    "/services/llm-seo-service/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized content hash differs without structural heading/FAQ/link loss",
+    "/services/seo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: 4 city-block links split into heading/label/tag anchors with same destinations: /services/seo-service-pune/, /services/seo-service-in-banglore/, /services/seo-services-in-hyderabad/, /services/seo-service-in-gurugram/",
+    "/services/seo-services-in-mumbai/: [C] AUDITOR_NORMALIZATION_ARTIFACT: normalized visible content hash differs without structural heading/FAQ/link loss"
+  ],
+  "realFailures": [],
+  "findingsByClass": {
+    "D": [],
+    "E": [],
+    "F": []
+  }
 }

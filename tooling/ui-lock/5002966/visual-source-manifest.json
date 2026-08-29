@@ -1,0 +1,144 @@
+{
+  "approvedSha": "5002966",
+  "generatedAt": "2026-08-29T11:47:39.315Z",
+  "purpose": "SHA-256 integrity lock for homepage mirror visual implementation",
+  "fileCount": 34,
+  "files": [
+    {
+      "path": "app/(site)/page.tsx",
+      "sha256": "cdf6accb5c55f727562ca5925d9ad49b7232a154ac835cf51e9fec2e3808c565"
+    },
+    {
+      "path": "app/(site)/layout.tsx",
+      "sha256": "fb0d9cb76b57f383051e9e1929a8593fb463d21aa1f1e2dea37b29bcd519f198"
+    },
+    {
+      "path": "components/layout/ConditionalSiteChrome.tsx",
+      "sha256": "037682c4678431886aa4985282c75cc0ac14193057c55c0d917a073581d85670"
+    },
+    {
+      "path": "components/layout/ChromeProvider.tsx",
+      "sha256": "82d0f30dd8fd19e028e000d99aa342b44d098be60cc9ca5117026b8f83c5a0a2"
+    },
+    {
+      "path": "components/layout/LetsTalkModal.tsx",
+      "sha256": "48866c3e94ea6caa2347dbee20968704ace1b3fb46b250dbadc836eaf47910f1"
+    },
+    {
+      "path": "components/layout/LetsTalkModal.module.css",
+      "sha256": "44c3dca3d7de066dd0edddfb21060e66a2bc828387d27467393643945e632840"
+    },
+    {
+      "path": "components/layout/useFocusTrap.ts",
+      "sha256": "2c95432a2dc8f3ffb8dbbfdf91793adf76652f1b0670efc2c4c4966cad7b0720"
+    },
+    {
+      "path": "components/forms/PublicLeadForm.tsx",
+      "sha256": "51e67f23aaaccfa5d6872e3b837e952ee1d4ab770a7aacda560d12f1858e6b8d"
+    },
+    {
+      "path": "components/forms/PublicLeadForm.module.css",
+      "sha256": "d0b3b5c1159953915c9e4a601bc2eb9f740f5ebc91f98fda7ff7cb86c411f382"
+    },
+    {
+      "path": "components/mirror/HomeWpMirrorPage.tsx",
+      "sha256": "7b841a7c7ad53bf6c4bcb69145ed402825d459a3fd720eb8b249c48fcfb7525f"
+    },
+    {
+      "path": "components/wp-exact/DgsWpBoot.tsx",
+      "sha256": "ff3be5968fe0ba3eb02a6cd0ddeaa4d216fb967d2aebf12cc25620c63aef7151"
+    },
+    {
+      "path": "components/wp-exact/WpMirrorCreativeGallery.tsx",
+      "sha256": "e74bc022120f2da84e3908acf6277c11bd9cc39665ff248c93f73b87ce4cb6e4"
+    },
+    {
+      "path": "components/wp-exact/WpMirrorHomeForm.tsx",
+      "sha256": "4b1f1337922a754b157dfe05adc294bb6d1d64d69912510af0ce062f01820525"
+    },
+    {
+      "path": "lib/wordpress/load-homepage-mirror.ts",
+      "sha256": "45920157ec4ed4bc77fcdbb5a1b40bd7b0637cfffabf1abd0ac57b91353d0a18"
+    },
+    {
+      "path": "lib/wordpress/prepare-homepage-mirror.ts",
+      "sha256": "483108fc617494e76231b483a54579352f436bc8b40540f302e320df2e2bda4f"
+    },
+    {
+      "path": "lib/wp-exact/rewrite-wp-urls.ts",
+      "sha256": "b3a1f7611ca69efbfad446f87c326ee95fce849c1702f70c273930f33f837719"
+    },
+    {
+      "path": "lib/wp-exact/load-extracted-assets.ts",
+      "sha256": "6ecfdbe7d01cb2aad6bc97a933be53579fe5b6b9c03a0bd32620b68fde369755"
+    },
+    {
+      "path": "lib/wp-exact/build-mirror-swap-html.ts",
+      "sha256": "1f5d31269e43e87199b1c1b4f0e328869844ffb3f4c51df667c9fd2e50c10fa1"
+    },
+    {
+      "path": "lib/wp-exact/wp-mirror-overrides.css",
+      "sha256": "558749624b9494f36bf8ddd92d20d73f41da3f39d6c85f88f7e57d314d193b70"
+    },
+    {
+      "path": "lib/wp-exact/extracted/nav.html",
+      "sha256": "de88e1ea7d34a78755abf72892b5684a17df7e45ca826e98956223fb74436688"
+    },
+    {
+      "path": "lib/wp-exact/extracted/nav-styles.css",
+      "sha256": "276e48b2ab0290daaaac84bba12880aaa5a02e494c360cb69bc777bfbd89341c"
+    },
+    {
+      "path": "lib/wp-exact/extracted/footer.html",
+      "sha256": "4b02ba3ff8d74402f88af510ab66d10e03e9f97435a0e80a23b43ba2cbc48f46"
+    },
+    {
+      "path": "lib/wp-exact/extracted/footer-styles.css",
+      "sha256": "5d1ab70600086f02d8a659a338b5d3756570259f92b100efa896f92573258bae"
+    },
+    {
+      "path": "lib/wp-exact/extracted/fluentform-styles.css",
+      "sha256": "1aaf489b6875bd290348bcff05d4ce4101fafa3c6db5cdf4fb9d0ab8b980aef9"
+    },
+    {
+      "path": "lib/wp-exact/extracted/home-fluentform-styles.css",
+      "sha256": "010aafeb5f62609c00b73a58926576358c28b365eda1caa991a6c1786fb87d52"
+    },
+    {
+      "path": "lib/wp-exact/extracted/boot-nav.js",
+      "sha256": "1d51d35b9cdf3d56cb7c1c3b6a1776bda0249eaab9c8345a5ad4eaf89717a61e"
+    },
+    {
+      "path": "lib/wp-exact/extracted/boot-v1215-particles-only.js",
+      "sha256": "4b5df00191d46f7042ba383f32a2dc67c77b400e171582a635c43e8c52fdb604"
+    },
+    {
+      "path": "lib/wp-exact/extracted/boot-0.js",
+      "sha256": "fcfbadad7a2eddd1a6e8c5436fc98f1744b1457d8297405b55e206ffea6d80e6"
+    },
+    {
+      "path": "lib/wp-exact/extracted/boot-portfolio-home.js",
+      "sha256": "fa02c6d2dda9c96cc0b2bb6b60592e2676bd85f331c08372b24b3c75f9cacbe7"
+    },
+    {
+      "path": "lib/wp-exact/extracted/boot-1.js",
+      "sha256": "d51d30b202745813446ff5f711fb7ac6911ba06fb4256cef8aa6d3bb6537cdb4"
+    },
+    {
+      "path": "lib/portfolio/load-homepage-gallery.ts",
+      "sha256": "b7e02ae7bbb65bd6331a36de2368c19f1c15204b1cb3d895802696916b8b4c36"
+    },
+    {
+      "path": "lib/portfolio/types.ts",
+      "sha256": "dc96ca6d47b9f439c0f173d551b585fe2967d2417b6b3d17b2f8d245beea8ec9"
+    },
+    {
+      "path": "data/wordpress/content/page-best-digital-marketing-agency-in-mumbai.json",
+      "sha256": "df9338e7a08510b1534a4836f8c6b99dc7ed5a84254b7ca1a175480281f78f0e"
+    },
+    {
+      "path": "data/portfolio/homepage-gallery.json",
+      "sha256": "db899671e249510275508dbaf4fc4540977c9e2fdd32e08bfb90fed5d0a76e02"
+    }
+  ]
+}
