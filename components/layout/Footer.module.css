@@ -1,119 +1,166 @@
+.wrapper {
+  width: 100%;
+  background: #000;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--font-body);
+}
+
 .footer {
-  border-top: 1px solid var(--color-border);
-  background: #020202;
-  padding: var(--space-16) 0 var(--space-8);
-  margin-top: var(--space-20);
+  padding: 0;
 }
 
-.inner {
-  width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
+.container {
+  width: min(calc(100% - 80px), 1600px);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.2fr repeat(3, 1fr);
-  gap: var(--space-10);
+  padding: 48px 0 0;
 }
 
-.brandCol {
-  max-width: 22rem;
+.aiSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 70px;
+  padding: 16px 20px;
+  margin-bottom: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.aiHeading {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.aiIcons {
+  display: flex;
+  gap: 10px;
+}
+
+.aiLink {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.column {
+  min-width: 0;
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
 }
 
 .logoLink {
   display: inline-flex;
-  margin-bottom: var(--space-4);
+  margin-bottom: 20px;
 }
 
-.description,
-.clutchSub {
-  color: var(--color-text-muted);
-  font-size: 0.95rem;
+.tagline,
+.trustBadges {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.62);
 }
 
-.clutch {
-  margin-top: var(--space-4);
-  color: var(--color-text);
+.trustBadges {
+  margin-top: 16px;
   font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .colTitle {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  margin-bottom: 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-dim);
-  margin-bottom: var(--space-4);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .colList,
 .socialList {
   list-style: none;
   display: grid;
-  gap: var(--space-2);
+  gap: 10px;
 }
 
 .colList a,
 .socialList a {
-  color: var(--color-text-muted);
-  font-size: 0.92rem;
-}
-
-.colList a:hover,
-.socialList a:hover {
-  color: var(--color-accent);
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.68);
 }
 
 .address {
-  font-style: normal;
   display: grid;
-  gap: 0.1rem;
-  margin-bottom: var(--space-4);
-  color: var(--color-text-muted);
-  font-size: 0.92rem;
+  gap: 4px;
+  margin-bottom: 16px;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.socialList {
+  margin-top: 20px;
 }
 
 .bottom {
-  width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
-  margin: var(--space-10) auto 0;
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--color-border);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  align-items: center;
   justify-content: space-between;
-  color: var(--color-text-dim);
-  font-size: 0.88rem;
+  gap: 16px;
+  padding: 28px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.copyright,
+.legal a {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .legal {
   display: flex;
-  align-items: center;
-  gap: var(--space-2);
+  gap: 18px;
 }
 
-.sep {
-  margin-right: var(--space-2);
-  opacity: 0.5;
-}
-
-@media (max-width: 1024px) {
-  .inner {
+@media (max-width: 1100px) {
+  .grid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 640px) {
-  .inner {
+  .container {
+    width: min(calc(100% - 36px), 1600px);
+  }
+
+  .aiSummary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 2560px) {
-  .inner {
-    max-width: var(--wide-max);
-    margin-inline: auto;
-  }
-}
-
-@media (min-width: 3840px) {
-  .inner {
-    grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
   }
 }

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getRouteByPath } from "@/lib/nextjs/routes";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { HOMEPAGE_META_DESCRIPTION } from "@/lib/seo/homepage-metadata";
 import { HomePageTemplate } from "@/components/templates/HomePage";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return buildPageMetadata({
     title: route.title || "Digital Marketing Agency in Mumbai | D'Genius Solutions",
-    description: route.description || "",
+    description: route.description || HOMEPAGE_META_DESCRIPTION,
     path: "/",
     canonicalPath: route.desiredCanonicalPath || route.canonical || "/",
     indexable: route.indexable,

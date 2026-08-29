@@ -23,8 +23,8 @@ import {
 const OUT = path.join(OUTPUT_ROOT, "next");
 
 const METRIC_SELECTORS = [
-  { key: "header", selector: "header" },
-  { key: "hero", selector: "main h1" },
+  { key: "header", selector: "#dgsNav" },
+  { key: "hero", selector: ".dgs-v1215-hero" },
   { key: "footer", selector: "footer" },
 ];
 
@@ -71,7 +71,7 @@ async function captureViewport(browser, viewport) {
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   await page.waitForTimeout(400);
 
-  const header = page.locator("header").first();
+  const header = page.locator("#dgsNav").first();
   await safeElementScreenshot(header, path.join(dir, "header.png"), page);
 
   const h1 = page.locator("main h1").first();
@@ -87,6 +87,11 @@ async function captureViewport(browser, viewport) {
       };
     });
     await page.screenshot({ path: path.join(dir, "hero.png"), clip: box });
+  }
+
+  const metrics = {};
+  for (const { key, selector } of METRIC_SELECTORS) {
+    metrics[key] = await measureElement(page, selector);
   }
 
   const menuTrigger = await openMenuIfPresent(page);
@@ -115,10 +120,6 @@ async function captureViewport(browser, viewport) {
 
   const sections = await discoverHomepageSections(page);
   const headings = await extractHeadingOrder(page);
-  const metrics = {};
-  for (const { key, selector } of METRIC_SELECTORS) {
-    metrics[key] = await measureElement(page, selector);
-  }
 
   const backgroundTech = await page.evaluate(() => {
     const canvas = document.querySelectorAll("canvas").length;

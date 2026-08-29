@@ -18,7 +18,7 @@ export function HomeIndustries({ blocks }: Props) {
     .filter((t) => t.length > 2 && t.length < 40);
 
   return (
-    <section className={styles.section} id="dgs-v1215-industries">
+    <section className={styles.section} id="dgs-v1215-industries" data-reveal>
       <div className={styles.inner}>
         <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
         <div className={styles.chips}>

@@ -1,0 +1,536 @@
+
+
+.dgs-v1215-copy h1,
+.dgs-v1215-section-head h2,
+.dgs-v1215-final-card h2{
+  margin:0 !important;
+  color:rgba(255,255,255,.96) !important;
+  font-weight:800 !important;
+  letter-spacing:-.06em !important;
+}
+
+
+.dgs-v1215-copy p,
+.dgs-v1215-section-head p,
+.dgs-v1215-final-card p{
+  color:rgba(255,255,255,.66) !important;
+  font-size:clamp(15px,1.05vw,18px) !important;
+  line-height:1.72 !important;
+}
+
+
+.dgs-v1215-btn::after,
+.dgs-v1215-award-card::after,
+.dgs-v1215-service-menu article::after,
+.dgs-ai-service-clarity::after,
+.dgs-v1215-case-visual-card::after,
+.dgs-v1215-case-mini::after,
+.dgs-v1215-gallery-frame::after,
+.dgs-v1215-testimonial-card::after,
+.dgs-v1215-authority-card::after,
+.dgs-v1215-proof-strip article::after,
+.dgs-v1215-faq-grid details::after,
+.dgs-v1215-final-card::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  padding:1px !important;
+  border-radius:inherit !important;
+  background:var(--v1215-outline-gradient) !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+  z-index:1 !important;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  -webkit-mask-composite:xor !important;
+  mask-composite:exclude !important;
+  transition:opacity .24s ease !important;
+}
+
+
+.dgs-v1215-btn:hover,
+.dgs-v1215-award-card:hover,
+.dgs-v1215-service-menu article:hover,
+.dgs-v1215-case-visual-card:hover,
+.dgs-v1215-case-mini:hover,
+.dgs-v1215-gallery-frame:hover,
+.dgs-v1215-testimonial-card:hover,
+.dgs-v1215-authority-card:hover,
+.dgs-v1215-proof-strip article:hover,
+.dgs-v1215-faq-grid details:hover,
+.dgs-v1215-final-card:hover{
+  border-color:transparent !important;
+  transform:translateY(-4px) !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.28), 0 0 18px rgba(253,92,98,.10) !important;
+}
+
+
+.dgs-v1215-btn:hover::after,
+.dgs-v1215-award-card:hover::after,
+.dgs-v1215-service-menu article:hover::after,
+.dgs-ai-service-clarity:hover::after,
+.dgs-v1215-case-visual-card:hover::after,
+.dgs-v1215-case-mini:hover::after,
+.dgs-v1215-gallery-frame:hover::after,
+.dgs-v1215-testimonial-card:hover::after,
+.dgs-v1215-authority-card:hover::after,
+.dgs-v1215-proof-strip article:hover::after,
+.dgs-v1215-faq-grid details:hover::after,
+.dgs-v1215-final-card:hover::after{
+  opacity:1 !important;
+}
+
+
+.dgs-v1215-proof-stack,
+.dgs-v1215-service-clarity,
+.dgs-v1215-ai-portfolio,
+.dgs-v1215-case-block,
+.dgs-v1215-portfolio,
+.dgs-v1215-testimonials,
+.dgs-v1215-search-authority,
+.dgs-v1215-industries,
+.dgs-v1215-why,
+.dgs-v1215-faq,
+.dgs-v1215-final{
+  position:relative !important;
+  padding:clamp(82px,10vw,150px) 0 !important;
+}
+
+
+.dgs-v1215-award-card,
+.dgs-v1215-service-menu article,
+.dgs-ai-service-clarity,
+.dgs-v1215-case-visual-card,
+.dgs-v1215-case-mini,
+.dgs-v1215-gallery-frame,
+.dgs-v1215-testimonial-card,
+.dgs-v1215-authority-card,
+.dgs-v1215-proof-strip article,
+.dgs-v1215-faq-grid details,
+.dgs-v1215-final-card{
+  position:relative !important;
+  isolation:isolate !important;
+  overflow:hidden !important;
+  background:linear-gradient(135deg, rgba(255,255,255,.072), rgba(255,255,255,.026)), rgba(2,2,2,.36) !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  backdrop-filter:blur(18px) !important;
+  transition:transform .28s ease, border-color .28s ease, box-shadow .28s ease !important;
+}
+
+
+.dgs-v1215-final-card{
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:flex-start !important;
+  gap:24px !important;
+  border-radius:40px !important;
+  padding:clamp(28px,4vw,54px) !important;
+}
+
+
+.dgs-v1215-final-card h2{
+  max-width:900px !important;
+  font-size:clamp(2.2rem,4.2vw,5.2rem) !important;
+  line-height:.98 !important;
+}
+
+
+  .dgs-v1215-final-card{
+    flex-direction:column !important;
+  }
+
+  .dgs-v1215-copy h1,
+  .dgs-v1215-section-head h2,
+  .dgs-v1215-final-card h2{
+    font-size:clamp(2.3rem,11.5vw,4.1rem) !important;
+    line-height:1 !important;
+  }
+
+
+  .dgs-v1215-proof-stack,
+  .dgs-v1215-service-clarity,
+  .dgs-v1215-ai-portfolio,
+  .dgs-v1215-case-block,
+  .dgs-v1215-portfolio,
+  .dgs-v1215-testimonials,
+  .dgs-v1215-search-authority,
+  .dgs-v1215-industries,
+  .dgs-v1215-why,
+  .dgs-v1215-faq,
+  .dgs-v1215-final{
+    padding:64px 0 !important;
+  }
+
+
+
+
+/* ================================
+   FINAL CTA RESPONSIVE FIX
+   2K / 4K / Desktop / Mobile
+================================ */
+.dgs-v1215-final {
+  position: relative !important;
+  padding: clamp(70px, 7vw, 140px) 0 !important;
+}
+
+
+.dgs-v1215-final-card {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: flex-start !important;
+  gap: clamp(28px, 5vw, 80px) !important;
+  border-radius: clamp(26px, 2vw, 42px) !important;
+  padding: clamp(34px, 4.5vw, 72px) !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.072), rgba(255,255,255,.026)), rgba(2,2,2,.36) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  backdrop-filter: blur(18px) !important;
+  overflow: hidden !important;
+}
+
+
+.dgs-v1215-final-card > div {
+  width: 100% !important;
+  max-width: 1180px !important;
+  min-width: 0 !important;
+}
+
+
+.dgs-v1215-final-card > div > span {
+  display: block !important;
+  margin-bottom: 12px !important;
+  color: rgba(255,255,255,.88) !important;
+  font-size: clamp(14px, .9vw, 18px) !important;
+  line-height: 1.35 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+
+.dgs-v1215-final-card h2 {
+  max-width: 1120px !important;
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: clamp(3rem, 4.7vw, 6.8rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -0.075em !important;
+  font-weight: 900 !important;
+}
+
+
+.dgs-v1215-final-card p {
+  max-width: 1120px !important;
+  margin: 14px 0 0 !important;
+  color: rgba(255,255,255,.66) !important;
+  font-size: clamp(15px, 1vw, 20px) !important;
+  line-height: 1.62 !important;
+}
+
+
+.dgs-v1215-final-card > .dgs-v1215-btn {
+  align-self: start !important;
+  justify-self: end !important;
+  width: auto !important;
+  min-width: 220px !important;
+  max-width: 260px !important;
+  min-height: 88px !important;
+  padding: 22px 28px !important;
+  border-radius: 999px !important;
+  white-space: normal !important;
+  text-align: left !important;
+  line-height: 1.35 !important;
+  display: inline-flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 20px !important;
+  font-size: clamp(13px, .85vw, 16px) !important;
+  font-weight: 900 !important;
+}
+
+
+.dgs-v1215-final-card > .dgs-v1215-btn span {
+  flex: 0 0 auto !important;
+  margin-left: 6px !important;
+}
+
+
+  .dgs-v1215-final-card {
+    padding: 76px 86px !important;
+  }
+
+
+  .dgs-v1215-final-card h2 {
+    max-width: 1220px !important;
+    font-size: clamp(5.4rem, 4.6vw, 7.2rem) !important;
+  }
+
+
+  .dgs-v1215-final-card p {
+    max-width: 1200px !important;
+    font-size: 20px !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn {
+    min-width: 250px !important;
+    max-width: 290px !important;
+    min-height: 92px !important;
+  }
+
+
+  .dgs-v1215-final-card {
+    padding: 96px 110px !important;
+    border-radius: 54px !important;
+  }
+
+
+  .dgs-v1215-final-card h2 {
+    max-width: 1500px !important;
+    font-size: clamp(6.6rem, 4vw, 9rem) !important;
+  }
+
+
+  .dgs-v1215-final-card p {
+    max-width: 1450px !important;
+    font-size: 24px !important;
+    line-height: 1.65 !important;
+  }
+
+
+  .dgs-v1215-final-card > div > span {
+    font-size: 22px !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn {
+    min-width: 310px !important;
+    max-width: 340px !important;
+    min-height: 112px !important;
+    padding: 28px 36px !important;
+    font-size: 18px !important;
+  }
+
+  .dgs-v1215-final-card {
+    grid-template-columns: 1fr !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn {
+    justify-self: start !important;
+    margin-top: 6px !important;
+  }
+
+
+  .dgs-v1215-final-card h2 {
+    font-size: clamp(3rem, 6vw, 5.4rem) !important;
+  }
+
+  .dgs-v1215-final {
+    padding: 64px 0 !important;
+  }
+
+
+  .dgs-v1215-final-card {
+    padding: 34px 24px !important;
+    border-radius: 28px !important;
+    gap: 24px !important;
+  }
+
+
+  .dgs-v1215-final-card h2 {
+    font-size: clamp(2.8rem, 10vw, 4.7rem) !important;
+    line-height: 1 !important;
+    letter-spacing: -0.065em !important;
+  }
+
+
+  .dgs-v1215-final-card p {
+    font-size: 15px !important;
+    line-height: 1.62 !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 58px !important;
+    padding: 16px 20px !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+
+  .dgs-v1215-final-card {
+    padding: 28px 18px !important;
+    border-radius: 24px !important;
+  }
+
+
+  .dgs-v1215-final-card > div > span {
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+  }
+
+
+  .dgs-v1215-final-card h2 {
+    font-size: clamp(2.45rem, 12vw, 3.75rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.06em !important;
+  }
+
+
+  .dgs-v1215-final-card p {
+    margin-top: 14px !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn {
+    min-height: 54px !important;
+    padding: 15px 18px !important;
+    font-size: 13px !important;
+    border-radius: 999px !important;
+  }
+
+
+/* Final CTA button: stable on desktop, 2K, 4K and mobile */
+.dgs-v1215-final-card > .dgs-v1215-btn{
+  min-width: 300px !important;
+  max-width: 340px !important;
+  min-height: 92px !important;
+  padding: 24px 32px !important;
+  white-space: normal !important;
+  text-align: left !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  line-height: 1.25 !important;
+  border-radius: 999px !important;
+}
+
+
+.dgs-v1215-final-card > .dgs-v1215-btn span{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 22px !important;
+  line-height: 1 !important;
+  margin-left: 16px !important;
+}
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn{
+    min-width: 340px !important;
+    max-width: 380px !important;
+    min-height: 106px !important;
+    padding: 28px 38px !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn{
+    min-width: 410px !important;
+    max-width: 460px !important;
+    min-height: 126px !important;
+    padding: 34px 46px !important;
+    font-size: 20px !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn{
+    justify-self: start !important;
+    min-width: 270px !important;
+    max-width: 330px !important;
+    min-height: 78px !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn{
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 56px !important;
+    padding: 16px 20px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn span{
+    margin-left: 10px !important;
+  }
+
+
+/* Service/card/body content must stay naturally readable */
+.dgs-v1215-service-menu article,
+.dgs-v1215-award-body,
+.dgs-v1215-case-content,
+.dgs-v1215-case-mini,
+.dgs-v1215-testimonial-card,
+.dgs-v1215-authority-card,
+.dgs-v1215-proof-strip article,
+.dgs-v1215-faq-grid details,
+.dgs-ai-service-copy,
+.dgs-ai-service-points article,
+.dgs-v1215-final-card,
+.dgs-v1215-final-card h2,
+.dgs-v1215-final-card p{
+  text-align: left !important;
+}
+
+
+/* CTA button text should not be squeezed or weirdly centered */
+.dgs-v1215-final-card > .dgs-v1215-btn{
+  text-align: left !important;
+}
+
+  .dgs-v1215 .dgs-v1215-section-head,
+  .dgs-v1215 .dgs-v1215-section-head h2,
+  .dgs-v1215 .dgs-v1215-section-head p,
+  .dgs-v1215-copy,
+  .dgs-v1215-copy h1,
+  .dgs-v1215-copy p,
+  .dgs-v1215-final-card,
+  .dgs-v1215-final-card h2,
+  .dgs-v1215-final-card p{
+    text-align: left !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn{
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+
+/* Card text remains readable */
+.dgs-v1215-service-menu article,
+.dgs-v1215-award-body,
+.dgs-v1215-case-content,
+.dgs-v1215-case-mini,
+.dgs-v1215-testimonial-card,
+.dgs-v1215-authority-card,
+.dgs-v1215-proof-strip article,
+.dgs-v1215-faq-grid details,
+.dgs-ai-service-copy,
+.dgs-ai-service-points article,
+.dgs-v1215-final-card,
+.dgs-v1215-final-card h2,
+.dgs-v1215-final-card p{
+  text-align: left !important;
+}
+
+
+  .dgs-v1215-final-card,
+  .dgs-v1215-final-card h2,
+  .dgs-v1215-final-card p{
+    text-align: left !important;
+  }
+
+
+  .dgs-v1215-final-card > .dgs-v1215-btn{
+    text-align: center !important;
+    justify-content: center !important;
+  }

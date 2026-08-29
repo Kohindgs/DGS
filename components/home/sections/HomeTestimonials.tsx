@@ -14,7 +14,7 @@ export function HomeTestimonials({ blocks }: Props) {
   const people = blocks.filter((b) => b.type === "heading" && b.level === 3);
 
   return (
-    <section className={styles.section} id="testimonials">
+    <section className={`${styles.section} dgs-v1215-testimonials`} id="testimonials" data-reveal>
       <div className={styles.inner}>
         <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
         <div className={styles.grid}>

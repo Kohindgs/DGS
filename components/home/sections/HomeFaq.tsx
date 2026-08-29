@@ -12,7 +12,7 @@ export function HomeFaq({ blocks }: Props) {
   if (!faq) return null;
 
   return (
-    <section className={styles.section} id="dgs-v1215-faq">
+    <section className={styles.section} id="dgs-v1215-faq" data-reveal>
       <div className={styles.inner}>
         <h2>Questions Brands Ask Before Choosing A Digital Marketing Agency</h2>
         <div className={styles.list}>

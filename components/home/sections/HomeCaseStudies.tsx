@@ -32,7 +32,7 @@ export function HomeCaseStudies({ blocks }: Props) {
   });
 
   return (
-    <section className={styles.section} id="case-studies">
+    <section className={`${styles.section} dgs-v1215-case-block`} id="case-studies" data-reveal>
       <div className={styles.inner}>
         <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
         <div className={styles.grid}>

@@ -3,12 +3,11 @@
 }
 
 .inner {
-  width: min(calc(100% - 36px), 1404px);
+  width: min(calc(100% - 36px), 900px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: 40px;
-  align-items: start;
+  gap: 32px;
+  text-align: center;
 }
 
 .copy h2 {
@@ -22,29 +21,21 @@
 .lead {
   color: rgba(255, 255, 255, 0.68);
   line-height: 1.6;
+  max-width: 62ch;
+  margin-inline: auto;
 }
 
 .formWrap {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
   padding: 28px;
-}
-
-.cta {
-  display: inline-flex;
-  margin-top: 18px;
-  min-height: 59.9px;
-  align-items: center;
-  padding: 15px 22px;
-  border-radius: 999px;
-  background: rgb(253, 92, 98);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 800;
+  margin-inline: auto;
+  width: min(100%, 560px);
+  text-align: left;
 }
 
 @media (max-width: 900px) {
   .inner {
-    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }

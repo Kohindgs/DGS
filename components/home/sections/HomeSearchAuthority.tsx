@@ -24,7 +24,7 @@ export function HomeSearchAuthority({ blocks }: Props) {
   const items = blocks.filter((b) => b.type === "heading" && b.level === 3);
 
   return (
-    <section className={styles.section} id="dgs-v1215-search-authority">
+    <section className={styles.section} id="dgs-v1215-search-authority" data-reveal>
       <div className={styles.inner}>
         <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
         <div className={styles.grid}>

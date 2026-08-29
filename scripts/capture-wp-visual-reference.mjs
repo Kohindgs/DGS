@@ -24,8 +24,8 @@ import {
 const OUT = path.join(OUTPUT_ROOT, "wp");
 
 const METRIC_SELECTORS = [
-  { key: "header", selector: "header, .cmsmasters-header, .site-header" },
-  { key: "hero", selector: "main h1" },
+  { key: "header", selector: "#dgsNav" },
+  { key: "hero", selector: ".dgs-v1215-hero" },
   { key: "footer", selector: "footer, .site-footer" },
 ];
 
@@ -72,15 +72,17 @@ async function captureViewport(browser, viewport) {
   // Header at top
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   await page.waitForTimeout(400);
-  const header = page.locator("header, .cmsmasters-header, .site-header").first();
+  const header = page.locator("#dgsNav").first();
   await safeElementScreenshot(header, path.join(dir, "header.png"), page);
 
   // Hero region around h1
   const h1 = page.locator("main h1").first();
   if ((await h1.count()) > 0) {
     const box = await h1.evaluate((el) => {
-      const r = el.closest("section, .elementor-section, article, main")?.getBoundingClientRect() ||
-        el.getBoundingClientRect();
+      const hero =
+        el.closest(".dgs-v1215-hero, section, .elementor-section, article, main") ||
+        el;
+      const r = hero.getBoundingClientRect();
       return {
         x: Math.max(r.x - 24, 0),
         y: Math.max(r.y - 24, 0),
@@ -89,6 +91,11 @@ async function captureViewport(browser, viewport) {
       };
     });
     await page.screenshot({ path: path.join(dir, "hero.png"), clip: box });
+  }
+
+  const metrics = {};
+  for (const { key, selector } of METRIC_SELECTORS) {
+    metrics[key] = await measureElement(page, selector);
   }
 
   // Menu open
@@ -120,11 +127,6 @@ async function captureViewport(browser, viewport) {
 
   const sections = await discoverHomepageSections(page);
   const headings = await extractHeadingOrder(page);
-
-  const metrics = {};
-  for (const { key, selector } of METRIC_SELECTORS) {
-    metrics[key] = await measureElement(page, selector);
-  }
 
   // Detect background technology
   const backgroundTech = await page.evaluate(() => {

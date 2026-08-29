@@ -161,6 +161,7 @@ export async function extractHeadingOrder(page) {
 
 export async function openMenuIfPresent(page) {
   const triggers = [
+    "#dgsTrig",
     "#site-menu-trigger",
     'button:has-text("MENU")',
     'button:has-text("Menu")',

@@ -1,0 +1,96 @@
+# Dimgrey Hostinger configuration inventory (secrets redacted)
+# Generated during clean-slate reset — do NOT commit secret values.
+
+## Account
+ssh_host=147.93.100.126
+ssh_port=65002
+ssh_user=u188101251
+staging_url=https://dimgrey-goat-473970.hostingersite.com/
+
+## Domain root
+domain_root=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com
+
+## Document root (Passenger entry)
+document_root=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/public_html
+
+## Passenger (pre-reset active release)
+passenger_app_root_pre_reset=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/releases/9a4c49e
+passenger_app_type=node
+passenger_nodejs=/opt/alt/alt-nodejs22/root/bin/node
+passenger_startup_file=server.js
+passenger_base_uri=/
+passenger_restart_dir=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/releases/<release>/tmp
+
+## Passenger (post-reset maintenance)
+passenger_app_root_post_reset=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/releases/maintenance
+current_symlink_pre_deploy=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/current -> releases/maintenance
+
+## Atomic app root (active post-deploy)
+atomic_app_root=/home/u188101251/dimgrey-app
+atomic_current_symlink=/home/u188101251/dimgrey-app/current -> /home/u188101251/dimgrey-app/releases/db703d7
+passenger_app_root_active=/home/u188101251/dimgrey-app/current
+
+## Active deployment (2026-08-28)
+deployed_sha=db703d734c61357c1a155f49b9b12d7945743c5c
+deployed_branch=cursor/wp-visual-mirror-755d
+next_build_id=_g0PUjrVspjQ5mTGl4rby
+release_directory=/home/u188101251/dimgrey-app/releases/db703d7
+deployment_metadata=/home/u188101251/dimgrey-app/current/deployment-info.json
+deployed_at=2026-08-28T17:31:54Z
+checkpoint=header-hero-rail-proof-sections
+
+## Node version
+node_version=22 (Hostinger alt-nodejs22 path)
+
+## Pre-reset deployment identity
+deploy_sha=9a4c49e78dcfe2200620639369655ec68f0f93bb
+deploy_short_sha=9a4c49e
+next_build_id=guiIvbOpupXM5UqiZJSTw
+last_deploy_timestamp=2026-08-28T12:57:32Z
+
+## Environment variable locations (keys only)
+env_example_keys=DGS_SOURCE_URL,WP_REST_BASE_URL,DGS_PUBLIC_INDEXING,MIGRATION_TARGET_URL
+env_local_path_legacy=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/nodejs/.env.local
+env_local_keys_legacy=MEM0_API_KEY
+release_env_example=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/releases/<sha>/.env.example
+
+## Hostinger-specific files preserved
+preserved_public_html_htaccess=yes
+preserved_public_html_htaccess_pre_repair=yes
+preserved_builds_config=yes
+preserved_builds_config_path=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/public_html/.builds/config/preload-timestamp.js
+
+## Hostinger .htaccess SetEnv
+setenv_node_options=--require <document_root>/.builds/config/preload-timestamp.js
+setenv_lsnode_console_log=console.log
+setenv_tokio_worker_threads=2
+
+## Response headers (staging)
+header_cache_control=private, no-store, max-age=0, must-revalidate
+header_cdn_cache_control=no-store
+header_x_robots_tag=noindex, nofollow, noarchive
+
+## Pre-reset release directories (archived)
+archived_releases=9a4c49e,5c39c859
+archived_legacy_nodejs=yes
+
+## Removed overlay artifacts (not preserved)
+removed_builds_last_source=yes
+removed_builds_logs=yes
+removed_builds_source=yes
+
+## Atomic deployment target architecture (post-reset)
+releases_root=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/releases
+current_pointer=/home/u188101251/domains/dimgrey-goat-473970.hostingersite.com/current
+deployment_policy=one directory per Git SHA; never reuse .next between SHAs; switch PassengerAppRoot or current symlink atomically
+
+## Backup location pattern
+backup_root=/home/u188101251/dimgrey-backups/pre-clean-<timestamp>/
+
+## Symlinks
+symlinks=current -> releases/maintenance (post-reset)
+
+## NOT touched
+production_wordpress=www.dgeniussolutions.com (read-only)
+git_history=unchanged
+other_hostinger_sites=unchanged

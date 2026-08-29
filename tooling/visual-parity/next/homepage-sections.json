@@ -2,393 +2,897 @@
   "390x844": [
     {
       "index": 0,
-      "id": "",
-      "className": "HomeHero-module__NRzLjq__hero wide-container",
-      "heading": "Full Service Digital Marketing Agency In Mumbai",
-      "top": 178,
-      "height": 1081.875,
-      "width": 374
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "top": 64,
+      "height": 1856.125,
+      "width": 390
     },
     {
       "index": 1,
       "id": "",
-      "className": "HomeHeroSignals-module__rdfFaW__section container",
-      "heading": "Search Visibility",
-      "top": 1279.78125,
-      "height": 506.53125,
-      "width": 374
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "",
+      "top": 1920.125,
+      "height": 199.09375,
+      "width": 390
     },
     {
       "index": 2,
-      "id": "",
-      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
       "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
-      "top": 3606.03125,
-      "height": 5975.90625,
-      "width": 374
+      "top": 2119.21875,
+      "height": 1551.875,
+      "width": 390
     },
     {
       "index": 3,
       "id": "",
-      "className": "HomePortfolioPreview-module__mAq73G__section",
-      "heading": "AI-Led Creative Portfolio",
-      "top": 11481.53125,
-      "height": 3976.90625,
-      "width": 374
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "",
+      "top": 2571.5625,
+      "height": 72,
+      "width": 390
     },
     {
       "index": 4,
-      "id": "",
-      "className": "",
-      "heading": "",
-      "top": 21116.5,
-      "height": 126,
-      "width": 374
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 3671.09375,
+      "height": 1272.8125,
+      "width": 390
     },
     {
       "index": 5,
       "id": "",
-      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 4991.90625,
+      "height": 614.671875,
+      "width": 390
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "HomeCaseStudies-module__rz3HaG__section",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 5654.578125,
+      "height": 1405.28125,
+      "width": 390
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 7059.859375,
+      "height": 297.875,
+      "width": 390
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "HomeTestimonials-module__XHlr0a__section",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 7357.734375,
+      "height": 1231.875,
+      "width": 390
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 8589.609375,
+      "height": 1508.8125,
+      "width": 390
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "top": 10098.421875,
+      "height": 424.390625,
+      "width": 390
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 10522.8125,
+      "height": 1071.875,
+      "width": 390
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 11594.6875,
+      "height": 867.109375,
+      "width": 390
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "HomeFinalCta-module__-wIG2W__section",
       "heading": "Let us audit your brand, website, search visibility and campaign flow.",
-      "top": 21258.5,
-      "height": 428.8125,
-      "width": 374
+      "top": 12461.796875,
+      "height": 1609.875,
+      "width": 390
     }
   ],
   "768x1024": [
     {
       "index": 0,
-      "id": "",
-      "className": "HomeHero-module__NRzLjq__hero wide-container",
-      "heading": "Full Service Digital Marketing Agency In Mumbai",
-      "top": 178,
-      "height": 971.875,
-      "width": 752
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "top": 64,
+      "height": 1369.9375,
+      "width": 768
     },
     {
       "index": 1,
       "id": "",
-      "className": "HomeHeroSignals-module__rdfFaW__section container",
-      "heading": "Search Visibility",
-      "top": 1169.78125,
-      "height": 506.53125,
-      "width": 752
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "",
+      "top": 1433.9375,
+      "height": 199.09375,
+      "width": 768
     },
     {
       "index": 2,
-      "id": "",
-      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
       "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
-      "top": 3424.03125,
-      "height": 5921.90625,
-      "width": 752
+      "top": 1633.03125,
+      "height": 1346.03125,
+      "width": 768
     },
     {
       "index": 3,
       "id": "",
-      "className": "HomePortfolioPreview-module__mAq73G__section",
-      "heading": "AI-Led Creative Portfolio",
-      "top": 10949.53125,
-      "height": 3976.90625,
-      "width": 752
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "",
+      "top": 1951.21875,
+      "height": 72,
+      "width": 768
     },
     {
       "index": 4,
-      "id": "",
-      "className": "",
-      "heading": "",
-      "top": 19770.5,
-      "height": 108,
-      "width": 752
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 2979.0625,
+      "height": 1231.875,
+      "width": 768
     },
     {
       "index": 5,
       "id": "",
-      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 4258.9375,
+      "height": 1079.546875,
+      "width": 768
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "HomeCaseStudies-module__rz3HaG__section",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 5386.484375,
+      "height": 913.515625,
+      "width": 768
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 6300,
+      "height": 256.9375,
+      "width": 768
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "HomeTestimonials-module__XHlr0a__section",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 6556.9375,
+      "height": 714.9375,
+      "width": 768
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 7271.875,
+      "height": 1426.9375,
+      "width": 768
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "top": 8698.8125,
+      "height": 312.390625,
+      "width": 768
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 9011.203125,
+      "height": 634.9375,
+      "width": 768
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 9646.140625,
+      "height": 726.34375,
+      "width": 768
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "HomeFinalCta-module__-wIG2W__section",
       "heading": "Let us audit your brand, website, search visibility and campaign flow.",
-      "top": 19894.5,
-      "height": 304.8125,
-      "width": 752
+      "top": 10372.484375,
+      "height": 1527.984375,
+      "width": 768
     }
   ],
   "1440x900": [
     {
       "index": 0,
-      "id": "",
-      "className": "HomeHero-module__NRzLjq__hero wide-container",
-      "heading": "Full Service Digital Marketing Agency In Mumbai",
-      "top": 178,
-      "height": 953.875,
-      "width": 1424
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "top": 100.796875,
+      "height": 996,
+      "width": 1440
     },
     {
       "index": 1,
       "id": "",
-      "className": "HomeHeroSignals-module__rdfFaW__section container",
-      "heading": "Search Visibility",
-      "top": 1151.78125,
-      "height": 506.53125,
-      "width": 1424
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "",
+      "top": 1096.796875,
+      "height": 199.09375,
+      "width": 1440
     },
     {
       "index": 2,
-      "id": "",
-      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
       "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
-      "top": 3361.03125,
-      "height": 5894.90625,
-      "width": 1424
+      "top": 1295.890625,
+      "height": 1424.0625,
+      "width": 1440
     },
     {
       "index": 3,
       "id": "",
-      "className": "HomePortfolioPreview-module__mAq73G__section",
-      "heading": "AI-Led Creative Portfolio",
-      "top": 10769.53125,
-      "height": 2020.90625,
-      "width": 1424
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "",
+      "top": 1718.890625,
+      "height": 72,
+      "width": 1440
     },
     {
       "index": 4,
-      "id": "",
-      "className": "",
-      "heading": "",
-      "top": 17418.5,
-      "height": 108,
-      "width": 1424
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 2719.953125,
+      "height": 789.1875,
+      "width": 1440
     },
     {
       "index": 5,
       "id": "",
-      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 3557.140625,
+      "height": 592.375,
+      "width": 1440
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "HomeCaseStudies-module__rz3HaG__section",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 4197.515625,
+      "height": 701.703125,
+      "width": 1440
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 4899.21875,
+      "height": 273.59375,
+      "width": 1440
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "HomeTestimonials-module__XHlr0a__section",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 5172.8125,
+      "height": 493.59375,
+      "width": 1440
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 5666.40625,
+      "height": 651.59375,
+      "width": 1440
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "top": 6318,
+      "height": 268.6875,
+      "width": 1440
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 6586.6875,
+      "height": 453.59375,
+      "width": 1440
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 7040.28125,
+      "height": 750.9375,
+      "width": 1440
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "HomeFinalCta-module__-wIG2W__section",
       "heading": "Let us audit your brand, website, search visibility and campaign flow.",
-      "top": 17542.5,
-      "height": 244.8125,
-      "width": 1424
+      "top": 7791.21875,
+      "height": 1359.390625,
+      "width": 1440
     }
   ],
   "1920x1080": [
     {
       "index": 0,
-      "id": "",
-      "className": "HomeHero-module__NRzLjq__hero wide-container",
-      "heading": "Full Service Digital Marketing Agency In Mumbai",
-      "top": 178,
-      "height": 953.875,
-      "width": 1904
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "top": 134.390625,
+      "height": 996,
+      "width": 1920
     },
     {
       "index": 1,
       "id": "",
-      "className": "HomeHeroSignals-module__rdfFaW__section container",
-      "heading": "Search Visibility",
-      "top": 1151.78125,
-      "height": 506.53125,
-      "width": 1904
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "",
+      "top": 1130.390625,
+      "height": 199.09375,
+      "width": 1920
     },
     {
       "index": 2,
-      "id": "",
-      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
       "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
-      "top": 3361.03125,
-      "height": 5894.90625,
-      "width": 1904
+      "top": 1329.484375,
+      "height": 1429.1875,
+      "width": 1920
     },
     {
       "index": 3,
       "id": "",
-      "className": "HomePortfolioPreview-module__mAq73G__section",
-      "heading": "AI-Led Creative Portfolio",
-      "top": 10769.53125,
-      "height": 2020.90625,
-      "width": 1904
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "",
+      "top": 1752.484375,
+      "height": 72,
+      "width": 1920
     },
     {
       "index": 4,
-      "id": "",
-      "className": "",
-      "heading": "",
-      "top": 17382.5,
-      "height": 108,
-      "width": 1904
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 2758.671875,
+      "height": 794.28125,
+      "width": 1920
     },
     {
       "index": 5,
       "id": "",
-      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 3600.953125,
+      "height": 719.375,
+      "width": 1920
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "HomeCaseStudies-module__rz3HaG__section",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 4368.328125,
+      "height": 704.25,
+      "width": 1920
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 5072.578125,
+      "height": 276.140625,
+      "width": 1920
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "HomeTestimonials-module__XHlr0a__section",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 5348.71875,
+      "height": 496.140625,
+      "width": 1920
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 5844.859375,
+      "height": 654.140625,
+      "width": 1920
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "top": 6499,
+      "height": 269.1875,
+      "width": 1920
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 6768.1875,
+      "height": 456.140625,
+      "width": 1920
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 7224.328125,
+      "height": 751.9375,
+      "width": 1920
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "HomeFinalCta-module__-wIG2W__section",
       "heading": "Let us audit your brand, website, search visibility and campaign flow.",
-      "top": 17506.5,
-      "height": 244.8125,
-      "width": 1904
+      "top": 7976.265625,
+      "height": 1359.390625,
+      "width": 1920
     }
   ],
   "2560x1440": [
     {
       "index": 0,
-      "id": "",
-      "className": "HomeHero-module__NRzLjq__hero wide-container",
-      "heading": "Full Service Digital Marketing Agency In Mumbai",
-      "top": 178,
-      "height": 953.875,
-      "width": 2544
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "top": 144,
+      "height": 996,
+      "width": 2560
     },
     {
       "index": 1,
       "id": "",
-      "className": "HomeHeroSignals-module__rdfFaW__section container",
-      "heading": "Search Visibility",
-      "top": 1151.78125,
-      "height": 506.53125,
-      "width": 2544
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "",
+      "top": 1140,
+      "height": 199.09375,
+      "width": 2560
     },
     {
       "index": 2,
-      "id": "",
-      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
       "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
-      "top": 3361.03125,
-      "height": 5894.90625,
-      "width": 2544
+      "top": 1339.09375,
+      "height": 1429.1875,
+      "width": 2560
     },
     {
       "index": 3,
       "id": "",
-      "className": "HomePortfolioPreview-module__mAq73G__section",
-      "heading": "AI-Led Creative Portfolio",
-      "top": 10769.53125,
-      "height": 1531.90625,
-      "width": 2544
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "",
+      "top": 1762.09375,
+      "height": 72,
+      "width": 2560
     },
     {
       "index": 4,
-      "id": "",
-      "className": "",
-      "heading": "",
-      "top": 16893.5,
-      "height": 108,
-      "width": 2544
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 2768.28125,
+      "height": 794.28125,
+      "width": 2560
     },
     {
       "index": 5,
       "id": "",
-      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 3610.5625,
+      "height": 819.375,
+      "width": 2560
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "HomeCaseStudies-module__rz3HaG__section",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 4477.9375,
+      "height": 704.25,
+      "width": 2560
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 5182.1875,
+      "height": 276.140625,
+      "width": 2560
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "HomeTestimonials-module__XHlr0a__section",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 5458.328125,
+      "height": 496.140625,
+      "width": 2560
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 5954.46875,
+      "height": 654.140625,
+      "width": 2560
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "top": 6608.609375,
+      "height": 269.1875,
+      "width": 2560
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 6877.796875,
+      "height": 456.140625,
+      "width": 2560
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 7333.9375,
+      "height": 751.9375,
+      "width": 2560
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "HomeFinalCta-module__-wIG2W__section",
       "heading": "Let us audit your brand, website, search visibility and campaign flow.",
-      "top": 17017.5,
-      "height": 223.8125,
-      "width": 2544
+      "top": 8085.875,
+      "height": 1359.390625,
+      "width": 2560
     }
   ],
   "3440x1440": [
     {
       "index": 0,
-      "id": "",
-      "className": "HomeHero-module__NRzLjq__hero wide-container",
-      "heading": "Full Service Digital Marketing Agency In Mumbai",
-      "top": 178,
-      "height": 953.875,
-      "width": 3424
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "top": 144,
+      "height": 996,
+      "width": 3440
     },
     {
       "index": 1,
       "id": "",
-      "className": "HomeHeroSignals-module__rdfFaW__section container",
-      "heading": "Search Visibility",
-      "top": 1151.78125,
-      "height": 506.53125,
-      "width": 3424
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "",
+      "top": 1140,
+      "height": 199.09375,
+      "width": 3440
     },
     {
       "index": 2,
-      "id": "",
-      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
       "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
-      "top": 3361.03125,
-      "height": 5894.90625,
-      "width": 3424
+      "top": 1339.09375,
+      "height": 1429.1875,
+      "width": 3440
     },
     {
       "index": 3,
       "id": "",
-      "className": "HomePortfolioPreview-module__mAq73G__section",
-      "heading": "AI-Led Creative Portfolio",
-      "top": 10769.53125,
-      "height": 1042.90625,
-      "width": 3424
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "",
+      "top": 1762.09375,
+      "height": 72,
+      "width": 3440
     },
     {
       "index": 4,
-      "id": "",
-      "className": "",
-      "heading": "",
-      "top": 16404.5,
-      "height": 108,
-      "width": 3424
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 2768.28125,
+      "height": 794.28125,
+      "width": 3440
     },
     {
       "index": 5,
       "id": "",
-      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 3610.5625,
+      "height": 919.375,
+      "width": 3440
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "HomeCaseStudies-module__rz3HaG__section",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 4577.9375,
+      "height": 704.25,
+      "width": 3440
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 5282.1875,
+      "height": 276.140625,
+      "width": 3440
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "HomeTestimonials-module__XHlr0a__section",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 5558.328125,
+      "height": 496.140625,
+      "width": 3440
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 6054.46875,
+      "height": 654.140625,
+      "width": 3440
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "top": 6708.609375,
+      "height": 269.1875,
+      "width": 3440
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 6977.796875,
+      "height": 456.140625,
+      "width": 3440
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 7433.9375,
+      "height": 751.9375,
+      "width": 3440
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "HomeFinalCta-module__-wIG2W__section",
       "heading": "Let us audit your brand, website, search visibility and campaign flow.",
-      "top": 16528.5,
-      "height": 223.8125,
-      "width": 3424
+      "top": 8185.875,
+      "height": 1359.390625,
+      "width": 3440
     }
   ],
   "3840x2160": [
     {
       "index": 0,
-      "id": "",
-      "className": "HomeHero-module__NRzLjq__hero wide-container",
-      "heading": "Full Service Digital Marketing Agency In Mumbai",
-      "top": 178,
-      "height": 953.875,
-      "width": 3824
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "top": 144,
+      "height": 996,
+      "width": 3840
     },
     {
       "index": 1,
       "id": "",
-      "className": "HomeHeroSignals-module__rdfFaW__section container",
-      "heading": "Search Visibility",
-      "top": 1151.78125,
-      "height": 506.53125,
-      "width": 3824
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "",
+      "top": 1140,
+      "height": 199.09375,
+      "width": 3840
     },
     {
       "index": 2,
-      "id": "",
-      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
       "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and te",
-      "top": 3361.03125,
-      "height": 5894.90625,
-      "width": 3824
+      "top": 1339.09375,
+      "height": 1429.1875,
+      "width": 3840
     },
     {
       "index": 3,
       "id": "",
-      "className": "HomePortfolioPreview-module__mAq73G__section",
-      "heading": "AI-Led Creative Portfolio",
-      "top": 10769.53125,
-      "height": 1042.90625,
-      "width": 3824
+      "className": "ClientLogoMarquee-module__74j2Sa__section",
+      "heading": "",
+      "top": 1762.09375,
+      "height": 72,
+      "width": 3840
     },
     {
       "index": 4,
-      "id": "",
-      "className": "",
-      "heading": "",
-      "top": 16404.5,
-      "height": 108,
-      "width": 3824
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "top": 2768.28125,
+      "height": 794.28125,
+      "width": 3840
     },
     {
       "index": 5,
       "id": "",
-      "className": "HomeFinalCta-module__-wIG2W__section container",
+      "className": "HomePortfolioPreview-module__mAq73G__section",
+      "heading": "AI-Led Creative Portfolio",
+      "top": 3610.5625,
+      "height": 969.375,
+      "width": 3840
+    },
+    {
+      "index": 6,
+      "id": "case-studies",
+      "className": "HomeCaseStudies-module__rz3HaG__section",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "top": 4627.9375,
+      "height": 704.25,
+      "width": 3840
+    },
+    {
+      "index": 7,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "top": 5332.1875,
+      "height": 276.140625,
+      "width": 3840
+    },
+    {
+      "index": 8,
+      "id": "testimonials",
+      "className": "HomeTestimonials-module__XHlr0a__section",
+      "heading": "Trusted By Brands Worldwide",
+      "top": 5608.328125,
+      "height": 496.140625,
+      "width": 3840
+    },
+    {
+      "index": 9,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "top": 6104.46875,
+      "height": 654.140625,
+      "width": 3840
+    },
+    {
+      "index": 10,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "top": 6758.609375,
+      "height": 269.1875,
+      "width": 3840
+    },
+    {
+      "index": 11,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "top": 7027.796875,
+      "height": 456.140625,
+      "width": 3840
+    },
+    {
+      "index": 12,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "top": 7483.9375,
+      "height": 751.9375,
+      "width": 3840
+    },
+    {
+      "index": 13,
+      "id": "contact-form",
+      "className": "HomeFinalCta-module__-wIG2W__section",
       "heading": "Let us audit your brand, website, search visibility and campaign flow.",
-      "top": 16528.5,
-      "height": 223.8125,
-      "width": 3824
+      "top": 8235.875,
+      "height": 1359.390625,
+      "width": 3840
     }
   ]
 }

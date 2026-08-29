@@ -1,31 +1,50 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ContentBlock } from "@/lib/content/types";
+import type { HomepageGalleryItem } from "@/lib/portfolio/types";
 import styles from "./HomeCreativeGallery.module.css";
 
-type Props = { blocks: ContentBlock[] };
+const PREVIEW_COUNT = 8;
 
-export function HomeCreativeGallery({ blocks }: Props) {
+type Props = {
+  blocks: ContentBlock[];
+  items: HomepageGalleryItem[];
+};
+
+export function HomeCreativeGallery({ blocks, items }: Props) {
   const heading = blocks.find((b) => b.type === "heading" && b.level === 2);
-  const images = blocks.filter((b) => b.type === "image").slice(0, 8);
+  const preview = items.slice(0, PREVIEW_COUNT);
 
   return (
-    <section className={styles.section} id="dgs-v1215-work">
+    <section
+      className={`${styles.section} dgs-v1215-portfolio`}
+      id="dgs-v1215-work"
+      data-reveal
+    >
       <div className={styles.inner}>
-        <h2>{heading?.type === "heading" ? heading.text : ""}</h2>
+        <h2>{heading?.type === "heading" ? heading.text : "Creative Work"}</h2>
         <div className={styles.grid}>
-          {images.map((image, index) =>
-            image.type === "image" ? (
-              <div key={`${image.src}-${index}`} className={styles.item}>
-                <Image
-                  src={image.src}
-                  alt={image.alt || ""}
-                  width={480}
-                  height={360}
-                  className={styles.image}
-                />
-              </div>
-            ) : null,
-          )}
+          {preview.map((item) => (
+            <Link
+              key={item.id}
+              href="/portfolio/"
+              className={styles.item}
+              aria-label={item.alt || item.title}
+            >
+              <Image
+                src={item.thumbnail}
+                alt={item.alt || item.title}
+                width={item.width || 480}
+                height={item.height || 360}
+                className={styles.image}
+              />
+            </Link>
+          ))}
+        </div>
+        <div className={styles.ctaRow}>
+          <Link href="/portfolio/" className={styles.cta}>
+            View Portfolio <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
     </section>

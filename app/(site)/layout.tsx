@@ -4,7 +4,7 @@ import { SkipLink } from "@/components/layout/SkipLink";
 import { ChromeProvider } from "@/components/layout/ChromeProvider";
 import { SiteMenu } from "@/components/layout/SiteMenu";
 import { LetsTalkModal } from "@/components/layout/LetsTalkModal";
-import { DgsWebGLBackground } from "@/components/background/DgsWebGLBackground";
+import { ConditionalSiteChrome } from "@/components/layout/ConditionalSiteChrome";
 import { ScrollProvider } from "@/components/motion/ScrollProvider";
 
 export default function SiteChromeLayout({
@@ -14,14 +14,17 @@ export default function SiteChromeLayout({
 }>) {
   return (
     <ChromeProvider>
-      <DgsWebGLBackground />
       <ScrollProvider>
         <SkipLink />
-        <SiteHeader />
-        <SiteMenu />
+        <ConditionalSiteChrome>
+          <SiteHeader />
+          <SiteMenu />
+        </ConditionalSiteChrome>
         <LetsTalkModal />
         {children}
-        <SiteFooter />
+        <ConditionalSiteChrome>
+          <SiteFooter />
+        </ConditionalSiteChrome>
       </ScrollProvider>
     </ChromeProvider>
   );

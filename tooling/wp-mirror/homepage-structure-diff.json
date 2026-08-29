@@ -1,0 +1,1084 @@
+{
+  "generatedAt": "2026-08-28T17:34:21.339Z",
+  "wpUrl": "https://www.dgeniussolutions.com/",
+  "nextUrl": "http://localhost:3010/",
+  "summary": {
+    "wpSectionCount": 14,
+    "nextSectionCount": 11,
+    "wpPageHeight": 18264,
+    "nextPageHeight": 13074,
+    "issueCount": 19,
+    "byType": {
+      "HEIGHT_MISMATCH": 9,
+      "MISSING_NEXT_SECTION": 3,
+      "MEDIA_MISMATCH": 2,
+      "EXTRA_NEXT_SECTION": 5
+    }
+  },
+  "issues": [
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "rail",
+      "wpHeight": 198,
+      "nextHeight": 77,
+      "deltaPercent": -61.11
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "proof",
+      "wpHeight": 3166,
+      "nextHeight": 5696,
+      "deltaPercent": 79.91
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "capabilities",
+      "wpHeight": 1109,
+      "nextHeight": 261,
+      "deltaPercent": -76.47
+    },
+    {
+      "type": "MISSING_NEXT_SECTION",
+      "key": "portfolio",
+      "wpSelector": ".dgs-v1215-portfolio, [id*='portfolio']",
+      "wpHeading": ""
+    },
+    {
+      "type": "MISSING_NEXT_SECTION",
+      "key": "caseStudies",
+      "wpSelector": ".dgs-v1215-case-studies, [id*='case']",
+      "wpHeading": "SEO, Website And Digital Growth Case Studies"
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "creativeGallery",
+      "wpHeight": 1806,
+      "nextHeight": 38,
+      "deltaPercent": -97.9
+    },
+    {
+      "type": "MEDIA_MISMATCH",
+      "key": "creativeGallery",
+      "wpMediaCount": 8,
+      "nextMediaCount": 0
+    },
+    {
+      "type": "MISSING_NEXT_SECTION",
+      "key": "testimonials",
+      "wpSelector": ".dgs-v1215-testimonials, [id*='testimonial']",
+      "wpHeading": "Trusted By Brands Worldwide"
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "searchAuthority",
+      "wpHeight": 1179,
+      "nextHeight": 372,
+      "deltaPercent": -68.45
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "industries",
+      "wpHeight": 426,
+      "nextHeight": 64,
+      "deltaPercent": -84.98
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "whyDgs",
+      "wpHeight": 784,
+      "nextHeight": 261,
+      "deltaPercent": -66.71
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "faq",
+      "wpHeight": 1058,
+      "nextHeight": 192,
+      "deltaPercent": -81.85
+    },
+    {
+      "type": "HEIGHT_MISMATCH",
+      "key": "footer",
+      "wpHeight": 824,
+      "nextHeight": 673,
+      "deltaPercent": -18.33
+    },
+    {
+      "type": "MEDIA_MISMATCH",
+      "key": "footer",
+      "wpMediaCount": 7,
+      "nextMediaCount": 1
+    },
+    {
+      "type": "EXTRA_NEXT_SECTION",
+      "key": "ClientLogoMarquee-module__74j2Sa__section",
+      "nextHeading": "",
+      "geometry": {
+        "startY": 2084,
+        "height": 5504
+      }
+    },
+    {
+      "type": "EXTRA_NEXT_SECTION",
+      "key": "HomePortfolioPreview-module__mAq73G__section",
+      "nextHeading": "AI-Led Creative Portfolio",
+      "geometry": {
+        "startY": 7977,
+        "height": 2014
+      }
+    },
+    {
+      "type": "EXTRA_NEXT_SECTION",
+      "key": "case-studies",
+      "nextHeading": "SEO, Website And Digital Growth Case Studies",
+      "geometry": {
+        "startY": 9991,
+        "height": 843
+      }
+    },
+    {
+      "type": "EXTRA_NEXT_SECTION",
+      "key": "testimonials",
+      "nextHeading": "Trusted By Brands Worldwide",
+      "geometry": {
+        "startY": 10872,
+        "height": 261
+      }
+    },
+    {
+      "type": "EXTRA_NEXT_SECTION",
+      "key": "contact-form",
+      "nextHeading": "Let us audit your brand, website, search visibility and campaign flow.",
+      "geometry": {
+        "startY": 12021,
+        "height": 200
+      }
+    }
+  ],
+  "wpSections": [
+    {
+      "order": 1,
+      "key": "header",
+      "selector": "#dgsNav",
+      "present": true,
+      "id": "dgsNav",
+      "className": "",
+      "heading": "",
+      "geometry": {
+        "startY": 0,
+        "height": 0,
+        "width": 0,
+        "containerWidth": 0
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/DGS-LOGO-3.webp",
+          "alt": "D'Genius Solutions"
+        }
+      ],
+      "items": {
+        "cards": 0,
+        "images": 1
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 2,
+      "key": "hero",
+      "selector": ".dgs-v1215-hero",
+      "present": true,
+      "id": "dgs-home-start",
+      "className": "dgs-v1215-hero",
+      "heading": "Full Service\nDigital Marketing\nAgency In Mumbai",
+      "geometry": {
+        "startY": 0,
+        "height": 996,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "flex",
+        "maxWidth": "none",
+        "padding": "115.2px 0px 82px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/thoughtful-logo-concept-featuring-ai-meaningful-way.webp",
+          "alt": "Digital marketing, SEO, AEO, GEO, LLM SEO and AI production agency visual for D'"
+        }
+      ],
+      "items": {
+        "cards": 0,
+        "images": 1
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 3,
+      "key": "rail",
+      "selector": ".dgs-v1215-rail",
+      "present": true,
+      "id": null,
+      "className": "dgs-v1215-rail",
+      "heading": "D'Genius Solutions capabilities",
+      "geometry": {
+        "startY": 996,
+        "height": 198,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "68px 0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 0,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 4,
+      "key": "proof",
+      "selector": ".dgs-v1215-proof, #dgs-proof",
+      "present": true,
+      "id": "dgs-proof",
+      "className": "dgs-v1215-proof-stack",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+      "geometry": {
+        "startY": 1194,
+        "height": 3166,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "144px 0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Eureka Forbes client logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Aditya Birla Education Academy client logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Saint Gobain client logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Pantaloons client logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Jaipur Kurti client logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Nutriuits client logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Raymond client logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Plush Puppy client logo"
+        }
+      ],
+      "items": {
+        "logos": 47,
+        "awardCards": 3
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 5,
+      "key": "capabilities",
+      "selector": ".dgs-v1215-services, #dgs-v1215-services",
+      "present": true,
+      "id": "dgs-v1215-services",
+      "className": "dgs-v1215-service-clarity",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "geometry": {
+        "startY": 4360,
+        "height": 1109,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "144px 0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 4,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 6,
+      "key": "portfolio",
+      "selector": ".dgs-v1215-portfolio, [id*='portfolio']",
+      "present": true,
+      "id": "portfolio-front-style-css",
+      "className": "",
+      "heading": "",
+      "geometry": {
+        "startY": 0,
+        "height": 0,
+        "width": 0,
+        "containerWidth": 0
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "none",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "items": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 7,
+      "key": "caseStudies",
+      "selector": ".dgs-v1215-case-studies, [id*='case']",
+      "present": true,
+      "id": "case-studies",
+      "className": "dgs-v1215-case-block",
+      "heading": "SEO, Website And Digital Growth Case Studies",
+      "geometry": {
+        "startY": 8221,
+        "height": 1420,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "144px 0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "TheWorldGrad website SEO case study visual"
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Weavings-Home-page-.png?v=20260707-header-visible",
+          "alt": "Weavings website SEO and performance marketing case study visual"
+        }
+      ],
+      "items": {
+        "cards": 8,
+        "images": 2
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 8,
+      "key": "creativeGallery",
+      "selector": ".dgs-v1215-work, #dgs-v1215-work",
+      "present": true,
+      "id": "dgs-v1215-work",
+      "className": "dgs-v1215-portfolio",
+      "heading": "Brand Identity & Creative Excellence",
+      "geometry": {
+        "startY": 9641,
+        "height": 1806,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "144px 0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_01-3-1-1024x576.png.webp",
+          "alt": ""
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_02-3-1024x576.png.webp",
+          "alt": ""
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_03-3-1024x576.png.webp",
+          "alt": ""
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_04-3-1024x576.png.webp",
+          "alt": ""
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_05-2-1024x576.png.webp",
+          "alt": ""
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_06-3-1024x576.png.webp",
+          "alt": ""
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS1-1-1024x576.png.webp",
+          "alt": ""
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Standee_rays-1-469x1024.jpg.webp",
+          "alt": ""
+        }
+      ],
+      "items": {
+        "cards": 0,
+        "images": 62
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 9,
+      "key": "testimonials",
+      "selector": ".dgs-v1215-testimonials, [id*='testimonial']",
+      "present": true,
+      "id": "testimonials",
+      "className": "dgs-v1215-testimonials",
+      "heading": "Trusted By Brands Worldwide",
+      "geometry": {
+        "startY": 11447,
+        "height": 897,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "115.2px 0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 4,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 10,
+      "key": "searchAuthority",
+      "selector": ".dgs-v1215-search-authority, #dgs-v1215-search-authority",
+      "present": true,
+      "id": "dgs-v1215-search-authority",
+      "className": "dgs-v1215-search-authority",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "geometry": {
+        "startY": 12344,
+        "height": 1179,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "144px 0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 6,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 11,
+      "key": "industries",
+      "selector": ".dgs-v1215-industries, #dgs-v1215-industries",
+      "present": true,
+      "id": "dgs-v1215-industries",
+      "className": "dgs-v1215-industries",
+      "heading": "Industries We Help Grow",
+      "geometry": {
+        "startY": 13523,
+        "height": 426,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "100.8px 0px 46.08px"
+      },
+      "media": [],
+      "items": {
+        "cards": 0,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 12,
+      "key": "whyDgs",
+      "selector": ".dgs-v1215-why, #dgs-v1215-why",
+      "present": true,
+      "id": "dgs-v1215-why",
+      "className": "dgs-v1215-why",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "geometry": {
+        "startY": 13949,
+        "height": 784,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "57.6px 0px 144px"
+      },
+      "media": [],
+      "items": {
+        "cards": 4,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 13,
+      "key": "faq",
+      "selector": ".dgs-v1215-faq, #dgs-v1215-faq",
+      "present": true,
+      "id": "dgs-v1215-faq",
+      "className": "dgs-v1215-faq",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "geometry": {
+        "startY": 14733,
+        "height": 1058,
+        "width": 1440,
+        "containerWidth": 1404
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "144px 0px"
+      },
+      "media": [],
+      "items": {
+        "items": 6
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "key": "finalCta",
+      "selector": ".dgs-v1215-final-cta, .dgs-v1215-cta",
+      "present": false
+    },
+    {
+      "order": 15,
+      "key": "footer",
+      "selector": "footer",
+      "present": true,
+      "id": null,
+      "className": "elementor elementor-61373 elementor-location-footer",
+      "heading": "",
+      "geometry": {
+        "startY": 17439,
+        "height": 824,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "https://cdn.simpleicons.org/openai/FFFFFF",
+          "alt": "ChatGPT"
+        },
+        {
+          "tag": "img",
+          "src": "https://cdn.simpleicons.org/perplexity/FFFFFF",
+          "alt": "Perplexity"
+        },
+        {
+          "tag": "img",
+          "src": "https://cdn.simpleicons.org/googlegemini/FFFFFF",
+          "alt": "Gemini"
+        },
+        {
+          "tag": "img",
+          "src": "https://cdn.simpleicons.org/anthropic/FFFFFF",
+          "alt": "Claude"
+        },
+        {
+          "tag": "img",
+          "src": "https://cdn.simpleicons.org/microsoftcopilot/FFFFFF",
+          "alt": "Copilot"
+        },
+        {
+          "tag": "img",
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO.png",
+          "alt": "D'Genius Solutions digital marketing agency logo"
+        },
+        {
+          "tag": "img",
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Clutch 5-star rating badge"
+        }
+      ],
+      "items": {
+        "cards": 0,
+        "images": 7
+      },
+      "animation": "canvas-background"
+    }
+  ],
+  "nextSections": [
+    {
+      "order": 1,
+      "key": "header",
+      "selector": "#dgsNav",
+      "present": true,
+      "id": "dgsNav",
+      "className": "Header-module__KHjLKa__header ",
+      "heading": "",
+      "geometry": {
+        "startY": 0,
+        "height": 100,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FDGS-LOGO-3.webp&w=256&q=75",
+          "alt": "D'Genius Solutions"
+        }
+      ],
+      "items": {
+        "cards": 0,
+        "images": 1
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 2,
+      "key": "hero",
+      "selector": ".dgs-v1215-hero, #dgs-home-start",
+      "present": true,
+      "id": "dgs-home-start",
+      "className": "HomeHero-module__NRzLjq__hero dgs-v1215-hero",
+      "heading": "Full ServiceDigital MarketingAgency In Mumbai",
+      "geometry": {
+        "startY": 1008,
+        "height": 935,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2026%2F01%2Fthoughtful-logo-concept-fe",
+          "alt": "Digital marketing, SEO, AEO, GEO, LLM SEO and AI production agency visual for D'"
+        }
+      ],
+      "items": {
+        "cards": 0,
+        "images": 1
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 3,
+      "key": "rail",
+      "selector": ".dgs-v1215-rail",
+      "present": true,
+      "id": null,
+      "className": "HomeHeroRail-module__9zQS6a__rail dgs-v1215-rail",
+      "heading": "D'Genius Solutions capabilities",
+      "geometry": {
+        "startY": 1943,
+        "height": 77,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 0,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 4,
+      "key": "proof",
+      "selector": "#dgs-proof",
+      "present": true,
+      "id": "dgs-proof",
+      "className": "HomeProofStack-module__bqMDoW__section",
+      "heading": "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+      "geometry": {
+        "startY": 2020,
+        "height": 5696,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FEureka-forbes_White.png&w=",
+          "alt": "Eureka Forbes client logo"
+        },
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FABEA-1.png&w=3840&q=75",
+          "alt": "Aditya Birla Education Academy client logo"
+        },
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FSaint-gobian.png&w=3840&q=",
+          "alt": "Saint Gobain client logo"
+        },
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FPantaloons.png&w=3840&q=75",
+          "alt": "Pantaloons client logo"
+        },
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2Foutput-onlinepngtools-300x",
+          "alt": "Jaipur Kurti client logo"
+        },
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FNutriuits.png&w=3840&q=75",
+          "alt": "Nutriuits client logo"
+        },
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FRaymond.png&w=3840&q=75",
+          "alt": "Raymond client logo"
+        },
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2025%2F11%2FPlush-puppy.png&w=3840&q=7",
+          "alt": "Plush Puppy client logo"
+        }
+      ],
+      "items": {
+        "logos": 43,
+        "awardCards": 3
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 5,
+      "key": "capabilities",
+      "selector": "#dgs-v1215-services",
+      "present": true,
+      "id": "dgs-v1215-services",
+      "className": "HomeCapabilities-module__z1-gKq__section",
+      "heading": "One team for search, web, creative, performance and AI production.",
+      "geometry": {
+        "startY": 7716,
+        "height": 261,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 0,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "key": "portfolio",
+      "selector": "[data-section='portfolio'], #dgs-portfolio, .HomePortfolioPreview",
+      "present": false
+    },
+    {
+      "key": "caseStudies",
+      "selector": "[data-section='case-studies']",
+      "present": false
+    },
+    {
+      "order": 8,
+      "key": "creativeGallery",
+      "selector": "#dgs-v1215-work",
+      "present": true,
+      "id": "dgs-v1215-work",
+      "className": "HomeCreativeGallery-module__yYl5pG__section",
+      "heading": "Brand Identity & Creative Excellence",
+      "geometry": {
+        "startY": 10834,
+        "height": 38,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 0,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "key": "testimonials",
+      "selector": "[data-section='testimonials']",
+      "present": false
+    },
+    {
+      "order": 10,
+      "key": "searchAuthority",
+      "selector": "#dgs-v1215-search-authority",
+      "present": true,
+      "id": "dgs-v1215-search-authority",
+      "className": "HomeSearchAuthority-module__QHbzyq__section",
+      "heading": "Built For Google Search, AI Answers And Voice Discovery",
+      "geometry": {
+        "startY": 11133,
+        "height": 372,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 0,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 11,
+      "key": "industries",
+      "selector": "#dgs-v1215-industries",
+      "present": true,
+      "id": "dgs-v1215-industries",
+      "className": "HomeIndustries-module__loFreq__section",
+      "heading": "Industries We Help Grow",
+      "geometry": {
+        "startY": 11504,
+        "height": 64,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 0,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 12,
+      "key": "whyDgs",
+      "selector": "#dgs-v1215-why",
+      "present": true,
+      "id": "dgs-v1215-why",
+      "className": "HomeWhyDgs-module__ksFHba__section",
+      "heading": "Why Brands Choose D’Genius Solutions",
+      "geometry": {
+        "startY": 11568,
+        "height": 261,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "cards": 4,
+        "images": 0
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "order": 13,
+      "key": "faq",
+      "selector": "#dgs-v1215-faq",
+      "present": true,
+      "id": "dgs-v1215-faq",
+      "className": "HomeFaq-module__3VJHZW__section",
+      "heading": "Questions Brands Ask Before Choosing A Digital Marketing Agency",
+      "geometry": {
+        "startY": 11829,
+        "height": 192,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "0px"
+      },
+      "media": [],
+      "items": {
+        "items": 6
+      },
+      "animation": "canvas-background"
+    },
+    {
+      "key": "finalCta",
+      "selector": "[data-section='final-cta'], .HomeFinalCta",
+      "present": false
+    },
+    {
+      "order": 15,
+      "key": "footer",
+      "selector": "footer",
+      "present": true,
+      "id": null,
+      "className": "Footer-module__yg9ahW__footer",
+      "heading": "Quick Links",
+      "geometry": {
+        "startY": 12401,
+        "height": 673,
+        "width": 1440,
+        "containerWidth": 1440
+      },
+      "background": {
+        "backgroundColor": "rgb(2, 2, 2)",
+        "backgroundImage": "none",
+        "display": "block",
+        "maxWidth": "none",
+        "padding": "64px 0px 32px"
+      },
+      "media": [
+        {
+          "tag": "img",
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2026%2F02%2Fcropped-DGS-LOGO-1.webp&w=",
+          "alt": "D'Genius Solutions"
+        }
+      ],
+      "items": {
+        "cards": 0,
+        "images": 1
+      },
+      "animation": "canvas-background"
+    }
+  ]
+}
