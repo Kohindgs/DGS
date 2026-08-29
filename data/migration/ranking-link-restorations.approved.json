@@ -1,44 +1,51 @@
 {
-  "schemaVersion": 1,
-  "approvedAt": "2026-08-29T09:50:00.000Z",
-  "policy": "Human-approved href-only restorations for ranking-protected routes. Anchor wording must not change.",
+  "schemaVersion": 2,
+  "approvedAt": "2026-08-29T10:40:00.000Z",
+  "policy": "Human-approved href-only restorations for ranking-protected routes. Anchor wording must not change. B-class entries are approved technical link-target corrections; frozen WordPress evidence is unchanged.",
   "restorations": {
     "/services/ai-video-production-agency/": [
       {
         "headingId": "seo-services-in-mumbai",
         "anchor": "SEO Services In Mumbai",
-        "href": "/services/seo-services-in-mumbai/",
-        "wordpressDestination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/"
+        "wordpressDestination": "/services/seo-services-in-mumbai/",
+        "requiredNextDestination": "/services/seo-services-in-mumbai/",
+        "classification": null
       },
       {
         "headingId": "aeo-services-in-mumbai",
         "anchor": "AEO Services In Mumbai",
-        "href": "/services/aeo-services-in-mumbai/",
-        "wordpressDestination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
+        "wordpressDestination": "/services/aeo-services-in-mumbai/",
+        "requiredNextDestination": "/services/aeo-services-in-mumbai/",
+        "classification": null
       },
       {
         "headingId": "optimize-for-ai-overviews",
         "anchor": "Optimize For AI Overviews",
-        "href": "/blogs/optimize-for-ai-overviews/",
-        "wordpressDestination": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/"
+        "wordpressDestination": "/blogs/optimize-for-ai-overviews/",
+        "requiredNextDestination": "/blogs/optimize-for-ai-overviews/",
+        "classification": null
       },
       {
         "headingId": "google-ads-services",
         "anchor": "Google Ads Services",
-        "href": "/services/google-ads/",
-        "wordpressDestination": "https://www.dgeniussolutions.com/services/google-ads/"
+        "wordpressDestination": "/services/google-ads/",
+        "requiredNextDestination": "/services/google-ads/",
+        "classification": "F",
+        "stopReason": "CASE C — live WordPress /services/google-ads/ returns 404 with no authoritative redirect; Next registry has no /services/google-ads/ route. Do not invent a destination."
       },
       {
         "headingId": "website-development-company-in-mumbai",
         "anchor": "Website Development Company In Mumbai",
-        "href": "/services/website-development/",
-        "wordpressDestination": "https://www.dgeniussolutions.com/services/website-development/"
+        "wordpressDestination": "/services/website-development/",
+        "requiredNextDestination": "/services/website-development-amc/",
+        "classification": "B"
       },
       {
         "headingId": "future-of-seo",
         "anchor": "Future Of SEO",
-        "href": "/blogs/future-of-seo/",
-        "wordpressDestination": "https://www.dgeniussolutions.com/blogs/future-of-seo/"
+        "wordpressDestination": "/blogs/future-of-seo/",
+        "requiredNextDestination": "/blogs/future-of-seo/",
+        "classification": null
       }
     ]
   }

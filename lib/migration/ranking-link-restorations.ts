@@ -3,7 +3,11 @@ import approved from "@/data/migration/ranking-link-restorations.approved.json";
 
 type Restoration = {
   headingId: string;
-  href: string;
+  anchor: string;
+  wordpressDestination: string;
+  requiredNextDestination: string;
+  classification?: string | null;
+  stopReason?: string;
 };
 
 const byPath = approved.restorations as Record<string, Restoration[]>;
@@ -12,7 +16,9 @@ export function applyRankingLinkRestorations(path: string, blocks: ContentBlock[
   const restorations = byPath[path];
   if (!restorations?.length) return blocks;
 
-  const hrefByHeadingId = new Map(restorations.map((item) => [item.headingId, item.href]));
+  const hrefByHeadingId = new Map(
+    restorations.map((item) => [item.headingId, item.requiredNextDestination]),
+  );
 
   return blocks.map((block) => {
     if (block.type !== "heading") return block;

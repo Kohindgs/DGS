@@ -12,6 +12,12 @@ import {
   jsonLdTypesFromHtml,
 } from "./lib/migration-audit-shared.mjs";
 import {
+  buildExpectedContextualLinks,
+  collectRequiredDestinations,
+  loadApprovedLinkRestorations,
+  restorationsForPath,
+} from "./lib/ranking-link-restorations.mjs";
+import {
   canonicalFromHtml,
   diffContextualLinks,
   diffFaq,
@@ -72,12 +78,71 @@ function classify(kind, detail) {
   const map = {
     "staging-noindex": { class: "A", label: "EXPECTED_STAGING_DIFFERENCE" },
     "aeo-canonical": { class: "B", label: "APPROVED_TECHNICAL_CORRECTION" },
+    "link-target": { class: "B", label: "APPROVED_TECHNICAL_LINK_TARGET_CORRECTION" },
     artifact: { class: "C", label: "AUDITOR_NORMALIZATION_ARTIFACT" },
     drift: { class: "D", label: "REAL_VISIBLE_CONTENT_DRIFT" },
     link: { class: "E", label: "REAL_INTERNAL_LINK_PARITY_DEFECT" },
+    "broken-destination": { class: "E", label: "BROKEN_INTERNAL_LINK_DESTINATION" },
     unknown: { class: "F", label: "NEEDS_HUMAN_DECISION" },
   };
   return { ...map[kind], detail };
+}
+
+async function checkDestinationHealth(requiredPath) {
+  const expectedPath = normalizePath(requiredPath, TARGET);
+  const hops = [];
+  let current = new URL(expectedPath, TARGET).href;
+  let response = null;
+
+  for (let i = 0; i < 10; i++) {
+    response = await fetch(current, {
+      redirect: "manual",
+      headers: { Accept: "text/html,*/*", "User-Agent": "DGS-Ranking-Protection/1.0" },
+    });
+    const location = response.headers.get("location");
+    hops.push({ url: current, status: response.status, location });
+    if (response.status >= 300 && response.status < 400 && location) {
+      current = new URL(location, current).href;
+      continue;
+    }
+    break;
+  }
+
+  const html = response?.status === 200 ? await response.text() : "";
+  const canonicalHref = canonicalFromHtml(html);
+  const canonicalPath = canonicalHref ? normalizePath(canonicalHref, TARGET) : "";
+  const robots = metaFromHtml(html, "robots");
+  const xRobots = response?.headers.get("x-robots-tag") || "";
+  const noindexInfo = classifyNoindex(robots, xRobots);
+  const redirectHops = Math.max(0, hops.length - 1);
+  const finalPath = normalizePath(current, TARGET);
+  const issues = [];
+
+  if (!response || response.status === 404 || response.status === 410) {
+    issues.push(`destination HTTP ${response?.status || "unknown"}`);
+  } else if (response.status !== 200) {
+    issues.push(`destination HTTP ${response.status}`);
+  }
+  if (redirectHops > 0) {
+    issues.push(`${redirectHops} redirect hop(s); protected internal links must be direct 200 canonical URLs`);
+  }
+  if (canonicalPath && canonicalPath !== expectedPath) {
+    issues.push(`final canonical ${canonicalPath} != required ${expectedPath}`);
+  }
+  if (!expectsStagingNoindex() && noindexInfo.hasNoindex) {
+    issues.push(`destination not indexable (${noindexInfo.label || "noindex"})`);
+  }
+
+  return {
+    requiredPath: expectedPath,
+    finalPath,
+    httpStatus: response?.status || 0,
+    redirectHops,
+    canonicalPath,
+    indexable: !noindexInfo.hasNoindex,
+    issues,
+    healthy: issues.length === 0,
+  };
 }
 
 const baselineSerialized = await readFile(BASELINE_PATH, "utf8");
@@ -90,6 +155,7 @@ if (!integrityResult.ok) {
 }
 
 const frozenBaseline = integrityResult.baseline;
+const approvedRestorations = await loadApprovedLinkRestorations();
 const sitemap = await fetchSitemapPaths();
 const routeReports = [];
 const blockingFailures = [];
@@ -136,13 +202,8 @@ for (const [routePath, snapshot] of Object.entries(frozenBaseline.routes)) {
   const headingDiff = diffHeadings(baselineHeadings, nextHeadings);
   const faqDiff = diffFaq(snapshot.faqs || [], nextFaq);
   const imageDiff = diffImages(snapshot.images || [], nextImages);
-  const baselineLinks = (snapshot.contextualLinks || []).map((link) => ({
-    anchor: link.anchor,
-    href: link.href,
-    path: link.path,
-    scope: "body",
-    destination: link.href,
-  }));
+  const routeRestorations = restorationsForPath(approvedRestorations, routePath);
+  const baselineLinks = buildExpectedContextualLinks(snapshot.contextualLinks || [], routeRestorations, TARGET);
   const linkDiff = diffContextualLinks(baselineLinks, nextLinks);
 
   const missingHeadings = meaningfulMissingHeadings(headingDiff.missing);
@@ -227,6 +288,19 @@ for (const [routePath, snapshot] of Object.entries(frozenBaseline.routes)) {
     );
   }
 
+  for (const expected of baselineLinks) {
+    if (expected.classification === "B") {
+      record(
+        "link-target",
+        `"${expected.anchor}" WordPress ${expected.wordpressPath} -> required Next ${expected.path}`,
+        false,
+      );
+    }
+    if (expected.classification === "F" && expected.stopReason) {
+      record("unknown", expected.stopReason, false);
+    }
+  }
+
   if (altDiffs.length) {
     record("drift", `${altDiffs.length} meaningful image alt text differences`, true);
   } else if (imageDiff.altDiffs.length) {
@@ -278,6 +352,25 @@ for (const [routePath, snapshot] of Object.entries(frozenBaseline.routes)) {
   });
 }
 
+const destinationChecks = [];
+const requiredDestinations = collectRequiredDestinations(approvedRestorations, frozenBaseline, TARGET);
+for (const destination of requiredDestinations) {
+  const health = await checkDestinationHealth(destination.requiredPath);
+  destinationChecks.push({
+    ...destination,
+    ...health,
+  });
+  if (!health.healthy) {
+    const detail = `"${destination.anchor}" on ${destination.sourceRoute} -> ${destination.requiredPath}: ${health.issues.join("; ")}`;
+    blockingFailures.push(`${destination.sourceRoute}: [E] ${detail}`);
+    explainedFindings.push(`${destination.sourceRoute}: [E] BROKEN_INTERNAL_LINK_DESTINATION — ${detail}`);
+  } else if (destination.classification === "B") {
+    explainedFindings.push(
+      `${destination.sourceRoute}: [B] "${destination.anchor}" approved link-target correction ${destination.wordpressPath} -> ${destination.requiredPath}`,
+    );
+  }
+}
+
 const report = {
   checkedAt: new Date().toISOString(),
   target: TARGET.origin,
@@ -286,6 +379,7 @@ const report = {
   expectStagingNoindex: expectsStagingNoindex(),
   protectedRouteCount: routeReports.length,
   routes: routeReports,
+  destinationChecks,
   explainedFindings,
   blockingFailures,
   passed: blockingFailures.length === 0,
