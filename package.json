@@ -53,7 +53,8 @@
     "capture:ui-lock-baseline": "node scripts/capture-ui-lock-baseline.mjs",
     "validate:ui-lock": "node scripts/validate-ui-lock.mjs",
     "audit:tier0-migration": "node scripts/audit-tier0-migration.mjs",
-    "diagnose:tier0-parity": "node scripts/diagnose-tier0-parity.mjs"
+    "diagnose:tier0-parity": "node scripts/diagnose-tier0-parity.mjs",
+    "validate:ranking-protection": "node scripts/validate-ranking-protection.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
