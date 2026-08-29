@@ -8,6 +8,8 @@ type Props = {
   children: ReactNode;
 };
 
+const SETTLE_EPSILON = 0.001;
+
 function initHeroPointerMotion() {
   if (typeof window === "undefined") return () => {};
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return () => {};
@@ -23,14 +25,32 @@ function initHeroPointerMotion() {
   let targetY = 0;
   let rafId = 0;
 
+  const isSettled = () =>
+    Math.abs(nx - targetX) < SETTLE_EPSILON && Math.abs(ny - targetY) < SETTLE_EPSILON;
+
+  const applyTransform = () => {
+    if (window.innerWidth < 900) {
+      wrap.style.transform = "";
+      img.style.transform = "";
+      return;
+    }
+
+    wrap.style.transform = `perspective(1300px) rotateY(${(nx * 4).toFixed(2)}deg) rotateX(${(-ny * 3).toFixed(2)}deg) translate3d(${(nx * 8).toFixed(2)}px, ${(ny * 6).toFixed(2)}px, 0)`;
+    img.style.transform = `scale(1.02) translate3d(${(nx * -7).toFixed(2)}px, ${(ny * -5).toFixed(2)}px, 0)`;
+  };
+
   const render = () => {
+    rafId = 0;
     active = false;
     nx += (targetX - nx) * 0.12;
     ny += (targetY - ny) * 0.12;
+    applyTransform();
 
-    if (window.innerWidth >= 900) {
-      wrap.style.transform = `perspective(1300px) rotateY(${(nx * 4).toFixed(2)}deg) rotateX(${(-ny * 3).toFixed(2)}deg) translate3d(${(nx * 8).toFixed(2)}px, ${(ny * 6).toFixed(2)}px, 0)`;
-      img.style.transform = `scale(1.02) translate3d(${(nx * -7).toFixed(2)}px, ${(ny * -5).toFixed(2)}px, 0)`;
+    if (!isSettled()) {
+      requestRender();
+    } else if (targetX === 0 && targetY === 0) {
+      wrap.style.transform = "";
+      img.style.transform = "";
     }
   };
 
@@ -51,8 +71,6 @@ function initHeroPointerMotion() {
   const onPointerLeave = () => {
     targetX = 0;
     targetY = 0;
-    wrap.style.transform = "";
-    img.style.transform = "";
     requestRender();
   };
 
@@ -78,39 +96,8 @@ export function HomeV1215Shell({ children }: Props) {
   }, []);
 
   useEffect(() => {
-    const root = mainRef.current;
-    if (!root) return;
-
-    let ticking = false;
-
-    const update = () => {
-      const rect = root.getBoundingClientRect();
-      const start = window.pageYOffset + rect.top;
-      const total = Math.max(root.offsetHeight - window.innerHeight, 1);
-      const current = window.pageYOffset - start;
-      const progress = Math.min(Math.max(current / total, 0), 1);
-      root.style.setProperty("--v1215-scroll", progress.toFixed(4));
-      ticking = false;
-    };
-
-    const requestUpdate = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    };
-
-    update();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate, { passive: true });
-
     const cleanupPointer = initHeroPointerMotion();
-
-    return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      cleanupPointer();
-    };
+    return cleanupPointer;
   }, []);
 
   return (

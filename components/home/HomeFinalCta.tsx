@@ -1,5 +1,4 @@
 import type { ContentBlock } from "@/lib/content/types";
-import type { HomepageGalleryItem } from "@/lib/portfolio/types";
 import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
 import styles from "./HomeFinalCta.module.css";
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { HomepageGalleryItem } from "@/lib/portfolio/types";
 
 const PREVIEW_COUNT = 8;
@@ -13,7 +14,7 @@ export function WpMirrorCreativeGallery({ items }: Props) {
   return (
     <div className="dgs-native-gallery">
       {preview.map((item) => (
-        <a
+        <Link
           key={item.id}
           href="/portfolio/"
           className="dgs-native-gallery__item"
@@ -28,13 +29,13 @@ export function WpMirrorCreativeGallery({ items }: Props) {
             decoding="async"
             className="dgs-native-gallery__image"
           />
-        </a>
+        </Link>
       ))}
       <div className="dgs-native-gallery__cta-row">
-        <a href="/portfolio/" className="dgs-v1215-btn dgs-v1215-btn-primary dgs-native-gallery__cta">
+        <Link href="/portfolio/" className="dgs-v1215-btn dgs-v1215-btn-primary dgs-native-gallery__cta">
           View Portfolio
           <span>→</span>
-        </a>
+        </Link>
       </div>
     </div>
   );

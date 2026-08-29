@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { Renderer, Camera, Geometry, Program, Mesh } from "ogl";
+import { interpolateScrollProgress } from "@/lib/motion/scroll-progress";
+import { getParticleCount, getParticleDpr, canUseHomeWebGL } from "@/lib/motion/ogl-particle-tuning";
 import styles from "./DgsOglParticleBackground.module.css";
 
 const PALETTE: [number, number, number][] = [
@@ -10,19 +12,6 @@ const PALETTE: [number, number, number][] = [
   [157 / 255, 78 / 255, 221 / 255],
   [1, 1, 1],
 ];
-
-function getDpr() {
-  if (typeof window === "undefined") return 1;
-  return Math.min(window.devicePixelRatio || 1, 1.25);
-}
-
-function canUseWebGL() {
-  if (typeof window === "undefined") return false;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
-  if (window.matchMedia("(pointer: coarse)").matches) return false;
-  if (window.innerWidth < 901) return false;
-  return true;
-}
 
 function buildParticleData(count: number) {
   const positions = new Float32Array(count * 3);
@@ -42,7 +31,7 @@ function buildParticleData(count: number) {
     colors[i * 3 + 2] = b;
   }
 
-  return { positions, colors, count };
+  return { positions, colors };
 }
 
 const vertex = `
@@ -82,11 +71,23 @@ export function DgsOglParticleBackground({ onReady }: Props) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !canUseWebGL()) return;
+    if (!canvas) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+
+    if (!canUseHomeWebGL(window.innerWidth, { reducedMotion, coarsePointer })) {
+      return;
+    }
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let currentDpr = getParticleDpr(width, window.devicePixelRatio || 1);
+    let particleCount = getParticleCount(width);
 
     const renderer = new Renderer({
       canvas,
-      dpr: getDpr(),
+      dpr: currentDpr,
       alpha: true,
       antialias: false,
       powerPreference: "low-power",
@@ -96,13 +97,15 @@ export function DgsOglParticleBackground({ onReady }: Props) {
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
 
-    const particleCount = window.innerWidth > 1400 ? 560 : 380;
-    const { positions, colors, count } = buildParticleData(particleCount);
+    const rebuildParticles = (count: number) => {
+      const { positions, colors } = buildParticleData(count);
+      return new Geometry(gl, {
+        position: { size: 3, data: positions },
+        color: { size: 3, data: colors },
+      });
+    };
 
-    const geometry = new Geometry(gl, {
-      position: { size: 3, data: positions },
-      color: { size: 3, data: colors },
-    });
+    let geometry = rebuildParticles(particleCount);
 
     const program = new Program(gl, {
       vertex,
@@ -118,78 +121,121 @@ export function DgsOglParticleBackground({ onReady }: Props) {
       program,
     });
 
-    points.position.z = 0;
-
     const camera = new Camera(gl, { fov: 58, near: 0.1, far: 100 });
     camera.position.set(0, 0, 8.5);
 
     let rafId = 0;
-    let running = document.visibilityState === "visible";
     let start = performance.now();
-    let currentDpr = getDpr();
+    const pointerTarget = { x: 0, y: 0 };
+    const pointerCurrent = { x: 0, y: 0 };
 
-    const resize = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+    const shouldAnimate = () =>
+      document.visibilityState === "visible" &&
+      canUseHomeWebGL(window.innerWidth, {
+        reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        coarsePointer: window.matchMedia("(pointer: coarse)").matches,
+      });
 
-      if (width < 901) {
-        running = false;
+    const stopLoop = () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const scheduleFrame = () => {
+      if (!shouldAnimate() || rafId) return;
+      rafId = requestAnimationFrame(render);
+    };
+
+    const applySize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      if (!canUseHomeWebGL(width, { reducedMotion, coarsePointer })) {
         canvas.style.display = "none";
+        stopLoop();
         return;
       }
 
       canvas.style.display = "block";
-      const nextDpr = getDpr();
-      if (Math.abs(nextDpr - currentDpr) > 0.05) {
+
+      const nextCount = getParticleCount(width);
+      if (nextCount !== particleCount) {
+        particleCount = nextCount;
+        geometry = rebuildParticles(particleCount);
+        points.geometry = geometry;
+      }
+
+      const nextDpr = getParticleDpr(width, window.devicePixelRatio || 1);
+      if (Math.abs(nextDpr - currentDpr) > 0.01) {
         currentDpr = nextDpr;
         renderer.dpr = nextDpr;
       }
 
       renderer.setSize(width, height);
       camera.perspective({ aspect: width / height });
-      running = true;
-      scheduleFrame();
     };
 
-    const scheduleFrame = () => {
-      if (!running || rafId) return;
-      rafId = requestAnimationFrame(render);
+    const onResize = () => {
+      applySize();
+      if (shouldAnimate()) scheduleFrame();
     };
 
     const onVisibility = () => {
-      const visible = document.visibilityState === "visible";
-      running = visible && window.innerWidth >= 901;
-      if (running) {
+      if (shouldAnimate()) {
         start = performance.now();
         scheduleFrame();
-      } else if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = 0;
+      } else {
+        stopLoop();
       }
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType && event.pointerType !== "mouse") return;
+      pointerTarget.x = (event.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2;
+      pointerTarget.y = (event.clientY / Math.max(window.innerHeight, 1) - 0.5) * 2;
+    };
+
+    const onPointerLeave = () => {
+      pointerTarget.x = 0;
+      pointerTarget.y = 0;
     };
 
     const render = (now: number) => {
       rafId = 0;
-      if (!running) return;
+      if (!shouldAnimate()) return;
 
+      const progress = interpolateScrollProgress();
       const time = (now - start) * 0.001;
-      points.rotation.y = time * 0.022;
-      points.rotation.x = Math.sin(time * 0.22) * 0.035;
+
+      pointerCurrent.x += (pointerTarget.x - pointerCurrent.x) * 0.08;
+      pointerCurrent.y += (pointerTarget.y - pointerCurrent.y) * 0.08;
+
+      points.rotation.y = time * 0.022 + progress * 0.12 + pointerCurrent.x * 0.022;
+      points.rotation.x = Math.sin(time * 0.22) * 0.035 + progress * 0.035 + pointerCurrent.y * -0.018;
+      points.position.x = pointerCurrent.x * 0.12;
+      points.position.y = progress * 0.28 + pointerCurrent.y * 0.08;
+      points.position.z = -progress * 0.22;
+      camera.position.z = 8.5 - progress * 0.35;
 
       renderer.render({ scene: points, camera });
-      scheduleFrame();
+      rafId = requestAnimationFrame(render);
     };
 
-    resize();
+    applySize();
     onReady?.();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerleave", onPointerLeave, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     scheduleFrame();
 
     return () => {
-      running = false;
-      if (rafId) cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", resize);
+      stopLoop();
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerleave", onPointerLeave);
       document.removeEventListener("visibilitychange", onVisibility);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
