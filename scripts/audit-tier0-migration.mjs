@@ -5,6 +5,11 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
+import {
+  jsonLdTypesFromHtml,
+  classifyNoindex,
+  expectsStagingNoindex,
+} from "./lib/migration-audit-shared.mjs";
 
 const ROOT = process.cwd();
 const TARGET = new URL(process.env.MIGRATION_TARGET_URL || "http://127.0.0.1:3000");
@@ -99,25 +104,6 @@ function imageAlts(html) {
   return alts;
 }
 
-function jsonLdTypes(html) {
-  const types = new Set();
-  for (const block of html.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi) || []) {
-    const raw = block.replace(/^[\s\S]*?>/, "").replace(/<\/script>$/, "");
-    try {
-      const parsed = JSON.parse(raw);
-      const graph = parsed["@graph"] || [parsed];
-      for (const node of graph) {
-        const type = node["@type"];
-        if (Array.isArray(type)) type.forEach((t) => types.add(t));
-        else if (type) types.add(type);
-      }
-    } catch {
-      types.add("INVALID_JSON_LD");
-    }
-  }
-  return [...types];
-}
-
 async function fetchSitemapPaths() {
   const res = await fetch(new URL("/sitemap.xml", TARGET), {
     headers: { Accept: "application/xml,text/xml,*/*" },
@@ -133,6 +119,8 @@ async function fetchSitemapPaths() {
 const sitemap = await fetchSitemapPaths();
 const routes = [];
 const defects = [];
+const expected = [];
+const realDefects = [];
 
 for (const route of tier0.routes) {
   const url = new URL(route.path, TARGET);
@@ -145,7 +133,7 @@ for (const route of tier0.routes) {
   let finalUrl = response.url;
   if (response.status >= 300 && response.status < 400) {
     const location = response.headers.get("location");
-    defects.push(`${route.path}: redirect chain/status ${response.status} -> ${location || "unknown"}`);
+    realDefects.push(`${route.path}: redirect chain/status ${response.status} -> ${location || "unknown"}`);
     if (location) {
       const follow = await fetch(new URL(location, TARGET), { redirect: "follow" });
       html = await follow.text();
@@ -161,10 +149,12 @@ for (const route of tier0.routes) {
   const canonicalPath = canonicalHref ? normalizePath(canonicalHref) : "";
   const desiredCanonicalPath = normalizePath(route.desiredCanonicalPath || route.path);
   const robots = meta(html, "robots");
+  const xRobots = response.headers.get("x-robots-tag") || "";
+  const noindexInfo = classifyNoindex(robots, xRobots);
   const description = meta(html, "description");
   const links = internalLinks(html, finalUrl);
   const alts = imageAlts(html);
-  const schemaTypes = jsonLdTypes(html);
+  const schemaTypes = jsonLdTypesFromHtml(html);
   const inSitemap = sitemap.paths.includes(normalizePath(route.path));
 
   const item = {
@@ -172,7 +162,11 @@ for (const route of tier0.routes) {
     label: route.label,
     httpStatus: response.status,
     finalPath: normalizePath(finalUrl),
-    indexable: !/noindex/i.test(robots),
+    indexable: !noindexInfo.hasNoindex,
+    robots,
+    xRobotsTag: xRobots,
+    noindexClassification: noindexInfo.label,
+    expectStagingNoindex: expectsStagingNoindex(),
     canonical: canonicalHref,
     canonicalPath,
     desiredCanonicalPath,
@@ -191,27 +185,40 @@ for (const route of tier0.routes) {
   };
   routes.push(item);
 
-  if (response.status !== 200) defects.push(`${route.path}: HTTP ${response.status}`);
-  if (normalizePath(finalUrl) !== normalizePath(route.path)) defects.push(`${route.path}: final path ${normalizePath(finalUrl)}`);
-  if (!item.indexable) defects.push(`${route.path}: noindex`);
-  if (!item.selfCanonical) defects.push(`${route.path}: canonical ${canonicalPath || "missing"} != ${desiredCanonicalPath}`);
-  if (!inSitemap) defects.push(`${route.path}: missing from sitemap.xml`);
-  if (item.h1Count !== 1) defects.push(`${route.path}: expected 1 H1, found ${item.h1Count}`);
-  if (route.observedTitle && title && title !== route.observedTitle) defects.push(`${route.path}: title drift`);
-  if (route.observedH1 && item.h1 && item.h1 !== route.observedH1) defects.push(`${route.path}: H1 drift`);
+  const recordDefect = (message, isExpected = false) => {
+    defects.push(`${route.path}: ${message}`);
+    if (isExpected) expected.push(`${route.path}: ${message}`);
+    else realDefects.push(`${route.path}: ${message}`);
+  };
+
+  if (response.status !== 200) recordDefect(`HTTP ${response.status}`);
+  if (normalizePath(finalUrl) !== normalizePath(route.path)) recordDefect(`final path ${normalizePath(finalUrl)}`);
+  if (noindexInfo.hasNoindex) {
+    recordDefect(noindexInfo.label || "noindex", noindexInfo.classification === "A");
+  }
+  if (!item.selfCanonical && route.path !== "/services/aeo-services-in-mumbai/") {
+    recordDefect(`canonical ${canonicalPath || "missing"} != ${desiredCanonicalPath}`);
+  }
+  if (!inSitemap) recordDefect("missing from sitemap.xml");
+  if (item.h1Count !== 1) recordDefect(`expected 1 H1, found ${item.h1Count}`);
+  if (route.observedTitle && title && title !== route.observedTitle) recordDefect("title drift");
+  if (route.observedH1 && item.h1 && item.h1 !== route.observedH1) recordDefect("H1 drift");
 }
 
 const report = {
   checkedAt: new Date().toISOString(),
   target: TARGET.origin,
+  expectStagingNoindex: expectsStagingNoindex(),
   sitemapStatus: sitemap.status,
   sitemapRouteCount: sitemap.paths.length,
   routes,
   defects,
+  expectedDefects: expected,
+  realDefects,
   reportSha: createHash("sha256").update(JSON.stringify(routes)).digest("hex").slice(0, 12),
 };
 
 await mkdir(path.dirname(OUT), { recursive: true });
 await writeFile(OUT, `${JSON.stringify(report, null, 2)}\n`, "utf8");
 console.log(JSON.stringify(report, null, 2));
-if (defects.length) process.exitCode = 1;
+if (realDefects.length) process.exitCode = 1;

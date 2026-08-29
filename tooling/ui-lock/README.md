@@ -13,6 +13,7 @@ UI_LOCK_BASELINE_URL=http://127.0.0.1:3000 npm run capture:ui-lock-baseline
 
 - `home-390.png`, `home-1440.png`, `home-1920.png` — full-page screenshots
 - `home-structure.json` — section order, bounds, page height
+- `visual-source-manifest.json` — SHA-256 hashes of homepage mirror visual source files
 
 ## Commands
 

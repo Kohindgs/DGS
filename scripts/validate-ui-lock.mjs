@@ -4,6 +4,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { chromium } from "playwright";
 import { PNG } from "pngjs";
 import pixelmatch from "pixelmatch";
@@ -198,9 +199,41 @@ function compareStructure(baseline, current, errors) {
   }
 }
 
+function assertVisualSourceIntegrity(errors) {
+  const manifestPath = path.join(BASELINE_ROOT, "visual-source-manifest.json");
+  if (!fs.existsSync(manifestPath)) {
+    errors.push(`Missing visual source manifest: ${manifestPath}`);
+    return;
+  }
+
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  const drift = [];
+
+  for (const entry of manifest.files || []) {
+    const abs = path.resolve(entry.path);
+    if (!fs.existsSync(abs)) {
+      drift.push({ path: entry.path, issue: "missing" });
+      continue;
+    }
+    const current = createHash("sha256").update(fs.readFileSync(abs)).digest("hex");
+    if (current !== entry.sha256) {
+      drift.push({ path: entry.path, issue: "hash-mismatch", expected: entry.sha256, actual: current });
+    }
+  }
+
+  if (drift.length) {
+    errors.push(`Visual source integrity failed (${drift.length} file(s) drifted from approved manifest)`);
+    for (const item of drift.slice(0, 8)) {
+      errors.push(`  visual-source: ${item.path} — ${item.issue}`);
+    }
+    if (drift.length > 8) errors.push(`  ...and ${drift.length - 8} more`);
+  }
+}
+
 async function main() {
   const errors = [];
   assertHomepageArchitecture(errors);
+  assertVisualSourceIntegrity(errors);
 
   const structurePath = path.join(BASELINE_ROOT, "home-structure.json");
   if (!fs.existsSync(structurePath)) {
@@ -282,7 +315,17 @@ async function main() {
   }
 
   pass("PASS — APPROVED UI PRESERVED");
-  console.log(JSON.stringify({ screenshotResults, sectionOrder: currentStructure.sectionOrder }, null, 2));
+  console.log(
+    JSON.stringify(
+      {
+        visualSourceIntegrity: "pass",
+        screenshotResults,
+        sectionOrder: currentStructure.sectionOrder,
+      },
+      null,
+      2,
+    ),
+  );
 }
 
 main().catch((error) => {
