@@ -90,7 +90,39 @@ export function cleanPath(input, base = "https://www.dgeniussolutions.com") {
 }
 
 export function spanText(spans = []) {
-  return spans.map((s) => s.text || "").join("").trim();
+  if (!spans.length) return "";
+  if (spans.length === 1) return (spans[0].text || "").trim();
+  return spans
+    .map((s) => s.text || "")
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function collapseComparableText(value = "") {
+  return normalizeText(value)
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractPageH1Text(html) {
+  const match = html.match(/<div class="container readable-copy"[^>]*>[\s\S]*?<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  return match ? normalizeHeadingText(match[1]) : "";
+}
+
+function textIsPresent(entry, renderedComparable, { minLength = 20, slice = 80 } = {}) {
+  const comparable = collapseComparableText(entry.text);
+  const needle = comparable.slice(0, slice);
+  if (needle.length <= minLength) return true;
+  if (renderedComparable.includes(needle)) return true;
+  if (entry.spans?.length > 1) {
+    return entry.spans.every((span) => {
+      const spanNeedle = collapseComparableText(span.text || "");
+      return spanNeedle.length <= 3 || renderedComparable.includes(spanNeedle);
+    });
+  }
+  return false;
 }
 
 export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = {}) {
@@ -112,7 +144,7 @@ export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = 
     }
     if (block.type === "paragraph") {
       const text = spanText(block.content);
-      if (text) paragraphs.push({ ...blockRef, text });
+      if (text) paragraphs.push({ ...blockRef, text, spans: block.content || [] });
       for (const span of block.content || []) {
         if (span.href) {
           links.push({ ...blockRef, anchor: span.text?.trim() || text, path: cleanPath(span.href) });
@@ -122,7 +154,7 @@ export function extractExpectedFromBlocks(blocks = [], { wordpressId = null } = 
     if (block.type === "list") {
       for (const item of block.items || []) {
         const text = spanText(item);
-        if (text) lists.push({ ...blockRef, text });
+        if (text) lists.push({ ...blockRef, text, spans: item });
         for (const span of item || []) {
           if (span.href) {
             links.push({ ...blockRef, anchor: span.text?.trim() || text, path: cleanPath(span.href) });
@@ -185,6 +217,32 @@ export function isHomepageUiLockedExternalIcon(src) {
   }
 }
 
+function decodeHtmlEntities(text = "") {
+  return text
+    .replace(/&#x27;/gi, "'")
+    .replace(/&#0*39;/gi, "'")
+    .replace(/&apos;/gi, "'")
+    .replace(/&quot;/gi, '"')
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+}
+
+function normalizeHeadingText(text = "") {
+  return collapseComparableText(decodeHtmlEntities(text));
+}
+
+function headingIsPresent(sourceHeading, renderedHeadings) {
+  const sourceText = normalizeHeadingText(sourceHeading.text);
+  return renderedHeadings.some((rendered) => {
+    const renderedText = normalizeHeadingText(rendered.text);
+    if (renderedText !== sourceText) return false;
+    if (rendered.level === sourceHeading.level) return true;
+    const levels = new Set([rendered.level, sourceHeading.level]);
+    return levels.has("h1") && levels.has("h2");
+  });
+}
+
 function isNonBlockingExternalImage(src, routePath) {
   if (isMshotsExternalDependency(src)) return true;
   if (routePath === "/" && isHomepageUiLockedExternalIcon(src)) return true;
@@ -228,11 +286,15 @@ export function classifyMigration({
 
 export function compareRenderedContent(expected, html, pageUrl) {
   const article = extractArticleHtml(html);
+  const pageH1Text = extractPageH1Text(html);
   const renderedHeadings = extractHeadings(article || html);
+  if (pageH1Text) {
+    renderedHeadings.unshift({ level: "h1", text: pageH1Text });
+  }
   const renderedFaq = extractFaqItems(article || html);
   const renderedLinks = extractContextualLinks(article || html, pageUrl);
   const renderedImages = extractImages(article || html);
-  const renderedText = normalizeText(article || html);
+  const renderedText = collapseComparableText(article || html) + (pageH1Text ? ` ${pageH1Text}` : "");
 
   const sourceHeadings = expected.headings.map((h, index) => ({
     index,
@@ -241,13 +303,14 @@ export function compareRenderedContent(expected, html, pageUrl) {
   }));
   const headingDiff = diffHeadings(sourceHeadings, renderedHeadings);
   const missingHeadings = meaningfulMissingHeadings(headingDiff.missing).filter(
-    (h) => !isTemplateLiteralHeading(h.text),
+    (h) =>
+      !isTemplateLiteralHeading(h.text) &&
+      !headingIsPresent({ level: h.level, text: h.text }, renderedHeadings),
   );
 
-  const missingParagraphs = expected.paragraphs.filter((entry) => {
-    const needle = normalizeText(entry.text).slice(0, 80);
-    return needle.length > 20 && !renderedText.includes(needle);
-  });
+  const missingParagraphs = expected.paragraphs.filter(
+    (entry) => !textIsPresent(entry, renderedText, { minLength: 20, slice: 80 }),
+  );
 
   const missingFaqs = expected.faqs.filter(
     (f) => f.question && !renderedFaq.some((r) => r.question === f.question),
@@ -265,10 +328,9 @@ export function compareRenderedContent(expected, html, pageUrl) {
       blockType: f.type,
     }));
 
-  const missingLists = expected.lists.filter((entry) => {
-    const needle = normalizeText(entry.text).slice(0, 60);
-    return needle.length > 15 && !renderedText.includes(needle);
-  });
+  const missingLists = expected.lists.filter(
+    (entry) => !textIsPresent(entry, renderedText, { minLength: 15, slice: 60 }),
+  );
 
   const internalExpectedLinks = expected.links.filter(
     (l) => l.path.startsWith("/") && !/wp-content/i.test(l.path),

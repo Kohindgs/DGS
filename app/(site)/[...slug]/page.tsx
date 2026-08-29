@@ -85,10 +85,11 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   const schemaBlocks = buildRouteSchemas({ route, path, blocks: restoredBlocks, breadcrumbs });
 
   const pageH1 = resolvePageH1(route, restoredBlocks);
-  const isH1 = (b: ContentBlock): b is HeadingBlock => b.type === "heading" && b.level === 1;
+  const isPageH1Duplicate = (b: ContentBlock): b is HeadingBlock =>
+    b.type === "heading" && b.level === 1 && b.text.trim() === pageH1.trim();
   const isDuplicateHeading = (b: ContentBlock): b is HeadingBlock =>
     b.type === "heading" && b.text.trim() === pageH1.trim();
-  const contentBlocks = restoredBlocks.filter((b) => !isH1(b) && !isDuplicateHeading(b));
+  const contentBlocks = restoredBlocks.filter((b) => !isPageH1Duplicate(b) && !isDuplicateHeading(b));
   const showContactForm = path === "/contact-us/";
 
   return (

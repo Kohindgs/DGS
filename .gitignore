@@ -6,5 +6,5 @@ out
 !.env.example
 *.log
 .DS_Store
-coverage
+*.tsbuildinfo
 tooling/ui-lock/**/diffs/

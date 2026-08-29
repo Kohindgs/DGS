@@ -105,10 +105,13 @@ for (const item of approved.corrections || []) {
     failures.push(`correction missing path or wordpressDestination: ${JSON.stringify(item)}`);
   }
   if (item.requiredNextDestination) {
-    assert(
-      normalizeHref(item.requiredNextDestination) === normalizeHref(item.requiredNextDestination),
-      "requiredNextDestination must be normalized path",
-    );
+    const normalized = normalizeHref(item.requiredNextDestination);
+    if (!normalized.startsWith("/")) {
+      failures.push(`requiredNextDestination must be internal path: ${item.path} -> ${item.requiredNextDestination}`);
+    }
+    if (normalized !== item.requiredNextDestination && !item.requiredNextDestination.startsWith("/")) {
+      failures.push(`requiredNextDestination not normalized: ${item.path} -> ${item.requiredNextDestination}`);
+    }
   }
 }
 

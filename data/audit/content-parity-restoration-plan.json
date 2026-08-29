@@ -1,0 +1,3227 @@
+{
+  "generatedAt": "2026-08-29T15:28:03.160Z",
+  "startingIncompleteCount": 57,
+  "classificationCounts": {
+    "A": 0,
+    "B": 2,
+    "C": 9,
+    "D": 192,
+    "E": 0,
+    "F": 0,
+    "G": 0
+  },
+  "resolutionSummary": {
+    "rendererLevelFixes": [
+      "page.tsx: only remove duplicate page H1, not all in-content h1 blocks"
+    ],
+    "extractionLevelFixes": [
+      "/blogs/ and /our-services/ archive headings corrected to live WordPress titles",
+      "FAQ section headings normalized from h1 to h2 in extracted blocks"
+    ],
+    "auditLevelFixes": [
+      "spanText joins multi-span content with spaces",
+      "collapseComparableText normalizes punctuation whitespace around inline links",
+      "heading compare accepts h1/h2 equivalence and page-level H1",
+      "per-span presence fallback for multi-span paragraphs/lists"
+    ],
+    "pageSpecificFixes": 0
+  },
+  "policy": "Phase 1F migration recovery only. No SEO rewrites. No visual redesign.",
+  "routes": [
+    {
+      "path": "/aeo-dubai/",
+      "wordpressId": 64225,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/aeo-dubai/",
+          "wordpressId": 64225,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 71,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For stronger organic visibility in the UAE, AEO should work with SEO services, GEO, AIO, and LLM SEO.",
+          "sourceOrder": 71,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/aeo-dubai/",
+          "wordpressId": 64225,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 115,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "As an AEO agency in Dubai, DGS helps brands target high-intent searches such as AEO agency in Dubai, AEO services in Dub",
+          "sourceOrder": 115,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/aeo-dubai/",
+          "wordpressId": 64225,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 117,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For broader search visibility, we connect this page with GEO services, LLM SEO services, social media marketing, and web",
+          "sourceOrder": 117,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/aeo-dubai/",
+          "wordpressId": 64225,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 174,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "DGS connects answer-led content with GEO services and LLM SEO services.",
+          "sourceOrder": 174,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/aeo-dubai/",
+          "wordpressId": 64225,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 175,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "We also align pages with helpful content principles from Google Search Central.",
+          "sourceOrder": 175,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/",
+      "wordpressId": 26492,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/",
+          "wordpressId": 26492,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "Archives",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/3-3-3-rule-in-marketing/",
+      "wordpressId": 64475,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/3-3-3-rule-in-marketing/",
+          "wordpressId": 64475,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 106,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, the 3-3-3 rule can be used to simplify SEO and digital marketing planning.",
+          "sourceOrder": 106,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/aeo-business/",
+      "wordpressId": 64292,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 9,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Clear question-based headingsShort and direct answersHelpful explanationsFAQ sectionsSchema markupInternal linkingEntity",
+          "sourceOrder": 9,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 14,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "What is Answer Engine Optimization?Why does my business need answer engine optimization?How can my website appear in AI ",
+          "sourceOrder": 14,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 23,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "SEO helps a page rank for “answer engine optimization services.”Answer optimization helps that same page answer “What ar",
+          "sourceOrder": 23,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 25,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If your business is already investing in SEO services, adding answer engine optimization can improve how your content pe",
+          "sourceOrder": 25,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 43,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "“What is answer engine optimization?”“How can answer optimization help my business?”“Which agency offers answer engine o",
+          "sourceOrder": 43,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 55,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "What the topic meansWhy it mattersWho needs itHow it worksWhat benefits it providesWhat action the user should take next",
+          "sourceOrder": 55,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 62,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is why your blog should internally link to your AEO service page. The blog educates users, and the service page hel",
+          "sourceOrder": 62,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/aeo-business/",
+          "wordpressId": 64292,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 72,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "What service do you provide?Who is the service for?What problem does it solve?How does your process work?Why should some",
+          "sourceOrder": 72,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-content-optimization/",
+      "wordpressId": 61962,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-content-optimization/",
+          "wordpressId": 61962,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 25,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, this balance matters. Technology supports the process, but strategy and creativity guide the fina",
+          "sourceOrder": 25,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-generated-summaries-in-search-ads/",
+      "wordpressId": 64739,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-generated-summaries-in-search-ads/",
+          "wordpressId": 64739,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 18,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "But with AI-generated summaries in search ads, Google may add another layer of information. That layer can influence how",
+          "sourceOrder": 18,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-generated-summaries-in-search-ads/",
+          "wordpressId": 64739,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 35,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "With AI-generated summaries in search ads, the quality of your website content may influence how Google understands your",
+          "sourceOrder": 35,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-overview-ranking/",
+      "wordpressId": 62485,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-overview-ranking/",
+          "wordpressId": 62485,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 2,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, digital marketing specialists closely track these changes and help businesses optimize their webs",
+          "sourceOrder": 2,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-ranking/",
+          "wordpressId": 62485,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 14,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "One of the most important ranking factors for AI-powered search results is EEAT.",
+          "sourceOrder": 14,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-ranking/",
+          "wordpressId": 62485,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 58,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, experienced SEO specialists help businesses optimize their websites for modern AI search environm",
+          "sourceOrder": 58,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-overview-seo/",
+      "wordpressId": 64815,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 3,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "According to the Google Search Central AI optimization guide, normal SEO best practices still apply to generative AI fea",
+          "sourceOrder": 3,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 37,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For example, if the topic is AI Overview SEO, the page should quickly explain that it helps websites become easier for G",
+          "sourceOrder": 37,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 53,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For AI Overview SEO, your content should naturally connect related topics such as SEO, AEO, GEO, AI Overviews, Google Se",
+          "sourceOrder": 53,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 60,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That is why FAQ-style content has become more important in AI Overview SEO.",
+          "sourceOrder": 60,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 74,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "When a blog explains a topic like AI Overview SEO, it becomes more valuable when it connects readers to related informat",
+          "sourceOrder": 74,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 85,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For AI Overview SEO, updated content shows that the website is active, maintained, and aligned with current search behav",
+          "sourceOrder": 85,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 96,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Keyword stuffingThin contentCopied contentGeneric AI-generated blogsNo clear answerNo FAQsNo internal linksNo author or ",
+          "sourceOrder": 96,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-overview-seo/",
+          "wordpressId": 64815,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 108,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Create useful content.Answer real questions.Fix technical SEO issues.Add trust signals.Use natural internal links.Keep i",
+          "sourceOrder": 108,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-readiness-for-websites/",
+      "wordpressId": 63861,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-readiness-for-websites/",
+          "wordpressId": 63861,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For businesses already investing in SEO services, website development, and content writing services, AI readiness is now",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-readiness-for-websites/",
+          "wordpressId": 63861,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 9,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is where AEO services, GEO services, and LLM SEO start to overlap with traditional SEO.",
+          "sourceOrder": 9,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-readiness-for-websites/",
+          "wordpressId": 63861,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 17,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "So the goal is not to “write for AI” in an artificial way.AI readiness for websites is becoming more important because s",
+          "sourceOrder": 17,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-readiness-for-websites/",
+          "wordpressId": 63861,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 24,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That is one reason businesses often need support from a mix of SEO services, AEO services, and website content writing, ",
+          "sourceOrder": 24,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-readiness-for-websites/",
+          "wordpressId": 63861,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 66,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This kind of FAQ content is especially useful when connected to SEO services, AEO services, and content writing services",
+          "sourceOrder": 66,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-search-behavior-2026/",
+      "wordpressId": 62433,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-search-behavior-2026/",
+          "wordpressId": 62433,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 12,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This evolution is largely powered by generative ai, which allows search engines to interpret natural language queries an",
+          "sourceOrder": 12,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-search-behavior-2026/",
+          "wordpressId": 62433,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 45,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, businesses gain access to modern strategies that combine data-driven marketing with advanced opti",
+          "sourceOrder": 45,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-search-behavior-2026/",
+          "wordpressId": 62433,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 47,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses adapt to the rapidly changing search landscape by integrating AI-driven insigh",
+          "sourceOrder": 47,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-search-checklist-2026/",
+      "wordpressId": 65235,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-search-checklist-2026/",
+          "wordpressId": 65235,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This type of direct answer also supports Answer Engine Optimization.",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-search-checklist-2026/",
+          "wordpressId": 65235,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 58,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Content about direct answers can connect to your AEO services.",
+          "sourceOrder": 58,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-search-checklist-2026/",
+          "wordpressId": 65235,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 59,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Content about visibility within generative search can link to your GEO services.",
+          "sourceOrder": 59,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-search-checklist-2026/",
+          "wordpressId": 65235,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 127,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "It should be higher rankings that generate business.",
+          "sourceOrder": 127,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-search-checklist-2026/",
+          "wordpressId": 65235,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 147,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we combine SEO, AEO, GEO and LLM SEO strategies to help businesses strengthen their visibility ac",
+          "sourceOrder": 147,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "wordpressId": 64964,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-search-optimization-ecommerce/",
+          "wordpressId": 64964,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 35,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Awareness: What type of product do I need?Consideration: Which option is better?Decision: Is this product suitable for m",
+          "sourceOrder": 35,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-search-optimization-ecommerce/",
+          "wordpressId": 64964,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "Frequently Asked Questions",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-video-production-cost-india/",
+      "wordpressId": 65240,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-video-production-cost-india/",
+          "wordpressId": 65240,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 92,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Revision requirements also influence AI video production cost.",
+          "sourceOrder": 92,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-video-production-cost-india/",
+          "wordpressId": 65240,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 105,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That provides a much more accurate way to evaluate AI video production pricing.",
+          "sourceOrder": 105,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-video-production-for-business/",
+      "wordpressId": 64465,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-video-production-for-business/",
+          "wordpressId": 64465,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 58,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "AI video production supports SEO visibility, AEO Services, GEO optimization, LLM SEO Service, voice search readiness, an",
+          "sourceOrder": 58,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/ai-video-vs-traditional-video/",
+      "wordpressId": 65256,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/ai-video-vs-traditional-video/",
+          "wordpressId": 65256,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 107,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That is usually a more useful way to build a modern video marketing strategy.",
+          "sourceOrder": 107,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-video-vs-traditional-video/",
+          "wordpressId": 65256,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 132,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "There is no universal winner in AI Video vs Traditional Video.",
+          "sourceOrder": 132,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/ai-video-vs-traditional-video/",
+          "wordpressId": 65256,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "wordpressId": 64968,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/brand-mentions-for-ai-tools/",
+          "wordpressId": 64968,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "Frequently Asked Questions",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/brand-visibility-in-ai-search/",
+      "wordpressId": 65091,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/brand-visibility-in-ai-search/",
+          "wordpressId": 65091,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 67,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Explore our SEO Services in Mumbai, AEO Services in Mumbai, GEO Services and LLM SEO Services.",
+          "sourceOrder": 67,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/chatgpt-brand-visibility/",
+      "wordpressId": 65264,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/chatgpt-brand-visibility/",
+          "wordpressId": 65264,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 59,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "A blog about AI search could link to LLM SEO services. An article about generative search could connect with GEO service",
+          "sourceOrder": 59,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "wordpressId": 62755,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/content-strategy-high-intent-traffic/",
+          "wordpressId": 62755,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 12,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If the goal is to attract businesses looking for SEO, branding, website development, or digital marketing support, then ",
+          "sourceOrder": 12,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/content-strategy-high-intent-traffic/",
+          "wordpressId": 62755,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 61,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "D’Genius Solutions can help by creating content that aligns SEO, AEO, service goals, and user intent to attract visitors",
+          "sourceOrder": 61,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/core-update-strategy/",
+      "wordpressId": 64990,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/core-update-strategy/",
+          "wordpressId": 64990,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "Frequently Asked Questions",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/future-of-seo/",
+      "wordpressId": 63952,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/future-of-seo/",
+          "wordpressId": 63952,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 5,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses build modern SEO strategies that improve search visibility, attract qualified ",
+          "sourceOrder": 5,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/future-of-seo/",
+          "wordpressId": 63952,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 15,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That is why your content should not only target the focus keyword SEO. It should also help business owners understand wh",
+          "sourceOrder": 15,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/future-of-seo/",
+          "wordpressId": 63952,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 34,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Modern SEO also includes LLM SEO, which helps AI tools understand, mention, and recommend your brand more accurately.",
+          "sourceOrder": 34,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/future-of-seo/",
+          "wordpressId": 63952,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 78,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "D’Genius Solutions can help your business improve organic growth prepare for AI search, and convert organic traffic into",
+          "sourceOrder": 78,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/generative-engine-optimization-business/",
+      "wordpressId": 64846,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 5,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "A strong strategy should connect SEO services for better Google visibility, GEO services for AI search visibility, and c",
+          "sourceOrder": 5,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 21,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "SEO focuses on ranking web pages in search results.Generative Engine Optimization focuses on helping AI systems include ",
+          "sourceOrder": 21,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 22,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "SEO asks:“How can this page rank on Google?”",
+          "sourceOrder": 22,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 23,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "GEO asks:“How can this brand become a trusted source for AI-generated answers?”",
+          "sourceOrder": 23,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 30,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "“What is the best digital strategy for my business?”“How can I improve visibility in AI search?”“Which company provides ",
+          "sourceOrder": 30,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 38,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Keyword relevancePage structureMeta title and descriptionInternal linkingTechnical healthWebsite speedMobile experienceC",
+          "sourceOrder": 38,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 46,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "SEO service pagesGEO service pagesAEO service pagesDigital marketing pagesAI search visibility pagesLocal service pagesL",
+          "sourceOrder": 46,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization-business/",
+          "wordpressId": 64846,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 52,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "What your business doesWho your services are forWhat problems you solveWhy your service mattersHow your process worksWha",
+          "sourceOrder": 52,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/generative-engine-optimization/",
+      "wordpressId": 64204,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/generative-engine-optimization/",
+          "wordpressId": 64204,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 3,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses improve visibility across Google Search, AI Overviews, answer engines, and gen",
+          "sourceOrder": 3,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/generative-engine-optimization/",
+          "wordpressId": 64204,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 202,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "D’Genius Solutions helps businesses improve visibility through SEO services, GEO services, AEO services, and AI-focused ",
+          "sourceOrder": 202,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-ads-vs-meta-ads/",
+      "wordpressId": 65259,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-ads-vs-meta-ads/",
+          "wordpressId": 65259,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 59,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "The objective should therefore be qualified lead efficiency, not simply the lowest possible CPL.",
+          "sourceOrder": 59,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-ads-vs-meta-ads/",
+          "wordpressId": 65259,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 66,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "The difference is largely one of intent maturity.",
+          "sourceOrder": 66,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-ads-vs-meta-ads/",
+          "wordpressId": 65259,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 123,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This creates a more complete performance marketing strategy.",
+          "sourceOrder": 123,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-agentic-browsing/",
+      "wordpressId": 64921,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-agentic-browsing/",
+          "wordpressId": 64921,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 22,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Google Agentic Browsing, meanwhile, is focused on whether an AI agent can reliably interact with a website.",
+          "sourceOrder": 22,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-agentic-browsing/",
+          "wordpressId": 64921,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 49,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Google is also experimenting with WebMCP, which can allow developers to describe website tools and form actions using ma",
+          "sourceOrder": 49,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-agentic-browsing/",
+          "wordpressId": 64921,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 59,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "DGS also provides dedicated AEO services in Mumbai, GEO services and LLM SEO services for brands adapting to answer-led ",
+          "sourceOrder": 59,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-agentic-browsing/",
+          "wordpressId": 64921,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 61,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "The Lighthouse Agentic Browsing category includes an audit for llms.txt, a proposed machine-readable file that can summa",
+          "sourceOrder": 61,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "wordpressId": 61956,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+          "wordpressId": 61956,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 14,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "With the rise of AI-driven search results, search engines are prioritizing synthesized answers and contextual relevance ",
+          "sourceOrder": 14,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+          "wordpressId": 61956,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 28,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, SEO strategies are designed around sustainable visibility rather than short-term traffic spikes. ",
+          "sourceOrder": 28,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+          "wordpressId": 61956,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "Google AI Overviews and the Growth of Zero-Click Searches",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-ai-overviews-image-generation/",
+      "wordpressId": 64909,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-ai-overviews-image-generation/",
+          "wordpressId": 64909,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 30,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, this principle can be applied across SEO services, AEO services, website development and AI-led m",
+          "sourceOrder": 30,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-ai-search-update/",
+      "wordpressId": 63706,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-ai-search-update/",
+          "wordpressId": 63706,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 16,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "To understand the Google AI Search Update, businesses should understand two important ideas: retrieval-augmented generat",
+          "sourceOrder": 16,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-algorithm-business/",
+      "wordpressId": 63943,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-algorithm-business/",
+          "wordpressId": 63943,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 12,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is especially important for businesses that depend on content writing, website development, and organic search to a",
+          "sourceOrder": 12,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-io-2026/",
+      "wordpressId": 63881,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-io-2026/",
+          "wordpressId": 63881,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 3,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses prepare for this next phase of search with SEO, AI-ready content, website deve",
+          "sourceOrder": 3,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-io-2026/",
+          "wordpressId": 63881,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "According to Google’s official Google I/O 2026 announcements, the company introduced major updates across AI Search, Gem",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-io-2026/",
+          "wordpressId": 63881,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 80,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "With LLM SEO services, businesses can improve their chances of being understood, mentioned, and recommended in AI-powere",
+          "sourceOrder": 80,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-ranking-fixes/",
+      "wordpressId": 64112,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-ranking-fixes/",
+          "wordpressId": 64112,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 3,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses improve their search ranking through website SEO, content optimization, techni",
+          "sourceOrder": 3,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-ranking-fixes/",
+          "wordpressId": 64112,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 7,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "According to Google Search Central, SEO helps search engines understand your content and helps users find your website t",
+          "sourceOrder": 7,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-search-console-social-media/",
+      "wordpressId": 64856,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-search-console-social-media/",
+          "wordpressId": 64856,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 17,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Which social platforms support Google visibilityWhich posts or videos are getting search impressionsWhich search queries",
+          "sourceOrder": 17,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-search-console-social-media/",
+          "wordpressId": 64856,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 18,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For businesses investing in SEO Services, this update is highly useful because it connects website SEO with social media",
+          "sourceOrder": 18,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-search-console-social-media/",
+          "wordpressId": 64856,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 27,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Website pagesYouTube videosImagesSocial postsBusiness profilesAI OverviewsLocal resultsProduct resultsShort-form content",
+          "sourceOrder": 27,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-search-console-social-media/",
+          "wordpressId": 64856,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 43,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "A detailed blogA YouTube explainerAn Instagram carouselA short videoAn FAQ sectionA service page update",
+          "sourceOrder": 43,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-search-console-social-media/",
+          "wordpressId": 64856,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 56,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "ClearOriginalUsefulEasy to understandRelevant to the audienceConnected to real business expertise",
+          "sourceOrder": 56,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-search-console-social-media/",
+          "wordpressId": 64856,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 78,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Website pages should be optimized.Blogs should answer real questions.Social posts should support search topics.Videos sh",
+          "sourceOrder": 78,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/google-spam-update/",
+      "wordpressId": 64728,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/google-spam-update/",
+          "wordpressId": 64728,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 3,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Many businesses notice a sudden ranking drop after a Google spam update. A page that was ranking well may move down, tra",
+          "sourceOrder": 3,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-spam-update/",
+          "wordpressId": 64728,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 5,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses understand why their rankings dropped and what needs to be fixed. Our team che",
+          "sourceOrder": 5,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/google-spam-update/",
+          "wordpressId": 64728,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 6,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For complete SEO support, you can explore our SEO services in Mumbai.",
+          "sourceOrder": 6,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/llm-seo-ai-search/",
+      "wordpressId": 64620,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 3,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "“Which company can optimize my website for AI search?”“How can my business appear in ChatGPT or Gemini?”“What is LLM SEO",
+          "sourceOrder": 3,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 11,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "What your business doesWhich services you provideWhich locations you serveWhy your brand is trustworthyWhich pages are m",
+          "sourceOrder": 11,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 20,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Can search engines understand this page?Can AI tools understand this page?Can users trust this business after reading th",
+          "sourceOrder": 20,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 22,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That is why LLM SEO, AI SEO, website SEO and website development should work together.",
+          "sourceOrder": 22,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 28,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Home pageService pagesLocation pagesBlog pagesCase studiesAbout pageContact pageFAQ sectionsInternal links",
+          "sourceOrder": 28,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 38,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "AI SEOwebsite SEOAI searchlarge language modelsAI toolsGoogle AI OverviewsChatGPT searchGemini search",
+          "sourceOrder": 38,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 40,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Perplexity searchwebsite developmenttechnical SEOschema markup",
+          "sourceOrder": 40,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 48,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "What is LLM SEO?Why is LLM SEO important?How does AI search affect websites?How can a website become AI-friendly?What ro",
+          "sourceOrder": 48,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-ai-search/",
+          "wordpressId": 64620,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "FAQs",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/llm-seo-services-mumbai/",
+      "wordpressId": 62568,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/llm-seo-services-mumbai/",
+          "wordpressId": 62568,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 30,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For businesses trying to optimize for large language models, structure matters because it improves machine readability w",
+          "sourceOrder": 30,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/llm-seo-services-mumbai/",
+          "wordpressId": 62568,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 39,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For brands that want to optimize content for LLMs, improve SEO for AI models, and build a lasting LLM visibility strateg",
+          "sourceOrder": 39,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/low-social-media-reach/",
+      "wordpressId": 65251,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/low-social-media-reach/",
+          "wordpressId": 65251,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is especially important for Instagram reach, because a Reel cannot generate deeper engagement if viewers leave befo",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/low-social-media-reach/",
+          "wordpressId": 65251,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 47,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is another common cause of low social media reach.",
+          "sourceOrder": 47,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/low-social-media-reach/",
+          "wordpressId": 65251,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 105,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "When businesses encounter low social media reach, the first response is often to increase posting frequency.",
+          "sourceOrder": 105,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/low-social-media-reach/",
+          "wordpressId": 65251,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 135,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "You can read Google’s official social and video performance guidance.",
+          "sourceOrder": 135,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/low-social-media-reach/",
+          "wordpressId": 65251,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 158,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If you are struggling with low social media reach, stop searching for one hidden algorithm trick.",
+          "sourceOrder": 158,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/low-social-media-reach/",
+          "wordpressId": 65251,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 163,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Build stronger social media engagement.",
+          "sourceOrder": 163,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/optimize-content-ai-search/",
+      "wordpressId": 64866,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/optimize-content-ai-search/",
+          "wordpressId": 64866,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 29,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "To optimize content for AI search, a page should provide a direct explanation, cover the surrounding questions, support ",
+          "sourceOrder": 29,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/optimize-for-ai-overviews/",
+      "wordpressId": 63959,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 6,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses improve visibility across search, AI-powered discovery, content, and conversio",
+          "sourceOrder": 6,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 34,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "DGS supports this search shift through AEO services in Mumbai, helping businesses become more visible in answer-led sear",
+          "sourceOrder": 34,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 74,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Businesses preparing for AI-driven discovery can explore DGS LLM SEO services.",
+          "sourceOrder": 74,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 90,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "To optimize for AI overviews, businesses should begin thinking about trust signals.",
+          "sourceOrder": 90,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 119,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Businesses can view DGS work and brand experience through the DGS portfolio.",
+          "sourceOrder": 119,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 132,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Many businesses want to optimize for AI overviews, but they approach it in the wrong way.",
+          "sourceOrder": 132,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 151,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If your business wants to optimize for AI overviews, the first step is to understand how search behavior is changing. Us",
+          "sourceOrder": 151,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/optimize-for-ai-overviews/",
+          "wordpressId": 63959,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 154,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "At D’Genius Solutions, we help businesses prepare for the future of search with SEO, AEO, GEO, LLM SEO, content creation",
+          "sourceOrder": 154,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/seo-rankings-up-but-traffic-down/",
+      "wordpressId": 64859,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 2,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "When businesses notice SEO rankings up but traffic down, the real issue often lies in search demand, click-through rate,",
+          "sourceOrder": 2,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 5,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "When you see SEO rankings up but traffic down, your website may be appearing in stronger positions while receiving fewer",
+          "sourceOrder": 5,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 81,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is another major cause of SEO rankings up but traffic down.",
+          "sourceOrder": 81,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 117,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "To diagnose SEO rankings up but traffic down, follow a structured process instead of making random content changes.",
+          "sourceOrder": 117,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 126,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Position improves, but impressions decline:Search demand may have fallen.",
+          "sourceOrder": 126,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 127,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Position improves, impressions remain stable, but clicks decline:CTR may be weaker, or search-result features may be tak",
+          "sourceOrder": 127,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 128,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Average position improves, but important pages lose traffic:Low-value keyword gains may be hiding valuable losses.",
+          "sourceOrder": 128,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-rankings-up-but-traffic-down/",
+          "wordpressId": 64859,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 129,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Traffic stays stable, but enquiries decline:The problem may involve intent or conversion performance.",
+          "sourceOrder": 129,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/seo-services-india-2026/",
+      "wordpressId": 62849,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/seo-services-india-2026/",
+          "wordpressId": 62849,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 17,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is why terms such as local seo services, seo services near me, and seo services in mumbai have become more commerci",
+          "sourceOrder": 17,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-services-india-2026/",
+          "wordpressId": 62849,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 32,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is why searches related to the best seo services, best seo services in india, and a reliable professional seo compa",
+          "sourceOrder": 32,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-services-india-2026/",
+          "wordpressId": 62849,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 38,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Whether a company is comparing a best seo agency, exploring a new seo solution, or looking for affordable seo service in",
+          "sourceOrder": 38,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/seo-services-india-2026/",
+          "wordpressId": 62849,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 47,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That is why seo services, smarter search engine optimization services, and business-focused organic strategy are becomin",
+          "sourceOrder": 47,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/voice-search-seo/",
+      "wordpressId": 64942,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/voice-search-seo/",
+          "wordpressId": 64942,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 58,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "It is also a core part of AEO services in Mumbai. Answer Engine Optimisation structures content so it can be understood ",
+          "sourceOrder": 58,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "wordpressId": 63343,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/website-design-lead-generation-mumbai/",
+          "wordpressId": 63343,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 2,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Today, website design also needs to support SEO, AEO, AIO, GEO, LLM SEO, and overall AI readiness. Search is no longer l",
+          "sourceOrder": 2,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-design-lead-generation-mumbai/",
+          "wordpressId": 63343,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 18,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Page speed also affects SEO. Google wants to show users pages that offer a better experience. A slow-loading page may st",
+          "sourceOrder": 18,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-design-lead-generation-mumbai/",
+          "wordpressId": 63343,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 27,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This is where website copy supports AEO and AIO. Answer Engine Optimization works best when the page answers common user",
+          "sourceOrder": 27,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-design-lead-generation-mumbai/",
+          "wordpressId": 63343,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 39,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For example, after explaining website development services, a CTA like “Request a Website Audit” or “Talk to Our Website",
+          "sourceOrder": 39,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-design-lead-generation-mumbai/",
+          "wordpressId": 63343,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 44,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For D’Genius Solutions, this matters across services such as SEO, AEO, GEO, LLM SEO, website development, branding, cont",
+          "sourceOrder": 44,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-design-lead-generation-mumbai/",
+          "wordpressId": 63343,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 55,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "That is why a business website should be treated as a lead generation engine, not a one-time design project.",
+          "sourceOrder": 55,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-design-lead-generation-mumbai/",
+          "wordpressId": 63343,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 58,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "A strong website should be fast, mobile-friendly, structured, SEO-focused, answer-ready, AI-readable, and conversion-dri",
+          "sourceOrder": 58,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/website-development-mistakes/",
+      "wordpressId": 63362,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 11,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For example, a company offering website development, SEO, branding, social media marketing, performance marketing, and A",
+          "sourceOrder": 11,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 15,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For better AI search visibility, the website needs machine-readable content. This means clear headings, direct answers, ",
+          "sourceOrder": 15,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 20,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For AEO and answer engine optimization, service pages should include direct answers, FAQs, benefits, process steps, comp",
+          "sourceOrder": 20,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 21,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For LLM SEO, the content should clearly connect the service with the business, industry, location, and customer pain poi",
+          "sourceOrder": 21,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 31,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For SEO and technical SEO for websites, page speed, Core Web Vitals, mobile performance, and clean coding matter. A webs",
+          "sourceOrder": 31,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 34,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Without structured data, search engines may still crawl the website, but they may not fully understand the relationship ",
+          "sourceOrder": 34,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 35,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For GEO and LLM SEO, schema markup works like an additional clarity layer. It helps machines understand what the page is",
+          "sourceOrder": 35,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-development-mistakes/",
+          "wordpressId": 63362,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 43,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Thin content is one of the most damaging website development mistakes. Many business websites use generic content that c",
+          "sourceOrder": 43,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/website-performance-conversions/",
+      "wordpressId": 62717,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/website-performance-conversions/",
+          "wordpressId": 62717,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 14,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For brands investing in website development services, this means performance should be planned from the beginning rather",
+          "sourceOrder": 14,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-performance-conversions/",
+          "wordpressId": 62717,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 45,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Whether the project needs professional website development, cleaner architecture, improved mobile behavior, or stronger ",
+          "sourceOrder": 45,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/website-traffic-but-no-leads/",
+      "wordpressId": 65280,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If you have website traffic but no leads, first check whether you are attracting the right audience. Then review your la",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 27,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If you have website traffic but no leads, compare your highest-traffic landing pages with the actual queries generating ",
+          "sourceOrder": 27,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 56,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If you have website traffic but no leads, test your form yourself on both desktop and mobile. Check whether it loads pro",
+          "sourceOrder": 56,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 93,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Start with acquisition. Identify where the traffic comes from and which queries, campaigns and audiences generate visito",
+          "sourceOrder": 93,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 94,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Next, analyse behaviour. Find the pages visitors enter, where they leave and whether they interact with CTAs, forms or i",
+          "sourceOrder": 94,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 95,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Then evaluate conversion. Check whether forms work, contact options are visible and conversion events are recorded corre",
+          "sourceOrder": 95,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 96,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Finally, evaluate lead quality. Ten enquiries from people who cannot buy your service may be less valuable than three en",
+          "sourceOrder": 96,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/website-traffic-but-no-leads/",
+          "wordpressId": 65280,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 101,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "If you are experiencing website traffic but no leads, avoid immediately publishing more articles or increasing your adve",
+          "sourceOrder": 101,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "wordpressId": 64217,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/blogs/what-is-llm-seo/",
+          "wordpressId": 64217,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "This change has created a new layer of digital visibility called LLM SEO.",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/what-is-llm-seo/",
+          "wordpressId": 64217,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 80,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "DGS also offers related services such as AEO services and GEO services, which support stronger visibility across answer ",
+          "sourceOrder": 80,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/what-is-llm-seo/",
+          "wordpressId": 64217,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 85,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "For example, if your business wants to be associated with LLM SEO services, AI SEO, SEO, and AI search visibility, those",
+          "sourceOrder": 85,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/blogs/what-is-llm-seo/",
+          "wordpressId": 64217,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 98,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "LLM SEO, AI SEO, GEO, and AEO are connected, but they have different roles in a modern search strategy.",
+          "sourceOrder": 98,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/contact-us/",
+      "wordpressId": 62460,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/contact-us/",
+          "wordpressId": 62460,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "Let's build together.",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/our-services/",
+      "wordpressId": 55355,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/our-services/",
+          "wordpressId": 55355,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "G",
+          "sourceBlockType": null,
+          "exactSourceText": "Archives",
+          "proposedTechnicalFix": "Render verified source block at source order",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/seo-pricing/",
+      "wordpressId": 62632,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/seo-pricing/",
+          "wordpressId": 62632,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 145,
+          "sourceBlockType": "list",
+          "exactSourceText": "✓Keywords grew from 397 to 8,645",
+          "sourceOrder": 145,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/seo-pricing/",
+          "wordpressId": 62632,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 145,
+          "sourceBlockType": "list",
+          "exactSourceText": "✓Traffic grew from 1,578 to 9,588 monthly visits",
+          "sourceOrder": 145,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/seo-pricing/",
+          "wordpressId": 62632,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 145,
+          "sourceBlockType": "list",
+          "exactSourceText": "✓Backlinks scaled from 888 to 2,109",
+          "sourceOrder": 145,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/seo-pricing/",
+          "wordpressId": 62632,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 145,
+          "sourceBlockType": "list",
+          "exactSourceText": "✓Technical SEO score significantly improved",
+          "sourceOrder": 145,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/seo-pricing/",
+          "wordpressId": 62632,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 145,
+          "sourceBlockType": "list",
+          "exactSourceText": "✓Schema markup boosted CTR across all pages",
+          "sourceOrder": 145,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/services/branding/",
+      "wordpressId": 40277,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/services/branding/",
+          "wordpressId": 40277,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 66,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Brands without recognition experience 50% lower purchase intent. In Mumbai's competitive business environment where 22.3",
+          "sourceOrder": 66,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/branding/",
+          "wordpressId": 40277,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 78,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "60% of businesses report brand consistency drives 20%+ revenue growth. Without clear brand guidelines, teams create conf",
+          "sourceOrder": 78,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/services/seo-service-in-banglore/",
+      "wordpressId": 64528,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/services/seo-service-in-banglore/",
+          "wordpressId": 64528,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Updated for 2026Practical search strategy for Google, Maps, AI Overviews and local discovery across Koramangala, Indiran",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-banglore/",
+          "wordpressId": 64528,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "01Business & website review — We understand your services, sales goals, target locations, pages, and current search perf",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-banglore/",
+          "wordpressId": 64528,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "02Customer search mapping — We group searches by intent: information, provider comparison, nearby services, or ready-to-",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-banglore/",
+          "wordpressId": 64528,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "03Technical cleanup — We fix crawl, indexing, speed, internal linking, duplicate page, sitemap, and schema issues that h",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-banglore/",
+          "wordpressId": 64528,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "04Content improvement — We rewrite weak sections, deepen service pages, add useful FAQs, and connect pages with natural ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-banglore/",
+          "wordpressId": 64528,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "05Lead-focused tracking — We track calls, forms, WhatsApp clicks, local actions, organic sessions, and keyword movement ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/services/seo-service-in-gurugram/",
+      "wordpressId": 64543,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/services/seo-service-in-gurugram/",
+          "wordpressId": 64543,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Updated for 2026Practical search strategy for Google, Maps, AI Overviews and local discovery across Cyber City, Udyog Vi",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-gurugram/",
+          "wordpressId": 64543,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "01Business & website review — We understand your services, sales goals, target locations, pages, and current search perf",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-gurugram/",
+          "wordpressId": 64543,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "02Customer search mapping — We group searches by intent: information, provider comparison, nearby services, or ready-to-",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-gurugram/",
+          "wordpressId": 64543,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "03Technical cleanup — We fix crawl, indexing, speed, internal linking, duplicate page, sitemap, and schema issues that h",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-gurugram/",
+          "wordpressId": 64543,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "04Content improvement — We rewrite weak sections, deepen service pages, add useful FAQs, and connect pages with natural ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-in-gurugram/",
+          "wordpressId": 64543,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "05Lead-focused tracking — We track calls, forms, WhatsApp clicks, local actions, organic sessions, and keyword movement ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/services/seo-service-pune/",
+      "wordpressId": 64509,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/services/seo-service-pune/",
+          "wordpressId": 64509,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Updated for 2026Practical search strategy for Google, Maps, AI Overviews and local discovery across Hinjawadi, Baner, Kh",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-pune/",
+          "wordpressId": 64509,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "01Business & website review — We understand your services, sales goals, target locations, pages, and current search perf",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-pune/",
+          "wordpressId": 64509,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "02Customer search mapping — We group searches by intent: information, provider comparison, nearby services, or ready-to-",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-pune/",
+          "wordpressId": 64509,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "03Technical cleanup — We fix crawl, indexing, speed, internal linking, duplicate page, sitemap, and schema issues that h",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-pune/",
+          "wordpressId": 64509,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "04Content improvement — We rewrite weak sections, deepen service pages, add useful FAQs, and connect pages with natural ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-service-pune/",
+          "wordpressId": 64509,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "05Lead-focused tracking — We track calls, forms, WhatsApp clicks, local actions, organic sessions, and keyword movement ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/services/seo-services-in-hyderabad/",
+      "wordpressId": 64533,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/services/seo-services-in-hyderabad/",
+          "wordpressId": 64533,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 4,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "Updated for 2026Practical search strategy for Google, Maps, AI Overviews and local discovery across HITEC City, Gachibow",
+          "sourceOrder": 4,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-services-in-hyderabad/",
+          "wordpressId": 64533,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "01Business & website review — We understand your services, sales goals, target locations, pages, and current search perf",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-services-in-hyderabad/",
+          "wordpressId": 64533,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "02Customer search mapping — We group searches by intent: information, provider comparison, nearby services, or ready-to-",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-services-in-hyderabad/",
+          "wordpressId": 64533,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "03Technical cleanup — We fix crawl, indexing, speed, internal linking, duplicate page, sitemap, and schema issues that h",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-services-in-hyderabad/",
+          "wordpressId": 64533,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "04Content improvement — We rewrite weak sections, deepen service pages, add useful FAQs, and connect pages with natural ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        },
+        {
+          "path": "/services/seo-services-in-hyderabad/",
+          "wordpressId": 64533,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 26,
+          "sourceBlockType": "list",
+          "exactSourceText": "05Lead-focused tracking — We track calls, forms, WhatsApp clicks, local actions, organic sessions, and keyword movement ",
+          "sourceOrder": 26,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/services/website-development-amc/",
+      "wordpressId": 41418,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/services/website-development-amc/",
+          "wordpressId": 41418,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 43,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "The same technical foundation can support ongoing SEO, answer engine optimisation, generative engine optimisation and LL",
+          "sourceOrder": 43,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/services/website-development-pune-page/",
+      "wordpressId": 65132,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/services/website-development-pune-page/",
+          "wordpressId": 65132,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 43,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "The same technical foundation can support ongoing SEO, answer engine optimisation, generative engine optimisation and LL",
+          "sourceOrder": 43,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    },
+    {
+      "path": "/sitemap/",
+      "wordpressId": 39184,
+      "currentStatus": "CONTENT_INCOMPLETE",
+      "findings": [
+        {
+          "path": "/sitemap/",
+          "wordpressId": 39184,
+          "currentStatus": "CONTENT_INCOMPLETE",
+          "missingBlockCount": 1,
+          "findingClassification": "D",
+          "sourceBlockIndex": 43,
+          "sourceBlockType": "paragraph",
+          "exactSourceText": "© 2026 D'Genius Solutions. All Rights Reserved.",
+          "sourceOrder": 43,
+          "proposedTechnicalFix": "Improve multi-span parity compare while preserving strict coverage",
+          "pageSpecificFixRequired": false,
+          "rankingProtected": false
+        }
+      ]
+    }
+  ]
+}

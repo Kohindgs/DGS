@@ -249,7 +249,10 @@ for (const routePath of [...allPaths].sort()) {
   inventory.push(entry);
 }
 
-const globalChromeLinks = deduplicatedGlobalChromeInternalLinks();
+const globalChromeHomeHtml = await fetch(new URL("/", TARGET), {
+  headers: { Accept: "text/html" },
+}).then((res) => res.text());
+const globalChromeLinks = deduplicatedGlobalChromeInternalLinks(globalChromeHomeHtml, TARGET);
 const globalChromeResults = await Promise.all(
   globalChromeLinks.map(async (link) => {
     const result = await validateInternalLink(link, TARGET, probeCache);
@@ -307,6 +310,7 @@ const output = {
     visualStatusReconciles: visualStatusTotal === inventory.length,
     retainedHtmlVisualCounts,
     globalChromeAudit: {
+      source: "rendered-homepage-chrome-with-canonical-fallback",
       uniqueInternalLinks: globalChromeLinks.length,
       checked: globalChromeResults.length,
       notFound404: globalChrome404.length,
