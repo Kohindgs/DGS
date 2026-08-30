@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T17:10:14.287Z",
+  "generatedAt": "2026-08-30T10:43:18.614Z",
   "patterns": {
     "elementor": {
       "label": "Elementor runtime",
@@ -76,11 +76,7 @@
       }
     ],
     "simpleicons": [],
-    "mshots": [
-      {
-        "file": "components/content/SemanticContent.tsx"
-      }
-    ],
+    "mshots": [],
     "wpThemeRuntime": [],
     "adminAjax": [],
     "wpUploadsAsset": [
@@ -128,14 +124,14 @@
     ]
   },
   "summary": {
-    "classAForbiddenRuntime": 6,
+    "classAForbiddenRuntime": 5,
     "elementorRuntime": 0,
     "enviraRuntime": 3,
     "rankMathRuntime": 0,
     "fluentFrontendRuntime": 2,
     "simpleiconsRuntime": 0,
-    "mshotsRuntime": 1,
-    "mshotsApprovalStatus": "ASSET_APPROVAL_REQUIRED",
+    "mshotsRuntime": 0,
+    "mshotsApprovalStatus": "none",
     "wpUploadsAssets": 9
   },
   "classAFindings": [
@@ -163,11 +159,6 @@
       "type": "fluentFrontend",
       "file": "lib/wp-exact/build-mirror-swap-html.ts",
       "label": "Fluent Forms frontend runtime"
-    },
-    {
-      "type": "mshots",
-      "file": "components/content/SemanticContent.tsx",
-      "label": "WordPress mshots runtime"
     }
   ]
 }

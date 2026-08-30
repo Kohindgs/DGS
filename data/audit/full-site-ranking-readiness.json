@@ -1,15 +1,15 @@
 {
-  "auditSchemaVersion": "2A.1B",
-  "generatedAt": "2026-08-30T09:23:49.623Z",
+  "auditSchemaVersion": "2B.1",
+  "generatedAt": "2026-08-30T10:47:07.378Z",
   "target": "http://127.0.0.1:3025/",
   "expectedIndexableUrlCount": 96,
-  "applicationSourceCommit": "5866109d38e352afa360d08ca555b87f3dcd1d8c",
-  "auditInputDigest": "98ac8740de1dfd175758a65cdb74e8ae3c99fb9851b095df5831d0a4ada9014b",
+  "applicationSourceCommit": "b90118c17fc0950071979686ebeb81dadd03320c",
+  "auditInputDigest": "029cba7037857fb30cfd57bc6eb761cf60a89771c100522fbf5437c3a4e7a66f",
   "mobileOverflowEvidence": {
     "reused": true,
-    "sourceCommit": "5866109d38e352afa360d08ca555b87f3dcd1d8c",
-    "sourceReportGeneratedAt": "2026-08-29T17:01:40.416Z",
-    "sourceEvidencePath": "data/audit/mobile-overflow-evidence.5866109.json",
+    "sourceCommit": "b90118c17fc0950071979686ebeb81dadd03320c",
+    "sourceReportGeneratedAt": "2026-08-30T10:25:52.770Z",
+    "sourceEvidencePath": "data/audit/mobile-overflow-evidence.b90118c.json",
     "mobileEvidenceDigest": "6d8fc1dba2a53acb35203c976e287937ed51bfb251c8abb807af6412240828f6",
     "viewports": [
       "390x844",
@@ -30,8 +30,8 @@
     "h1Defects": 0,
     "canonicalDefects": 0,
     "schemaDefects": 0,
-    "ogImageDefects": 96,
-    "twitterImageDefects": 96,
+    "ogImageDefects": 0,
+    "twitterImageDefects": 0,
     "overflowPages": 0
   },
   "pages": [
@@ -61,11 +61,11 @@
       ],
       "ogTitle": "Digital Marketing Agency in Mumbai | D’Genius Solutions",
       "ogDescription": "D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Digital Marketing Agency in Mumbai | D’Genius Solutions",
       "twitterDescription": "D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -76,8 +76,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -105,11 +105,11 @@
       ],
       "ogTitle": "About Us D’Genius Solutions Digital Growth Experts",
       "ogDescription": "Learn about D’Genius Solutions, a results-driven digital marketing agency specializing in SEO, AI marketing, and performance growth strategies.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "About Us D’Genius Solutions Digital Growth Experts",
       "twitterDescription": "Learn about D’Genius Solutions, a results-driven digital marketing agency specializing in SEO, AI marketing, and performance growth strategies.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -118,8 +118,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -147,11 +147,11 @@
       ],
       "ogTitle": "AEO Dubai",
       "ogDescription": "D'Genius Solutions provides AEO services in Dubai to help brands appear in Google AI Overviews, ChatGPT, Gemini, Perplexity, featured snippets and People Also Ask. Get a free AEO audit.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AEO Dubai",
       "twitterDescription": "D'Genius Solutions provides AEO services in Dubai to help brands appear in Google AI Overviews, ChatGPT, Gemini, Perplexity, featured snippets and People Also Ask. Get a free AEO audit.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -162,8 +162,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -194,11 +194,11 @@
       ],
       "ogTitle": "Australia Page",
       "ogDescription": "We create city-focused search, website, content and lead generation strategies for Australian brands that want stronger visibility in high-intent local markets.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Australia Page",
       "twitterDescription": "We create city-focused search, website, content and lead generation strategies for Australian brands that want stronger visibility in high-intent local markets.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -207,8 +207,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -236,11 +236,11 @@
       ],
       "ogTitle": "Better Ceasons Case Study",
       "ogDescription": "Website Development Case Study",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Better Ceasons Case Study",
       "twitterDescription": "Website Development Case Study",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -249,8 +249,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -278,11 +278,11 @@
       ],
       "ogTitle": "Digital Marketing Blogs D'Genius Solutions in Mumbai",
       "ogDescription": "Explore expert digital marketing blogs from D'Genius Solutions in Mumbai covering SEO, AI marketing, branding, and performance strategies.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Digital Marketing Blogs D'Genius Solutions in Mumbai",
       "twitterDescription": "Explore expert digital marketing blogs from D'Genius Solutions in Mumbai covering SEO, AI marketing, branding, and performance strategies.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -291,8 +291,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -321,11 +321,11 @@
       ],
       "ogTitle": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster - D'Genius Solutions",
       "ogDescription": "3-3-3 rule in marketing is a practical way to simplify how a business communicates, promotes, and converts customers. It helps brands focus on three clear",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster - D'Genius Solutions",
       "twitterDescription": "3-3-3 rule in marketing is a practical way to simplify how a business communicates, promotes, and converts customers. It helps brands focus on three clear",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -336,8 +336,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -366,11 +366,11 @@
       ],
       "ogTitle": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization - D'Genius Solutions",
       "ogDescription": "AEO stands for Answer Engine Optimization. It is the process of improving website content so search engines, AI platforms, voice assistants, and answer",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization - D'Genius Solutions",
       "twitterDescription": "AEO stands for Answer Engine Optimization. It is the process of improving website content so search engines, AI platforms, voice assistants, and answer",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -381,8 +381,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -411,11 +411,11 @@
       ],
       "ogTitle": "AI Content Optimization: 7 Proven Ways to Boost Results",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Content Optimization: 7 Proven Ways to Boost Results",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -424,8 +424,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -454,11 +454,11 @@
       ],
       "ogTitle": "AI-Generated Summaries in Search Ads: What This Means for Advertisers - D'Genius Solutions",
       "ogDescription": "Learn how AI-generated summaries in search ads can affect Google Ads, PPC strategy, landing pages, CTR, SEO, brand control, and AI search visibility.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI-Generated Summaries in Search Ads: What This Means for Advertisers - D'Genius Solutions",
       "twitterDescription": "Learn how AI-generated summaries in search ads can affect Google Ads, PPC strategy, landing pages, CTR, SEO, brand control, and AI search visibility.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -469,8 +469,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -499,11 +499,11 @@
       ],
       "ogTitle": "How AI Is Reshaping Digital Marketing Strategies in 2026",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "How AI Is Reshaping Digital Marketing Strategies in 2026",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -512,8 +512,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -542,11 +542,11 @@
       ],
       "ogTitle": "AI Overview: 7 Powerful Ways to Boost Search Visibility",
       "ogDescription": "AI Overview optimization helps businesses improve search visibility, build trust, answer user queries, and rank better in AI search.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Overview: 7 Powerful Ways to Boost Search Visibility",
       "twitterDescription": "AI Overview optimization helps businesses improve search visibility, build trust, answer user queries, and rank better in AI search.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -555,8 +555,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -585,11 +585,11 @@
       ],
       "ogTitle": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews - D'Genius Solutions",
       "ogDescription": "AI Overview SEO helps websites rank in Google AI Overviews with helpful content, AEO, GEO, FAQs, technical SEO, trust signals, and internal links.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews - D'Genius Solutions",
       "twitterDescription": "AI Overview SEO helps websites rank in Google AI Overviews with helpful content, AEO, GEO, FAQs, technical SEO, trust signals, and internal links.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -600,8 +600,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -630,11 +630,11 @@
       ],
       "ogTitle": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026 - D'Genius Solutions",
       "ogDescription": "AI readiness for websites is becoming essential in 2026. A business website can look polished, load well, and still be difficult for Google, AI Overviews,",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026 - D'Genius Solutions",
       "twitterDescription": "AI readiness for websites is becoming essential in 2026. A business website can look polished, load well, and still be difficult for Google, AI Overviews,",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -645,8 +645,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -675,11 +675,11 @@
       ],
       "ogTitle": "AI Search Behavior: 7 Proven Changes Businesses Must Know",
       "ogDescription": "AI search behavior is changing how users find answers, trust brands, and interact with search results in 2026.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Search Behavior: 7 Proven Changes Businesses Must Know",
       "twitterDescription": "AI search behavior is changing how users find answers, trust brands, and interact with search results in 2026.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -688,8 +688,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -718,11 +718,11 @@
       ],
       "ogTitle": "AI Search Checklist 2026 for Modern Websites",
       "ogDescription": "AI Search Checklist 2026 covers 10 essential steps to improve Google rankings, AI Overviews, AI search visibility and website performance",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Search Checklist 2026 for Modern Websites",
       "twitterDescription": "AI Search Checklist 2026 covers 10 essential steps to improve Google rankings, AI Overviews, AI search visibility and website performance",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -731,8 +731,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -761,11 +761,11 @@
       ],
       "ogTitle": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026 - D'Genius Solutions",
       "ogDescription": "AI Search Optimization for E-commerce Brands helps online stores appear in Google and AI recommendations. Discover 9 proven strategies for 2026.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026 - D'Genius Solutions",
       "twitterDescription": "AI Search Optimization for E-commerce Brands helps online stores appear in Google and AI recommendations. Discover 9 proven strategies for 2026.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -776,8 +776,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -806,11 +806,11 @@
       ],
       "ogTitle": "Top AI Tools for Digital Marketing Agencies in 2026",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Top AI Tools for Digital Marketing Agencies in 2026",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -819,8 +819,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -849,11 +849,11 @@
       ],
       "ogTitle": "How Much Does AI Video Production Cost in India in 2026? - D'Genius Solutions",
       "ogDescription": "AI video production costAI video production cost in India in 2026 depends on the type of video, creative complexity, duration, number of scenes, AI models",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "How Much Does AI Video Production Cost in India in 2026? - D'Genius Solutions",
       "twitterDescription": "AI video production costAI video production cost in India in 2026 depends on the type of video, creative complexity, duration, number of scenes, AI models",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -864,8 +864,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -894,11 +894,11 @@
       ],
       "ogTitle": "11 Ways AI Video Production for Business Helps Create More Content Faster",
       "ogDescription": "Learn how AI video production for business helps brands create more content faster, reduce costs, improve marketing, and scale content creation across digital platforms.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "11 Ways AI Video Production for Business Helps Create More Content Faster",
       "twitterDescription": "Learn how AI video production for business helps brands create more content faster, reduce costs, improve marketing, and scale content creation across digital platforms.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -910,8 +910,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -940,11 +940,11 @@
       ],
       "ogTitle": "AI Video vs Traditional Video 7 Proven Differences for Brands",
       "ogDescription": "AI Video vs Traditional Video explained for brands. Compare cost, speed, quality, scalability and creative control to choose the right production approach.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Video vs Traditional Video 7 Proven Differences for Brands",
       "twitterDescription": "AI Video vs Traditional Video explained for brands. Compare cost, speed, quality, scalability and creative control to choose the right production approach.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -955,8 +955,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -985,11 +985,11 @@
       ],
       "ogTitle": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation - D'Genius Solutions",
       "ogDescription": "Brand identity is more than a logo, color palette, or business name. It is the complete way people recognize, remember, and trust your business online. In",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation - D'Genius Solutions",
       "twitterDescription": "Brand identity is more than a logo, color palette, or business name. It is the complete way people recognize, remember, and trust your business online. In",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1000,8 +1000,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1030,11 +1030,11 @@
       ],
       "ogTitle": "Brand Mentions for AI Tools: 7 Powerful Ways to Build Trust",
       "ogDescription": "Brand Mentions for AI Tools help build online authority, improve AI visibility and increase your chances of appearing in trusted business recommendations.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Brand Mentions for AI Tools: 7 Powerful Ways to Build Trust",
       "twitterDescription": "Brand Mentions for AI Tools help build online authority, improve AI visibility and increase your chances of appearing in trusted business recommendations.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1043,8 +1043,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1073,11 +1073,11 @@
       ],
       "ogTitle": "Brand Visibility in AI Search: 7 Proven Measurement Methods",
       "ogDescription": "Learn how to measure brand visibility in AI search across ChatGPT, Gemini and Google AI Overviews using mentions, citations and share of voice.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Brand Visibility in AI Search: 7 Proven Measurement Methods",
       "twitterDescription": "Learn how to measure brand visibility in AI search across ChatGPT, Gemini and Google AI Overviews using mentions, citations and share of voice.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1086,8 +1086,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1116,11 +1116,11 @@
       ],
       "ogTitle": "ChatGPT brand visibility: 7 Critical Reasons Competitors Win",
       "ogDescription": "ChatGPT brand visibility depends on clear entity signals, expert content and trusted proof. Learn 7 reasons competitors get recommended and how to fix it.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "ChatGPT brand visibility: 7 Critical Reasons Competitors Win",
       "twitterDescription": "ChatGPT brand visibility depends on clear entity signals, expert content and trusted proof. Learn 7 reasons competitors get recommended and how to fix it.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1129,8 +1129,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1159,11 +1159,11 @@
       ],
       "ogTitle": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss - D'Genius Solutions",
       "ogDescription": "Content strategy for SEO is not about publishing more blogs every week. It is about publishing the right content, targeting the right intent, supporting the",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss - D'Genius Solutions",
       "twitterDescription": "Content strategy for SEO is not about publishing more blogs every week. It is about publishing the right content, targeting the right intent, supporting the",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1174,8 +1174,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1204,11 +1204,11 @@
       ],
       "ogTitle": "7 Smart Content Strategy Tips for High-Intent Traffic",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "7 Smart Content Strategy Tips for High-Intent Traffic",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1217,8 +1217,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1247,11 +1247,11 @@
       ],
       "ogTitle": "Content Writing for SEO: 9 Ways to Rank and Convert - D'Genius Solutions",
       "ogDescription": "Content writing for SEO helps businesses create helpful, search-focused, and conversion-ready pages that rank higher on Google and convert visitors into",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Content Writing for SEO: 9 Ways to Rank and Convert - D'Genius Solutions",
       "twitterDescription": "Content writing for SEO helps businesses create helpful, search-focused, and conversion-ready pages that rank higher on Google and convert visitors into",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1262,8 +1262,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1292,11 +1292,11 @@
       ],
       "ogTitle": "Core Update Strategy: 8 Proven Ways to Protect Rankings",
       "ogDescription": "Build a core update strategy with original content, strong E-E-A-T, technical SEO and regular audits to protect your Google rankings.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Core Update Strategy: 8 Proven Ways to Protect Rankings",
       "twitterDescription": "Build a core update strategy with original content, strong E-E-A-T, technical SEO and regular audits to protect your Google rankings.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1305,8 +1305,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1335,11 +1335,11 @@
       ],
       "ogTitle": "Is SEO Dead in 2026? What Business Owners Need to Know",
       "ogDescription": "The future of SEO includes AEO, GEO, AIO, voice search, and AI readiness. Learn how businesses can improve visibility and generate qualified leads in 2026.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Is SEO Dead in 2026? What Business Owners Need to Know",
       "twitterDescription": "The future of SEO includes AEO, GEO, AIO, voice search, and AI readiness. Learn how businesses can improve visibility and generate qualified leads in 2026.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1348,8 +1348,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1378,11 +1378,11 @@
       ],
       "ogTitle": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026 - D'Genius Solutions",
       "ogDescription": "Generative Engine Optimization is now becoming a serious part of digital marketing because the way people search is changing. Earlier, most customers searched",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026 - D'Genius Solutions",
       "twitterDescription": "Generative Engine Optimization is now becoming a serious part of digital marketing because the way people search is changing. Earlier, most customers searched",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1393,8 +1393,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1423,11 +1423,11 @@
       ],
       "ogTitle": "7 Ways Generative Engine Optimization Helps Your Business",
       "ogDescription": "Learn what Generative Engine Optimization is, how GEO improves AI search visibility, and how it helps businesses build authority and generate better leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "7 Ways Generative Engine Optimization Helps Your Business",
       "twitterDescription": "Learn what Generative Engine Optimization is, how GEO improves AI search visibility, and how it helps businesses build authority and generate better leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1436,8 +1436,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1466,11 +1466,11 @@
       ],
       "ogTitle": "GEO vs SEO: 7 Powerful Ways Businesses Can Rank in Google and AI Search",
       "ogDescription": "GEO vs SEO explains how businesses can improve visibility in Google search, AI Overviews, ChatGPT, Perplexity, and other AI search platforms with SEO and Generative Engine Optimization.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "GEO vs SEO: 7 Powerful Ways Businesses Can Rank in Google and AI Search",
       "twitterDescription": "GEO vs SEO explains how businesses can improve visibility in Google search, AI Overviews, ChatGPT, Perplexity, and other AI search platforms with SEO and Generative Engine Optimization.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1482,8 +1482,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1512,11 +1512,11 @@
       ],
       "ogTitle": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026? - D'Genius Solutions",
       "ogDescription": "Google Ads vs Meta Ads does not have one universal winner for lead generation in 2026. Google Ads generally performs strongly when people are already",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026? - D'Genius Solutions",
       "twitterDescription": "Google Ads vs Meta Ads does not have one universal winner for lead generation in 2026. Google Ads generally performs strongly when people are already",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1527,8 +1527,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1557,11 +1557,11 @@
       ],
       "ogTitle": "Google Agentic Browsing: 7 Website Changes for 2026 - D'Genius Solutions",
       "ogDescription": "Google Agentic Browsing is changing how AI agents understand and use websites. Discover 7 steps to prepare your website for AI search in 2026",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google Agentic Browsing: 7 Website Changes for 2026 - D'Genius Solutions",
       "twitterDescription": "Google Agentic Browsing is changing how AI agents understand and use websites. Discover 7 steps to prepare your website for AI search in 2026",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1572,8 +1572,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1602,11 +1602,11 @@
       ],
       "ogTitle": "Google AI Overviews and the Growth of Zero-Click Searches",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google AI Overviews and the Growth of Zero-Click Searches",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1615,8 +1615,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1645,11 +1645,11 @@
       ],
       "ogTitle": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take - D'Genius Solutions",
       "ogDescription": "Google AI Overviews image generation is changing how people discover, create and interact with visual information through Google Search.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take - D'Genius Solutions",
       "twitterDescription": "Google AI Overviews image generation is changing how people discover, create and interact with visual information through Google Search.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1660,8 +1660,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1690,11 +1690,11 @@
       ],
       "ogTitle": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads - D'Genius Solutions",
       "ogDescription": "Google AI Search Update helps businesses improve AI search visibility, build trust, answer user queries, and generate better leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads - D'Genius Solutions",
       "twitterDescription": "Google AI Search Update helps businesses improve AI search visibility, build trust, answer user queries, and generate better leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1705,8 +1705,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1735,11 +1735,11 @@
       ],
       "ogTitle": "Google Algorithm: 5 Critical Reasons Business Search Rankings Change",
       "ogDescription": "Discover 5 ways the Google Algorithm affects business search visibility, rankings, traffic, and lead generation, and why it matters for long-term online growth.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google Algorithm: 5 Critical Reasons Business Search Rankings Change",
       "twitterDescription": "Discover 5 ways the Google Algorithm affects business search visibility, rankings, traffic, and lead generation, and why it matters for long-term online growth.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1750,8 +1750,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1780,11 +1780,11 @@
       ],
       "ogTitle": "Google I/O 2026 SEO Updates That Will Transform AI Search - D'Genius Solutions",
       "ogDescription": "Google I/O 2026 made one thing clear: the future of search is becoming more AI-driven, more conversational, and more personalized.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google I/O 2026 SEO Updates That Will Transform AI Search - D'Genius Solutions",
       "twitterDescription": "Google I/O 2026 made one thing clear: the future of search is becoming more AI-driven, more conversational, and more personalized.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1795,8 +1795,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1825,11 +1825,11 @@
       ],
       "ogTitle": "Google Ranking: 7 Proven Fixes for Better Visibility",
       "ogDescription": "Google ranking can improve when your website SEO, technical issues, content quality, backlinks, and local SEO signals are properly optimized. Learn how to fix it.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google Ranking: 7 Proven Fixes for Better Visibility",
       "twitterDescription": "Google ranking can improve when your website SEO, technical issues, content quality, backlinks, and local SEO signals are properly optimized. Learn how to fix it.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1840,8 +1840,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1870,11 +1870,11 @@
       ],
       "ogTitle": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026 - D'Genius Solutions",
       "ogDescription": "Google Search Console social media tracking is becoming an important topic for businesses, marketers, creators and SEO teams. Google Search is no longer",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026 - D'Genius Solutions",
       "twitterDescription": "Google Search Console social media tracking is becoming an important topic for businesses, marketers, creators and SEO teams. Google Search is no longer",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1885,8 +1885,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1915,11 +1915,11 @@
       ],
       "ogTitle": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
       "ogDescription": "A Google spam update can affect your website ranking, traffic, and leads. Learn why rankings drop and how DGS helps businesses recover with clean SEO, content, and backlink fixes.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
       "twitterDescription": "A Google spam update can affect your website ranking, traffic, and leads. Learn why rankings drop and how DGS helps businesses recover with clean SEO, content, and backlink fixes.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1931,8 +1931,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1961,11 +1961,11 @@
       ],
       "ogTitle": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models - D'Genius Solutions",
       "ogDescription": "LLM SEO is becoming important for businesses that want visibility on Google, AI search tools and large language models like ChatGPT, Gemini, Perplexity and",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models - D'Genius Solutions",
       "twitterDescription": "LLM SEO is becoming important for businesses that want visibility on Google, AI search tools and large language models like ChatGPT, Gemini, Perplexity and",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -1976,8 +1976,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2006,11 +2006,11 @@
       ],
       "ogTitle": "LLM SEO Services: 7 Proven Ways to Improve AI Visibility",
       "ogDescription": "LLM SEO Services help Mumbai businesses improve AI visibility, search relevance, citations, and content clarity across modern search platforms.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "LLM SEO Services: 7 Proven Ways to Improve AI Visibility",
       "twitterDescription": "LLM SEO Services help Mumbai businesses improve AI visibility, search relevance, citations, and content clarity across modern search platforms.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2019,8 +2019,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2049,11 +2049,11 @@
       ],
       "ogTitle": "Local SEO: 7 Proven Ways to Grow Your Business",
       "ogDescription": "Local SEO helps businesses improve nearby visibility, attract targeted customers, build trust, and generate qualified local leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Local SEO: 7 Proven Ways to Grow Your Business",
       "twitterDescription": "Local SEO helps businesses improve nearby visibility, attract targeted customers, build trust, and generate qualified local leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2062,8 +2062,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2092,11 +2092,11 @@
       ],
       "ogTitle": "Low Social Media Reach in 2026? 9 Proven Fixes",
       "ogDescription": "Low social media reach despite trending audio and hashtags? Learn why posts stall, what affects visibility, and how to improve organic reach in 2026.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Low Social Media Reach in 2026? 9 Proven Fixes",
       "twitterDescription": "Low social media reach despite trending audio and hashtags? Learn why posts stall, what affects visibility, and how to improve organic reach in 2026.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2105,8 +2105,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2135,11 +2135,11 @@
       ],
       "ogTitle": "Modern SEO Strategies for Business Growth 2026",
       "ogDescription": "Discover how modern SEO Strategies like EEAT, AEO, GEO drives revenue and visibility. D'Genius Solutions Mumbai shares actionable Insights for growth and leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Modern SEO Strategies for Business Growth 2026",
       "twitterDescription": "Discover how modern SEO Strategies like EEAT, AEO, GEO drives revenue and visibility. D'Genius Solutions Mumbai shares actionable Insights for growth and leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2148,8 +2148,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2178,11 +2178,11 @@
       ],
       "ogTitle": "Optimize Content for AI Search With 11 Proven Strategies",
       "ogDescription": "Optimize content for AI search with 11 proven strategies for ChatGPT, Gemini, Perplexity",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Optimize Content for AI Search With 11 Proven Strategies",
       "twitterDescription": "Optimize content for AI search with 11 proven strategies for ChatGPT, Gemini, Perplexity",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2191,8 +2191,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2221,11 +2221,11 @@
       ],
       "ogTitle": "How to Optimize for AI Overviews in 2026 | DGS",
       "ogDescription": "Learn how to optimize for AI overviews in 2026 with AEO, GEO, LLM SEO, voice search, AI readiness, and lead-generation hints from DGS.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "How to Optimize for AI Overviews in 2026 | DGS",
       "twitterDescription": "Learn how to optimize for AI overviews in 2026 with AEO, GEO, LLM SEO, voice search, AI readiness, and lead-generation hints from DGS.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2234,8 +2234,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2264,11 +2264,11 @@
       ],
       "ogTitle": "Schema SEO for Small Business: 7 Easy Steps for 2026 - D'Genius Solutions",
       "ogDescription": "Schema SEO for small business helps search engines understand what a company does, where it operates and what information is available on its website.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Schema SEO for Small Business: 7 Easy Steps for 2026 - D'Genius Solutions",
       "twitterDescription": "Schema SEO for small business helps search engines understand what a company does, where it operates and what information is available on its website.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2279,8 +2279,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2309,11 +2309,11 @@
       ],
       "ogTitle": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility - D'Genius Solutions",
       "ogDescription": "Google has introduced a major new update for website owners, SEO teams, publishers, and digital marketers: dedicated Search Generative AI performance reports",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility - D'Genius Solutions",
       "twitterDescription": "Google has introduced a major new update for website owners, SEO teams, publishers, and digital marketers: dedicated Search Generative AI performance reports",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2324,8 +2324,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2354,11 +2354,11 @@
       ],
       "ogTitle": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site - D'Genius Solutions",
       "ogDescription": "SEO friendly website planning is no longer only about adding keywords to pages. A business website now needs clean development, strong web design, fast",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site - D'Genius Solutions",
       "twitterDescription": "SEO friendly website planning is no longer only about adding keywords to pages. A business website now needs clean development, strong web design, fast",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2369,8 +2369,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2399,11 +2399,11 @@
       ],
       "ogTitle": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling - D'Genius Solutions",
       "ogDescription": "SEO rankings up but traffic down is one of the most confusing situations a business can face. Your tracked keywords may be moving higher on Google, yet",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling - D'Genius Solutions",
       "twitterDescription": "SEO rankings up but traffic down is one of the most confusing situations a business can face. Your tracked keywords may be moving higher on Google, yet",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2414,8 +2414,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2444,11 +2444,11 @@
       ],
       "ogTitle": "Rising Demand for SEO Services in India in 2026",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Rising Demand for SEO Services in India in 2026",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2457,8 +2457,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2487,11 +2487,11 @@
       ],
       "ogTitle": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
       "ogDescription": "Learn how SEO strategies for business growth improve rankings, search visibility, user trust, and lead generation for businesses.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
       "twitterDescription": "Learn how SEO strategies for business growth improve rankings, search visibility, user trust, and lead generation for businesses.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2502,8 +2502,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2532,11 +2532,11 @@
       ],
       "ogTitle": "Social Media Conversion: 9 Reasons Followers Don't Buy",
       "ogDescription": "Struggling with social media conversion? Learn why followers are not becoming customers and how to turn social media engagement into leads and sales.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Social Media Conversion: 9 Reasons Followers Don't Buy",
       "twitterDescription": "Struggling with social media conversion? Learn why followers are not becoming customers and how to turn social media engagement into leads and sales.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2545,8 +2545,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2575,11 +2575,11 @@
       ],
       "ogTitle": "Social Media Marketing Strategy 2026 for Small Businesses",
       "ogDescription": "Learn how a social media marketing strategy helps small businesses grow reach, branding, engagement, traffic, and leads with smarter digital marketing.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Social Media Marketing Strategy 2026 for Small Businesses",
       "twitterDescription": "Learn how a social media marketing strategy helps small businesses grow reach, branding, engagement, traffic, and leads with smarter digital marketing.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2588,8 +2588,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2618,11 +2618,11 @@
       ],
       "ogTitle": "Why Topical Authority Matters More Than Keyword Density in 2026",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Why Topical Authority Matters More Than Keyword Density in 2026",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2633,8 +2633,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2663,11 +2663,11 @@
       ],
       "ogTitle": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches - D'Genius Solutions",
       "ogDescription": "Voice Search SEO helps businesses optimise their websites for searches made through spoken questions and natural, conversational language.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches - D'Genius Solutions",
       "twitterDescription": "Voice Search SEO helps businesses optimise their websites for searches made through spoken questions and natural, conversational language.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2678,8 +2678,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2708,11 +2708,11 @@
       ],
       "ogTitle": "Why Website Design Directly Affects Lead Generation",
       "ogDescription": "Website design and lead generation are directly connected because users decide within seconds whether they trust a business or not. A website may get traffic,",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Why Website Design Directly Affects Lead Generation",
       "twitterDescription": "Website design and lead generation are directly connected because users decide within seconds whether they trust a business or not. A website may get traffic,",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2721,8 +2721,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2751,11 +2751,11 @@
       ],
       "ogTitle": "How to Turn Website Traffic Into Qualified Leads",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "How to Turn Website Traffic Into Qualified Leads",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2764,8 +2764,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2794,11 +2794,11 @@
       ],
       "ogTitle": "Website Development Mistakes That Hurt Business Growth",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Website Development Mistakes That Hurt Business Growth",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2807,8 +2807,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2837,11 +2837,11 @@
       ],
       "ogTitle": "7 Website Development Features That Help Businesses Generate Quality Leads - D'Genius Solutions",
       "ogDescription": "Website Development plays a major role in how a business attracts, engages, and converts potential customers online. A website may look professional, but its",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "7 Website Development Features That Help Businesses Generate Quality Leads - D'Genius Solutions",
       "twitterDescription": "Website Development plays a major role in how a business attracts, engages, and converts potential customers online. A website may look professional, but its",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2852,8 +2852,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2882,11 +2882,11 @@
       ],
       "ogTitle": "Why Website Performance Still Decides Conversions in 2026",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Why Website Performance Still Decides Conversions in 2026",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2895,8 +2895,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2925,11 +2925,11 @@
       ],
       "ogTitle": "Website Traffic but No Leads? 9 Proven Fixes That Work",
       "ogDescription": "Website traffic but no leads? Discover 9 proven reasons visitors do not convert and learn how to improve traffic quality, landing pages, CTAs, trust and tracking.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Website Traffic but No Leads? 9 Proven Fixes That Work",
       "twitterDescription": "Website traffic but no leads? Discover 9 proven reasons visitors do not convert and learn how to improve traffic quality, landing pages, CTAs, trust and tracking.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2940,8 +2940,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2970,11 +2970,11 @@
       ],
       "ogTitle": "What Is LLM SEO? Powerful 2026 Guide to AI Search Optimization",
       "ogDescription": "LLM SEO helps businesses improve visibility across AI search platforms like ChatGPT, Gemini, Perplexity, Copilot, and Google AI results. Learn how it supports brand authority, AI visibility, and lead generation in 2026.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "What Is LLM SEO? Powerful 2026 Guide to AI Search Optimization",
       "twitterDescription": "LLM SEO helps businesses improve visibility across AI search platforms like ChatGPT, Gemini, Perplexity, Copilot, and Google AI results. Learn how it supports brand authority, AI visibility, and lead generation in 2026.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -2986,8 +2986,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3015,11 +3015,11 @@
       ],
       "ogTitle": "Career",
       "ogDescription": "D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Career",
       "twitterDescription": "D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3030,8 +3030,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3059,11 +3059,11 @@
       ],
       "ogTitle": "Case studies - D'Genius Solutions",
       "ogDescription": "Explore DGS project work across website development, SEO, AEO, GEO, LLM SEO, AI video production, AI avatar storytelling, content creation, and branding. This",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Case studies - D'Genius Solutions",
       "twitterDescription": "Explore DGS project work across website development, SEO, AEO, GEO, LLM SEO, AI video production, AI avatar storytelling, content creation, and branding. This",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3072,8 +3072,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3101,11 +3101,11 @@
       ],
       "ogTitle": "Contact Us",
       "ogDescription": "Tell us about your project. We respond within 24 hours.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Contact Us",
       "twitterDescription": "Tell us about your project. We respond within 24 hours.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3114,8 +3114,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3143,11 +3143,11 @@
       ],
       "ogTitle": "Motion Graphics",
       "ogDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Motion Graphics",
       "twitterDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3156,8 +3156,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3185,11 +3185,11 @@
       ],
       "ogTitle": "Digital Marketing Services in Mumbai | D’Genius Solutions",
       "ogDescription": "Boost your brand with expert SEO, performance marketing, social media, branding, and web development services by D’Genius Solutions.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Digital Marketing Services in Mumbai | D’Genius Solutions",
       "twitterDescription": "Boost your brand with expert SEO, performance marketing, social media, branding, and web development services by D’Genius Solutions.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3198,8 +3198,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3227,11 +3227,11 @@
       ],
       "ogTitle": "Portfolio D’Genius Solutions Digital Marketing Case Studies",
       "ogDescription": "Explore the portfolio of D’Genius Solutions featuring real digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Portfolio D’Genius Solutions Digital Marketing Case Studies",
       "twitterDescription": "Explore the portfolio of D’Genius Solutions featuring real digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3240,8 +3240,8 @@
       "contentStatus": "INTENTIONALLY_NATIVE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3269,11 +3269,11 @@
       ],
       "ogTitle": "Privacy Policy D’Genius Solutions",
       "ogDescription": "Read the Privacy Policy of D’Genius Solutions to understand how we collect, use, protect, and manage your personal information.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Privacy Policy D’Genius Solutions",
       "twitterDescription": "Read the Privacy Policy of D’Genius Solutions to understand how we collect, use, protect, and manage your personal information.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3282,8 +3282,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3311,11 +3311,11 @@
       ],
       "ogTitle": "SEO Pricing",
       "ogDescription": "Mumbai's most trusted SEO agency — Page 1 rankings to AI search dominance across ChatGPT, Perplexity & Google SGE.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO Pricing",
       "twitterDescription": "Mumbai's most trusted SEO agency — Page 1 rankings to AI search dominance across ChatGPT, Perplexity & Google SGE.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3324,8 +3324,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3349,11 +3349,11 @@
       ],
       "ogTitle": "Services - D'Genius Solutions",
       "ogDescription": "Services Archive - D'Genius Solutions",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Services - D'Genius Solutions",
       "twitterDescription": "Services Archive - D'Genius Solutions",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3362,8 +3362,8 @@
       "contentStatus": "INTENTIONALLY_NATIVE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3392,11 +3392,11 @@
       ],
       "ogTitle": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
       "ogDescription": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
       "twitterDescription": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3407,8 +3407,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3437,11 +3437,11 @@
       ],
       "ogTitle": "AI Production Dubai page - D'Genius Solutions",
       "ogDescription": "AI Video Production Agency In Dubai",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Production Dubai page - D'Genius Solutions",
       "twitterDescription": "AI Video Production Agency In Dubai",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3450,8 +3450,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3480,11 +3480,11 @@
       ],
       "ogTitle": "AI Video Production Agency in Mumbai | D’Genius Solutions",
       "ogDescription": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "AI Video Production Agency in Mumbai | D’Genius Solutions",
       "twitterDescription": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3493,8 +3493,8 @@
       "contentStatus": "RANKING_PROTECTED",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3523,11 +3523,11 @@
       ],
       "ogTitle": "Branding Services | 100+ Clients | D'Genius Solutions",
       "ogDescription": "Transform your brand identity into market dominance. D’Genius Solutions offers strategic branding services in Mumbai, offering brand strategy & visual identity.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Branding Services | 100+ Clients | D'Genius Solutions",
       "twitterDescription": "Transform your brand identity into market dominance. D’Genius Solutions offers strategic branding services in Mumbai, offering brand strategy & visual identity.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3536,8 +3536,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3569,11 +3569,11 @@
       ],
       "ogTitle": "Content Creation Services | 100+ Clients | D'Genius Solutions",
       "ogDescription": "Get high-quality content creation services in Mumbai designed for clarity, credibility, and conversions. We create SEO-ready content that builds trust and drives growth",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Content Creation Services | 100+ Clients | D'Genius Solutions",
       "twitterDescription": "Get high-quality content creation services in Mumbai designed for clarity, credibility, and conversions. We create SEO-ready content that builds trust and drives growth",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3585,8 +3585,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3615,11 +3615,11 @@
       ],
       "ogTitle": "Dubai SEO - D'Genius Solutions",
       "ogDescription": "Click any case study to view the complete performance breakdown, key results, achievements, and SEO growth context from our SEO company in Dubai.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Dubai SEO - D'Genius Solutions",
       "twitterDescription": "Click any case study to view the complete performance breakdown, key results, achievements, and SEO growth context from our SEO company in Dubai.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3628,8 +3628,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3658,11 +3658,11 @@
       ],
       "ogTitle": "GEO Services in Mumbai | D'Genius Solutions",
       "ogDescription": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "GEO Services in Mumbai | D'Genius Solutions",
       "twitterDescription": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3671,8 +3671,8 @@
       "contentStatus": "RANKING_PROTECTED",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3701,11 +3701,11 @@
       ],
       "ogTitle": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
       "ogDescription": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get a free AI search audit by D'Genius Solutions.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
       "twitterDescription": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get a free AI search audit by D'Genius Solutions.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3714,8 +3714,8 @@
       "contentStatus": "RANKING_PROTECTED",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3744,11 +3744,11 @@
       ],
       "ogTitle": "Performance Marketing - D'Genius Solutions",
       "ogDescription": "Trusted By 200+ Brands",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Performance Marketing - D'Genius Solutions",
       "twitterDescription": "Trusted By 200+ Brands",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3757,8 +3757,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3787,11 +3787,11 @@
       ],
       "ogTitle": "SEO services in Bangalore",
       "ogDescription": "D'Genius Solutions provides SEO services in Bangalore to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO services in Bangalore",
       "twitterDescription": "D'Genius Solutions provides SEO services in Bangalore to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3802,8 +3802,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3832,11 +3832,11 @@
       ],
       "ogTitle": "SEO Services in Gurugram | SEO Agency in Gurugram for Rankings & Leads | DGS",
       "ogDescription": "D’Genius Solutions provides SEO services in Gurugram to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO Services in Gurugram | SEO Agency in Gurugram for Rankings & Leads | DGS",
       "twitterDescription": "D’Genius Solutions provides SEO services in Gurugram to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3848,8 +3848,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3878,11 +3878,11 @@
       ],
       "ogTitle": "SEO Services in Pune | SEO Agency in Pune for Rankings & Leads | DGS",
       "ogDescription": "D'Genius Solutions provides SEO services in Pune to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO Services in Pune | SEO Agency in Pune for Rankings & Leads | DGS",
       "twitterDescription": "D'Genius Solutions provides SEO services in Pune to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3894,8 +3894,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3924,11 +3924,11 @@
       ],
       "ogTitle": "SEO Services in Hyderabad | SEO Agency in Hyderabad for Rankings & Leads | DGS",
       "ogDescription": "D’Genius Solutions provides SEO services in Hyderabad to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO Services in Hyderabad | SEO Agency in Hyderabad for Rankings & Leads | DGS",
       "twitterDescription": "D’Genius Solutions provides SEO services in Hyderabad to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3940,8 +3940,8 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3970,11 +3970,11 @@
       ],
       "ogTitle": "SEO Services in Mumbai | SEO Agency for Rankings & Leads | DGS",
       "ogDescription": "D'Genius Solutions is an SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "SEO Services in Mumbai | SEO Agency for Rankings & Leads | DGS",
       "twitterDescription": "D'Genius Solutions is an SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -3985,8 +3985,8 @@
       "recommendations": [
         "title_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -4015,11 +4015,11 @@
       ],
       "ogTitle": "Shirdi Se Sai Tak Case Study - D'Genius Solutions",
       "ogDescription": "Premium Case Study Experience",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Shirdi Se Sai Tak Case Study - D'Genius Solutions",
       "twitterDescription": "Premium Case Study Experience",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -4028,8 +4028,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4058,11 +4058,11 @@
       ],
       "ogTitle": "Social Media Marketing | 100+ Clients | D'Genius Solutions",
       "ogDescription": "Grow your brand with ROI-focused social media marketing services in Mumbai. D’Genius Solutions helps businesses scale engagement, leads, and conversions",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Social Media Marketing | 100+ Clients | D'Genius Solutions",
       "twitterDescription": "Grow your brand with ROI-focused social media marketing services in Mumbai. D’Genius Solutions helps businesses scale engagement, leads, and conversions",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -4071,8 +4071,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4101,11 +4101,11 @@
       ],
       "ogTitle": "Website Development Company in Mumbai | Web Design & AMC",
       "ogDescription": "D'Genius Solutions builds responsive, SEO-ready websites in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Website Development Company in Mumbai | Web Design & AMC",
       "twitterDescription": "D'Genius Solutions builds responsive, SEO-ready websites in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -4114,8 +4114,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4144,11 +4144,11 @@
       ],
       "ogTitle": "Website Development Pune Page - D'Genius Solutions",
       "ogDescription": "D'Genius Solutions is a website development company in Pune delivering responsive, conversion-focused and SEO-friendly websites for startups, SMEs and",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Website Development Pune Page - D'Genius Solutions",
       "twitterDescription": "D'Genius Solutions is a website development company in Pune delivering responsive, conversion-focused and SEO-friendly websites for startups, SMEs and",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -4157,8 +4157,8 @@
       "contentStatus": "CONTENT_COMPLETE",
       "blockingDefects": [],
       "recommendations": [],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4186,11 +4186,11 @@
       ],
       "ogTitle": "Sitemap | D'Genius Solutions - Web Design & SEO Mumbai",
       "ogDescription": "Browse D'Genius Solutions' full sitemap: Discover WordPress designs, Elementor templates, SEO services, and client projects in Mumbai. Quick navigation to all pages.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "Sitemap | D'Genius Solutions - Web Design & SEO Mumbai",
       "twitterDescription": "Browse D'Genius Solutions' full sitemap: Discover WordPress designs, Elementor templates, SEO services, and client projects in Mumbai. Quick navigation to all pages.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -4201,8 +4201,8 @@
       "recommendations": [
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4230,11 +4230,11 @@
       ],
       "ogTitle": "US Digital Marketing Services for Search Visibility and Leads",
       "ogDescription": "D'Genius Solutions helps US businesses grow search visibility, AI search presence and qualified leads with SEO, AEO, GEO, LLM SEO and digital marketing services.",
-      "ogImage": "",
-      "twitterCard": "summary",
+      "ogImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+      "twitterCard": "summary_large_image",
       "twitterTitle": "US Digital Marketing Services for Search Visibility and Leads",
       "twitterDescription": "D'Genius Solutions helps US businesses grow search visibility, AI search presence and qualified leads with SEO, AEO, GEO, LLM SEO and digital marketing services.",
-      "twitterImage": "",
+      "twitterImage": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
       "mobileOverflow": {
         "390x844": false,
         "430x932": false
@@ -4246,11 +4246,11 @@
         "title_length",
         "description_length"
       ],
-      "ogImageMissing": true,
-      "twitterImageMissing": true,
+      "ogImageMissing": false,
+      "twitterImageMissing": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     }
   ],
-  "reportDataDigest": "1dcd316e8448c003bd504b8be3eb477833289c3b018e6210592da80dcf6ee51f"
+  "reportDataDigest": "b33c7b76a644a7dc6e66c6714c17dbb9ff5551232483e2436b8a6ee1acfa2aa4"
 }

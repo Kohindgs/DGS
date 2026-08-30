@@ -7,6 +7,7 @@ import path from "node:path";
 import test from "node:test";
 import {
   AUDIT_SCHEMA_VERSION,
+  MOBILE_EVIDENCE_PATH,
   MOBILE_EVIDENCE_SOURCE_COMMIT,
   assertMobileEvidenceReuseAllowed,
   computeAuditInputDigest,
@@ -68,7 +69,7 @@ function syntheticReport() {
       reused: true,
       sourceCommit: MOBILE_EVIDENCE_SOURCE_COMMIT,
       sourceReportGeneratedAt: "2026-08-29T17:01:40.416Z",
-      sourceEvidencePath: "data/audit/mobile-overflow-evidence.5866109.json",
+      sourceEvidencePath: MOBILE_EVIDENCE_PATH,
       mobileEvidenceDigest: "mobile",
       viewports: ["390x844", "430x932"],
     },
@@ -106,7 +107,7 @@ function setupTempRepo() {
 test("allowlist permits only scripts and explicit audit files", () => {
   assert.equal(isAllowedChangePath("scripts/validate-full-site-ranking-readiness.mjs"), true);
   assert.equal(isAllowedChangePath("data/audit/full-site-ranking-readiness.json"), true);
-  assert.equal(isAllowedChangePath("data/audit/mobile-overflow-evidence.5866109.json"), true);
+  assert.equal(isAllowedChangePath(MOBILE_EVIDENCE_PATH), true);
   assert.equal(isAllowedChangePath("data/audit/other.json"), false);
   assert.equal(isAllowedChangePath("app/page.tsx"), false);
 });
@@ -116,7 +117,7 @@ test("no unexpected changes since mobile evidence source commit in real repo", (
 });
 
 test("mobile evidence digest is stable and complete", () => {
-  const evidence = JSON.parse(readFileSync(path.join(ROOT, "data/audit/mobile-overflow-evidence.5866109.json"), "utf8"));
+  const evidence = JSON.parse(readFileSync(path.join(ROOT, MOBILE_EVIDENCE_PATH), "utf8"));
   const digest = computeMobileEvidenceDigest(evidence.evidence);
   assert.equal(evidence.digest, digest);
   assert.equal(evidence.evidence.length, 96);

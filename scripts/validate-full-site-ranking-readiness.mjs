@@ -239,9 +239,14 @@ if (overflowIssues.length) {
   fail("Unexplained mobile overflow remains", { overflowIssues });
 }
 
-const ogImageApprovalRequired = ogImagePaths.length > 0;
+if (ogImagePaths.length > 0) {
+  fail("OG/Twitter social images are missing on indexable routes", {
+    ogImageDefectCount: ogImagePaths.length,
+    samplePaths: ogImagePaths.slice(0, 10),
+  });
+}
 
-console.log("PASS — FULL-SITE RANKING READINESS (WITH KNOWN OG-IMAGE APPROVAL BLOCKER)");
+console.log("PASS — FULL-SITE RANKING READINESS");
 console.log(
   JSON.stringify(
     {
@@ -256,14 +261,11 @@ console.log(
       missingDescriptionDefects: recomputed.missingDescriptionDefects,
       titleLengthRecommendations: recomputed.titleLengthRecommendations,
       descriptionLengthRecommendations: recomputed.descriptionLengthRecommendations,
-      ogImageApprovalRequired,
-      ogImageDefectCount: ogImagePaths.length,
+      ogImageDefectCount: 0,
       twitterImageDefectCount: recomputed.twitterImageDefects,
       overflowPages: recomputed.overflowPages,
       mobileOverflowEvidenceReused: report.mobileOverflowEvidence,
-      socialMetadataStatus: ogImageApprovalRequired
-        ? "OG_IMAGE_APPROVAL_REQUIRED — social share images are not fully present"
-        : "complete",
+      socialMetadataStatus: "complete",
     },
     null,
     2,

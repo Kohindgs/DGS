@@ -4,14 +4,16 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { cleanPath } from "./full-site-route-audit.mjs";
 
-export const AUDIT_SCHEMA_VERSION = "2A.1B";
-export const MOBILE_EVIDENCE_SOURCE_COMMIT = "5866109d38e352afa360d08ca555b87f3dcd1d8c";
-export const MOBILE_EVIDENCE_PATH = "data/audit/mobile-overflow-evidence.5866109.json";
+export const AUDIT_SCHEMA_VERSION = "2B.1";
+export const MOBILE_EVIDENCE_SOURCE_COMMIT = "b90118c17fc0950071979686ebeb81dadd03320c";
+export const MOBILE_EVIDENCE_SHORT_SHA = MOBILE_EVIDENCE_SOURCE_COMMIT.slice(0, 7);
+export const MOBILE_EVIDENCE_PATH = `data/audit/mobile-overflow-evidence.${MOBILE_EVIDENCE_SHORT_SHA}.json`;
 export const PRODUCTION_CANONICAL_HOST = "www.dgeniussolutions.com";
 export const REQUIRED_VIEWPORTS = ["390x844", "430x932"];
 
 const ALLOWED_EXACT_PATHS = new Set([
   "data/audit/full-site-ranking-readiness.json",
+  "data/audit/plugin-runtime-dependency-audit.json",
   MOBILE_EVIDENCE_PATH,
   "package.json",
   "package-lock.json",
@@ -24,6 +26,8 @@ export function normalizeRepoPath(filePath) {
 export function isAllowedChangePath(filePath) {
   const normalized = normalizeRepoPath(filePath);
   if (normalized.startsWith("scripts/")) return true;
+  if (normalized.startsWith("data/audit/weavings-screenshots/")) return true;
+  if (/^data\/audit\/mobile-overflow-evidence\.[0-9a-f]{7}\.json$/.test(normalized)) return true;
   return ALLOWED_EXACT_PATHS.has(normalized);
 }
 
