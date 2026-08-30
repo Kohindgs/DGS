@@ -1,6 +1,9 @@
 {
-  "sourceCommit": "b90118c17fc0950071979686ebeb81dadd03320c",
-  "sourceReportGeneratedAt": "2026-08-30T10:25:52.770Z",
+  "sourceCommit": "570d3cee287975d5263fe3dcb3f012786212b843",
+  "sourceReportGeneratedAt": "2026-08-30T15:39:47.741Z",
+  "capturedAt": "2026-08-30T15:39:47.741Z",
+  "captureStartedAtMs": 1788104180796,
+  "sourceCommitTimestampMs": 1788104129000,
   "viewports": [
     "390x844",
     "430x932"

@@ -1,15 +1,15 @@
 {
-  "auditSchemaVersion": "2B.1",
-  "generatedAt": "2026-08-30T10:47:07.378Z",
+  "auditSchemaVersion": "2B.1A",
+  "generatedAt": "2026-08-30T15:39:52.785Z",
   "target": "http://127.0.0.1:3025/",
   "expectedIndexableUrlCount": 96,
-  "applicationSourceCommit": "b90118c17fc0950071979686ebeb81dadd03320c",
-  "auditInputDigest": "029cba7037857fb30cfd57bc6eb761cf60a89771c100522fbf5437c3a4e7a66f",
+  "applicationSourceCommit": "570d3cee287975d5263fe3dcb3f012786212b843",
+  "auditInputDigest": "d9d5df4983c1d0bf9afc181d03cd28918f61d8187a3b9560abd364869ed3ed62",
   "mobileOverflowEvidence": {
     "reused": true,
-    "sourceCommit": "b90118c17fc0950071979686ebeb81dadd03320c",
-    "sourceReportGeneratedAt": "2026-08-30T10:25:52.770Z",
-    "sourceEvidencePath": "data/audit/mobile-overflow-evidence.b90118c.json",
+    "sourceCommit": "570d3cee287975d5263fe3dcb3f012786212b843",
+    "sourceReportGeneratedAt": "2026-08-30T15:39:47.741Z",
+    "sourceEvidencePath": "data/audit/mobile-overflow-evidence.570d3ce.json",
     "mobileEvidenceDigest": "6d8fc1dba2a53acb35203c976e287937ed51bfb251c8abb807af6412240828f6",
     "viewports": [
       "390x844",
@@ -32,6 +32,7 @@
     "schemaDefects": 0,
     "ogImageDefects": 0,
     "twitterImageDefects": 0,
+    "twitterCardDefects": 0,
     "overflowPages": 0
   },
   "pages": [
@@ -78,6 +79,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -120,6 +122,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -164,6 +167,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -209,6 +213,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -251,6 +256,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -293,6 +299,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -338,6 +345,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -383,6 +391,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -426,6 +435,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -471,6 +481,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -514,6 +525,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -557,6 +569,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -602,6 +615,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -647,6 +661,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -690,6 +705,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -733,6 +749,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -778,6 +795,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -821,6 +839,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -866,6 +885,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -912,6 +932,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -957,6 +978,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1002,6 +1024,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1045,6 +1068,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1088,6 +1112,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1131,6 +1156,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1176,6 +1202,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1219,6 +1246,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1264,6 +1292,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1307,6 +1336,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1350,6 +1380,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1395,6 +1426,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1438,6 +1470,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1484,6 +1517,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1529,6 +1563,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1574,6 +1609,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1617,6 +1653,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1662,6 +1699,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1707,6 +1745,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1752,6 +1791,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1797,6 +1837,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1842,6 +1883,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1887,6 +1929,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1933,6 +1976,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -1978,6 +2022,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2021,6 +2066,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2064,6 +2110,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2107,6 +2154,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2150,6 +2198,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2193,6 +2242,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2236,6 +2286,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2281,6 +2332,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2326,6 +2378,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2371,6 +2424,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2416,6 +2470,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2459,6 +2514,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2504,6 +2560,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2547,6 +2604,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2590,6 +2648,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2635,6 +2694,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2680,6 +2740,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2723,6 +2784,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2766,6 +2828,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2809,6 +2872,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2854,6 +2918,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2897,6 +2962,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2942,6 +3008,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -2988,6 +3055,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3032,6 +3100,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3074,6 +3143,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3116,6 +3186,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3158,6 +3229,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3200,6 +3272,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3242,6 +3315,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3284,6 +3358,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3326,6 +3401,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3364,6 +3440,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3409,6 +3486,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3452,6 +3530,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3495,6 +3574,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3538,6 +3618,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3587,6 +3668,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3630,6 +3712,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3673,6 +3756,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3716,6 +3800,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -3759,6 +3844,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3804,6 +3890,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3850,6 +3937,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3896,6 +3984,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3942,6 +4031,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -3987,6 +4077,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "RANKING_PROTECTED",
       "contentGrowthRecommendations": []
     },
@@ -4030,6 +4121,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4073,6 +4165,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4116,6 +4209,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4159,6 +4253,7 @@
       "recommendations": [],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4203,6 +4298,7 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     },
@@ -4248,9 +4344,10 @@
       ],
       "ogImageMissing": false,
       "twitterImageMissing": false,
+      "twitterCardDefect": false,
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     }
   ],
-  "reportDataDigest": "b33c7b76a644a7dc6e66c6714c17dbb9ff5551232483e2436b8a6ee1acfa2aa4"
+  "reportDataDigest": "d3a76a06405df6493d44d7c2d091d16c5262ec86df2d3d9a154650268782bf54"
 }
