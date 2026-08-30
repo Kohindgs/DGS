@@ -27,6 +27,7 @@ import {
   validateMobileEvidencePayload,
   validateProductionCanonical,
 } from "./lib/ranking-readiness-integrity.mjs";
+import { evaluatePageSocialMetadata } from "./lib/social-metadata-validation.mjs";
 
 const ROOT = process.cwd();
 const TARGET = new URL(process.env.MIGRATION_TARGET_URL || "http://127.0.0.1:3025");
@@ -115,8 +116,13 @@ for (const route of registry.routes) {
   if (!canonicalCheck.ok) blockingDefects.push(`canonical_${canonicalCheck.reason}`);
   if (!schemaTypes.length) blockingDefects.push("missing_schema");
 
-  const ogImageMissing = !metadata.ogImage;
-  const twitterImageMissing = !metadata.twitterImage;
+  const social = evaluatePageSocialMetadata(metadata);
+  const ogImageMissing = social.ogImageDefect;
+  const twitterImageMissing = social.twitterImageDefect;
+  const twitterCardDefect = social.twitterCardDefect;
+  if (ogImageMissing) blockingDefects.push("og_image");
+  if (twitterImageMissing) blockingDefects.push("twitter_image");
+  if (twitterCardDefect) blockingDefects.push("twitter_card");
 
   const readinessRecord = readinessByPath.get(routePath);
   const record = {
@@ -147,6 +153,7 @@ for (const route of registry.routes) {
     recommendations,
     ogImageMissing,
     twitterImageMissing,
+    twitterCardDefect,
     classification: "",
     contentGrowthRecommendations: [],
   };
@@ -177,6 +184,7 @@ const summary = {
   schemaDefects: pages.filter((page) => page.blockingDefects.includes("missing_schema")).length,
   ogImageDefects: pages.filter((page) => page.ogImageMissing).length,
   twitterImageDefects: pages.filter((page) => page.twitterImageMissing).length,
+  twitterCardDefects: pages.filter((page) => page.twitterCardDefect).length,
   overflowPages: pages.filter((page) => Object.values(page.mobileOverflow || {}).some(Boolean)).length,
 };
 

@@ -16,6 +16,11 @@ import {
   validateMobileEvidencePayload,
   validateProductionCanonical,
 } from "./lib/ranking-readiness-integrity.mjs";
+import {
+  deriveSocialMetadataStatus,
+  evaluatePageSocialMetadata,
+  recomputeSocialSummary,
+} from "./lib/social-metadata-validation.mjs";
 
 const ROOT = process.cwd();
 const AUDIT = path.join(ROOT, "data/audit/full-site-ranking-readiness.json");
@@ -183,7 +188,7 @@ if (mobilePayloadIssues.length) {
 
 const blockingIssues = [];
 const overflowIssues = [];
-const ogImagePaths = [];
+const socialDefectPaths = [];
 
 for (const page of pages) {
   if (page.status !== 200) blockingIssues.push(`${page.path}: status ${page.status}`);
@@ -202,10 +207,14 @@ for (const page of pages) {
       overflowIssues.push(page.path);
     }
   }
-  if (page.ogImageMissing || !page.ogImage) ogImagePaths.push(page.path);
+  const social = evaluatePageSocialMetadata(page);
+  if (social.socialDefectCount > 0) {
+    socialDefectPaths.push(`${page.path}: ${social.socialDefects.join(",")}`);
+  }
 }
 
 const summary = report.summary || {};
+const socialSummary = recomputeSocialSummary(pages);
 const recomputed = {
   intendedIndexableUrls: pages.length,
   rankingProtected: pages.filter((page) => page.classification === "RANKING_PROTECTED").length,
@@ -220,8 +229,9 @@ const recomputed = {
   h1Defects: pages.filter((page) => page.h1Count !== 1).length,
   canonicalDefects: pages.filter((page) => !validateProductionCanonical(page.canonical, page.path).ok).length,
   schemaDefects: pages.filter((page) => !page.schemaTypes?.length).length,
-  ogImageDefects: ogImagePaths.length,
-  twitterImageDefects: pages.filter((page) => page.twitterImageMissing || !page.twitterImage).length,
+  ogImageDefects: socialSummary.ogImageDefects,
+  twitterImageDefects: socialSummary.twitterImageDefects,
+  twitterCardDefects: socialSummary.twitterCardDefects,
   overflowPages: pages.filter((page) => Object.values(page.mobileOverflow || {}).some(Boolean)).length,
 };
 
@@ -239,10 +249,20 @@ if (overflowIssues.length) {
   fail("Unexplained mobile overflow remains", { overflowIssues });
 }
 
-if (ogImagePaths.length > 0) {
-  fail("OG/Twitter social images are missing on indexable routes", {
-    ogImageDefectCount: ogImagePaths.length,
-    samplePaths: ogImagePaths.slice(0, 10),
+if (socialDefectPaths.length > 0) {
+  fail("Approved social metadata defects found", {
+    socialDefectCount: socialDefectPaths.length,
+    samplePaths: socialDefectPaths.slice(0, 10),
+  });
+}
+
+const socialMetadataStatus = deriveSocialMetadataStatus(pages);
+if (!socialSummary.socialMetadataComplete) {
+  fail("Social metadata must be complete before reporting success", {
+    ogImageDefects: socialSummary.ogImageDefects,
+    twitterImageDefects: socialSummary.twitterImageDefects,
+    twitterCardDefects: socialSummary.twitterCardDefects,
+    socialMetadataStatus,
   });
 }
 
@@ -261,11 +281,12 @@ console.log(
       missingDescriptionDefects: recomputed.missingDescriptionDefects,
       titleLengthRecommendations: recomputed.titleLengthRecommendations,
       descriptionLengthRecommendations: recomputed.descriptionLengthRecommendations,
-      ogImageDefectCount: 0,
+      ogImageDefectCount: recomputed.ogImageDefects,
       twitterImageDefectCount: recomputed.twitterImageDefects,
+      twitterCardDefectCount: recomputed.twitterCardDefects,
       overflowPages: recomputed.overflowPages,
       mobileOverflowEvidenceReused: report.mobileOverflowEvidence,
-      socialMetadataStatus: "complete",
+      socialMetadataStatus,
     },
     null,
     2,

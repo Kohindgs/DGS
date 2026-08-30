@@ -75,6 +75,11 @@
     "audit:hostinger-crawler-safety": "node scripts/audit-hostinger-crawler-safety.mjs",
     "validate:plugin-runtime": "node scripts/validate-plugin-runtime.mjs",
     "validate:crawler-files": "node scripts/validate-crawler-files.mjs",
+    "validate:approved-assets": "node scripts/validate-approved-assets.mjs",
+    "capture:weavings-layout-baseline": "node scripts/capture-weavings-layout-baseline.mjs",
+    "test:approved-assets-determinism": "node --test scripts/test-approved-assets-determinism.mjs",
+    "test:social-metadata-adversarial": "node --test scripts/test-social-metadata-adversarial.mjs",
+    "test:weavings-layout": "node --test scripts/test-weavings-layout.mjs",
     "validate:full-site-ranking-readiness": "node scripts/validate-full-site-ranking-readiness.mjs"
   },
   "dependencies": {

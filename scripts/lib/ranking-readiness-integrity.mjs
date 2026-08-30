@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { cleanPath } from "./full-site-route-audit.mjs";
 
-export const AUDIT_SCHEMA_VERSION = "2B.1";
+export const AUDIT_SCHEMA_VERSION = "2B.1A";
 export const MOBILE_EVIDENCE_SOURCE_COMMIT = "b90118c17fc0950071979686ebeb81dadd03320c";
 export const MOBILE_EVIDENCE_SHORT_SHA = MOBILE_EVIDENCE_SOURCE_COMMIT.slice(0, 7);
 export const MOBILE_EVIDENCE_PATH = `data/audit/mobile-overflow-evidence.${MOBILE_EVIDENCE_SHORT_SHA}.json`;
@@ -33,6 +33,35 @@ export function isAllowedChangePath(filePath) {
 
 export function gitOutput(root, args) {
   return execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
+}
+
+export function assertValidCommitSha(commit) {
+  return typeof commit === "string" && /^[0-9a-f]{40}$/.test(commit);
+}
+
+export function assertCleanWorktree(root) {
+  const dirty = gitOutput(root, ["status", "--porcelain"]);
+  if (dirty) {
+    const error = new Error("Working tree is not clean");
+    error.dirtyPaths = dirty.split("\n").map((line) => line.slice(3).trim()).filter(Boolean);
+    throw error;
+  }
+}
+
+export function assertHeadMatchesCommit(root, commit) {
+  const head = gitOutput(root, ["rev-parse", "HEAD"]);
+  if (head !== commit) {
+    const error = new Error("HEAD does not match required commit");
+    error.expected = commit;
+    error.actual = head;
+    throw error;
+  }
+}
+
+export function commitTimestampMs(root, commit) {
+  const value = Number(gitOutput(root, ["show", "-s", "--format=%ct", commit]));
+  if (!Number.isFinite(value)) throw new Error(`Unable to read commit timestamp for ${commit}`);
+  return value * 1000;
 }
 
 export function listChangedPaths(root, sourceCommit) {
@@ -202,6 +231,9 @@ export function canonicalPageData(page) {
     h1Count: page.h1Count,
     canonical: page.canonical || "",
     schemaTypes: [...(page.schemaTypes || [])].sort(),
+    ogImage: page.ogImage || "",
+    twitterImage: page.twitterImage || "",
+    twitterCard: page.twitterCard || "",
     ogImageMissing: Boolean(page.ogImageMissing),
     twitterImageMissing: Boolean(page.twitterImageMissing),
     mobileOverflow: {

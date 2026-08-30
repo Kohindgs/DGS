@@ -1,6 +1,5 @@
 {
-  "version": "2B.1",
-  "generatedAt": "2026-08-30T10:20:43.969Z",
+  "version": "2B.1A",
   "social": {
     "defaultShareImage": {
       "localPath": "/images/social/dgs-default-share.png",
@@ -14,7 +13,8 @@
       "mime": "image/png",
       "sha256": "88ca56b4b25877e682d8f0fce291a4486d1e41aea58b468be81a23239d3789c5"
     },
-    "productionUrl": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png"
+    "productionUrl": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+    "productionHostname": "www.dgeniussolutions.com"
   },
   "replacements": [
     {
@@ -29,13 +29,17 @@
       },
       "replacement": {
         "localPath": "/images/case-studies/weavings-home-page-64820.png",
+        "sourceLocalPath": "/images/case-studies/weavings-home-page-64820-source.png",
         "wordpressMediaId": 64820,
         "sourceUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Weavings-Home-page-.png?v=20260707-header-visible",
         "alt": "Live preview of Weavings website",
         "mime": "image/png",
+        "sourceSha256": "7162b0d1a00abf0d579434bb5c6919316b924b306a5183476dcebdcaf3e8c5a9",
+        "sourceWidth": 1600,
+        "sourceHeight": 779,
+        "presentationSha256": "261c52a5b21c6a744b107a247acb26f3909793e0d01ecbd89dd7c2dc724745f8",
         "width": 1600,
-        "height": 779,
-        "sha256": "7162b0d1a00abf0d579434bb5c6919316b924b306a5183476dcebdcaf3e8c5a9"
+        "height": 1000
       }
     }
   ]
