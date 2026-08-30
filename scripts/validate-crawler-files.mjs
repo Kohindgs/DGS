@@ -11,6 +11,11 @@ export function parseRobotsGroups(body) {
   const groups = [];
   let current = null;
 
+  const pushCurrent = () => {
+    if (current?.agents.length) groups.push(current);
+    current = null;
+  };
+
   for (const rawLine of body.split(/\r?\n/)) {
     const line = rawLine.split("#")[0].trim();
     if (!line) continue;
@@ -20,8 +25,14 @@ export function parseRobotsGroups(body) {
     const value = line.slice(colon + 1).trim();
 
     if (key === "user-agent") {
-      if (current?.agents.length) groups.push(current);
-      current = { agents: [value], allow: [], disallow: [] };
+      if (current && (current.allow.length || current.disallow.length)) {
+        pushCurrent();
+        current = { agents: [value], allow: [], disallow: [] };
+      } else if (current) {
+        current.agents.push(value);
+      } else {
+        current = { agents: [value], allow: [], disallow: [] };
+      }
       continue;
     }
 
@@ -30,24 +41,37 @@ export function parseRobotsGroups(body) {
     if (key === "disallow") current.disallow.push(value);
   }
 
-  if (current?.agents.length) groups.push(current);
+  pushCurrent();
   return groups;
 }
 
-export function resolveRobotsGroup(groups, agent) {
+export function groupsForAgent(groups, agent) {
   const normalized = agent.toLowerCase();
-  const specific = groups.find((group) =>
+  const specific = groups.filter((group) =>
     group.agents.some((value) => value.toLowerCase() === normalized),
   );
-  if (specific) return { group: specific, matchedBy: "specific" };
-  const wildcard = groups.find((group) => group.agents.some((value) => value === "*"));
-  if (wildcard) return { group: wildcard, matchedBy: "wildcard" };
-  return { group: null, matchedBy: "none" };
+  if (specific.length) return { groups: specific, matchedBy: "specific" };
+  const wildcard = groups.filter((group) => group.agents.some((value) => value === "*"));
+  if (wildcard.length) return { groups: wildcard, matchedBy: "wildcard" };
+  return { groups: [], matchedBy: "none" };
+}
+
+export function resolveRobotsGroup(groups, agent) {
+  const resolved = groupsForAgent(groups, agent);
+  if (!resolved.groups.length) return { group: null, matchedBy: resolved.matchedBy };
+  return {
+    group: {
+      agents: [...new Set(resolved.groups.flatMap((group) => group.agents))],
+      allow: resolved.groups.flatMap((group) => group.allow),
+      disallow: resolved.groups.flatMap((group) => group.disallow),
+    },
+    matchedBy: resolved.matchedBy,
+  };
 }
 
 export function rootPathBlocked(group) {
   if (!group) return false;
-  return group.disallow.some((rule) => rule === "/" || rule === "");
+  return group.disallow.some((rule) => rule === "/");
 }
 
 export function evaluateCrawlerAccess(groups, agent) {

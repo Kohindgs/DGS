@@ -30,6 +30,11 @@ test("metaByPropertyFromHtml reads Open Graph property tags", () => {
   assert.equal(metaByPropertyFromHtml(html, "og:image"), "https://www.dgeniussolutions.com/share.png");
 });
 
+test("metaByPropertyFromHtml preserves apostrophe inside double-quoted value", () => {
+  const html = `<html><head><meta property="og:title" content="D'Genius Solutions"></head></html>`;
+  assert.equal(metaByPropertyFromHtml(html, "og:title"), "D'Genius Solutions");
+});
+
 test("metaByNameFromHtml reads Twitter name tags", () => {
   const html = `<html><head>
     <meta name="twitter:card" content="summary_large_image">
@@ -43,10 +48,20 @@ test("metaByNameFromHtml reads Twitter name tags", () => {
   assert.equal(metaByNameFromHtml(html, "twitter:image"), "https://www.dgeniussolutions.com/tw.png");
 });
 
-test("metadata parser is insensitive to attribute order", () => {
+test("single-quoted attribute values preserve embedded double quotes", () => {
+  const html = `<html><head><meta name='twitter:title' content='He said &quot;hello&quot;'></head></html>`;
+  assert.equal(metaByNameFromHtml(html, "twitter:title"), 'He said "hello"');
+});
+
+test("curly apostrophe is preserved in metadata values", () => {
+  const html = `<html><head><meta property="og:title" content="D\u2019Genius Solutions"></head></html>`;
+  assert.equal(metaByPropertyFromHtml(html, "og:title"), "D\u2019Genius Solutions");
+});
+
+test("metadata parser is insensitive to attribute order and case", () => {
   const html = `<html><head>
     <meta content="Value First" name="description">
-    <meta name="robots" content="index,follow">
+    <meta NAME="robots" CONTENT="index,follow">
     <meta content="Property Value" property="og:title">
   </head></html>`;
   const metadata = renderedMetadataFromHtml(html);

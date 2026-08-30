@@ -29,8 +29,39 @@ export function normalizeText(html = "") {
 }
 
 export function attr(tag, name) {
-  const match = tag.match(new RegExp(`\\s${name}\\s*=\\s*["']([^"']*)["']`, "i"));
-  return match ? decode(match[1].trim()) : "";
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const patterns = [
+    new RegExp(`\\s${escaped}\\s*=\\s*"([^"]*)"`, "i"),
+    new RegExp(`\\s${escaped}\\s*=\\s*'([^']*)'`, "i"),
+  ];
+  for (const pattern of patterns) {
+    const match = tag.match(pattern);
+    if (match) return decode(match[1].trim());
+  }
+  return "";
+}
+
+export function validateProductionCanonical(canonical, pagePath, host = "www.dgeniussolutions.com") {
+  if (!canonical) return { ok: false, reason: "missing" };
+  let url;
+  try {
+    url = new URL(canonical);
+  } catch {
+    return { ok: false, reason: "invalid-url" };
+  }
+  if (url.protocol !== "https:") return { ok: false, reason: "non-https" };
+  if (url.username || url.password) return { ok: false, reason: "credentials" };
+  if (url.port) return { ok: false, reason: "unexpected-port" };
+  if (url.search || url.hash) return { ok: false, reason: "query-or-hash" };
+  if (url.hostname !== host) return { ok: false, reason: "wrong-host" };
+  if (/dimgrey-goat/i.test(canonical)) return { ok: false, reason: "dimgrey-leak" };
+
+  let expectedPath = pagePath || "/";
+  let actualPath = url.pathname || "/";
+  if (actualPath !== "/" && !actualPath.endsWith("/")) actualPath += "/";
+  if (expectedPath !== "/" && !expectedPath.endsWith("/")) expectedPath += "/";
+  if (actualPath !== expectedPath) return { ok: false, reason: "path-mismatch" };
+  return { ok: true };
 }
 
 export function normalizePath(value, base) {

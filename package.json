@@ -61,6 +61,7 @@
     "test:content-parity": "node --test scripts/test-content-parity.mjs",
     "test:metadata-parser": "node --test scripts/test-metadata-parser.mjs",
     "test:crawler-files": "node --test scripts/test-crawler-files.mjs",
+    "test:ranking-integrity": "node --test scripts/test-ranking-integrity.mjs",
     "build:ranking-protection-baseline": "node scripts/build-ranking-protection-baseline.mjs",
     "audit:robots-forensic": "node scripts/audit-robots-forensic.mjs",
     "audit:plugin-runtime": "node scripts/audit-plugin-runtime.mjs",

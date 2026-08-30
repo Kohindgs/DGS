@@ -1,12 +1,16 @@
 {
-  "generatedAt": "2026-08-30T08:47:40.233Z",
+  "auditSchemaVersion": "2A.1A",
+  "generatedAt": "2026-08-30T09:02:51.279Z",
   "target": "http://127.0.0.1:3025/",
   "expectedIndexableUrlCount": 96,
+  "applicationSourceCommit": "b40b1046496507d7465300a92046570beace09f2",
+  "auditInputDigest": "b3ba841fbb3a82e61057cabf3716e9de4c80cd2c5128306175f178ff1198918c",
   "mobileOverflowEvidence": {
     "reused": true,
-    "sourceReportGeneratedAt": "2026-08-30T08:46:19.126Z",
-    "sourceReportPath": "data/audit/full-site-ranking-readiness.json",
-    "sourceOverflowDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "sourceCommit": "5866109d38e352afa360d08ca555b87f3dcd1d8c",
+    "sourceReportGeneratedAt": "2026-08-29T17:01:40.416Z",
+    "sourceEvidencePath": "data/audit/mobile-overflow-evidence.5866109.json",
+    "mobileEvidenceDigest": "6d8fc1dba2a53acb35203c976e287937ed51bfb251c8abb807af6412240828f6",
     "viewports": [
       "390x844",
       "430x932"
@@ -4247,5 +4251,6 @@
       "classification": "READY_FOR_PAGE_OPTIMIZATION",
       "contentGrowthRecommendations": []
     }
-  ]
+  ],
+  "reportDataDigest": "160888e59a8f9be84a396d1127e669a17a2ba863f1577b32930a18faa3110f3a"
 }
