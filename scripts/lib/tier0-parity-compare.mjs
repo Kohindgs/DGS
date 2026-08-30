@@ -47,11 +47,39 @@ export function canonicalFromHtml(html) {
   return "";
 }
 
-export function metaFromHtml(html, name) {
+export function metaByNameFromHtml(html, name) {
+  const target = name.toLowerCase();
   for (const tag of html.match(/<meta\b[^>]*>/gi) || []) {
-    if (attr(tag, "name").toLowerCase() === name.toLowerCase()) return attr(tag, "content");
+    if (attr(tag, "name").toLowerCase() === target) return attr(tag, "content");
   }
   return "";
+}
+
+export function metaByPropertyFromHtml(html, property) {
+  const target = property.toLowerCase();
+  for (const tag of html.match(/<meta\b[^>]*>/gi) || []) {
+    if (attr(tag, "property").toLowerCase() === target) return attr(tag, "content");
+  }
+  return "";
+}
+
+export function metaFromHtml(html, name) {
+  return metaByNameFromHtml(html, name);
+}
+
+export function renderedMetadataFromHtml(html) {
+  return {
+    title: titleFromHtml(html),
+    description: metaByNameFromHtml(html, "description"),
+    robots: metaByNameFromHtml(html, "robots"),
+    ogTitle: metaByPropertyFromHtml(html, "og:title"),
+    ogDescription: metaByPropertyFromHtml(html, "og:description"),
+    ogImage: metaByPropertyFromHtml(html, "og:image"),
+    twitterCard: metaByNameFromHtml(html, "twitter:card"),
+    twitterTitle: metaByNameFromHtml(html, "twitter:title"),
+    twitterDescription: metaByNameFromHtml(html, "twitter:description"),
+    twitterImage: metaByNameFromHtml(html, "twitter:image"),
+  };
 }
 
 export function titleFromHtml(html) {

@@ -59,6 +59,8 @@
     "validate:content-parity": "node scripts/validate-content-parity.mjs",
     "validate:content-parity-restoration-plan": "node scripts/validate-content-parity-restoration-plan.mjs",
     "test:content-parity": "node --test scripts/test-content-parity.mjs",
+    "test:metadata-parser": "node --test scripts/test-metadata-parser.mjs",
+    "test:crawler-files": "node --test scripts/test-crawler-files.mjs",
     "build:ranking-protection-baseline": "node scripts/build-ranking-protection-baseline.mjs",
     "audit:robots-forensic": "node scripts/audit-robots-forensic.mjs",
     "audit:plugin-runtime": "node scripts/audit-plugin-runtime.mjs",
