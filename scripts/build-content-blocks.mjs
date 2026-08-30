@@ -6,6 +6,65 @@ import { createHash } from "node:crypto";
 const ROOT = process.cwd();
 const RAW_DIR = path.join(ROOT, "data/wordpress/raw");
 const OUT_DIR = path.join(ROOT, "data/wordpress/blocks");
+const APPROVED_ASSETS = path.join(ROOT, "data/migration/approved-asset-replacements.json");
+const ARCHIVE_HEADING_EVIDENCE = path.join(ROOT, "data/migration/archive-heading-evidence.json");
+
+async function loadApprovedAssetReplacements() {
+  try {
+    const manifest = JSON.parse(await readFile(APPROVED_ASSETS, "utf8"));
+    return manifest.replacements || [];
+  } catch {
+    return [];
+  }
+}
+
+function normalizeRoutePath(pathName) {
+  if (!pathName) return pathName;
+  return pathName.endsWith("/") ? pathName : `${pathName}/`;
+}
+
+function applyArchiveHeadingCorrections(pathName, blocks) {
+  const routePath = normalizeRoutePath(pathName);
+  const corrections = applyArchiveHeadingCorrections.cache || [];
+  for (const archive of corrections) {
+    if (normalizeRoutePath(archive.route) !== routePath) continue;
+    for (const block of blocks) {
+      if (block.type === "heading" && block.level === 1 && block.text === archive.priorExtractedHeading) {
+        block.text = archive.correctedExtractedHeading;
+        block.id = archive.correctedExtractedHeading.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 60);
+      }
+    }
+  }
+}
+
+function applyApprovedAssetReplacements(pathName, blocks, replacements) {
+  const routePath = normalizeRoutePath(pathName);
+  for (const block of blocks) {
+    if (block.type !== "image") continue;
+    for (const replacement of replacements) {
+      const routes = (replacement.routes || []).map(normalizeRoutePath);
+      if (!routes.includes(routePath)) continue;
+      const pattern = replacement.match?.pattern;
+      if (!pattern || !block.src.includes(pattern)) continue;
+      const next = replacement.replacement;
+      block.src = next.localPath;
+      if (next.alt) block.alt = next.alt;
+      if (next.width) block.width = next.width;
+      if (next.height) block.height = next.height;
+      block.dimensionSource = "verified";
+      block.approvedAssetReplacementId = replacement.id;
+    }
+  }
+}
+
+async function loadArchiveHeadingCorrections() {
+  try {
+    const evidence = JSON.parse(await readFile(ARCHIVE_HEADING_EVIDENCE, "utf8"));
+    applyArchiveHeadingCorrections.cache = evidence.archives || [];
+  } catch {
+    applyArchiveHeadingCorrections.cache = [];
+  }
+}
 
 async function readJson(file) {
   return JSON.parse(await readFile(file, "utf8"));
@@ -299,6 +358,8 @@ function traverseNode($, $node, blocks, depth = 0) {
 
 async function main() {
   await mkdir(OUT_DIR, { recursive: true });
+  const approvedReplacements = await loadApprovedAssetReplacements();
+  await loadArchiveHeadingCorrections();
 
   const [pages, services, posts] = await Promise.all([
     readJson(path.join(RAW_DIR, "pages.json")),
@@ -330,6 +391,9 @@ async function main() {
         traverseNode($, $(child), blocks);
       }
     });
+
+    applyApprovedAssetReplacements(pathName, blocks, approvedReplacements);
+    applyArchiveHeadingCorrections(pathName, blocks);
 
     const visibleText = blocks
       .filter((b) => b.type === "paragraph" || b.type === "heading")

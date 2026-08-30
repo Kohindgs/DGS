@@ -43,45 +43,21 @@ export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: Sem
               </Tag>
             );
           }
-          case "image": {
-            // EXTERNAL MEDIA RUNTIME DEPENDENCY — PHASE 2 PLUGIN/ASSET EXIT
-            // s.wordpress.com/mshots thumbnails require native <img>; not plugin-free migration debt.
-            const useNativeImage = (() => {
-              try {
-                const url = new URL(block.src, "https://www.dgeniussolutions.com");
-                return url.hostname === "s.wordpress.com" && url.pathname.startsWith("/mshots/");
-              } catch {
-                return /s\.wordpress\.com\/mshots/i.test(block.src);
-              }
-            })();
+          case "image":
             return (
               <figure key={key}>
-                {useNativeImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={block.src}
-                    alt={block.alt}
-                    width={block.width ?? 16}
-                    height={block.height ?? 9}
-                    loading={block.preload ? "eager" : "lazy"}
-                    decoding="async"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 960px"
-                  />
-                ) : (
-                  <Image
-                    src={block.src}
-                    alt={block.alt}
-                    width={block.width ?? 16}
-                    height={block.height ?? 9}
-                    preload={block.preload === true}
-                    loading={block.preload ? undefined : "lazy"}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 960px"
-                  />
-                )}
+                <Image
+                  src={block.src}
+                  alt={block.alt}
+                  width={block.width ?? 16}
+                  height={block.height ?? 9}
+                  preload={block.preload === true}
+                  loading={block.preload ? undefined : "lazy"}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 960px"
+                />
                 {block.caption ? <figcaption>{block.caption}</figcaption> : null}
               </figure>
             );
-          }
           case "quote":
             return (
               <blockquote key={key}>
