@@ -7,6 +7,7 @@ import {
   MOBILE_EVIDENCE_PATH,
   MOBILE_EVIDENCE_SOURCE_COMMIT,
   REQUIRED_VIEWPORTS,
+  assertMobileEvidenceReuseAllowed,
   computeAuditInputDigest,
   computeMobileEvidenceDigest,
   computeReportDataDigest,
@@ -32,6 +33,16 @@ const expectedPaths = indexability.routes
   .filter((route) => route.indexable && route.includeInSitemap)
   .map((route) => cleanPath(route.path))
   .sort();
+
+try {
+  assertMobileEvidenceReuseAllowed(ROOT);
+} catch (error) {
+  console.error("FAIL — FULL-SITE RANKING READINESS");
+  for (const unexpectedPath of error.unexpectedPaths || []) {
+    console.error(unexpectedPath);
+  }
+  process.exit(1);
+}
 
 function fail(message, details = {}) {
   console.error("FAIL — FULL-SITE RANKING READINESS");
@@ -75,6 +86,13 @@ if (!isValidGeneratedAt(report.generatedAt)) {
 
 if (report.expectedIndexableUrlCount !== 96) {
   fail("expectedIndexableUrlCount must be 96", { value: report.expectedIndexableUrlCount });
+}
+
+if (report.applicationSourceCommit !== MOBILE_EVIDENCE_SOURCE_COMMIT) {
+  fail("applicationSourceCommit must match mobile evidence source commit", {
+    expected: MOBILE_EVIDENCE_SOURCE_COMMIT,
+    actual: report.applicationSourceCommit,
+  });
 }
 
 const mobileEvidence = report.mobileOverflowEvidence || {};

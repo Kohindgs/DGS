@@ -4,62 +4,82 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { cleanPath } from "./full-site-route-audit.mjs";
 
-export const AUDIT_SCHEMA_VERSION = "2A.1A";
+export const AUDIT_SCHEMA_VERSION = "2A.1B";
 export const MOBILE_EVIDENCE_SOURCE_COMMIT = "5866109d38e352afa360d08ca555b87f3dcd1d8c";
 export const MOBILE_EVIDENCE_PATH = "data/audit/mobile-overflow-evidence.5866109.json";
 export const PRODUCTION_CANONICAL_HOST = "www.dgeniussolutions.com";
 export const REQUIRED_VIEWPORTS = ["390x844", "430x932"];
 
-const ALLOWED_CHANGE_PREFIXES = [
-  "scripts/",
-  "data/audit/",
+const ALLOWED_EXACT_PATHS = new Set([
+  "data/audit/full-site-ranking-readiness.json",
+  MOBILE_EVIDENCE_PATH,
   "package.json",
   "package-lock.json",
-];
+]);
 
-export function isAllowedChangePath(filePath) {
-  const normalized = filePath.replace(/\\/g, "/");
-  if (ALLOWED_CHANGE_PREFIXES.some((prefix) => normalized === prefix || normalized.startsWith(prefix))) {
-    return true;
-  }
-  return false;
+export function normalizeRepoPath(filePath) {
+  return filePath.replace(/\\/g, "/");
 }
 
-export function isProhibitedApplicationPath(filePath) {
-  const normalized = filePath.replace(/\\/g, "/");
-  if (isAllowedChangePath(normalized)) return false;
-  if (normalized.endsWith(".css")) return true;
-  if (
-    normalized.startsWith("app/") ||
-    normalized.startsWith("components/") ||
-    normalized.startsWith("lib/") ||
-    normalized.startsWith("styles/") ||
-    normalized.startsWith("public/")
-  ) {
-    return true;
-  }
-  if (["next.config.ts", "middleware.ts", "proxy.ts"].includes(normalized)) return true;
-  return false;
+export function isAllowedChangePath(filePath) {
+  const normalized = normalizeRepoPath(filePath);
+  if (normalized.startsWith("scripts/")) return true;
+  return ALLOWED_EXACT_PATHS.has(normalized);
+}
+
+export function gitOutput(root, args) {
+  return execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
 }
 
 export function listChangedPaths(root, sourceCommit) {
   const paths = new Set();
   const commands = [
-    ["git", "diff", "--name-only", sourceCommit, "HEAD"],
-    ["git", "diff", "--name-only", "--cached"],
-    ["git", "diff", "--name-only"],
+    ["diff", "--name-only", sourceCommit, "HEAD"],
+    ["diff", "--name-only", "--cached"],
+    ["diff", "--name-only"],
+    ["ls-files", "--others", "--exclude-standard"],
   ];
+
   for (const args of commands) {
-    const output = execFileSync(args[0], args.slice(1), { cwd: root, encoding: "utf8" }).trim();
+    const output = gitOutput(root, args);
     for (const line of output.split("\n").map((value) => value.trim()).filter(Boolean)) {
-      paths.add(line);
+      paths.add(normalizeRepoPath(line));
     }
   }
+
   return [...paths].sort();
 }
 
-export function findProhibitedApplicationChanges(root, sourceCommit) {
-  return listChangedPaths(root, sourceCommit).filter(isProhibitedApplicationPath);
+export function findUnexpectedChanges(root, sourceCommit = MOBILE_EVIDENCE_SOURCE_COMMIT) {
+  return listChangedPaths(root, sourceCommit).filter((filePath) => !isAllowedChangePath(filePath));
+}
+
+export function assertMobileEvidenceReuseAllowed(root, sourceCommit = MOBILE_EVIDENCE_SOURCE_COMMIT) {
+  const unexpectedPaths = findUnexpectedChanges(root, sourceCommit);
+  if (unexpectedPaths.length) {
+    const error = new Error("Unexpected changes detected; mobile overflow evidence cannot be reused");
+    error.unexpectedPaths = unexpectedPaths;
+    throw error;
+  }
+}
+
+export function stableValue(value) {
+  if (Array.isArray(value)) {
+    return value.map((entry) => stableValue(entry));
+  }
+  if (value && typeof value === "object") {
+    return Object.keys(value)
+      .sort()
+      .reduce((acc, key) => {
+        acc[key] = stableValue(value[key]);
+        return acc;
+      }, {});
+  }
+  return value;
+}
+
+export function stableStringify(value) {
+  return JSON.stringify(stableValue(value));
 }
 
 export function buildMobileEvidencePayload(pagesByPath) {
@@ -127,26 +147,46 @@ export function validateMobileEvidencePayload(payload, expectedPaths) {
 }
 
 export function getApplicationSourceCommit(root) {
-  const prohibited = findProhibitedApplicationChanges(root, MOBILE_EVIDENCE_SOURCE_COMMIT);
-  if (prohibited.length) {
-    const error = new Error("Application/UI changes detected; mobile overflow evidence cannot be reused");
-    error.prohibitedPaths = prohibited;
-    throw error;
-  }
-  return execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
+  assertMobileEvidenceReuseAllowed(root);
+  return MOBILE_EVIDENCE_SOURCE_COMMIT;
+}
+
+export function indexabilityAuditInputs(indexabilityManifest) {
+  return indexabilityManifest.routes
+    .filter((route) => route.indexable && route.includeInSitemap)
+    .map((route) => stableValue(route))
+    .sort((a, b) => cleanPath(a.path).localeCompare(cleanPath(b.path)));
+}
+
+export function registryAuditInputs(routeRegistry, expectedPaths) {
+  const expected = new Set(expectedPaths);
+  return routeRegistry.routes
+    .filter((route) => expected.has(cleanPath(route.path)))
+    .map((route) => stableValue(route))
+    .sort((a, b) => cleanPath(a.path).localeCompare(cleanPath(b.path)));
+}
+
+export function readinessAuditInputs(readinessInventory, expectedPaths) {
+  const expected = new Set(expectedPaths);
+  return readinessInventory
+    .filter((route) => expected.has(cleanPath(route.path)))
+    .map((route) => stableValue(route))
+    .sort((a, b) => cleanPath(a.path).localeCompare(cleanPath(b.path)));
 }
 
 export function computeAuditInputDigest({ indexabilityManifest, routeRegistry, readinessInventory, schemaVersion }) {
+  const expectedPaths = indexabilityManifest.routes
+    .filter((route) => route.indexable && route.includeInSitemap)
+    .map((route) => cleanPath(route.path))
+    .sort();
+
   const payload = {
     schemaVersion,
-    indexability: indexabilityManifest.routes
-      .filter((route) => route.indexable && route.includeInSitemap)
-      .map((route) => cleanPath(route.path))
-      .sort(),
-    registryPaths: routeRegistry.routes.map((route) => cleanPath(route.path)).sort(),
-    readinessPaths: readinessInventory.map((route) => cleanPath(route.path)).sort(),
+    indexability: indexabilityAuditInputs(indexabilityManifest),
+    routeRegistry: registryAuditInputs(routeRegistry, expectedPaths),
+    readinessInventory: readinessAuditInputs(readinessInventory, expectedPaths),
   };
-  return computeDigest(JSON.stringify(payload));
+  return computeDigest(stableStringify(payload));
 }
 
 export function canonicalPageData(page) {
@@ -172,11 +212,16 @@ export function canonicalPageData(page) {
 
 export function computeReportDataDigest(report) {
   const payload = {
+    auditSchemaVersion: report.auditSchemaVersion,
+    target: report.target,
     expectedIndexableUrlCount: report.expectedIndexableUrlCount,
+    applicationSourceCommit: report.applicationSourceCommit,
+    auditInputDigest: report.auditInputDigest,
+    mobileOverflowEvidence: report.mobileOverflowEvidence,
     summary: report.summary,
     pages: (report.pages || []).map(canonicalPageData).sort((a, b) => a.path.localeCompare(b.path)),
   };
-  return computeDigest(JSON.stringify(payload));
+  return computeDigest(stableStringify(payload));
 }
 
 export function validateProductionCanonical(canonical, pagePath) {

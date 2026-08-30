@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import {
   AUDIT_SCHEMA_VERSION,
+  MOBILE_EVIDENCE_SOURCE_COMMIT,
+  assertMobileEvidenceReuseAllowed,
   computeAuditInputDigest,
   computeMobileEvidenceDigest,
   computeReportDataDigest,
-  findProhibitedApplicationChanges,
+  findUnexpectedChanges,
   isAllowedChangePath,
-  isProhibitedApplicationPath,
   validateMobileEvidencePayload,
   validateProductionCanonical,
 } from "./lib/ranking-readiness-integrity.mjs";
@@ -59,11 +62,11 @@ function syntheticReport() {
     generatedAt: new Date().toISOString(),
     target: "http://127.0.0.1:3025/",
     expectedIndexableUrlCount: 1,
-    applicationSourceCommit: "abc123",
+    applicationSourceCommit: MOBILE_EVIDENCE_SOURCE_COMMIT,
     auditInputDigest: "input",
     mobileOverflowEvidence: {
       reused: true,
-      sourceCommit: "5866109d38e352afa360d08ca555b87f3dcd1d8c",
+      sourceCommit: MOBILE_EVIDENCE_SOURCE_COMMIT,
       sourceReportGeneratedAt: "2026-08-29T17:01:40.416Z",
       sourceEvidencePath: "data/audit/mobile-overflow-evidence.5866109.json",
       mobileEvidenceDigest: "mobile",
@@ -81,18 +84,35 @@ function mutate(report, mutator) {
   return clone;
 }
 
-test("allowlist permits scripts and audit data changes", () => {
+function git(cwd, ...args) {
+  return execFileSync("git", args, { cwd, encoding: "utf8" }).trim();
+}
+
+function setupTempRepo() {
+  const dir = mkdtempSync(path.join(os.tmpdir(), "ranking-guard-"));
+  git(dir, "init");
+  git(dir, "config", "user.email", "test@example.com");
+  git(dir, "config", "user.name", "Test");
+  mkdirSync(path.join(dir, "app"), { recursive: true });
+  mkdirSync(path.join(dir, "scripts"), { recursive: true });
+  writeFileSync(path.join(dir, "app/page.tsx"), "export default function Page() { return null; }\n");
+  writeFileSync(path.join(dir, "scripts/guard.mjs"), "export const ok = true;\n");
+  git(dir, "add", ".");
+  git(dir, "commit", "-m", "baseline");
+  const sourceCommit = git(dir, "rev-parse", "HEAD");
+  return { dir, sourceCommit };
+}
+
+test("allowlist permits only scripts and explicit audit files", () => {
   assert.equal(isAllowedChangePath("scripts/validate-full-site-ranking-readiness.mjs"), true);
   assert.equal(isAllowedChangePath("data/audit/full-site-ranking-readiness.json"), true);
-  assert.equal(isProhibitedApplicationPath("app/page.tsx"), true);
-  assert.equal(isProhibitedApplicationPath("components/Footer.tsx"), true);
-  assert.equal(isProhibitedApplicationPath("app/globals.css"), true);
-  assert.equal(isProhibitedApplicationPath("scripts/test-ranking-integrity.mjs"), false);
+  assert.equal(isAllowedChangePath("data/audit/mobile-overflow-evidence.5866109.json"), true);
+  assert.equal(isAllowedChangePath("data/audit/other.json"), false);
+  assert.equal(isAllowedChangePath("app/page.tsx"), false);
 });
 
-test("no prohibited application changes since mobile evidence source commit", () => {
-  const prohibited = findProhibitedApplicationChanges(ROOT, "5866109d38e352afa360d08ca555b87f3dcd1d8c");
-  assert.deepEqual(prohibited, []);
+test("no unexpected changes since mobile evidence source commit in real repo", () => {
+  assert.deepEqual(findUnexpectedChanges(ROOT, MOBILE_EVIDENCE_SOURCE_COMMIT), []);
 });
 
 test("mobile evidence digest is stable and complete", () => {
@@ -121,6 +141,90 @@ test("canonical validation rejects deceptive and invalid URLs", () => {
   );
 });
 
+test("audit input digest changes when route title changes", () => {
+  const registry = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/nextjs-route-registry.generated.json"), "utf8"),
+  );
+  const indexability = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/indexability-manifest.generated.json"), "utf8"),
+  );
+  const readiness = JSON.parse(readFileSync(path.join(ROOT, "data/audit/full-site-route-readiness.json"), "utf8")).inventory || [];
+  const base = {
+    indexabilityManifest: indexability,
+    routeRegistry: registry,
+    readinessInventory: readiness,
+    schemaVersion: AUDIT_SCHEMA_VERSION,
+  };
+  const original = computeAuditInputDigest(base);
+  const mutatedRegistry = structuredClone(registry);
+  mutatedRegistry.routes[0].title = "Mutated Title";
+  const mutated = computeAuditInputDigest({ ...base, routeRegistry: mutatedRegistry });
+  assert.notEqual(original, mutated);
+});
+
+test("audit input digest changes when route description changes", () => {
+  const registry = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/nextjs-route-registry.generated.json"), "utf8"),
+  );
+  const indexability = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/indexability-manifest.generated.json"), "utf8"),
+  );
+  const readiness = JSON.parse(readFileSync(path.join(ROOT, "data/audit/full-site-route-readiness.json"), "utf8")).inventory || [];
+  const base = {
+    indexabilityManifest: indexability,
+    routeRegistry: registry,
+    readinessInventory: readiness,
+    schemaVersion: AUDIT_SCHEMA_VERSION,
+  };
+  const original = computeAuditInputDigest(base);
+  const mutatedRegistry = structuredClone(registry);
+  mutatedRegistry.routes[0].description = "Mutated description";
+  const mutated = computeAuditInputDigest({ ...base, routeRegistry: mutatedRegistry });
+  assert.notEqual(original, mutated);
+});
+
+test("audit input digest changes when indexability property changes", () => {
+  const registry = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/nextjs-route-registry.generated.json"), "utf8"),
+  );
+  const indexability = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/indexability-manifest.generated.json"), "utf8"),
+  );
+  const readiness = JSON.parse(readFileSync(path.join(ROOT, "data/audit/full-site-route-readiness.json"), "utf8")).inventory || [];
+  const base = {
+    indexabilityManifest: indexability,
+    routeRegistry: registry,
+    readinessInventory: readiness,
+    schemaVersion: AUDIT_SCHEMA_VERSION,
+  };
+  const original = computeAuditInputDigest(base);
+  const mutatedIndexability = structuredClone(indexability);
+  mutatedIndexability.routes[0].reason = "Mutated reason";
+  const mutated = computeAuditInputDigest({ ...base, indexabilityManifest: mutatedIndexability });
+  assert.notEqual(original, mutated);
+});
+
+test("audit input digest changes when readiness content status changes", () => {
+  const registry = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/nextjs-route-registry.generated.json"), "utf8"),
+  );
+  const indexability = JSON.parse(
+    readFileSync(path.join(ROOT, "data/migration/indexability-manifest.generated.json"), "utf8"),
+  );
+  const readiness = JSON.parse(readFileSync(path.join(ROOT, "data/audit/full-site-route-readiness.json"), "utf8")).inventory || [];
+  const base = {
+    indexabilityManifest: indexability,
+    routeRegistry: registry,
+    readinessInventory: readiness,
+    schemaVersion: AUDIT_SCHEMA_VERSION,
+  };
+  const original = computeAuditInputDigest(base);
+  const mutatedReadiness = structuredClone(readiness);
+  mutatedReadiness[0].contentStatus = "CONTENT_INCOMPLETE";
+  const mutated = computeAuditInputDigest({ ...base, readinessInventory: mutatedReadiness });
+  assert.notEqual(original, mutated);
+});
+
 test("mutated page status fails report digest validation", () => {
   const report = syntheticReport();
   const mutated = mutate(report, (value) => {
@@ -129,55 +233,12 @@ test("mutated page status fails report digest validation", () => {
   assert.notEqual(mutated.reportDataDigest, computeReportDataDigest(mutated));
 });
 
-test("mutated canonical fails report digest validation", () => {
+test("mutated application source commit fails report digest validation", () => {
   const report = syntheticReport();
   const mutated = mutate(report, (value) => {
-    value.pages[0].canonical = "https://evil.example/";
+    value.applicationSourceCommit = "deadbeef";
   });
   assert.notEqual(mutated.reportDataDigest, computeReportDataDigest(mutated));
-});
-
-test("mutated overflow value fails report digest validation", () => {
-  const report = syntheticReport();
-  const mutated = mutate(report, (value) => {
-    value.pages[0].mobileOverflow["390x844"] = true;
-  });
-  assert.notEqual(mutated.reportDataDigest, computeReportDataDigest(mutated));
-});
-
-test("mutated expected path set fails manifest comparison", () => {
-  const report = syntheticReport();
-  const mutated = mutate(report, (value) => {
-    value.pages[0].path = "/unexpected-path/";
-  });
-  assert.notEqual(mutated.pages[0].path, "/");
-});
-
-test("mutated summary count is detectable", () => {
-  const report = syntheticReport();
-  const mutated = mutate(report, (value) => {
-    value.summary.missingTitleDefects = 99;
-  });
-  const recomputed = report.pages.filter((page) => !page.title).length;
-  assert.notEqual(mutated.summary.missingTitleDefects, recomputed);
-});
-
-test("mutated audit input digest is detectable", () => {
-  const registry = JSON.parse(
-    readFileSync(path.join(ROOT, "data/migration/nextjs-route-registry.generated.json"), "utf8"),
-  );
-  const indexability = JSON.parse(
-    readFileSync(path.join(ROOT, "data/migration/indexability-manifest.generated.json"), "utf8"),
-  );
-  const readiness = JSON.parse(readFileSync(path.join(ROOT, "data/audit/full-site-route-readiness.json"), "utf8")).inventory || [];
-  const digest = computeAuditInputDigest({
-    indexabilityManifest: indexability,
-    routeRegistry: registry,
-    readinessInventory: readiness,
-    schemaVersion: AUDIT_SCHEMA_VERSION,
-  });
-  assert.match(digest, /^[a-f0-9]{64}$/);
-  assert.notEqual(digest, "deadbeef");
 });
 
 test("mutated report digest is detectable", () => {
@@ -189,12 +250,106 @@ test("mutated report digest is detectable", () => {
   assert.notEqual(mutated.reportDataDigest, computeReportDataDigest(mutated));
 });
 
-test("old schema report lacks required integrity fields", () => {
-  const report = syntheticReport();
-  const old = { ...report };
-  delete old.auditSchemaVersion;
-  delete old.applicationSourceCommit;
-  delete old.auditInputDigest;
-  delete old.reportDataDigest;
-  assert.equal("auditSchemaVersion" in old, false);
+test("isolated guard baseline is clean", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), []);
+    assert.doesNotThrow(() => assertMobileEvidenceReuseAllowed(dir, sourceCommit));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard allows scripts changes", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    writeFileSync(path.join(dir, "scripts/new-guard.mjs"), "export const ok = true;\n");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), []);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard fails on untracked app probe", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    writeFileSync(path.join(dir, "app/probe.tsx"), "export default function Probe() {}\n");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), ["app/probe.tsx"]);
+    assert.throws(() => assertMobileEvidenceReuseAllowed(dir, sourceCommit));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard fails on untracked css probe", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    writeFileSync(path.join(dir, "app/probe.css"), ".probe {}\n");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), ["app/probe.css"]);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard fails on untracked data migration probe", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    mkdirSync(path.join(dir, "data/migration"), { recursive: true });
+    writeFileSync(path.join(dir, "data/migration/probe.json"), "{}\n");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), ["data/migration/probe.json"]);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard fails on staged prohibited file", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    mkdirSync(path.join(dir, "components"), { recursive: true });
+    writeFileSync(path.join(dir, "components/Footer.tsx"), "export const Footer = () => null;\n");
+    git(dir, "add", "components/Footer.tsx");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), ["components/Footer.tsx"]);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard fails on unstaged tracked application change", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    writeFileSync(path.join(dir, "app/page.tsx"), "export default function Page() { return <main />; }\n");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), ["app/page.tsx"]);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard fails on committed prohibited change after source commit", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    writeFileSync(path.join(dir, "app/page.tsx"), "export default function Page() { return <main />; }\n");
+    git(dir, "add", "app/page.tsx");
+    git(dir, "commit", "-m", "app change");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), ["app/page.tsx"]);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("isolated guard returns exact offending paths", () => {
+  const { dir, sourceCommit } = setupTempRepo();
+  try {
+    writeFileSync(path.join(dir, "app/probe.tsx"), "export default function Probe() {}\n");
+    mkdirSync(path.join(dir, "data/migration"), { recursive: true });
+    writeFileSync(path.join(dir, "data/migration/probe.json"), "{}\n");
+    assert.deepEqual(findUnexpectedChanges(dir, sourceCommit), ["app/probe.tsx", "data/migration/probe.json"]);
+    try {
+      assertMobileEvidenceReuseAllowed(dir, sourceCommit);
+      assert.fail("expected guard failure");
+    } catch (error) {
+      assert.deepEqual(error.unexpectedPaths, ["app/probe.tsx", "data/migration/probe.json"]);
+    }
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

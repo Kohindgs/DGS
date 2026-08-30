@@ -50,9 +50,11 @@ let applicationSourceCommit;
 try {
   applicationSourceCommit = getApplicationSourceCommit(ROOT);
 } catch (error) {
-  console.error(error.message);
-  if (error.prohibitedPaths?.length) {
-    console.error(JSON.stringify({ prohibitedPaths: error.prohibitedPaths }, null, 2));
+  for (const unexpectedPath of error.unexpectedPaths || []) {
+    console.error(unexpectedPath);
+  }
+  if (!error.unexpectedPaths?.length) {
+    console.error(error.message);
   }
   process.exit(1);
 }
