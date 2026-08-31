@@ -8,3 +8,4 @@ out
 .DS_Store
 *.tsbuildinfo
 tooling/ui-lock/**/diffs/
+data/forms-private/
