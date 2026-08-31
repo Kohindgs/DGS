@@ -14,6 +14,10 @@ export const REQUIRED_VIEWPORTS = ["390x844", "430x932"];
 const ALLOWED_EXACT_PATHS = new Set([
   "data/audit/full-site-ranking-readiness.json",
   "data/audit/plugin-runtime-dependency-audit.json",
+  "data/audit/forms-phase-2c1a-activation.json",
+  "data/audit/forms-phase-2c1-blocker.json",
+  "data/audit/forms-plugin-exit-audit.json",
+  "data/audit/weavings-layout-baseline.json",
   MOBILE_EVIDENCE_PATH,
   "package.json",
   "package-lock.json",
