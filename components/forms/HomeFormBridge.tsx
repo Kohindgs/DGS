@@ -64,6 +64,8 @@ function setFeedback(form: HTMLFormElement, status: string, message: string) {
  */
 export function HomeFormBridge() {
   useEffect(() => {
+    if (window.location.pathname !== "/" && window.location.pathname !== "") return;
+
     const definition = getFormDefinitionForRoute("/");
     if (!definition?.activationEnabled) return;
 
