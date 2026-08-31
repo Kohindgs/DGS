@@ -8,8 +8,8 @@
     "hiddenFields": "Server-owned hidden/default fields; client tampering rejected; shared validator module",
     "nonceContext": "Route/form-scoped nonce and embedded post ID; no homepage Form 1 fallback; safe fail without token"
   },
-  "applicationSourceSha": "a9c76995cd655f9626c730f64f8e2bd5cdf4b7b2",
-  "reviewSha": "5fd0ece39e9ce3ffabcef1741d50451ef0df405e",
+  "applicationSourceSha": "3202138fd5b5dedf3db1946693dd6a6445427ef2",
+  "reviewSha": "09fb49eab032f4070a19a4d25585eb63eb224c59",
   "inventoryMethod": "Authenticated Fluent Forms REST (Basic Application Password). Site MCP tool catalog still does not expose Fluent Forms-specific tools; REST was used for verified field inventory.",
   "safety": {
     "liveProductionSubmission": false,
