@@ -1,15 +1,15 @@
 {
   "auditSchemaVersion": "2B.1A",
-  "generatedAt": "2026-08-31T17:03:30.190Z",
+  "generatedAt": "2026-08-31T18:39:13.768Z",
   "target": "http://127.0.0.1:3025/",
   "expectedIndexableUrlCount": 96,
-  "applicationSourceCommit": "a9c76995cd655f9626c730f64f8e2bd5cdf4b7b2",
+  "applicationSourceCommit": "3202138fd5b5dedf3db1946693dd6a6445427ef2",
   "auditInputDigest": "d9d5df4983c1d0bf9afc181d03cd28918f61d8187a3b9560abd364869ed3ed62",
   "mobileOverflowEvidence": {
     "reused": true,
-    "sourceCommit": "a9c76995cd655f9626c730f64f8e2bd5cdf4b7b2",
-    "sourceReportGeneratedAt": "2026-08-31T17:03:16.804Z",
-    "sourceEvidencePath": "data/audit/mobile-overflow-evidence.a9c7699.json",
+    "sourceCommit": "3202138fd5b5dedf3db1946693dd6a6445427ef2",
+    "sourceReportGeneratedAt": "2026-08-31T18:39:09.062Z",
+    "sourceEvidencePath": "data/audit/mobile-overflow-evidence.3202138.json",
     "mobileEvidenceDigest": "6d8fc1dba2a53acb35203c976e287937ed51bfb251c8abb807af6412240828f6",
     "viewports": [
       "390x844",
@@ -4349,5 +4349,5 @@
       "contentGrowthRecommendations": []
     }
   ],
-  "reportDataDigest": "b8feae72f162f0c9beccdfcbd328a7e311887e17cf857142b6929f88b44a2e63"
+  "reportDataDigest": "df421a1287660a83ae50da9ca5b2986283882d62a648280e17d9e150e7cf45a1"
 }
