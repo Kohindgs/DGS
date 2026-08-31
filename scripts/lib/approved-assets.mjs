@@ -32,6 +32,7 @@ export const WEAVINGS_PRESENTATION = {
   sourceLocalPath: "/images/case-studies/weavings-home-page-64820-source.png",
   padColor: "#020202",
   alt: "Live preview of Weavings website",
+  presentationSha256: "261c52a5b21c6a744b107a247acb26f3909793e0d01ecbd89dd7c2dc724745f8",
 };
 
 export const APPROVED_SOCIAL = {
@@ -41,6 +42,7 @@ export const APPROVED_SOCIAL = {
   height: 630,
   mime: "image/png",
   format: "png",
+  sha256: "88ca56b4b25877e682d8f0fce291a4486d1e41aea58b468be81a23239d3789c5",
 };
 
 export const WEAVINGS_ROUTES = [
@@ -50,8 +52,54 @@ export const WEAVINGS_ROUTES = [
 
 export const MSHOTS_PATTERN = "s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F";
 
+const STAGING_HOST_PATTERNS = [/dimgrey-goat/i, /hostingersite\.com/i];
+
 export function sha256Buffer(buffer) {
   return createHash("sha256").update(buffer).digest("hex");
+}
+
+export function validateApprovedAssetUrl(url) {
+  if (!url) return { ok: false, reason: "missing-url" };
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return { ok: false, reason: "invalid-url" };
+  }
+  if (parsed.protocol !== "https:") return { ok: false, reason: "non-https" };
+  if (parsed.username || parsed.password) return { ok: false, reason: "credentials" };
+  if (parsed.port) return { ok: false, reason: "unexpected-port" };
+  if (parsed.hostname !== PRODUCTION_HOST) return { ok: false, reason: "wrong-host" };
+  if (STAGING_HOST_PATTERNS.some((pattern) => pattern.test(url))) {
+    return { ok: false, reason: "staging-host" };
+  }
+  return { ok: true };
+}
+
+export function validateApprovedAssetUrlOrThrow(url, label = "asset") {
+  const result = validateApprovedAssetUrl(url);
+  if (!result.ok) {
+    throw new Error(`${label} final URL rejected (${result.reason}): ${url}`);
+  }
+}
+
+export function isStrictPngContentType(contentType) {
+  if (!contentType) return false;
+  const parts = contentType.split(";").map((part) => part.trim());
+  if (parts[0].toLowerCase() !== "image/png") return false;
+  for (let index = 1; index < parts.length; index += 1) {
+    if (!parts[index].toLowerCase().startsWith("charset=")) return false;
+  }
+  return true;
+}
+
+export function assertStrictImageMimeAndFormat(contentType, format, label) {
+  if (!isStrictPngContentType(contentType)) {
+    throw new Error(`${label} Content-Type must be image/png, got ${contentType || "missing"}`);
+  }
+  if (format !== "png") {
+    throw new Error(`${label} decoded format must be png, got ${format || "missing"}`);
+  }
 }
 
 export async function inspectImageBuffer(buffer) {
@@ -69,23 +117,25 @@ export async function fetchPinnedAsset(url) {
   if (!response.ok) {
     throw new Error(`HTTP ${response.status} for ${url}`);
   }
+  const finalUrl = response.url;
+  validateApprovedAssetUrlOrThrow(finalUrl, `fetch ${url}`);
   const buffer = Buffer.from(await response.arrayBuffer());
   const contentType = response.headers.get("content-type") || "";
   const inspected = await inspectImageBuffer(buffer);
-  return { buffer, contentType, ...inspected };
+  return { buffer, contentType, finalUrl, ...inspected };
 }
 
 export function assertPinnedSource(actual, pinned, label) {
+  if (actual.finalUrl) {
+    validateApprovedAssetUrlOrThrow(actual.finalUrl, label);
+  }
   if (actual.sha256 !== pinned.sha256) {
     throw new Error(`${label} SHA-256 mismatch: expected ${pinned.sha256}, got ${actual.sha256}`);
   }
   if (actual.width !== pinned.width || actual.height !== pinned.height) {
     throw new Error(`${label} dimensions mismatch: expected ${pinned.width}x${pinned.height}, got ${actual.width}x${actual.height}`);
   }
-  const mimeOk = actual.contentType?.includes("png") || actual.format === "png";
-  if (!mimeOk) {
-    throw new Error(`${label} MIME/format mismatch: ${actual.contentType || actual.format}`);
-  }
+  assertStrictImageMimeAndFormat(actual.contentType, actual.format, label);
 }
 
 export async function buildWeavingsPresentationDerivative(sourceBuffer) {
@@ -199,8 +249,131 @@ export function buildApprovedAssetManifest({ socialSha256, weavingsPresentationS
   };
 }
 
-function readLocalImage(root, relativePath) {
-  return readFileSync(path.join(root, relativePath.replace(/^\//, "")));
+function expectExact(actual, expected, label, issues) {
+  if (actual !== expected) {
+    issues.push(`${label}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
+  }
+}
+
+function expectArrayEqual(actual, expected, label, issues) {
+  const left = [...(actual || [])].sort();
+  const right = [...expected].sort();
+  if (left.join("|") !== right.join("|")) {
+    issues.push(`${label}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
+  }
+}
+
+export function validateManifestProvenance(manifest) {
+  const issues = [];
+
+  if (!manifest || typeof manifest !== "object") {
+    return { ok: false, issues: ["manifest must be an object"] };
+  }
+
+  const allowedTopLevel = new Set(["version", "social", "replacements"]);
+  for (const key of Object.keys(manifest)) {
+    if (!allowedTopLevel.has(key)) issues.push(`unexpected manifest field: ${key}`);
+  }
+
+  expectExact(manifest.version, APPROVED_ASSET_VERSION, "manifest.version", issues);
+
+  const social = manifest.social;
+  if (!social || typeof social !== "object") {
+    issues.push("manifest.social missing");
+  } else {
+    const allowedSocial = new Set(["defaultShareImage", "productionUrl", "productionHostname"]);
+    for (const key of Object.keys(social)) {
+      if (!allowedSocial.has(key)) issues.push(`unexpected social field: ${key}`);
+    }
+    expectExact(social.productionUrl, APPROVED_SOCIAL.productionUrl, "social.productionUrl", issues);
+    expectExact(social.productionHostname, PRODUCTION_HOST, "social.productionHostname", issues);
+
+    const share = social.defaultShareImage;
+    if (!share || typeof share !== "object") {
+      issues.push("social.defaultShareImage missing");
+    } else {
+      expectExact(share.localPath, APPROVED_SOCIAL.localPath, "social.defaultShareImage.localPath", issues);
+      expectExact(share.sourceLogoUrl, PINNED_LOGO.url, "social.defaultShareImage.sourceLogoUrl", issues);
+      expectExact(share.sourceLogoSha256, PINNED_LOGO.sha256, "social.defaultShareImage.sourceLogoSha256", issues);
+      expectExact(share.sourceLogoWidth, PINNED_LOGO.width, "social.defaultShareImage.sourceLogoWidth", issues);
+      expectExact(share.sourceLogoHeight, PINNED_LOGO.height, "social.defaultShareImage.sourceLogoHeight", issues);
+      expectExact(share.sourceLogoMime, PINNED_LOGO.mime, "social.defaultShareImage.sourceLogoMime", issues);
+      expectExact(share.width, APPROVED_SOCIAL.width, "social.defaultShareImage.width", issues);
+      expectExact(share.height, APPROVED_SOCIAL.height, "social.defaultShareImage.height", issues);
+      expectExact(share.mime, APPROVED_SOCIAL.mime, "social.defaultShareImage.mime", issues);
+      expectExact(share.sha256, APPROVED_SOCIAL.sha256, "social.defaultShareImage.sha256", issues);
+    }
+  }
+
+  const replacements = manifest.replacements;
+  if (!Array.isArray(replacements)) {
+    issues.push("manifest.replacements must be an array");
+  } else if (replacements.length !== 1) {
+    issues.push(`expected exactly one approved replacement, found ${replacements.length}`);
+  } else {
+    const replacement = replacements[0];
+    const allowedReplacement = new Set(["id", "routes", "match", "replacement"]);
+    for (const key of Object.keys(replacement)) {
+      if (!allowedReplacement.has(key)) issues.push(`unexpected replacement field: ${key}`);
+    }
+    expectExact(replacement.id, "weavings-mshots-64820", "replacement.id", issues);
+    expectArrayEqual(replacement.routes, WEAVINGS_ROUTES, "replacement.routes", issues);
+
+    const match = replacement.match;
+    if (!match || typeof match !== "object") {
+      issues.push("replacement.match missing");
+    } else {
+      expectExact(match.type, "mshots", "replacement.match.type", issues);
+      expectExact(match.pattern, MSHOTS_PATTERN, "replacement.match.pattern", issues);
+    }
+
+    const rep = replacement.replacement;
+    if (!rep || typeof rep !== "object") {
+      issues.push("replacement.replacement missing");
+    } else {
+      expectExact(rep.localPath, WEAVINGS_PRESENTATION.localPath, "replacement.replacement.localPath", issues);
+      expectExact(rep.sourceLocalPath, WEAVINGS_PRESENTATION.sourceLocalPath, "replacement.replacement.sourceLocalPath", issues);
+      expectExact(rep.wordpressMediaId, PINNED_WEAVINGS_SOURCE.wordpressMediaId, "replacement.replacement.wordpressMediaId", issues);
+      expectExact(rep.sourceUrl, PINNED_WEAVINGS_SOURCE.url, "replacement.replacement.sourceUrl", issues);
+      expectExact(rep.alt, WEAVINGS_PRESENTATION.alt, "replacement.replacement.alt", issues);
+      expectExact(rep.mime, PINNED_WEAVINGS_SOURCE.mime, "replacement.replacement.mime", issues);
+      expectExact(rep.sourceSha256, PINNED_WEAVINGS_SOURCE.sha256, "replacement.replacement.sourceSha256", issues);
+      expectExact(rep.sourceWidth, PINNED_WEAVINGS_SOURCE.width, "replacement.replacement.sourceWidth", issues);
+      expectExact(rep.sourceHeight, PINNED_WEAVINGS_SOURCE.height, "replacement.replacement.sourceHeight", issues);
+      expectExact(rep.width, WEAVINGS_PRESENTATION.width, "replacement.replacement.width", issues);
+      expectExact(rep.height, WEAVINGS_PRESENTATION.height, "replacement.replacement.height", issues);
+      expectExact(
+        rep.presentationSha256,
+        WEAVINGS_PRESENTATION.presentationSha256,
+        "replacement.replacement.presentationSha256",
+        issues,
+      );
+    }
+  }
+
+  return { ok: issues.length === 0, issues };
+}
+
+async function validateLocalAssetFile(root, relativePath, expectations, issues) {
+  const filePath = path.join(root, "public", relativePath.replace(/^\//, ""));
+  try {
+    const buffer = readFileSync(filePath);
+    const inspected = await inspectImageBuffer(buffer);
+    if (expectations.sha256 && inspected.sha256 !== expectations.sha256) {
+      issues.push(`${relativePath}: sha256 mismatch`);
+    }
+    if (expectations.width !== undefined && inspected.width !== expectations.width) {
+      issues.push(`${relativePath}: width mismatch`);
+    }
+    if (expectations.height !== undefined && inspected.height !== expectations.height) {
+      issues.push(`${relativePath}: height mismatch`);
+    }
+    if (inspected.format !== "png") {
+      issues.push(`${relativePath}: decoded format must be png`);
+    }
+  } catch {
+    issues.push(`missing asset file ${relativePath}`);
+  }
 }
 
 export async function validateApprovedAssetsOffline(root) {
@@ -213,78 +386,34 @@ export async function validateApprovedAssetsOffline(root) {
     return { ok: false, issues: ["missing approved-asset-replacements.json"] };
   }
 
-  if (manifest.version !== APPROVED_ASSET_VERSION) {
-    issues.push(`manifest version must be ${APPROVED_ASSET_VERSION}`);
-  }
+  const manifestResult = validateManifestProvenance(manifest);
+  issues.push(...manifestResult.issues);
 
-  const socialUrl = manifest.social?.productionUrl;
-  if (socialUrl !== APPROVED_SOCIAL.productionUrl) {
-    issues.push(`social productionUrl must be ${APPROVED_SOCIAL.productionUrl}`);
-  }
-  if (manifest.social?.productionHostname !== PRODUCTION_HOST) {
-    issues.push(`social productionHostname must be ${PRODUCTION_HOST}`);
-  }
+  const share = manifest.social?.defaultShareImage;
+  const replacement = manifest.replacements?.[0]?.replacement;
 
-  const replacements = manifest.replacements || [];
-  if (replacements.length !== 1) {
-    issues.push(`expected exactly one approved replacement, found ${replacements.length}`);
-  }
-
-  const replacement = replacements[0];
-  if (!replacement || replacement.id !== "weavings-mshots-64820") {
-    issues.push("missing weavings-mshots-64820 replacement");
-  } else {
-    const routes = [...(replacement.routes || [])].sort();
-    const expectedRoutes = [...WEAVINGS_ROUTES].sort();
-    if (routes.join("|") !== expectedRoutes.join("|")) {
-      issues.push("Weavings replacement routes mismatch");
-    }
-    const rep = replacement.replacement || {};
-    if (rep.sourceSha256 !== PINNED_WEAVINGS_SOURCE.sha256) issues.push("Weavings sourceSha256 mismatch");
-    if (rep.sourceWidth !== PINNED_WEAVINGS_SOURCE.width || rep.sourceHeight !== PINNED_WEAVINGS_SOURCE.height) {
-      issues.push("Weavings source dimensions mismatch");
-    }
-    if (rep.width !== WEAVINGS_PRESENTATION.width || rep.height !== WEAVINGS_PRESENTATION.height) {
-      issues.push("Weavings presentation dimensions must be 1600x1000");
-    }
-    if (!rep.presentationSha256) issues.push("Weavings presentationSha256 missing");
-  }
-
-  const filesToCheck = [
-    { rel: APPROVED_SOCIAL.localPath, expected: manifest.social?.defaultShareImage },
-    { rel: WEAVINGS_PRESENTATION.sourceLocalPath, pinned: PINNED_WEAVINGS_SOURCE },
-    { rel: WEAVINGS_PRESENTATION.localPath, expected: replacement?.replacement },
-  ];
-
-  for (const entry of filesToCheck) {
-    if (!entry.rel) continue;
-    const filePath = path.join(root, "public", entry.rel.replace(/^\//, ""));
-    try {
-      const buffer = readFileSync(filePath);
-      const inspected = await inspectImageBuffer(buffer);
-      if (entry.pinned) {
-        if (inspected.sha256 !== entry.pinned.sha256) issues.push(`${entry.rel}: sha256 mismatch`);
-        if (inspected.width !== entry.pinned.width || inspected.height !== entry.pinned.height) {
-          issues.push(`${entry.rel}: dimensions mismatch`);
-        }
-      }
-      if (entry.expected?.sha256 && inspected.sha256 !== entry.expected.sha256) {
-        issues.push(`${entry.rel}: sha256 mismatch`);
-      }
-      if (entry.expected?.presentationSha256 && inspected.sha256 !== entry.expected.presentationSha256) {
-        issues.push(`${entry.rel}: presentation sha256 mismatch`);
-      }
-      if (entry.expected?.width && inspected.width !== entry.expected.width) {
-        issues.push(`${entry.rel}: width mismatch`);
-      }
-      if (entry.expected?.height && inspected.height !== entry.expected.height) {
-        issues.push(`${entry.rel}: height mismatch`);
-      }
-      if (inspected.format !== "png") issues.push(`${entry.rel}: format must be png`);
-    } catch {
-      issues.push(`missing asset file ${entry.rel}`);
-    }
-  }
+  await validateLocalAssetFile(
+    root,
+    APPROVED_SOCIAL.localPath,
+    { sha256: share?.sha256, width: APPROVED_SOCIAL.width, height: APPROVED_SOCIAL.height },
+    issues,
+  );
+  await validateLocalAssetFile(
+    root,
+    WEAVINGS_PRESENTATION.sourceLocalPath,
+    { sha256: PINNED_WEAVINGS_SOURCE.sha256, width: PINNED_WEAVINGS_SOURCE.width, height: PINNED_WEAVINGS_SOURCE.height },
+    issues,
+  );
+  await validateLocalAssetFile(
+    root,
+    WEAVINGS_PRESENTATION.localPath,
+    {
+      sha256: replacement?.presentationSha256,
+      width: WEAVINGS_PRESENTATION.width,
+      height: WEAVINGS_PRESENTATION.height,
+    },
+    issues,
+  );
 
   const blocks = JSON.parse(readFileSync(path.join(root, "data/wordpress/blocks/content-blocks.generated.json"), "utf8")).blocks || {};
   for (const route of WEAVINGS_ROUTES) {

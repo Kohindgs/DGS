@@ -1,17 +1,13 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync, mkdtempSync, rmSync } from "node:fs";
+import { readFileSync, mkdtempSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { buildApprovedAssetManifest, sha256Buffer } from "./lib/approved-assets.mjs";
 
 const ROOT = process.cwd();
-
-function git(cwd, ...args) {
-  return execFileSync("git", args, { cwd, encoding: "utf8" }).trim();
-}
 
 test("approved asset generation is deterministic", () => {
   const beforeManifest = readFileSync(path.join(ROOT, "data/migration/approved-asset-replacements.json"), "utf8");
