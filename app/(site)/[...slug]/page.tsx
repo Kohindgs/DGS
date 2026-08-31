@@ -13,7 +13,8 @@ import { buildRouteSchemas } from "@/lib/schema/page-schemas";
 import { resolvePageH1 } from "@/lib/migration/page-h1";
 import { getRetiredRoute } from "@/lib/migration/retired-routes";
 import { getRouteDecision, shouldExcludeFromStaticGeneration } from "@/lib/migration/route-decisions";
-import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
+import { FluentLeadForm } from "@/components/forms/FluentLeadForm";
+import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 import Link from "next/link";
 import { applyRankingLinkRestorations } from "@/lib/migration/ranking-link-restorations";
 import { applyTechnicalLinkCorrections } from "@/lib/migration/technical-link-corrections";
@@ -88,6 +89,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   const pageH1 = resolvePageH1(route, restoredBlocks);
   const contentBlocks = filterDuplicatePageH1Block(restoredBlocks, pageH1);
   const showContactForm = path === "/contact-us/";
+  const contactFormDefinition = showContactForm ? getFormDefinitionForRoute("/contact-us/") : null;
 
   return (
     <main className="page-main" id="main-content">
@@ -113,14 +115,14 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
           <h1>{pageH1}</h1>
         </div>
         <div className="container semantic-content-wrap">
-          <SemanticContent blocks={contentBlocks} demoteSecondaryHeadings />
+          <SemanticContent blocks={contentBlocks} demoteSecondaryHeadings route={path} />
         </div>
-        {showContactForm ? (
+        {showContactForm && contactFormDefinition ? (
           <section className="container contact-form-section" aria-labelledby="contact-form-heading">
             <h2 id="contact-form-heading" className="visually-hidden">
               Contact form
             </h2>
-            <PublicLeadForm id="dgContact" route="/contact-us/" />
+            <FluentLeadForm id="dgContact" route="/contact-us/" definition={contactFormDefinition} />
           </section>
         ) : null}
       </article>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
+import { FormActivationBoot } from "@/components/forms/FormActivationBoot";
 import { isPublicIndexingEnabled } from "@/lib/seo/environment";
 import "./globals.css";
 
@@ -35,7 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${spaceGrotesk.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <FormActivationBoot />
+      </body>
     </html>
   );
 }

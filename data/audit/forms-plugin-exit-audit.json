@@ -1,53 +1,103 @@
 {
-  "generatedAt": "2026-08-29T16:58:12.393Z",
-  "policy": "Native Next UI + controlled submission endpoint. Fluent Forms backend only when authenticated configuration is available.",
+  "generatedAt": "2026-08-31T16:40:20.610Z",
+  "policy": "Native Next UI + same-origin /api/forms/submit forwarding to Fluent Forms public admin-ajax endpoint.",
+  "inventoryStatus": "AUTHENTICATED_INVENTORY_CAPTURED",
+  "submissionActivationStatus": "ENABLED_FOR_VERIFIED_FORMS",
   "homepage": {
     "route": "/",
     "fluentFormId": 1,
-    "state": "DISPLAY_ONLY_SUBMISSION_DISABLED",
-    "dataSubmissionAttribute": "disabled",
-    "publicFieldEvidence": [
-      "names[first_name]",
-      "email",
-      "phone",
-      "input_text",
-      "dropdown_1",
-      "subject",
-      "dropdown",
-      "message",
-      "Home_Page",
-      "Home_Page_form"
-    ],
-    "approvedDefinitionPresent": false,
-    "activationBlocker": "Authenticated Fluent Forms backend configuration not approved in data/forms/definitions.approved.json"
+    "state": "SUBMISSION_ENABLED",
+    "dataSubmissionAttribute": "enabled",
+    "approvedDefinitionPresent": true
   },
   "contact": {
     "route": "/contact-us/",
     "fluentFormId": 1,
-    "state": "DISPLAY_ONLY_SUBMISSION_DISABLED",
-    "dataSubmissionAttribute": "disabled",
-    "publicFieldEvidence": [
-      "names[first_name]",
-      "email",
-      "phone",
-      "input_text",
-      "dropdown_1",
-      "subject",
-      "dropdown",
-      "message",
-      "Home_Page",
-      "Home_Page_form"
-    ],
-    "approvedDefinitionPresent": false,
-    "activationBlocker": "Authenticated Fluent Forms backend configuration not approved in data/forms/definitions.approved.json"
+    "state": "SUBMISSION_ENABLED",
+    "dataSubmissionAttribute": "enabled",
+    "approvedDefinitionPresent": true
   },
+  "formsActivated": [
+    1,
+    3,
+    4,
+    6,
+    9,
+    10,
+    11,
+    19,
+    20,
+    21,
+    26
+  ],
+  "routeMappings": [
+    {
+      "route": "/",
+      "fluentFormId": 1,
+      "approved": true
+    },
+    {
+      "route": "/contact-us/",
+      "fluentFormId": 1,
+      "approved": true
+    },
+    {
+      "route": "/services/ai-video-production-agency/",
+      "fluentFormId": 9,
+      "approved": true
+    },
+    {
+      "route": "/services/seo-services-in-mumbai/",
+      "fluentFormId": 3,
+      "approved": true
+    },
+    {
+      "route": "/services/aeo-services-in-mumbai/",
+      "fluentFormId": 19,
+      "approved": true
+    },
+    {
+      "route": "/services/geo/",
+      "fluentFormId": 21,
+      "approved": true
+    },
+    {
+      "route": "/services/llm-seo-service/",
+      "fluentFormId": 20,
+      "approved": true
+    },
+    {
+      "route": "/services/performance-marketing/",
+      "fluentFormId": 26,
+      "approved": true
+    },
+    {
+      "route": "/services/social-media-marketing/",
+      "fluentFormId": 4,
+      "approved": true
+    },
+    {
+      "route": "/services/branding/",
+      "fluentFormId": 10,
+      "approved": true
+    },
+    {
+      "route": "/services/content-creation/",
+      "fluentFormId": 11,
+      "approved": true
+    },
+    {
+      "route": "/services/website-development-amc/",
+      "fluentFormId": 6,
+      "approved": true
+    }
+  ],
   "stagingDummySubmissionTested": false,
-  "emailCrmWebhookResult": "NOT_TESTED — submissions remain disabled",
-  "remainingActivationBlocker": "Populate data/forms/definitions.approved.json from authenticated WordPress Fluent Forms admin (read-only inventory). No customer PII inspection performed.",
-  "inventoryNotes": {
-    "fieldOrder": "See data/migration/forms-public-evidence.json public markup evidence",
-    "captcha": "reCAPTCHA markup evidenced on tier-0 service routes; homepage/contact use Fluent Form 1 presentation only",
-    "successBehavior": "UNKNOWN until backend endpoint configured",
-    "failureBehavior": "UNKNOWN until backend endpoint configured"
+  "emailCrmWebhookResult": "NOT_TESTED",
+  "dummySubmissionResult": "NOT_TESTED",
+  "architecture": {
+    "nextJsEndpoint": "/api/forms/submit/",
+    "wordpressEndpointClass": "public-admin-ajax",
+    "credentialsInBrowser": false
   }
 }

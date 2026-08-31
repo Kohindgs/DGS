@@ -8,4 +8,5 @@ out
 .DS_Store
 *.tsbuildinfo
 tooling/ui-lock/**/diffs/
+.cursor/mcp.json
 data/forms-private/

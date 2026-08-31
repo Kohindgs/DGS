@@ -10,40 +10,44 @@ const APPROVED = path.join(ROOT, "data/forms/definitions.approved.json");
 const publicEvidence = JSON.parse(readFileSync(PUBLIC, "utf8"));
 const approved = JSON.parse(readFileSync(APPROVED, "utf8"));
 
-const requiredForms = (publicEvidence.forms || []).filter((form) =>
-  ["/", "/contact-us/"].includes(form.route),
-);
+const forms = approved.forms || [];
+const byRoute = new Map();
+for (const form of forms) {
+  for (const route of form.sourceRoutes || []) byRoute.set(route, form);
+}
 
 const report = {
   generatedAt: new Date().toISOString(),
-  policy: "Native Next UI + controlled submission endpoint. Fluent Forms backend only when authenticated configuration is available.",
+  policy: "Native Next UI + same-origin /api/forms/submit forwarding to Fluent Forms public admin-ajax endpoint.",
+  inventoryStatus: approved.inventoryStatus,
+  submissionActivationStatus: approved.submissionActivationStatus,
   homepage: {
     route: "/",
     fluentFormId: 1,
-    state: "DISPLAY_ONLY_SUBMISSION_DISABLED",
-    dataSubmissionAttribute: "disabled",
-    publicFieldEvidence: requiredForms.find((f) => f.route === "/")?.fields || [],
-    approvedDefinitionPresent: (approved.forms || []).some((f) => f.sourceRoute === "/"),
-    activationBlocker: "Authenticated Fluent Forms backend configuration not approved in data/forms/definitions.approved.json",
+    state: byRoute.get("/")?.activationEnabled ? "SUBMISSION_ENABLED" : "DISPLAY_ONLY_SUBMISSION_DISABLED",
+    dataSubmissionAttribute: byRoute.get("/")?.activationEnabled ? "enabled" : "disabled",
+    approvedDefinitionPresent: Boolean(byRoute.get("/")),
   },
   contact: {
     route: "/contact-us/",
     fluentFormId: 1,
-    state: "DISPLAY_ONLY_SUBMISSION_DISABLED",
-    dataSubmissionAttribute: "disabled",
-    publicFieldEvidence: requiredForms.find((f) => f.route === "/contact-us/")?.fields || [],
-    approvedDefinitionPresent: (approved.forms || []).some((f) => f.sourceRoute === "/contact-us/"),
-    activationBlocker: "Authenticated Fluent Forms backend configuration not approved in data/forms/definitions.approved.json",
+    state: byRoute.get("/contact-us/")?.activationEnabled ? "SUBMISSION_ENABLED" : "DISPLAY_ONLY_SUBMISSION_DISABLED",
+    dataSubmissionAttribute: byRoute.get("/contact-us/")?.activationEnabled ? "enabled" : "disabled",
+    approvedDefinitionPresent: Boolean(byRoute.get("/contact-us/")),
   },
+  formsActivated: forms.filter((form) => form.activationEnabled).map((form) => form.fluentFormId),
+  routeMappings: publicEvidence.forms.map((item) => ({
+    route: item.route,
+    fluentFormId: item.fluentFormId,
+    approved: Boolean(byRoute.get(item.route)),
+  })),
   stagingDummySubmissionTested: false,
-  emailCrmWebhookResult: "NOT_TESTED — submissions remain disabled",
-  remainingActivationBlocker:
-    "Populate data/forms/definitions.approved.json from authenticated WordPress Fluent Forms admin (read-only inventory). No customer PII inspection performed.",
-  inventoryNotes: {
-    fieldOrder: "See data/migration/forms-public-evidence.json public markup evidence",
-    captcha: "reCAPTCHA markup evidenced on tier-0 service routes; homepage/contact use Fluent Form 1 presentation only",
-    successBehavior: "UNKNOWN until backend endpoint configured",
-    failureBehavior: "UNKNOWN until backend endpoint configured",
+  emailCrmWebhookResult: approved.emailCrmWebhookResult || "NOT_TESTED",
+  dummySubmissionResult: approved.dummySubmissionResult || "NOT_TESTED",
+  architecture: {
+    nextJsEndpoint: "/api/forms/submit/",
+    wordpressEndpointClass: "public-admin-ajax",
+    credentialsInBrowser: false,
   },
 };
 

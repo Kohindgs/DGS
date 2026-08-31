@@ -1,5 +1,3346 @@
 {
-  "schemaVersion": 1,
-  "policy": "Populate only from authenticated Fluent Forms configuration and verified live behavior. Public rendered field names are evidence, not sufficient backend configuration.",
-  "forms": []
+  "schemaVersion": 2,
+  "policy": "Sanitized authenticated Fluent Forms definitions. No secrets, submission entries, or customer PII. Definitions from authenticated Fluent Forms REST; public site keys only for CAPTCHA widgets.",
+  "inventoryStatus": "AUTHENTICATED_INVENTORY_CAPTURED",
+  "submissionActivationStatus": "ENABLED_FOR_VERIFIED_FORMS",
+  "dummySubmissionResult": "NOT_TESTED",
+  "emailCrmWebhookResult": "NOT_TESTED",
+  "forms": [
+    {
+      "key": "fluentform-1",
+      "fluentFormId": 1,
+      "title": "Home Page Form",
+      "shortcode": "[fluentform id=\"1\"]",
+      "sourceRoutes": [
+        "/",
+        "/contact-us/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "How did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "subject",
+          "label": "Subject",
+          "type": "text",
+          "required": true,
+          "placeholder": "Subject",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Service",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Generative AI",
+              "value": "Generative AI"
+            },
+            {
+              "label": "GEO",
+              "value": "GEO"
+            },
+            {
+              "label": "Search Engine Optimization",
+              "value": "Search Engine Optimization"
+            },
+            {
+              "label": "AEO ",
+              "value": "AEO "
+            },
+            {
+              "label": "Social Media Marketing",
+              "value": "Social Media Marketing"
+            },
+            {
+              "label": "Website Design & Development",
+              "value": "Website Design & Development"
+            },
+            {
+              "label": "Content Writing",
+              "value": "Content Writing"
+            },
+            {
+              "label": "Blog Writing",
+              "value": "Blog Writing"
+            },
+            {
+              "label": "Graphic Designing",
+              "value": "Graphic Designing"
+            },
+            {
+              "label": "Influencer Marketing",
+              "value": "Influencer Marketing"
+            },
+            {
+              "label": "Branding",
+              "value": "Branding"
+            },
+            {
+              "label": "Employer Branding",
+              "value": "Employer Branding"
+            },
+            {
+              "label": "LinkedIn Marketing",
+              "value": "LinkedIn Marketing"
+            },
+            {
+              "label": "Video Production",
+              "value": "Video Production"
+            },
+            {
+              "label": "LLM",
+              "value": "LLM"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "message",
+          "label": "Your Message",
+          "type": "textarea",
+          "required": false,
+          "placeholder": "Your Message",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "Home_Page",
+          "label": "Home Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "Home_Page_form",
+          "label": "Home Page Form",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "email",
+        "phone",
+        "input_text",
+        "dropdown_1",
+        "subject",
+        "dropdown",
+        "message",
+        "Home_Page",
+        "Home_Page_form"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "recaptcha",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "reset_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Lead From From Home Page",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/": 63505,
+          "/contact-us/": 62460
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "0ba1e2c68192409e338e02c6c77a55a83dc79588de2a71d5853baf5bd552cbd8",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-3",
+      "fluentFormId": 3,
+      "title": "Free SEO Audit Form",
+      "shortcode": "[fluentform id=\"3\"]",
+      "sourceRoutes": [
+        "/services/seo-services-in-mumbai/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "names[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "url",
+          "label": "Website URL (Add https://)",
+          "type": "url",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "url": "This field must contain a valid url"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Select Service",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "SEO",
+              "value": "SEO"
+            },
+            {
+              "label": "Advance SEO(GEO,AEO,LLM SEO)",
+              "value": "Advance SEO(GEO,AEO,LLM SEO)"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Where did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "hidden",
+          "label": "SEO Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "SEO Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "names[last_name]",
+        "email",
+        "input_text",
+        "url",
+        "phone",
+        "dropdown",
+        "dropdown_1",
+        "hidden"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "recaptcha",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/seo-services-in-mumbai/": 40278
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "8b5e5d9dc859cb8484ee32b95981e8962912f026aa105a6eb29e2e75ac95b16b",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-4",
+      "fluentFormId": 4,
+      "title": "Social Media FORM",
+      "shortcode": "[fluentform id=\"4\"]",
+      "sourceRoutes": [
+        "/services/social-media-marketing/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "names[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "url",
+          "label": "Website",
+          "type": "url",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "url": "This field must contain a valid url"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": false,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "hidden",
+          "label": "Social Media Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Social Media Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "names[last_name]",
+        "email",
+        "url",
+        "phone",
+        "hidden"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "turnstile",
+        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "samePage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/social-media-marketing/": 40112
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "676f38a896ea1a7bb669f5c364d4906ecac7fe148d21e3f89c6d7d56a4bbcc5d",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-6",
+      "fluentFormId": 6,
+      "title": "Website Development Form",
+      "shortcode": "[fluentform id=\"6\"]",
+      "sourceRoutes": [
+        "/services/website-development-amc/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "names[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Select your requirement",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "New Website Development",
+              "value": "New Website Development"
+            },
+            {
+              "label": "Website Redevelopment",
+              "value": "Website Redevelopment"
+            },
+            {
+              "label": "Website Maintenance",
+              "value": "Website Maintenance"
+            },
+            {
+              "label": "Ecommerce Website",
+              "value": "Ecommerce Website"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Where did you hear about us?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "hidden",
+          "label": "Website Development Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Website Development Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "names[last_name]",
+        "email",
+        "input_text",
+        "phone",
+        "dropdown",
+        "dropdown_1",
+        "hidden"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "turnstile",
+        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "samePage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/website-development-amc/": 41418
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "1e51a1036334d59506ff4796dd6f1790b180b3aadf36b9b7bc8561a0ce248297",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-9",
+      "fluentFormId": 9,
+      "title": "Generative AI",
+      "shortcode": "[fluentform id=\"9\"]",
+      "sourceRoutes": [
+        "/services/ai-video-production-agency/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "names[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Brand Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text_1",
+          "label": "Phone/Mobile",
+          "type": "text",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Select Content",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Generative Images",
+              "value": "Generative Images"
+            },
+            {
+              "label": "Product Image Optimization",
+              "value": "Product Image Optimization"
+            },
+            {
+              "label": "Short Form Videos (Up-to 30 Sec)",
+              "value": "Short Form Videos (Up-to 30 Sec)"
+            },
+            {
+              "label": "Long Form Videos (Story Based)",
+              "value": "Long Form Videos (Story Based)"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Where did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "description",
+          "label": "Additional Brief",
+          "type": "textarea",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "hidden",
+          "label": "Generative",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Generative AI Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "names[last_name]",
+        "email",
+        "input_text",
+        "input_text_1",
+        "dropdown",
+        "dropdown_1",
+        "description",
+        "hidden"
+      ],
+      "captcha": {
+        "enabled": false,
+        "provider": null,
+        "publicSiteKey": null,
+        "siteKeyEnvRef": null,
+        "secretKeyEnvRef": null
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "reset_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/ai-video-production-agency/": 40114
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "8122e1d2849d0a3de840443fc970f2f1b57a219e440f6b945961a30a9bc0c713",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-10",
+      "fluentFormId": 10,
+      "title": "Branding Form (#10)",
+      "shortcode": "[fluentform id=\"10\"]",
+      "sourceRoutes": [
+        "/services/branding/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "input_text_1",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "url",
+          "label": "Company Name",
+          "type": "url",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "url": "This field must contain a valid url"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_3",
+          "label": "Where did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Friends/Colleagues",
+              "value": "Friends/Colleagues"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Branding Service Interest",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Corporate Identity Design",
+              "value": "Corporate Identity Design"
+            },
+            {
+              "label": "Employer Branding",
+              "value": "Employer Branding"
+            },
+            {
+              "label": "Packaging & Offline Branding",
+              "value": "Packaging & Offline Branding"
+            },
+            {
+              "label": "Complete Brand Strategy",
+              "value": "Complete Brand Strategy"
+            },
+            {
+              "label": "Logo Design & Rebranding",
+              "value": "Logo Design & Rebranding"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Project Timeline",
+          "type": "select",
+          "required": false,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Immediate",
+              "value": "Immediate"
+            },
+            {
+              "label": "1-3 Months",
+              "value": "1-3 Months"
+            },
+            {
+              "label": "3-6 Months",
+              "value": "3-6 Months"
+            },
+            {
+              "label": "Exploratory",
+              "value": "Exploratory"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "description",
+          "label": "Project Brief",
+          "type": "textarea",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "Branding_Page",
+          "label": "Branding Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "hidden",
+          "label": "Branding",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Branding Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "dropdown_2",
+          "label": "Dropdown",
+          "type": "select",
+          "required": false,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Option 1",
+              "value": "Option 1"
+            },
+            {
+              "label": "Option 2",
+              "value": "Option 2"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        }
+      ],
+      "allowedFieldKeys": [
+        "input_text_1",
+        "email",
+        "url",
+        "phone",
+        "dropdown_3",
+        "dropdown",
+        "dropdown_1",
+        "description",
+        "Branding_Page",
+        "hidden",
+        "dropdown_2"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "turnstile",
+        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": true,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/branding/": 40277
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "7f946f1d615a539bc23b60d03352c5d90613f7b59958a6729e1b8b2d93f649dc",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-11",
+      "fluentFormId": 11,
+      "title": "Content Creation Form",
+      "shortcode": "[fluentform id=\"11\"]",
+      "sourceRoutes": [
+        "/services/content-creation/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "input_text_1",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "url",
+          "label": "Company Name",
+          "type": "url",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "url": "This field must contain a valid url"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Branding Service Interest",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Blog Creation",
+              "value": "Blog Creation"
+            },
+            {
+              "label": "Social Media Content/Calendar",
+              "value": "Social Media Content/Calendar"
+            },
+            {
+              "label": "Website Content Creation",
+              "value": "Website Content Creation"
+            },
+            {
+              "label": "Content Strategy",
+              "value": "Content Strategy"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Project Timeline",
+          "type": "select",
+          "required": false,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Immediate",
+              "value": "Immediate"
+            },
+            {
+              "label": "1-3 Months",
+              "value": "1-3 Months"
+            },
+            {
+              "label": "3-6 Months",
+              "value": "3-6 Months"
+            },
+            {
+              "label": "Exploratory",
+              "value": "Exploratory"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_2",
+          "label": "Where did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "description",
+          "label": "Project Brief",
+          "type": "textarea",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "Content_creation",
+          "label": "Content Creation",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Content Creation Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "input_text_1",
+        "email",
+        "url",
+        "phone",
+        "dropdown",
+        "dropdown_1",
+        "dropdown_2",
+        "description",
+        "Content_creation"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "turnstile",
+        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "reset_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/content-creation/": 40276
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "2bb6fad48a0239bad2524939bbd1af5c25360dca223d5c5f6198744471b42805",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-19",
+      "fluentFormId": 19,
+      "title": "Free AEO Audit Form",
+      "shortcode": "[fluentform id=\"19\"]",
+      "sourceRoutes": [
+        "/services/aeo-services-in-mumbai/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "names[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "url",
+          "label": "Website URL (Add https://)",
+          "type": "url",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "url": "This field must contain a valid url"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Select Service",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "SEO",
+              "value": "SEO"
+            },
+            {
+              "label": "Advance SEO(GEO,AEO,LLM SEO)",
+              "value": "Advance SEO(GEO,AEO,LLM SEO)"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Where did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "hidden",
+          "label": "SEO Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "SEO Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "names[last_name]",
+        "email",
+        "input_text",
+        "url",
+        "phone",
+        "dropdown",
+        "dropdown_1",
+        "hidden"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "recaptcha",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/aeo-services-in-mumbai/": 62373
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "9649fe4339de46b1e1d08fc34e03b7366f5af5aa574cfceb7fe6a2b080d05dfc",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-20",
+      "fluentFormId": 20,
+      "title": "Free LLM Audit Form",
+      "shortcode": "[fluentform id=\"20\"]",
+      "sourceRoutes": [
+        "/services/llm-seo-service/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "names[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "url",
+          "label": "Website URL (Add https://)",
+          "type": "url",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "url": "This field must contain a valid url"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Select Service",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "SEO",
+              "value": "SEO"
+            },
+            {
+              "label": "Advance SEO(GEO,AEO,LLM SEO)",
+              "value": "Advance SEO(GEO,AEO,LLM SEO)"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Where did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "hidden",
+          "label": "SEO Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "SEO Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "names[last_name]",
+        "email",
+        "input_text",
+        "url",
+        "phone",
+        "dropdown",
+        "dropdown_1",
+        "hidden"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "recaptcha",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/llm-seo-service/": 62322
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "a19f453e1698847dffbf356b2fc0a90869b5142879ac91b02b23465b1af21e05",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-21",
+      "fluentFormId": 21,
+      "title": "Free GEO Audit Form",
+      "shortcode": "[fluentform id=\"21\"]",
+      "sourceRoutes": [
+        "/services/geo/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "names[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "names[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "Email Address",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "url",
+          "label": "Website URL (Add https://)",
+          "type": "url",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "url": "This field must contain a valid url"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Phone/Mobile",
+          "type": "tel",
+          "required": true,
+          "placeholder": "Mobile Number",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown",
+          "label": "Select Service",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "SEO",
+              "value": "SEO"
+            },
+            {
+              "label": "Advance SEO(GEO,AEO,LLM SEO)",
+              "value": "Advance SEO(GEO,AEO,LLM SEO)"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "dropdown_1",
+          "label": "Where did you hear about us ?",
+          "type": "select",
+          "required": true,
+          "placeholder": "- Select -",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Google Ads",
+              "value": "Google Ads"
+            },
+            {
+              "label": "Google Search",
+              "value": "Google Search"
+            },
+            {
+              "label": "Friend / Colleague",
+              "value": "Friend / Colleague"
+            },
+            {
+              "label": "Twitter",
+              "value": "Twitter"
+            },
+            {
+              "label": "Youtube",
+              "value": "Youtube"
+            },
+            {
+              "label": "Instagram",
+              "value": "Instagram"
+            },
+            {
+              "label": "Facebook",
+              "value": "Facebook"
+            },
+            {
+              "label": "LinkedIn",
+              "value": "LinkedIn"
+            },
+            {
+              "label": "Podcast",
+              "value": "Podcast"
+            },
+            {
+              "label": "Blog / Article",
+              "value": "Blog / Article"
+            },
+            {
+              "label": "Other",
+              "value": "Other"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "hidden",
+          "label": "SEO Page",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "SEO Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        }
+      ],
+      "allowedFieldKeys": [
+        "names[first_name]",
+        "names[last_name]",
+        "email",
+        "input_text",
+        "url",
+        "phone",
+        "dropdown",
+        "dropdown_1",
+        "hidden"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "recaptcha",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": null,
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/geo/": 62317
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "e5d9f160045635af18a610bef63953ab79530eb68095aed62f1cc47e703ff4f4",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    },
+    {
+      "key": "fluentform-26",
+      "fluentFormId": 26,
+      "title": "DGS Performance Marketing Page Form",
+      "shortcode": "[fluentform id=\"26\"]",
+      "sourceRoutes": [
+        "/services/performance-marketing/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "full_name[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "full_name[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Business Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "you@example.com",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "Enter a valid business email address.",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Work Phone / WhatsApp",
+          "type": "tel",
+          "required": true,
+          "placeholder": "+91 98765 43210",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Your company or brand name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "company_website",
+          "label": "Company Website or Brand Page",
+          "type": "text",
+          "required": true,
+          "placeholder": "www.company.com",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "role",
+          "label": "Your Role",
+          "type": "select",
+          "required": true,
+          "placeholder": "Select your role",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Founder / Owner / CEO",
+              "value": "Founder / Owner / CEO"
+            },
+            {
+              "label": "Marketing Head / CMO",
+              "value": "Marketing Head / CMO"
+            },
+            {
+              "label": "Brand Manager",
+              "value": "Brand Manager"
+            },
+            {
+              "label": "Ecommerce Head",
+              "value": "Ecommerce Head"
+            },
+            {
+              "label": "Business Head",
+              "value": "Business Head"
+            },
+            {
+              "label": "Agency / Consultant representing a brand",
+              "value": "Agency / Consultant representing a brand"
+            },
+            {
+              "label": "Other Decision Maker",
+              "value": "Other Decision Maker"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "budget",
+          "label": "Performance Marketing Budget",
+          "type": "select",
+          "required": true,
+          "placeholder": "Select your budget",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "\u20b975,000 to \u20b91 lakh",
+              "value": "\u20b975,000 to \u20b91 lakh"
+            },
+            {
+              "label": "\u20b91 lakh to \u20b93 lakh",
+              "value": "\u20b91 lakh to \u20b93 lakh"
+            },
+            {
+              "label": "\u20b93 lakh to \u20b95 lakh",
+              "value": "\u20b93 lakh to \u20b95 lakh"
+            },
+            {
+              "label": "\u20b95 lakh to \u20b910 lakh",
+              "value": "\u20b95 lakh to \u20b910 lakh"
+            },
+            {
+              "label": "\u20b910 lakh plus",
+              "value": "\u20b910 lakh plus"
+            },
+            {
+              "label": "Not sure yet",
+              "value": "Not sure yet"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "start_timeline",
+          "label": "When do you want to start?",
+          "type": "select",
+          "required": true,
+          "placeholder": "Select timeline",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Immediately",
+              "value": "Immediately"
+            },
+            {
+              "label": "Within 2 to 4 weeks",
+              "value": "Within 2 to 4 weeks"
+            },
+            {
+              "label": "Within 1 to 3 months",
+              "value": "Within 1 to 3 months"
+            },
+            {
+              "label": "Exploring options",
+              "value": "Exploring options"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "requirement",
+          "label": "Briefly describe your business requirement",
+          "type": "textarea",
+          "required": true,
+          "placeholder": "Tell us about your business, website, challenge or growth goal.",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "contact_consent",
+          "label": "Contact consent",
+          "type": "checkbox",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "service_name",
+          "label": "Service Name",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Website Development",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "lead_source",
+          "label": "Lead Source",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Google Ads Landing Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "landing_page_url",
+          "label": "Landing Page URL",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "referrer_url",
+          "label": "Referrer URL",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_source",
+          "label": "UTM Source",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_medium",
+          "label": "UTM Medium",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_campaign",
+          "label": "UTM Campaign",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_term",
+          "label": "UTM Term",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_content",
+          "label": "UTM Content",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "gclid",
+          "label": "GCLID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "campaignid",
+          "label": "Campaign ID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "adgroupid",
+          "label": "Ad Group ID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "creative",
+          "label": "Creative ID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "matchtype",
+          "label": "Match Type",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "device",
+          "label": "Device",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "business_confirmation[]",
+          "label": "Business enquiry confirmation",
+          "type": "checkbox",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "I confirm this is a business enquiry for a company or brand, not a job application, internship request, freelancer pitch or personal enquiry.",
+              "value": "I confirm this is a business enquiry for a company or brand, not a job application, internship request, freelancer pitch or personal enquiry."
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        }
+      ],
+      "allowedFieldKeys": [
+        "full_name[first_name]",
+        "full_name[last_name]",
+        "email",
+        "phone",
+        "input_text",
+        "company_website",
+        "role",
+        "budget",
+        "start_timeline",
+        "requirement",
+        "contact_consent",
+        "service_name",
+        "lead_source",
+        "landing_page_url",
+        "referrer_url",
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_term",
+        "utm_content",
+        "gclid",
+        "campaignid",
+        "adgroupid",
+        "creative",
+        "matchtype",
+        "device",
+        "business_confirmation[]"
+      ],
+      "captcha": {
+        "enabled": false,
+        "provider": null,
+        "publicSiteKey": null,
+        "siteKeyEnvRef": null,
+        "secretKeyEnvRef": null
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": "internal",
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/services/performance-marketing/": 64616
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "58e2cbb56e80b7af7c6a60d47a558557d169f84f7b4ab0a43b54a37b9a322dac",
+        "accessMethod": "authenticated-fluentform-rest"
+      }
+    }
+  ]
 }
