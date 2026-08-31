@@ -89,11 +89,9 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
 
     try {
       const captchaToken = await obtainCaptchaToken(definition);
-      const payloadFields: Record<string, string> = { ...values };
-      for (const field of definition.fields) {
-        if (field.hidden && field.defaultValue && !payloadFields[field.name]) {
-          payloadFields[field.name] = field.defaultValue;
-        }
+      const payloadFields: Record<string, string> = {};
+      for (const field of fields) {
+        payloadFields[field.name] = values[field.name] || "";
       }
 
       const response = await fetch("/api/forms/submit/", {

@@ -119,12 +119,10 @@ export function HomeFormBridge() {
         const fields: Record<string, string> = {};
         const data = new FormData(form);
         for (const [key, value] of data.entries()) {
-          if (typeof value === "string") fields[key] = value;
-        }
-        for (const field of definition.fields) {
-          if (field.hidden && field.defaultValue && !fields[field.name]) {
-            fields[field.name] = field.defaultValue;
-          }
+          if (typeof value !== "string") continue;
+          const field = definition.fields.find((item) => item.name === key);
+          if (field?.hidden) continue;
+          fields[key] = value;
         }
 
         let captchaToken: string | undefined;

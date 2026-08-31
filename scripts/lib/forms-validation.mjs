@@ -1,23 +1,12 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { validateFormPayload } from "../../lib/forms/payload-validation.mjs";
+import { resolveFormContextFromHtml } from "../../lib/forms/form-context.mjs";
 
 const ROOT = process.cwd();
 const definitions = JSON.parse(
   readFileSync(path.join(ROOT, "data/forms/definitions.approved.json"), "utf8"),
 );
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const URL_RE = /^https?:\/\/.+/i;
-const FORBIDDEN_CLIENT_KEYS = [
-  "authorization",
-  "cookie",
-  "password",
-  "application_password",
-  "api_key",
-  "apitoken",
-  "webhook",
-  "secret",
-];
 
 export function listForms() {
   return definitions.forms || [];
@@ -32,6 +21,18 @@ export function getByRoute(route) {
     listForms().find((form) => (form.sourceRoutes || []).includes(route) || form.sourceRoute === route) ||
     null
   );
+}
+
+function assertRouteFormMapping(route, fluentFormId) {
+  const definition = getByRoute(route);
+  if (!definition) throw new Error(`No approved form mapped to route ${route}`);
+  if (Number(definition.fluentFormId) !== Number(fluentFormId)) {
+    throw new Error(`Route ${route} is mapped to Fluent Form ${definition.fluentFormId}, not ${fluentFormId}`);
+  }
+  if (!definition.activationEnabled || definition.approvalState !== "APPROVED_FOR_IMPLEMENTATION") {
+    throw new Error(`Form ${fluentFormId} is not approved for activation`);
+  }
+  return definition;
 }
 
 export function buildValidFields(definition, overrides = {}) {
@@ -51,68 +52,13 @@ export function buildValidFields(definition, overrides = {}) {
 }
 
 export function validatePayload(input) {
-  if (!input || typeof input !== "object") return { ok: false, message: "Invalid submission payload", status: 400 };
-  const fluentFormId = Number(input.fluentFormId);
-  const route = typeof input.route === "string" ? input.route : "";
-  const fields = input.fields && typeof input.fields === "object" ? input.fields : null;
-  if (!Number.isInteger(fluentFormId) || fluentFormId <= 0) return { ok: false, message: "Invalid form ID", status: 400 };
-  if (!route.startsWith("/")) return { ok: false, message: "Invalid route", status: 400 };
-  if (!fields) return { ok: false, message: "Missing fields", status: 400 };
-
-  const definition = getById(fluentFormId);
-  if (!definition) return { ok: false, message: "Form ID is not allowlisted", status: 403 };
-  const mapped = getByRoute(route);
-  if (!mapped || Number(mapped.fluentFormId) !== fluentFormId) {
-    return { ok: false, message: "Route/form mismatch", status: 403 };
-  }
-
-  for (const key of Object.keys(fields)) {
-    const lower = key.toLowerCase();
-    if (FORBIDDEN_CLIENT_KEYS.some((forbidden) => lower.includes(forbidden))) {
-      return { ok: false, message: "Unexpected privileged field", status: 400 };
-    }
-  }
-
-  const allowed = new Set(definition.allowedFieldKeys || []);
-  for (const key of Object.keys(fields)) {
-    if (!allowed.has(key)) return { ok: false, message: `Unexpected field: ${key}`, status: 400 };
-  }
-
-  const fieldErrors = {};
-  const sanitizedFields = {};
-  for (const field of definition.fields || []) {
-    if (field.hidden) {
-      if (field.defaultValue) sanitizedFields[field.name] = String(field.defaultValue);
-      continue;
-    }
-    if (field.type === "captcha") continue;
-    const raw = fields[field.name];
-    const value = raw == null ? "" : String(raw).trim();
-    if (field.required && !value) {
-      fieldErrors[field.name] = `${field.label} is required`;
-      continue;
-    }
-    if (!value) continue;
-    if (field.type === "email" && !EMAIL_RE.test(value)) fieldErrors[field.name] = "Enter a valid email address";
-    else if (field.type === "url" && !URL_RE.test(value)) fieldErrors[field.name] = "Enter a valid URL";
-    else if (field.type === "tel" && value.replace(/[^\d+]/g, "").length < 7) {
-      fieldErrors[field.name] = "Enter a valid phone number";
-    } else sanitizedFields[field.name] = value;
-  }
-
-  if (Object.keys(fieldErrors).length) {
-    return { ok: false, message: "Please correct the highlighted fields", fieldErrors, status: 422 };
-  }
-  if (definition.captcha?.enabled && !input.captchaToken) {
-    return { ok: false, message: "CAPTCHA verification is required", status: 422 };
-  }
-  return {
-    ok: true,
-    definition,
-    sanitizedFields,
-    captchaToken: typeof input.captchaToken === "string" ? input.captchaToken : undefined,
-  };
+  return validateFormPayload(input, {
+    getDefinitionById: getById,
+    assertRouteFormMapping,
+  });
 }
+
+export { resolveFormContextFromHtml };
 
 /**
  * Mocked submission pipeline — never contacts WordPress.
@@ -149,7 +95,6 @@ export async function mockSubmit(input, options = {}) {
     };
   }
 
-  // Ensure only allowlisted keys would be forwarded
   const allowed = new Set(validated.definition.allowedFieldKeys || []);
   for (const key of Object.keys(validated.sanitizedFields)) {
     if (!allowed.has(key)) {

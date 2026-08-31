@@ -9,6 +9,7 @@ import {
   getByRoute,
   listForms,
   mockSubmit,
+  resolveFormContextFromHtml,
   validatePayload,
 } from "./lib/forms-validation.mjs";
 
@@ -68,11 +69,82 @@ test("rejects route/form mismatch", () => {
 
 test("rejects unexpected fields", () => {
   const definition = getById(1);
-  const fields = Object.fromEntries(definition.allowedFieldKeys.map((key) => [key, "x"]));
+  const visibleKeys = definition.allowedFieldKeys.filter(
+    (key) => !definition.fields.some((field) => field.hidden && field.name === key),
+  );
+  const fields = Object.fromEntries(visibleKeys.map((key) => [key, "x"]));
   fields.unexpected_field = "nope";
-  const result = validatePayload({ fluentFormId: 1, route: "/", fields });
+  const result = validatePayload({ fluentFormId: 1, route: "/", fields, captchaToken: "token" });
   assert.equal(result.ok, false);
   assert.match(result.message, /Unexpected field/);
+});
+
+test("rejects client-supplied hidden field tampering", () => {
+  const definition = getById(3);
+  const fields = buildValidFields(definition, { hidden: "TAMPERED_VALUE" });
+  const result = validatePayload({
+    fluentFormId: 3,
+    route: "/services/seo-services-in-mumbai/",
+    fields,
+    captchaToken: "token",
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.message, /Hidden field must not be supplied by client/);
+});
+
+test("server-owned hidden defaults are applied without client input", () => {
+  const definition = getById(3);
+  const fields = buildValidFields(definition);
+  const result = validatePayload({
+    fluentFormId: 3,
+    route: "/services/seo-services-in-mumbai/",
+    fields,
+    captchaToken: "token",
+  });
+  assert.equal(result.ok, true);
+  assert.equal(result.sanitizedFields.hidden, "SEO Page");
+  assert.equal(fields.hidden, undefined);
+});
+
+test("service form context fails when only homepage Form 1 nonce is present", () => {
+  const definition = getById(3);
+  const route = "/services/seo-services-in-mumbai/";
+  const poisonedHtml = `
+    <input name="_fluentform_1_fluentformnonce" value="homepage-nonce" />
+    <input name="__fluent_form_embded_post_id" value="63505" />
+    <div class="fluentform_wrapper_3">service form without route nonce</div>
+  `;
+  const context = resolveFormContextFromHtml(poisonedHtml, definition, route);
+  assert.equal(context.ok, false);
+  assert.match(context.message, /security token/i);
+  assert.notEqual(context.embeddedPostId, "63505");
+});
+
+test("service form context uses route-scoped post ID, not homepage Form 1", () => {
+  const definition = getById(3);
+  const route = "/services/seo-services-in-mumbai/";
+  const html = `
+    <input name="__fluent_form_embded_post_id" value="63505" />
+    <div class="fluentform_wrapper_3">
+      <input name="_fluentform_3_fluentformnonce" value="service-nonce-abc" />
+      <input name="__fluent_form_embded_post_id" value="40278" />
+    </div>
+  `;
+  const context = resolveFormContextFromHtml(html, definition, route);
+  assert.equal(context.ok, true);
+  assert.equal(context.nonce, "service-nonce-abc");
+  assert.equal(context.embeddedPostId, "40278");
+  assert.notEqual(context.embeddedPostId, "63505");
+});
+
+test("service form context fails safely when route nonce missing but page ID exists", () => {
+  const definition = getById(3);
+  const route = "/services/seo-services-in-mumbai/";
+  const html = `<div class="fluentform_wrapper_3">no nonce on target page</div>`;
+  const context = resolveFormContextFromHtml(html, definition, route);
+  assert.equal(context.ok, false);
+  assert.equal(context.routePageId, "40278");
+  assert.match(context.message, /security token/i);
 });
 
 test("rejects privileged secret-like field keys", () => {
