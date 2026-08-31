@@ -12,6 +12,10 @@ import {
   resolveFormContextFromHtml,
   validatePayload,
 } from "./lib/forms-validation.mjs";
+import {
+  HOMEPAGE_SERVICE_UI_TO_FORM1,
+  normalizeHomepageBridgeFields,
+} from "../lib/forms/homepage-service-normalize.mjs";
 
 const ROOT = process.cwd();
 const definitions = JSON.parse(readFileSync(path.join(ROOT, "data/forms/definitions.approved.json"), "utf8"));
@@ -52,6 +56,26 @@ test("field-key parity with public WordPress evidence", () => {
     const definition = getByRoute(item.route);
     const allowed = new Set(definition.allowedFieldKeys);
     for (const field of item.fields || []) assert.ok(allowed.has(field), `${item.route} missing ${field}`);
+  }
+});
+
+test("homepage UI service options normalize and pass Form 1 validator", () => {
+  const definition = getById(1);
+  const uiOptions = Object.keys(HOMEPAGE_SERVICE_UI_TO_FORM1);
+  assert.equal(uiOptions.length, 5);
+
+  for (const uiValue of uiOptions) {
+    const fields = buildValidFields(definition, { dropdown: uiValue });
+    const normalized = normalizeHomepageBridgeFields(fields);
+    assert.equal(normalized.dropdown, HOMEPAGE_SERVICE_UI_TO_FORM1[uiValue], `normalize ${uiValue}`);
+    const result = validatePayload({
+      fluentFormId: 1,
+      route: "/",
+      fields: normalized,
+      captchaToken: "token",
+    });
+    assert.equal(result.ok, true, `Form 1 validator rejected normalized value for UI option ${uiValue}`);
+    assert.equal(result.sanitizedFields.dropdown, HOMEPAGE_SERVICE_UI_TO_FORM1[uiValue]);
   }
 });
 

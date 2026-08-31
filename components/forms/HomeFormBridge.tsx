@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import { getFormDefinitionForRoute } from "@/lib/forms/registry";
+// @ts-expect-error shared homepage bridge normalization for UI-locked service labels
+import { normalizeHomepageBridgeFields } from "@/lib/forms/homepage-service-normalize.mjs";
 
 declare global {
   interface Window {
@@ -124,6 +126,7 @@ export function HomeFormBridge() {
           if (field?.hidden) continue;
           fields[key] = value;
         }
+        const payloadFields = normalizeHomepageBridgeFields(fields);
 
         let captchaToken: string | undefined;
         if (definition.captcha?.enabled && definition.captcha.publicSiteKey) {
@@ -136,7 +139,7 @@ export function HomeFormBridge() {
           body: JSON.stringify({
             fluentFormId: definition.fluentFormId,
             route: "/",
-            fields,
+            fields: payloadFields,
             captchaToken,
           }),
         });
