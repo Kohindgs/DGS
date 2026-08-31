@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ContentBlock } from "@/lib/content/types";
 import { RichText } from "./RichText";
 import { RouteFormBlock } from "@/components/forms/RouteFormBlock";
+import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 
 type SemanticContentProps = {
   blocks: ContentBlock[];
@@ -114,7 +115,7 @@ export function SemanticContent({
           case "form":
             return (
               <div key={key} data-migration-form data-wordpress-form={block.wordpressForm}>
-                {route ? (
+                {route && getFormDefinitionForRoute(route)?.activationEnabled ? (
                   <RouteFormBlock route={route} />
                 ) : (
                   block.inputs.map((input, i) => (
