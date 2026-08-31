@@ -2,7 +2,9 @@
   "phase": "2C.1A",
   "status": "COMPLETE_PENDING_HUMAN_REVIEW",
   "supersedes": "data/audit/forms-phase-2c1-blocker.json",
-  "completedAt": "2026-08-31T16:50:00.000Z",
+  "completedAt": "2026-08-31T16:56:00.000Z",
+  "applicationSourceSha": "fb3591da30069c5ed2294f1ea406f27e715e7bc4",
+  "reviewSha": "025192945671c9829bf96d21bcf1c564049f180c",
   "inventoryMethod": "Authenticated Fluent Forms REST (Basic Application Password). Site MCP tool catalog still does not expose Fluent Forms-specific tools; REST was used for verified field inventory.",
   "safety": {
     "liveProductionSubmission": false,
