@@ -1,0 +1,1810 @@
+{
+  "generatedAt": "2026-09-01T18:21:57.246Z",
+  "source": "https://www.dgeniussolutions.com",
+  "method": "Live HTML slice (after #dgsNav / #dgsTalkPopup, before footer) with REST fallback; scripts/JSON-LD stripped; LiteSpeed CSS only for cmsmasters families",
+  "familyCounts": {
+    "about": 1,
+    "service-html-aeo": 3,
+    "service-html-widget-other": 21,
+    "blog-archive": 1,
+    "blog-detail": 61,
+    "career": 1,
+    "service-html-ai-video": 3,
+    "contact": 1,
+    "page-our-services": 1,
+    "portfolio": 1,
+    "service-html-location-seo": 6,
+    "service-html-llm": 2,
+    "service-html-geo": 1,
+    "service-html-performance": 1,
+    "service-archive": 1
+  },
+  "families": {
+    "about": {
+      "count": 1,
+      "routes": [
+        "/about-us/"
+      ],
+      "reason": "live cmsmasters-main + HTML widget",
+      "needsThemeCss": true
+    },
+    "service-html-aeo": {
+      "count": 3,
+      "routes": [
+        "/aeo-dubai/",
+        "/aeo-services-mumbai-google-ads-landing-page/",
+        "/services/aeo-services-in-mumbai/"
+      ],
+      "reason": "self-contained .dgs-aeo-page HTML widget",
+      "needsThemeCss": false
+    },
+    "service-html-widget-other": {
+      "count": 21,
+      "routes": [
+        "/ai-motion-graphic-designer/",
+        "/ai-production-videos-google-ads-landing-page/",
+        "/australia-page/",
+        "/better-ceasons-case-study/",
+        "/indriya-test/",
+        "/motion-graphics/",
+        "/privacy-policy/",
+        "/seo-executive-assessment/",
+        "/seo-manager-assessment/",
+        "/seo-pricing/",
+        "/services/branding/",
+        "/services/content-creation/",
+        "/services/shirdi-se-sai-tak-case-study/",
+        "/services/social-media-marketing/",
+        "/services/website-development-amc/",
+        "/services/website-development-pune-page/",
+        "/sitemap/",
+        "/social-media-executive/",
+        "/thank-you/",
+        "/us-landing-page/",
+        "/website-development-services-in-mumbai-dgenius-solutions/"
+      ],
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "needsThemeCss": false
+    },
+    "blog-archive": {
+      "count": 1,
+      "routes": [
+        "/blogs/"
+      ],
+      "reason": "live cmsmasters-blog grid archive",
+      "needsThemeCss": true
+    },
+    "blog-detail": {
+      "count": 61,
+      "routes": [
+        "/blogs/3-3-3-rule-in-marketing/",
+        "/blogs/aeo-business/",
+        "/blogs/ai-content-optimization/",
+        "/blogs/ai-generated-summaries-in-search-ads/",
+        "/blogs/ai-marketing-strategies-2026/",
+        "/blogs/ai-overview-ranking/",
+        "/blogs/ai-overview-seo/",
+        "/blogs/ai-readiness-for-websites/",
+        "/blogs/ai-search-behavior-2026/",
+        "/blogs/ai-search-checklist-2026/",
+        "/blogs/ai-search-optimization-ecommerce/",
+        "/blogs/ai-tools-marketing-agencies/",
+        "/blogs/ai-video-production-cost-india/",
+        "/blogs/ai-video-production-for-business/",
+        "/blogs/ai-video-vs-traditional-video/",
+        "/blogs/brand-identity-seo-trust-lead-generation/",
+        "/blogs/brand-mentions-for-ai-tools/",
+        "/blogs/brand-visibility-in-ai-search/",
+        "/blogs/chatgpt-brand-visibility/",
+        "/blogs/content-strategy-for-seo/",
+        "/blogs/content-strategy-high-intent-traffic/",
+        "/blogs/content-writing-for-seo/",
+        "/blogs/core-update-strategy/",
+        "/blogs/future-of-seo/",
+        "/blogs/generative-engine-optimization-business/",
+        "/blogs/generative-engine-optimization/",
+        "/blogs/geo-vs-seo-google-ai-search/",
+        "/blogs/google-ads-vs-meta-ads/",
+        "/blogs/google-agentic-browsing/",
+        "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+        "/blogs/google-ai-overviews-image-generation/",
+        "/blogs/google-ai-search-update/",
+        "/blogs/google-algorithm-business/",
+        "/blogs/google-io-2026/",
+        "/blogs/google-ranking-fixes/",
+        "/blogs/google-search-console-social-media/",
+        "/blogs/google-spam-update/",
+        "/blogs/llm-seo-ai-search/",
+        "/blogs/llm-seo-services-mumbai/",
+        "/blogs/local-seo-business-growth/",
+        "/blogs/low-social-media-reach/",
+        "/blogs/modern-seo-business-growth/",
+        "/blogs/optimize-content-ai-search/",
+        "/blogs/optimize-for-ai-overviews/",
+        "/blogs/schema-seo-for-small-business/",
+        "/blogs/search-generative-ai-performance-reports/",
+        "/blogs/seo-friendly-website/",
+        "/blogs/seo-rankings-up-but-traffic-down/",
+        "/blogs/seo-services-india-2026/",
+        "/blogs/seo-strategies-business-growth/",
+        "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+        "/blogs/social-media-marketing-strategy/",
+        "/blogs/topical-authority-seo/",
+        "/blogs/voice-search-seo/",
+        "/blogs/website-design-lead-generation-mumbai/",
+        "/blogs/website-development-leads/",
+        "/blogs/website-development-mistakes/",
+        "/blogs/website-development-quality-leads/",
+        "/blogs/website-performance-conversions/",
+        "/blogs/website-traffic-but-no-leads/",
+        "/blogs/what-is-llm-seo/"
+      ],
+      "reason": "live cmsmasters/Elementor single post template",
+      "needsThemeCss": true
+    },
+    "career": {
+      "count": 1,
+      "routes": [
+        "/career/"
+      ],
+      "reason": "REST HTML widget; live /career/ 301s to homepage",
+      "needsThemeCss": false
+    },
+    "service-html-ai-video": {
+      "count": 3,
+      "routes": [
+        "/case_studies/",
+        "/services/ai-production-dubai-page/",
+        "/services/ai-video-production-agency/"
+      ],
+      "reason": "self-contained AI video HTML widget",
+      "needsThemeCss": false
+    },
+    "contact": {
+      "count": 1,
+      "routes": [
+        "/contact-us/"
+      ],
+      "reason": "live cmsmasters-main contact widget",
+      "needsThemeCss": true
+    },
+    "page-our-services": {
+      "count": 1,
+      "routes": [
+        "/our-services/"
+      ],
+      "reason": "live cmsmasters Our Services page",
+      "needsThemeCss": true
+    },
+    "portfolio": {
+      "count": 1,
+      "routes": [
+        "/portfolio/"
+      ],
+      "reason": "live cmsmasters + Envira gallery",
+      "needsThemeCss": true
+    },
+    "service-html-location-seo": {
+      "count": 6,
+      "routes": [
+        "/seo-services-mumbai-google-ads-landing-page/",
+        "/services/seo-service-in-banglore/",
+        "/services/seo-service-in-gurugram/",
+        "/services/seo-service-pune/",
+        "/services/seo-services-in-hyderabad/",
+        "/services/seo-services-in-mumbai/"
+      ],
+      "reason": "location SEO Elementor HTML widget with inline CSS",
+      "needsThemeCss": false
+    },
+    "service-html-llm": {
+      "count": 2,
+      "routes": [
+        "/services/dubai-seo/",
+        "/services/llm-seo-service/"
+      ],
+      "reason": "self-contained LLM SEO HTML widget",
+      "needsThemeCss": false
+    },
+    "service-html-geo": {
+      "count": 1,
+      "routes": [
+        "/services/geo/"
+      ],
+      "reason": "self-contained GEO HTML widget",
+      "needsThemeCss": false
+    },
+    "service-html-performance": {
+      "count": 1,
+      "routes": [
+        "/services/performance-marketing/"
+      ],
+      "reason": "self-contained #dgs-performance-page HTML widget",
+      "needsThemeCss": false
+    },
+    "service-archive": {
+      "count": 1,
+      "routes": [
+        "/services/"
+      ],
+      "reason": "live CPT archive post-type-archive-services",
+      "needsThemeCss": true
+    }
+  },
+  "routes": [
+    {
+      "path": "/about-us/",
+      "family": "about",
+      "reason": "live cmsmasters-main + HTML widget",
+      "source": "live",
+      "wordpressId": 38769,
+      "type": "page",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 16666,
+      "cssFileCount": 29
+    },
+    {
+      "path": "/aeo-dubai/",
+      "family": "service-html-aeo",
+      "reason": "self-contained .dgs-aeo-page HTML widget",
+      "source": "live",
+      "wordpressId": 64225,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "19"
+      ],
+      "bodyBytes": 78501,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/aeo-services-mumbai-google-ads-landing-page/",
+      "family": "service-html-aeo",
+      "reason": "self-contained .dgs-aeo-page HTML widget",
+      "source": "live",
+      "wordpressId": 63759,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "23"
+      ],
+      "bodyBytes": 71215,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/ai-motion-graphic-designer/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64359,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 27928,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/ai-production-videos-google-ads-landing-page/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 63765,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "24"
+      ],
+      "bodyBytes": 40216,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/australia-page/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64701,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "27"
+      ],
+      "bodyBytes": 353539,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/better-ceasons-case-study/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64367,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "6"
+      ],
+      "bodyBytes": 33591,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/blogs/",
+      "family": "blog-archive",
+      "reason": "live cmsmasters-blog grid archive",
+      "source": "live",
+      "wordpressId": 26492,
+      "type": "page",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 37105,
+      "cssFileCount": 29
+    },
+    {
+      "path": "/blogs/3-3-3-rule-in-marketing/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64475,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 61623,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/aeo-business/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64292,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 72388,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-content-optimization/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 61962,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 57550,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-generated-summaries-in-search-ads/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64739,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 70907,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 61777,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 59881,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-overview-ranking/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62485,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 60590,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-overview-seo/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64815,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 66100,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-readiness-for-websites/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63861,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 72392,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-search-behavior-2026/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62433,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 60293,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-search-checklist-2026/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65235,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 61616,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64964,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 85968,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62481,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 58921,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-video-production-cost-india/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65240,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 79964,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-video-production-for-business/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64465,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 56524,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/ai-video-vs-traditional-video/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65256,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 64791,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64389,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 57620,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64968,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 72751,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/brand-visibility-in-ai-search/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65091,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 60368,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/chatgpt-brand-visibility/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65264,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 57321,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/content-strategy-for-seo/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64446,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 59439,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62755,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 60736,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/content-writing-for-seo/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64352,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 62044,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/core-update-strategy/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64990,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 66378,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/future-of-seo/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63952,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 56370,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/generative-engine-optimization-business/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64846,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 65449,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/generative-engine-optimization/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64204,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 73713,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/geo-vs-seo-google-ai-search/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64039,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 80862,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-ads-vs-meta-ads/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65259,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 67056,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-agentic-browsing/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64921,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 71166,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 61956,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 56906,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-ai-overviews-image-generation/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64909,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 71852,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-ai-search-update/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63706,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 71591,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-algorithm-business/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63943,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 54707,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-io-2026/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63881,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 67140,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-ranking-fixes/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64112,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 69245,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-search-console-social-media/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64856,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 64313,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/google-spam-update/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64728,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 58321,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/llm-seo-ai-search/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64620,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 76997,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/llm-seo-services-mumbai/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62568,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 59863,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/local-seo-business-growth/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62447,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 58470,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/low-social-media-reach/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65251,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 64230,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/modern-seo-business-growth/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62452,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 63478,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/optimize-content-ai-search/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64866,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 71864,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/optimize-for-ai-overviews/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63959,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 76099,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/schema-seo-for-small-business/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64938,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 82868,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64213,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 67811,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/seo-friendly-website/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64348,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 61979,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/seo-rankings-up-but-traffic-down/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64859,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 88225,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/seo-services-india-2026/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62849,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 60520,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/seo-strategies-business-growth/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63547,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 54277,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65270,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 63802,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/social-media-marketing-strategy/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64561,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 64264,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/topical-authority-seo/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62710,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 57967,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/voice-search-seo/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64942,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 87526,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63343,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 58628,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/website-development-leads/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62751,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 60552,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/website-development-mistakes/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63362,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 63863,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/website-development-quality-leads/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 63657,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 59539,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/website-performance-conversions/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 62717,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 64943,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/website-traffic-but-no-leads/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 65280,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 59197,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "family": "blog-detail",
+      "reason": "live cmsmasters/Elementor single post template",
+      "source": "live",
+      "wordpressId": 64217,
+      "type": "post",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 66487,
+      "cssFileCount": 40
+    },
+    {
+      "path": "/career/",
+      "family": "career",
+      "reason": "REST HTML widget; live /career/ 301s to homepage",
+      "source": "rest-fallback",
+      "wordpressId": 55238,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "15"
+      ],
+      "bodyBytes": 23859,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/case_studies/",
+      "family": "service-html-ai-video",
+      "reason": "self-contained AI video HTML widget",
+      "source": "live",
+      "wordpressId": 64415,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 26037,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/contact-us/",
+      "family": "contact",
+      "reason": "live cmsmasters-main contact widget",
+      "source": "live",
+      "wordpressId": 62460,
+      "type": "page",
+      "needsThemeCss": true,
+      "fluentFormIds": [
+        "1"
+      ],
+      "bodyBytes": 10815,
+      "cssFileCount": 28
+    },
+    {
+      "path": "/indriya-test/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64455,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 27960,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/motion-graphics/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64436,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 29531,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/our-services/",
+      "family": "page-our-services",
+      "reason": "live cmsmasters Our Services page",
+      "source": "live",
+      "wordpressId": 55355,
+      "type": "page",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 39931,
+      "cssFileCount": 32
+    },
+    {
+      "path": "/portfolio/",
+      "family": "portfolio",
+      "reason": "live cmsmasters + Envira gallery",
+      "source": "live",
+      "wordpressId": 55736,
+      "type": "page",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 299305,
+      "cssFileCount": 29
+    },
+    {
+      "path": "/privacy-policy/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 3,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 24008,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/seo-executive-assessment/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 63056,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 29717,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/seo-manager-assessment/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 63071,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 29532,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/seo-pricing/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 62632,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "18"
+      ],
+      "bodyBytes": 155434,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/seo-services-mumbai-google-ads-landing-page/",
+      "family": "service-html-location-seo",
+      "reason": "location SEO Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 63697,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "22"
+      ],
+      "bodyBytes": 70570,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "family": "service-html-aeo",
+      "reason": "self-contained .dgs-aeo-page HTML widget",
+      "source": "live",
+      "wordpressId": 62373,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "19"
+      ],
+      "bodyBytes": 83374,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/ai-production-dubai-page/",
+      "family": "service-html-ai-video",
+      "reason": "self-contained AI video HTML widget",
+      "source": "live",
+      "wordpressId": 64236,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "9"
+      ],
+      "bodyBytes": 46565,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/ai-video-production-agency/",
+      "family": "service-html-ai-video",
+      "reason": "self-contained AI video HTML widget",
+      "source": "live",
+      "wordpressId": 40114,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "9"
+      ],
+      "bodyBytes": 79870,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/branding/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 40277,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "10"
+      ],
+      "bodyBytes": 51504,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/content-creation/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 40276,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "11"
+      ],
+      "bodyBytes": 48803,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "family": "service-html-llm",
+      "reason": "self-contained LLM SEO HTML widget",
+      "source": "live",
+      "wordpressId": 64285,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "3"
+      ],
+      "bodyBytes": 75385,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/geo/",
+      "family": "service-html-geo",
+      "reason": "self-contained GEO HTML widget",
+      "source": "live",
+      "wordpressId": 62317,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "21"
+      ],
+      "bodyBytes": 49293,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "family": "service-html-llm",
+      "reason": "self-contained LLM SEO HTML widget",
+      "source": "live",
+      "wordpressId": 62322,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "20"
+      ],
+      "bodyBytes": 58282,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/performance-marketing/",
+      "family": "service-html-performance",
+      "reason": "self-contained #dgs-performance-page HTML widget",
+      "source": "live",
+      "wordpressId": 64616,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "26"
+      ],
+      "bodyBytes": 59257,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/seo-service-in-banglore/",
+      "family": "service-html-location-seo",
+      "reason": "location SEO Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64528,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "3"
+      ],
+      "bodyBytes": 87478,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/seo-service-in-gurugram/",
+      "family": "service-html-location-seo",
+      "reason": "location SEO Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64543,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "3"
+      ],
+      "bodyBytes": 87468,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/seo-service-pune/",
+      "family": "service-html-location-seo",
+      "reason": "location SEO Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64509,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "3"
+      ],
+      "bodyBytes": 87584,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/seo-services-in-hyderabad/",
+      "family": "service-html-location-seo",
+      "reason": "location SEO Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64533,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "3"
+      ],
+      "bodyBytes": 87713,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/seo-services-in-mumbai/",
+      "family": "service-html-location-seo",
+      "reason": "location SEO Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 40278,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "3"
+      ],
+      "bodyBytes": 100765,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/shirdi-se-sai-tak-case-study/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 64259,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "9"
+      ],
+      "bodyBytes": 27281,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/social-media-marketing/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 40112,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "4"
+      ],
+      "bodyBytes": 84908,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/website-development-amc/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 41418,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "6"
+      ],
+      "bodyBytes": 81797,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/website-development-pune-page/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 65132,
+      "type": "services",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "28"
+      ],
+      "bodyBytes": 93857,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/sitemap/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 39184,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 124362,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/social-media-executive/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 65276,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 31350,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/thank-you/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 62421,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 4025,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/us-landing-page/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 63974,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [],
+      "bodyBytes": 47097,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/website-development-services-in-mumbai-dgenius-solutions/",
+      "family": "service-html-widget-other",
+      "reason": "self-contained Elementor HTML widget with inline CSS",
+      "source": "live",
+      "wordpressId": 63786,
+      "type": "page",
+      "needsThemeCss": false,
+      "fluentFormIds": [
+        "25"
+      ],
+      "bodyBytes": 53656,
+      "cssFileCount": 0
+    },
+    {
+      "path": "/services/",
+      "family": "service-archive",
+      "reason": "live CPT archive post-type-archive-services",
+      "source": "live",
+      "wordpressId": 0,
+      "type": "page",
+      "needsThemeCss": true,
+      "fluentFormIds": [],
+      "bodyBytes": 46025,
+      "cssFileCount": 32
+    }
+  ],
+  "errors": [],
+  "uniqueCssFiles": [
+    {
+      "file": "1e6588776c77.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/ccce965395754d18bc27bc84bbdae62b.css",
+      "bytes": 9839
+    },
+    {
+      "file": "680e44d641e5.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/15e454bade3648b7b279d254d0d2346a.css",
+      "bytes": 3926
+    },
+    {
+      "file": "2c995785d0e3.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/07a6632f51518049ff11dfa991fa0a01.css",
+      "bytes": 104010
+    },
+    {
+      "file": "41b5f6c0515e.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/2ded875a6b03bd7f4f442f2c69c57cf3.css",
+      "bytes": 5543
+    },
+    {
+      "file": "6ddefd38268e.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/55db73dc7ea71a156a6cd6ff480bf2c5.css",
+      "bytes": 690
+    },
+    {
+      "file": "95a98729f055.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/07b29447004b527c321160ca2b444aff.css",
+      "bytes": 229123
+    },
+    {
+      "file": "14d776c2d94f.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/829246c033412b2519bb0957ffcf3253.css",
+      "bytes": 4133
+    },
+    {
+      "file": "bb658e64045d.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/99ecd11c59bbff172528b78b915aa523.css",
+      "bytes": 59142
+    },
+    {
+      "file": "99c9411112db.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/cd23b0ee906568ccb9e7f226365043d7.css",
+      "bytes": 32053
+    },
+    {
+      "file": "6eac37c48466.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/14493dc0078950dfd2dd1d7b80941550.css",
+      "bytes": 67937
+    },
+    {
+      "file": "a9846b2c2630.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/92188f2ba2b696cb4e1fb0cdef8c5917.css",
+      "bytes": 44696
+    },
+    {
+      "file": "9d3957bb9ef5.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/49897f3721c5c2e86d64b12940462135.css",
+      "bytes": 10835
+    },
+    {
+      "file": "5f05de11f520.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/f958aa85e6e75cae41250dd39ef2a45d.css",
+      "bytes": 55
+    },
+    {
+      "file": "c2ba528d631d.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/c6e3efff0471cc42ef9631d0e9c1cf1b.css",
+      "bytes": 22738
+    },
+    {
+      "file": "908ec682ac5f.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/73b685d4d7f6524823777f25c9ecd963.css",
+      "bytes": 340399
+    },
+    {
+      "file": "2c78ba151984.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/b523b6f37e054497474cdb44ce8d59c4.css",
+      "bytes": 85479
+    },
+    {
+      "file": "bfa4dd0f313f.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/cab337eafb962c082b67801698b805a3.css",
+      "bytes": 54819
+    },
+    {
+      "file": "dc57be62d8a6.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/076eb2e9ef6cbe203a4f663d15ec4e02.css",
+      "bytes": 10373
+    },
+    {
+      "file": "0507931e3ce0.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/b49b20328bbbaac0ac378ef5355ce590.css",
+      "bytes": 6520
+    },
+    {
+      "file": "010ac4eceb9d.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/50ba1276b180af007b7f05a1283a5c1f.css",
+      "bytes": 220319
+    },
+    {
+      "file": "e7cc2ba634a7.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/cf3bee61dafb2d5838cd011f443dc758.css",
+      "bytes": 1680
+    },
+    {
+      "file": "fde2e22c393b.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/7ddd0e42d340bb705e194a9886665f3e.css",
+      "bytes": 312136
+    },
+    {
+      "file": "77ced9cca4a7.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/f2f38d56ac84d7cb63bee5c60c925444.css",
+      "bytes": 515
+    },
+    {
+      "file": "09b256b202fa.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/a7ab0839fa10ba8f6c4805b94c49e050.css",
+      "bytes": 1417
+    },
+    {
+      "file": "9550612de83c.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/cd26ed5f8b89293c305d0dddfb0d3099.css",
+      "bytes": 233
+    },
+    {
+      "file": "91494d08715c.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/911050191aed1aa5d99b02692058da33.css",
+      "bytes": 36866
+    },
+    {
+      "file": "baf9b06b1579.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/cbe39faee0063c346e05c6accf1ba02d.css",
+      "bytes": 44031
+    },
+    {
+      "file": "7bf8c8fd4a99.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/d1afe04e884a2d0791074701cef09efc.css",
+      "bytes": 3591
+    },
+    {
+      "file": "b32e6c4500fb.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/9e1433f829431852423cd149410dcece.css",
+      "bytes": 2605
+    },
+    {
+      "file": "70b09e2f7836.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/7264475e5e2ed82579e0ba85303a23ae.css",
+      "bytes": 4775
+    },
+    {
+      "file": "495f61f3836a.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/9d21cfe568b6f37aebc73b7b0285ab4a.css",
+      "bytes": 63867
+    },
+    {
+      "file": "af54f9db8dcf.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/02eb75b6c150542ba34d5007dea088d4.css",
+      "bytes": 2819
+    },
+    {
+      "file": "12be1df099f5.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/0db9285b1396ca26aa0c5e4233304798.css",
+      "bytes": 2490
+    },
+    {
+      "file": "35cac62bcd37.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/2c788131de476e5f8cbc3b7dfc2b1ff4.css",
+      "bytes": 22321
+    },
+    {
+      "file": "d5edd2ff6d1f.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/bd29c1e1cbb887e2473068efe9787a56.css",
+      "bytes": 19319
+    },
+    {
+      "file": "f68e889145cb.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/1887ae79f670598c339bede63e63ccdc.css",
+      "bytes": 560
+    },
+    {
+      "file": "4e645a2c6efd.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/a396fddcc8e93e3154c93ca79334b97f.css",
+      "bytes": 16193
+    },
+    {
+      "file": "196f351ce1a7.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/53e73218e30ef09a57250a4ff49a1885.css",
+      "bytes": 5486
+    },
+    {
+      "file": "ad1a06ea9863.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/2eb0a9e07d59e69f5ead0a463f4f6767.css",
+      "bytes": 41697
+    },
+    {
+      "file": "9213f7ef3bb0.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/d546be1697e5500e28bf3e6a3a00cd69.css",
+      "bytes": 65834
+    },
+    {
+      "file": "a017fe846153.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/d0c81912b2c07728096365971ab210a8.css",
+      "bytes": 20178
+    },
+    {
+      "file": "1f99b0449807.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/eb68623c6c39124dc7a2bfc862d16b07.css",
+      "bytes": 2342
+    },
+    {
+      "file": "f042f3243af9.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/1944517a36bf66c01f448e2582dfccc7.css",
+      "bytes": 4258
+    },
+    {
+      "file": "0052c3ad2cad.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/3f0749296f15683328dc62f77f4ebd9e.css",
+      "bytes": 17580
+    },
+    {
+      "file": "600dbed69bbc.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/0d49e90a58af6b0b07c25f974a21307e.css",
+      "bytes": 77
+    },
+    {
+      "file": "9e10b6992132.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/8fc698321732cf29bbd6e1a88cb871dc.css",
+      "bytes": 4482
+    },
+    {
+      "file": "51ba55682e4b.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/04127f8302bd42e5881afce62800ce49.css",
+      "bytes": 4825
+    },
+    {
+      "file": "373d22f41e49.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/2f0876f96ab6936c9f02665a32f9963d.css",
+      "bytes": 154
+    },
+    {
+      "file": "5cf6f67f33ad.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/44ec6a6e1b14d98c5ed4f7981d9acd32.css",
+      "bytes": 13982
+    },
+    {
+      "file": "9f2d2fcd8b6e.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/0901c4d59f4dd6b1fd9030ef3d6aea96.css",
+      "bytes": 7202
+    },
+    {
+      "file": "5a50bca13dc8.css",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/css/bc12a863810c4edc321b766d5f301081.css",
+      "bytes": 13136
+    }
+  ]
+}

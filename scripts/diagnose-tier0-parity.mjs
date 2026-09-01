@@ -93,8 +93,22 @@ function meta(html, name) {
 }
 
 function extractArticleHtml(fullHtml) {
-  const match = fullHtml.match(/<article\b[^>]*data-migration-content[^>]*>([\s\S]*?)<\/article>/i);
-  return match?.[1] || "";
+  const startMatch = fullHtml.match(/<article\b[^>]*data-migration-content[^>]*>/i);
+  if (!startMatch || startMatch.index == null) return "";
+  const startIdx = startMatch.index + startMatch[0].length;
+  let depth = 1;
+  const re = /<\/?article\b[^>]*>/gi;
+  re.lastIndex = startIdx;
+  let match;
+  while ((match = re.exec(fullHtml))) {
+    if (match[0].startsWith("</")) {
+      depth -= 1;
+      if (depth === 0) return fullHtml.slice(startIdx, match.index);
+    } else {
+      depth += 1;
+    }
+  }
+  return fullHtml.slice(startIdx);
 }
 
 function extractHeadings(html) {

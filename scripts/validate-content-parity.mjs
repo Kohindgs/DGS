@@ -21,7 +21,7 @@ import {
   listApprovedHeadingNormalizations,
   textIsPresent,
 } from "./lib/content-parity.mjs";
-import { extractArticleHtml, extractHeadings, extractFaqItems, extractContextualLinks, normalizeText } from "./lib/tier0-parity-compare.mjs";
+import { extractArticleHtml, extractPageH1Html, extractHeadings, extractFaqItems, extractContextualLinks, normalizeText } from "./lib/tier0-parity-compare.mjs";
 
 const ROOT = process.cwd();
 const TARGET = new URL(process.env.MIGRATION_TARGET_URL || "http://127.0.0.1:3025");
@@ -95,10 +95,12 @@ for (const routePath of retainedRoutes) {
 
   const comparison = compareRenderedContent(expected, html, new URL(routePath, TARGET).href, routePath);
   const article = extractArticleHtml(html);
-  const pageH1Match = html.match(/<div class="container readable-copy"[^>]*>[\s\S]*?<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  const pageH1Html = extractPageH1Html(html);
   const renderedHeadings = extractHeadings(article || html);
-  if (pageH1Match) renderedHeadings.unshift({ level: "h1", text: pageH1Match[1].replace(/<[^>]+>/g, "") });
-  const renderedText = collapseComparableText(`${article || ""} ${pageH1Match?.[1] || ""}`);
+  if (pageH1Html && !renderedHeadings.some((h) => h.level === "h1")) {
+    renderedHeadings.unshift({ level: "h1", text: pageH1Html.replace(/<[^>]+>/g, "") });
+  }
+  const renderedText = collapseComparableText(`${article || ""} ${pageH1Html || ""}`);
 
   let routeOk = true;
 

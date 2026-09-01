@@ -481,6 +481,13 @@ test("activation, provenance, and data-submission enabled wiring", () => {
   assert.match(homeBridge, /fluentform_1/);
   assert.match(homeBridge, /renderRecaptchaV2/);
 
+  const innerBridge = readFileSync(path.join(ROOT, "components/forms/InnerFormBridge.tsx"), "utf8");
+  assert.match(innerBridge, /data-submission/);
+  assert.match(innerBridge, /\/api\/forms\/submit\//);
+  assert.match(innerBridge, /fluentform_\$\{definition\.fluentFormId\}/);
+  assert.match(innerBridge, /renderRecaptchaV2/);
+  assert.doesNotMatch(innerBridge, /normalizeHomepageBridgeFields/);
+
   const routeApi = readFileSync(path.join(ROOT, "app/api/forms/submit/route.ts"), "utf8");
   assert.match(routeApi, /validateClientSubmitPayload/);
   assert.match(routeApi, /forwardToFluentForms/);

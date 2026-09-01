@@ -2,20 +2,16 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { loadRouteRegistry, getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
-import { filterDuplicatePageH1Block } from "@/lib/migration/filter-page-h1-duplicate";
 import { slugToPath } from "@/lib/nextjs/path";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { assertProtectedRouteSearchPolicy } from "@/lib/migration/search-policy";
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
-import { resolvePageH1 } from "@/lib/migration/page-h1";
 import { getRetiredRoute } from "@/lib/migration/retired-routes";
 import { getRouteDecision, shouldExcludeFromStaticGeneration } from "@/lib/migration/route-decisions";
-import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 import { applyRankingLinkRestorations } from "@/lib/migration/ranking-link-restorations";
 import { applyTechnicalLinkCorrections } from "@/lib/migration/technical-link-corrections";
-import { InnerPageShell } from "@/components/templates/InnerPageShell";
-import { selectRelatedPosts, buildTitlePathIndex } from "@/lib/content/related-posts";
-import { buildPageBreadcrumbs, resolveInnerPageVariant } from "@/lib/navigation/page-breadcrumbs";
+import { InnerWpMirrorPage } from "@/components/mirror/InnerWpMirrorPage";
+import { buildPageBreadcrumbs } from "@/lib/navigation/page-breadcrumbs";
 
 export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
@@ -72,7 +68,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
     });
   }
 
-  const registry = await loadRouteRegistry();
   const blocks = (await loadContentBlocks())[path]?.blocks || [];
   const restoredBlocks = applyTechnicalLinkCorrections(
     path,
@@ -80,23 +75,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   );
   const breadcrumbs = buildPageBreadcrumbs(path, route);
   const schemaBlocks = buildRouteSchemas({ route, path, blocks: restoredBlocks, breadcrumbs });
-  const pageH1 = resolvePageH1(route, restoredBlocks);
-  const contentBlocks = filterDuplicatePageH1Block(restoredBlocks, pageH1);
-  const variant = resolveInnerPageVariant(path, route.wordpressType);
-  const contactFormDefinition = path === "/contact-us/" ? getFormDefinitionForRoute("/contact-us/") : null;
 
-  return (
-    <InnerPageShell
-      route={route}
-      path={path}
-      pageH1={pageH1}
-      variant={variant}
-      breadcrumbs={breadcrumbs}
-      contentBlocks={contentBlocks}
-      schemaBlocks={schemaBlocks}
-      relatedPosts={variant === "blog" ? selectRelatedPosts(registry.routes, path) : []}
-      contactFormDefinition={contactFormDefinition}
-      hrefByTitle={variant === "blog-archive" || variant === "listing" ? buildTitlePathIndex(registry.routes) : {}}
-    />
-  );
+  return <InnerWpMirrorPage path={path} wordpressId={route.wordpressId} schemaBlocks={schemaBlocks} />;
 }

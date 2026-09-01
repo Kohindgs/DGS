@@ -1,9 +1,9 @@
 import { Metadata } from "next";
-import { loadRouteRegistry, getRouteByPath } from "@/lib/nextjs/routes";
+import { getRouteByPath } from "@/lib/nextjs/routes";
+import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { organizationSchema, breadcrumbSchema } from "@/lib/schema/builders";
-import { readFile } from "node:fs/promises";
-import { ServicesArchiveTemplate } from "@/components/templates/ServicesArchiveTemplate";
+import { buildRouteSchemas } from "@/lib/schema/page-schemas";
+import { InnerWpMirrorPage } from "@/components/mirror/InnerWpMirrorPage";
 
 export async function generateMetadata(): Promise<Metadata> {
   const route = await getRouteByPath("/services/");
@@ -27,38 +27,20 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ServicesArchivePage() {
   const route = await getRouteByPath("/services/");
-  const registry = await loadRouteRegistry();
-
-  const wpServices: Array<{ path: string }> = JSON.parse(
-    await readFile("data/wordpress/normalized/services.json", "utf8"),
-  );
-  const wpOrder = new Map<string, number>(wpServices.map((s, idx) => [s.path, idx]));
-
-  const services = registry.routes
-    .filter((r) => r.wordpressType === "service" && (r.proposedAction === "KEEP_SAME_URL" || r.proposedAction === "PROTECTED"))
-    .sort((a, b) => (wpOrder.get(a.path) ?? Number.MAX_SAFE_INTEGER) - (wpOrder.get(b.path) ?? Number.MAX_SAFE_INTEGER));
-
-  const description = route?.description || "";
+  const path = "/services/";
+  const blocks = (await loadContentBlocks())[path]?.blocks || [];
   const breadcrumbs = [
     { name: "Home", path: "/" },
     { name: "Services", path: "/services/" },
   ];
-
-  const schemaBlocks = [
-    organizationSchema({
-      name: "D'Genius Solutions",
-      url: "https://www.dgeniussolutions.com",
-      id: "https://www.dgeniussolutions.com/#organization",
-    }),
-    breadcrumbSchema(breadcrumbs),
-  ];
+  const schemaBlocks = route
+    ? buildRouteSchemas({ route, path, blocks, breadcrumbs })
+    : [];
 
   return (
-    <ServicesArchiveTemplate
-      heading={route?.h1 || "Archives: Services"}
-      description={description}
-      services={services}
-      breadcrumbs={breadcrumbs}
+    <InnerWpMirrorPage
+      path={path}
+      wordpressId={route?.wordpressId || 0}
       schemaBlocks={schemaBlocks}
     />
   );

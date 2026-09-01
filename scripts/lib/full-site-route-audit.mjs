@@ -1,6 +1,7 @@
 import {
   canonicalFromHtml,
   extractArticleHtml,
+  extractPageH1Html,
   extractContextualLinks,
   extractFaqItems,
   extractHeadings,
@@ -63,8 +64,8 @@ export const CONTENT_STATUSES = [
   "NOT_APPLICABLE",
 ];
 
-/** Approved native Next routes — not compared against WordPress block parity. */
-export const INTENTIONALLY_NATIVE_PATHS = new Set(["/portfolio/", "/services/"]);
+/** WordPress-mirrored routes are compared against WordPress block parity. */
+export const INTENTIONALLY_NATIVE_PATHS = new Set();
 
 const NON_RETAINED_MIGRATION_CLASSES = new Set([
   "301_REDIRECT",
@@ -102,8 +103,8 @@ export function cleanPath(input, base = "https://www.dgeniussolutions.com") {
 }
 
 function extractPageH1Text(html) {
-  const match = html.match(/<div class="container readable-copy"[^>]*>[\s\S]*?<h1[^>]*>([\s\S]*?)<\/h1>/i);
-  return match ? normalizeHeadingText(match[1]) : "";
+  const raw = extractPageH1Html(html);
+  return raw ? normalizeHeadingText(raw) : "";
 }
 
 function isTrackableInternalHref(href) {
@@ -410,11 +411,19 @@ export async function auditRetainedHtml({
   const hasFooter = /<footer\b/i.test(html);
   const hasArticle = Boolean(article);
   const isHome = path === "/";
-  const usesWpMirror = /dgs-wp-mirror-home|HomeWpMirrorPage/i.test(html) || /class="dgs-wp-mirror-home"/.test(html);
+  const usesWpMirror =
+    /dgs-wp-mirror-home|dgs-wp-mirror-inner|HomeWpMirrorPage|InnerWpMirrorPage/i.test(html) ||
+    /class="dgs-wp-mirror-home"|class="dgs-wp-mirror-inner"/.test(html);
 
   if (!isHome && !hasArticle) failures.push("missing data-migration-content article marker");
   if (isHome && !usesWpMirror) failures.push("homepage missing WP mirror root");
-  if (!isHome && h1s.length < 1) failures.push("missing H1");
+  if (!isHome && h1s.length < 1) {
+    if (path === "/contact-us/") {
+      warnings.push("contact page has no H1 (matches live WordPress)");
+    } else {
+      failures.push("missing H1");
+    }
+  }
   if (!isHome && registryRoute?.h1 && h1s[0] && h1s[0].text !== registryRoute.h1) {
     warnings.push(`H1 text differs from registry: "${h1s[0].text}"`);
   }

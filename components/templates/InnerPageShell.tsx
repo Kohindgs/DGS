@@ -1,3 +1,8 @@
+/**
+ * Invented Phase 3B inner-page chrome. Not used on live routes.
+ * Inner pages render WordPress markup via InnerWpMirrorPage instead.
+ * Retained only as a reference for the rejected shared Next.js shell.
+ */
 import type { ReactNode } from "react";
 import type { ContentBlock } from "@/lib/content/types";
 import type { RouteRecord } from "@/lib/nextjs/routes";

@@ -1,0 +1,63 @@
+/* Inner-page WordPress mirror: appearance only, no Elementor/plugin runtime. */
+
+html {
+  background-color: #020202;
+}
+
+body {
+  margin: 0;
+  background-color: #020202;
+  color: #d2d2cf;
+}
+
+.dgs-wp-mirror-inner {
+  min-height: 40vh;
+}
+
+.dgs-wp-mirror-inner img,
+.dgs-wp-mirror-inner video {
+  max-width: 100%;
+  height: auto;
+}
+
+.dgs-wp-mirror-inner iframe {
+  max-width: 100%;
+}
+
+/* Empty cmsmasters chrome leftover from live slice — do not invent a hero. */
+.dgs-wp-mirror-inner .cmsmasters-header:empty,
+.dgs-wp-mirror-inner header.cmsmasters-header:not(:has(*)) {
+  display: none;
+}
+
+/* Envira without Envira JS: keep images visible in their existing markup. */
+.dgs-wp-mirror-inner .envira-gallery-wrap,
+.dgs-wp-mirror-inner .envira-gallery-public,
+.dgs-wp-mirror-inner .envira-gallery-0,
+.dgs-wp-mirror-inner .envira-gallery {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dgs-wp-mirror-inner .envira-gallery-item,
+.dgs-wp-mirror-inner .envira-gallery-item-inner,
+.dgs-wp-mirror-inner .envira-gallery-image-container {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dgs-wp-mirror-inner .envira-gallery-image,
+.dgs-wp-mirror-inner .envira-gallery img {
+  display: block !important;
+  width: 100%;
+  height: auto;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* LiteSpeed/lazy placeholders should already be rewritten; keep hidden clones hidden. */
+.dgs-wp-mirror-inner img[data-lazyloaded][src^="data:image"] {
+  display: none;
+}

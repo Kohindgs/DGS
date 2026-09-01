@@ -37,6 +37,7 @@ tar -czf "$TARBALL" \
   components \
   data \
   lib \
+  public \
   middleware.ts \
   next.config.ts \
   next-env.d.ts \

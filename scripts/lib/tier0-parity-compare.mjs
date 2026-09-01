@@ -119,8 +119,32 @@ export function titleFromHtml(html) {
 }
 
 export function extractArticleHtml(fullHtml) {
-  const match = fullHtml.match(/<article\b[^>]*data-migration-content[^>]*>([\s\S]*?)<\/article>/i);
-  return match?.[1] || "";
+  const startMatch = fullHtml.match(/<article\b[^>]*data-migration-content[^>]*>/i);
+  if (!startMatch || startMatch.index == null) return "";
+  const startIdx = startMatch.index + startMatch[0].length;
+  let depth = 1;
+  const re = /<\/?article\b[^>]*>/gi;
+  re.lastIndex = startIdx;
+  let match;
+  while ((match = re.exec(fullHtml))) {
+    if (match[0].startsWith("</")) {
+      depth -= 1;
+      if (depth === 0) return fullHtml.slice(startIdx, match.index);
+    } else {
+      depth += 1;
+    }
+  }
+  return fullHtml.slice(startIdx);
+}
+
+export function extractPageH1Html(html) {
+  const readable = html.match(/<div class="container readable-copy"[^>]*>[\s\S]*?<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
+  if (readable) return readable[1];
+  const article = extractArticleHtml(html);
+  const scoped = article.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
+  if (scoped) return scoped[1];
+  const any = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
+  return any?.[1] || "";
 }
 
 export function extractHeadings(html) {
