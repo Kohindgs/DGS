@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "approvedAt": "2026-08-29T14:35:00.000Z",
+  "policy": "Phase 1E approved technical link corrections for non-protected routes. Anchor text is preserved. CASE A/B destinations use verified WordPress redirects or canonical Next routes. CASE C removes href only when WordPress source is 404/410 with no authoritative redirect.",
+  "corrections": [
+    {
+      "path": "/aeo-dubai/",
+      "anchor": "website development",
+      "wordpressDestination": "/services/website-development/",
+      "requiredNextDestination": "/services/website-development-amc/",
+      "classification": "B",
+      "reason": "WordPress 301 to website-development-amc"
+    },
+    {
+      "path": "/blogs/ai-content-optimization/",
+      "anchor": "generative AI services",
+      "wordpressDestination": "/services/generative-ai/",
+      "requiredNextDestination": "/services/ai-video-production-agency/",
+      "classification": "B",
+      "reason": "WordPress 301 to ai-video-production-agency"
+    },
+    {
+      "path": "/blogs/ai-video-production-for-business/",
+      "anchor": "AEO Services",
+      "wordpressDestination": "/services/answer-engine-optimization-aeo-service/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
+    },
+    {
+      "path": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "anchor": "Website Development Services",
+      "wordpressDestination": "/services/website-development/",
+      "requiredNextDestination": "/services/website-development-amc/",
+      "classification": "B"
+    },
+    {
+      "path": "/blogs/content-writing-for-seo/",
+      "anchor": "AEO Services",
+      "wordpressDestination": "/services/aeo-services/",
+      "requiredNextDestination": "/services/aeo-services-in-mumbai/",
+      "classification": "B",
+      "reason": "WordPress 301 to aeo-services-in-mumbai"
+    },
+    {
+      "path": "/blogs/content-writing-for-seo/",
+      "anchor": "Website Development Services",
+      "wordpressDestination": "/services/website-development/",
+      "requiredNextDestination": "/services/website-development-amc/",
+      "classification": "B"
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "anchor": "AI-driven search results",
+      "wordpressDestination": "/services/generative-ai/",
+      "requiredNextDestination": "/services/ai-video-production-agency/",
+      "classification": "B"
+    },
+    {
+      "path": "/blogs/google-ranking-fixes/",
+      "anchor": "content creation",
+      "wordpressDestination": "/services/content-creation-agency-mumbai/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
+    },
+    {
+      "path": "/blogs/google-ranking-fixes/",
+      "anchor": "content creation services",
+      "wordpressDestination": "/services/content-creation-agency-mumbai/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
+    },
+    {
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "wordpressDestination": "/services/llm-seo-services/",
+      "requiredNextDestination": "/services/llm-seo-service/",
+      "classification": "B",
+      "reason": "WordPress 301 to llm-seo-service"
+    },
+    {
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "wordpressDestination": "/services/digital-marketing-services/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination 404"
+    },
+    {
+      "path": "/blogs/website-development-leads/",
+      "anchor": "Website Development",
+      "wordpressDestination": "/services/website-development/",
+      "requiredNextDestination": "/services/website-development-amc/",
+      "classification": "B"
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "anchor": "LLM SEO services",
+      "wordpressDestination": "/services/llm-seo-services-in-mumbai/",
+      "requiredNextDestination": "/services/llm-seo-service/",
+      "classification": "B"
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "anchor": "GEO services",
+      "wordpressDestination": "/services/generative-engine-optimization-services-in-mumbai/",
+      "requiredNextDestination": "/services/geo/",
+      "classification": "B"
+    },
+    {
+      "path": "/blogs/ai-readiness-for-websites/",
+      "wordpressDestination": "/services/generative-ai/",
+      "requiredNextDestination": "/services/ai-video-production-agency/",
+      "classification": "B"
+    },
+    {
+      "path": "/sitemap/",
+      "wordpressDestination": "/services/generative-ai/",
+      "requiredNextDestination": "/services/ai-video-production-agency/",
+      "classification": "B"
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "wordpressDestination": "/services/ecommerce-seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/ecommerce-seo/ returns HTTP 404 with no authoritative redirect"
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "wordpressDestination": "/services/real-estate-seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/real-estate-seo/ returns HTTP 404 with no authoritative redirect"
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "wordpressDestination": "/services/education-seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/education-seo/ returns HTTP 404 with no authoritative redirect"
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "wordpressDestination": "/services/finance-seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/finance-seo/ returns HTTP 404 with no authoritative redirect"
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "wordpressDestination": "/services/hospitality-seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/hospitality-seo/ returns HTTP 404 with no authoritative redirect"
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "wordpressDestination": "/services/saas-seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/saas-seo/ returns HTTP 404 with no authoritative redirect"
+    }
+  ]
+}

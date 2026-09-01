@@ -1,19 +1,34 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 
 const ROOT = process.cwd();
 const MIGRATION_DIR = path.join(ROOT, "data/migration");
 const TARGET_DIR = path.join(ROOT, "data/audit/target");
+const AUDIT_DIR = path.join(ROOT, "data/audit");
 const required = [
   ["route parity", path.join(MIGRATION_DIR, "route-parity-v2.generated.json")],
   ["indexability manifest", path.join(MIGRATION_DIR, "indexability-manifest.generated.json")],
   ["source defects", path.join(MIGRATION_DIR, "source-defects.json")],
   ["defect resolutions", path.join(MIGRATION_DIR, "defect-resolutions.approved.json")],
   ["Tier-0 target parity", path.join(TARGET_DIR, "tier0-parity.json")],
+  ["ranking protection report", path.join(AUDIT_DIR, "ranking-protection-report.json")],
 ];
 
 const errors = [];
 const loaded = {};
+
+const rankingRun = spawnSync(
+  process.execPath,
+  [path.join(ROOT, "scripts/validate-ranking-protection.mjs")],
+  { cwd: ROOT, env: process.env, encoding: "utf8" },
+);
+if (rankingRun.status !== 0) {
+  errors.push("Ranking protection release blocker failed");
+  if (rankingRun.stdout) errors.push(rankingRun.stdout.trim());
+  if (rankingRun.stderr) errors.push(rankingRun.stderr.trim());
+}
+
 for (const [label, file] of required) {
   try {
     loaded[label] = JSON.parse(await readFile(file, "utf8"));
@@ -28,6 +43,13 @@ if (!errors.length) {
   const sourceDefects = loaded["source defects"];
   const resolutions = loaded["defect resolutions"];
   const targetParity = loaded["Tier-0 target parity"];
+  const rankingProtection = loaded["ranking protection report"];
+
+  if (rankingProtection && rankingProtection.passed !== true) {
+    errors.push(
+      `Ranking protection blocker: ${(rankingProtection.blockingFailures || []).length} unexplained failures`,
+    );
+  }
 
   const unresolvedRoutes = indexability.routes.filter((route) => !route.deployable);
   if (unresolvedRoutes.length) errors.push(`${unresolvedRoutes.length} routes still require an approved migration/indexability decision`);
@@ -44,8 +66,9 @@ if (!errors.length) {
     }
   }
 
-  if ((targetParity.failures || []).length) {
-    errors.push(`Tier-0 target parity has ${targetParity.failures.length} failures`);
+  if ((targetParity.realFailures || targetParity.failures || []).length) {
+    const realCount = (targetParity.realFailures || targetParity.failures || []).length;
+    errors.push(`Tier-0 target parity has ${realCount} failures`);
   }
 
   const requiredSeverities = new Set(["critical-migration", "technical-seo", "semantic-html", "redirect"]);

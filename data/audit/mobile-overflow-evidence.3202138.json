@@ -1,0 +1,494 @@
+{
+  "sourceCommit": "3202138fd5b5dedf3db1946693dd6a6445427ef2",
+  "sourceReportGeneratedAt": "2026-08-31T18:39:09.062Z",
+  "capturedAt": "2026-08-31T18:39:09.062Z",
+  "captureStartedAtMs": 1788201374365,
+  "sourceCommitTimestampMs": 1788201294000,
+  "viewports": [
+    "390x844",
+    "430x932"
+  ],
+  "digest": "6d8fc1dba2a53acb35203c976e287937ed51bfb251c8abb807af6412240828f6",
+  "evidence": [
+    {
+      "path": "/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/about-us/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/aeo-dubai/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/australia-page/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/better-ceasons-case-study/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/3-3-3-rule-in-marketing/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/aeo-business/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-content-optimization/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-generated-summaries-in-search-ads/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-overview-ranking/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-overview-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-readiness-for-websites/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-search-behavior-2026/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-search-checklist-2026/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-video-production-cost-india/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-video-production-for-business/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/ai-video-vs-traditional-video/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/brand-visibility-in-ai-search/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/chatgpt-brand-visibility/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/content-strategy-for-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/content-writing-for-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/core-update-strategy/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/future-of-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/generative-engine-optimization-business/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/generative-engine-optimization/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/geo-vs-seo-google-ai-search/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-ads-vs-meta-ads/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-agentic-browsing/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-ai-overviews-image-generation/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-ai-search-update/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-algorithm-business/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-io-2026/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-ranking-fixes/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-search-console-social-media/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/google-spam-update/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/llm-seo-ai-search/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/llm-seo-services-mumbai/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/local-seo-business-growth/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/low-social-media-reach/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/modern-seo-business-growth/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/optimize-content-ai-search/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/optimize-for-ai-overviews/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/schema-seo-for-small-business/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/seo-friendly-website/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/seo-rankings-up-but-traffic-down/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/seo-services-india-2026/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/seo-strategies-business-growth/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/social-media-marketing-strategy/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/topical-authority-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/voice-search-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/website-development-leads/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/website-development-mistakes/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/website-development-quality-leads/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/website-performance-conversions/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/website-traffic-but-no-leads/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/career/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/case_studies/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/contact-us/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/motion-graphics/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/our-services/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/portfolio/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/privacy-policy/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/seo-pricing/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/ai-production-dubai-page/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/ai-video-production-agency/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/branding/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/content-creation/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/geo/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/performance-marketing/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/seo-service-in-banglore/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/seo-service-in-gurugram/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/seo-service-pune/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/seo-services-in-hyderabad/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/seo-services-in-mumbai/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/shirdi-se-sai-tak-case-study/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/social-media-marketing/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/website-development-amc/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/services/website-development-pune-page/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/sitemap/",
+      "390x844": false,
+      "430x932": false
+    },
+    {
+      "path": "/us-landing-page/",
+      "390x844": false,
+      "430x932": false
+    }
+  ]
+}

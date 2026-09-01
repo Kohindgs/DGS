@@ -24,18 +24,17 @@ export function buildRobotsManifest(): MetadataRoute.Robots {
     };
   }
 
+  const crawlRules = {
+    allow: "/",
+    disallow: DISALLOWED_PATHS,
+  };
+
   return {
     rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: DISALLOWED_PATHS,
-      },
-      {
-        userAgent: "OAI-SearchBot",
-        allow: "/",
-        disallow: DISALLOWED_PATHS,
-      },
+      { userAgent: "*", ...crawlRules },
+      { userAgent: "Googlebot", ...crawlRules },
+      { userAgent: "Bingbot", ...crawlRules },
+      { userAgent: "OAI-SearchBot", ...crawlRules },
     ],
     sitemap: `${siteConfig.url}/sitemap.xml`,
     host: siteConfig.url,

@@ -1,13 +1,21 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ContentBlock } from "@/lib/content/types";
 import { RichText } from "./RichText";
+import { RouteFormBlock } from "@/components/forms/RouteFormBlock";
+import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 
 type SemanticContentProps = {
   blocks: ContentBlock[];
   demoteSecondaryHeadings?: boolean;
+  route?: string;
 };
 
-export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: SemanticContentProps) {
+export function SemanticContent({
+  blocks,
+  demoteSecondaryHeadings = false,
+  route,
+}: SemanticContentProps) {
   return (
     <div className="semantic-content">
       {blocks.map((block, index) => {
@@ -26,7 +34,7 @@ export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: Sem
             const Tag = `h${level}` as "h2" | "h3" | "h4" | "h5" | "h6";
             return (
               <Tag key={key} id={block.id}>
-                {block.text}
+                {block.href ? <Link href={block.href}>{block.text}</Link> : block.text}
               </Tag>
             );
           }
@@ -107,9 +115,17 @@ export function SemanticContent({ blocks, demoteSecondaryHeadings = false }: Sem
           case "form":
             return (
               <div key={key} data-migration-form data-wordpress-form={block.wordpressForm}>
-                {block.inputs.map((input, i) => (
-                  <div key={i} data-migration-field={input.name || input.type || `field-${i}`} data-required={input.required ? "true" : "false"} />
-                ))}
+                {route && getFormDefinitionForRoute(route)?.activationEnabled ? (
+                  <RouteFormBlock route={route} />
+                ) : (
+                  block.inputs.map((input, i) => (
+                    <div
+                      key={i}
+                      data-migration-field={input.name || input.type || `field-${i}`}
+                      data-required={input.required ? "true" : "false"}
+                    />
+                  ))
+                )}
               </div>
             );
           case "table":
