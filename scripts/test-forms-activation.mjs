@@ -330,6 +330,54 @@ function simulateHomeFormBridgeActivation(html) {
   return $;
 }
 
+function homepageFormOverridesCss() {
+  return readFileSync(path.join(ROOT, "lib/wp-exact/wp-mirror-overrides.css"), "utf8");
+}
+
+function cssRule(css, selector) {
+  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = css.match(new RegExp(`${escaped}\\s*\\{([^}]+)\\}`));
+  return match ? match[1] : "";
+}
+
+test("homepage Service select keeps all five UI options and readable native popup text", () => {
+  const $ = cheerio.load(homepageFormSsrHtml());
+  const values = $("#fluentform_1 select[name='dropdown'] option")
+    .toArray()
+    .map((el) => $(el).attr("value"))
+    .filter((value) => value);
+  assert.deepEqual(values, ["SEO", "AEO", "GEO", "AI Video Production", "Website Development"]);
+
+  const css = homepageFormOverridesCss();
+  const closedSelect = cssRule(css, "#contact-form .dgs-v1215-form-shortcode select.ff-el-form-control");
+  assert.match(closedSelect, /color:\s*#fff\s*!important/);
+  assert.doesNotMatch(closedSelect, /option/);
+
+  const optionRule = cssRule(css, "#contact-form .dgs-v1215-form-shortcode select.ff-el-form-control option");
+  assert.match(optionRule, /color:\s*#111(?:111)?\s*!important/);
+  assert.match(optionRule, /background-color:\s*#fff(?:fff)?\s*!important/);
+});
+
+test("homepage submit cursor follows actual disabled state", () => {
+  const css = homepageFormOverridesCss();
+  const base = cssRule(css, "#contact-form .dgs-v1215-form-shortcode .ff-btn-submit");
+  assert.doesNotMatch(base, /cursor:\s*not-allowed/);
+  assert.doesNotMatch(base, /cursor:\s*pointer/);
+
+  const disabled = cssRule(css, "#contact-form .dgs-v1215-form-shortcode .ff-btn-submit:disabled");
+  assert.match(disabled, /cursor:\s*not-allowed\s*!important/);
+
+  const enabled = cssRule(css, "#contact-form .dgs-v1215-form-shortcode .ff-btn-submit:not(:disabled)");
+  assert.match(enabled, /cursor:\s*pointer\s*!important/);
+  assert.match(enabled, /opacity:\s*1\s*!important/);
+
+  const html = homepageFormSsrHtml();
+  const $ssr = cheerio.load(html);
+  assert.ok($ssr("#fluentform_1 button.ff-btn-submit").attr("disabled") != null);
+  const $bound = simulateHomeFormBridgeActivation(html);
+  assert.equal($bound("#fluentform_1 button.ff-btn-submit").attr("disabled"), undefined);
+});
+
 test("homepage SSR text fields are editable before hydration", () => {
   const html = homepageFormSsrHtml();
   assert.doesNotMatch(html, /\breadonly\b/);
