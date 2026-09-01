@@ -223,6 +223,16 @@ button {
   border-radius: var(--radius-md);
 }
 
+.semantic-content ul,
+.semantic-content ol {
+  padding-left: 1.2rem;
+}
+
+.semantic-table {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
 .home-portfolio {
   margin-block: var(--space-12);
 }

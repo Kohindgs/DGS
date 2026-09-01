@@ -6,6 +6,7 @@ import { SiteMenu } from "@/components/layout/SiteMenu";
 import { LetsTalkModal } from "@/components/layout/LetsTalkModal";
 import { ConditionalSiteChrome } from "@/components/layout/ConditionalSiteChrome";
 import { ScrollProvider } from "@/components/motion/ScrollProvider";
+import "@/components/templates/inner-page.css";
 
 export default function SiteChromeLayout({
   children,
