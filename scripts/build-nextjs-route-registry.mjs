@@ -101,11 +101,21 @@ for (const entry of registry) {
   entry.includeInSitemap = decision.includeInSitemap;
   if (decision.canonicalPath) {
     entry.canonical = `https://www.dgeniussolutions.com${decision.canonicalPath}`;
+    entry.desiredCanonicalPath = decision.canonicalPath;
   }
   if (decision.classification === "RETIRED_GONE") {
     entry.proposedAction = "RETIRE_REVIEW";
     entry.indexable = false;
     entry.includeInSitemap = false;
+  } else if (decision.indexable === true) {
+    entry.proposedAction = "KEEP_SAME_URL";
+    const wp = wpByPath.get(entry.path);
+    if (wp) {
+      if (wp.title) entry.title = wp.title;
+      const wpH1 = wp.headings?.find((heading) => heading.level === "h1")?.text;
+      if (wpH1) entry.h1 = wpH1;
+      if (wp.headings?.length) entry.headings = wp.headings;
+    }
   } else if (decision.indexable === false) {
     entry.proposedAction = "KEEP_SAME_URL";
   }

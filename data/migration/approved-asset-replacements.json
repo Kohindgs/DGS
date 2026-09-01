@@ -1,0 +1,46 @@
+{
+  "version": "2B.1A",
+  "social": {
+    "defaultShareImage": {
+      "localPath": "/images/social/dgs-default-share.png",
+      "sourceLogoUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO.png",
+      "sourceLogoSha256": "0b4dd1b64ff83158caaff9413885e37fcabbb252f02a645320061cc8e00f19d9",
+      "sourceLogoWidth": 512,
+      "sourceLogoHeight": 512,
+      "sourceLogoMime": "image/png",
+      "width": 1200,
+      "height": 630,
+      "mime": "image/png",
+      "sha256": "88ca56b4b25877e682d8f0fce291a4486d1e41aea58b468be81a23239d3789c5"
+    },
+    "productionUrl": "https://www.dgeniussolutions.com/images/social/dgs-default-share.png",
+    "productionHostname": "www.dgeniussolutions.com"
+  },
+  "replacements": [
+    {
+      "id": "weavings-mshots-64820",
+      "routes": [
+        "/services/website-development-amc/",
+        "/services/website-development-pune-page/"
+      ],
+      "match": {
+        "type": "mshots",
+        "pattern": "s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F"
+      },
+      "replacement": {
+        "localPath": "/images/case-studies/weavings-home-page-64820.png",
+        "sourceLocalPath": "/images/case-studies/weavings-home-page-64820-source.png",
+        "wordpressMediaId": 64820,
+        "sourceUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Weavings-Home-page-.png?v=20260707-header-visible",
+        "alt": "Live preview of Weavings website",
+        "mime": "image/png",
+        "sourceSha256": "7162b0d1a00abf0d579434bb5c6919316b924b306a5183476dcebdcaf3e8c5a9",
+        "sourceWidth": 1600,
+        "sourceHeight": 779,
+        "presentationSha256": "261c52a5b21c6a744b107a247acb26f3909793e0d01ecbd89dd7c2dc724745f8",
+        "width": 1600,
+        "height": 1000
+      }
+    }
+  ]
+}

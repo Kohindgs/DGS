@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-08-29T17:02:16.928Z",
+  "sources": {
+    "publicDimgrey": {
+      "url": "https://dimgrey-goat-473970.hostingersite.com/robots.txt",
+      "status": 200,
+      "body": "User-agent: Googlebot\nDisallow: /\n\nUser-agent: *\nAllow: /\n",
+      "googlebotDisallowRoot": true
+    },
+    "localStagingApp": {
+      "url": "http://127.0.0.1:3025/robots.txt",
+      "status": 200,
+      "body": "User-Agent: *\nAllow: /\n\n",
+      "note": "origin app output",
+      "googlebotDisallowRoot": false
+    },
+    "repositoryStagingSimulation": {
+      "env": "DGS_PUBLIC_INDEXING unset/false",
+      "body": "User-agent: *\nAllow: /",
+      "googlebotDisallowRoot": false
+    },
+    "repositoryProductionSimulation": {
+      "env": "DGS_PUBLIC_INDEXING=true",
+      "body": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Googlebot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Bingbot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nSitemap: https://www.dgeniussolutions.com/sitemap.xml\nHost: https://www.dgeniussolutions.com",
+      "googlebotDisallowRoot": false
+    },
+    "productionWordPressReference": {
+      "url": "https://www.dgeniussolutions.com/robots.txt",
+      "status": 200,
+      "body": "# D'Genius Solutions robots.txt\n# Generated through functions.php. Do not duplicate this in a physical robots.txt file.\n\nUser-agent: *\nAllow: /\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\nDisallow: /wp-login.php\nDisallow: /*?preview=true\nDisallow: /*?elementor-preview=\nDisallow: /*?s=\nDisallow: /wp-content/uploads/wpo-plugins-tables-list.json\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nSitemap: https://www.dgeniussolutions.com/sitemap_index.xml\n",
+      "googlebotDisallowRoot": false
+    }
+  },
+  "findings": {
+    "googlebotDisallowReproducedOnDimgrey": true,
+    "googlebotDisallowInRepositorySource": false,
+    "classification": "HOSTINGER_OR_CDN_INJECTION — not present in Next.js robots-policy.ts",
+    "productionGooglebotCrawlableInRepoSimulation": true,
+    "oaiSearchBotCrawlableInRepoSimulation": true
+  }
+}

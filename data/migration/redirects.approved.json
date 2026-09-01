@@ -28,6 +28,10 @@
     { "source": "/us/", "destination": "/us-landing-page/", "statusCode": 301, "reason": "US landing alias" },
     { "source": "/index.php/", "destination": "/", "statusCode": 301, "reason": "WordPress index alias" },
     { "source": "/home/", "destination": "/", "statusCode": 301, "reason": "Home alias" },
-    { "source": "/website-development-services-in-mumbai-dgenius-solutions/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "Legacy website development slug; authoritative service is website-development-amc" }
+    { "source": "/website-development-services-in-mumbai-dgenius-solutions/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "Legacy website development slug; authoritative service is website-development-amc" },
+    { "source": "/services/website-development/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "WordPress legacy slug; authoritative website development service is website-development-amc" },
+    { "source": "/services/generative-ai/", "destination": "/services/ai-video-production-agency/", "statusCode": 301, "reason": "WordPress legacy slug; generative AI service canonical is ai-video-production-agency" },
+    { "source": "/services/llm-seo-services/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "WordPress legacy plural slug alias" },
+    { "source": "/services/aeo-services/", "destination": "/services/aeo-services-in-mumbai/", "statusCode": 301, "reason": "WordPress legacy short AEO slug alias" }
   ]
 }

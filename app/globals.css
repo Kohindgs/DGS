@@ -67,11 +67,15 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 body {
   background: #020202;
   color: #d2d2cf;
+  overflow-x: clip;
+  max-width: 100%;
   font-family: var(--font-body), system-ui, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
@@ -158,6 +162,13 @@ button {
 
 .page-main {
   padding-block: var(--section-y);
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.semantic-content-wrap {
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 .page-breadcrumbs {

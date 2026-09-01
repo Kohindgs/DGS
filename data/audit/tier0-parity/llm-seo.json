@@ -1,0 +1,815 @@
+{
+  "path": "/services/llm-seo-service/",
+  "slug": "llm-seo",
+  "checkedAt": "2026-08-29T07:45:49.825Z",
+  "target": "http://127.0.0.1:3025",
+  "wordpressSource": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+  "httpStatus": 200,
+  "indexability": {
+    "robots": "noindex, nofollow",
+    "xRobotsTag": "noindex, nofollow, noarchive",
+    "hasNoindex": true,
+    "classification": "A",
+    "label": "EXPECTED_STAGING_NOINDEX",
+    "expectStagingNoindex": true
+  },
+  "canonical": {
+    "next": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "nextPath": "/services/llm-seo-service/",
+    "desiredPath": "/services/llm-seo-service/",
+    "wordpressObservedPath": "/services/llm-seo-service/",
+    "selfCanonical": true
+  },
+  "schemaTypes": [
+    "BreadcrumbList",
+    "ImageObject",
+    "ListItem",
+    "Organization",
+    "PostalAddress",
+    "Service",
+    "WebPage",
+    "WebSite"
+  ],
+  "content": {
+    "hashMatch": false,
+    "sourceSha256": "bef3be0e7642cfe489c7df82664720d33e62e5f15874a88e275c9be28fa0e14e",
+    "targetSha256": "e7c31d0816cd27240a90d061e571aa9e8106e159f6e0fd3b79cf1c3a68cffc7a",
+    "headings": {
+      "missing": [],
+      "extra": [],
+      "textDifferences": [],
+      "order": {
+        "orderChanged": false,
+        "sourceOrder": [
+          "h1:LLM SEO Services in Mumbai for AI Search Visibility",
+          "h2:Recognized for SEO, Content & Performance Marketing",
+          "h3:Best Place to Work",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h2:What Are LLM SEO Services?",
+          "h3:How LLM SEO Services Help Brands Appear in AI Answers",
+          "h3:LLM SEO Services for ChatGPT Gemini and Perplexity",
+          "h3:LLM SEO Services for Mumbai Businesses",
+          "h2:What Are LLM SEO Services?",
+          "h3:What LLM SEO Services Do",
+          "h3:What AI Systems Evaluate",
+          "h2:Results AI systems can actually pick up.",
+          "h2:How Our LLM SEO Services Build AI Visibility",
+          "h3:AI Citation Optimization",
+          "h3:SEO + AEO + GEO Alignment",
+          "h3:SEO for AI Models",
+          "h3:Rank in search engines",
+          "h3:Appear in AI answers",
+          "h3:Reinforce authority across platforms",
+          "h2:How D'Genius Solutions Approaches LLM SEO",
+          "h3:Authority-Driven Content Architecture",
+          "h3:Conversational Query Mapping",
+          "h3:Structured Entity Optimization",
+          "h3:Technical AI Readability",
+          "h3:AI Behavior Monitoring",
+          "h3:Conversion & Reporting Layer",
+          "h2:Real clients. Real outcomes.",
+          "h3:Ranked #1 on ChatGPT — 1.82M impressions with LLM-led visibility",
+          "h3:397 keywords to 8,645 — traffic grew 6× in under a year",
+          "h2:Brand Presence & Media Visibility.",
+          "h2:The Business Impact of LLM SEO Services",
+          "h2:Words from brands who trusted the process.",
+          "h2:Frequently Asked Questions",
+          "h2:Get Your Free LLM SEO Audit"
+        ],
+        "targetOrder": [
+          "h1:LLM SEO Services in Mumbai for AI Search Visibility",
+          "h2:Recognized for SEO, Content & Performance Marketing",
+          "h3:Best Place to Work",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h2:What Are LLM SEO Services?",
+          "h3:How LLM SEO Services Help Brands Appear in AI Answers",
+          "h3:LLM SEO Services for ChatGPT Gemini and Perplexity",
+          "h3:LLM SEO Services for Mumbai Businesses",
+          "h2:What Are LLM SEO Services?",
+          "h3:What LLM SEO Services Do",
+          "h3:What AI Systems Evaluate",
+          "h2:Results AI systems can actually pick up.",
+          "h2:How Our LLM SEO Services Build AI Visibility",
+          "h3:AI Citation Optimization",
+          "h3:SEO + AEO + GEO Alignment",
+          "h3:SEO for AI Models",
+          "h3:Rank in search engines",
+          "h3:Appear in AI answers",
+          "h3:Reinforce authority across platforms",
+          "h2:How D'Genius Solutions Approaches LLM SEO",
+          "h3:Authority-Driven Content Architecture",
+          "h3:Conversational Query Mapping",
+          "h3:Structured Entity Optimization",
+          "h3:Technical AI Readability",
+          "h3:AI Behavior Monitoring",
+          "h3:Conversion & Reporting Layer",
+          "h2:Real clients. Real outcomes.",
+          "h3:Ranked #1 on ChatGPT — 1.82M impressions with LLM-led visibility",
+          "h3:397 keywords to 8,645 — traffic grew 6× in under a year",
+          "h2:Brand Presence & Media Visibility.",
+          "h2:The Business Impact of LLM SEO Services",
+          "h2:Words from brands who trusted the process.",
+          "h2:Frequently Asked Questions",
+          "h2:Get Your Free LLM SEO Audit"
+        ]
+      }
+    },
+    "paragraphs": {
+      "missing": [],
+      "extra": [
+        "AI-First Agency — LLM SEO & Large Language Model Optimization",
+        "Structured Authority Frameworks AI Citation Optimization LLM Visibility Strategy",
+        "Call +91-99879 22901",
+        "WhatsApp",
+        "Updated: April 2026 · Reviewed for AI search, entity clarity, citation readiness, and internal linking",
+        "Awards & Recognition",
+        "Prime Insights · 2024",
+        "Corporate Connect · 2024-25",
+        "GLA · 2025",
+        "Proof of Performance",
+        "LLM SEO #1 on ChatGPT — Contract Staffing Mumbai",
+        "AEO Google AI Overview Ranking",
+        "AEO Featured Snippet Capture",
+        "GEO AI Overview Citation",
+        "GEO Perplexity AI Citation",
+        "Local SEO Google Maps Dominance",
+        "Our Approach",
+        "Case Studies",
+        "B2B Staffing",
+        "17.4K Clicks 1.82M Impressions #1 ChatGPT",
+        "View Full Case Study →",
+        "WM Weavings Manpower · Ongoing AI Visibility",
+        "Education Consultancy",
+        "95% KW Growth 6× Traffic 2.5× Backlinks",
+        "View Full Case Study →",
+        "TW TheWorldGrad · 4-year partnership SEO Growth",
+        "Brand Presence",
+        "Improved Brand Recall Your brand becomes consistently recognized within AI platforms whenever users ask relevant questions in your industry. Reduced Paid Dependency AI-based organic visibility reduces dependency on paid acquisition and drives sustainable inbound reach. Stronger Trust Positioning Being referenced by AI tools builds immediate credibility and authority perception before a user even visits your website. Higher-Quality Inbound Leads Users who discover your brand through AI recommendations arrive with higher purchase intent and pre-built trust. Sustainable Long-Term Visibility LLM SEO builds compounding authority that continues to drive visibility as AI adoption accelerates globally. Better AI-Led Shortlisting Your business becomes easier for AI tools to understand, compare, and recommend when users shortlist vendors or service providers.",
+        "Testimonials",
+        "★★★★★"
+      ],
+      "wordingDifferences": [
+        {
+          "source": "LLM SEO services help your brand become easier for ChatGPT, Gemini, Perplexity, Google AI Overviews, and other AI systems to understand, trust, and recommend. Search behavior is shifting toward AI-driven discovery, and buyers now ask conversational platforms for direct recommendations before they visit a website.",
+          "target": "AI-First Agency — LLM SEO & Large Language Model Optimization"
+        },
+        {
+          "source": "Trusted by Leading Brands",
+          "target": "LLM SEO services help your brand become easier for ChatGPT, Gemini, Perplexity, Google AI Overviews, and other AI systems to understand, trust, and recommend. Search behavior is shifting toward AI-driven discovery, and buyers now ask conversational platforms for direct recommendations before they visit a website."
+        },
+        {
+          "source": "D'Genius Solutions has been recognized by reputed platforms for workplace excellence, SEO performance, content quality, and digital marketing impact.",
+          "target": "Structured Authority Frameworks AI Citation Optimization LLM Visibility Strategy"
+        },
+        {
+          "source": "Recognition for D'Genius Solutions Pvt. Ltd. as a growth-focused and people-first digital marketing company.",
+          "target": "Call +91-99879 22901"
+        },
+        {
+          "source": "Recognition for digital marketing impact, client-focused execution, and scalable organic growth strategies.",
+          "target": "WhatsApp"
+        },
+        {
+          "source": "Awarded for consistent work across SEO execution, content strategy, and performance-driven digital growth.",
+          "target": "Updated: April 2026 · Reviewed for AI search, entity clarity, citation readiness, and internal linking"
+        },
+        {
+          "source": "LLM SEO services help businesses improve how large language models understand, trust, and reference their brand inside AI generated answers.",
+          "target": "Trusted by Leading Brands"
+        },
+        {
+          "source": "Unlike traditional SEO services in Mumbai , LLM SEO services focus on entity clarity, structured content, answer ready formatting, schema markup, topical authority, citation readiness, and trusted brand signals across the open web.",
+          "target": "Awards & Recognition"
+        },
+        {
+          "source": "D'Genius Solutions provides LLM SEO services in Mumbai for brands that want stronger visibility across traditional search engines and AI search platforms. The goal is not only to rank on Google, but also to make your brand easier for AI systems to understand, shortlist, and recommend.",
+          "target": "D'Genius Solutions has been recognized by reputed platforms for workplace excellence, SEO performance, content quality, and digital marketing impact."
+        },
+        {
+          "source": "Our LLM SEO services combine SEO services in Mumbai , AEO services in Mumbai , GEO services , schema, internal linking, content restructuring, authority building, and AI visibility monitoring.",
+          "target": "Prime Insights · 2024"
+        },
+        {
+          "source": "We structure your content so AI systems can understand your brand, services, location, proof signals, expertise, and buyer relevance with less ambiguity.",
+          "target": "Recognition for D'Genius Solutions Pvt. Ltd. as a growth-focused and people-first digital marketing company."
+        },
+        {
+          "source": "We help local and national brands improve visibility when users ask AI tools for service recommendations, pricing guidance, comparisons, and vendor shortlists.",
+          "target": "Corporate Connect · 2024-25"
+        },
+        {
+          "source": "LLM SEO services help businesses structure their digital presence so large language models can understand, trust, and reference them inside AI-generated answers. The goal is not just to rank a page. The goal is to become a brand that AI tools can confidently mention when users ask for recommendations, comparisons, or expert guidance.",
+          "target": "Recognition for digital marketing impact, client-focused execution, and scalable organic growth strategies."
+        },
+        {
+          "source": "For businesses in Mumbai, LLM SEO services are becoming important because buyers now use ChatGPT, Gemini, Perplexity, and Google AI Overviews to compare agencies, vendors, consultants, clinics, education brands, staffing companies, ecommerce brands, and local service providers before making enquiries.",
+          "target": "GLA · 2025"
+        },
+        {
+          "source": "It improves how AI systems interpret your brand, services, location, expertise, and proof signals. This supports visibility across ChatGPT-style answers, Gemini, Perplexity, AI Overviews, and other conversational discovery journeys.",
+          "target": "Awarded for consistent work across SEO execution, content strategy, and performance-driven digital growth."
+        },
+        {
+          "source": "LLM SEO is not about keyword density. It is about structured authority, contextual clarity, and credibility signals.",
+          "target": "LLM SEO services help businesses improve how large language models understand, trust, and reference their brand inside AI generated answers."
+        },
+        {
+          "source": "Real screenshots from live campaigns. Click any image to view full size proof.",
+          "target": "Unlike traditional SEO services in Mumbai , LLM SEO services focus on entity clarity, structured content, answer ready formatting, schema markup, topical authority, citation readiness, and trusted brand signals across the open web."
+        },
+        {
+          "source": "LLM SEO works best when it connects AI citation readiness, SEO , AEO , GEO , and technical clarity into one structured visibility system.",
+          "target": "D'Genius Solutions provides LLM SEO services in Mumbai for brands that want stronger visibility across traditional search engines and AI search platforms. The goal is not only to rank on Google, but also to make your brand easier for AI systems to understand, shortlist, and recommend."
+        },
+        {
+          "source": "We strengthen brand authority, experience signals, topical clusters, and structured explanations so AI tools can confidently cite or mention your business in relevant answers.",
+          "target": "Our LLM SEO services combine SEO services in Mumbai , AEO services in Mumbai , GEO services , schema, internal linking, content restructuring, authority building, and AI visibility monitoring."
+        },
+        {
+          "source": "Traditional SEO supports rankings, AEO supports direct answers, GEO supports generative search visibility, and LLM SEO improves how AI systems understand your brand entity.",
+          "target": "We structure your content so AI systems can understand your brand, services, location, proof signals, expertise, and buyer relevance with less ambiguity."
+        }
+      ],
+      "sourceCount": 41,
+      "targetCount": 90
+    },
+    "listItems": {
+      "missing": [],
+      "extra": [],
+      "sourceCount": 15,
+      "targetCount": 15
+    },
+    "faq": {
+      "missing": [],
+      "extra": [],
+      "answerDiffs": []
+    },
+    "images": {
+      "missing": [
+        {
+          "index": 49,
+          "src": "",
+          "alt": "Proof screenshot"
+        }
+      ],
+      "extra": [],
+      "altDiffs": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "MKA",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Candour London",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Plush Puppy",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aertrip",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Prime Insights Best Place to Work award for D",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Corporate Connect highly regarded digital marketing agency award for D",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "GLA award for excellence in SEO content and performance marketing for D",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "LLM SEO services in Mumbai proof screenshot showing ChatGPT visibility result",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Google AI Overview ranking screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Featured snippet capture screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Google AI Overview citation screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Perplexity AI citation screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Google Maps local SEO visibility screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings Manpower website",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings Manpower",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad website",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Brand presence and media visibility logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad",
+          "targetAlt": "Weavings"
+        }
+      ]
+    },
+    "order": {
+      "orderChanged": false,
+      "sourceOrder": [
+        "h1:LLM SEO Services in Mumbai for AI Search Visibility",
+        "h2:Recognized for SEO, Content & Performance Marketing",
+        "h3:Best Place to Work",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h2:What Are LLM SEO Services?",
+        "h3:How LLM SEO Services Help Brands Appear in AI Answers",
+        "h3:LLM SEO Services for ChatGPT Gemini and Perplexity",
+        "h3:LLM SEO Services for Mumbai Businesses",
+        "h2:What Are LLM SEO Services?",
+        "h3:What LLM SEO Services Do",
+        "h3:What AI Systems Evaluate",
+        "h2:Results AI systems can actually pick up.",
+        "h2:How Our LLM SEO Services Build AI Visibility",
+        "h3:AI Citation Optimization",
+        "h3:SEO + AEO + GEO Alignment",
+        "h3:SEO for AI Models",
+        "h3:Rank in search engines",
+        "h3:Appear in AI answers",
+        "h3:Reinforce authority across platforms",
+        "h2:How D'Genius Solutions Approaches LLM SEO",
+        "h3:Authority-Driven Content Architecture",
+        "h3:Conversational Query Mapping",
+        "h3:Structured Entity Optimization",
+        "h3:Technical AI Readability",
+        "h3:AI Behavior Monitoring",
+        "h3:Conversion & Reporting Layer",
+        "h2:Real clients. Real outcomes.",
+        "h3:Ranked #1 on ChatGPT — 1.82M impressions with LLM-led visibility",
+        "h3:397 keywords to 8,645 — traffic grew 6× in under a year",
+        "h2:Brand Presence & Media Visibility.",
+        "h2:The Business Impact of LLM SEO Services",
+        "h2:Words from brands who trusted the process.",
+        "h2:Frequently Asked Questions",
+        "h2:Get Your Free LLM SEO Audit"
+      ],
+      "targetOrder": [
+        "h1:LLM SEO Services in Mumbai for AI Search Visibility",
+        "h2:Recognized for SEO, Content & Performance Marketing",
+        "h3:Best Place to Work",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h2:What Are LLM SEO Services?",
+        "h3:How LLM SEO Services Help Brands Appear in AI Answers",
+        "h3:LLM SEO Services for ChatGPT Gemini and Perplexity",
+        "h3:LLM SEO Services for Mumbai Businesses",
+        "h2:What Are LLM SEO Services?",
+        "h3:What LLM SEO Services Do",
+        "h3:What AI Systems Evaluate",
+        "h2:Results AI systems can actually pick up.",
+        "h2:How Our LLM SEO Services Build AI Visibility",
+        "h3:AI Citation Optimization",
+        "h3:SEO + AEO + GEO Alignment",
+        "h3:SEO for AI Models",
+        "h3:Rank in search engines",
+        "h3:Appear in AI answers",
+        "h3:Reinforce authority across platforms",
+        "h2:How D'Genius Solutions Approaches LLM SEO",
+        "h3:Authority-Driven Content Architecture",
+        "h3:Conversational Query Mapping",
+        "h3:Structured Entity Optimization",
+        "h3:Technical AI Readability",
+        "h3:AI Behavior Monitoring",
+        "h3:Conversion & Reporting Layer",
+        "h2:Real clients. Real outcomes.",
+        "h3:Ranked #1 on ChatGPT — 1.82M impressions with LLM-led visibility",
+        "h3:397 keywords to 8,645 — traffic grew 6× in under a year",
+        "h2:Brand Presence & Media Visibility.",
+        "h2:The Business Impact of LLM SEO Services",
+        "h2:Words from brands who trusted the process.",
+        "h2:Frequently Asked Questions",
+        "h2:Get Your Free LLM SEO Audit"
+      ]
+    }
+  },
+  "links": {
+    "wordpressContextual": [
+      {
+        "anchor": "WhatsApp",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20LLM%20SEO%20services",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20LLM%20SEO%20services",
+        "path": "/919987922901/",
+        "scope": "body"
+      },
+      {
+        "anchor": "traditional SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Traditional SEO",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "D'Genius Solutions",
+        "href": "https://www.dgeniussolutions.com",
+        "destination": "https://www.dgeniussolutions.com/",
+        "path": "/",
+        "scope": "body"
+      }
+    ],
+    "nextContextual": [
+      {
+        "anchor": "WhatsApp",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20LLM%20SEO%20services",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20LLM%20SEO%20services",
+        "path": "/919987922901/",
+        "scope": "body"
+      },
+      {
+        "anchor": "traditional SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO services in Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO services",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Traditional SEO",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "D'Genius Solutions",
+        "href": "https://www.dgeniussolutions.com",
+        "destination": "https://www.dgeniussolutions.com/",
+        "path": "/",
+        "scope": "body"
+      }
+    ],
+    "nextGlobal": [],
+    "missingInNext": [],
+    "extraInNext": [],
+    "destinationStatus": [
+      {
+        "path": "/919987922901/",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/aeo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/geo/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/",
+        "httpStatus": 200,
+        "redirect": null
+      }
+    ]
+  },
+  "findings": [
+    {
+      "class": "A",
+      "label": "EXPECTED_STAGING_DIFFERENCE",
+      "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "49 extra paragraphs"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "image/alt differences detected"
+    },
+    {
+      "class": "C",
+      "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+      "detail": "normalized text hash differs but structured diff shows no major heading/paragraph loss — likely wrapper/normalization artifact"
+    }
+  ],
+  "classifications": {
+    "A": 1,
+    "D": 2,
+    "C": 1
+  }
+}
