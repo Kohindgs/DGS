@@ -6,9 +6,11 @@
   "blockerFixes": {
     "prComment": "5482695616",
     "hiddenFields": "Server-owned hidden/default fields; client tampering rejected; shared validator module",
-    "nonceContext": "Route/form-scoped nonce and embedded post ID; no homepage Form 1 fallback; safe fail without token"
+    "nonceContext": "Route/form-scoped nonce and embedded post ID; no homepage Form 1 fallback; safe fail without token",
+    "ajaxPayload": "Native fluentform_submit action/form_id/one serialized data string; no outer data[field] parameters",
+    "recaptchaV2": "Visible explicit reCAPTCHA v2 (api.js?render=explicit + grecaptcha.render); verified live WordPress widget"
   },
-  "applicationSourceSha": "3202138fd5b5dedf3db1946693dd6a6445427ef2",
+  "applicationSourceSha": "cd173b726b3dcd20a8bdf7cdf46ad20e9aecc2ba",
   "reviewSha": "09fb49eab032f4070a19a4d25585eb63eb224c59",
   "inventoryMethod": "Authenticated Fluent Forms REST (Basic Application Password). Site MCP tool catalog still does not expose Fluent Forms-specific tools; REST was used for verified field inventory.",
   "safety": {

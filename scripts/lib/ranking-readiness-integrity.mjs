@@ -5,7 +5,7 @@ import path from "node:path";
 import { cleanPath } from "./full-site-route-audit.mjs";
 
 export const AUDIT_SCHEMA_VERSION = "2B.1A";
-export const MOBILE_EVIDENCE_SOURCE_COMMIT = "0a8dc7130dc1ecd094e946bca0fbbb71dd21cd07";
+export const MOBILE_EVIDENCE_SOURCE_COMMIT = "cd173b726b3dcd20a8bdf7cdf46ad20e9aecc2ba";
 export const MOBILE_EVIDENCE_SHORT_SHA = MOBILE_EVIDENCE_SOURCE_COMMIT.slice(0, 7);
 export const MOBILE_EVIDENCE_PATH = `data/audit/mobile-overflow-evidence.${MOBILE_EVIDENCE_SHORT_SHA}.json`;
 export const PRODUCTION_CANONICAL_HOST = "www.dgeniussolutions.com";
