@@ -48,14 +48,14 @@ export function ListingAwareContent({ blocks, route, hrefByTitle = {} }: Listing
       const headingTag = block.level === 3 ? "h3" : "h4";
       const Heading = headingTag;
       nodes.push(
-        <article key={`listing-card-${index}`} className="listing-card">
+        <div key={`listing-card-${index}`} className="listing-card">
           <Heading id={block.id}>
             {href ? <Link href={href}>{block.text}</Link> : block.text}
           </Heading>
           <p>
             <RichText content={next.content} />
           </p>
-        </article>,
+        </div>,
       );
       index += 1;
       continue;

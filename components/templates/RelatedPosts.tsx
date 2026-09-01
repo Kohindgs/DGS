@@ -13,13 +13,13 @@ export function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
             const dateLabel = formatDisplayDate(post.date);
             return (
               <li key={post.path}>
-                <article className="related-posts__card">
+                <div className="related-posts__card">
                   {dateLabel ? <p className="related-posts__date">{dateLabel}</p> : null}
                   <p className="related-posts__title">
                     <Link href={post.path}>{post.title}</Link>
                   </p>
                   {post.description ? <p className="related-posts__excerpt">{post.description}</p> : null}
-                </article>
+                </div>
               </li>
             );
           })}

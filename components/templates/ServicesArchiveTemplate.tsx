@@ -36,7 +36,7 @@ export function ServicesArchiveTemplate({
         <div className="container">
           <div className="services-archive__grid">
             {services.map((service) => (
-              <article key={service.path} className="services-archive__card">
+              <div key={service.path} className="services-archive__card">
                 <h2>
                   <Link href={service.path}>{service.title || service.path}</Link>
                 </h2>
@@ -44,7 +44,7 @@ export function ServicesArchiveTemplate({
                 <p className="services-archive__link">
                   <Link href={service.path}>View service</Link>
                 </p>
-              </article>
+              </div>
             ))}
           </div>
         </div>
