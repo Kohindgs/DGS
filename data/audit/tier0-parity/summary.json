@@ -1,0 +1,442 @@
+{
+  "checkedAt": "2026-08-29T07:45:49.923Z",
+  "target": "http://127.0.0.1:3025",
+  "expectStagingNoindex": true,
+  "routes": [
+    {
+      "path": "/services/ai-video-production-agency/",
+      "slug": "ai-video",
+      "httpStatus": 200,
+      "hashMatch": false,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "indexability": {
+        "robots": "noindex, nofollow",
+        "xRobotsTag": "noindex, nofollow, noarchive",
+        "hasNoindex": true,
+        "classification": "A",
+        "label": "EXPECTED_STAGING_NOINDEX",
+        "expectStagingNoindex": true
+      },
+      "canonical": {
+        "next": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+        "nextPath": "/services/ai-video-production-agency/",
+        "desiredPath": "/services/ai-video-production-agency/",
+        "wordpressObservedPath": "/services/ai-video-production-agency/",
+        "selfCanonical": true
+      },
+      "contentDrift": {
+        "missingHeadings": 1,
+        "extraHeadings": 0,
+        "missingParagraphs": 3,
+        "extraParagraphs": 30,
+        "missingListItems": 0,
+        "extraListItems": 0,
+        "faqIssues": 0,
+        "imageIssues": 50,
+        "orderChanged": true
+      },
+      "linkDrift": {
+        "missingInNext": 6,
+        "extraInNext": 0
+      },
+      "classifications": {
+        "A": 1,
+        "D": 6,
+        "E": 1
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "1 missing headings"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "heading order changed"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "3 missing paragraphs"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "76 extra paragraphs"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "image/alt differences detected"
+        },
+        {
+          "class": "E",
+          "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+          "detail": "6 contextual links missing in Next"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "normalized visible content hash differs from WordPress baseline"
+        }
+      ]
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "slug": "aeo",
+      "httpStatus": 200,
+      "hashMatch": false,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "indexability": {
+        "robots": "noindex, nofollow",
+        "xRobotsTag": "noindex, nofollow, noarchive",
+        "hasNoindex": true,
+        "classification": "A",
+        "label": "EXPECTED_STAGING_NOINDEX",
+        "expectStagingNoindex": true
+      },
+      "canonical": {
+        "next": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "nextPath": "/services/aeo-services-in-mumbai/",
+        "desiredPath": "/services/aeo-services-in-mumbai/",
+        "wordpressObservedPath": "/services/aeo/",
+        "selfCanonical": true
+      },
+      "contentDrift": {
+        "missingHeadings": 0,
+        "extraHeadings": 0,
+        "missingParagraphs": 0,
+        "extraParagraphs": 30,
+        "missingListItems": 0,
+        "extraListItems": 0,
+        "faqIssues": 0,
+        "imageIssues": 81,
+        "orderChanged": false
+      },
+      "linkDrift": {
+        "missingInNext": 8,
+        "extraInNext": 0
+      },
+      "classifications": {
+        "A": 1,
+        "B": 1,
+        "D": 2,
+        "E": 1,
+        "C": 1
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+        },
+        {
+          "class": "B",
+          "label": "APPROVED_TECHNICAL_CORRECTION",
+          "detail": "WordPress canonical /services/aeo/ vs Next /services/aeo-services-in-mumbai/ (desired /services/aeo-services-in-mumbai/)"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "74 extra paragraphs"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "image/alt differences detected"
+        },
+        {
+          "class": "E",
+          "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+          "detail": "8 contextual links missing in Next"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized text hash differs but structured diff shows no major heading/paragraph loss — likely wrapper/normalization artifact"
+        }
+      ]
+    },
+    {
+      "path": "/services/geo/",
+      "slug": "geo",
+      "httpStatus": 200,
+      "hashMatch": false,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "indexability": {
+        "robots": "noindex, nofollow",
+        "xRobotsTag": "noindex, nofollow, noarchive",
+        "hasNoindex": true,
+        "classification": "A",
+        "label": "EXPECTED_STAGING_NOINDEX",
+        "expectStagingNoindex": true
+      },
+      "canonical": {
+        "next": "https://www.dgeniussolutions.com/services/geo/",
+        "nextPath": "/services/geo/",
+        "desiredPath": "/services/geo/",
+        "wordpressObservedPath": "/services/geo/",
+        "selfCanonical": true
+      },
+      "contentDrift": {
+        "missingHeadings": 0,
+        "extraHeadings": 0,
+        "missingParagraphs": 0,
+        "extraParagraphs": 30,
+        "missingListItems": 0,
+        "extraListItems": 0,
+        "faqIssues": 0,
+        "imageIssues": 20,
+        "orderChanged": false
+      },
+      "linkDrift": {
+        "missingInNext": 8,
+        "extraInNext": 0
+      },
+      "classifications": {
+        "A": 1,
+        "D": 2,
+        "E": 1,
+        "C": 1
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "51 extra paragraphs"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "image/alt differences detected"
+        },
+        {
+          "class": "E",
+          "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+          "detail": "8 contextual links missing in Next"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized text hash differs but structured diff shows no major heading/paragraph loss — likely wrapper/normalization artifact"
+        }
+      ]
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "slug": "llm-seo",
+      "httpStatus": 200,
+      "hashMatch": false,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "indexability": {
+        "robots": "noindex, nofollow",
+        "xRobotsTag": "noindex, nofollow, noarchive",
+        "hasNoindex": true,
+        "classification": "A",
+        "label": "EXPECTED_STAGING_NOINDEX",
+        "expectStagingNoindex": true
+      },
+      "canonical": {
+        "next": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "nextPath": "/services/llm-seo-service/",
+        "desiredPath": "/services/llm-seo-service/",
+        "wordpressObservedPath": "/services/llm-seo-service/",
+        "selfCanonical": true
+      },
+      "contentDrift": {
+        "missingHeadings": 0,
+        "extraHeadings": 0,
+        "missingParagraphs": 0,
+        "extraParagraphs": 30,
+        "missingListItems": 0,
+        "extraListItems": 0,
+        "faqIssues": 0,
+        "imageIssues": 50,
+        "orderChanged": false
+      },
+      "linkDrift": {
+        "missingInNext": 0,
+        "extraInNext": 0
+      },
+      "classifications": {
+        "A": 1,
+        "D": 2,
+        "C": 1
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "49 extra paragraphs"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "image/alt differences detected"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "normalized text hash differs but structured diff shows no major heading/paragraph loss — likely wrapper/normalization artifact"
+        }
+      ]
+    },
+    {
+      "path": "/services/seo-services-in-mumbai/",
+      "slug": "seo-mumbai",
+      "httpStatus": 200,
+      "hashMatch": false,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "indexability": {
+        "robots": "noindex, nofollow",
+        "xRobotsTag": "noindex, nofollow, noarchive",
+        "hasNoindex": true,
+        "classification": "A",
+        "label": "EXPECTED_STAGING_NOINDEX",
+        "expectStagingNoindex": true
+      },
+      "canonical": {
+        "next": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "nextPath": "/services/seo-services-in-mumbai/",
+        "desiredPath": "/services/seo-services-in-mumbai/",
+        "wordpressObservedPath": "/services/seo-services-in-mumbai/",
+        "selfCanonical": true
+      },
+      "contentDrift": {
+        "missingHeadings": 4,
+        "extraHeadings": 0,
+        "missingParagraphs": 4,
+        "extraParagraphs": 30,
+        "missingListItems": 0,
+        "extraListItems": 0,
+        "faqIssues": 0,
+        "imageIssues": 89,
+        "orderChanged": true
+      },
+      "linkDrift": {
+        "missingInNext": 12,
+        "extraInNext": 36
+      },
+      "classifications": {
+        "A": 1,
+        "D": 6,
+        "E": 2
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "4 missing headings"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "heading order changed"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "4 missing paragraphs"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "170 extra paragraphs"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "image/alt differences detected"
+        },
+        {
+          "class": "E",
+          "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+          "detail": "12 contextual links missing in Next"
+        },
+        {
+          "class": "E",
+          "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+          "detail": "36 extra contextual links in Next"
+        },
+        {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "normalized visible content hash differs from WordPress baseline"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "A": 5,
+    "D": 18,
+    "E": 5,
+    "B": 1,
+    "C": 3
+  }
+}

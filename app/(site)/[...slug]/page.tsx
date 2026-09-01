@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { loadRouteRegistry, getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
-import type { ContentBlock, HeadingBlock } from "@/lib/content/types";
+import type { ContentBlock } from "@/lib/content/types";
+import { filterDuplicatePageH1Block } from "@/lib/migration/filter-page-h1-duplicate";
 import { slugToPath } from "@/lib/nextjs/path";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -12,8 +13,11 @@ import { buildRouteSchemas } from "@/lib/schema/page-schemas";
 import { resolvePageH1 } from "@/lib/migration/page-h1";
 import { getRetiredRoute } from "@/lib/migration/retired-routes";
 import { getRouteDecision, shouldExcludeFromStaticGeneration } from "@/lib/migration/route-decisions";
-import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
+import { FluentLeadForm } from "@/components/forms/FluentLeadForm";
+import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 import Link from "next/link";
+import { applyRankingLinkRestorations } from "@/lib/migration/ranking-link-restorations";
+import { applyTechnicalLinkCorrections } from "@/lib/migration/technical-link-corrections";
 
 export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
@@ -75,15 +79,17 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   }
 
   const blocks = (await loadContentBlocks())[path]?.blocks || [];
+  const restoredBlocks = applyTechnicalLinkCorrections(
+    path,
+    applyRankingLinkRestorations(path, blocks),
+  );
   const breadcrumbs = buildBreadcrumbs(path, route);
-  const schemaBlocks = buildRouteSchemas({ route, path, blocks, breadcrumbs });
+  const schemaBlocks = buildRouteSchemas({ route, path, blocks: restoredBlocks, breadcrumbs });
 
-  const pageH1 = resolvePageH1(route, blocks);
-  const isH1 = (b: ContentBlock): b is HeadingBlock => b.type === "heading" && b.level === 1;
-  const isDuplicateHeading = (b: ContentBlock): b is HeadingBlock =>
-    b.type === "heading" && b.text.trim() === pageH1.trim();
-  const contentBlocks = blocks.filter((b) => !isH1(b) && !isDuplicateHeading(b));
+  const pageH1 = resolvePageH1(route, restoredBlocks);
+  const contentBlocks = filterDuplicatePageH1Block(restoredBlocks, pageH1);
   const showContactForm = path === "/contact-us/";
+  const contactFormDefinition = showContactForm ? getFormDefinitionForRoute("/contact-us/") : null;
 
   return (
     <main className="page-main" id="main-content">
@@ -109,14 +115,14 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
           <h1>{pageH1}</h1>
         </div>
         <div className="container semantic-content-wrap">
-          <SemanticContent blocks={contentBlocks} demoteSecondaryHeadings />
+          <SemanticContent blocks={contentBlocks} demoteSecondaryHeadings route={path} />
         </div>
-        {showContactForm ? (
+        {showContactForm && contactFormDefinition ? (
           <section className="container contact-form-section" aria-labelledby="contact-form-heading">
             <h2 id="contact-form-heading" className="visually-hidden">
               Contact form
             </h2>
-            <PublicLeadForm id="dgContact" route="/contact-us/" />
+            <FluentLeadForm id="dgContact" route="/contact-us/" definition={contactFormDefinition} />
           </section>
         ) : null}
       </article>

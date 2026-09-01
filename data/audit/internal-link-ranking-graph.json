@@ -1,0 +1,6499 @@
+{
+  "generatedAt": "2026-08-29T16:58:12.503Z",
+  "source": "data/migration/internal-link-graph.generated.json",
+  "nodeCount": 96,
+  "orphanPages": [
+    "/aeo-dubai/",
+    "/australia-page/",
+    "/better-ceasons-case-study/",
+    "/blogs/ai-content-optimization/",
+    "/blogs/content-strategy-high-intent-traffic/",
+    "/blogs/topical-authority-seo/",
+    "/blogs/website-design-lead-generation-mumbai/",
+    "/blogs/website-development-leads/",
+    "/motion-graphics/",
+    "/seo-pricing/",
+    "/us-landing-page/"
+  ],
+  "weaklyLinkedPages": [
+    "/aeo-dubai/",
+    "/australia-page/",
+    "/better-ceasons-case-study/",
+    "/blogs/ai-content-optimization/",
+    "/blogs/ai-marketing-strategies-2026/",
+    "/blogs/content-strategy-high-intent-traffic/",
+    "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+    "/blogs/seo-services-india-2026/",
+    "/blogs/seo-strategies-business-growth/",
+    "/blogs/topical-authority-seo/",
+    "/blogs/website-design-lead-generation-mumbai/",
+    "/blogs/website-development-leads/",
+    "/blogs/website-performance-conversions/",
+    "/motion-graphics/",
+    "/seo-pricing/",
+    "/services/",
+    "/us-landing-page/"
+  ],
+  "nodes": {
+    "/": {
+      "path": "/",
+      "incomingLinks": 291,
+      "outgoingLinks": 330,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 81,
+      "topInboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 181
+        },
+        {
+          "anchor": "",
+          "count": 91
+        },
+        {
+          "anchor": "D’Genius Solutions",
+          "count": 9
+        },
+        {
+          "anchor": "D'Genius Solutions",
+          "count": 5
+        },
+        {
+          "anchor": "digital marketing services",
+          "count": 3
+        },
+        {
+          "anchor": "D’Genius Solutions website",
+          "count": 1
+        },
+        {
+          "anchor": "D’Genius Solutions homepage",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 189
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 9
+        },
+        {
+          "anchor": "Branding",
+          "count": 9
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 6
+        },
+        {
+          "anchor": "About Us",
+          "count": 6
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 6
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 6
+        },
+        {
+          "anchor": "Social Media",
+          "count": 6
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 6
+        },
+        {
+          "anchor": "Blogs",
+          "count": 6
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 6
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/about-us/": {
+      "path": "/about-us/",
+      "incomingLinks": 182,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "About Us",
+          "count": 182
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/aeo-dubai/": {
+      "path": "/aeo-dubai/",
+      "incomingLinks": 0,
+      "outgoingLinks": 45,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 20,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "GEO services",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO services",
+          "count": 2
+        }
+      ],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/australia-page/": {
+      "path": "/australia-page/",
+      "incomingLinks": 0,
+      "outgoingLinks": 110,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 83,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 63
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 3
+        },
+        {
+          "anchor": "Branding",
+          "count": 3
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Social Media",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/better-ceasons-case-study/": {
+      "path": "/better-ceasons-case-study/",
+      "incomingLinks": 0,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/blogs/": {
+      "path": "/blogs/",
+      "incomingLinks": 188,
+      "outgoingLinks": 79,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "Blogs",
+          "count": 182
+        },
+        {
+          "anchor": "2",
+          "count": 1
+        },
+        {
+          "anchor": "3",
+          "count": 1
+        },
+        {
+          "anchor": "6",
+          "count": 1
+        },
+        {
+          "anchor": "7",
+          "count": 1
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "Blog strategy",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 11
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 9
+        },
+        {
+          "anchor": "Growth Business",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/3-3-3-rule-in-marketing/": {
+      "path": "/blogs/3-3-3-rule-in-marketing/",
+      "incomingLinks": 2,
+      "outgoingLinks": 58,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post 3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post 3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/aeo-business/": {
+      "path": "/blogs/aeo-business/",
+      "incomingLinks": 2,
+      "outgoingLinks": 60,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 31,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-content-optimization/": {
+      "path": "/blogs/ai-content-optimization/",
+      "incomingLinks": 0,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/blogs/ai-generated-summaries-in-search-ads/": {
+      "path": "/blogs/ai-generated-summaries-in-search-ads/",
+      "incomingLinks": 2,
+      "outgoingLinks": 57,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post AI-Generated Summaries in Search Ads: What This Means for Advertisers",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post AI-Generated Summaries in Search Ads: What This Means for Advertisers",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 7
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-marketing-strategies-2026/": {
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "incomingLinks": 1,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 1,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post How AI Is Reshaping Digital Marketing Strategies in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [],
+      "orphan": false,
+      "weaklyLinked": true
+    },
+    "/blogs/ai-overview-ranking/": {
+      "path": "/blogs/ai-overview-ranking/",
+      "incomingLinks": 2,
+      "outgoingLinks": 56,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 27,
+      "topInboundAnchors": [
+        {
+          "anchor": "Cancel reply",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post How to Rank in Google AI Overviews in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-overview-seo/": {
+      "path": "/blogs/ai-overview-seo/",
+      "incomingLinks": 2,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-readiness-for-websites/": {
+      "path": "/blogs/ai-readiness-for-websites/",
+      "incomingLinks": 2,
+      "outgoingLinks": 84,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post AI Readiness for Websites: Essential Checklist for Business Growth in 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post AI Readiness for Websites: Essential Checklist for Business Growth in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "SEO services",
+          "count": 6
+        },
+        {
+          "anchor": "AEO services",
+          "count": 6
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 5
+        },
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "GEO services",
+          "count": 4
+        },
+        {
+          "anchor": "website development",
+          "count": 3
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-search-behavior-2026/": {
+      "path": "/blogs/ai-search-behavior-2026/",
+      "incomingLinks": 2,
+      "outgoingLinks": 57,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 27,
+      "topInboundAnchors": [
+        {
+          "anchor": "Cancel reply",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post How AI Is Transforming Search Behavior in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-search-checklist-2026/": {
+      "path": "/blogs/ai-search-checklist-2026/",
+      "incomingLinks": 4,
+      "outgoingLinks": 62,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "AI Search Checklist 2026 10 Essential Checks for Better Rankings",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post AI Search Checklist 2026 10 Essential Checks for Better Rankings",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post AI Search Checklist 2026 10 Essential Checks for Better Rankings",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-search-optimization-ecommerce/": {
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "incomingLinks": 2,
+      "outgoingLinks": 59,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-tools-marketing-agencies/": {
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "incomingLinks": 2,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Top AI Tools for Digital Marketing Agencies in 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Top AI Tools for Digital Marketing Agencies in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-video-production-cost-india/": {
+      "path": "/blogs/ai-video-production-cost-india/",
+      "incomingLinks": 4,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "How Much Does AI Video Production Cost in India in 2026?",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post How Much Does AI Video Production Cost in India in 2026?",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post How Much Does AI Video Production Cost in India in 2026?",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-video-production-for-business/": {
+      "path": "/blogs/ai-video-production-for-business/",
+      "incomingLinks": 2,
+      "outgoingLinks": 60,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 28,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post AI Video Production for Business: How It Helps Brands Create More Content Faster",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post AI Video Production for Business: How It Helps Brands Create More Content Faster",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/ai-video-vs-traditional-video/": {
+      "path": "/blogs/ai-video-vs-traditional-video/",
+      "incomingLinks": 4,
+      "outgoingLinks": 60,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/brand-identity-seo-trust-lead-generation/": {
+      "path": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "incomingLinks": 2,
+      "outgoingLinks": 56,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/brand-mentions-for-ai-tools/": {
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "incomingLinks": 2,
+      "outgoingLinks": 58,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post How Brand Mentions Help AI Tools Trust and Recommend Your Business",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post How Brand Mentions Help AI Tools Trust and Recommend Your Business",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/brand-visibility-in-ai-search/": {
+      "path": "/blogs/brand-visibility-in-ai-search/",
+      "incomingLinks": 4,
+      "outgoingLinks": 57,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "Brand Visibility in AI Search: 7 Ways to Measure It",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Brand Visibility in AI Search: 7 Ways to Measure It",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Brand Visibility in AI Search: 7 Ways to Measure It",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/chatgpt-brand-visibility/": {
+      "path": "/blogs/chatgpt-brand-visibility/",
+      "incomingLinks": 154,
+      "outgoingLinks": 61,
+      "uniqueIncomingSources": 51,
+      "uniqueOutgoingDestinations": 23,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 51
+        },
+        {
+          "anchor": "ChatGPT Brand Visibility: Why Does ChatGPT Recommend Your Competitors but Not Your Brand?",
+          "count": 51
+        },
+        {
+          "anchor": "Read More",
+          "count": 50
+        },
+        {
+          "anchor": "Next Post ChatGPT Brand Visibility: Why Does ChatGPT Recommend Your Competitors but Not Your Brand?",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post ChatGPT Brand Visibility: Why Does ChatGPT Recommend Your Competitors but Not Your Brand?",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/content-strategy-for-seo/": {
+      "path": "/blogs/content-strategy-for-seo/",
+      "incomingLinks": 2,
+      "outgoingLinks": 58,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 28,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/content-strategy-high-intent-traffic/": {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "incomingLinks": 0,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/blogs/content-writing-for-seo/": {
+      "path": "/blogs/content-writing-for-seo/",
+      "incomingLinks": 4,
+      "outgoingLinks": 64,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 27,
+      "topInboundAnchors": [
+        {
+          "anchor": "Content Writing for SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Previous Post Content Writing for SEO: 9 Ways to Rank and Convert",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Content Writing for SEO: 9 Ways to Rank and Convert",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Content Creation services",
+          "count": 5
+        },
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/core-update-strategy/": {
+      "path": "/blogs/core-update-strategy/",
+      "incomingLinks": 2,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post How to Build a Google Core Update-Resistant Content Strategy",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post How to Build a Google Core Update-Resistant Content Strategy",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/future-of-seo/": {
+      "path": "/blogs/future-of-seo/",
+      "incomingLinks": 5,
+      "outgoingLinks": 65,
+      "uniqueIncomingSources": 5,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "Future Of SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Future of SEO",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Is SEO Dead in 2026? What Business Owners Need to Know",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Is SEO Dead in 2026? What Business Owners Need to Know",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/generative-engine-optimization-business/": {
+      "path": "/blogs/generative-engine-optimization-business/",
+      "incomingLinks": 2,
+      "outgoingLinks": 59,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 29,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/generative-engine-optimization/": {
+      "path": "/blogs/generative-engine-optimization/",
+      "incomingLinks": 3,
+      "outgoingLinks": 75,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 32,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post What Is Generative Engine Optimization and How Can It Help Your Business?",
+          "count": 1
+        },
+        {
+          "anchor": "Generative Engine Optimization",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post What Is Generative Engine Optimization and How Can It Help Your Business?",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Generative Engine Optimization services",
+          "count": 3
+        },
+        {
+          "anchor": "SEO services",
+          "count": 3
+        },
+        {
+          "anchor": "AEO services",
+          "count": 3
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/geo-vs-seo-google-ai-search/": {
+      "path": "/blogs/geo-vs-seo-google-ai-search/",
+      "incomingLinks": 5,
+      "outgoingLinks": 66,
+      "uniqueIncomingSources": 4,
+      "uniqueOutgoingDestinations": 32,
+      "topInboundAnchors": [
+        {
+          "anchor": "GEO vs SEO and Google AI Search",
+          "count": 1
+        },
+        {
+          "anchor": "GEO vs SEO guide",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post GEO vs SEO: How to Rank in Google and AI Searc",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post GEO vs SEO: How to Rank in Google and AI Searc",
+          "count": 1
+        },
+        {
+          "anchor": "GEO vs SEO in Google AI Search",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-ads-vs-meta-ads/": {
+      "path": "/blogs/google-ads-vs-meta-ads/",
+      "incomingLinks": 13,
+      "outgoingLinks": 54,
+      "uniqueIncomingSources": 5,
+      "uniqueOutgoingDestinations": 24,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026?",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Next Post Google Ads vs Meta Ads: Which Generates Better Leads in 2026?",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Google Ads vs Meta Ads: Which Generates Better Leads in 2026?",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-agentic-browsing/": {
+      "path": "/blogs/google-agentic-browsing/",
+      "incomingLinks": 2,
+      "outgoingLinks": 58,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Google Agentic Browsing: 7 Website Changes for 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Google Agentic Browsing: 7 Website Changes for 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/": {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "incomingLinks": 1,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 1,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Google AI Overviews and the Growth of Zero-Click Searches",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [],
+      "orphan": false,
+      "weaklyLinked": true
+    },
+    "/blogs/google-ai-overviews-image-generation/": {
+      "path": "/blogs/google-ai-overviews-image-generation/",
+      "incomingLinks": 2,
+      "outgoingLinks": 57,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-ai-search-update/": {
+      "path": "/blogs/google-ai-search-update/",
+      "incomingLinks": 2,
+      "outgoingLinks": 60,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 31,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Google AI Search Update: 7 Ways Businesses Can Get Better Leads",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Google AI Search Update: 7 Ways Businesses Can Get Better Leads",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-algorithm-business/": {
+      "path": "/blogs/google-algorithm-business/",
+      "incomingLinks": 2,
+      "outgoingLinks": 63,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Google Algorithm for Businesses: What It Means for Search Visibility",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Google Algorithm for Businesses: What It Means for Search Visibility",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-io-2026/": {
+      "path": "/blogs/google-io-2026/",
+      "incomingLinks": 2,
+      "outgoingLinks": 60,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Google I/O 2026 SEO Updates That Will Transform AI Search",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Google I/O 2026 SEO Updates That Will Transform AI Search",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-ranking-fixes/": {
+      "path": "/blogs/google-ranking-fixes/",
+      "incomingLinks": 3,
+      "outgoingLinks": 59,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post 7 Critical Reasons Why Your Business Is Not Ranking on Google",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post 7 Critical Reasons Why Your Business Is Not Ranking on Google",
+          "count": 1
+        },
+        {
+          "anchor": "Google ranking fixes",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-search-console-social-media/": {
+      "path": "/blogs/google-search-console-social-media/",
+      "incomingLinks": 2,
+      "outgoingLinks": 56,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Google Search Console Social Media Update: 7 Key Changes for Brands in 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Google Search Console Social Media Update: 7 Key Changes for Brands in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/google-spam-update/": {
+      "path": "/blogs/google-spam-update/",
+      "incomingLinks": 2,
+      "outgoingLinks": 61,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/llm-seo-ai-search/": {
+      "path": "/blogs/llm-seo-ai-search/",
+      "incomingLinks": 2,
+      "outgoingLinks": 62,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 28,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/llm-seo-services-mumbai/": {
+      "path": "/blogs/llm-seo-services-mumbai/",
+      "incomingLinks": 2,
+      "outgoingLinks": 56,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Key LLM SEO Services for Modern Businesses in Mumbai",
+          "count": 1
+        },
+        {
+          "anchor": "Cancel reply",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/local-seo-business-growth/": {
+      "path": "/blogs/local-seo-business-growth/",
+      "incomingLinks": 3,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Why Local SEO Is Important for Business Growth",
+          "count": 1
+        },
+        {
+          "anchor": "Cancel reply",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Why Local SEO Is Important for Business Growth",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/low-social-media-reach/": {
+      "path": "/blogs/low-social-media-reach/",
+      "incomingLinks": 4,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "Low Social Media Reach in 2026? Why Trending Audio and Hashtags Are Not Enough",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Low Social Media Reach in 2026? Why Trending Audio and Hashtags Are Not Enough",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Low Social Media Reach in 2026? Why Trending Audio and Hashtags Are Not Enough",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/modern-seo-business-growth/": {
+      "path": "/blogs/modern-seo-business-growth/",
+      "incomingLinks": 2,
+      "outgoingLinks": 57,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 28,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post How Modern SEO Strategies Are Transforming Business Growth",
+          "count": 1
+        },
+        {
+          "anchor": "Cancel reply",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/optimize-content-ai-search/": {
+      "path": "/blogs/optimize-content-ai-search/",
+      "incomingLinks": 2,
+      "outgoingLinks": 56,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post How to Optimize Content for ChatGPT, Gemini, Perplexity and Google AI Mode",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post How to Optimize Content for ChatGPT, Gemini, Perplexity and Google AI Mode",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/optimize-for-ai-overviews/": {
+      "path": "/blogs/optimize-for-ai-overviews/",
+      "incomingLinks": 8,
+      "outgoingLinks": 70,
+      "uniqueIncomingSources": 5,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Optimize for AI Overviews",
+          "count": 2
+        },
+        {
+          "anchor": "Optimize For AI Overviews",
+          "count": 2
+        },
+        {
+          "anchor": "Next Post Optimize for AI Overviews in 2026: Proven Growth Guide",
+          "count": 1
+        },
+        {
+          "anchor": "how to optimize for AI Overviews",
+          "count": 1
+        },
+        {
+          "anchor": "optimize for AI Overviews",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Optimize for AI Overviews in 2026: Proven Growth Guide",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "AEO services in Mumbai",
+          "count": 3
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/schema-seo-for-small-business/": {
+      "path": "/blogs/schema-seo-for-small-business/",
+      "incomingLinks": 3,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "schema SEO for small businesses",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Schema SEO for Small Business: 7 Easy Steps for 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Schema SEO for Small Business: 7 Easy Steps for 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/search-generative-ai-performance-reports/": {
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "incomingLinks": 2,
+      "outgoingLinks": 68,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 34,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/seo-friendly-website/": {
+      "path": "/blogs/seo-friendly-website/",
+      "incomingLinks": 3,
+      "outgoingLinks": 58,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site",
+          "count": 1
+        },
+        {
+          "anchor": "SEO Friendly Website",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/seo-rankings-up-but-traffic-down/": {
+      "path": "/blogs/seo-rankings-up-but-traffic-down/",
+      "incomingLinks": 2,
+      "outgoingLinks": 57,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/seo-services-india-2026/": {
+      "path": "/blogs/seo-services-india-2026/",
+      "incomingLinks": 1,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 1,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Rising Demand for SEO Services in India in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [],
+      "orphan": false,
+      "weaklyLinked": true
+    },
+    "/blogs/seo-strategies-business-growth/": {
+      "path": "/blogs/seo-strategies-business-growth/",
+      "incomingLinks": 1,
+      "outgoingLinks": 54,
+      "uniqueIncomingSources": 1,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post 5 SEO Strategies for Business Growth That Improve Rankings and Leads",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": true
+    },
+    "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/": {
+      "path": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "incomingLinks": 154,
+      "outgoingLinks": 56,
+      "uniqueIncomingSources": 51,
+      "uniqueOutgoingDestinations": 23,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 51
+        },
+        {
+          "anchor": "Social Media Conversion: Why Your Followers Are Not Becoming Customers",
+          "count": 51
+        },
+        {
+          "anchor": "Read More",
+          "count": 50
+        },
+        {
+          "anchor": "Next Post Social Media Conversion: Why Your Followers Are Not Becoming Customers",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Social Media Conversion: Why Your Followers Are Not Becoming Customers",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/social-media-marketing-strategy/": {
+      "path": "/blogs/social-media-marketing-strategy/",
+      "incomingLinks": 2,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Social Media Marketing Strategy 2026 for Small Businesses",
+          "count": 1
+        },
+        {
+          "anchor": "Previous Post Social Media Marketing Strategy 2026 for Small Businesses",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/topical-authority-seo/": {
+      "path": "/blogs/topical-authority-seo/",
+      "incomingLinks": 0,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/blogs/voice-search-seo/": {
+      "path": "/blogs/voice-search-seo/",
+      "incomingLinks": 2,
+      "outgoingLinks": 60,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Voice Search SEO in 2026: How Businesses Can Win Conversational Searches",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Voice Search SEO in 2026: How Businesses Can Win Conversational Searches",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/website-design-lead-generation-mumbai/": {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "incomingLinks": 0,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 26,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/blogs/website-development-leads/": {
+      "path": "/blogs/website-development-leads/",
+      "incomingLinks": 0,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/blogs/website-development-mistakes/": {
+      "path": "/blogs/website-development-mistakes/",
+      "incomingLinks": 2,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post Website Development Mistakes That Hurt Business Growth",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post Website Development Mistakes That Hurt Business Growth",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/website-development-quality-leads/": {
+      "path": "/blogs/website-development-quality-leads/",
+      "incomingLinks": 2,
+      "outgoingLinks": 63,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post 7 Website Development Features That Help Businesses Generate Quality Leads",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post 7 Website Development Features That Help Businesses Generate Quality Leads",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "SEO",
+          "count": 3
+        },
+        {
+          "anchor": "AEO",
+          "count": 3
+        },
+        {
+          "anchor": "Website Development",
+          "count": 3
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/website-performance-conversions/": {
+      "path": "/blogs/website-performance-conversions/",
+      "incomingLinks": 1,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 1,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [
+        {
+          "anchor": "Next Post Why Website Performance Still Decides Conversions in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [],
+      "orphan": false,
+      "weaklyLinked": true
+    },
+    "/blogs/website-traffic-but-no-leads/": {
+      "path": "/blogs/website-traffic-but-no-leads/",
+      "incomingLinks": 153,
+      "outgoingLinks": 57,
+      "uniqueIncomingSources": 51,
+      "uniqueOutgoingDestinations": 24,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 51
+        },
+        {
+          "anchor": "Website Traffic but No Leads? 9 Proven Fixes That Work",
+          "count": 51
+        },
+        {
+          "anchor": "Read More",
+          "count": 50
+        },
+        {
+          "anchor": "Next Post Website Traffic but No Leads? 9 Proven Fixes That Work",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/blogs/what-is-llm-seo/": {
+      "path": "/blogs/what-is-llm-seo/",
+      "incomingLinks": 2,
+      "outgoingLinks": 59,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 27,
+      "topInboundAnchors": [
+        {
+          "anchor": "Previous Post What Is LLM SEO and Why Businesses Should Care in 2026",
+          "count": 1
+        },
+        {
+          "anchor": "Next Post What Is LLM SEO and Why Businesses Should Care in 2026",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 4
+        },
+        {
+          "anchor": "Digital Marketing",
+          "count": 4
+        },
+        {
+          "anchor": "LLM SEO services",
+          "count": 3
+        },
+        {
+          "anchor": "Read More",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/career/": {
+      "path": "/career/",
+      "incomingLinks": 180,
+      "outgoingLinks": 0,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 0,
+      "topInboundAnchors": [
+        {
+          "anchor": "Careers",
+          "count": 90
+        },
+        {
+          "anchor": "Career",
+          "count": 90
+        }
+      ],
+      "topOutboundAnchors": [],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/case_studies/": {
+      "path": "/case_studies/",
+      "incomingLinks": 88,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 86,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Case Studies",
+          "count": 88
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/contact-us/": {
+      "path": "/contact-us/",
+      "incomingLinks": 188,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Contact Us",
+          "count": 93
+        },
+        {
+          "anchor": "Contact",
+          "count": 89
+        },
+        {
+          "anchor": "Get in Touch",
+          "count": 2
+        },
+        {
+          "anchor": "Contact D’Genius Solutions",
+          "count": 1
+        },
+        {
+          "anchor": "D’Genius Solutions",
+          "count": 1
+        },
+        {
+          "anchor": "Contact DGS today",
+          "count": 1
+        },
+        {
+          "anchor": "Get Started",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/motion-graphics/": {
+      "path": "/motion-graphics/",
+      "incomingLinks": 0,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/our-services/": {
+      "path": "/our-services/",
+      "incomingLinks": 11,
+      "outgoingLinks": 55,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 28,
+      "topInboundAnchors": [
+        {
+          "anchor": "Our Services",
+          "count": 4
+        },
+        {
+          "anchor": "",
+          "count": 3
+        },
+        {
+          "anchor": "All Services",
+          "count": 2
+        },
+        {
+          "anchor": "digital marketing services",
+          "count": 1
+        },
+        {
+          "anchor": "2",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 11
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/portfolio/": {
+      "path": "/portfolio/",
+      "incomingLinks": 183,
+      "outgoingLinks": 100,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 81,
+      "topInboundAnchors": [
+        {
+          "anchor": "Portfolio",
+          "count": 182
+        },
+        {
+          "anchor": "DGS portfolio",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 63
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/privacy-policy/": {
+      "path": "/privacy-policy/",
+      "incomingLinks": 178,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Privacy Policy",
+          "count": 178
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/seo-pricing/": {
+      "path": "/seo-pricing/",
+      "incomingLinks": 0,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": true,
+      "weaklyLinked": true
+    },
+    "/services/": {
+      "path": "/services/",
+      "incomingLinks": 1,
+      "outgoingLinks": 61,
+      "uniqueIncomingSources": 1,
+      "uniqueOutgoingDestinations": 28,
+      "topInboundAnchors": [
+        {
+          "anchor": "DGS digital marketing services",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 12
+        },
+        {
+          "anchor": "Home",
+          "count": 3
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 3
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": true
+    },
+    "/services/aeo-services-in-mumbai/": {
+      "path": "/services/aeo-services-in-mumbai/",
+      "incomingLinks": 224,
+      "outgoingLinks": 61,
+      "uniqueIncomingSources": 86,
+      "uniqueOutgoingDestinations": 27,
+      "topInboundAnchors": [
+        {
+          "anchor": "AEO",
+          "count": 98
+        },
+        {
+          "anchor": "AEO Services",
+          "count": 93
+        },
+        {
+          "anchor": "AEO services",
+          "count": 15
+        },
+        {
+          "anchor": "AEO services in Mumbai",
+          "count": 11
+        },
+        {
+          "anchor": "Answer Engine Optimization",
+          "count": 2
+        },
+        {
+          "anchor": "answer engine optimisation",
+          "count": 2
+        },
+        {
+          "anchor": "AEO Services in Mumbai",
+          "count": 1
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "AEO Services In Mumbai",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/ai-production-dubai-page/": {
+      "path": "/services/ai-production-dubai-page/",
+      "incomingLinks": 4,
+      "outgoingLinks": 44,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "AI Production Dubai page",
+          "count": 2
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/ai-video-production-agency/": {
+      "path": "/services/ai-video-production-agency/",
+      "incomingLinks": 191,
+      "outgoingLinks": 44,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 23,
+      "topInboundAnchors": [
+        {
+          "anchor": "AI Video Production",
+          "count": 176
+        },
+        {
+          "anchor": "AI Production",
+          "count": 7
+        },
+        {
+          "anchor": "AI video production services",
+          "count": 4
+        },
+        {
+          "anchor": "AI Video Production Agency",
+          "count": 1
+        },
+        {
+          "anchor": "AI Video Production Agency in Mumbai",
+          "count": 1
+        },
+        {
+          "anchor": "AI video production agency",
+          "count": 1
+        },
+        {
+          "anchor": "AI video production",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/branding/": {
+      "path": "/services/branding/",
+      "incomingLinks": 188,
+      "outgoingLinks": 39,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Branding",
+          "count": 186
+        },
+        {
+          "anchor": "branding",
+          "count": 1
+        },
+        {
+          "anchor": "branding services",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/content-creation/": {
+      "path": "/services/content-creation/",
+      "incomingLinks": 204,
+      "outgoingLinks": 41,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Content Creation",
+          "count": 186
+        },
+        {
+          "anchor": "Content Creation services",
+          "count": 5
+        },
+        {
+          "anchor": "content writing services",
+          "count": 3
+        },
+        {
+          "anchor": "content creation services",
+          "count": 3
+        },
+        {
+          "anchor": "content writing",
+          "count": 2
+        },
+        {
+          "anchor": "website content writing",
+          "count": 1
+        },
+        {
+          "anchor": "Content Creation Services",
+          "count": 1
+        },
+        {
+          "anchor": "content creation",
+          "count": 1
+        },
+        {
+          "anchor": "SEO content-writing guide",
+          "count": 1
+        },
+        {
+          "anchor": "Content creation services",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "D'Genius Solutions",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/dubai-seo/": {
+      "path": "/services/dubai-seo/",
+      "incomingLinks": 4,
+      "outgoingLinks": 44,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 25,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "Dubai SEO",
+          "count": 2
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/geo/": {
+      "path": "/services/geo/",
+      "incomingLinks": 229,
+      "outgoingLinks": 52,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 27,
+      "topInboundAnchors": [
+        {
+          "anchor": "GEO",
+          "count": 101
+        },
+        {
+          "anchor": "GEO Services",
+          "count": 97
+        },
+        {
+          "anchor": "GEO services",
+          "count": 20
+        },
+        {
+          "anchor": "Generative Engine Optimization services",
+          "count": 4
+        },
+        {
+          "anchor": "Generative Engine Optimization",
+          "count": 2
+        },
+        {
+          "anchor": "generative engine optimisation",
+          "count": 2
+        },
+        {
+          "anchor": "Generative Engine Optimisation strategy",
+          "count": 1
+        },
+        {
+          "anchor": "GEO,",
+          "count": 1
+        },
+        {
+          "anchor": "Supports AI Citations",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/llm-seo-service/": {
+      "path": "/services/llm-seo-service/",
+      "incomingLinks": 227,
+      "outgoingLinks": 49,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "LLM SEO",
+          "count": 110
+        },
+        {
+          "anchor": "LLM SEO Services",
+          "count": 93
+        },
+        {
+          "anchor": "LLM SEO services",
+          "count": 14
+        },
+        {
+          "anchor": "LLM SEO Service",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO services in Mumbai",
+          "count": 2
+        },
+        {
+          "anchor": "LLM visibility",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO service",
+          "count": 1
+        },
+        {
+          "anchor": "AI SEO and LLM SEO optimization",
+          "count": 1
+        },
+        {
+          "anchor": "LLM SEO strategy",
+          "count": 1
+        },
+        {
+          "anchor": "Clarifies Brand Entities",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "AEO",
+          "count": 3
+        },
+        {
+          "anchor": "GEO",
+          "count": 3
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/performance-marketing/": {
+      "path": "/services/performance-marketing/",
+      "incomingLinks": 188,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Performance Marketing",
+          "count": 182
+        },
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "performance marketing campaigns",
+          "count": 1
+        },
+        {
+          "anchor": "Google Ads vs Meta Ads",
+          "count": 1
+        },
+        {
+          "anchor": "performance marketing strategy",
+          "count": 1
+        },
+        {
+          "anchor": "performance marketing services",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/seo-service-in-banglore/": {
+      "path": "/services/seo-service-in-banglore/",
+      "incomingLinks": 7,
+      "outgoingLinks": 54,
+      "uniqueIncomingSources": 6,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "03 / Bangalore ↗ SEO Services in Bangalore Search strategy for Bangalore companies, startups, and service brands that need better visibility and stronger website enquiries. Bangalore Growth Organic Leads",
+          "count": 3
+        },
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "SEO service in Banglore",
+          "count": 1
+        },
+        {
+          "anchor": "02 / Bangalore ↗ SEO Services in Bangalore Search strategy for Bangalore companies, startups, and service brands that need better visibility and stronger website enquiries. Bangalore Growth Organic Leads",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/seo-service-in-gurugram/": {
+      "path": "/services/seo-service-in-gurugram/",
+      "incomingLinks": 8,
+      "outgoingLinks": 54,
+      "uniqueIncomingSources": 6,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "05 / Gurugram ↗ SEO Services in Gurugram Search growth campaigns for Gurugram businesses focused on visibility, trust, traffic quality, and better enquiries. Gurugram Growth Search Leads",
+          "count": 3
+        },
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "SEO services in Gurugram",
+          "count": 2
+        },
+        {
+          "anchor": "04 / Gurugram ↗ SEO Services in Gurugram Search growth campaigns for Gurugram businesses focused on visibility, trust, traffic quality, and better enquiries. Gurugram Growth Search Leads",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/seo-service-pune/": {
+      "path": "/services/seo-service-pune/",
+      "incomingLinks": 4,
+      "outgoingLinks": 54,
+      "uniqueIncomingSources": 3,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "SEO service Pune",
+          "count": 1
+        },
+        {
+          "anchor": "01 / Pune ↗ SEO Services in Pune Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers. Pune Search Local Leads",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/seo-services-in-hyderabad/": {
+      "path": "/services/seo-services-in-hyderabad/",
+      "incomingLinks": 8,
+      "outgoingLinks": 54,
+      "uniqueIncomingSources": 6,
+      "uniqueOutgoingDestinations": 30,
+      "topInboundAnchors": [
+        {
+          "anchor": "04 / Hyderabad ↗ SEO Services in Hyderabad Website optimization, local search improvements, and ranking support for Hyderabad businesses competing online. Hyderabad Search Lead Quality",
+          "count": 3
+        },
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "SEO services in Hyderabad",
+          "count": 2
+        },
+        {
+          "anchor": "03 / Hyderabad ↗ SEO Services in Hyderabad Website optimization, local search improvements, and ranking support for Hyderabad businesses competing online. Hyderabad Search Lead Quality",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/seo-services-in-mumbai/": {
+      "path": "/services/seo-services-in-mumbai/",
+      "incomingLinks": 268,
+      "outgoingLinks": 54,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 31,
+      "topInboundAnchors": [
+        {
+          "anchor": "SEO",
+          "count": 99
+        },
+        {
+          "anchor": "SEO Services",
+          "count": 95
+        },
+        {
+          "anchor": "SEO services in Mumbai",
+          "count": 24
+        },
+        {
+          "anchor": "SEO services",
+          "count": 20
+        },
+        {
+          "anchor": "SEO Services in Mumbai",
+          "count": 4
+        },
+        {
+          "anchor": "01 / Mumbai ↗ SEO Services in Mumbai Local SEO, technical optimization, content strategy, and lead-focused search growth for Mumbai businesses. Mumbai Search Local Growth",
+          "count": 4
+        },
+        {
+          "anchor": "SEO agency in Mumbai",
+          "count": 3
+        },
+        {
+          "anchor": "professional SEO services",
+          "count": 3
+        },
+        {
+          "anchor": "SEO strategy",
+          "count": 2
+        },
+        {
+          "anchor": "SEO agency in India",
+          "count": 1
+        },
+        {
+          "anchor": "search engine optimization",
+          "count": 1
+        },
+        {
+          "anchor": "SEO content planning",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "",
+          "count": 9
+        },
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "AEO",
+          "count": 2
+        },
+        {
+          "anchor": "GEO",
+          "count": 2
+        },
+        {
+          "anchor": "LLM SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/shirdi-se-sai-tak-case-study/": {
+      "path": "/services/shirdi-se-sai-tak-case-study/",
+      "incomingLinks": 4,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "Shirdi Se Sai Tak Case Study",
+          "count": 2
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/social-media-marketing/": {
+      "path": "/services/social-media-marketing/",
+      "incomingLinks": 197,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Social Media Marketing",
+          "count": 93
+        },
+        {
+          "anchor": "Social Media",
+          "count": 92
+        },
+        {
+          "anchor": "Social Media Marketing Services",
+          "count": 3
+        },
+        {
+          "anchor": "social media marketing services",
+          "count": 3
+        },
+        {
+          "anchor": "social media marketing strategy",
+          "count": 2
+        },
+        {
+          "anchor": "social media marketing",
+          "count": 1
+        },
+        {
+          "anchor": "D’Genius Solutions’ Social Media Marketing Services",
+          "count": 1
+        },
+        {
+          "anchor": "Social Media Marketing services",
+          "count": 1
+        },
+        {
+          "anchor": "professional social media marketing services from D’Genius Solutions",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/website-development-amc/": {
+      "path": "/services/website-development-amc/",
+      "incomingLinks": 216,
+      "outgoingLinks": 43,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "Website Development",
+          "count": 99
+        },
+        {
+          "anchor": "Website Dev",
+          "count": 88
+        },
+        {
+          "anchor": "website development",
+          "count": 6
+        },
+        {
+          "anchor": "website development services",
+          "count": 5
+        },
+        {
+          "anchor": "website development and AMC capability",
+          "count": 5
+        },
+        {
+          "anchor": "website development and AMC service",
+          "count": 3
+        },
+        {
+          "anchor": "website development and AMC services",
+          "count": 3
+        },
+        {
+          "anchor": "Website Development Services",
+          "count": 1
+        },
+        {
+          "anchor": "SEO-ready websites in Mumbai",
+          "count": 1
+        },
+        {
+          "anchor": "Website Development Company in Mumbai",
+          "count": 1
+        },
+        {
+          "anchor": "website development solutions",
+          "count": 1
+        },
+        {
+          "anchor": "Website development and AMC services",
+          "count": 1
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/services/website-development-pune-page/": {
+      "path": "/services/website-development-pune-page/",
+      "incomingLinks": 4,
+      "outgoingLinks": 42,
+      "uniqueIncomingSources": 2,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [
+        {
+          "anchor": "",
+          "count": 2
+        },
+        {
+          "anchor": "Website Development Pune Page",
+          "count": 2
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "SEO",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/sitemap/": {
+      "path": "/sitemap/",
+      "incomingLinks": 177,
+      "outgoingLinks": 101,
+      "uniqueIncomingSources": 87,
+      "uniqueOutgoingDestinations": 20,
+      "topInboundAnchors": [
+        {
+          "anchor": "Sitemap",
+          "count": 177
+        }
+      ],
+      "topOutboundAnchors": [
+        {
+          "anchor": "About Us",
+          "count": 6
+        },
+        {
+          "anchor": "Website Development",
+          "count": 6
+        },
+        {
+          "anchor": "Branding",
+          "count": 6
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 6
+        },
+        {
+          "anchor": "Blogs",
+          "count": 6
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 6
+        },
+        {
+          "anchor": "Social Media Marketing",
+          "count": 5
+        },
+        {
+          "anchor": "Contact Us",
+          "count": 5
+        },
+        {
+          "anchor": "Our Services",
+          "count": 4
+        },
+        {
+          "anchor": "AI Production",
+          "count": 4
+        },
+        {
+          "anchor": "SEO",
+          "count": 4
+        },
+        {
+          "anchor": "AEO",
+          "count": 4
+        }
+      ],
+      "orphan": false,
+      "weaklyLinked": false
+    },
+    "/us-landing-page/": {
+      "path": "/us-landing-page/",
+      "incomingLinks": 0,
+      "outgoingLinks": 38,
+      "uniqueIncomingSources": 0,
+      "uniqueOutgoingDestinations": 19,
+      "topInboundAnchors": [],
+      "topOutboundAnchors": [
+        {
+          "anchor": "Home",
+          "count": 2
+        },
+        {
+          "anchor": "About Us",
+          "count": 2
+        },
+        {
+          "anchor": "AI Video Production",
+          "count": 2
+        },
+        {
+          "anchor": "Performance Marketing",
+          "count": 2
+        },
+        {
+          "anchor": "Branding",
+          "count": 2
+        },
+        {
+          "anchor": "Content Creation",
+          "count": 2
+        },
+        {
+          "anchor": "Portfolio",
+          "count": 2
+        },
+        {
+          "anchor": "Blogs",
+          "count": 2
+        },
+        {
+          "anchor": "Privacy Policy",
+          "count": 2
+        },
+        {
+          "anchor": "Sitemap",
+          "count": 2
+        },
+        {
+          "anchor": "",
+          "count": 1
+        },
+        {
+          "anchor": "SEO",
+          "count": 1
+        }
+      ],
+      "orphan": true,
+      "weaklyLinked": true
+    }
+  },
+  "cannibalizationClusters": [],
+  "note": "Cannibalization clusters require manual CONTENT STRATEGY review — not implemented in Phase 2A"
+}
