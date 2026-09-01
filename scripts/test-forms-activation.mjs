@@ -320,11 +320,18 @@ test("activation, provenance, and data-submission enabled wiring", () => {
   assert.match(homeBridge, /data-submission/);
   assert.match(homeBridge, /\/api\/forms\/submit\//);
   assert.match(homeBridge, /fluentform_1/);
+  assert.match(homeBridge, /renderRecaptchaV2/);
 
   const routeApi = readFileSync(path.join(ROOT, "app/api/forms/submit/route.ts"), "utf8");
   assert.match(routeApi, /validateClientSubmitPayload/);
   assert.match(routeApi, /forwardToFluentForms/);
   assert.doesNotMatch(routeApi, /Authorization|application_password|FLUENTFORM_.*SECRET/i);
+
+  const submitAdapter = readFileSync(path.join(ROOT, "lib/forms/submit.ts"), "utf8");
+  assert.match(submitAdapter, /buildFluentFormsAjaxParams/);
+  assert.match(submitAdapter, /interpretFluentAjaxResponse/);
+  assert.doesNotMatch(submitAdapter, /data\[\$\{/);
+  assert.doesNotMatch(submitAdapter, /form\.set\(`data\[/);
 });
 
 test("definitions status flags for activation", () => {

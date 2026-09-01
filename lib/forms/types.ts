@@ -47,6 +47,8 @@ export type FormDefinition = {
   captcha?: {
     enabled: boolean;
     provider: "recaptcha" | "turnstile" | "hcaptcha" | null;
+    /** Verified live WordPress Fluent Forms widget; recaptcha is v2 explicit/visible. */
+    version?: "v2_explicit" | null;
     publicSiteKey?: string | null;
     siteKeyEnvRef?: string | null;
     secretKeyEnvRef?: string | null;

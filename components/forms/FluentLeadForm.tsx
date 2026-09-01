@@ -1,8 +1,9 @@
 "use client";
 
-import { type ChangeEvent, type FormEvent, useMemo, useRef, useState } from "react";
+import { type ChangeEvent, type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./FluentLeadForm.module.css";
 import type { FormDefinition, FormFieldDefinition } from "@/lib/forms/types";
+import { obtainTurnstileToken, renderRecaptchaV2, type RecaptchaV2Widget } from "./captcha-client";
 
 type FluentLeadFormProps = {
   id?: string;
@@ -16,54 +17,17 @@ function visibleFields(definition: FormDefinition): FormFieldDefinition[] {
   return definition.fields.filter((field) => !field.hidden && field.type !== "captcha");
 }
 
-function loadScript(src: string, id: string) {
-  if (document.getElementById(id)) return Promise.resolve();
-  return new Promise<void>((resolve, reject) => {
-    const script = document.createElement("script");
-    script.id = id;
-    script.src = src;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load ${src}`));
-    document.head.appendChild(script);
-  });
-}
-
-async function obtainCaptchaToken(definition: FormDefinition): Promise<string | undefined> {
-  if (!definition.captcha?.enabled || !definition.captcha.publicSiteKey) return undefined;
-  const siteKey = definition.captcha.publicSiteKey;
-  if (definition.captcha.provider === "turnstile") {
-    await loadScript("https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit", "cf-turnstile-api");
-    return new Promise((resolve, reject) => {
-      const host = document.createElement("div");
-      host.style.display = "none";
-      document.body.appendChild(host);
-      const widgetId = window.turnstile?.render(host, {
-        sitekey: siteKey,
-        size: "invisible",
-        callback: (token: string) => {
-          host.remove();
-          resolve(token);
-        },
-        "error-callback": () => {
-          host.remove();
-          reject(new Error("CAPTCHA failed"));
-        },
-      });
-      if (!widgetId) {
-        host.remove();
-        reject(new Error("Turnstile unavailable"));
-      }
-    });
-  }
-
-  await loadScript(`https://www.google.com/recaptcha/api.js?render=${siteKey}`, "recaptcha-api");
-  await new Promise<void>((resolve) => window.grecaptcha?.ready(() => resolve()));
-  return window.grecaptcha?.execute(siteKey, { action: "fluentform_submit" });
+function usesRecaptchaV2(definition: FormDefinition) {
+  return Boolean(
+    definition.captcha?.enabled &&
+      definition.captcha.provider === "recaptcha" &&
+      definition.captcha.publicSiteKey,
+  );
 }
 
 export function FluentLeadForm({ id = "contact-form", route, definition, className }: FluentLeadFormProps) {
   const fields = useMemo(() => visibleFields(definition), [definition]);
+  const recaptchaEnabled = usesRecaptchaV2(definition);
   const [values, setValues] = useState<Record<string, string>>(() => {
     const initial: Record<string, string> = {};
     for (const field of definition.fields) {
@@ -77,10 +41,36 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
   >("idle");
   const [message, setMessage] = useState("");
   const submittingRef = useRef(false);
+  const captchaHostRef = useRef<HTMLDivElement>(null);
+  const captchaWidgetRef = useRef<RecaptchaV2Widget | null>(null);
+
+  useEffect(() => {
+    if (!recaptchaEnabled || !definition.captcha?.publicSiteKey || !captchaHostRef.current) return;
+    const host = captchaHostRef.current;
+    let cancelled = false;
+
+    renderRecaptchaV2({ container: host, siteKey: definition.captcha.publicSiteKey })
+      .then((widget) => {
+        if (cancelled) {
+          widget.reset();
+          return;
+        }
+        captchaWidgetRef.current = widget;
+      })
+      .catch(() => {
+        if (!cancelled) captchaWidgetRef.current = null;
+      });
+
+    return () => {
+      cancelled = true;
+      captchaWidgetRef.current?.reset();
+      captchaWidgetRef.current = null;
+      host.replaceChildren();
+    };
+  }, [definition, recaptchaEnabled]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Duplicate-click / in-flight guard
     if (submittingRef.current || status === "submitting") return;
     submittingRef.current = true;
     setStatus("submitting");
@@ -88,7 +78,19 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
     setFieldErrors({});
 
     try {
-      const captchaToken = await obtainCaptchaToken(definition);
+      let captchaToken: string | undefined;
+      if (recaptchaEnabled) {
+        captchaToken = captchaWidgetRef.current?.getToken();
+        if (!captchaToken) {
+          setStatus("backend-error");
+          setFieldErrors({ captcha: "CAPTCHA verification is required" });
+          setMessage("CAPTCHA verification is required");
+          return;
+        }
+      } else if (definition.captcha?.enabled && definition.captcha.provider === "turnstile" && definition.captcha.publicSiteKey) {
+        captchaToken = await obtainTurnstileToken(definition.captcha.publicSiteKey);
+      }
+
       const payloadFields: Record<string, string> = {};
       for (const field of fields) {
         payloadFields[field.name] = values[field.name] || "";
@@ -138,6 +140,8 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
       setMessage("Network error while submitting the form. Please try again.");
     } finally {
       submittingRef.current = false;
+      captchaWidgetRef.current?.reset();
+      setStatus((current) => (current === "submitting" ? "idle" : current));
     }
   }
 
@@ -200,6 +204,17 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
           </label>
         );
       })}
+
+      {recaptchaEnabled ? (
+        <div className={styles.captcha} data-migration-field="captcha">
+          <div ref={captchaHostRef} data-recaptcha-v2-host="true" />
+          {fieldErrors.captcha ? (
+            <span className={styles.error} role="alert">
+              {fieldErrors.captcha}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
 
       {status === "success" ? (
         <p className={styles.success} role="status" data-form-feedback="success">

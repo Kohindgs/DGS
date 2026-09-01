@@ -4,6 +4,8 @@ import { assertRouteFormMapping, getFormDefinitionById } from "./registry";
 import { validateFormPayload } from "./payload-validation.mjs";
 // @ts-expect-error shared form-context module consumed by production and mocked tests
 import { fetchFormContext } from "./form-context.mjs";
+// @ts-expect-error shared Fluent Forms ajax payload builder consumed by production and mocked tests
+import { buildFluentFormsAjaxParams, interpretFluentAjaxResponse } from "./fluent-ajax-payload.mjs";
 
 export type ClientSubmitPayload = {
   fluentFormId: number;
@@ -28,33 +30,14 @@ export type ValidationSuccess = {
 
 // @ts-expect-error shared form-context module consumed by production and mocked tests
 export { resolveFormContextFromHtml } from "./form-context.mjs";
+// @ts-expect-error shared Fluent Forms ajax payload builder
+export { buildFluentFormsAjaxParams, inspectFluentFormsAjaxBody, interpretFluentAjaxResponse } from "./fluent-ajax-payload.mjs";
 
 export function validateClientSubmitPayload(input: unknown): ValidationSuccess | ValidationFailure {
   return validateFormPayload(input, {
     getDefinitionById: getFormDefinitionById,
     assertRouteFormMapping,
   }) as ValidationSuccess | ValidationFailure;
-}
-
-function expandNestedFields(fields: Record<string, string>): Record<string, unknown> {
-  const out: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(fields)) {
-    const match = key.match(/^([^[\]]+)\[([^\]]+)\]$/);
-    if (match) {
-      const [, parent, child] = match;
-      const current = (out[parent] as Record<string, string> | undefined) || {};
-      current[child] = value;
-      out[parent] = current;
-    } else if (key.endsWith("[]")) {
-      const base = key.slice(0, -2);
-      const existing = (out[base] as string[] | undefined) || [];
-      existing.push(value);
-      out[base] = existing;
-    } else {
-      out[key] = value;
-    }
-  }
-  return out;
 }
 
 export async function forwardToFluentForms(options: {
@@ -73,40 +56,16 @@ export async function forwardToFluentForms(options: {
     };
   }
 
-  const form = new URLSearchParams();
-  form.set("action", definition.backend.submissionAction || "fluentform_submit");
-  form.set("form_id", String(definition.fluentFormId));
-
-  const nested = expandNestedFields(sanitizedFields);
-  const flatEntries: Array<[string, string]> = [];
-  for (const [key, value] of Object.entries(sanitizedFields)) {
-    flatEntries.push([`data[${key}]`, value]);
-  }
-  for (const [key, value] of Object.entries(nested)) {
-    if (value && typeof value === "object" && !Array.isArray(value)) {
-      for (const [child, childValue] of Object.entries(value as Record<string, string>)) {
-        flatEntries.push([`data[${key}][${child}]`, String(childValue)]);
-      }
-    }
-  }
-  for (const [key, value] of flatEntries) form.append(key, value);
-
-  form.set(`_fluentform_${definition.fluentFormId}_fluentformnonce`, context.nonce);
-  form.set(`data[_fluentform_${definition.fluentFormId}_fluentformnonce]`, context.nonce);
-  form.set("__fluent_form_embded_post_id", context.embeddedPostId);
-  form.set("data[__fluent_form_embded_post_id]", context.embeddedPostId);
-  form.set("_wp_http_referer", route);
-  form.set("data[_wp_http_referer]", route);
-
-  if (captchaToken) {
-    if (definition.captcha?.provider === "turnstile") {
-      form.set("cf-turnstile-response", captchaToken);
-      form.set("data[cf-turnstile-response]", captchaToken);
-    } else {
-      form.set("g-recaptcha-response", captchaToken);
-      form.set("data[g-recaptcha-response]", captchaToken);
-    }
-  }
+  const form = buildFluentFormsAjaxParams({
+    fluentFormId: definition.fluentFormId,
+    route,
+    sanitizedFields,
+    captchaToken,
+    nonce: context.nonce,
+    embeddedPostId: context.embeddedPostId,
+    captchaProvider: definition.captcha?.provider,
+    submissionAction: definition.backend.submissionAction || "fluentform_submit",
+  });
 
   const endpoint = definition.backend.submissionEndpoint;
   const response = await fetch(endpoint, {
@@ -130,27 +89,26 @@ export async function forwardToFluentForms(options: {
     parsed = { message: text.slice(0, 300) };
   }
 
-  const safeMessage = String(parsed.message || parsed.result || definition.confirmation?.message || "Submitted");
-  const errors = (parsed.errors || parsed.error || parsed.formErrors) as Record<string, string | string[]> | string | undefined;
-  const fieldErrors: Record<string, string> = {};
-  if (errors && typeof errors === "object") {
-    for (const [key, value] of Object.entries(errors)) {
-      fieldErrors[key] = Array.isArray(value) ? value.join(" ") : String(value);
-    }
-  }
+  const interpreted = interpretFluentAjaxResponse(parsed, response.ok);
+  const safeMessage = String(
+    interpreted.message || definition.confirmation?.message || "Submitted",
+  );
 
-  const success = response.ok && (parsed.success === true || parsed.result === "success" || parsed.type === "success");
-  if (!success) {
+  if (!interpreted.success) {
     return {
       ok: false,
-      message: typeof errors === "string" ? errors : safeMessage || definition.failureMessage || "Submission failed",
-      fieldErrors: Object.keys(fieldErrors).length ? fieldErrors : undefined,
+      message:
+        interpreted.errorText ||
+        safeMessage ||
+        definition.failureMessage ||
+        "Submission failed",
+      fieldErrors: interpreted.fieldErrors,
     };
   }
 
   return {
     ok: true,
     message: definition.confirmation?.message || safeMessage || "Thank you for your submission.",
-    submissionId: (parsed.insert_id as string | number | undefined) || (parsed.submission_id as string | number | undefined),
+    submissionId: interpreted.submissionId,
   };
 }

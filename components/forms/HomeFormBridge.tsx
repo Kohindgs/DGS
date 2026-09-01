@@ -4,40 +4,7 @@ import { useEffect } from "react";
 import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 // @ts-expect-error shared homepage bridge normalization for UI-locked service labels
 import { normalizeHomepageBridgeFields } from "@/lib/forms/homepage-service-normalize.mjs";
-
-declare global {
-  interface Window {
-    grecaptcha?: {
-      ready: (cb: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-      render?: (el: HTMLElement, options: Record<string, unknown>) => number;
-    };
-    turnstile?: {
-      render: (el: HTMLElement, options: Record<string, unknown>) => string;
-      reset: (widgetId?: string) => void;
-      getResponse: (widgetId?: string) => string;
-    };
-  }
-}
-
-function loadScript(src: string, id: string) {
-  if (document.getElementById(id)) return Promise.resolve();
-  return new Promise<void>((resolve, reject) => {
-    const script = document.createElement("script");
-    script.id = id;
-    script.src = src;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load ${src}`));
-    document.head.appendChild(script);
-  });
-}
-
-async function obtainRecaptchaToken(siteKey: string) {
-  await loadScript(`https://www.google.com/recaptcha/api.js?render=${siteKey}`, "recaptcha-api");
-  await new Promise<void>((resolve) => window.grecaptcha?.ready(() => resolve()));
-  return window.grecaptcha?.execute(siteKey, { action: "fluentform_submit" });
-}
+import { ensureHomepageRecaptchaHost, renderRecaptchaV2, type RecaptchaV2Widget } from "./captcha-client";
 
 function ensureFeedback(form: HTMLFormElement) {
   let node = form.querySelector<HTMLElement>("[data-form-feedback-host]");
@@ -104,7 +71,43 @@ export function HomeFormBridge() {
       button.textContent = definition.submitButtonText || button.textContent || "Submit Form";
     }
 
+    const visibleFieldNames = new Set(
+      definition.fields.filter((field) => !field.hidden && field.type !== "captcha").map((field) => field.name),
+    );
+
     let submitting = false;
+    let captchaWidget: RecaptchaV2Widget | null = null;
+    let cancelled = false;
+
+    const recaptchaEnabled = Boolean(
+      definition.captcha?.enabled && definition.captcha.provider === "recaptcha" && definition.captcha.publicSiteKey,
+    );
+
+    if (recaptchaEnabled && definition.captcha?.publicSiteKey) {
+      const host = ensureHomepageRecaptchaHost(form);
+      renderRecaptchaV2({ container: host, siteKey: definition.captcha.publicSiteKey })
+        .then((widget) => {
+          if (cancelled) {
+            widget.reset();
+            return;
+          }
+          captchaWidget = widget;
+        })
+        .catch(() => {
+          if (!cancelled) captchaWidget = null;
+        });
+    }
+
+    const restoreSubmitChrome = () => {
+      submitting = false;
+      if (button) {
+        button.disabled = false;
+        button.textContent = definition.submitButtonText || "Submit Form";
+      }
+      if (form.getAttribute("data-form-status") === "submitting") {
+        form.setAttribute("data-form-status", "idle");
+      }
+    };
 
     const onSubmit = async (event: Event) => {
       event.preventDefault();
@@ -122,15 +125,18 @@ export function HomeFormBridge() {
         const data = new FormData(form);
         for (const [key, value] of data.entries()) {
           if (typeof value !== "string") continue;
-          const field = definition.fields.find((item) => item.name === key);
-          if (field?.hidden) continue;
+          if (!visibleFieldNames.has(key)) continue;
           fields[key] = value;
         }
         const payloadFields = normalizeHomepageBridgeFields(fields);
 
         let captchaToken: string | undefined;
-        if (definition.captcha?.enabled && definition.captcha.publicSiteKey) {
-          captchaToken = await obtainRecaptchaToken(definition.captcha.publicSiteKey);
+        if (recaptchaEnabled) {
+          captchaToken = captchaWidget?.getToken();
+          if (!captchaToken) {
+            setFeedback(form, "backend-error", "CAPTCHA verification is required");
+            return;
+          }
         }
 
         const response = await fetch("/api/forms/submit/", {
@@ -163,20 +169,16 @@ export function HomeFormBridge() {
       } catch {
         setFeedback(form, "network-error", "Network error while submitting the form. Please try again.");
       } finally {
-        submitting = false;
-        if (button) {
-          button.disabled = false;
-          button.textContent = definition.submitButtonText || "Submit Form";
-        }
-        if (form.getAttribute("data-form-status") === "submitting") {
-          form.setAttribute("data-form-status", "idle");
-        }
+        captchaWidget?.reset();
+        restoreSubmitChrome();
       }
     };
 
     form.addEventListener("submit", onSubmit);
     return () => {
+      cancelled = true;
       form.removeEventListener("submit", onSubmit);
+      captchaWidget?.reset();
       delete form.dataset.dgsBridgeBound;
     };
   }, []);
