@@ -15,7 +15,9 @@ import {
 import {
   HOMEPAGE_SERVICE_UI_TO_FORM1,
   normalizeHomepageBridgeFields,
+  normalizeHomepageServiceDropdown,
 } from "../lib/forms/homepage-service-normalize.mjs";
+import * as cheerio from "cheerio";
 
 const ROOT = process.cwd();
 const definitions = JSON.parse(readFileSync(path.join(ROOT, "data/forms/definitions.approved.json"), "utf8"));
@@ -297,6 +299,115 @@ test("no literal secrets in definitions or form client/server sources", () => {
       }
     }
   }
+});
+
+function homepageFormSsrHtml() {
+  const source = readFileSync(path.join(ROOT, "lib/wp-exact/build-mirror-swap-html.ts"), "utf8");
+  const fnStart = source.indexOf("export function buildHomeFormHtml");
+  assert.ok(fnStart >= 0, "buildHomeFormHtml is exported");
+  const tickStart = source.indexOf("`", fnStart);
+  const tickEnd = source.indexOf("`;", tickStart + 1);
+  assert.ok(tickStart >= 0 && tickEnd > tickStart, "buildHomeFormHtml returns a template string");
+  return source.slice(tickStart + 1, tickEnd);
+}
+
+function simulateHomeFormBridgeActivation(html) {
+  const $ = cheerio.load(html);
+  const form = $("#fluentform_1");
+  form.attr("data-submission", "enabled");
+  form.removeAttr("readonly");
+  form.find("input, textarea, select").each((_, el) => {
+    const node = $(el);
+    node.removeAttr("readonly");
+    node.removeAttr("disabled");
+    node.prop("disabled", false);
+  });
+  const button = form.find("button.ff-btn-submit, button[type='button'], button[type='submit']").first();
+  button.removeAttr("disabled");
+  button.removeAttr("aria-disabled");
+  button.prop("disabled", false);
+  button.attr("type", "submit");
+  return $;
+}
+
+test("homepage SSR text fields are editable before hydration", () => {
+  const html = homepageFormSsrHtml();
+  assert.doesNotMatch(html, /\breadonly\b/);
+  const $ = cheerio.load(html);
+  const textControls = $("#fluentform_1 input[type='text'], #fluentform_1 input[type='email'], #fluentform_1 input[type='tel'], #fluentform_1 textarea");
+  assert.equal(textControls.length, 6);
+  textControls.each((_, el) => {
+    const node = $(el);
+    assert.equal(node.attr("readonly"), undefined, `${node.attr("name")} must not be readonly before hydration`);
+    assert.equal(node.attr("disabled"), undefined, `${node.attr("name")} must not be disabled before hydration`);
+  });
+  assert.equal($("#fluentform_1").attr("data-submission"), "disabled");
+});
+
+test("homepage SSR submit stays disabled until HomeFormBridge binds", () => {
+  const html = homepageFormSsrHtml();
+  const $ssr = cheerio.load(html);
+  const ssrButton = $ssr("#fluentform_1 button.ff-btn-submit");
+  assert.equal(ssrButton.length, 1);
+  assert.ok(ssrButton.attr("disabled") != null);
+  assert.equal(ssrButton.attr("aria-disabled"), "true");
+  assert.equal(ssrButton.attr("type"), "button");
+  assert.equal($ssr("#fluentform_1").attr("data-submission"), "disabled");
+
+  const homeBridge = readFileSync(path.join(ROOT, "components/forms/HomeFormBridge.tsx"), "utf8");
+  assert.match(homeBridge, /form\.setAttribute\("data-submission", "enabled"\)/);
+  assert.match(homeBridge, /button\.disabled = false/);
+  assert.match(homeBridge, /button\.removeAttribute\("aria-disabled"\)/);
+  assert.match(homeBridge, /button\.type = "submit"/);
+  assert.match(homeBridge, /form\.addEventListener\("submit", onSubmit\)/);
+
+  const $bound = simulateHomeFormBridgeActivation(html);
+  const boundButton = $bound("#fluentform_1 button.ff-btn-submit");
+  assert.equal($bound("#fluentform_1").attr("data-submission"), "enabled");
+  assert.equal(boundButton.attr("disabled"), undefined);
+  assert.equal(boundButton.attr("aria-disabled"), undefined);
+  assert.equal(boundButton.attr("type"), "submit");
+});
+
+test("homepage UI option SEO still normalizes to Search Engine Optimization", () => {
+  assert.equal(normalizeHomepageServiceDropdown("SEO"), "Search Engine Optimization");
+  const fields = buildValidFields(getById(1), { dropdown: "SEO" });
+  const normalized = normalizeHomepageBridgeFields(fields);
+  assert.equal(normalized.dropdown, "Search Engine Optimization");
+  const result = validatePayload({
+    fluentFormId: 1,
+    route: "/",
+    fields: normalized,
+    captchaToken: "token",
+  });
+  assert.equal(result.ok, true);
+  assert.equal(result.sanitizedFields.dropdown, "Search Engine Optimization");
+  const rawRejected = validatePayload({
+    fluentFormId: 1,
+    route: "/",
+    fields: buildValidFields(getById(1), { dropdown: "SEO" }),
+    captchaToken: "token",
+  });
+  assert.equal(rawRejected.ok, false);
+  assert.match(String(rawRejected.fieldErrors?.dropdown || rawRejected.message), /Invalid option|Service/);
+});
+
+test("homepage captcha remains required after editability fix", () => {
+  const definition = getById(1);
+  const fields = normalizeHomepageBridgeFields(buildValidFields(definition, { dropdown: "SEO" }));
+  const missing = validatePayload({ fluentFormId: 1, route: "/", fields });
+  assert.equal(missing.ok, false);
+  assert.equal(missing.status, 422);
+  assert.match(missing.message, /CAPTCHA verification is required/);
+  const empty = validatePayload({ fluentFormId: 1, route: "/", fields, captchaToken: "" });
+  assert.equal(empty.ok, false);
+  assert.match(empty.message, /CAPTCHA verification is required/);
+
+  const homeBridge = readFileSync(path.join(ROOT, "components/forms/HomeFormBridge.tsx"), "utf8");
+  assert.match(homeBridge, /renderRecaptchaV2/);
+  assert.match(homeBridge, /CAPTCHA verification is required/);
+  assert.match(homeBridge, /captchaWidget\?\.getToken\(\)/);
+  assert.doesNotMatch(homeBridge, /grecaptcha\.execute/);
 });
 
 test("activation, provenance, and data-submission enabled wiring", () => {
