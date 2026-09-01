@@ -1,10 +1,11 @@
 "use client";
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 /** Inner pages and homepage supply extracted WordPress nav/footer; hide Next chrome. */
-export function ConditionalSiteChrome(_props: Props) {
+export function ConditionalSiteChrome(props: Props) {
+  void props.children;
   return null;
 }

@@ -39,10 +39,6 @@ const ROUTES = [
 
 const FRACTIONS = [0, 0.35, 0.7];
 
-function ensureDirSync(dir) {
-  mkdir(dir, { recursive: true }).catch(() => {});
-}
-
 async function settle(page) {
   await page.waitForLoadState("domcontentloaded", { timeout: 60000 }).catch(() => {});
   await page.waitForTimeout(1800);

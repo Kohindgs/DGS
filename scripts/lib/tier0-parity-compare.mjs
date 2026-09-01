@@ -6,6 +6,10 @@ import { createHash } from "node:crypto";
 export function decode(value = "") {
   return value
     .replace(/&nbsp;/gi, " ")
+    .replace(/&middot;/gi, "·")
+    .replace(/&bull;/gi, "•")
+    .replace(/&ndash;/gi, "–")
+    .replace(/&mdash;/gi, "—")
     .replace(/&amp;/gi, "&")
     .replace(/&quot;/gi, '"')
     .replace(/&#0*39;/gi, "'")

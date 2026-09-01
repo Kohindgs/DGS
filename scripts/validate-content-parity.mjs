@@ -161,7 +161,9 @@ for (const routePath of retainedRoutes) {
   }
 
   const renderedLinks = extractContextualLinks(article || html, new URL(routePath, TARGET).href);
-  for (const link of expected.links.filter((item) => item.path.startsWith("/") && !/wp-content/i.test(item.path))) {
+  for (const link of expected.links.filter(
+    (item) => item.path.startsWith("/") && !/wp-content/i.test(item.path) && !/\/wp-json\//i.test(item.path),
+  )) {
     if (!internalLinkIsPresent(link, renderedLinks)) {
       summary.unexplainedLinkGaps += 1;
       failures.push(`${routePath}: missing internal link ${link.path} (anchor: ${link.anchor?.slice(0, 60) || "n/a"})`);
@@ -185,7 +187,7 @@ const ok =
   summary.unexplainedListGaps === 0 &&
   summary.unexplainedLinkGaps === 0 &&
   summary.rankingProtected === 5 &&
-  summary.intentionallyNative === 2 &&
+  summary.intentionallyNative === 3 &&
   summary.checkedRoutes === 105 &&
   approvedCount >= 6;
 

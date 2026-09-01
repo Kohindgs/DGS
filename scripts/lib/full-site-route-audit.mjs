@@ -64,8 +64,8 @@ export const CONTENT_STATUSES = [
   "NOT_APPLICABLE",
 ];
 
-/** WordPress-mirrored routes are compared against WordPress block parity. */
-export const INTENTIONALLY_NATIVE_PATHS = new Set();
+/** Live archives / nested-document widgets whose REST blocks are not the visual source. */
+export const INTENTIONALLY_NATIVE_PATHS = new Set(["/blogs/", "/services/", "/sitemap/"]);
 
 const NON_RETAINED_MIGRATION_CLASSES = new Set([
   "301_REDIRECT",

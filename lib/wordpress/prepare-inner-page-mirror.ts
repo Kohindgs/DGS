@@ -1,4 +1,5 @@
 import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
+import { applyApprovedLinkCorrectionsToHtml } from "./apply-mirror-link-corrections";
 import type { InnerPageMirrorContent } from "./inner-mirror-types";
 
 export type PreparedInnerPageMirror = InnerPageMirrorContent & {
@@ -30,7 +31,10 @@ export function prepareInnerPageMirror(
   content: InnerPageMirrorContent,
   wordpressId: number,
 ): PreparedInnerPageMirror {
-  const body = lazyBelowFold(rewriteWpUrls(stripLeadingCloseTags(content.body || "")));
+  const body = applyApprovedLinkCorrectionsToHtml(
+    content.path,
+    lazyBelowFold(rewriteWpUrls(stripLeadingCloseTags(content.body || ""))),
+  );
   const styles = rewriteWpUrls(content.styles || "");
   const articleHtml = `<article data-migration-content data-wordpress-id="${wordpressId}">${body}</article>`;
   return {

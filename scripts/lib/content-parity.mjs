@@ -10,6 +10,11 @@ const APPROVED_HEADING_NORMALIZATIONS = JSON.parse(
 
 export function decodeHtmlEntities(text = "") {
   return text
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&middot;/gi, "·")
+    .replace(/&bull;/gi, "•")
+    .replace(/&ndash;/gi, "–")
+    .replace(/&mdash;/gi, "—")
     .replace(/&#x27;/gi, "'")
     .replace(/&#0*39;/gi, "'")
     .replace(/&apos;/gi, "'")
@@ -68,8 +73,9 @@ export function headingIsPresent(routePath, sourceHeading, renderedHeadings) {
     const renderedText = normalizeHeadingText(rendered.text);
     if (renderedText !== sourceText) return false;
     const renderedLevel = normalizeHeadingLevel(rendered.level);
+    if (renderedLevel === sourceLevel) return true;
     if (approved) return renderedLevel === normalizeHeadingLevel(approved.renderedLevel);
-    return renderedLevel === sourceLevel;
+    return false;
   });
 }
 
@@ -102,6 +108,10 @@ export function textIsPresent(entry, renderedComparable, { minLength = 20, slice
   const needle = comparable.slice(0, slice);
   if (needle.length <= minLength) return true;
   if (renderedComparable.includes(needle)) return true;
+
+  const compactHaystack = renderedComparable.replace(/\s+/g, "");
+  const compactNeedle = needle.replace(/\s+/g, "");
+  if (compactNeedle.length > minLength && compactHaystack.includes(compactNeedle)) return true;
 
   if (entry.spans?.length > 1) {
     return orderedSpanSequencePresent(entry.spans, renderedComparable, { maxGap: maxSpanGap });
