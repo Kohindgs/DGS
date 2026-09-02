@@ -76,7 +76,6 @@ async function main() {
   const pages = [];
   let totalRefs = 0;
   let placeholders = 0;
-  let missingCss = 0;
   let missingFonts = 0;
   let relativeCssUrls = 0;
   let liveWithoutCss = 0;
@@ -111,7 +110,6 @@ async function main() {
     const cssMissingForLive = page.source === "live" && cssFiles.length === 0;
     if (cssMissingForLive) {
       liveWithoutCss += 1;
-      missingCss += 1;
     }
     if (page.source === "live" && !hasFontPreload && page.path !== "/career/") {
       missingFonts += 1;
