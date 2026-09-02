@@ -9,6 +9,7 @@ import { findRelativeCssUrls } from "./lib/rebase-css-urls.mjs";
 import {
   collectHtmlVisualAssetUrls,
 } from "./lib/collect-visual-stylesheets.mjs";
+import { isPlaceholderMediaUrl, readHtmlAttr } from "./lib/html-attrs.mjs";
 
 const ROOT = process.cwd();
 const PAGES_DIR = path.join(ROOT, "data/wordpress/mirrors/pages");
@@ -38,14 +39,30 @@ const PRIORITY = [
 function classifyAsset(url) {
   if (!url) return "MISSING";
   if (/\/wp-mirror-css\//i.test(url) && !/\.css(\?|$)/i.test(url)) return "WRONG URL";
-  if (/R0lGODlhAQABAIAAAP/i.test(url) || /^data:image\/gif;base64,/i.test(url)) return "PLACEHOLDER";
-  if (/^data:image\/svg\+xml/i.test(url)) return "MATCH";
+  if (isPlaceholderMediaUrl(url) || /R0lGODlhAQABAIAAAP/i.test(url) || /^data:image\//i.test(url)) {
+    return "PLACEHOLDER";
+  }
   if (/^https?:\/\/www\.dgeniussolutions\.com\/wp-content\//i.test(url)) return "MATCH";
   if (/^https?:\/\/www\.dgeniussolutions\.com\/wp-includes\//i.test(url)) return "MATCH";
   if (/^https?:\/\//i.test(url)) return "MATCH";
   if (url.startsWith("/wp-content/") || url.startsWith("/wp-includes/")) return "WRONG URL";
-  if (url.startsWith("data:")) return "MATCH";
+  if (url.startsWith("data:")) return "PLACEHOLDER";
   return "WRONG URL";
+}
+
+function leftoverLazyImgCount(html) {
+  let count = 0;
+  for (const match of String(html || "").matchAll(/<img\b[^>]*>/gi)) {
+    const tag = match[0];
+    const src = readHtmlAttr(tag, "src") || "";
+    const dataSrc =
+      readHtmlAttr(tag, "data-src") ||
+      readHtmlAttr(tag, "data-envira-src") ||
+      readHtmlAttr(tag, "data-lazy-src") ||
+      "";
+    if (isPlaceholderMediaUrl(src) && dataSrc && !isPlaceholderMediaUrl(dataSrc)) count += 1;
+  }
+  return count;
 }
 
 async function loadCssText(file, cache) {
@@ -101,7 +118,8 @@ async function main() {
     const htmlUrls = collectHtmlVisualAssetUrls(page.body || "");
     const htmlClasses = htmlUrls.map((url) => ({ url, classification: classifyAsset(url) }));
     const leftoverPlaceholders = htmlClasses.filter((row) => row.classification === "PLACEHOLDER");
-    placeholders += leftoverPlaceholders.length;
+    const leftoverLazy = leftoverLazyImgCount(page.body || "");
+    placeholders += leftoverPlaceholders.length + leftoverLazy;
     totalRefs += htmlUrls.length;
 
     const cssFiles = page.cssFiles || [];
@@ -134,7 +152,7 @@ async function main() {
 
     let pageClass = "MATCH";
     if (cssMissingForLive) pageClass = "CSS DEPENDENCY MISSING";
-    else if (leftoverPlaceholders.length) pageClass = "PLACEHOLDER";
+    else if (leftoverPlaceholders.length || leftoverLazy) pageClass = "PLACEHOLDER";
     else if (cssRelative.length) pageClass = "WRONG URL";
     else if (page.source === "rest-fallback" && page.path === "/career/") pageClass = "INTENTIONAL DIFFERENCE";
     else if (page.source === "live" && !hasFontPreload) pageClass = "FONT/ICON DEPENDENCY MISSING";
@@ -148,6 +166,7 @@ async function main() {
       hasFontPreload,
       htmlAssetCount: htmlUrls.length,
       leftoverPlaceholders: leftoverPlaceholders.length,
+      leftoverLazyImgs: leftoverLazy,
       relativeCssUrls: cssRelative,
       classification: pageClass,
       priority: PRIORITY.includes(page.path),

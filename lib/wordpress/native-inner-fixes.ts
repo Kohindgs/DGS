@@ -1,7 +1,126 @@
+/**
+ * Inner-page WordPress HTML repairs.
+ *
+ * Attribute matching must use `(?:^|\\s)name=` — never `\\bsrc=`.
+ * `-` is a non-word character, so `\\bsrc=` matches the `src` in `data-src`.
+ */
+
+const SRC_DATA_ATTRS = ["data-src", "data-envira-src", "data-lazy-src", "data-original"];
+const SRCSET_DATA_ATTRS = ["data-srcset", "data-envira-srcset", "data-lazy-srcset"];
+const POSTER_DATA_ATTRS = ["data-poster", "data-lazy-poster"];
+
 export const NATIVE_JUSTIFIED_GALLERY_ROOT_ID = "dgs-native-justified-gallery-root";
 
 /** Empty in-tree mount so the native gallery stays inside the Elementor shortcode width. */
 export const NATIVE_JUSTIFIED_GALLERY_MOUNT = `<div id="${NATIVE_JUSTIFIED_GALLERY_ROOT_ID}" data-dgs-native-justified-gallery-root="true" style="margin-bottom:20px"></div>`;
+
+export function htmlAttrPattern(name: string): RegExp {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?:^|\\s)${escaped}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, "i");
+}
+
+export function readHtmlAttr(tag: string, name: string): string | null {
+  const match = tag.match(htmlAttrPattern(name));
+  if (!match) return null;
+  return match[1] ?? match[2] ?? match[3] ?? "";
+}
+
+export function replaceHtmlAttr(tag: string, name: string, value: string): string {
+  const pattern = htmlAttrPattern(name);
+  const match = tag.match(pattern);
+  if (!match || match.index == null) {
+    return upsertHtmlAttr(tag, name, value);
+  }
+  const quoted = `"${value.replace(/"/g, "&quot;")}"`;
+  const prefix = match[0].match(/^(\s*)/)?.[1] ?? "";
+  return `${tag.slice(0, match.index)}${prefix}${name}=${quoted}${tag.slice(match.index + match[0].length)}`;
+}
+
+export function upsertHtmlAttr(tag: string, name: string, value: string): string {
+  if (readHtmlAttr(tag, name) !== null) {
+    return replaceHtmlAttr(tag, name, value);
+  }
+  const quoted = `"${value.replace(/"/g, "&quot;")}"`;
+  return tag.replace(/(\s*\/?>)$/, ` ${name}=${quoted}$1`);
+}
+
+export function removeHtmlAttr(tag: string, name: string): string {
+  const pattern = htmlAttrPattern(name);
+  return tag.replace(pattern, (full) => (full.startsWith(" ") || /^\s/.test(full) ? "" : ""));
+}
+
+export function removeHtmlClass(tag: string, className: string): string {
+  const current = readHtmlAttr(tag, "class");
+  if (!current) return tag;
+  const next = current
+    .split(/\s+/)
+    .filter((token) => token && token !== className)
+    .join(" ");
+  if (!next) return removeHtmlAttr(tag, "class");
+  return replaceHtmlAttr(tag, "class", next);
+}
+
+export function addHtmlClass(tag: string, className: string): string {
+  const current = readHtmlAttr(tag, "class") ?? "";
+  const tokens = current.split(/\s+/).filter(Boolean);
+  if (tokens.includes(className)) return tag;
+  tokens.push(className);
+  return upsertHtmlAttr(tag, "class", tokens.join(" "));
+}
+
+export function isPlaceholderMediaUrl(value: string | null | undefined): boolean {
+  if (!value) return true;
+  const trimmed = value.trim();
+  if (!trimmed) return true;
+  if (/^data:/i.test(trimmed)) return true;
+  if (/placeholder|blank\.gif|lazy-load|1x1/i.test(trimmed)) return true;
+  if (/R0lGODlhAQABAIAAAP/i.test(trimmed)) return true;
+  return false;
+}
+
+function firstRealDataUrl(tag: string, names: string[]): string {
+  for (const name of names) {
+    const value = readHtmlAttr(tag, name);
+    if (value && !isPlaceholderMediaUrl(value)) return value;
+  }
+  return "";
+}
+
+function promoteAttr(tag: string, liveName: string, dataNames: string[]): string {
+  const data = firstRealDataUrl(tag, dataNames);
+  if (!data) return tag;
+  const live = readHtmlAttr(tag, liveName);
+  if (!live || isPlaceholderMediaUrl(live)) {
+    return upsertHtmlAttr(tag, liveName, data);
+  }
+  return tag;
+}
+
+export function unwrapLazyMediaTag(tag: string): string {
+  let out = tag;
+  out = promoteAttr(out, "src", SRC_DATA_ATTRS);
+  out = promoteAttr(out, "srcset", SRCSET_DATA_ATTRS);
+  out = promoteAttr(out, "poster", POSTER_DATA_ATTRS);
+  const srcset = readHtmlAttr(out, "srcset");
+  if (srcset && isPlaceholderMediaUrl(srcset)) {
+    out = removeHtmlAttr(out, "srcset");
+  }
+  out = removeHtmlClass(out, "lazyload");
+  out = removeHtmlClass(out, "lazyloading");
+  out = addHtmlClass(out, "e-lazyloaded");
+  return out;
+}
+
+export function unwrapLazyMediaHtml(html: string): string {
+  return html.replace(/<(img|source|video|audio)\b[^>]*>/gi, (tag) => unwrapLazyMediaTag(tag));
+}
+
+/** Drop captured WordPress/Elementor footers; Next appends the shared extracted footer. */
+export function stripCapturedFooters(html: string): string {
+  const match = html.search(/<footer\b/i);
+  if (match >= 0) return html.slice(0, match).trim();
+  return html;
+}
 
 function findMatchingClose(html: string, startIdx: number): number {
   const tagMatch = html.slice(startIdx).match(/^<([a-zA-Z0-9-]+)/);
@@ -24,76 +143,24 @@ function findMatchingClose(html: string, startIdx: number): number {
   return -1;
 }
 
-/** Strip Envira/LiteSpeed placeholder srcset/src so the real media URL is what the browser paints. */
+/** Strip Envira/LiteSpeed/Smush placeholders so the real media URL is what the browser paints. */
 export function unwrapMirrorLazyMedia(html: string): string {
-  const unwrappedImgs = html.replace(/<img\b[^>]*>/gi, (tag) => {
-    let out = tag;
-    const read = (name: string) => tag.match(new RegExp(`\\b${name}=["']([^"']*)["']`, "i"))?.[1] || "";
-    const src = read("src");
-    const srcset = read("srcset");
-    const dataSrc = read("data-src") || read("data-envira-src") || read("data-lazy-src") || read("data-original");
-    const dataSrcset = read("data-srcset") || read("data-envira-srcset") || read("data-lazy-srcset");
-    const srcIsPlaceholder = /^data:image\//i.test(src) || /placeholder/i.test(src);
-    const srcsetIsPlaceholder =
-      /^data:image\//i.test(srcset) || /R0lGODlhAQABAIAAAP/i.test(srcset) || srcset === "data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
-
-    if (dataSrc && (srcIsPlaceholder || !src)) {
-      if (/\bsrc=/i.test(out)) out = out.replace(/\bsrc=["'][^"']*["']/i, `src="${dataSrc}"`);
-      else out = out.replace(/<img/i, `<img src="${dataSrc}"`);
-    }
-
-    if (srcsetIsPlaceholder) {
-      if (dataSrcset && !/^data:image\//i.test(dataSrcset)) {
-        out = out.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
-      } else {
-        out = out.replace(/\s*srcset=["'][^"']*["']/i, "");
-      }
-    } else if (dataSrcset && !srcset) {
-      out = out.replace(/<img/i, `<img srcset="${dataSrcset}"`);
-    }
-
-    return out;
-  });
-  return unwrapDataBackgrounds(unwrapSourcesAndPosters(unwrappedImgs));
-}
-
-function unwrapSourcesAndPosters(html: string): string {
-  let out = html.replace(/<source\b[^>]*>/gi, (tag) => {
-    const dataSrcset = tag.match(/\bdata-srcset=["']([^"']+)["']/i)?.[1];
-    const srcset = tag.match(/\bsrcset=["']([^"']+)["']/i)?.[1] || "";
-    if (dataSrcset && (/^data:image\//i.test(srcset) || /R0lGODlhAQABAIAAAP/i.test(srcset) || !srcset)) {
-      if (/\bsrcset=/i.test(tag)) return tag.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
-      return tag.replace(/<source/i, `<source srcset="${dataSrcset}"`);
-    }
-    return tag;
-  });
-  out = out.replace(/<video\b[^>]*>/gi, (tag) => {
-    const dataPoster = tag.match(/\bdata-poster=["']([^"']+)["']/i)?.[1];
-    const poster = tag.match(/\bposter=["']([^"']+)["']/i)?.[1] || "";
-    if (dataPoster && (!poster || /^data:image\//i.test(poster))) {
-      if (/\bposter=/i.test(tag)) return tag.replace(/\bposter=["'][^"']*["']/i, `poster="${dataPoster}"`);
-      return tag.replace(/<video/i, `<video poster="${dataPoster}"`);
-    }
-    return tag;
-  });
-  return out;
+  return unwrapDataBackgrounds(unwrapLazyMediaHtml(html));
 }
 
 function unwrapDataBackgrounds(html: string): string {
   return html.replace(/<(div|section|span|figure|a|header|footer|article|aside|li)\b[^>]*>/gi, (tag) => {
     const dataBg =
-      tag.match(/\bdata-bg=["']([^"']+)["']/i)?.[1] ||
-      tag.match(/\bdata-lazy-bg=["']([^"']+)["']/i)?.[1] ||
-      tag.match(/\bdata-bg-webp=["']([^"']+)["']/i)?.[1];
-    if (!dataBg || /^data:image\//i.test(dataBg) || /placeholder/i.test(dataBg)) return tag;
+      readHtmlAttr(tag, "data-bg") ||
+      readHtmlAttr(tag, "data-lazy-bg") ||
+      readHtmlAttr(tag, "data-bg-webp");
+    if (!dataBg || isPlaceholderMediaUrl(dataBg)) return tag;
     if (/background-image\s*:/i.test(tag)) return tag;
-    if (/\bstyle=/i.test(tag)) {
-      return tag.replace(
-        /\bstyle=(["'])([\s\S]*?)\1/i,
-        (_, q, style) => `style=${q}background-image:url('${dataBg}');${style}${q}`,
-      );
+    if (readHtmlAttr(tag, "style") !== null) {
+      const style = readHtmlAttr(tag, "style") || "";
+      return upsertHtmlAttr(tag, "style", `background-image:url('${dataBg}');${style}`);
     }
-    return tag.replace(/<([a-zA-Z0-9-]+)/i, `<$1 style="background-image:url('${dataBg}')"`);
+    return upsertHtmlAttr(tag, "style", `background-image:url('${dataBg}')`);
   });
 }
 

@@ -20,6 +20,13 @@ import {
   collectVisualStylesheetUrls,
   looksLikePlaceholderSrc,
 } from "./lib/collect-visual-stylesheets.mjs";
+import {
+  isPlaceholderMediaUrl,
+  readHtmlAttr,
+  stripCapturedFooters,
+  unwrapLazyMediaHtml,
+  upsertHtmlAttr,
+} from "./lib/html-attrs.mjs";
 
 const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, "data/wordpress/mirrors");
@@ -81,8 +88,10 @@ function stripElementById(html, id) {
 }
 
 function sliceLiveBody(html) {
-  const footerStart = html.indexOf('<footer class="dgs-footer-wrapper">');
-  const end = footerStart >= 0 ? footerStart : html.indexOf("</body>");
+  const firstFooter = html.search(/<footer\b/i);
+  const namedFooter = html.indexOf('<footer class="dgs-footer-wrapper">');
+  const footerStart =
+    firstFooter >= 0 ? firstFooter : namedFooter >= 0 ? namedFooter : html.indexOf("</body>");
   const talk = extractElementById(html, "dgsTalkPopup");
   let start = 0;
   if (talk) {
@@ -91,10 +100,10 @@ function sliceLiveBody(html) {
     const nav = extractElementById(html, "dgsNav");
     start = nav ? nav.end : 0;
   }
-  let body = html.slice(start, end > start ? end : undefined);
+  let body = html.slice(start, footerStart > start ? footerStart : undefined);
   body = body.replace(/<a class="skip-link screen-reader-text"[\s\S]*?<\/a>/i, "");
   body = stripElementById(body, "dgsTalkPopup");
-  return body.trim();
+  return stripCapturedFooters(body.trim());
 }
 
 function stripRuntime(html) {
@@ -116,69 +125,20 @@ function stripStyleTags(html) {
 }
 
 function unwrapLazyImages(html) {
-  let out = html.replace(/<img\b[^>]*>/gi, (tag) => {
-    let next = tag;
-    const read = (name) => tag.match(new RegExp(`\\b${name}=["']([^"']*)["']`, "i"))?.[1] || "";
-    const dataSrc = read("data-src") || read("data-envira-src") || read("data-lazy-src") || read("data-original");
-    const dataSrcset = read("data-srcset") || read("data-envira-srcset") || read("data-lazy-srcset");
-    const src = read("src");
-    const srcset = read("srcset");
-    const isPlaceholder = looksLikePlaceholderSrc(src);
-    const srcsetIsPlaceholder = looksLikePlaceholderSrc(srcset);
-
-    if (dataSrc && (isPlaceholder || !src)) {
-      if (/\bsrc=/i.test(next)) next = next.replace(/\bsrc=["'][^"']*["']/i, `src="${dataSrc}"`);
-      else next = next.replace(/<img/i, `<img src="${dataSrc}"`);
-    }
-    if (srcsetIsPlaceholder) {
-      if (dataSrcset && !looksLikePlaceholderSrc(dataSrcset)) {
-        next = next.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
-      } else {
-        next = next.replace(/\s*srcset=["'][^"']*["']/i, "");
-      }
-    } else if (dataSrcset) {
-      if (/\bsrcset=/i.test(next)) next = next.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
-      else next = next.replace(/<img/i, `<img srcset="${dataSrcset}"`);
-    }
-    if (!/\bloading=/i.test(next)) next = next.replace(/<img/i, `<img loading="lazy"`);
-    if (!/\bdecoding=/i.test(next)) next = next.replace(/<img/i, `<img decoding="async"`);
-    return next;
-  });
+  let out = unwrapLazyMediaHtml(html);
 
   out = out.replace(/<(div|section|span|figure|a|header|footer|article|aside|li)\b[^>]*>/gi, (tag) => {
     const dataBg =
-      tag.match(/\bdata-bg=["']([^"']+)["']/i)?.[1] ||
-      tag.match(/\bdata-lazy-bg=["']([^"']+)["']/i)?.[1] ||
-      tag.match(/\bdata-bg-webp=["']([^"']+)["']/i)?.[1];
-    if (!dataBg || looksLikePlaceholderSrc(dataBg)) return tag;
+      readHtmlAttr(tag, "data-bg") ||
+      readHtmlAttr(tag, "data-lazy-bg") ||
+      readHtmlAttr(tag, "data-bg-webp");
+    if (!dataBg || isPlaceholderMediaUrl(dataBg) || looksLikePlaceholderSrc(dataBg)) return tag;
     if (/background-image\s*:/i.test(tag)) return tag;
-    if (/\bstyle=/i.test(tag)) {
-      return tag.replace(
-        /\bstyle=(["'])([\s\S]*?)\1/i,
-        (_, q, style) => `style=${q}background-image:url('${dataBg}');${style}${q}`,
-      );
+    const style = readHtmlAttr(tag, "style");
+    if (style !== null) {
+      return upsertHtmlAttr(tag, "style", `background-image:url('${dataBg}');${style}`);
     }
-    return tag.replace(/<([a-zA-Z0-9-]+)/i, `<$1 style="background-image:url('${dataBg}')"`);
-  });
-
-  out = out.replace(/<source\b[^>]*>/gi, (tag) => {
-    const dataSrcset = tag.match(/\bdata-srcset=["']([^"']+)["']/i)?.[1];
-    const srcset = tag.match(/\bsrcset=["']([^"']+)["']/i)?.[1] || "";
-    if (dataSrcset && (looksLikePlaceholderSrc(srcset) || !srcset)) {
-      if (/\bsrcset=/i.test(tag)) return tag.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
-      return tag.replace(/<source/i, `<source srcset="${dataSrcset}"`);
-    }
-    return tag;
-  });
-
-  out = out.replace(/<video\b[^>]*>/gi, (tag) => {
-    const dataPoster = tag.match(/\bdata-poster=["']([^"']+)["']/i)?.[1];
-    const poster = tag.match(/\bposter=["']([^"']+)["']/i)?.[1] || "";
-    if (dataPoster && (!poster || looksLikePlaceholderSrc(poster))) {
-      if (/\bposter=/i.test(tag)) return tag.replace(/\bposter=["'][^"']*["']/i, `poster="${dataPoster}"`);
-      return tag.replace(/<video/i, `<video poster="${dataPoster}"`);
-    }
-    return tag;
+    return upsertHtmlAttr(tag, "style", `background-image:url('${dataBg}')`);
   });
 
   return out;

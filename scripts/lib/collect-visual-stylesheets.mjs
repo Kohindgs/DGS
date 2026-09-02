@@ -1,3 +1,5 @@
+import { readHtmlAttr } from "./html-attrs.mjs";
+
 const WP_ORIGIN = "https://www.dgeniussolutions.com";
 
 const EXCLUDE =
@@ -112,7 +114,7 @@ export function collectHtmlVisualAssetUrls(html) {
     if (src) urls.push(src);
   };
   for (const tag of String(html || "").matchAll(/<img\b[^>]*>/gi)) {
-    const read = (name) => tag[0].match(new RegExp(`\\b${name}=["']([^"']*)["']`, "i"))?.[1] || "";
+    const read = (name) => readHtmlAttr(tag[0], name) || "";
     push(read("src"));
     const srcset = read("srcset") || read("data-srcset") || read("data-envira-srcset");
     for (const part of srcset.split(",")) {
@@ -121,7 +123,7 @@ export function collectHtmlVisualAssetUrls(html) {
     push(read("data-src") || read("data-envira-src") || read("data-lazy-src"));
   }
   for (const tag of String(html || "").matchAll(/<(?:source|video|use)\b[^>]*>/gi)) {
-    const read = (name) => tag[0].match(new RegExp(`\\b${name}=["']([^"']*)["']`, "i"))?.[1] || "";
+    const read = (name) => readHtmlAttr(tag[0], name) || "";
     push(read("src"));
     push(read("poster") || read("data-poster"));
     push(read("href") || read("xlink:href"));

@@ -3,6 +3,7 @@ import { applyApprovedLinkCorrectionsToHtml } from "./apply-mirror-link-correcti
 import {
   markElementorBackgroundsReady,
   replaceEnviraWrapWithNativeMount,
+  stripCapturedFooters,
   unwrapMirrorLazyMedia,
 } from "./native-inner-fixes";
 import type { InnerPageMirrorContent } from "./inner-mirror-types";
@@ -37,7 +38,7 @@ export function prepareInnerPageMirror(
   wordpressId: number,
 ): PreparedInnerPageMirror {
   let body = markElementorBackgroundsReady(
-    unwrapMirrorLazyMedia(stripLeadingCloseTags(content.body || "")),
+    unwrapMirrorLazyMedia(stripCapturedFooters(stripLeadingCloseTags(content.body || ""))),
   );
   if (content.path === "/portfolio/") {
     body = replaceEnviraWrapWithNativeMount(body);

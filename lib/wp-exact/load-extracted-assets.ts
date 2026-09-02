@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { unwrapMirrorLazyMedia } from "@/lib/wordpress/native-inner-fixes";
 import { rewriteWpUrls } from "./rewrite-wp-urls";
 
 const EXTRACTED = join(process.cwd(), "lib/wp-exact/extracted");
@@ -62,9 +63,9 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
   ]);
 
   cached = {
-    navHtml: rewriteWpUrls(navHtml),
+    navHtml: unwrapMirrorLazyMedia(rewriteWpUrls(navHtml)),
     navStyles: rewriteWpUrls(navStyles),
-    footerHtml: rewriteWpUrls(footerHtml),
+    footerHtml: unwrapMirrorLazyMedia(rewriteWpUrls(footerHtml)),
     footerStyles: rewriteWpUrls(footerStyles),
     fluentformStyles: rewriteWpUrls(fluentformStyles),
     homeFluentformStyles: rewriteWpUrls(homeFluentformStyles),

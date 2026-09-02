@@ -6,6 +6,7 @@ import {
   NATIVE_JUSTIFIED_GALLERY_MOUNT,
   markElementorBackgroundsReady,
   replaceEnviraWrapWithNativeMount,
+  stripCapturedFooters,
   unwrapMirrorLazyMedia,
 } from "../lib/wordpress/native-inner-fixes.ts";
 
@@ -92,10 +93,66 @@ describe("unwrapMirrorLazyMedia", () => {
     assert.match(out, /src="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/logo\.png"/);
   });
 
+  it("promotes data-src when it appears BEFORE the placeholder src", () => {
+    const html =
+      '<img loading="lazy" width="200" height="80" data-src="https://www.dgeniussolutions.com/wp-content/uploads/2025/11/Eureka-forbes_White.png" alt="Eureka Forbes client logo" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==" class="lazyload">';
+    const out = unwrapMirrorLazyMedia(html);
+    assert.match(out, /src="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/2025\/11\/Eureka-forbes_White\.png"/);
+    assert.equal(/src="data:image/i.test(out), false);
+    assert.equal(/\bdata-src="https:\/\/www\.dgeniussolutions\.com/.test(html), true);
+    assert.equal(/(?:^|\s)class="[^"]*(?:^|\s)lazyload(?:\s|$)/.test(out), false);
+    assert.match(out, /e-lazyloaded/);
+  });
+
+  it("does not treat data-src as src when rewriting with a word-boundary matcher would", () => {
+    const html =
+      '<img data-src="https://www.dgeniussolutions.com/wp-content/uploads/real.png" src="data:image/svg+xml;base64,PHN2Zy8+">';
+    const buggy = html.replace(/\bsrc=["'][^"']*["']/i, 'src="SHOULD_NOT_WIN"');
+    assert.match(buggy, /src="SHOULD_NOT_WIN"/);
+    const out = unwrapMirrorLazyMedia(html);
+    assert.match(out, /src="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/real\.png"/);
+    assert.equal(out.includes("SHOULD_NOT_WIN"), false);
+  });
+
+  it("promotes data-srcset when it appears BEFORE placeholder srcset", () => {
+    const html =
+      '<img data-srcset="https://www.dgeniussolutions.com/wp-content/uploads/logo.png 200w" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" src="https://www.dgeniussolutions.com/wp-content/uploads/logo.png">';
+    const out = unwrapMirrorLazyMedia(html);
+    assert.match(out, /srcset="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/logo\.png 200w"/);
+    assert.equal(out.includes("data:image/gif"), false);
+  });
+
+  it("promotes video data-src, data-poster, and nested source data-src", () => {
+    const html =
+      '<video data-poster="https://www.dgeniussolutions.com/wp-content/uploads/poster.jpg" poster="data:image/svg+xml;base64,PHN2Zy8+" data-src="https://www.dgeniussolutions.com/wp-content/uploads/clip.mp4"><source data-src="https://www.dgeniussolutions.com/wp-content/uploads/clip.mp4" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" type="video/mp4"></video>';
+    const out = unwrapMirrorLazyMedia(html);
+    assert.match(out, /<video[^>]*src="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/clip\.mp4"/);
+    assert.match(out, /poster="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/poster\.jpg"/);
+    assert.match(out, /<source[^>]*src="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/clip\.mp4"/);
+  });
+
+  it("promotes picture source data-srcset over a placeholder srcset", () => {
+    const html =
+      '<picture><source data-srcset="https://www.dgeniussolutions.com/wp-content/uploads/hero.webp" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP" type="image/webp"><img data-src="https://www.dgeniussolutions.com/wp-content/uploads/hero.jpg" src="data:image/svg+xml;base64,PHN2Zy8+"></picture>';
+    const out = unwrapMirrorLazyMedia(html);
+    assert.match(out, /srcset="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/hero\.webp"/);
+    assert.match(out, /src="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/hero\.jpg"/);
+  });
+
   it("promotes data-bg onto an inline background-image", () => {
     const html = '<div class="hero" data-bg="https://www.dgeniussolutions.com/wp-content/uploads/hero.webp">';
     const out = unwrapMirrorLazyMedia(html);
     assert.match(out, /background-image:url\('https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/hero\.webp'\)/);
+  });
+});
+
+describe("stripCapturedFooters", () => {
+  it("removes an Elementor location footer leftover from the body slice", () => {
+    const html =
+      '<main>content</main><footer data-elementor-type="footer" class="elementor-location-footer"><svg></svg>';
+    const out = stripCapturedFooters(html);
+    assert.equal(out.includes("<footer"), false);
+    assert.equal(out.includes("<main>content</main>"), true);
   });
 });
 

@@ -71,9 +71,15 @@ async function main() {
     await page.goto(new URL(route, NEXT).href, { waitUntil: "networkidle", timeout: 90000 }).catch(() => {});
     await page.waitForTimeout(1200);
     const placeholders = await page.evaluate(() => {
-      return [...document.querySelectorAll("img")]
-        .filter((img) => /^data:image\/gif/i.test(img.getAttribute("src") || "") || /R0lGODlhAQABAIAAAP/.test(img.getAttribute("srcset") || ""))
-        .length;
+      return [...document.querySelectorAll("img")].filter((img) => {
+        const src = img.getAttribute("src") || "";
+        const dataSrc = img.getAttribute("data-src") || "";
+        const srcset = img.getAttribute("srcset") || "";
+        const dataSrcset = img.getAttribute("data-srcset") || "";
+        const paintedPlaceholder = /^data:image\//i.test(src) && /^https?:/i.test(dataSrc);
+        const paintedPlaceholderSrcset = /^data:image\//i.test(srcset) && dataSrcset && !/^data:/i.test(dataSrcset);
+        return paintedPlaceholder || paintedPlaceholderSrcset || /R0lGODlhAQABAIAAAP/.test(src) || /R0lGODlhAQABAIAAAP/.test(srcset);
+      }).length;
     });
     const cssCount = await page.evaluate(() =>
       [...document.querySelectorAll('link[rel="stylesheet"]')].filter((n) => /wp-mirror-css/.test(n.href)).length,
