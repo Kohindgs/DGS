@@ -144,16 +144,25 @@ function collectFontLinks(html) {
 function unwrapLazyImages(html) {
   return html.replace(/<img\b[^>]*>/gi, (tag) => {
     let out = tag;
-    const dataSrc = tag.match(/\bdata-src=["']([^"']+)["']/i)?.[1];
-    const dataSrcset = tag.match(/\bdata-srcset=["']([^"']+)["']/i)?.[1];
-    const src = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1] || "";
-    const isPlaceholder = /^data:image\//i.test(src) || /placeholder|lazy/i.test(src);
+    const read = (name) => tag.match(new RegExp(`\\b${name}=["']([^"']*)["']`, "i"))?.[1] || "";
+    const dataSrc = read("data-src") || read("data-envira-src") || read("data-lazy-src");
+    const dataSrcset = read("data-srcset") || read("data-envira-srcset") || read("data-lazy-srcset");
+    const src = read("src");
+    const srcset = read("srcset");
+    const isPlaceholder = /^data:image\//i.test(src) || /placeholder/i.test(src);
+    const srcsetIsPlaceholder = /^data:image\//i.test(srcset) || /R0lGODlhAQABAIAAAP/i.test(srcset);
 
     if (dataSrc && (isPlaceholder || !src)) {
       if (/\bsrc=/i.test(out)) out = out.replace(/\bsrc=["'][^"']*["']/i, `src="${dataSrc}"`);
       else out = out.replace(/<img/i, `<img src="${dataSrc}"`);
     }
-    if (dataSrcset) {
+    if (srcsetIsPlaceholder) {
+      if (dataSrcset && !/^data:image\//i.test(dataSrcset)) {
+        out = out.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
+      } else {
+        out = out.replace(/\s*srcset=["'][^"']*["']/i, "");
+      }
+    } else if (dataSrcset) {
       if (/\bsrcset=/i.test(out)) out = out.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
       else out = out.replace(/<img/i, `<img srcset="${dataSrcset}"`);
     }

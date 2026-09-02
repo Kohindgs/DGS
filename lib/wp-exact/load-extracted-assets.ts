@@ -13,6 +13,7 @@ export type WpExtractedAssets = {
   homeFluentformStyles: string;
   bootV1215: string;
   bootPortfolioHome: string;
+  bootPortfolioInner: string;
   bootNav: string;
 };
 
@@ -38,6 +39,7 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     homeFluentformStyles,
     bootV1215,
     bootPortfolioHome,
+    bootPortfolioInner,
     bootNav,
   ] = await Promise.all([
     readFile(join(EXTRACTED, "nav.html"), "utf8"),
@@ -53,6 +55,9 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     readFile(join(EXTRACTED, "boot-portfolio-home.js"), "utf8").catch(() =>
       readFile(join(EXTRACTED, "boot-1.js"), "utf8"),
     ),
+    readFile(join(EXTRACTED, "boot-portfolio-8.js"), "utf8").catch(() =>
+      readFile(join(EXTRACTED, "boot-1.js"), "utf8"),
+    ),
     readFile(join(EXTRACTED, "boot-nav.js"), "utf8"),
   ]);
 
@@ -65,6 +70,7 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     homeFluentformStyles: rewriteWpUrls(homeFluentformStyles),
     bootV1215,
     bootPortfolioHome,
+    bootPortfolioInner,
     bootNav,
   };
 

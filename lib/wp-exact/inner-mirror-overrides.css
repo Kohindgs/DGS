@@ -17,7 +17,6 @@ body {
 .dgs-wp-mirror-inner img,
 .dgs-wp-mirror-inner video {
   max-width: 100%;
-  height: auto;
 }
 
 .dgs-wp-mirror-inner iframe {
@@ -30,34 +29,22 @@ body {
   display: none;
 }
 
-/* Envira without Envira JS: keep images visible in their existing markup. */
-.dgs-wp-mirror-inner .envira-gallery-wrap,
-.dgs-wp-mirror-inner .envira-gallery-public,
-.dgs-wp-mirror-inner .envira-gallery-0,
-.dgs-wp-mirror-inner .envira-gallery {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.dgs-wp-mirror-inner .envira-gallery-item,
-.dgs-wp-mirror-inner .envira-gallery-item-inner,
-.dgs-wp-mirror-inner .envira-gallery-image-container {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.dgs-wp-mirror-inner .envira-gallery-image,
-.dgs-wp-mirror-inner .envira-gallery img {
-  display: block !important;
+/* Native justified gallery: images must keep their computed row height. */
+.dgs-wp-mirror-inner [data-dgs-native-justified-gallery] img {
   width: 100%;
-  height: auto;
-  opacity: 1 !important;
-  visibility: visible !important;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
 }
 
-/* LiteSpeed/lazy placeholders should already be rewritten; keep hidden clones hidden. */
-.dgs-wp-mirror-inner img[data-lazyloaded][src^="data:image"] {
-  display: none;
+/* WP widget JS used to set .faq-a max-height; keep the default-open item visible. */
+.dgs-wp-mirror-inner .faq-item.active > .faq-a,
+.dgs-wp-mirror-inner .faq-item.active .faq-a {
+  max-height: 2000px;
+}
+
+/* LiteSpeed leftover placeholders if unwrap missed a tag. */
+.dgs-wp-mirror-inner img[src^="data:image"][data-src],
+.dgs-wp-mirror-inner img[srcset^="data:image"] {
+  visibility: hidden;
 }

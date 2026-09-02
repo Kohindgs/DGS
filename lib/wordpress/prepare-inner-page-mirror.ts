@@ -1,5 +1,9 @@
 import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
 import { applyApprovedLinkCorrectionsToHtml } from "./apply-mirror-link-corrections";
+import {
+  replaceEnviraWrapWithNativeMount,
+  unwrapMirrorLazyMedia,
+} from "./native-inner-fixes";
 import type { InnerPageMirrorContent } from "./inner-mirror-types";
 
 export type PreparedInnerPageMirror = InnerPageMirrorContent & {
@@ -31,9 +35,13 @@ export function prepareInnerPageMirror(
   content: InnerPageMirrorContent,
   wordpressId: number,
 ): PreparedInnerPageMirror {
-  const body = applyApprovedLinkCorrectionsToHtml(
+  let body = unwrapMirrorLazyMedia(stripLeadingCloseTags(content.body || ""));
+  if (content.path === "/portfolio/") {
+    body = replaceEnviraWrapWithNativeMount(body);
+  }
+  body = applyApprovedLinkCorrectionsToHtml(
     content.path,
-    lazyBelowFold(rewriteWpUrls(stripLeadingCloseTags(content.body || ""))),
+    lazyBelowFold(rewriteWpUrls(body)),
   );
   const styles = rewriteWpUrls(content.styles || "");
   const articleHtml = `<article data-migration-content data-wordpress-id="${wordpressId}">${body}</article>`;
