@@ -84,6 +84,7 @@
     "test:social-metadata-adversarial": "node --test scripts/test-social-metadata-adversarial.mjs",
     "test:weavings-layout": "node --test scripts/test-weavings-layout.mjs",
     "test:inner-visual-gap-fixes": "node --experimental-strip-types --test scripts/test-inner-visual-gap-fixes.mjs",
+    "test:forms-activation": "node --test scripts/test-forms-activation.mjs",
     "test:fluent-ajax-payload": "node --test scripts/test-fluent-ajax-payload.mjs",
     "test:recaptcha-v2": "node --test scripts/test-recaptcha-v2-integration.mjs",
     "validate:full-site-ranking-readiness": "node scripts/validate-full-site-ranking-readiness.mjs"
