@@ -17,6 +17,8 @@ const ALLOWLIST = new Set([
   "lib/wp-exact/extracted/fluentform-styles.css",
   "lib/wp-exact/extracted/home-fluentform-styles.css",
   "lib/wp-exact/extracted/footer.html",
+  "lib/wp-exact/inner-mirror-overrides.css",
+  "lib/wordpress/native-inner-fixes.ts",
   "lib/wp-exact/build-mirror-swap-html.ts",
   "components/wp-exact/WpMirrorHomeForm.tsx",
   "lib/wordpress/sanitize-homepage-mirror.ts",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T15:39:51.950Z",
+  "generatedAt": "2026-09-02T09:33:31.472Z",
   "patterns": {
     "elementor": {
       "label": "Elementor runtime",
@@ -54,8 +54,15 @@
     }
   },
   "findings": {
-    "elementor": [],
+    "elementor": [
+      {
+        "file": "lib/wp-exact/inner-mirror-overrides.css"
+      }
+    ],
     "envira": [
+      {
+        "file": "lib/wordpress/native-inner-fixes.ts"
+      },
       {
         "file": "lib/wordpress/sanitize-homepage-mirror.ts"
       },
@@ -75,7 +82,11 @@
         "file": "lib/wp-exact/build-mirror-swap-html.ts"
       }
     ],
-    "simpleicons": [],
+    "simpleicons": [
+      {
+        "file": "lib/wp-exact/extracted/footer.html"
+      }
+    ],
     "mshots": [],
     "wpThemeRuntime": [],
     "adminAjax": [],
@@ -124,17 +135,27 @@
     ]
   },
   "summary": {
-    "classAForbiddenRuntime": 5,
-    "elementorRuntime": 0,
-    "enviraRuntime": 3,
+    "classAForbiddenRuntime": 8,
+    "elementorRuntime": 1,
+    "enviraRuntime": 4,
     "rankMathRuntime": 0,
     "fluentFrontendRuntime": 2,
-    "simpleiconsRuntime": 0,
+    "simpleiconsRuntime": 1,
     "mshotsRuntime": 0,
     "mshotsApprovalStatus": "none",
     "wpUploadsAssets": 9
   },
   "classAFindings": [
+    {
+      "type": "elementor",
+      "file": "lib/wp-exact/inner-mirror-overrides.css",
+      "label": "Elementor runtime"
+    },
+    {
+      "type": "envira",
+      "file": "lib/wordpress/native-inner-fixes.ts",
+      "label": "Envira runtime"
+    },
     {
       "type": "envira",
       "file": "lib/wordpress/sanitize-homepage-mirror.ts",
@@ -159,6 +180,11 @@
       "type": "fluentFrontend",
       "file": "lib/wp-exact/build-mirror-swap-html.ts",
       "label": "Fluent Forms frontend runtime"
+    },
+    {
+      "type": "simpleicons",
+      "file": "lib/wp-exact/extracted/footer.html",
+      "label": "SimpleIcons CDN"
     }
   ]
 }
