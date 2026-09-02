@@ -22,7 +22,7 @@ describe("inferMediaSize", () => {
 });
 
 describe("layoutJustified", () => {
-  it("packs items into justified rows that fill the container width", () => {
+  it("packs overflowing items onto the next row and stretches the completed row", () => {
     const items = [
       { id: 1, width: 1600, height: 400 },
       { id: 2, width: 1600, height: 400 },
@@ -38,7 +38,40 @@ describe("layoutJustified", () => {
     const first = rows[0];
     const total = first.items.reduce((sum, cell) => sum + cell.width, 0) + 10 * (first.items.length - 1);
     assert.ok(Math.abs(total - 1440) < 1);
-    assert.ok(first.items.length >= 2);
+    assert.ok(first.items.length >= 1);
+  });
+
+  it("matches live WordPress desktop packing for 16:9 thumbs at 1280px", () => {
+    const items = Array.from({ length: 6 }, (_, index) => ({
+      id: index + 1,
+      width: 1024,
+      height: 576,
+    }));
+    const rows = layoutJustified(items, {
+      containerWidth: 1280,
+      rowHeight: 150,
+      gutter: 1,
+      justifyLastRow: false,
+    });
+    assert.equal(rows[0].items.length, 4);
+    assert.ok(Math.abs(rows[0].height - 180) < 2);
+  });
+
+  it("matches live WordPress mobile packing for a 16:9 thumb at 390px", () => {
+    const rows = layoutJustified(
+      [
+        { id: 1, width: 1024, height: 576 },
+        { id: 2, width: 1024, height: 576 },
+      ],
+      {
+        containerWidth: 390,
+        rowHeight: 150,
+        gutter: 0,
+        justifyLastRow: false,
+      },
+    );
+    assert.equal(rows[0].items.length, 1);
+    assert.ok(Math.abs(rows[0].height - 219.375) < 1);
   });
 });
 

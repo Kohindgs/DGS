@@ -1,4 +1,7 @@
-export const NATIVE_JUSTIFIED_GALLERY_MOUNT = "<!--DGS_NATIVE_JUSTIFIED_GALLERY-->";
+export const NATIVE_JUSTIFIED_GALLERY_ROOT_ID = "dgs-native-justified-gallery-root";
+
+/** Empty in-tree mount so the native gallery stays inside the Elementor shortcode width. */
+export const NATIVE_JUSTIFIED_GALLERY_MOUNT = `<div id="${NATIVE_JUSTIFIED_GALLERY_ROOT_ID}" data-dgs-native-justified-gallery-root="true" style="margin-bottom:20px"></div>`;
 
 function findMatchingClose(html: string, startIdx: number): number {
   const tagMatch = html.slice(startIdx).match(/^<([a-zA-Z0-9-]+)/);

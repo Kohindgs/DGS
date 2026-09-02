@@ -7,9 +7,10 @@ import { layoutJustified } from "@/lib/portfolio/justified-layout";
 import { PortfolioLightbox } from "@/components/portfolio/PortfolioLightbox";
 import styles from "./JustifiedPortfolioGallery.module.css";
 
-const DESKTOP_ROW_HEIGHT = 190;
-const MOBILE_ROW_HEIGHT = 90;
-const DESKTOP_GUTTER = 10;
+/** Live WordPress Envira config: justified_row_height 150. Mobile also renders 150, not 80. */
+const ROW_HEIGHT = 150;
+/** Live justified_margins is 1px on desktop; gutter_mobile is 0. */
+const DESKTOP_GUTTER = 1;
 const MOBILE_GUTTER = 0;
 const MOBILE_MQ = 767;
 
@@ -17,14 +18,20 @@ type SizedItem = HomepageGalleryItem & { layoutWidth: number; layoutHeight: numb
 
 type Props = {
   items: HomepageGalleryItem[];
+  containerWidth?: number;
+  isMobile?: boolean;
 };
 
-export function JustifiedPortfolioGallery({ items }: Props) {
+export function JustifiedPortfolioGallery({
+  items,
+  containerWidth: containerWidthProp,
+  isMobile: isMobileProp,
+}: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeTriggerRef = useRef<HTMLElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState(1440);
-  const [isMobile, setIsMobile] = useState(false);
+  const [measuredWidth, setMeasuredWidth] = useState<number | null>(null);
+  const [measuredMobile, setMeasuredMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const sizedItems = useMemo<SizedItem[]>(
@@ -37,14 +44,12 @@ export function JustifiedPortfolioGallery({ items }: Props) {
   );
 
   useEffect(() => {
+    if (containerWidthProp && containerWidthProp > 0 && typeof isMobileProp === "boolean") return;
     const node = rootRef.current;
-    if (!node || typeof ResizeObserver === "undefined") {
-      setContainerWidth(typeof window !== "undefined" ? window.innerWidth : 1440);
-      return;
-    }
+    if (!node || typeof ResizeObserver === "undefined") return;
     const update = () => {
-      setContainerWidth(Math.floor(node.getBoundingClientRect().width));
-      setIsMobile(window.matchMedia(`(max-width: ${MOBILE_MQ}px)`).matches);
+      setMeasuredWidth(Math.floor(node.getBoundingClientRect().width));
+      setMeasuredMobile(window.matchMedia(`(max-width: ${MOBILE_MQ}px)`).matches);
     };
     update();
     const observer = new ResizeObserver(update);
@@ -54,16 +59,14 @@ export function JustifiedPortfolioGallery({ items }: Props) {
       observer.disconnect();
       window.removeEventListener("resize", update);
     };
-  }, []);
+  }, [containerWidthProp, isMobileProp]);
+
+  const isMobile = typeof isMobileProp === "boolean" ? isMobileProp : measuredMobile;
+  const containerWidth = containerWidthProp && containerWidthProp > 0 ? containerWidthProp : measuredWidth || 1280;
+  const gutter = isMobile ? MOBILE_GUTTER : DESKTOP_GUTTER;
 
   const rows = useMemo(() => {
     if (!containerWidth || !sizedItems.length) return [];
-    if (isMobile) {
-      return sizedItems.map((item) => ({
-        height: MOBILE_ROW_HEIGHT,
-        items: [{ item, width: containerWidth, height: MOBILE_ROW_HEIGHT }],
-      }));
-    }
     return layoutJustified(
       sizedItems.map((item) => ({
         ...item,
@@ -72,12 +75,12 @@ export function JustifiedPortfolioGallery({ items }: Props) {
       })),
       {
         containerWidth,
-        rowHeight: DESKTOP_ROW_HEIGHT,
-        gutter: DESKTOP_GUTTER,
+        rowHeight: ROW_HEIGHT,
+        gutter,
         justifyLastRow: false,
       },
     );
-  }, [containerWidth, isMobile, sizedItems]);
+  }, [containerWidth, gutter, sizedItems]);
 
   return (
     <>
@@ -94,8 +97,8 @@ export function JustifiedPortfolioGallery({ items }: Props) {
             className={styles.row}
             style={{
               height: `${row.height}px`,
-              gap: `${isMobile ? MOBILE_GUTTER : DESKTOP_GUTTER}px`,
-              marginBottom: `${isMobile ? MOBILE_GUTTER : DESKTOP_GUTTER}px`,
+              gap: `${gutter}px`,
+              marginBottom: `${gutter}px`,
             }}
           >
             {row.items.map((cell) => {

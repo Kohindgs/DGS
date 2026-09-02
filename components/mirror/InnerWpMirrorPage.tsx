@@ -3,14 +3,14 @@ import { join } from "node:path";
 import { loadInnerPageMirror } from "@/lib/wordpress/load-inner-page-mirror";
 import { prepareInnerPageMirror } from "@/lib/wordpress/prepare-inner-page-mirror";
 import {
-  NATIVE_JUSTIFIED_GALLERY_MOUNT,
+  NATIVE_JUSTIFIED_GALLERY_ROOT_ID,
   hasNativeVideoPortfolioMount,
 } from "@/lib/wordpress/native-inner-fixes";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
 import { InnerMirrorWidgets } from "@/components/mirror/InnerMirrorWidgets";
-import { JustifiedPortfolioGallery } from "@/components/portfolio/JustifiedPortfolioGallery";
+import { JustifiedPortfolioGalleryPortal } from "@/components/portfolio/JustifiedPortfolioGalleryPortal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import type { JsonLdValue } from "@/lib/schema/jsonld";
 import type { HomepageGalleryItem } from "@/lib/portfolio/types";
@@ -38,18 +38,13 @@ function MirrorArticle({
   html: string;
   galleryItems?: HomepageGalleryItem[];
 }) {
-  if (galleryItems?.length && html.includes(NATIVE_JUSTIFIED_GALLERY_MOUNT)) {
-    const [before, after] = html.split(NATIVE_JUSTIFIED_GALLERY_MOUNT);
-    return (
-      <div className="dgs-wp-mirror-inner">
-        <div dangerouslySetInnerHTML={{ __html: before }} />
-        <JustifiedPortfolioGallery items={galleryItems} />
-        <div dangerouslySetInnerHTML={{ __html: after }} />
-      </div>
-    );
-  }
-
-  return <div className="dgs-wp-mirror-inner" dangerouslySetInnerHTML={{ __html: html }} />;
+  const mountGallery = Boolean(galleryItems?.length && html.includes(NATIVE_JUSTIFIED_GALLERY_ROOT_ID));
+  return (
+    <>
+      <div className="dgs-wp-mirror-inner" dangerouslySetInnerHTML={{ __html: html }} />
+      {mountGallery && galleryItems?.length ? <JustifiedPortfolioGalleryPortal items={galleryItems} /> : null}
+    </>
+  );
 }
 
 export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: InnerWpMirrorPageProps) {

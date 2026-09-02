@@ -29,7 +29,11 @@ body {
   display: none;
 }
 
-/* Native justified gallery: images must keep their computed row height. */
+/* Native justified gallery: stay in the Elementor shortcode column and keep row height. */
+.dgs-wp-mirror-inner [data-dgs-native-justified-gallery-root] {
+  width: 100%;
+}
+
 .dgs-wp-mirror-inner [data-dgs-native-justified-gallery] img {
   width: 100%;
   height: 100%;
