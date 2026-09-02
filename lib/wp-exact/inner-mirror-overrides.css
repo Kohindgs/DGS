@@ -70,6 +70,14 @@ body {
   background: #0a0a0a;
 }
 
+/* Live WP JS adds .is-ready on the video; extracted boot also marks .video-ready on the card. */
+.dgs-wp-mirror-inner .thumb-video.is-ready,
+.dgs-wp-mirror-inner .video-ready .thumb-video,
+.dgs-wp-mirror-inner .gallery-item.video-ready .thumb-video,
+.dgs-wp-mirror-inner .case-study-item.video-ready .thumb-video {
+  opacity: 1 !important;
+}
+
 /* Elementor motion JS is not restored; keep captured widgets visible. */
 .dgs-wp-mirror-inner .elementor-invisible {
   visibility: visible;
