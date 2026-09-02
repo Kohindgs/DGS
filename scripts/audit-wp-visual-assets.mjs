@@ -8,7 +8,6 @@ import path from "node:path";
 import { findRelativeCssUrls } from "./lib/rebase-css-urls.mjs";
 import {
   collectHtmlVisualAssetUrls,
-  looksLikePlaceholderSrc,
 } from "./lib/collect-visual-stylesheets.mjs";
 
 const ROOT = process.cwd();
@@ -38,13 +37,14 @@ const PRIORITY = [
 
 function classifyAsset(url) {
   if (!url) return "MISSING";
-  if (looksLikePlaceholderSrc(url)) return "PLACEHOLDER";
   if (/\/wp-mirror-css\//i.test(url) && !/\.css(\?|$)/i.test(url)) return "WRONG URL";
+  if (/R0lGODlhAQABAIAAAP/i.test(url) || /^data:image\/gif;base64,/i.test(url)) return "PLACEHOLDER";
+  if (/^data:image\/svg\+xml/i.test(url)) return "MATCH";
   if (/^https?:\/\/www\.dgeniussolutions\.com\/wp-content\//i.test(url)) return "MATCH";
   if (/^https?:\/\/www\.dgeniussolutions\.com\/wp-includes\//i.test(url)) return "MATCH";
   if (/^https?:\/\//i.test(url)) return "MATCH";
   if (url.startsWith("/wp-content/") || url.startsWith("/wp-includes/")) return "WRONG URL";
-  if (url.startsWith("data:")) return looksLikePlaceholderSrc(url) ? "PLACEHOLDER" : "MATCH";
+  if (url.startsWith("data:")) return "MATCH";
   return "WRONG URL";
 }
 
