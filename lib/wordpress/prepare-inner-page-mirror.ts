@@ -1,6 +1,7 @@
 import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
 import { applyApprovedLinkCorrectionsToHtml } from "./apply-mirror-link-corrections";
 import {
+  markElementorBackgroundsReady,
   replaceEnviraWrapWithNativeMount,
   unwrapMirrorLazyMedia,
 } from "./native-inner-fixes";
@@ -35,7 +36,9 @@ export function prepareInnerPageMirror(
   content: InnerPageMirrorContent,
   wordpressId: number,
 ): PreparedInnerPageMirror {
-  let body = unwrapMirrorLazyMedia(stripLeadingCloseTags(content.body || ""));
+  let body = markElementorBackgroundsReady(
+    unwrapMirrorLazyMedia(stripLeadingCloseTags(content.body || "")),
+  );
   if (content.path === "/portfolio/") {
     body = replaceEnviraWrapWithNativeMount(body);
   }

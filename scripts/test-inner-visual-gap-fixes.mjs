@@ -4,6 +4,7 @@ import { inferMediaSize } from "../lib/portfolio/infer-media-size.ts";
 import { layoutJustified } from "../lib/portfolio/justified-layout.ts";
 import {
   NATIVE_JUSTIFIED_GALLERY_MOUNT,
+  markElementorBackgroundsReady,
   replaceEnviraWrapWithNativeMount,
   unwrapMirrorLazyMedia,
 } from "../lib/wordpress/native-inner-fixes.ts";
@@ -89,6 +90,20 @@ describe("unwrapMirrorLazyMedia", () => {
       '<img src="data:image/svg+xml;base64,PHN2Zy8+" data-src="https://www.dgeniussolutions.com/wp-content/uploads/logo.png" class="lazyload">';
     const out = unwrapMirrorLazyMedia(html);
     assert.match(out, /src="https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/logo\.png"/);
+  });
+
+  it("promotes data-bg onto an inline background-image", () => {
+    const html = '<div class="hero" data-bg="https://www.dgeniussolutions.com/wp-content/uploads/hero.webp">';
+    const out = unwrapMirrorLazyMedia(html);
+    assert.match(out, /background-image:url\('https:\/\/www\.dgeniussolutions\.com\/wp-content\/uploads\/hero\.webp'\)/);
+  });
+});
+
+describe("markElementorBackgroundsReady", () => {
+  it("adds e-lazyloaded to Elementor parent containers", () => {
+    const html = '<div class="elementor-element e-con e-parent" data-id="x">';
+    const out = markElementorBackgroundsReady(html);
+    assert.match(out, /e-lazyloaded/);
   });
 });
 

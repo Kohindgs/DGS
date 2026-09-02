@@ -13,6 +13,13 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { rewriteWpUrls, WP_ORIGIN } from "./lib/rewrite-wp-urls.mjs";
+import { rebaseCssUrls } from "./lib/rebase-css-urls.mjs";
+import {
+  collectFontLinkTags,
+  collectHeadVisualCss,
+  collectVisualStylesheetUrls,
+  looksLikePlaceholderSrc,
+} from "./lib/collect-visual-stylesheets.mjs";
 
 const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, "data/wordpress/mirrors");
@@ -21,17 +28,6 @@ const CSS_DIR = path.join(OUT_DIR, "css");
 const PUBLIC_CSS_DIR = path.join(ROOT, "public/wp-mirror-css");
 const UA = "DGS-InnerPageMirror/1.0 (+https://www.dgeniussolutions.com)";
 const DELAY_MS = 650;
-const CSS_FAMILIES = new Set([
-  "blog-detail",
-  "blog-archive",
-  "service-archive",
-  "page-our-services",
-  "about",
-  "contact",
-  "portfolio",
-  "elementor-standard",
-  "theme-standard",
-]);
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -119,57 +115,73 @@ function stripStyleTags(html) {
   return html.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "");
 }
 
-function collectCssUrls(html) {
-  const urls = [];
-  for (const match of html.matchAll(/<link[^>]+rel=["']stylesheet["'][^>]*>/gi)) {
-    const href = match[0].match(/href=["']([^"']+)["']/i)?.[1];
-    if (!href) continue;
-    const clean = href.split("?")[0];
-    if (/\/wp-content\/litespeed\/css\/[a-f0-9]+\.css$/i.test(clean)) urls.push(clean);
-  }
-  return [...new Set(urls)];
-}
-
-function collectFontLinks(html) {
-  const links = [];
-  for (const match of html.matchAll(/<link[^>]+>/gi)) {
-    const tag = match[0];
-    if (/fonts\.googleapis|fonts\.gstatic|rel=["']preconnect["'][^>]*fonts/i.test(tag)) {
-      links.push(tag);
-    }
-  }
-  return [...new Set(links)];
-}
-
 function unwrapLazyImages(html) {
-  return html.replace(/<img\b[^>]*>/gi, (tag) => {
-    let out = tag;
+  let out = html.replace(/<img\b[^>]*>/gi, (tag) => {
+    let next = tag;
     const read = (name) => tag.match(new RegExp(`\\b${name}=["']([^"']*)["']`, "i"))?.[1] || "";
-    const dataSrc = read("data-src") || read("data-envira-src") || read("data-lazy-src");
+    const dataSrc = read("data-src") || read("data-envira-src") || read("data-lazy-src") || read("data-original");
     const dataSrcset = read("data-srcset") || read("data-envira-srcset") || read("data-lazy-srcset");
     const src = read("src");
     const srcset = read("srcset");
-    const isPlaceholder = /^data:image\//i.test(src) || /placeholder/i.test(src);
-    const srcsetIsPlaceholder = /^data:image\//i.test(srcset) || /R0lGODlhAQABAIAAAP/i.test(srcset);
+    const isPlaceholder = looksLikePlaceholderSrc(src);
+    const srcsetIsPlaceholder = looksLikePlaceholderSrc(srcset);
 
     if (dataSrc && (isPlaceholder || !src)) {
-      if (/\bsrc=/i.test(out)) out = out.replace(/\bsrc=["'][^"']*["']/i, `src="${dataSrc}"`);
-      else out = out.replace(/<img/i, `<img src="${dataSrc}"`);
+      if (/\bsrc=/i.test(next)) next = next.replace(/\bsrc=["'][^"']*["']/i, `src="${dataSrc}"`);
+      else next = next.replace(/<img/i, `<img src="${dataSrc}"`);
     }
     if (srcsetIsPlaceholder) {
-      if (dataSrcset && !/^data:image\//i.test(dataSrcset)) {
-        out = out.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
+      if (dataSrcset && !looksLikePlaceholderSrc(dataSrcset)) {
+        next = next.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
       } else {
-        out = out.replace(/\s*srcset=["'][^"']*["']/i, "");
+        next = next.replace(/\s*srcset=["'][^"']*["']/i, "");
       }
     } else if (dataSrcset) {
-      if (/\bsrcset=/i.test(out)) out = out.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
-      else out = out.replace(/<img/i, `<img srcset="${dataSrcset}"`);
+      if (/\bsrcset=/i.test(next)) next = next.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
+      else next = next.replace(/<img/i, `<img srcset="${dataSrcset}"`);
     }
-    if (!/\bloading=/i.test(out)) out = out.replace(/<img/i, `<img loading="lazy"`);
-    if (!/\bdecoding=/i.test(out)) out = out.replace(/<img/i, `<img decoding="async"`);
-    return out;
+    if (!/\bloading=/i.test(next)) next = next.replace(/<img/i, `<img loading="lazy"`);
+    if (!/\bdecoding=/i.test(next)) next = next.replace(/<img/i, `<img decoding="async"`);
+    return next;
   });
+
+  out = out.replace(/<(div|section|span|figure|a|header|footer|article|aside|li)\b[^>]*>/gi, (tag) => {
+    const dataBg =
+      tag.match(/\bdata-bg=["']([^"']+)["']/i)?.[1] ||
+      tag.match(/\bdata-lazy-bg=["']([^"']+)["']/i)?.[1] ||
+      tag.match(/\bdata-bg-webp=["']([^"']+)["']/i)?.[1];
+    if (!dataBg || looksLikePlaceholderSrc(dataBg)) return tag;
+    if (/background-image\s*:/i.test(tag)) return tag;
+    if (/\bstyle=/i.test(tag)) {
+      return tag.replace(
+        /\bstyle=(["'])([\s\S]*?)\1/i,
+        (_, q, style) => `style=${q}background-image:url('${dataBg}');${style}${q}`,
+      );
+    }
+    return tag.replace(/<([a-zA-Z0-9-]+)/i, `<$1 style="background-image:url('${dataBg}')"`);
+  });
+
+  out = out.replace(/<source\b[^>]*>/gi, (tag) => {
+    const dataSrcset = tag.match(/\bdata-srcset=["']([^"']+)["']/i)?.[1];
+    const srcset = tag.match(/\bsrcset=["']([^"']+)["']/i)?.[1] || "";
+    if (dataSrcset && (looksLikePlaceholderSrc(srcset) || !srcset)) {
+      if (/\bsrcset=/i.test(tag)) return tag.replace(/\bsrcset=["'][^"']*["']/i, `srcset="${dataSrcset}"`);
+      return tag.replace(/<source/i, `<source srcset="${dataSrcset}"`);
+    }
+    return tag;
+  });
+
+  out = out.replace(/<video\b[^>]*>/gi, (tag) => {
+    const dataPoster = tag.match(/\bdata-poster=["']([^"']+)["']/i)?.[1];
+    const poster = tag.match(/\bposter=["']([^"']+)["']/i)?.[1] || "";
+    if (dataPoster && (!poster || looksLikePlaceholderSrc(poster))) {
+      if (/\bposter=/i.test(tag)) return tag.replace(/\bposter=["'][^"']*["']/i, `poster="${dataPoster}"`);
+      return tag.replace(/<video/i, `<video poster="${dataPoster}"`);
+    }
+    return tag;
+  });
+
+  return out;
 }
 
 function fluentFormIds(html) {
@@ -272,7 +284,7 @@ async function downloadCss(url, cache) {
     cache.set(url, null);
     return null;
   }
-  const text = rewriteWpUrls(await res.text());
+  const text = rewriteWpUrls(rebaseCssUrls(await res.text(), url));
   const hash = sha12(text);
   const file = `${hash}.css`;
   await writeFile(path.join(CSS_DIR, file), text);
@@ -282,14 +294,15 @@ async function downloadCss(url, cache) {
   return entry;
 }
 
-function prepareBody(html) {
+function prepareBody(html, pageUrl) {
   let body = stripRuntime(html);
   body = body.replace(/^(?:\s*<\/(?:div|header|section|main|span|nav|aside)>)+/i, "").trim();
   body = unwrapLazyImages(body);
   const styles = extractInlineStyles(body);
   body = stripStyleTags(body);
   body = rewriteWpUrls(body);
-  return { body, styles: rewriteWpUrls(styles) };
+  const rebasedStyles = pageUrl ? rebaseCssUrls(styles, pageUrl) : styles;
+  return { body, styles: rewriteWpUrls(rebasedStyles) };
 }
 
 async function main() {
@@ -357,17 +370,20 @@ async function main() {
       : restClass;
     const family = source === "rest-fallback" ? restClass.family : liveClass.family;
     const reason = source === "rest-fallback" ? restClass.reason : liveClass.reason;
-    const needsThemeCss = CSS_FAMILIES.has(family);
+    const needsThemeCss = source === "live";
 
     let rawBody = "";
     let fontLinks = [];
     let cssFiles = [];
 
+    let headVisualCss = "";
     if (source === "live") {
       rawBody = sliceLiveBody(liveHtml);
-      fontLinks = collectFontLinks(liveHtml).map((tag) => rewriteWpUrls(tag));
+      const pageUrl = new URL(route.path, WP_ORIGIN).href;
+      fontLinks = collectFontLinkTags(liveHtml, pageUrl).map((tag) => rewriteWpUrls(tag));
+      headVisualCss = collectHeadVisualCss(liveHtml);
       if (needsThemeCss) {
-        for (const href of collectCssUrls(liveHtml)) {
+        for (const href of collectVisualStylesheetUrls(liveHtml, pageUrl)) {
           const entry = await downloadCss(href, cssCache);
           if (entry) cssFiles.push(entry.file);
         }
@@ -376,7 +392,12 @@ async function main() {
       rawBody = rest.html || "";
     }
 
-    const prepared = prepareBody(rawBody);
+    const pageUrl = source === "live" ? new URL(route.path, WP_ORIGIN).href : `${WP_ORIGIN}/`;
+    const prepared = prepareBody(rawBody, pageUrl);
+    if (headVisualCss) {
+      const rebasedHead = rewriteWpUrls(rebaseCssUrls(headVisualCss, pageUrl));
+      prepared.styles = prepared.styles ? `${rebasedHead}\n\n${prepared.styles}` : rebasedHead;
+    }
     const payload = {
       path: route.path,
       family,
@@ -429,7 +450,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     source: WP_ORIGIN,
     method:
-      "Live HTML slice (after #dgsNav / #dgsTalkPopup, before footer) with REST fallback; scripts/JSON-LD stripped; LiteSpeed CSS only for cmsmasters families",
+      "Live HTML slice (after #dgsNav / #dgsTalkPopup, before footer) with REST fallback; scripts/JSON-LD stripped; live visual stylesheets (LiteSpeed/Elementor/theme/plugin) for every live-captured family, with CSS url() rebased to the original stylesheet URL",
     familyCounts: Object.fromEntries(Object.entries(families).map(([k, v]) => [k, v.count])),
     families,
     routes: classified,

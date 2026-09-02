@@ -52,3 +52,8 @@ body {
 .dgs-wp-mirror-inner img[srcset^="data:image"] {
   visibility: hidden;
 }
+
+/* Elementor motion JS is not restored; keep captured widgets visible. */
+.dgs-wp-mirror-inner .elementor-invisible {
+  visibility: visible;
+}
