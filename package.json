@@ -87,6 +87,7 @@
     "test:wp-visual-css": "node --test scripts/test-wp-visual-css.mjs",
     "test:wp-visual-asset-parity": "node --test scripts/test-wp-visual-asset-parity.mjs",
     "audit:wp-visual-assets": "node scripts/audit-wp-visual-assets.mjs",
+    "audit:inner-visual-network": "node scripts/audit-inner-visual-network.mjs",
     "test:forms-activation": "node --test scripts/test-forms-activation.mjs",
     "test:fluent-ajax-payload": "node --test scripts/test-fluent-ajax-payload.mjs",
     "test:recaptcha-v2": "node --test scripts/test-recaptcha-v2-integration.mjs",
