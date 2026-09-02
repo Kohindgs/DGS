@@ -7,8 +7,8 @@ import { layoutJustified } from "@/lib/portfolio/justified-layout";
 import { PortfolioLightbox } from "@/components/portfolio/PortfolioLightbox";
 import styles from "./JustifiedPortfolioGallery.module.css";
 
-const DESKTOP_ROW_HEIGHT = 150;
-const MOBILE_ROW_HEIGHT = 80;
+const DESKTOP_ROW_HEIGHT = 190;
+const MOBILE_ROW_HEIGHT = 90;
 const DESKTOP_GUTTER = 10;
 const MOBILE_GUTTER = 0;
 const MOBILE_MQ = 767;
@@ -58,6 +58,12 @@ export function JustifiedPortfolioGallery({ items }: Props) {
 
   const rows = useMemo(() => {
     if (!containerWidth || !sizedItems.length) return [];
+    if (isMobile) {
+      return sizedItems.map((item) => ({
+        height: MOBILE_ROW_HEIGHT,
+        items: [{ item, width: containerWidth, height: MOBILE_ROW_HEIGHT }],
+      }));
+    }
     return layoutJustified(
       sizedItems.map((item) => ({
         ...item,
@@ -66,8 +72,8 @@ export function JustifiedPortfolioGallery({ items }: Props) {
       })),
       {
         containerWidth,
-        rowHeight: isMobile ? MOBILE_ROW_HEIGHT : DESKTOP_ROW_HEIGHT,
-        gutter: isMobile ? MOBILE_GUTTER : DESKTOP_GUTTER,
+        rowHeight: DESKTOP_ROW_HEIGHT,
+        gutter: DESKTOP_GUTTER,
         justifyLastRow: false,
       },
     );
