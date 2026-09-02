@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import type { HomepageGalleryItem } from "@/lib/portfolio/types";
 import { JustifiedPortfolioGallery } from "@/components/portfolio/JustifiedPortfolioGallery";
@@ -10,39 +10,54 @@ type Props = {
   items: HomepageGalleryItem[];
 };
 
+type MountSnapshot = {
+  node: HTMLElement | null;
+  width: number;
+  isMobile: boolean;
+};
+
+const SERVER_SNAPSHOT: MountSnapshot = { node: null, width: 1280, isMobile: false };
+
+let snapshot: MountSnapshot = SERVER_SNAPSHOT;
+
+function measure(): MountSnapshot {
+  const node = document.getElementById(NATIVE_JUSTIFIED_GALLERY_ROOT_ID);
+  const width = node
+    ? Math.floor(node.getBoundingClientRect().width) || Math.floor(window.innerWidth)
+    : Math.floor(window.innerWidth) || 1280;
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  return { node, width, isMobile };
+}
+
+function subscribe(onChange: () => void) {
+  const notify = () => {
+    const next = measure();
+    if (snapshot.node !== next.node || snapshot.width !== next.width || snapshot.isMobile !== next.isMobile) {
+      snapshot = next;
+      onChange();
+    }
+  };
+  notify();
+  const node = document.getElementById(NATIVE_JUSTIFIED_GALLERY_ROOT_ID);
+  const observer = node && typeof ResizeObserver !== "undefined" ? new ResizeObserver(notify) : null;
+  if (node && observer) observer.observe(node);
+  window.addEventListener("resize", notify);
+  return () => {
+    observer?.disconnect();
+    window.removeEventListener("resize", notify);
+  };
+}
+
 /**
  * Keeps the native gallery inside the mirrored Elementor shortcode width.
  * Splitting the HTML string at a comment marker dropped the gallery out of
  * that padded column and made it full-bleed.
  */
 export function JustifiedPortfolioGalleryPortal({ items }: Props) {
-  const [target, setTarget] = useState<HTMLElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState(1280);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useLayoutEffect(() => {
-    const node = document.getElementById(NATIVE_JUSTIFIED_GALLERY_ROOT_ID);
-    setTarget(node);
-    const update = () => {
-      const width = node ? Math.floor(node.getBoundingClientRect().width) : 0;
-      setContainerWidth(width || Math.floor(window.innerWidth));
-      setIsMobile(window.matchMedia("(max-width: 767px)").matches);
-    };
-    update();
-    if (!node || typeof ResizeObserver === "undefined") return;
-    const observer = new ResizeObserver(update);
-    observer.observe(node);
-    window.addEventListener("resize", update);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
+  const mount = useSyncExternalStore(subscribe, () => snapshot, () => SERVER_SNAPSHOT);
   const gallery = (
-    <JustifiedPortfolioGallery items={items} containerWidth={containerWidth} isMobile={isMobile} />
+    <JustifiedPortfolioGallery items={items} containerWidth={mount.width} isMobile={mount.isMobile} />
   );
-
-  if (target) return createPortal(gallery, target);
+  if (mount.node) return createPortal(gallery, mount.node);
   return gallery;
 }
