@@ -48,10 +48,12 @@ export function prepareInnerPageMirror(
     lazyBelowFold(rewriteWpUrls(body)),
   );
   const styles = rewriteWpUrls(content.styles || "");
+  const fontLinks = content.fontLinks?.map((tag) => rewriteWpUrls(tag));
   const articleHtml = `<article data-migration-content data-wordpress-id="${wordpressId}">${body}</article>`;
   return {
     ...content,
     articleHtml,
     combinedStyles: styles,
+    fontLinks,
   };
 }
