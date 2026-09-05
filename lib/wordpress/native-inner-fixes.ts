@@ -96,9 +96,6 @@ function promoteAttr(tag: string, liveName: string, dataNames: string[]): string
   return tag;
 }
 
-export const BLANK_PIXEL_DATA_URI =
-  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-
 export function unwrapLazyMediaTag(tag: string): string {
   let out = tag;
   out = promoteAttr(out, "src", SRC_DATA_ATTRS);
@@ -112,7 +109,7 @@ export function unwrapLazyMediaTag(tag: string): string {
   if (isImg) {
     const src = readHtmlAttr(out, "src");
     if (src !== null && src.trim() === "") {
-      out = replaceHtmlAttr(out, "src", BLANK_PIXEL_DATA_URI);
+      out = removeHtmlAttr(out, "src");
     }
   }
   out = removeHtmlClass(out, "lazyload");
