@@ -32,6 +32,7 @@ tar -czf "$TARBALL" \
   --exclude='tooling/visual-parity/diffs' \
   --exclude='node_modules/.cache' \
   --exclude='.cursor' \
+  --exclude='*.mp4' \
   .next \
   app \
   components \
@@ -61,6 +62,7 @@ BUILD_ID="$BUILD_ID"
 TIMESTAMP="$TIMESTAMP"
 REMOTE_APP="\$HOME/dimgrey-app"
 REMOTE_RELEASE="\$REMOTE_APP/releases/\$SHORT_SHA"
+SHARED_MEDIA="\$REMOTE_APP/shared/wp-content/uploads"
 DOMAIN_ROOT="\$HOME/domains/dimgrey-goat-473970.hostingersite.com"
 PUBLIC_HTML="\$DOMAIN_ROOT/public_html"
 
@@ -68,6 +70,16 @@ mkdir -p "\$REMOTE_RELEASE/tmp"
 rm -rf "\$REMOTE_RELEASE"/*
 tar -xzf "/tmp/dimgrey-release-\${SHORT_SHA}.tar.gz" -C "\$REMOTE_RELEASE"
 rm -f "/tmp/dimgrey-release-\${SHORT_SHA}.tar.gz"
+
+# Link shared persistent MP4 video assets into release public tree
+if [ -d "\$SHARED_MEDIA" ]; then
+  find "\$SHARED_MEDIA" -type f -name "*.mp4" | while read -r video; do
+    rel="\${video#\$SHARED_MEDIA/}"
+    target="\$REMOTE_RELEASE/public/wp-content/uploads/\$rel"
+    mkdir -p "\$(dirname "\$target")"
+    ln -sf "\$video" "\$target"
+  done
+fi
 
 cd "\$REMOTE_RELEASE"
 npm ci --omit=dev 2>&1 | tail -5
