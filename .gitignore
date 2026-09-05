@@ -6,4 +6,8 @@ out
 !.env.example
 *.log
 .DS_Store
-coverage
+*.tsbuildinfo
+tooling/ui-lock/**/diffs/
+.cursor/mcp.json
+data/forms-private/
+public/wp-content/uploads/**/*.mp4

@@ -1,0 +1,923 @@
+{
+  "checkedAt": "2026-09-01T18:28:10.029Z",
+  "target": "http://127.0.0.1:3025",
+  "baselineOverallSha256": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
+  "baselineIntegrity": "pass",
+  "expectStagingNoindex": true,
+  "protectedRouteCount": 4,
+  "routes": [
+    {
+      "path": "/services/ai-video-production-agency/",
+      "baselineRouteSha256": "0072eddb298dddeed5891aeddb36e8c4e26ffe53a28b55431583ca3539bce11f",
+      "httpStatus": 200,
+      "indexable": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
+      "title": "AI Video Production Agency in Mumbai | D’Genius Solutions",
+      "description": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
+      "h1": "AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
+      "canonicalPath": "/services/ai-video-production-agency/",
+      "desiredCanonicalPath": "/services/ai-video-production-agency/",
+      "selfCanonical": true,
+      "inSitemap": true,
+      "hasBreadcrumbs": true,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "contentHashMatch": true,
+      "content": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "headingOrderChanged": false,
+        "faq": {
+          "missing": [],
+          "extra": [],
+          "answerDiffs": []
+        },
+        "missingLinks": [],
+        "extraLinks": [
+          {
+            "anchor": "Runway",
+            "href": "https://runwayml.com/",
+            "destination": "https://runwayml.com/",
+            "path": "/",
+            "scope": "body"
+          },
+          {
+            "anchor": "Google Veo",
+            "href": "https://deepmind.google/technologies/veo/",
+            "destination": "https://deepmind.google/technologies/veo/",
+            "path": "/technologies/veo/",
+            "scope": "body"
+          },
+          {
+            "anchor": "Synthesia",
+            "href": "https://www.synthesia.io/",
+            "destination": "https://www.synthesia.io/",
+            "path": "/",
+            "scope": "body"
+          }
+        ],
+        "altDiffs": []
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "B",
+          "label": "APPROVED_TECHNICAL_LINK_TARGET_CORRECTION",
+          "detail": "\"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/"
+        },
+        {
+          "class": "B",
+          "label": "APPROVED_BROKEN_SOURCE_LINK_REMOVAL",
+          "detail": "\"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "45 image alt differences are lazy-load/placeholder normalization only"
+        }
+      ],
+      "blocking": []
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "baselineRouteSha256": "2f5465c259ccc1705192373eedb10b2316aaffc47bff7d9ce3325c8b5ab5cf28",
+      "httpStatus": 200,
+      "indexable": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
+      "title": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
+      "description": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
+      "h1": "AEO Services in Mumbai from a Mumbai-Based AEO Agency",
+      "canonicalPath": "/services/aeo-services-in-mumbai/",
+      "desiredCanonicalPath": "/services/aeo-services-in-mumbai/",
+      "selfCanonical": true,
+      "inSitemap": true,
+      "hasBreadcrumbs": true,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "contentHashMatch": true,
+      "content": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "headingOrderChanged": false,
+        "faq": {
+          "missing": [],
+          "extra": [],
+          "answerDiffs": []
+        },
+        "missingLinks": [],
+        "extraLinks": [
+          {
+            "anchor": "WhatsApp",
+            "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20AEO%20services",
+            "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20AEO%20services",
+            "path": "/919987922901/",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "Google Search Central guidance for generative AI search",
+            "href": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+            "destination": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+            "path": "/search/docs/fundamentals/ai-optimization-guide/",
+            "scope": "body"
+          }
+        ],
+        "altDiffs": []
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "B",
+          "label": "APPROVED_TECHNICAL_CORRECTION",
+          "detail": "Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "77 image alt differences are lazy-load/placeholder normalization only"
+        }
+      ],
+      "blocking": []
+    },
+    {
+      "path": "/services/geo/",
+      "baselineRouteSha256": "ad32afe2e6b85bf3e93cc22a779831dea541fa2df549ab1061c469bec1b6ce84",
+      "httpStatus": 200,
+      "indexable": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
+      "title": "GEO Services in Mumbai | D'Genius Solutions",
+      "description": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
+      "h1": "Generative Engine Optimization (GEO) Services in Mumbai",
+      "canonicalPath": "/services/geo/",
+      "desiredCanonicalPath": "/services/geo/",
+      "selfCanonical": true,
+      "inSitemap": true,
+      "hasBreadcrumbs": true,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "contentHashMatch": true,
+      "content": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "headingOrderChanged": false,
+        "faq": {
+          "missing": [],
+          "extra": [],
+          "answerDiffs": []
+        },
+        "missingLinks": [],
+        "extraLinks": [
+          {
+            "anchor": "WhatsApp",
+            "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20GEO%20services",
+            "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20GEO%20services",
+            "path": "/919987922901/",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "scope": "body"
+          },
+          {
+            "anchor": "",
+            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "scope": "body"
+          }
+        ],
+        "altDiffs": []
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "20 image alt differences are lazy-load/placeholder normalization only"
+        }
+      ],
+      "blocking": []
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "baselineRouteSha256": "3f52bed0d090203560874c4fdd5e9d3fe3544689615d3d377218c5dffe5af141",
+      "httpStatus": 200,
+      "indexable": false,
+      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
+      "expectStagingNoindex": true,
+      "title": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
+      "description": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get a free AI search audit by D'Genius Solutions.",
+      "h1": "LLM SEO Services in Mumbai for AI Search Visibility",
+      "canonicalPath": "/services/llm-seo-service/",
+      "desiredCanonicalPath": "/services/llm-seo-service/",
+      "selfCanonical": true,
+      "inSitemap": true,
+      "hasBreadcrumbs": true,
+      "schemaTypes": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "contentHashMatch": true,
+      "content": {
+        "missingHeadings": [],
+        "extraHeadings": [],
+        "headingOrderChanged": false,
+        "faq": {
+          "missing": [],
+          "extra": [],
+          "answerDiffs": []
+        },
+        "missingLinks": [],
+        "extraLinks": [
+          {
+            "anchor": "WhatsApp",
+            "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20LLM%20SEO%20services",
+            "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20LLM%20SEO%20services",
+            "path": "/919987922901/",
+            "scope": "body"
+          },
+          {
+            "anchor": "D'Genius Solutions",
+            "href": "https://www.dgeniussolutions.com",
+            "destination": "https://www.dgeniussolutions.com/",
+            "path": "/",
+            "scope": "body"
+          }
+        ],
+        "altDiffs": []
+      },
+      "findings": [
+        {
+          "class": "A",
+          "label": "EXPECTED_STAGING_DIFFERENCE",
+          "detail": "EXPECTED_STAGING_NOINDEX"
+        },
+        {
+          "class": "C",
+          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+          "detail": "49 image alt differences are lazy-load/placeholder normalization only"
+        }
+      ],
+      "blocking": []
+    }
+  ],
+  "destinationChecks": [
+    {
+      "sourceRoute": "/services/ai-video-production-agency/",
+      "anchor": "SEO Services In Mumbai",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/ai-video-production-agency/",
+      "anchor": "AEO Services In Mumbai",
+      "wordpressPath": "/services/aeo-services-in-mumbai/",
+      "requiredPath": "/services/aeo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/aeo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/aeo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/ai-video-production-agency/",
+      "anchor": "Optimize For AI Overviews",
+      "wordpressPath": "/blogs/optimize-for-ai-overviews/",
+      "requiredPath": "/blogs/optimize-for-ai-overviews/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/blogs/optimize-for-ai-overviews/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/blogs/optimize-for-ai-overviews/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/ai-video-production-agency/",
+      "anchor": "Website Development Company In Mumbai",
+      "wordpressPath": "/services/website-development/",
+      "requiredPath": "/services/website-development-amc/",
+      "classification": "B",
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/website-development-amc/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/website-development-amc/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/ai-video-production-agency/",
+      "anchor": "Future Of SEO",
+      "wordpressPath": "/blogs/future-of-seo/",
+      "requiredPath": "/blogs/future-of-seo/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/blogs/future-of-seo/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/blogs/future-of-seo/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "SEO services in Mumbai",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "Generative Engine Optimization services",
+      "wordpressPath": "/services/geo/",
+      "requiredPath": "/services/geo/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/geo/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/geo/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "LLM SEO services in Mumbai",
+      "wordpressPath": "/services/llm-seo-service/",
+      "requiredPath": "/services/llm-seo-service/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/llm-seo-service/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/llm-seo-service/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "SEO services",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "GEO services",
+      "wordpressPath": "/services/geo/",
+      "requiredPath": "/services/geo/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/geo/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/geo/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "LLM SEO services",
+      "wordpressPath": "/services/llm-seo-service/",
+      "requiredPath": "/services/llm-seo-service/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/llm-seo-service/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/llm-seo-service/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "Builds Search Foundations",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "Supports AI Citations",
+      "wordpressPath": "/services/geo/",
+      "requiredPath": "/services/geo/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/geo/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/geo/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "Clarifies Brand Entities",
+      "wordpressPath": "/services/llm-seo-service/",
+      "requiredPath": "/services/llm-seo-service/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/llm-seo-service/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/llm-seo-service/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "SEO",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "GEO",
+      "wordpressPath": "/services/geo/",
+      "requiredPath": "/services/geo/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/geo/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/geo/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/aeo-services-in-mumbai/",
+      "anchor": "LLM SEO",
+      "wordpressPath": "/services/llm-seo-service/",
+      "requiredPath": "/services/llm-seo-service/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/llm-seo-service/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/llm-seo-service/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/geo/",
+      "anchor": "SEO services in Mumbai",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/geo/",
+      "anchor": "Answer Engine Optimization",
+      "wordpressPath": "/services/aeo-services-in-mumbai/",
+      "requiredPath": "/services/aeo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/aeo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/aeo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/geo/",
+      "anchor": "LLM SEO services",
+      "wordpressPath": "/services/llm-seo-service/",
+      "requiredPath": "/services/llm-seo-service/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/llm-seo-service/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/llm-seo-service/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/geo/",
+      "anchor": "SEO",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/geo/",
+      "anchor": "AEO",
+      "wordpressPath": "/services/aeo-services-in-mumbai/",
+      "requiredPath": "/services/aeo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/aeo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/aeo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/geo/",
+      "anchor": "LLM SEO",
+      "wordpressPath": "/services/llm-seo-service/",
+      "requiredPath": "/services/llm-seo-service/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/llm-seo-service/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/llm-seo-service/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "traditional SEO services in Mumbai",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "SEO services in Mumbai",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "AEO services in Mumbai",
+      "wordpressPath": "/services/aeo-services-in-mumbai/",
+      "requiredPath": "/services/aeo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/aeo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/aeo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "GEO services",
+      "wordpressPath": "/services/geo/",
+      "requiredPath": "/services/geo/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/geo/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/geo/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "SEO",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "AEO",
+      "wordpressPath": "/services/aeo-services-in-mumbai/",
+      "requiredPath": "/services/aeo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/aeo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/aeo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "GEO",
+      "wordpressPath": "/services/geo/",
+      "requiredPath": "/services/geo/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/geo/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/geo/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    },
+    {
+      "sourceRoute": "/services/llm-seo-service/",
+      "anchor": "Traditional SEO",
+      "wordpressPath": "/services/seo-services-in-mumbai/",
+      "requiredPath": "/services/seo-services-in-mumbai/",
+      "classification": null,
+      "action": null,
+      "reason": null,
+      "finalPath": "/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "redirectHops": 0,
+      "canonicalPath": "/services/seo-services-in-mumbai/",
+      "indexable": false,
+      "issues": [],
+      "healthy": true
+    }
+  ],
+  "explainedFindings": [
+    "/services/ai-video-production-agency/: [A] EXPECTED_STAGING_NOINDEX",
+    "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
+    "/services/ai-video-production-agency/: [B] \"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved",
+    "/services/ai-video-production-agency/: [C] 45 image alt differences are lazy-load/placeholder normalization only",
+    "/services/aeo-services-in-mumbai/: [A] EXPECTED_STAGING_NOINDEX",
+    "/services/aeo-services-in-mumbai/: [B] Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)",
+    "/services/aeo-services-in-mumbai/: [C] 77 image alt differences are lazy-load/placeholder normalization only",
+    "/services/geo/: [A] EXPECTED_STAGING_NOINDEX",
+    "/services/geo/: [C] 20 image alt differences are lazy-load/placeholder normalization only",
+    "/services/llm-seo-service/: [A] EXPECTED_STAGING_NOINDEX",
+    "/services/llm-seo-service/: [C] 49 image alt differences are lazy-load/placeholder normalization only",
+    "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" approved link-target correction /services/website-development/ -> /services/website-development-amc/"
+  ],
+  "blockingFailures": [],
+  "passed": true
+}

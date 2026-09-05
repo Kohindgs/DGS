@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { absoluteUrl } from "./site";
 import { isPublicIndexingEnabled } from "./environment";
 
+export const DEFAULT_SHARE_IMAGE_PATH = "/images/social/dgs-default-share.png";
+export const DEFAULT_SHARE_IMAGE_URL = absoluteUrl(DEFAULT_SHARE_IMAGE_PATH);
+
 export type PageMetadataInput = {
   title: string;
   description?: string;
@@ -34,7 +37,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
   const publicIndexing = isPublicIndexingEnabled();
   const indexable = requestedIndexable && publicIndexing;
   const follow = input.follow !== false && publicIndexing;
-  const image = input.image ? absoluteUrl(input.image) : undefined;
+  const image = absoluteUrl(input.image || DEFAULT_SHARE_IMAGE_PATH);
 
   const metadata: Metadata = {
     title,
@@ -58,12 +61,12 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
       url: absoluteUrl(path),
       siteName: "D'Genius Solutions",
       locale: "en_IN",
-      images: image ? [{ url: image }] : undefined,
+      images: [{ url: image }],
     },
     twitter: {
-      card: image ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title,
-      images: image ? [image] : undefined,
+      images: [image],
     },
   };
 

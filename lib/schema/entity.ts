@@ -2,6 +2,8 @@ import { siteConfig } from "@/lib/seo/site";
 
 export const ORGANIZATION_ID = `${siteConfig.url}/#organization` as const;
 export const WEBSITE_ID = `${siteConfig.url}/#website` as const;
+export const LOCAL_BUSINESS_ID = `${siteConfig.url}/#localbusiness` as const;
+export const LOGO_ID = `${siteConfig.url}/#logo` as const;
 
 /** Verified public business facts — do not fabricate. */
 export const verifiedOrganization = {

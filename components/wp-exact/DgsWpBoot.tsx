@@ -5,8 +5,9 @@ import { useChrome } from "@/components/layout/ChromeProvider";
 
 type Props = {
   bootNav: string;
-  bootV1215: string;
-  bootPortfolio: string;
+  bootV1215?: string;
+  bootPortfolio?: string;
+  runV1215?: boolean;
   runPortfolio?: boolean;
 };
 
@@ -21,14 +22,22 @@ function runInlineScript(source: string, label: string) {
   }
 }
 
-export function DgsWpBoot({ bootNav, bootV1215, bootPortfolio, runPortfolio }: Props) {
+export function DgsWpBoot({
+  bootNav,
+  bootV1215 = "",
+  bootPortfolio = "",
+  runV1215 = true,
+  runPortfolio = true,
+}: Props) {
   const { openLetsTalk } = useChrome();
 
   useEffect(() => {
     runInlineScript(bootNav, "nav");
-    runInlineScript(bootV1215, "v1215");
+    if (runV1215 && bootV1215) {
+      runInlineScript(bootV1215, "v1215");
+    }
 
-    if (runPortfolio !== false) {
+    if (runPortfolio && bootPortfolio) {
       runInlineScript(bootPortfolio, "portfolio");
     }
 
@@ -41,7 +50,7 @@ export function DgsWpBoot({ bootNav, bootV1215, bootPortfolio, runPortfolio }: P
 
     document.addEventListener("click", onTalkClick);
     return () => document.removeEventListener("click", onTalkClick);
-  }, [bootNav, bootV1215, bootPortfolio, runPortfolio, openLetsTalk]);
+  }, [bootNav, bootV1215, bootPortfolio, runV1215, runPortfolio, openLetsTalk]);
 
   return null;
 }

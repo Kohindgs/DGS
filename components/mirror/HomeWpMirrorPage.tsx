@@ -42,7 +42,6 @@ export async function HomeWpMirrorPage() {
     .replace(NATIVE_HOME_FORM_MOUNT, buildHomeFormHtml());
 
   const jsonLdScripts = buildHomepageMirrorJsonLd({
-    content,
     route: route!,
     blocks: allBlocks["/"]?.blocks || [],
   });

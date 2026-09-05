@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 2,
+  "approvedAt": "2026-08-29T10:40:00.000Z",
+  "policy": "Human-approved href-only restorations for ranking-protected routes. Anchor wording must not change. B-class entries are approved technical link-target corrections; frozen WordPress evidence is unchanged.",
+  "restorations": {
+    "/services/ai-video-production-agency/": [
+      {
+        "headingId": "seo-services-in-mumbai",
+        "anchor": "SEO Services In Mumbai",
+        "wordpressDestination": "/services/seo-services-in-mumbai/",
+        "requiredNextDestination": "/services/seo-services-in-mumbai/",
+        "classification": null
+      },
+      {
+        "headingId": "aeo-services-in-mumbai",
+        "anchor": "AEO Services In Mumbai",
+        "wordpressDestination": "/services/aeo-services-in-mumbai/",
+        "requiredNextDestination": "/services/aeo-services-in-mumbai/",
+        "classification": null
+      },
+      {
+        "headingId": "optimize-for-ai-overviews",
+        "anchor": "Optimize For AI Overviews",
+        "wordpressDestination": "/blogs/optimize-for-ai-overviews/",
+        "requiredNextDestination": "/blogs/optimize-for-ai-overviews/",
+        "classification": null
+      },
+      {
+        "headingId": "google-ads-services",
+        "anchor": "Google Ads Services",
+        "wordpressDestination": "/services/google-ads/",
+        "requiredNextDestination": null,
+        "action": "REMOVE_BROKEN_HREF",
+        "classification": "B",
+        "reason": "Frozen WordPress destination returns 404 with no authoritative redirect or migrated canonical route."
+      },
+      {
+        "headingId": "website-development-company-in-mumbai",
+        "anchor": "Website Development Company In Mumbai",
+        "wordpressDestination": "/services/website-development/",
+        "requiredNextDestination": "/services/website-development-amc/",
+        "classification": "B"
+      },
+      {
+        "headingId": "future-of-seo",
+        "anchor": "Future Of SEO",
+        "wordpressDestination": "/blogs/future-of-seo/",
+        "requiredNextDestination": "/blogs/future-of-seo/",
+        "classification": null
+      }
+    ]
+  }
+}

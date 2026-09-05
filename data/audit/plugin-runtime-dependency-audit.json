@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-09-02T09:33:31.472Z",
+  "patterns": {
+    "elementor": {
+      "label": "Elementor runtime",
+      "class": "A",
+      "regex": {}
+    },
+    "envira": {
+      "label": "Envira runtime",
+      "class": "A",
+      "regex": {}
+    },
+    "rankMath": {
+      "label": "Rank Math runtime",
+      "class": "A",
+      "regex": {}
+    },
+    "fluentFrontend": {
+      "label": "Fluent Forms frontend runtime",
+      "class": "A",
+      "regex": {}
+    },
+    "simpleicons": {
+      "label": "SimpleIcons CDN",
+      "class": "A",
+      "regex": {}
+    },
+    "mshots": {
+      "label": "WordPress mshots runtime",
+      "class": "A",
+      "regex": {},
+      "approvalRequired": "ASSET_APPROVAL_REQUIRED — /services/website-development-amc/ and /services/website-development-pune-page/"
+    },
+    "wpThemeRuntime": {
+      "label": "WordPress theme frontend runtime",
+      "class": "A",
+      "regex": {}
+    },
+    "adminAjax": {
+      "label": "admin-ajax.php runtime",
+      "class": "A",
+      "regex": {}
+    },
+    "wpUploadsAsset": {
+      "label": "wp-content/uploads asset",
+      "class": "C",
+      "regex": {}
+    },
+    "fluentStylesSnapshot": {
+      "label": "Fluent Forms static legacy snapshot",
+      "class": "B",
+      "regex": {}
+    }
+  },
+  "findings": {
+    "elementor": [
+      {
+        "file": "lib/wp-exact/inner-mirror-overrides.css"
+      }
+    ],
+    "envira": [
+      {
+        "file": "lib/wordpress/native-inner-fixes.ts"
+      },
+      {
+        "file": "lib/wordpress/sanitize-homepage-mirror.ts"
+      },
+      {
+        "file": "lib/work/types.ts"
+      },
+      {
+        "file": "lib/wp-exact/extracted/creative-gallery-frame.html"
+      }
+    ],
+    "rankMath": [],
+    "fluentFrontend": [
+      {
+        "file": "components/wp-exact/WpMirrorHomeForm.tsx"
+      },
+      {
+        "file": "lib/wp-exact/build-mirror-swap-html.ts"
+      }
+    ],
+    "simpleicons": [
+      {
+        "file": "lib/wp-exact/extracted/footer.html"
+      }
+    ],
+    "mshots": [],
+    "wpThemeRuntime": [],
+    "adminAjax": [],
+    "wpUploadsAsset": [
+      {
+        "file": "components/home/HomeHero.tsx",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/schema/entity.ts",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/site/brand.ts",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/wp-exact/extracted/boot-1.js",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/wp-exact/extracted/boot-portfolio-8.js",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/wp-exact/extracted/boot-portfolio-home.js",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/wp-exact/extracted/creative-gallery-frame.html",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/wp-exact/extracted/footer.html",
+        "note": "allowed content asset reference"
+      },
+      {
+        "file": "lib/wp-exact/extracted/nav.html",
+        "note": "allowed content asset reference"
+      }
+    ],
+    "fluentStylesSnapshot": [
+      {
+        "file": "lib/wp-exact/load-extracted-assets.ts"
+      }
+    ]
+  },
+  "summary": {
+    "classAForbiddenRuntime": 8,
+    "elementorRuntime": 1,
+    "enviraRuntime": 4,
+    "rankMathRuntime": 0,
+    "fluentFrontendRuntime": 2,
+    "simpleiconsRuntime": 1,
+    "mshotsRuntime": 0,
+    "mshotsApprovalStatus": "none",
+    "wpUploadsAssets": 9
+  },
+  "classAFindings": [
+    {
+      "type": "elementor",
+      "file": "lib/wp-exact/inner-mirror-overrides.css",
+      "label": "Elementor runtime"
+    },
+    {
+      "type": "envira",
+      "file": "lib/wordpress/native-inner-fixes.ts",
+      "label": "Envira runtime"
+    },
+    {
+      "type": "envira",
+      "file": "lib/wordpress/sanitize-homepage-mirror.ts",
+      "label": "Envira runtime"
+    },
+    {
+      "type": "envira",
+      "file": "lib/work/types.ts",
+      "label": "Envira runtime"
+    },
+    {
+      "type": "envira",
+      "file": "lib/wp-exact/extracted/creative-gallery-frame.html",
+      "label": "Envira runtime"
+    },
+    {
+      "type": "fluentFrontend",
+      "file": "components/wp-exact/WpMirrorHomeForm.tsx",
+      "label": "Fluent Forms frontend runtime"
+    },
+    {
+      "type": "fluentFrontend",
+      "file": "lib/wp-exact/build-mirror-swap-html.ts",
+      "label": "Fluent Forms frontend runtime"
+    },
+    {
+      "type": "simpleicons",
+      "file": "lib/wp-exact/extracted/footer.html",
+      "label": "SimpleIcons CDN"
+    }
+  ]
+}

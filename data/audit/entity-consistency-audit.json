@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-08-29T16:58:12.294Z",
+  "verifiedNap": {
+    "streetAddress": "Unit 202, Amore Edge, Swami Vivekanand Rd, Govind Dham, Khar West",
+    "postalCode": "400052",
+    "addressLocality": "Mumbai",
+    "addressRegion": "Maharashtra",
+    "addressCountry": "IN"
+  },
+  "canonicalEntitySource": "lib/schema/entity.ts",
+  "stableIds": {
+    "organization": "https://www.dgeniussolutions.com/#organization",
+    "website": "https://www.dgeniussolutions.com/#website",
+    "localBusiness": "https://www.dgeniussolutions.com/#localbusiness",
+    "logo": "https://www.dgeniussolutions.com/#logo"
+  },
+  "conflicts": [],
+  "unresolvedPublicNapConflicts": 0
+}

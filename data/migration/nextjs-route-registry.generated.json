@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T07:50:03.143Z",
+  "generatedAt": "2026-08-29T14:32:27.917Z",
   "routes": [
     {
       "path": "/",
@@ -291,12 +291,12 @@
       "wordpressType": "page",
       "slug": "aeo-dubai",
       "status": 200,
-      "title": "AEO Agency in Dubai | Answer Engine Optimization Services | DGS",
+      "title": "AEO Dubai",
       "description": "D'Genius Solutions provides AEO services in Dubai to help brands appear in Google AI Overviews, ChatGPT, Gemini, Perplexity, featured snippets and People Also Ask. Get a free AEO audit.",
       "h1": "AEO Agency in Dubai for AI Search Visibility, Google AI Overviews & Qualified Leads",
       "canonical": "https://www.dgeniussolutions.com/aeo-dubai/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/aeo-dubai/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -628,7 +628,7 @@
       "h1": "AEO Services In Mumbai Built To Win AI Answers And Qualified Leads",
       "canonical": "https://www.dgeniussolutions.com/aeo-services-mumbai-google-ads-landing-page/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/aeo-services-mumbai-google-ads-landing-page/",
       "robots": null,
       "indexable": false,
       "includeInSitemap": false,
@@ -770,15 +770,15 @@
       "title": "AI Motion Graphic Designer",
       "description": null,
       "h1": "AI Motion Graphic Designer",
-      "canonical": null,
+      "canonical": "https://www.dgeniussolutions.com/ai-motion-graphic-designer/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/ai-motion-graphic-designer/",
       "robots": null,
       "indexable": false,
       "includeInSitemap": false,
       "protected": false,
       "protectedLabel": null,
-      "proposedAction": "PUBLISHED_NOT_IN_SITEMAP_REVIEW",
+      "proposedAction": "KEEP_SAME_URL",
       "date": "2026-06-15T17:35:30",
       "modified": "2026-06-17T12:01:54",
       "headings": [
@@ -844,7 +844,7 @@
       "h1": "AI Production Videos For Brands That Need Campaign Ready Content Faster",
       "canonical": "https://www.dgeniussolutions.com/ai-production-videos-google-ads-landing-page/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/ai-production-videos-google-ads-landing-page/",
       "robots": null,
       "indexable": false,
       "includeInSitemap": false,
@@ -947,12 +947,12 @@
       "wordpressType": "page",
       "slug": "australia-page",
       "status": 200,
-      "title": "Australia Page - D'Genius Solutions",
+      "title": "Australia Page",
       "description": "We create city-focused search, website, content and lead generation strategies for Australian brands that want stronger visibility in high-intent local markets.",
       "h1": "Full Service Digital Marketing Agency In Australia",
       "canonical": "https://www.dgeniussolutions.com/australia-page/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/australia-page/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -1201,6 +1201,10 @@
         {
           "level": "h2",
           "text": "Let us audit your brand, website, search visibility and campaign flow."
+        },
+        {
+          "level": "h3",
+          "text": "' + title + '"
         }
       ],
       "faqItems": []
@@ -1211,12 +1215,12 @@
       "wordpressType": "page",
       "slug": "better-ceasons-case-study",
       "status": 200,
-      "title": "Better Ceasons Case Study - D'Genius Solutions",
+      "title": "Better Ceasons Case Study",
       "description": "Website Development Case Study",
       "h1": "Better Ceasons Website Development",
       "canonical": "https://www.dgeniussolutions.com/better-ceasons-case-study/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/better-ceasons-case-study/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -10596,12 +10600,12 @@
       "wordpressType": "post",
       "slug": "website-design-lead-generation-mumbai",
       "status": 200,
-      "title": "Why Website Design Directly Affects Lead Generation - D'Genius Solutions",
+      "title": "Why Website Design Directly Affects Lead Generation",
       "description": "Website design and lead generation are directly connected because users decide within seconds whether they trust a business or not. A website may get traffic,",
       "h1": "Why Website Design Directly Affects Lead Generation",
       "canonical": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/blogs/website-design-lead-generation-mumbai/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -10611,10 +10615,6 @@
       "date": "2026-05-04T17:00:45",
       "modified": "2026-05-26T15:30:57",
       "headings": [
-        {
-          "level": "h1",
-          "text": "Why Website Design Directly Affects Lead Generation"
-        },
         {
           "level": "h2",
           "text": "Quick Answer: How Does Website Design Affect Lead Generation ?"
@@ -10686,22 +10686,6 @@
         {
           "level": "h3",
           "text": "How do AEO , AIO , GEO , and LLM SEO support website visibility?"
-        },
-        {
-          "level": "h3",
-          "text": "Related Posts"
-        },
-        {
-          "level": "h4",
-          "text": "Website Traffic but No Leads? 9 Proven Fixes That Work"
-        },
-        {
-          "level": "h4",
-          "text": "Social Media Conversion: Why Your Followers Are Not Becoming Customers"
-        },
-        {
-          "level": "h4",
-          "text": "ChatGPT Brand Visibility: Why Does ChatGPT Recommend Your Competitors but Not Your Brand?"
         }
       ],
       "faqItems": [
@@ -11556,208 +11540,52 @@
       "wordpressType": "page",
       "slug": "career",
       "status": 200,
-      "title": "Digital Marketing Agency in Mumbai | D’Genius Solutions",
+      "title": "Career",
       "description": "D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
-      "h1": "Full Service Digital Marketing Agency In Mumbai",
-      "canonical": "https://www.dgeniussolutions.com/",
+      "h1": "Join Our Team",
+      "canonical": "https://www.dgeniussolutions.com/career/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/career/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
-      "indexable": false,
-      "includeInSitemap": false,
+      "indexable": true,
+      "includeInSitemap": true,
       "protected": false,
       "protectedLabel": null,
-      "proposedAction": "REDIRECT_REVIEW",
+      "proposedAction": "KEEP_SAME_URL",
       "date": "2025-08-30T19:07:18",
       "modified": "2026-02-17T17:29:40",
       "headings": [
         {
           "level": "h1",
-          "text": "Full Service Digital Marketing Agency In Mumbai"
+          "text": "Join Our Team"
+        },
+        {
+          "level": "h3",
+          "text": "Junior HR Generalist"
         },
         {
           "level": "h2",
-          "text": "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories."
-        },
-        {
-          "level": "h2",
-          "text": "Recognized for SEO, Content & Performance Marketing"
+          "text": "Junior HR Generalist"
         },
         {
           "level": "h3",
-          "text": "Best Place to Work"
+          "text": "Overview"
         },
         {
           "level": "h3",
-          "text": "Highly Regarded Digital Marketing Agency to Watch Out"
+          "text": "Key Responsibilities"
         },
         {
           "level": "h3",
-          "text": "Excellence in SEO, Content & Performance Marketing"
-        },
-        {
-          "level": "h2",
-          "text": "One team for search, web, creative, performance and AI production."
+          "text": "Requirements"
         },
         {
           "level": "h3",
-          "text": "Search Visibility & AI Discovery"
+          "text": "What We Offer"
         },
         {
           "level": "h3",
-          "text": "Website Development & AMC"
-        },
-        {
-          "level": "h3",
-          "text": "Social Media & Performance Marketing"
-        },
-        {
-          "level": "h3",
-          "text": "Branding, Content & AI Production"
-        },
-        {
-          "level": "h2",
-          "text": "AI-Led Creative Portfolio"
-        },
-        {
-          "level": "h3",
-          "text": "Creative production for campaigns, product stories and social content."
-        },
-        {
-          "level": "h4",
-          "text": "AI Video Production"
-        },
-        {
-          "level": "h4",
-          "text": "AI Product Visuals"
-        },
-        {
-          "level": "h4",
-          "text": "Mascot & Character AI"
-        },
-        {
-          "level": "h4",
-          "text": "Festival & Topical Content"
-        },
-        {
-          "level": "h2",
-          "text": "SEO, Website And Digital Growth Case Studies"
-        },
-        {
-          "level": "h3",
-          "text": "TheWorldGrad"
-        },
-        {
-          "level": "h3",
-          "text": "Weavings Manpower"
-        },
-        {
-          "level": "h3",
-          "text": "Kotak Mahindra"
-        },
-        {
-          "level": "h3",
-          "text": "Eureka Forbes"
-        },
-        {
-          "level": "h3",
-          "text": "Onida"
-        },
-        {
-          "level": "h3",
-          "text": "Pantaloons"
-        },
-        {
-          "level": "h3",
-          "text": "DSP Mutual Fund"
-        },
-        {
-          "level": "h3",
-          "text": "Home Credit"
-        },
-        {
-          "level": "h2",
-          "text": "Brand Identity & Creative Excellence"
-        },
-        {
-          "level": "h2",
-          "text": "Trusted By Brands Worldwide"
-        },
-        {
-          "level": "h3",
-          "text": "Aparna Singh"
-        },
-        {
-          "level": "h3",
-          "text": "Dujon Fernandes"
-        },
-        {
-          "level": "h3",
-          "text": "Chaitali Nandi"
-        },
-        {
-          "level": "h3",
-          "text": "Suneel Kadekar"
-        },
-        {
-          "level": "h2",
-          "text": "Built For Google Search, AI Answers And Voice Discovery"
-        },
-        {
-          "level": "h3",
-          "text": "Rank-ready website and content foundations."
-        },
-        {
-          "level": "h3",
-          "text": "Built for answer-first discovery."
-        },
-        {
-          "level": "h3",
-          "text": "Visibility for generative search experiences."
-        },
-        {
-          "level": "h3",
-          "text": "Clear entities, services and brand context."
-        },
-        {
-          "level": "h3",
-          "text": "Natural answers for spoken queries."
-        },
-        {
-          "level": "h3",
-          "text": "Faster creative output with brand control."
-        },
-        {
-          "level": "h2",
-          "text": "Industries We Help Grow"
-        },
-        {
-          "level": "h2",
-          "text": "Why Brands Choose D’Genius Solutions"
-        },
-        {
-          "level": "h3",
-          "text": "Strategy"
-        },
-        {
-          "level": "h3",
-          "text": "Search"
-        },
-        {
-          "level": "h3",
-          "text": "Creative"
-        },
-        {
-          "level": "h3",
-          "text": "Scale"
-        },
-        {
-          "level": "h2",
-          "text": "Questions Brands Ask Before Choosing A Digital Marketing Agency"
-        },
-        {
-          "level": "h2",
-          "text": "Let us audit your brand, website, search visibility and campaign flow."
+          "text": "Apply for this position"
         }
       ],
       "faqItems": []
@@ -11900,12 +11728,12 @@
       "wordpressType": "page",
       "slug": "contact-us",
       "status": 200,
-      "title": "Contact Us - D'Genius Solutions",
+      "title": "Contact Us",
       "description": "Tell us about your project. We respond within 24 hours.",
       "h1": null,
       "canonical": "https://www.dgeniussolutions.com/contact-us/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/contact-us/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -11933,7 +11761,7 @@
       "h1": "AI Motion Graphic Designer",
       "canonical": "https://www.dgeniussolutions.com/indriya-test/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/indriya-test/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": false,
       "includeInSitemap": false,
@@ -12000,12 +11828,12 @@
       "wordpressType": "page",
       "slug": "motion-graphics",
       "status": 200,
-      "title": "Motion Graphics - D'Genius Solutions",
+      "title": "Motion Graphics",
       "description": null,
       "h1": "AI Motion Graphic Designer",
       "canonical": "https://www.dgeniussolutions.com/motion-graphics/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/motion-graphics/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -12333,7 +12161,7 @@
       "h1": "SEO Executive",
       "canonical": "https://www.dgeniussolutions.com/seo-executive-assessment/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/seo-executive-assessment/",
       "robots": null,
       "indexable": false,
       "includeInSitemap": false,
@@ -12409,7 +12237,7 @@
       "h1": "SEO Manager",
       "canonical": "https://www.dgeniussolutions.com/seo-manager-assessment/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/seo-manager-assessment/",
       "robots": null,
       "indexable": false,
       "includeInSitemap": false,
@@ -12480,12 +12308,12 @@
       "wordpressType": "page",
       "slug": "seo-pricing",
       "status": 200,
-      "title": "SEO Pricing - D'Genius Solutions",
+      "title": "SEO Pricing",
       "description": "Mumbai's most trusted SEO agency — Page 1 rankings to AI search dominance across ChatGPT, Perplexity & Google SGE.",
       "h1": "Search that sells. Priced with purpose.",
       "canonical": "https://www.dgeniussolutions.com/seo-pricing/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/seo-pricing/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -12561,7 +12389,7 @@
       "h1": "SEO Services In Mumbai Built To Grow Your Search Visibility And Leads",
       "canonical": "https://www.dgeniussolutions.com/seo-services-mumbai-google-ads-landing-page/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/seo-services-mumbai-google-ads-landing-page/",
       "robots": null,
       "indexable": false,
       "includeInSitemap": false,
@@ -17484,15 +17312,15 @@
       "title": "social media executive",
       "description": null,
       "h1": "Social Media Executive",
-      "canonical": null,
+      "canonical": "https://www.dgeniussolutions.com/social-media-executive/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/social-media-executive/",
       "robots": null,
       "indexable": false,
       "includeInSitemap": false,
       "protected": false,
       "protectedLabel": null,
-      "proposedAction": "PUBLISHED_NOT_IN_SITEMAP_REVIEW",
+      "proposedAction": "KEEP_SAME_URL",
       "date": "2026-08-26T10:05:50",
       "modified": "2026-08-26T10:29:11",
       "headings": [
@@ -17562,7 +17390,7 @@
       "h1": "You're All Set. We'll Be in Touch Soon.",
       "canonical": "https://www.dgeniussolutions.com/thank-you/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/thank-you/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": false,
       "includeInSitemap": false,
@@ -17590,7 +17418,7 @@
       "h1": "Digital Marketing Services Designed for the US Market.",
       "canonical": "https://www.dgeniussolutions.com/us-landing-page/",
       "canonicalMismatch": false,
-      "desiredCanonicalPath": null,
+      "desiredCanonicalPath": "/us-landing-page/",
       "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
       "indexable": true,
       "includeInSitemap": true,
@@ -17813,7 +17641,7 @@
       "includeInSitemap": false,
       "protected": false,
       "protectedLabel": null,
-      "proposedAction": "PUBLISHED_NOT_IN_SITEMAP_REVIEW",
+      "proposedAction": "KEEP_SAME_URL",
       "date": "2026-05-18T22:49:49",
       "modified": "2026-07-17T16:26:59",
       "headings": [

@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import { getRouteByPath } from "@/lib/nextjs/routes";
+import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { PortfolioPageTemplate } from "@/components/templates/PortfolioPage";
+import { buildRouteSchemas } from "@/lib/schema/page-schemas";
+import { InnerWpMirrorPage } from "@/components/mirror/InnerWpMirrorPage";
 
 export async function generateMetadata(): Promise<Metadata> {
   const route = await getRouteByPath("/portfolio/");
@@ -16,6 +18,23 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function PortfolioPage() {
-  return <PortfolioPageTemplate />;
+export default async function PortfolioPage() {
+  const route = await getRouteByPath("/portfolio/");
+  const path = "/portfolio/";
+  const blocks = (await loadContentBlocks())[path]?.blocks || [];
+  const breadcrumbs = [
+    { name: "Home", path: "/" },
+    { name: "Portfolio", path: "/portfolio/" },
+  ];
+  const schemaBlocks = route
+    ? buildRouteSchemas({ route, path, blocks, breadcrumbs })
+    : [];
+
+  return (
+    <InnerWpMirrorPage
+      path={path}
+      wordpressId={route?.wordpressId || 0}
+      schemaBlocks={schemaBlocks}
+    />
+  );
 }
