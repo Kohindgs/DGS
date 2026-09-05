@@ -220,7 +220,11 @@ export function InnerMirrorWidgets() {
 
     let cleanupSeoLb: (() => void) | undefined;
     if (seolb && seolbImg) {
-      const bentoItems = Array.from(root.querySelectorAll<HTMLElement>(".dgs-bento .dgs-bi"));
+      const bentoItems = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          ".dgs-case-image-link, .dgs-results-image a, .dgs-bento .dgs-bi",
+        ),
+      );
       let currentIndex = 0;
 
       const setSeoImage = (index: number) => {
@@ -228,10 +232,11 @@ export function InnerMirrorWidgets() {
         currentIndex = (index + bentoItems.length) % bentoItems.length;
         const item = bentoItems[currentIndex];
         const img = item.querySelector<HTMLImageElement>("img");
-        const pill = item.querySelector<HTMLElement>(".dgs-bipill");
-        const title = item.querySelector<HTMLElement>(".dgs-bittl");
+        const card = item.closest<HTMLElement>(".dgs-results-card, .dgs-case-card, .dgs-bi");
+        const pill = card?.querySelector<HTMLElement>(".dgs-case-tag, .dgs-bipill");
+        const title = card?.querySelector<HTMLElement>(".dgs-case-title, .dgs-bittl");
 
-        const src = img?.getAttribute("data-src") || img?.currentSrc || img?.src || "";
+        const src = item.getAttribute("href") || img?.getAttribute("data-src") || img?.currentSrc || img?.src || "";
         if (src) seolbImg.src = src;
         if (seolbPill && pill) seolbPill.textContent = pill.textContent;
         if (seolbTtl && title) seolbTtl.textContent = title.textContent;
@@ -253,7 +258,10 @@ export function InnerMirrorWidgets() {
 
       const cleanups: (() => void)[] = [];
       bentoItems.forEach((item, idx) => {
-        const onBentoClick = () => openSeoLb(idx);
+        const onBentoClick = (e: MouseEvent) => {
+          e.preventDefault();
+          openSeoLb(idx);
+        };
         item.addEventListener("click", onBentoClick);
         cleanups.push(() => item.removeEventListener("click", onBentoClick));
       });
