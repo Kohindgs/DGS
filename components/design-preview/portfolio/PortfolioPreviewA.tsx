@@ -12,16 +12,11 @@ type Props = {
 
 const layoutClass = (index: number) => {
   const pattern = [
-    styles.workWide,
-    styles.workTall,
-    styles.workMedium,
-    styles.workWide,
+    styles.workLeftLarge,
+    styles.workRightSmall,
+    styles.workLeftSmall,
+    styles.workRightLarge,
     styles.workFull,
-    styles.workMedium,
-    styles.workWide,
-    styles.workTall,
-    styles.workFull,
-    styles.workMedium,
   ];
   return pattern[index % pattern.length];
 };
@@ -31,7 +26,6 @@ const pad = (value: number) => String(value).padStart(2, "0");
 export function PortfolioPreviewA({ title, industries, items }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeItem = activeIndex === null ? null : items[activeIndex];
-
   const itemCountLabel = useMemo(() => pad(items.length), [items.length]);
 
   useEffect(() => {
@@ -77,17 +71,12 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
 
   return (
     <main className={styles.page}>
-      <div className={styles.previewBadge} aria-label="DGS Design Preview">
-        DGS Design Preview
-      </div>
-
       <section className={styles.hero} aria-labelledby="portfolio-preview-title">
         <div className={styles.heroGlow} aria-hidden="true" />
         <div className={styles.heroInner}>
-          <div className={styles.heroIndex} aria-hidden="true">
-            <span>01</span>
-            <span className={styles.heroIndexLine} />
-            <span>{itemCountLabel}</span>
+          <div className={styles.heroTopline}>
+            <span className={styles.previewBadge}>DGS Design Preview</span>
+            <span className={styles.heroCounter} aria-hidden="true">01 / {itemCountLabel}</span>
           </div>
 
           <h1 id="portfolio-preview-title" className={styles.title}>
@@ -99,19 +88,11 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
               <span key={`${industry}-${index}`} className={styles.industryGroup}>
                 <span>{industry}</span>
                 {index < industries.length - 1 ? (
-                  <span className={styles.separator} aria-hidden="true">
-                    •
-                  </span>
+                  <span className={styles.separator} aria-hidden="true">•</span>
                 ) : null}
               </span>
             ))}
           </p>
-
-          <div className={styles.scrollCue} aria-hidden="true">
-            <span className={styles.scrollTrack}>
-              <span />
-            </span>
-          </div>
         </div>
       </section>
 
@@ -120,7 +101,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
           {items.map((item, index) => {
             const aspect = item.width > 0 && item.height > 0 ? item.width / item.height : 4 / 3;
             const style = {
-              "--delay": `${Math.min(index % 8, 7) * 45}ms`,
+              "--delay": `${Math.min(index % 6, 5) * 40}ms`,
               "--media-ratio": aspect.toFixed(4),
               "--px": "0",
               "--py": "0",
@@ -141,7 +122,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
                   onPointerLeave={resetMedia}
                 >
                   <span className={styles.mediaFrame}>
-                    {/* The preview intentionally uses the exact WordPress-derived gallery media. */}
+                    {/* Exact WordPress-derived gallery media; visual treatment only. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.thumbnail}
@@ -153,9 +134,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
                       className={styles.image}
                     />
                     <span className={styles.mediaShade} aria-hidden="true" />
-                    <span className={styles.openGlyph} aria-hidden="true">
-                      ↗
-                    </span>
+                    <span className={styles.openGlyph} aria-hidden="true">↗</span>
                   </span>
                   <span className={styles.workMeta} aria-hidden="true">
                     <span>{pad(index + 1)}</span>
@@ -180,9 +159,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
           }}
         >
           <div className={styles.viewerChrome}>
-            <span className={styles.viewerCount}>
-              {pad(activeIndex + 1)} / {itemCountLabel}
-            </span>
+            <span className={styles.viewerCount}>{pad(activeIndex + 1)} / {itemCountLabel}</span>
             <button
               type="button"
               className={styles.viewerClose}
