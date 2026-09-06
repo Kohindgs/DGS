@@ -15,10 +15,11 @@ TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 SSH_HOST="${DIMGREY_SSH_HOST:-147.93.100.126}"
 SSH_PORT="${DIMGREY_SSH_PORT:-65002}"
 SSH_USER="${DIMGREY_SSH_USER:-u188101251}"
-SSH_PASS="${HOSTINGER_PASS:?HOSTINGER_PASS is required}"
+SSH_PASS="${HOSTINGER_PASS:-}"
 
+RELEASE_NAME="${SHORT_SHA}-${BUILD_ID}-$(date -u +%Y%m%d%H%M%S)"
 REMOTE_APP="$HOME/dimgrey-app"
-REMOTE_RELEASE="$REMOTE_APP/releases/$SHORT_SHA"
+REMOTE_RELEASE="$REMOTE_APP/releases/$RELEASE_NAME"
 DOMAIN_ROOT="$HOME/domains/dimgrey-goat-473970.hostingersite.com"
 PUBLIC_HTML="$DOMAIN_ROOT/public_html"
 
@@ -32,6 +33,8 @@ tar -czf "$TARBALL" \
   --exclude='tooling/visual-parity/diffs' \
   --exclude='node_modules/.cache' \
   --exclude='.cursor' \
+  --exclude='public/Porfolio' \
+  --exclude='public/media/portfolio/videos' \
   --exclude='*.mp4' \
   .next \
   app \
@@ -48,10 +51,16 @@ tar -czf "$TARBALL" \
   tsconfig.json
 
 echo "[deploy] Uploading to Hostinger..."
-sshpass -p "$SSH_PASS" scp -P "$SSH_PORT" -o StrictHostKeyChecking=no "$TARBALL" "$SSH_USER@$SSH_HOST:/tmp/dimgrey-release-${SHORT_SHA}.tar.gz"
+if [ -n "${SSH_PASS:-}" ] && command -v sshpass >/dev/null 2>&1; then
+  sshpass -p "$SSH_PASS" scp -P "$SSH_PORT" -o StrictHostKeyChecking=no "$TARBALL" "$SSH_USER@$SSH_HOST:/tmp/dimgrey-release-${SHORT_SHA}.tar.gz"
+  SSH_CMD="sshpass -p $SSH_PASS ssh -p $SSH_PORT -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST"
+else
+  scp -P "$SSH_PORT" -o BatchMode=yes -o StrictHostKeyChecking=no "$TARBALL" "$SSH_USER@$SSH_HOST:/tmp/dimgrey-release-${SHORT_SHA}.tar.gz"
+  SSH_CMD="ssh -p $SSH_PORT -o BatchMode=yes -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST"
+fi
 
 echo "[deploy] Installing release on server..."
-sshpass -p "$SSH_PASS" ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "bash -s" <<REMOTE
+$SSH_CMD "bash -s" <<REMOTE
 set -euo pipefail
 export PATH="/opt/alt/alt-nodejs22/root/usr/bin:/opt/alt/alt-nodejs22/root/bin:\$PATH"
 
@@ -60,14 +69,26 @@ FULL_SHA="$SHA"
 BRANCH="$BRANCH"
 BUILD_ID="$BUILD_ID"
 TIMESTAMP="$TIMESTAMP"
+RELEASE_NAME="$RELEASE_NAME"
 REMOTE_APP="\$HOME/dimgrey-app"
-REMOTE_RELEASE="\$REMOTE_APP/releases/\$SHORT_SHA"
+REMOTE_RELEASE="\$REMOTE_APP/releases/\$RELEASE_NAME"
 SHARED_MEDIA="\$REMOTE_APP/shared/wp-content/uploads"
+SHARED_VIDEOS="\$REMOTE_APP/shared/media/portfolio/videos"
 DOMAIN_ROOT="\$HOME/domains/dimgrey-goat-473970.hostingersite.com"
 PUBLIC_HTML="\$DOMAIN_ROOT/public_html"
 
+# Track current active release for rollback
+PREVIOUS_RELEASE=""
+if [ -L "\$REMOTE_APP/current" ]; then
+  PREVIOUS_RELEASE="\$(readlink -f "\$REMOTE_APP/current")"
+  echo "[deploy] Current active release before deploy: \$PREVIOUS_RELEASE"
+fi
+
+# Clean remote release directory completely
+rm -rf "\$REMOTE_RELEASE"
 mkdir -p "\$REMOTE_RELEASE/tmp"
-rm -rf "\$REMOTE_RELEASE"/*
+
+echo "[deploy] Extracting tarball into \$REMOTE_RELEASE..."
 tar -xzf "/tmp/dimgrey-release-\${SHORT_SHA}.tar.gz" -C "\$REMOTE_RELEASE"
 rm -f "/tmp/dimgrey-release-\${SHORT_SHA}.tar.gz"
 
@@ -78,6 +99,14 @@ if [ -d "\$SHARED_MEDIA" ]; then
     target="\$REMOTE_RELEASE/public/wp-content/uploads/\$rel"
     mkdir -p "\$(dirname "\$target")"
     ln -sf "\$video" "\$target"
+  done
+fi
+
+if [ -d "\$SHARED_VIDEOS" ]; then
+  mkdir -p "\$REMOTE_RELEASE/public/media/portfolio/videos"
+  find "\$SHARED_VIDEOS" -type f | while read -r vid; do
+    vname="\$(basename "\$vid")"
+    ln -sf "\$vid" "\$REMOTE_RELEASE/public/media/portfolio/videos/\$vname"
   done
 fi
 
@@ -93,11 +122,54 @@ cat > deployment-info.json <<JSON
   "buildId": "\$BUILD_ID",
   "releaseDirectory": "\$REMOTE_RELEASE",
   "deployedAt": "\$TIMESTAMP",
-  "checkpoint": "header-hero-rail-proof-sections",
+  "checkpoint": "hardened-atomic-deploy",
   "stagingUrl": "https://dimgrey-goat-473970.hostingersite.com/"
 }
 JSON
 
+# =====================================================================
+# PRE-ACTIVATION INTEGRITY CHECKS (Must pass before switching symlink)
+# =====================================================================
+echo "[deploy] Running Pre-Activation Integrity Checks..."
+
+# Check 1: Build ID must match
+RELEASE_BUILD_ID="\$(cat .next/BUILD_ID 2>/dev/null || echo '')"
+if [ "\$RELEASE_BUILD_ID" != "\$BUILD_ID" ]; then
+  echo "ERROR: BUILD_ID mismatch! Expected: \$BUILD_ID, Found: \$RELEASE_BUILD_ID"
+  exit 1
+fi
+
+# Check 2: .next/server/app/ must NOT contain malformed paths
+MALFORMED_COUNT=\$(find .next/server/app/ -name "*http:*" -o -name "*https:*" -o -name "*.hostingersite.com*" 2>/dev/null | wc -l)
+if [ "\$MALFORMED_COUNT" -gt 0 ]; then
+  echo "ERROR: Malformed shadowed path detected inside .next/server/app/ before activation!"
+  find .next/server/app/ -name "*http:*" -o -name "*https:*" -o -name "*.hostingersite.com*"
+  exit 1
+fi
+echo "[deploy] Check 2 Passed: Zero malformed paths in release tree."
+
+# Check 3: Essential static route artifacts must exist in release
+if [ ! -f ".next/server/app/design-preview/portfolio/a.html" ]; then
+  echo "ERROR: Missing .next/server/app/design-preview/portfolio/a.html in release!"
+  exit 1
+fi
+if [ -d ".next/server/app/design-preview/portfolio/a" ]; then
+  echo "ERROR: Malformed directory .next/server/app/design-preview/portfolio/a exists!"
+  exit 1
+fi
+echo "[deploy] Check 3 Passed: Required static artifacts verified."
+
+# Check 4: Pre-activation route verification on staging endpoints
+# (Checking staging URL to verify edge reachability before activating new release)
+for route in "/" "/portfolio/" "/design-preview/portfolio/a/"; do
+  code=\$(curl -sI -o /dev/null -w "%{http_code}" "https://dimgrey-goat-473970.hostingersite.com\$route" || echo "000")
+  echo "[deploy] Pre-activation probe: \$route => \$code"
+done
+
+# =====================================================================
+# ATOMIC ACTIVATION & PASSENGER RELOAD
+# =====================================================================
+echo "[deploy] Activating new release symlink..."
 ln -sfn "\$REMOTE_RELEASE" "\$REMOTE_APP/current"
 
 cat > "\$PUBLIC_HTML/.htaccess" <<HT
@@ -113,7 +185,6 @@ SetEnv LSNODE_CONSOLE_LOG console.log
 SetEnv TOKIO_WORKER_THREADS 2
 SetEnv DGS_PUBLIC_INDEXING false
 RewriteRule ^.builds - [F,L]
-
 <IfModule mod_headers.c>
 Header always set Cache-Control "private, no-store, max-age=0, must-revalidate"
 Header always set CDN-Cache-Control "no-store"
@@ -123,8 +194,57 @@ HT
 
 touch "\$REMOTE_APP/current/tmp/restart.txt"
 pkill -u "\$(whoami)" -f "lsnode:" 2>/dev/null || true
-sleep 3
+sleep 4
 
+# =====================================================================
+# POST-ACTIVATION VERIFICATION & AUTOMATIC ROLLBACK
+# =====================================================================
+echo "[deploy] Running Post-Activation Route Verification..."
+FAIL_COUNT=0
+
+for route in "/" "/portfolio/" "/design-preview/portfolio/a/"; do
+  status=\$(curl -sI -o /dev/null -w "%{http_code}" "https://dimgrey-goat-473970.hostingersite.com\$route" || echo "000")
+  echo "[deploy] Post-activation test: \$route => \$status"
+  if [ "\$status" != "200" ] && [ "\$status" != "308" ]; then
+    echo "ERROR: Route \$route returned unexpected status \$status"
+    FAIL_COUNT=\$((FAIL_COUNT + 1))
+  fi
+done
+
+# Check video streaming byte-range
+VIDEO_STATUS=\$(curl -sI -o /dev/null -w "%{http_code}" -r 0-1024 "https://dimgrey-goat-473970.hostingersite.com/media/portfolio/videos/media1.mp4" || echo "000")
+echo "[deploy] Video range test: /media/portfolio/videos/media1.mp4 => \$VIDEO_STATUS"
+if [ "\$VIDEO_STATUS" != "206" ]; then
+  echo "ERROR: Video byte-range returned unexpected status \$VIDEO_STATUS"
+  FAIL_COUNT=\$((FAIL_COUNT + 1))
+fi
+
+# Confirm no malformed directory was created during boot/activation
+POST_MALFORMED=\$(find "\$REMOTE_RELEASE/.next/server/app/" -name "*http:*" -o -name "*https:*" -o -name "*.hostingersite.com*" 2>/dev/null | wc -l)
+if [ "\$POST_MALFORMED" -gt 0 ]; then
+  echo "ERROR: Malformed path created post-activation!"
+  find "\$REMOTE_RELEASE/.next/server/app/" -name "*http:*" -o -name "*https:*" -o -name "*.hostingersite.com*"
+  FAIL_COUNT=\$((FAIL_COUNT + 1))
+fi
+
+if [ "\$FAIL_COUNT" -gt 0 ]; then
+  echo "CRITICAL: Post-activation verification failed! Triggering automatic rollback..."
+  if [ -n "\$PREVIOUS_RELEASE" ] && [ -d "\$PREVIOUS_RELEASE" ]; then
+    echo "[rollback] Reverting current symlink to: \$PREVIOUS_RELEASE"
+    ln -sfn "\$PREVIOUS_RELEASE" "\$REMOTE_APP/current"
+    touch "\$REMOTE_APP/current/tmp/restart.txt"
+    pkill -u "\$(whoami)" -f "lsnode:" 2>/dev/null || true
+    echo "[rollback] Rollback completed."
+  else
+    echo "[rollback] No previous release available to rollback."
+  fi
+  exit 1
+fi
+
+# Ensure runtime directories have appropriate permissions
+chmod -R u+w "\$REMOTE_RELEASE/tmp"
+
+echo "DEPLOY_SUCCESS=true"
 echo "DEPLOYED_SHA=\$FULL_SHA"
 echo "DEPLOYED_BUILD_ID=\$BUILD_ID"
 echo "RELEASE_DIR=\$REMOTE_RELEASE"
