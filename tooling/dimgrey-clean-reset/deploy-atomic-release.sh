@@ -84,7 +84,7 @@ if [ -L "\$REMOTE_APP/current" ]; then
   echo "[deploy] Current active release before deploy: \$PREVIOUS_RELEASE"
 fi
 
-# Clean remote release directory completely
+# Create a clean unique release directory
 rm -rf "\$REMOTE_RELEASE"
 mkdir -p "\$REMOTE_RELEASE/tmp"
 
@@ -148,20 +148,27 @@ if [ "\$MALFORMED_COUNT" -gt 0 ]; then
 fi
 echo "[deploy] Check 2 Passed: Zero malformed paths in release tree."
 
-# Check 3: Essential static route artifacts must exist in release
-if [ ! -f ".next/server/app/design-preview/portfolio/a.html" ]; then
-  echo "ERROR: Missing .next/server/app/design-preview/portfolio/a.html in release!"
+# Check 3: Approved Portfolio route artifact must exist
+if [ ! -f ".next/server/app/portfolio.html" ]; then
+  echo "ERROR: Missing .next/server/app/portfolio.html in release!"
   exit 1
 fi
-if [ -d ".next/server/app/design-preview/portfolio/a" ]; then
-  echo "ERROR: Malformed directory .next/server/app/design-preview/portfolio/a exists!"
+if [ -d ".next/server/app/portfolio" ]; then
+  echo "ERROR: Unexpected directory .next/server/app/portfolio exists and may shadow portfolio.html!"
   exit 1
 fi
-echo "[deploy] Check 3 Passed: Required static artifacts verified."
+echo "[deploy] Check 3 Passed: Approved Portfolio route artifact verified."
 
-# Check 4: Pre-activation route verification on staging endpoints
-# (Checking staging URL to verify edge reachability before activating new release)
-for route in "/" "/portfolio/" "/design-preview/portfolio/a/"; do
+# Check 4: Retired Portfolio demo must not be present in the build
+if [ -f ".next/server/app/design-preview/portfolio/a.html" ] || [ -d ".next/server/app/design-preview/portfolio/a" ]; then
+  echo "ERROR: Retired Portfolio demo route is still present in the release!"
+  exit 1
+fi
+echo "[deploy] Check 4 Passed: Portfolio demo route absent from release."
+
+# Check 5: Pre-activation route verification on currently active staging endpoints
+# This is reachability only because the new release is not active yet.
+for route in "/" "/portfolio/"; do
   code=\$(curl -sI -o /dev/null -w "%{http_code}" "https://dimgrey-goat-473970.hostingersite.com\$route" || echo "000")
   echo "[deploy] Pre-activation probe: \$route => \$code"
 done
@@ -202,7 +209,7 @@ sleep 4
 echo "[deploy] Running Post-Activation Route Verification..."
 FAIL_COUNT=0
 
-for route in "/" "/portfolio/" "/design-preview/portfolio/a/"; do
+for route in "/" "/portfolio/"; do
   status=\$(curl -sI -o /dev/null -w "%{http_code}" "https://dimgrey-goat-473970.hostingersite.com\$route" || echo "000")
   echo "[deploy] Post-activation test: \$route => \$status"
   if [ "\$status" != "200" ] && [ "\$status" != "308" ]; then
@@ -210,6 +217,14 @@ for route in "/" "/portfolio/" "/design-preview/portfolio/a/"; do
     FAIL_COUNT=\$((FAIL_COUNT + 1))
   fi
 done
+
+# The retired demo route must now be gone
+DEMO_STATUS=\$(curl -sI -o /dev/null -w "%{http_code}" "https://dimgrey-goat-473970.hostingersite.com/design-preview/portfolio/a/" || echo "000")
+echo "[deploy] Retired Portfolio demo route => \$DEMO_STATUS"
+if [ "\$DEMO_STATUS" != "404" ]; then
+  echo "ERROR: Retired Portfolio demo route is still reachable (expected 404)."
+  FAIL_COUNT=\$((FAIL_COUNT + 1))
+fi
 
 # Check video streaming byte-range
 VIDEO_STATUS=\$(curl -sI -o /dev/null -w "%{http_code}" -r 0-1024 "https://dimgrey-goat-473970.hostingersite.com/media/portfolio/videos/media1.mp4" || echo "000")
