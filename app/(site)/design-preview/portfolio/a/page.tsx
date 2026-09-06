@@ -40,7 +40,7 @@ export default async function PortfolioDesignPreviewAPage() {
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       <style dangerouslySetInnerHTML={{ __html: assets.footerStyles }} />
 
-      <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} suppressHydrationWarning />
 
       <PortfolioPreviewA
         title={source.title}
@@ -48,7 +48,7 @@ export default async function PortfolioDesignPreviewAPage() {
         items={source.items}
       />
 
-      <div dangerouslySetInnerHTML={{ __html: assets.footerHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: assets.footerHtml }} suppressHydrationWarning />
 
       <DgsWpBoot
         bootNav={assets.bootNav}
