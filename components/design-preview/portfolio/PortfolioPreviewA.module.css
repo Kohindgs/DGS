@@ -509,8 +509,10 @@
   }
 
   .title {
-    font-size: clamp(58px, 20.5vw, 108px);
-    letter-spacing: -0.07em;
+    font-size: clamp(36px, 11.4vw, 56px);
+    letter-spacing: -0.06em;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
 
   .industries {
