@@ -9,7 +9,6 @@
   background: #050506;
   color: var(--preview-ink);
   font-family: var(--preview-font-body), Inter, sans-serif;
-  isolation: isolate;
 }
 
 /* Slow GPU-transformed ambient gradient. It moves independently of the content so
