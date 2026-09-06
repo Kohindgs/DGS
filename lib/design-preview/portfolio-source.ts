@@ -62,6 +62,15 @@ export type PortfolioItem = PortfolioImageItem | PortfolioVideoItem;
 
 const portfolioMedia = portfolioMediaRaw as { items: PortfolioItem[] };
 
+const isNewPortfolioMedia = (item: PortfolioItem) =>
+  /^(picture\d+|media\d+)$/i.test(item.id);
+
+function orderPortfolioMedia(items: PortfolioItem[]) {
+  const newMedia = items.filter(isNewPortfolioMedia);
+  const existingMedia = items.filter((item) => !isNewPortfolioMedia(item));
+  return [...newMedia, ...existingMedia];
+}
+
 function readPortfolioHero() {
   const body = portfolioMirror.body;
   const titleMatch = body.match(/<span class="title-line">([^<]+)<\/span>/i);
@@ -86,6 +95,6 @@ export function loadPortfolioDesignPreviewSource() {
 
   return {
     ...hero,
-    items: portfolioMedia.items,
+    items: orderPortfolioMedia(portfolioMedia.items),
   };
 }
