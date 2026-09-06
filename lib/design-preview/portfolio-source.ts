@@ -1,4 +1,5 @@
 import portfolioMirror from "@/data/wordpress/mirrors/pages/portfolio.json";
+import portfolioVideosRaw from "@/data/design-preview/portfolio-videos.json";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 
 const decodeHtml = (value: string) =>
@@ -8,6 +9,18 @@ const decodeHtml = (value: string) =>
     .replaceAll("&#039;", "'")
     .replaceAll("&lt;", "<")
     .replaceAll("&gt;", ">");
+
+type PortfolioVideoManifestItem = {
+  id: number;
+  title: string;
+  alt?: string;
+  videoSrc: string;
+  poster: string;
+  width: number;
+  height: number;
+};
+
+const portfolioVideos = portfolioVideosRaw as { items: PortfolioVideoManifestItem[] };
 
 function readPortfolioHero() {
   const body = portfolioMirror.body;
@@ -36,9 +49,27 @@ export function loadPortfolioDesignPreviewSource() {
     throw new Error("Portfolio design preview requires the existing WordPress gallery items.");
   }
 
+  const imageItems = gallery.items.map((item) => ({
+    ...item,
+    mediaType: "image" as const,
+  }));
+
+  const videoItems = portfolioVideos.items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    alt: item.alt || "",
+    thumbnail: item.poster,
+    media: item.videoSrc,
+    width: item.width,
+    height: item.height,
+    mediaType: "video" as const,
+    videoSrc: item.videoSrc,
+    poster: item.poster,
+  }));
+
   return {
     ...hero,
     galleryId: gallery.galleryId,
-    items: gallery.items,
+    items: [...imageItems, ...videoItems],
   };
 }
