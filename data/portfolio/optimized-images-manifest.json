@@ -1,0 +1,5732 @@
+{
+  "totalImages": 80,
+  "totalOriginalBytes": 38835379,
+  "totalAvifBytes": 25079171,
+  "totalWebpBytes": 40735286,
+  "items": [
+    {
+      "id": 63158,
+      "sourceFilename": "SS_01-3-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/SS_01-3-1.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 396358,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63158_w480.avif",
+            "bytes": 8788
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63158_w768.avif",
+            "bytes": 17766
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63158_w1024.avif",
+            "bytes": 25441
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63158_w1280.avif",
+            "bytes": 34993
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63158_w1600.avif",
+            "bytes": 47738
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63158_w1920.avif",
+            "bytes": 109262
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63158_w480.webp",
+            "bytes": 12868
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63158_w768.webp",
+            "bytes": 26702
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63158_w1024.webp",
+            "bytes": 39568
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63158_w1280.webp",
+            "bytes": 54864
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63158_w1600.webp",
+            "bytes": 79250
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63158_w1920.webp",
+            "bytes": 149126
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63158_w1920.webp"
+      }
+    },
+    {
+      "id": 63159,
+      "sourceFilename": "SS_02-3.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/SS_02-3.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 403680,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63159_w480.avif",
+            "bytes": 9573
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63159_w768.avif",
+            "bytes": 20339
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63159_w1024.avif",
+            "bytes": 30894
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63159_w1280.avif",
+            "bytes": 43590
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63159_w1600.avif",
+            "bytes": 61759
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63159_w1920.avif",
+            "bytes": 120698
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63159_w480.webp",
+            "bytes": 13878
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63159_w768.webp",
+            "bytes": 30384
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63159_w1024.webp",
+            "bytes": 48104
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63159_w1280.webp",
+            "bytes": 68112
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63159_w1600.webp",
+            "bytes": 98142
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63159_w1920.webp",
+            "bytes": 167616
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63159_w1920.webp"
+      }
+    },
+    {
+      "id": 63160,
+      "sourceFilename": "SS_03-3.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/SS_03-3.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 428040,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63160_w480.avif",
+            "bytes": 10949
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63160_w768.avif",
+            "bytes": 22295
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63160_w1024.avif",
+            "bytes": 34207
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63160_w1280.avif",
+            "bytes": 47932
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63160_w1600.avif",
+            "bytes": 66242
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63160_w1920.avif",
+            "bytes": 99176
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63160_w480.webp",
+            "bytes": 17732
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63160_w768.webp",
+            "bytes": 36506
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63160_w1024.webp",
+            "bytes": 57144
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63160_w1280.webp",
+            "bytes": 79414
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63160_w1600.webp",
+            "bytes": 110758
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63160_w1920.webp",
+            "bytes": 160498
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63160_w1920.webp"
+      }
+    },
+    {
+      "id": 63161,
+      "sourceFilename": "SS_04-3.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/SS_04-3.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 528669,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63161_w480.avif",
+            "bytes": 12089
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63161_w768.avif",
+            "bytes": 26092
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63161_w1024.avif",
+            "bytes": 41146
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63161_w1280.avif",
+            "bytes": 57943
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63161_w1600.avif",
+            "bytes": 80079
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63161_w1920.avif",
+            "bytes": 106928
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63161_w480.webp",
+            "bytes": 18586
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63161_w768.webp",
+            "bytes": 41718
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63161_w1024.webp",
+            "bytes": 66428
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63161_w1280.webp",
+            "bytes": 93136
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63161_w1600.webp",
+            "bytes": 131504
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63161_w1920.webp",
+            "bytes": 184400
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63161_w1920.webp"
+      }
+    },
+    {
+      "id": 63162,
+      "sourceFilename": "SS_05-2.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/SS_05-2.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 382190,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63162_w480.avif",
+            "bytes": 8950
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63162_w768.avif",
+            "bytes": 17104
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63162_w1024.avif",
+            "bytes": 23245
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63162_w1280.avif",
+            "bytes": 31514
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63162_w1600.avif",
+            "bytes": 41633
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63162_w1920.avif",
+            "bytes": 73003
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63162_w480.webp",
+            "bytes": 13760
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63162_w768.webp",
+            "bytes": 25838
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63162_w1024.webp",
+            "bytes": 37304
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63162_w1280.webp",
+            "bytes": 49806
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63162_w1600.webp",
+            "bytes": 68746
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63162_w1920.webp",
+            "bytes": 117238
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63162_w1920.webp"
+      }
+    },
+    {
+      "id": 63163,
+      "sourceFilename": "SS_06-3.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/SS_06-3.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 621568,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63163_w480.avif",
+            "bytes": 14099
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63163_w768.avif",
+            "bytes": 34915
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63163_w1024.avif",
+            "bytes": 60087
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63163_w1280.avif",
+            "bytes": 91020
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63163_w1600.avif",
+            "bytes": 131785
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63163_w1920.avif",
+            "bytes": 206818
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63163_w480.webp",
+            "bytes": 22412
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63163_w768.webp",
+            "bytes": 56490
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63163_w1024.webp",
+            "bytes": 99830
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63163_w1280.webp",
+            "bytes": 149114
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63163_w1600.webp",
+            "bytes": 222478
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63163_w1920.webp",
+            "bytes": 327098
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63163_w1920.webp"
+      }
+    },
+    {
+      "id": 63164,
+      "sourceFilename": "SS1-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/SS1-1.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 801825,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63164_w480.avif",
+            "bytes": 15431
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63164_w768.avif",
+            "bytes": 32336
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63164_w1024.avif",
+            "bytes": 49564
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63164_w1280.avif",
+            "bytes": 70352
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63164_w1600.avif",
+            "bytes": 98111
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63164_w1920.avif",
+            "bytes": 148274
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63164_w480.webp",
+            "bytes": 22962
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63164_w768.webp",
+            "bytes": 48132
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63164_w1024.webp",
+            "bytes": 72774
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63164_w1280.webp",
+            "bytes": 103308
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63164_w1600.webp",
+            "bytes": 149934
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63164_w1920.webp",
+            "bytes": 221272
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63164_w1920.webp"
+      }
+    },
+    {
+      "id": 63151,
+      "sourceFilename": "Standee_rays-1-scaled.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Standee_rays-1-scaled.jpg.webp",
+      "naturalWidth": 1173,
+      "naturalHeight": 2560,
+      "ratio": 0.4582,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 234048,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 1048,
+            "url": "/media/portfolio/images/wp_63151_w480.avif",
+            "bytes": 28785
+          },
+          {
+            "width": 768,
+            "height": 1676,
+            "url": "/media/portfolio/images/wp_63151_w768.avif",
+            "bytes": 49640
+          },
+          {
+            "width": 1024,
+            "height": 2235,
+            "url": "/media/portfolio/images/wp_63151_w1024.avif",
+            "bytes": 70099
+          },
+          {
+            "width": 1173,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63151_w1173.avif",
+            "bytes": 84151
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 1048,
+            "url": "/media/portfolio/images/wp_63151_w480.webp",
+            "bytes": 43796
+          },
+          {
+            "width": 768,
+            "height": 1676,
+            "url": "/media/portfolio/images/wp_63151_w768.webp",
+            "bytes": 77104
+          },
+          {
+            "width": 1024,
+            "height": 2235,
+            "url": "/media/portfolio/images/wp_63151_w1024.webp",
+            "bytes": 106510
+          },
+          {
+            "width": 1173,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63151_w1173.webp",
+            "bytes": 127326
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63151_w1173.webp"
+      }
+    },
+    {
+      "id": 63149,
+      "sourceFilename": "Women-Option-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Women-Option-1.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 728924,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63149_w480.avif",
+            "bytes": 9527
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63149_w768.avif",
+            "bytes": 19651
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63149_w1024.avif",
+            "bytes": 29493
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63149_w1280.avif",
+            "bytes": 43049
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63149_w1600.avif",
+            "bytes": 61342
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63149_w1920.avif",
+            "bytes": 96659
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63149_w480.webp",
+            "bytes": 14190
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63149_w768.webp",
+            "bytes": 28754
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63149_w1024.webp",
+            "bytes": 44994
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63149_w1280.webp",
+            "bytes": 64598
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63149_w1600.webp",
+            "bytes": 93478
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63149_w1920.webp",
+            "bytes": 145552
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63149_w1920.webp"
+      }
+    },
+    {
+      "id": 63148,
+      "sourceFilename": "Men-Option-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Men-Option-1.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 358432,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63148_w480.avif",
+            "bytes": 7175
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63148_w768.avif",
+            "bytes": 13512
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63148_w1024.avif",
+            "bytes": 18414
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63148_w1280.avif",
+            "bytes": 24675
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63148_w1600.avif",
+            "bytes": 33013
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63148_w1920.avif",
+            "bytes": 60089
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63148_w480.webp",
+            "bytes": 10294
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63148_w768.webp",
+            "bytes": 18634
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63148_w1024.webp",
+            "bytes": 25806
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63148_w1280.webp",
+            "bytes": 34308
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63148_w1600.webp",
+            "bytes": 48494
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63148_w1920.webp",
+            "bytes": 90178
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63148_w1920.webp"
+      }
+    },
+    {
+      "id": 63147,
+      "sourceFilename": "Artboard-1-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Artboard-1-1.png.webp",
+      "naturalWidth": 1920,
+      "naturalHeight": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 535490,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63147_w480.avif",
+            "bytes": 9226
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63147_w768.avif",
+            "bytes": 17360
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63147_w1024.avif",
+            "bytes": 24751
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63147_w1280.avif",
+            "bytes": 35004
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63147_w1600.avif",
+            "bytes": 49580
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63147_w1920.avif",
+            "bytes": 81434
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/wp_63147_w480.webp",
+            "bytes": 14504
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/wp_63147_w768.webp",
+            "bytes": 26806
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/wp_63147_w1024.webp",
+            "bytes": 38404
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63147_w1280.webp",
+            "bytes": 52166
+          },
+          {
+            "width": 1600,
+            "height": 900,
+            "url": "/media/portfolio/images/wp_63147_w1600.webp",
+            "bytes": 70930
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63147_w1920.webp",
+            "bytes": 116322
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63147_w1920.webp"
+      }
+    },
+    {
+      "id": 63145,
+      "sourceFilename": "New-Dandiya-Grid-1-scaled.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/New-Dandiya-Grid-1-scaled.png.webp",
+      "naturalWidth": 2560,
+      "naturalHeight": 1707,
+      "ratio": 1.4997,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 2220426,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 320,
+            "url": "/media/portfolio/images/wp_63145_w480.avif",
+            "bytes": 22225
+          },
+          {
+            "width": 768,
+            "height": 512,
+            "url": "/media/portfolio/images/wp_63145_w768.avif",
+            "bytes": 51476
+          },
+          {
+            "width": 1024,
+            "height": 683,
+            "url": "/media/portfolio/images/wp_63145_w1024.avif",
+            "bytes": 84671
+          },
+          {
+            "width": 1280,
+            "height": 854,
+            "url": "/media/portfolio/images/wp_63145_w1280.avif",
+            "bytes": 123515
+          },
+          {
+            "width": 1600,
+            "height": 1067,
+            "url": "/media/portfolio/images/wp_63145_w1600.avif",
+            "bytes": 178629
+          },
+          {
+            "width": 1920,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63145_w1920.avif",
+            "bytes": 237250
+          },
+          {
+            "width": 2560,
+            "height": 1707,
+            "url": "/media/portfolio/images/wp_63145_w2560.avif",
+            "bytes": 420762
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 320,
+            "url": "/media/portfolio/images/wp_63145_w480.webp",
+            "bytes": 36582
+          },
+          {
+            "width": 768,
+            "height": 512,
+            "url": "/media/portfolio/images/wp_63145_w768.webp",
+            "bytes": 85302
+          },
+          {
+            "width": 1024,
+            "height": 683,
+            "url": "/media/portfolio/images/wp_63145_w1024.webp",
+            "bytes": 143768
+          },
+          {
+            "width": 1280,
+            "height": 854,
+            "url": "/media/portfolio/images/wp_63145_w1280.webp",
+            "bytes": 207246
+          },
+          {
+            "width": 1600,
+            "height": 1067,
+            "url": "/media/portfolio/images/wp_63145_w1600.webp",
+            "bytes": 302296
+          },
+          {
+            "width": 1920,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63145_w1920.webp",
+            "bytes": 406956
+          },
+          {
+            "width": 2560,
+            "height": 1707,
+            "url": "/media/portfolio/images/wp_63145_w2560.webp",
+            "bytes": 690298
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63145_w2560.webp"
+      }
+    },
+    {
+      "id": 63143,
+      "sourceFilename": "Wedding-Story6.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Wedding-Story6.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 261865,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63143_w480.avif",
+            "bytes": 34289
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63143_w768.avif",
+            "bytes": 63187
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63143_w1024.avif",
+            "bytes": 92948
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63143_w1080.avif",
+            "bytes": 106216
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63143_w480.webp",
+            "bytes": 55190
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63143_w768.webp",
+            "bytes": 100826
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63143_w1024.webp",
+            "bytes": 142152
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63143_w1080.webp",
+            "bytes": 153960
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63143_w1080.webp"
+      }
+    },
+    {
+      "id": 63142,
+      "sourceFilename": "Wedding-Story3.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Wedding-Story3.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 336547,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63142_w480.avif",
+            "bytes": 43522
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63142_w768.avif",
+            "bytes": 81899
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63142_w1024.avif",
+            "bytes": 113922
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63142_w1080.avif",
+            "bytes": 125273
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63142_w480.webp",
+            "bytes": 74692
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63142_w768.webp",
+            "bytes": 135830
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63142_w1024.webp",
+            "bytes": 191342
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63142_w1080.webp",
+            "bytes": 212404
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63142_w1080.webp"
+      }
+    },
+    {
+      "id": 63141,
+      "sourceFilename": "Wedding-Story2.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Wedding-Story2.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 332090,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63141_w480.avif",
+            "bytes": 36412
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63141_w768.avif",
+            "bytes": 77846
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63141_w1024.avif",
+            "bytes": 123300
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63141_w1080.avif",
+            "bytes": 140659
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63141_w480.webp",
+            "bytes": 61968
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63141_w768.webp",
+            "bytes": 132344
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63141_w1024.webp",
+            "bytes": 201800
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63141_w1080.webp",
+            "bytes": 230500
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63141_w1080.webp"
+      }
+    },
+    {
+      "id": 63140,
+      "sourceFilename": "Purple-Collage.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Purple-Collage.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 395430,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63140_w480.avif",
+            "bytes": 52421
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63140_w768.avif",
+            "bytes": 108133
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63140_w1024.avif",
+            "bytes": 162609
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63140_w1080.avif",
+            "bytes": 184504
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63140_w480.webp",
+            "bytes": 88722
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63140_w768.webp",
+            "bytes": 185392
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63140_w1024.webp",
+            "bytes": 273394
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63140_w1080.webp",
+            "bytes": 289902
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63140_w1080.webp"
+      }
+    },
+    {
+      "id": 63139,
+      "sourceFilename": "Pink-Collage.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Pink-Collage.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 332742,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63139_w480.avif",
+            "bytes": 44044
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63139_w768.avif",
+            "bytes": 90132
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63139_w1024.avif",
+            "bytes": 134955
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63139_w1080.avif",
+            "bytes": 152962
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63139_w480.webp",
+            "bytes": 70954
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63139_w768.webp",
+            "bytes": 142260
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63139_w1024.webp",
+            "bytes": 203130
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63139_w1080.webp",
+            "bytes": 221000
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63139_w1080.webp"
+      }
+    },
+    {
+      "id": 63138,
+      "sourceFilename": "Main_.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Main_.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 417050,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63138_w480.avif",
+            "bytes": 49481
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63138_w768.avif",
+            "bytes": 101461
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63138_w1024.avif",
+            "bytes": 165115
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63138_w1080.avif",
+            "bytes": 196249
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63138_w480.webp",
+            "bytes": 80892
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63138_w768.webp",
+            "bytes": 169786
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63138_w1024.webp",
+            "bytes": 262130
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63138_w1080.webp",
+            "bytes": 298584
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63138_w1080.webp"
+      }
+    },
+    {
+      "id": 63137,
+      "sourceFilename": "Karva-chauth-Story-saree_New-1.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree_New-1.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 337440,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63137_w480.avif",
+            "bytes": 38683
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63137_w768.avif",
+            "bytes": 82013
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63137_w1024.avif",
+            "bytes": 125865
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63137_w1080.avif",
+            "bytes": 149999
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63137_w480.webp",
+            "bytes": 60034
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63137_w768.webp",
+            "bytes": 126858
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63137_w1024.webp",
+            "bytes": 199818
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63137_w1080.webp",
+            "bytes": 230428
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63137_w1080.webp"
+      }
+    },
+    {
+      "id": 63136,
+      "sourceFilename": "Karva-chauth-Story-saree_New.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree_New.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 337440,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63136_w480.avif",
+            "bytes": 38683
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63136_w768.avif",
+            "bytes": 82013
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63136_w1024.avif",
+            "bytes": 125865
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63136_w1080.avif",
+            "bytes": 149999
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63136_w480.webp",
+            "bytes": 60034
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63136_w768.webp",
+            "bytes": 126858
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63136_w1024.webp",
+            "bytes": 199818
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63136_w1080.webp",
+            "bytes": 230428
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63136_w1080.webp"
+      }
+    },
+    {
+      "id": 63135,
+      "sourceFilename": "Karva-chauth-Story-saree.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 277023,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63135_w480.avif",
+            "bytes": 38099
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63135_w768.avif",
+            "bytes": 72560
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63135_w1024.avif",
+            "bytes": 105555
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63135_w1080.avif",
+            "bytes": 120337
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63135_w480.webp",
+            "bytes": 57086
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63135_w768.webp",
+            "bytes": 105594
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63135_w1024.webp",
+            "bytes": 151792
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63135_w1080.webp",
+            "bytes": 168176
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63135_w1080.webp"
+      }
+    },
+    {
+      "id": 63134,
+      "sourceFilename": "Diwali-Story1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Diwali-Story1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 1046794,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63134_w480.avif",
+            "bytes": 47259
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63134_w768.avif",
+            "bytes": 107641
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63134_w1024.avif",
+            "bytes": 174133
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63134_w1080.avif",
+            "bytes": 204826
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63134_w480.webp",
+            "bytes": 83764
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63134_w768.webp",
+            "bytes": 193280
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63134_w1024.webp",
+            "bytes": 323884
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63134_w1080.webp",
+            "bytes": 373506
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63134_w1080.webp"
+      }
+    },
+    {
+      "id": 63133,
+      "sourceFilename": "Yellow-Floral-Print-StoryOpt2.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Yellow-Floral-Print-StoryOpt2.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 1093469,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63133_w480.avif",
+            "bytes": 53809
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63133_w768.avif",
+            "bytes": 126939
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63133_w1024.avif",
+            "bytes": 205488
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63133_w1080.avif",
+            "bytes": 233018
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63133_w480.webp",
+            "bytes": 92580
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63133_w768.webp",
+            "bytes": 219172
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63133_w1024.webp",
+            "bytes": 354176
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63133_w1080.webp",
+            "bytes": 397814
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63133_w1080.webp"
+      }
+    },
+    {
+      "id": 63132,
+      "sourceFilename": "Wine-Ethenic-Churidar-Story.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Wine-Ethenic-Churidar-Story.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 694316,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63132_w480.avif",
+            "bytes": 33794
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63132_w768.avif",
+            "bytes": 63173
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63132_w1024.avif",
+            "bytes": 90349
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63132_w1080.avif",
+            "bytes": 100961
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63132_w480.webp",
+            "bytes": 52326
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63132_w768.webp",
+            "bytes": 97484
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63132_w1024.webp",
+            "bytes": 136844
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63132_w1080.webp",
+            "bytes": 156362
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63132_w1080.webp"
+      }
+    },
+    {
+      "id": 63131,
+      "sourceFilename": "Wedding-Grid_New-scaled.png",
+      "sourcePath": "public/wp-content/uploads/2026/04/Wedding-Grid_New-scaled.png",
+      "naturalWidth": 1600,
+      "naturalHeight": 1600,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 4409601,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63131_w480.avif",
+            "bytes": 35634
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63131_w768.avif",
+            "bytes": 80967
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63131_w1024.avif",
+            "bytes": 130831
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63131_w1280.avif",
+            "bytes": 187555
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63131_w1600.avif",
+            "bytes": 269150
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63131_w480.webp",
+            "bytes": 62062
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63131_w768.webp",
+            "bytes": 141930
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63131_w1024.webp",
+            "bytes": 234816
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63131_w1280.webp",
+            "bytes": 338710
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63131_w1600.webp",
+            "bytes": 479580
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63131_w1600.webp"
+      }
+    },
+    {
+      "id": 63130,
+      "sourceFilename": "Tussar-Silk-Digital-Printed-Zari-Embroidered-Kurta-With-Palazzo-And-Dupatta-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Tussar-Silk-Digital-Printed-Zari-Embroidered-Kurta-With-Palazzo-And-Dupatta-1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 820414,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63130_w480.avif",
+            "bytes": 34339
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63130_w768.avif",
+            "bytes": 71949
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63130_w1024.avif",
+            "bytes": 114918
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63130_w1080.avif",
+            "bytes": 132298
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63130_w480.webp",
+            "bytes": 52382
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63130_w768.webp",
+            "bytes": 114140
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63130_w1024.webp",
+            "bytes": 186038
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63130_w1080.webp",
+            "bytes": 209866
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63130_w1080.webp"
+      }
+    },
+    {
+      "id": 63128,
+      "sourceFilename": "Sarree-Story-1-copy.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Sarree-Story-1-copy.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 830966,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63128_w480.avif",
+            "bytes": 26287
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63128_w768.avif",
+            "bytes": 48684
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63128_w1024.avif",
+            "bytes": 70119
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63128_w1080.avif",
+            "bytes": 71279
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63128_w480.webp",
+            "bytes": 39852
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63128_w768.webp",
+            "bytes": 73374
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63128_w1024.webp",
+            "bytes": 106244
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63128_w1080.webp",
+            "bytes": 119204
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63128_w1080.webp"
+      }
+    },
+    {
+      "id": 63127,
+      "sourceFilename": "Sarree-Story-1-copy-2-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Sarree-Story-1-copy-2-1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 597507,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63127_w480.avif",
+            "bytes": 22521
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63127_w768.avif",
+            "bytes": 39113
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63127_w1024.avif",
+            "bytes": 56826
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63127_w1080.avif",
+            "bytes": 65090
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63127_w480.webp",
+            "bytes": 33632
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63127_w768.webp",
+            "bytes": 58342
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63127_w1024.webp",
+            "bytes": 88092
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63127_w1080.webp",
+            "bytes": 102630
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63127_w1080.webp"
+      }
+    },
+    {
+      "id": 63126,
+      "sourceFilename": "Sarree-Story-1-copy-2.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Sarree-Story-1-copy-2.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 597507,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63126_w480.avif",
+            "bytes": 22521
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63126_w768.avif",
+            "bytes": 39113
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63126_w1024.avif",
+            "bytes": 56826
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63126_w1080.avif",
+            "bytes": 65090
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63126_w480.webp",
+            "bytes": 33632
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63126_w768.webp",
+            "bytes": 58342
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63126_w1024.webp",
+            "bytes": 88092
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63126_w1080.webp",
+            "bytes": 102630
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63126_w1080.webp"
+      }
+    },
+    {
+      "id": 63125,
+      "sourceFilename": "Sale-Season-sale-story.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Sale-Season-sale-story.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 592610,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63125_w480.avif",
+            "bytes": 36673
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63125_w768.avif",
+            "bytes": 80591
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63125_w1024.avif",
+            "bytes": 127939
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63125_w1080.avif",
+            "bytes": 141663
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63125_w480.webp",
+            "bytes": 62048
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63125_w768.webp",
+            "bytes": 138324
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63125_w1024.webp",
+            "bytes": 223130
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63125_w1080.webp",
+            "bytes": 249708
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63125_w1080.webp"
+      }
+    },
+    {
+      "id": 63124,
+      "sourceFilename": "Green-Chanderi-Straight-Embroidered-Kurta-With-Pants-Dupatta-Set.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Green-Chanderi-Straight-Embroidered-Kurta-With-Pants-Dupatta-Set.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 964389,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63124_w480.avif",
+            "bytes": 40329
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63124_w768.avif",
+            "bytes": 80059
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63124_w1024.avif",
+            "bytes": 127042
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63124_w1080.avif",
+            "bytes": 140381
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63124_w480.webp",
+            "bytes": 66746
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63124_w768.webp",
+            "bytes": 133466
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63124_w1024.webp",
+            "bytes": 207948
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63124_w1080.webp",
+            "bytes": 237212
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63124_w1080.webp"
+      }
+    },
+    {
+      "id": 63123,
+      "sourceFilename": "Diwali-GridOpt1.1-1-scaled.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Diwali-GridOpt1.1-1-scaled.jpg.webp",
+      "naturalWidth": 2560,
+      "naturalHeight": 2560,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 1327419,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63123_w480.avif",
+            "bytes": 34145
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63123_w768.avif",
+            "bytes": 78381
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63123_w1024.avif",
+            "bytes": 134373
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63123_w1280.avif",
+            "bytes": 195768
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63123_w1600.avif",
+            "bytes": 286184
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63123_w1920.avif",
+            "bytes": 384366
+          },
+          {
+            "width": 2560,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63123_w2560.avif",
+            "bytes": 649298
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63123_w480.webp",
+            "bytes": 60124
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63123_w768.webp",
+            "bytes": 142308
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63123_w1024.webp",
+            "bytes": 240190
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63123_w1280.webp",
+            "bytes": 356584
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63123_w1600.webp",
+            "bytes": 503340
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63123_w1920.webp",
+            "bytes": 671858
+          },
+          {
+            "width": 2560,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63123_w2560.webp",
+            "bytes": 1048028
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63123_w2560.webp"
+      }
+    },
+    {
+      "id": 63121,
+      "sourceFilename": "Artboard-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Artboard-1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 559237,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63121_w480.avif",
+            "bytes": 32509
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63121_w768.avif",
+            "bytes": 65101
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63121_w1024.avif",
+            "bytes": 93310
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63121_w1080.avif",
+            "bytes": 99013
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63121_w480.webp",
+            "bytes": 53216
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63121_w768.webp",
+            "bytes": 99678
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63121_w1024.webp",
+            "bytes": 145174
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63121_w1080.webp",
+            "bytes": 163008
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63121_w1080.webp"
+      }
+    },
+    {
+      "id": 63120,
+      "sourceFilename": "1x1-scaled.webp",
+      "sourcePath": "public/wp-content/uploads/2026/04/1x1-scaled.webp",
+      "naturalWidth": 2560,
+      "naturalHeight": 2560,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 100128,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63120_w480.avif",
+            "bytes": 7777
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63120_w768.avif",
+            "bytes": 13359
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63120_w1024.avif",
+            "bytes": 18434
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63120_w1280.avif",
+            "bytes": 22749
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63120_w1600.avif",
+            "bytes": 29442
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63120_w1920.avif",
+            "bytes": 35977
+          },
+          {
+            "width": 2560,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63120_w2560.avif",
+            "bytes": 52276
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63120_w480.webp",
+            "bytes": 14230
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63120_w768.webp",
+            "bytes": 24064
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63120_w1024.webp",
+            "bytes": 33454
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63120_w1280.webp",
+            "bytes": 42716
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63120_w1600.webp",
+            "bytes": 51196
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63120_w1920.webp",
+            "bytes": 61912
+          },
+          {
+            "width": 2560,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63120_w2560.webp",
+            "bytes": 88200
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63120_w2560.webp"
+      }
+    },
+    {
+      "id": 63119,
+      "sourceFilename": "WED1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/WED1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 366505,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63119_w480.avif",
+            "bytes": 19147
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63119_w768.avif",
+            "bytes": 37848
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63119_w1024.avif",
+            "bytes": 58219
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63119_w1080.avif",
+            "bytes": 63813
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63119_w480.webp",
+            "bytes": 31598
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63119_w768.webp",
+            "bytes": 64718
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63119_w1024.webp",
+            "bytes": 98084
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63119_w1080.webp",
+            "bytes": 111488
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63119_w1080.webp"
+      }
+    },
+    {
+      "id": 63118,
+      "sourceFilename": "Unlock-Powerful-dreams.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Unlock-Powerful-dreams.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 159325,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63118_w480.avif",
+            "bytes": 21561
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63118_w768.avif",
+            "bytes": 36737
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63118_w1024.avif",
+            "bytes": 53463
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63118_w1080.avif",
+            "bytes": 57222
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63118_w480.webp",
+            "bytes": 35470
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63118_w768.webp",
+            "bytes": 61744
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63118_w1024.webp",
+            "bytes": 86360
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63118_w1080.webp",
+            "bytes": 95230
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63118_w1080.webp"
+      }
+    },
+    {
+      "id": 63117,
+      "sourceFilename": "11.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/11.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 196330,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63117_w480.avif",
+            "bytes": 22791
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63117_w768.avif",
+            "bytes": 45234
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63117_w1024.avif",
+            "bytes": 71204
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63117_w1080.avif",
+            "bytes": 84272
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63117_w480.webp",
+            "bytes": 34368
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63117_w768.webp",
+            "bytes": 70430
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63117_w1024.webp",
+            "bytes": 110598
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63117_w1080.webp",
+            "bytes": 124546
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63117_w1080.webp"
+      }
+    },
+    {
+      "id": 63116,
+      "sourceFilename": "Standee-Option-5-scaled.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Standee-Option-5-scaled.jpg.webp",
+      "naturalWidth": 1280,
+      "naturalHeight": 2560,
+      "ratio": 0.5,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 357282,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63116_w480.avif",
+            "bytes": 40425
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/wp_63116_w768.avif",
+            "bytes": 73497
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/wp_63116_w1024.avif",
+            "bytes": 102540
+          },
+          {
+            "width": 1280,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63116_w1280.avif",
+            "bytes": 137674
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63116_w480.webp",
+            "bytes": 63870
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/wp_63116_w768.webp",
+            "bytes": 118224
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/wp_63116_w1024.webp",
+            "bytes": 164376
+          },
+          {
+            "width": 1280,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63116_w1280.webp",
+            "bytes": 217892
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63116_w1280.webp"
+      }
+    },
+    {
+      "id": 63115,
+      "sourceFilename": "Standee-Option-4-scaled.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Standee-Option-4-scaled.jpg.webp",
+      "naturalWidth": 1280,
+      "naturalHeight": 2560,
+      "ratio": 0.5,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 336855,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63115_w480.avif",
+            "bytes": 36805
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/wp_63115_w768.avif",
+            "bytes": 66262
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/wp_63115_w1024.avif",
+            "bytes": 93234
+          },
+          {
+            "width": 1280,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63115_w1280.avif",
+            "bytes": 126991
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63115_w480.webp",
+            "bytes": 61250
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/wp_63115_w768.webp",
+            "bytes": 111266
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/wp_63115_w1024.webp",
+            "bytes": 156720
+          },
+          {
+            "width": 1280,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63115_w1280.webp",
+            "bytes": 204258
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63115_w1280.webp"
+      }
+    },
+    {
+      "id": 63114,
+      "sourceFilename": "Standee-Option-6-1-scaled.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Standee-Option-6-1-scaled.jpg.webp",
+      "naturalWidth": 1280,
+      "naturalHeight": 2560,
+      "ratio": 0.5,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 330222,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63114_w480.avif",
+            "bytes": 31781
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/wp_63114_w768.avif",
+            "bytes": 57859
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/wp_63114_w1024.avif",
+            "bytes": 83308
+          },
+          {
+            "width": 1280,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63114_w1280.avif",
+            "bytes": 116373
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63114_w480.webp",
+            "bytes": 55844
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/wp_63114_w768.webp",
+            "bytes": 100658
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/wp_63114_w1024.webp",
+            "bytes": 142480
+          },
+          {
+            "width": 1280,
+            "height": 2560,
+            "url": "/media/portfolio/images/wp_63114_w1280.webp",
+            "bytes": 185008
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63114_w1280.webp"
+      }
+    },
+    {
+      "id": 63113,
+      "sourceFilename": "4.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/4.png.webp",
+      "naturalWidth": 570,
+      "naturalHeight": 720,
+      "ratio": 0.7917,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 119255,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 606,
+            "url": "/media/portfolio/images/wp_63113_w480.avif",
+            "bytes": 26478
+          },
+          {
+            "width": 570,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63113_w570.avif",
+            "bytes": 32798
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 606,
+            "url": "/media/portfolio/images/wp_63113_w480.webp",
+            "bytes": 41436
+          },
+          {
+            "width": 570,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63113_w570.webp",
+            "bytes": 54974
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63113_w570.webp"
+      }
+    },
+    {
+      "id": 63112,
+      "sourceFilename": "international_yoga_day.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/international_yoga_day.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 177476,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63112_w480.avif",
+            "bytes": 15143
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63112_w768.avif",
+            "bytes": 24055
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63112_w1024.avif",
+            "bytes": 36301
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63112_w1080.avif",
+            "bytes": 37119
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63112_w480.webp",
+            "bytes": 24734
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63112_w768.webp",
+            "bytes": 42648
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63112_w1024.webp",
+            "bytes": 61896
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63112_w1080.webp",
+            "bytes": 72064
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63112_w1080.webp"
+      }
+    },
+    {
+      "id": 63111,
+      "sourceFilename": "IN-PURSUIT-OF-SUPER-PERFORMANCE-E-Learning1-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/IN-PURSUIT-OF-SUPER-PERFORMANCE-E-Learning1-1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 252604,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63111_w480.avif",
+            "bytes": 23799
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63111_w768.avif",
+            "bytes": 45160
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63111_w1024.avif",
+            "bytes": 67744
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63111_w1080.avif",
+            "bytes": 77548
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63111_w480.webp",
+            "bytes": 40494
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63111_w768.webp",
+            "bytes": 73878
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63111_w1024.webp",
+            "bytes": 112608
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63111_w1080.webp",
+            "bytes": 134486
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63111_w1080.webp"
+      }
+    },
+    {
+      "id": 63109,
+      "sourceFilename": "Chritmas-Post1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Chritmas-Post1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 271752,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63109_w480.avif",
+            "bytes": 27162
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63109_w768.avif",
+            "bytes": 47551
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63109_w1024.avif",
+            "bytes": 71704
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63109_w1080.avif",
+            "bytes": 81059
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63109_w480.webp",
+            "bytes": 41948
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63109_w768.webp",
+            "bytes": 78804
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63109_w1024.webp",
+            "bytes": 119656
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63109_w1080.webp",
+            "bytes": 138546
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63109_w1080.webp"
+      }
+    },
+    {
+      "id": 63108,
+      "sourceFilename": "277.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/277.png.webp",
+      "naturalWidth": 2000,
+      "naturalHeight": 2000,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 677801,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63108_w480.avif",
+            "bytes": 15895
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63108_w768.avif",
+            "bytes": 35706
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63108_w1024.avif",
+            "bytes": 56698
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63108_w1280.avif",
+            "bytes": 79282
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63108_w1600.avif",
+            "bytes": 108350
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63108_w1920.avif",
+            "bytes": 136105
+          },
+          {
+            "width": 2000,
+            "height": 2000,
+            "url": "/media/portfolio/images/wp_63108_w2000.avif",
+            "bytes": 148579
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63108_w480.webp",
+            "bytes": 25730
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63108_w768.webp",
+            "bytes": 55506
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63108_w1024.webp",
+            "bytes": 85736
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63108_w1280.webp",
+            "bytes": 116174
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63108_w1600.webp",
+            "bytes": 157734
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63108_w1920.webp",
+            "bytes": 205598
+          },
+          {
+            "width": 2000,
+            "height": 2000,
+            "url": "/media/portfolio/images/wp_63108_w2000.webp",
+            "bytes": 231346
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63108_w2000.webp"
+      }
+    },
+    {
+      "id": 63107,
+      "sourceFilename": "How-to-calm-your-pet.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/How-to-calm-your-pet.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1080,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 292114,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63107_w480.avif",
+            "bytes": 30858
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63107_w768.avif",
+            "bytes": 55873
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63107_w1024.avif",
+            "bytes": 81545
+          },
+          {
+            "width": 1080,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63107_w1080.avif",
+            "bytes": 96561
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63107_w480.webp",
+            "bytes": 50330
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63107_w768.webp",
+            "bytes": 94538
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63107_w1024.webp",
+            "bytes": 142758
+          },
+          {
+            "width": 1080,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63107_w1080.webp",
+            "bytes": 163760
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63107_w1080.webp"
+      }
+    },
+    {
+      "id": 63106,
+      "sourceFilename": "Lip-Filler1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Lip-Filler1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 409479,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63106_w480.avif",
+            "bytes": 21354
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63106_w768.avif",
+            "bytes": 44443
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63106_w1024.avif",
+            "bytes": 70347
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63106_w1080.avif",
+            "bytes": 83437
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63106_w480.webp",
+            "bytes": 33684
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63106_w768.webp",
+            "bytes": 73330
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63106_w1024.webp",
+            "bytes": 117660
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63106_w1080.webp",
+            "bytes": 134428
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63106_w1080.webp"
+      }
+    },
+    {
+      "id": 63104,
+      "sourceFilename": "DIY-Face-mask-scaled.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/DIY-Face-mask-scaled.png.webp",
+      "naturalWidth": 2560,
+      "naturalHeight": 533,
+      "ratio": 4.803,
+      "orientation": "ultra-wide",
+      "hasAlpha": false,
+      "originalBytes": 403734,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 100,
+            "url": "/media/portfolio/images/wp_63104_w480.avif",
+            "bytes": 7674
+          },
+          {
+            "width": 768,
+            "height": 160,
+            "url": "/media/portfolio/images/wp_63104_w768.avif",
+            "bytes": 15137
+          },
+          {
+            "width": 1024,
+            "height": 213,
+            "url": "/media/portfolio/images/wp_63104_w1024.avif",
+            "bytes": 22269
+          },
+          {
+            "width": 1280,
+            "height": 267,
+            "url": "/media/portfolio/images/wp_63104_w1280.avif",
+            "bytes": 31179
+          },
+          {
+            "width": 1600,
+            "height": 333,
+            "url": "/media/portfolio/images/wp_63104_w1600.avif",
+            "bytes": 42192
+          },
+          {
+            "width": 1920,
+            "height": 400,
+            "url": "/media/portfolio/images/wp_63104_w1920.avif",
+            "bytes": 53046
+          },
+          {
+            "width": 2560,
+            "height": 533,
+            "url": "/media/portfolio/images/wp_63104_w2560.avif",
+            "bytes": 79674
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 100,
+            "url": "/media/portfolio/images/wp_63104_w480.webp",
+            "bytes": 11236
+          },
+          {
+            "width": 768,
+            "height": 160,
+            "url": "/media/portfolio/images/wp_63104_w768.webp",
+            "bytes": 23008
+          },
+          {
+            "width": 1024,
+            "height": 213,
+            "url": "/media/portfolio/images/wp_63104_w1024.webp",
+            "bytes": 34510
+          },
+          {
+            "width": 1280,
+            "height": 267,
+            "url": "/media/portfolio/images/wp_63104_w1280.webp",
+            "bytes": 46704
+          },
+          {
+            "width": 1600,
+            "height": 333,
+            "url": "/media/portfolio/images/wp_63104_w1600.webp",
+            "bytes": 64112
+          },
+          {
+            "width": 1920,
+            "height": 400,
+            "url": "/media/portfolio/images/wp_63104_w1920.webp",
+            "bytes": 81438
+          },
+          {
+            "width": 2560,
+            "height": 533,
+            "url": "/media/portfolio/images/wp_63104_w2560.webp",
+            "bytes": 126990
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63104_w2560.webp"
+      }
+    },
+    {
+      "id": 63102,
+      "sourceFilename": "Body-Filler-Treatment_Final.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Body-Filler-Treatment_Final.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 305587,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63102_w480.avif",
+            "bytes": 19752
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63102_w768.avif",
+            "bytes": 35190
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63102_w1024.avif",
+            "bytes": 50429
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63102_w1080.avif",
+            "bytes": 63176
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63102_w480.webp",
+            "bytes": 28556
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63102_w768.webp",
+            "bytes": 52948
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63102_w1024.webp",
+            "bytes": 81868
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63102_w1080.webp",
+            "bytes": 97892
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63102_w1080.webp"
+      }
+    },
+    {
+      "id": 63101,
+      "sourceFilename": "Audrey-Thoery1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Audrey-Thoery1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 272400,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63101_w480.avif",
+            "bytes": 27206
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63101_w768.avif",
+            "bytes": 58621
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63101_w1024.avif",
+            "bytes": 88422
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63101_w1080.avif",
+            "bytes": 100119
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63101_w480.webp",
+            "bytes": 42630
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63101_w768.webp",
+            "bytes": 91034
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63101_w1024.webp",
+            "bytes": 141416
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63101_w1080.webp",
+            "bytes": 157074
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63101_w1080.webp"
+      }
+    },
+    {
+      "id": 63100,
+      "sourceFilename": "Under-Eyes-Fillers-Treatment1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Under-Eyes-Fillers-Treatment1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 582869,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63100_w480.avif",
+            "bytes": 27587
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63100_w768.avif",
+            "bytes": 56401
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63100_w1024.avif",
+            "bytes": 84606
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63100_w1080.avif",
+            "bytes": 95912
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63100_w480.webp",
+            "bytes": 45082
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63100_w768.webp",
+            "bytes": 89712
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63100_w1024.webp",
+            "bytes": 134314
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63100_w1080.webp",
+            "bytes": 152686
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63100_w1080.webp"
+      }
+    },
+    {
+      "id": 63099,
+      "sourceFilename": "Profilo-Body_3.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Profilo-Body_3.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 322532,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63099_w480.avif",
+            "bytes": 24561
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63099_w768.avif",
+            "bytes": 47024
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63099_w1024.avif",
+            "bytes": 69728
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63099_w1080.avif",
+            "bytes": 77085
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63099_w480.webp",
+            "bytes": 39348
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63099_w768.webp",
+            "bytes": 75050
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63099_w1024.webp",
+            "bytes": 112148
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63099_w1080.webp",
+            "bytes": 127628
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63099_w1080.webp"
+      }
+    },
+    {
+      "id": 63098,
+      "sourceFilename": "Profilo-Body.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Profilo-Body.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 213420,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63098_w480.avif",
+            "bytes": 20334
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63098_w768.avif",
+            "bytes": 37300
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63098_w1024.avif",
+            "bytes": 55088
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63098_w1080.avif",
+            "bytes": 59552
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63098_w480.webp",
+            "bytes": 29212
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63098_w768.webp",
+            "bytes": 56738
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63098_w1024.webp",
+            "bytes": 84868
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63098_w1080.webp",
+            "bytes": 96860
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63098_w1080.webp"
+      }
+    },
+    {
+      "id": 63097,
+      "sourceFilename": "Mother_s-Day.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Mother_s-Day.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 765289,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63097_w480.avif",
+            "bytes": 17791
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63097_w768.avif",
+            "bytes": 35344
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63097_w1024.avif",
+            "bytes": 60194
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63097_w1080.avif",
+            "bytes": 70940
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63097_w480.webp",
+            "bytes": 29010
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63097_w768.webp",
+            "bytes": 62120
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63097_w1024.webp",
+            "bytes": 104158
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63097_w1080.webp",
+            "bytes": 123348
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63097_w1080.webp"
+      }
+    },
+    {
+      "id": 63096,
+      "sourceFilename": "Dusshera.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Dusshera.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 244642,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63096_w480.avif",
+            "bytes": 26115
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63096_w768.avif",
+            "bytes": 56264
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63096_w1024.avif",
+            "bytes": 91104
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63096_w1080.avif",
+            "bytes": 112764
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 853,
+            "url": "/media/portfolio/images/wp_63096_w480.webp",
+            "bytes": 40780
+          },
+          {
+            "width": 768,
+            "height": 1365,
+            "url": "/media/portfolio/images/wp_63096_w768.webp",
+            "bytes": 82352
+          },
+          {
+            "width": 1024,
+            "height": 1820,
+            "url": "/media/portfolio/images/wp_63096_w1024.webp",
+            "bytes": 127084
+          },
+          {
+            "width": 1080,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63096_w1080.webp",
+            "bytes": 147106
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63096_w1080.webp"
+      }
+    },
+    {
+      "id": 63095,
+      "sourceFilename": "Eduprenuer-Awareness-1.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Eduprenuer-Awareness-1.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1350,
+      "ratio": 0.8,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 130618,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63095_w480.avif",
+            "bytes": 21154
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63095_w768.avif",
+            "bytes": 36400
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63095_w1024.avif",
+            "bytes": 52259
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63095_w1080.avif",
+            "bytes": 48471
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 600,
+            "url": "/media/portfolio/images/wp_63095_w480.webp",
+            "bytes": 36088
+          },
+          {
+            "width": 768,
+            "height": 960,
+            "url": "/media/portfolio/images/wp_63095_w768.webp",
+            "bytes": 63124
+          },
+          {
+            "width": 1024,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63095_w1024.webp",
+            "bytes": 91768
+          },
+          {
+            "width": 1080,
+            "height": 1350,
+            "url": "/media/portfolio/images/wp_63095_w1080.webp",
+            "bytes": 101758
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63095_w1080.webp"
+      }
+    },
+    {
+      "id": 63093,
+      "sourceFilename": "cover2.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/cover2.png.webp",
+      "naturalWidth": 2000,
+      "naturalHeight": 2000,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 970409,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63093_w480.avif",
+            "bytes": 24376
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63093_w768.avif",
+            "bytes": 47976
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63093_w1024.avif",
+            "bytes": 71440
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63093_w1280.avif",
+            "bytes": 98235
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63093_w1600.avif",
+            "bytes": 142306
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63093_w1920.avif",
+            "bytes": 198370
+          },
+          {
+            "width": 2000,
+            "height": 2000,
+            "url": "/media/portfolio/images/wp_63093_w2000.avif",
+            "bytes": 277339
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63093_w480.webp",
+            "bytes": 39038
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63093_w768.webp",
+            "bytes": 73990
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63093_w1024.webp",
+            "bytes": 109288
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/wp_63093_w1280.webp",
+            "bytes": 150538
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/wp_63093_w1600.webp",
+            "bytes": 215178
+          },
+          {
+            "width": 1920,
+            "height": 1920,
+            "url": "/media/portfolio/images/wp_63093_w1920.webp",
+            "bytes": 298936
+          },
+          {
+            "width": 2000,
+            "height": 2000,
+            "url": "/media/portfolio/images/wp_63093_w2000.webp",
+            "bytes": 368342
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63093_w2000.webp"
+      }
+    },
+    {
+      "id": 63092,
+      "sourceFilename": "Amazonia-grid7.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/Amazonia-grid7.png.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 720,
+      "ratio": 1.5,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 380841,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 320,
+            "url": "/media/portfolio/images/wp_63092_w480.avif",
+            "bytes": 22730
+          },
+          {
+            "width": 768,
+            "height": 512,
+            "url": "/media/portfolio/images/wp_63092_w768.avif",
+            "bytes": 49290
+          },
+          {
+            "width": 1024,
+            "height": 683,
+            "url": "/media/portfolio/images/wp_63092_w1024.avif",
+            "bytes": 77534
+          },
+          {
+            "width": 1080,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63092_w1080.avif",
+            "bytes": 89533
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 320,
+            "url": "/media/portfolio/images/wp_63092_w480.webp",
+            "bytes": 37504
+          },
+          {
+            "width": 768,
+            "height": 512,
+            "url": "/media/portfolio/images/wp_63092_w768.webp",
+            "bytes": 84632
+          },
+          {
+            "width": 1024,
+            "height": 683,
+            "url": "/media/portfolio/images/wp_63092_w1024.webp",
+            "bytes": 136638
+          },
+          {
+            "width": 1080,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63092_w1080.webp",
+            "bytes": 154542
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63092_w1080.webp"
+      }
+    },
+    {
+      "id": 63091,
+      "sourceFilename": "420-720PX_SOS.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/420-720PX_SOS.png.webp",
+      "naturalWidth": 420,
+      "naturalHeight": 720,
+      "ratio": 0.5833,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 30577,
+      "variants": {
+        "avif": [
+          {
+            "width": 420,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63091_w420.avif",
+            "bytes": 13465
+          }
+        ],
+        "webp": [
+          {
+            "width": 420,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63091_w420.webp",
+            "bytes": 23680
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63091_w420.webp"
+      }
+    },
+    {
+      "id": 63090,
+      "sourceFilename": "420-720PX_Clubmed.png.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/420-720PX_Clubmed.png.webp",
+      "naturalWidth": 420,
+      "naturalHeight": 720,
+      "ratio": 0.5833,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 111470,
+      "variants": {
+        "avif": [
+          {
+            "width": 420,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63090_w420.avif",
+            "bytes": 14665
+          }
+        ],
+        "webp": [
+          {
+            "width": 420,
+            "height": 720,
+            "url": "/media/portfolio/images/wp_63090_w420.webp",
+            "bytes": 22998
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63090_w420.webp"
+      }
+    },
+    {
+      "id": 63089,
+      "sourceFilename": "3-Grid_03.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/3-Grid_03.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1080,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 146152,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63089_w480.avif",
+            "bytes": 19616
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63089_w768.avif",
+            "bytes": 37803
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63089_w1024.avif",
+            "bytes": 54198
+          },
+          {
+            "width": 1080,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63089_w1080.avif",
+            "bytes": 59018
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63089_w480.webp",
+            "bytes": 32096
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63089_w768.webp",
+            "bytes": 59370
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63089_w1024.webp",
+            "bytes": 84530
+          },
+          {
+            "width": 1080,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63089_w1080.webp",
+            "bytes": 91806
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63089_w1080.webp"
+      }
+    },
+    {
+      "id": 63088,
+      "sourceFilename": "3-Grid_01.jpg.webp",
+      "sourcePath": "public/wp-content/smush-webp/2026/04/3-Grid_01.jpg.webp",
+      "naturalWidth": 1080,
+      "naturalHeight": 1080,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 279843,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63088_w480.avif",
+            "bytes": 33515
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63088_w768.avif",
+            "bytes": 74151
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63088_w1024.avif",
+            "bytes": 116501
+          },
+          {
+            "width": 1080,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63088_w1080.avif",
+            "bytes": 136639
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/wp_63088_w480.webp",
+            "bytes": 59448
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/wp_63088_w768.webp",
+            "bytes": 132322
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/wp_63088_w1024.webp",
+            "bytes": 203406
+          },
+          {
+            "width": 1080,
+            "height": 1080,
+            "url": "/media/portfolio/images/wp_63088_w1080.webp",
+            "bytes": 231016
+          }
+        ],
+        "fallback": "/media/portfolio/images/wp_63088_w1080.webp"
+      }
+    },
+    {
+      "id": "picture1",
+      "sourceFilename": "Picture1.jpg",
+      "sourcePath": "public/Porfolio/Picture1.jpg",
+      "naturalWidth": 1410,
+      "naturalHeight": 940,
+      "ratio": 1.5,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 254142,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 320,
+            "url": "/media/portfolio/images/picture1_w480.avif",
+            "bytes": 15000
+          },
+          {
+            "width": 768,
+            "height": 512,
+            "url": "/media/portfolio/images/picture1_w768.avif",
+            "bytes": 32198
+          },
+          {
+            "width": 1024,
+            "height": 683,
+            "url": "/media/portfolio/images/picture1_w1024.avif",
+            "bytes": 47405
+          },
+          {
+            "width": 1280,
+            "height": 853,
+            "url": "/media/portfolio/images/picture1_w1280.avif",
+            "bytes": 62415
+          },
+          {
+            "width": 1410,
+            "height": 940,
+            "url": "/media/portfolio/images/picture1_w1410.avif",
+            "bytes": 71962
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 320,
+            "url": "/media/portfolio/images/picture1_w480.webp",
+            "bytes": 25512
+          },
+          {
+            "width": 768,
+            "height": 512,
+            "url": "/media/portfolio/images/picture1_w768.webp",
+            "bytes": 55442
+          },
+          {
+            "width": 1024,
+            "height": 683,
+            "url": "/media/portfolio/images/picture1_w1024.webp",
+            "bytes": 82690
+          },
+          {
+            "width": 1280,
+            "height": 853,
+            "url": "/media/portfolio/images/picture1_w1280.webp",
+            "bytes": 107640
+          },
+          {
+            "width": 1410,
+            "height": 940,
+            "url": "/media/portfolio/images/picture1_w1410.webp",
+            "bytes": 121518
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture1_w1410.webp"
+      }
+    },
+    {
+      "id": "picture10",
+      "sourceFilename": "Picture10.jpg",
+      "sourcePath": "public/Porfolio/Picture10.jpg",
+      "naturalWidth": 1046,
+      "naturalHeight": 2092,
+      "ratio": 0.5,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 467924,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/picture10_w480.avif",
+            "bytes": 40589
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/picture10_w768.avif",
+            "bytes": 86079
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/picture10_w1024.avif",
+            "bytes": 131429
+          },
+          {
+            "width": 1046,
+            "height": 2092,
+            "url": "/media/portfolio/images/picture10_w1046.avif",
+            "bytes": 142762
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/picture10_w480.webp",
+            "bytes": 68840
+          },
+          {
+            "width": 768,
+            "height": 1536,
+            "url": "/media/portfolio/images/picture10_w768.webp",
+            "bytes": 144180
+          },
+          {
+            "width": 1024,
+            "height": 2048,
+            "url": "/media/portfolio/images/picture10_w1024.webp",
+            "bytes": 223408
+          },
+          {
+            "width": 1046,
+            "height": 2092,
+            "url": "/media/portfolio/images/picture10_w1046.webp",
+            "bytes": 239732
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture10_w1046.webp"
+      }
+    },
+    {
+      "id": "picture11",
+      "sourceFilename": "Picture11.jpg",
+      "sourcePath": "public/Porfolio/Picture11.jpg",
+      "naturalWidth": 1045,
+      "naturalHeight": 2092,
+      "ratio": 0.4995,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 372200,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 961,
+            "url": "/media/portfolio/images/picture11_w480.avif",
+            "bytes": 34033
+          },
+          {
+            "width": 768,
+            "height": 1537,
+            "url": "/media/portfolio/images/picture11_w768.avif",
+            "bytes": 64218
+          },
+          {
+            "width": 1024,
+            "height": 2050,
+            "url": "/media/portfolio/images/picture11_w1024.avif",
+            "bytes": 92618
+          },
+          {
+            "width": 1045,
+            "height": 2092,
+            "url": "/media/portfolio/images/picture11_w1045.avif",
+            "bytes": 97248
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 961,
+            "url": "/media/portfolio/images/picture11_w480.webp",
+            "bytes": 53006
+          },
+          {
+            "width": 768,
+            "height": 1537,
+            "url": "/media/portfolio/images/picture11_w768.webp",
+            "bytes": 102630
+          },
+          {
+            "width": 1024,
+            "height": 2050,
+            "url": "/media/portfolio/images/picture11_w1024.webp",
+            "bytes": 147632
+          },
+          {
+            "width": 1045,
+            "height": 2092,
+            "url": "/media/portfolio/images/picture11_w1045.webp",
+            "bytes": 155134
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture11_w1045.webp"
+      }
+    },
+    {
+      "id": "picture12",
+      "sourceFilename": "Picture12.jpg",
+      "sourcePath": "public/Porfolio/Picture12.jpg",
+      "naturalWidth": 905,
+      "naturalHeight": 905,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 122185,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture12_w480.avif",
+            "bytes": 14599
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture12_w768.avif",
+            "bytes": 26133
+          },
+          {
+            "width": 905,
+            "height": 905,
+            "url": "/media/portfolio/images/picture12_w905.avif",
+            "bytes": 31523
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture12_w480.webp",
+            "bytes": 24530
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture12_w768.webp",
+            "bytes": 41466
+          },
+          {
+            "width": 905,
+            "height": 905,
+            "url": "/media/portfolio/images/picture12_w905.webp",
+            "bytes": 50572
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture12_w905.webp"
+      }
+    },
+    {
+      "id": "picture13",
+      "sourceFilename": "Picture13.jpg",
+      "sourcePath": "public/Porfolio/Picture13.jpg",
+      "naturalWidth": 906,
+      "naturalHeight": 905,
+      "ratio": 1.0011,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 111212,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 479,
+            "url": "/media/portfolio/images/picture13_w480.avif",
+            "bytes": 12471
+          },
+          {
+            "width": 768,
+            "height": 767,
+            "url": "/media/portfolio/images/picture13_w768.avif",
+            "bytes": 23520
+          },
+          {
+            "width": 906,
+            "height": 905,
+            "url": "/media/portfolio/images/picture13_w906.avif",
+            "bytes": 28605
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 479,
+            "url": "/media/portfolio/images/picture13_w480.webp",
+            "bytes": 20660
+          },
+          {
+            "width": 768,
+            "height": 767,
+            "url": "/media/portfolio/images/picture13_w768.webp",
+            "bytes": 35350
+          },
+          {
+            "width": 906,
+            "height": 905,
+            "url": "/media/portfolio/images/picture13_w906.webp",
+            "bytes": 42868
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture13_w906.webp"
+      }
+    },
+    {
+      "id": "picture14",
+      "sourceFilename": "Picture14.jpg",
+      "sourcePath": "public/Porfolio/Picture14.jpg",
+      "naturalWidth": 909,
+      "naturalHeight": 909,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 156493,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture14_w480.avif",
+            "bytes": 19885
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture14_w768.avif",
+            "bytes": 34996
+          },
+          {
+            "width": 909,
+            "height": 909,
+            "url": "/media/portfolio/images/picture14_w909.avif",
+            "bytes": 44004
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture14_w480.webp",
+            "bytes": 32410
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture14_w768.webp",
+            "bytes": 56274
+          },
+          {
+            "width": 909,
+            "height": 909,
+            "url": "/media/portfolio/images/picture14_w909.webp",
+            "bytes": 69552
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture14_w909.webp"
+      }
+    },
+    {
+      "id": "picture15",
+      "sourceFilename": "Picture15.jpg",
+      "sourcePath": "public/Porfolio/Picture15.jpg",
+      "naturalWidth": 908,
+      "naturalHeight": 908,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 173335,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture15_w480.avif",
+            "bytes": 22051
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture15_w768.avif",
+            "bytes": 40277
+          },
+          {
+            "width": 908,
+            "height": 908,
+            "url": "/media/portfolio/images/picture15_w908.avif",
+            "bytes": 51336
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture15_w480.webp",
+            "bytes": 35862
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture15_w768.webp",
+            "bytes": 63008
+          },
+          {
+            "width": 908,
+            "height": 908,
+            "url": "/media/portfolio/images/picture15_w908.webp",
+            "bytes": 77506
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture15_w908.webp"
+      }
+    },
+    {
+      "id": "picture16",
+      "sourceFilename": "Picture16.jpg",
+      "sourcePath": "public/Porfolio/Picture16.jpg",
+      "naturalWidth": 1688,
+      "naturalHeight": 1688,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 413354,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture16_w480.avif",
+            "bytes": 16053
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture16_w768.avif",
+            "bytes": 34170
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/picture16_w1024.avif",
+            "bytes": 50501
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/picture16_w1280.avif",
+            "bytes": 68678
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/picture16_w1600.avif",
+            "bytes": 89033
+          },
+          {
+            "width": 1688,
+            "height": 1688,
+            "url": "/media/portfolio/images/picture16_w1688.avif",
+            "bytes": 98299
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture16_w480.webp",
+            "bytes": 22706
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture16_w768.webp",
+            "bytes": 55362
+          },
+          {
+            "width": 1024,
+            "height": 1024,
+            "url": "/media/portfolio/images/picture16_w1024.webp",
+            "bytes": 92422
+          },
+          {
+            "width": 1280,
+            "height": 1280,
+            "url": "/media/portfolio/images/picture16_w1280.webp",
+            "bytes": 130528
+          },
+          {
+            "width": 1600,
+            "height": 1600,
+            "url": "/media/portfolio/images/picture16_w1600.webp",
+            "bytes": 176372
+          },
+          {
+            "width": 1688,
+            "height": 1688,
+            "url": "/media/portfolio/images/picture16_w1688.webp",
+            "bytes": 191988
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture16_w1688.webp"
+      }
+    },
+    {
+      "id": "picture17",
+      "sourceFilename": "Picture17.jpg",
+      "sourcePath": "public/Porfolio/Picture17.jpg",
+      "naturalWidth": 810,
+      "naturalHeight": 810,
+      "ratio": 1,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 122126,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture17_w480.avif",
+            "bytes": 16452
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture17_w768.avif",
+            "bytes": 28245
+          },
+          {
+            "width": 810,
+            "height": 810,
+            "url": "/media/portfolio/images/picture17_w810.avif",
+            "bytes": 29686
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 480,
+            "url": "/media/portfolio/images/picture17_w480.webp",
+            "bytes": 27596
+          },
+          {
+            "width": 768,
+            "height": 768,
+            "url": "/media/portfolio/images/picture17_w768.webp",
+            "bytes": 48784
+          },
+          {
+            "width": 810,
+            "height": 810,
+            "url": "/media/portfolio/images/picture17_w810.webp",
+            "bytes": 53016
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture17_w810.webp"
+      }
+    },
+    {
+      "id": "picture18",
+      "sourceFilename": "Picture18.jpg",
+      "sourcePath": "public/Porfolio/Picture18.jpg",
+      "naturalWidth": 1182,
+      "naturalHeight": 1192,
+      "ratio": 0.9916,
+      "orientation": "square",
+      "hasAlpha": false,
+      "originalBytes": 226151,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 484,
+            "url": "/media/portfolio/images/picture18_w480.avif",
+            "bytes": 18371
+          },
+          {
+            "width": 768,
+            "height": 774,
+            "url": "/media/portfolio/images/picture18_w768.avif",
+            "bytes": 32520
+          },
+          {
+            "width": 1024,
+            "height": 1033,
+            "url": "/media/portfolio/images/picture18_w1024.avif",
+            "bytes": 46711
+          },
+          {
+            "width": 1182,
+            "height": 1192,
+            "url": "/media/portfolio/images/picture18_w1182.avif",
+            "bytes": 58570
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 484,
+            "url": "/media/portfolio/images/picture18_w480.webp",
+            "bytes": 26604
+          },
+          {
+            "width": 768,
+            "height": 774,
+            "url": "/media/portfolio/images/picture18_w768.webp",
+            "bytes": 49054
+          },
+          {
+            "width": 1024,
+            "height": 1033,
+            "url": "/media/portfolio/images/picture18_w1024.webp",
+            "bytes": 69160
+          },
+          {
+            "width": 1182,
+            "height": 1192,
+            "url": "/media/portfolio/images/picture18_w1182.webp",
+            "bytes": 83188
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture18_w1182.webp"
+      }
+    },
+    {
+      "id": "picture19",
+      "sourceFilename": "Picture19.jpg",
+      "sourcePath": "public/Porfolio/Picture19.jpg",
+      "naturalWidth": 1790,
+      "naturalHeight": 2250,
+      "ratio": 0.7956,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 507293,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 603,
+            "url": "/media/portfolio/images/picture19_w480.avif",
+            "bytes": 24457
+          },
+          {
+            "width": 768,
+            "height": 965,
+            "url": "/media/portfolio/images/picture19_w768.avif",
+            "bytes": 44555
+          },
+          {
+            "width": 1024,
+            "height": 1287,
+            "url": "/media/portfolio/images/picture19_w1024.avif",
+            "bytes": 63832
+          },
+          {
+            "width": 1280,
+            "height": 1609,
+            "url": "/media/portfolio/images/picture19_w1280.avif",
+            "bytes": 85702
+          },
+          {
+            "width": 1600,
+            "height": 2011,
+            "url": "/media/portfolio/images/picture19_w1600.avif",
+            "bytes": 106485
+          },
+          {
+            "width": 1790,
+            "height": 2250,
+            "url": "/media/portfolio/images/picture19_w1790.avif",
+            "bytes": 121175
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 603,
+            "url": "/media/portfolio/images/picture19_w480.webp",
+            "bytes": 38522
+          },
+          {
+            "width": 768,
+            "height": 965,
+            "url": "/media/portfolio/images/picture19_w768.webp",
+            "bytes": 74860
+          },
+          {
+            "width": 1024,
+            "height": 1287,
+            "url": "/media/portfolio/images/picture19_w1024.webp",
+            "bytes": 105906
+          },
+          {
+            "width": 1280,
+            "height": 1609,
+            "url": "/media/portfolio/images/picture19_w1280.webp",
+            "bytes": 135124
+          },
+          {
+            "width": 1600,
+            "height": 2011,
+            "url": "/media/portfolio/images/picture19_w1600.webp",
+            "bytes": 170142
+          },
+          {
+            "width": 1790,
+            "height": 2250,
+            "url": "/media/portfolio/images/picture19_w1790.webp",
+            "bytes": 192852
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture19_w1790.webp"
+      }
+    },
+    {
+      "id": "picture2",
+      "sourceFilename": "Picture2.png",
+      "sourcePath": "public/Porfolio/Picture2.png",
+      "naturalWidth": 1420,
+      "naturalHeight": 738,
+      "ratio": 1.9241,
+      "orientation": "wide",
+      "hasAlpha": true,
+      "originalBytes": 514225,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 249,
+            "url": "/media/portfolio/images/picture2_w480.avif",
+            "bytes": 12896
+          },
+          {
+            "width": 768,
+            "height": 399,
+            "url": "/media/portfolio/images/picture2_w768.avif",
+            "bytes": 23733
+          },
+          {
+            "width": 1024,
+            "height": 532,
+            "url": "/media/portfolio/images/picture2_w1024.avif",
+            "bytes": 34845
+          },
+          {
+            "width": 1280,
+            "height": 665,
+            "url": "/media/portfolio/images/picture2_w1280.avif",
+            "bytes": 43595
+          },
+          {
+            "width": 1420,
+            "height": 738,
+            "url": "/media/portfolio/images/picture2_w1420.avif",
+            "bytes": 47610
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 249,
+            "url": "/media/portfolio/images/picture2_w480.webp",
+            "bytes": 19702
+          },
+          {
+            "width": 768,
+            "height": 399,
+            "url": "/media/portfolio/images/picture2_w768.webp",
+            "bytes": 38776
+          },
+          {
+            "width": 1024,
+            "height": 532,
+            "url": "/media/portfolio/images/picture2_w1024.webp",
+            "bytes": 56820
+          },
+          {
+            "width": 1280,
+            "height": 665,
+            "url": "/media/portfolio/images/picture2_w1280.webp",
+            "bytes": 73052
+          },
+          {
+            "width": 1420,
+            "height": 738,
+            "url": "/media/portfolio/images/picture2_w1420.webp",
+            "bytes": 81262
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture2_w1420.webp"
+      }
+    },
+    {
+      "id": "picture3",
+      "sourceFilename": "Picture3.jpg",
+      "sourcePath": "public/Porfolio/Picture3.jpg",
+      "naturalWidth": 1568,
+      "naturalHeight": 304,
+      "ratio": 5.1579,
+      "orientation": "ultra-wide",
+      "hasAlpha": false,
+      "originalBytes": 116476,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 93,
+            "url": "/media/portfolio/images/picture3_w480.avif",
+            "bytes": 4400
+          },
+          {
+            "width": 768,
+            "height": 149,
+            "url": "/media/portfolio/images/picture3_w768.avif",
+            "bytes": 11037
+          },
+          {
+            "width": 1024,
+            "height": 199,
+            "url": "/media/portfolio/images/picture3_w1024.avif",
+            "bytes": 18474
+          },
+          {
+            "width": 1280,
+            "height": 248,
+            "url": "/media/portfolio/images/picture3_w1280.avif",
+            "bytes": 27622
+          },
+          {
+            "width": 1568,
+            "height": 304,
+            "url": "/media/portfolio/images/picture3_w1568.avif",
+            "bytes": 38860
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 93,
+            "url": "/media/portfolio/images/picture3_w480.webp",
+            "bytes": 8176
+          },
+          {
+            "width": 768,
+            "height": 149,
+            "url": "/media/portfolio/images/picture3_w768.webp",
+            "bytes": 19712
+          },
+          {
+            "width": 1024,
+            "height": 199,
+            "url": "/media/portfolio/images/picture3_w1024.webp",
+            "bytes": 32868
+          },
+          {
+            "width": 1280,
+            "height": 248,
+            "url": "/media/portfolio/images/picture3_w1280.webp",
+            "bytes": 47654
+          },
+          {
+            "width": 1568,
+            "height": 304,
+            "url": "/media/portfolio/images/picture3_w1568.webp",
+            "bytes": 66138
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture3_w1568.webp"
+      }
+    },
+    {
+      "id": "picture4",
+      "sourceFilename": "Picture4.jpg",
+      "sourcePath": "public/Porfolio/Picture4.jpg",
+      "naturalWidth": 1376,
+      "naturalHeight": 774,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "hasAlpha": false,
+      "originalBytes": 189358,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/picture4_w480.avif",
+            "bytes": 14918
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/picture4_w768.avif",
+            "bytes": 27305
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/picture4_w1024.avif",
+            "bytes": 37801
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/picture4_w1280.avif",
+            "bytes": 48614
+          },
+          {
+            "width": 1376,
+            "height": 774,
+            "url": "/media/portfolio/images/picture4_w1376.avif",
+            "bytes": 53556
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 270,
+            "url": "/media/portfolio/images/picture4_w480.webp",
+            "bytes": 22060
+          },
+          {
+            "width": 768,
+            "height": 432,
+            "url": "/media/portfolio/images/picture4_w768.webp",
+            "bytes": 42570
+          },
+          {
+            "width": 1024,
+            "height": 576,
+            "url": "/media/portfolio/images/picture4_w1024.webp",
+            "bytes": 59252
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "url": "/media/portfolio/images/picture4_w1280.webp",
+            "bytes": 77730
+          },
+          {
+            "width": 1376,
+            "height": 774,
+            "url": "/media/portfolio/images/picture4_w1376.webp",
+            "bytes": 83506
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture4_w1376.webp"
+      }
+    },
+    {
+      "id": "picture5",
+      "sourceFilename": "Picture5.jpg",
+      "sourcePath": "public/Porfolio/Picture5.jpg",
+      "naturalWidth": 943,
+      "naturalHeight": 2048,
+      "ratio": 0.4604,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 256117,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 1042,
+            "url": "/media/portfolio/images/picture5_w480.avif",
+            "bytes": 28375
+          },
+          {
+            "width": 768,
+            "height": 1668,
+            "url": "/media/portfolio/images/picture5_w768.avif",
+            "bytes": 52164
+          },
+          {
+            "width": 943,
+            "height": 2048,
+            "url": "/media/portfolio/images/picture5_w943.avif",
+            "bytes": 63409
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 1042,
+            "url": "/media/portfolio/images/picture5_w480.webp",
+            "bytes": 45912
+          },
+          {
+            "width": 768,
+            "height": 1668,
+            "url": "/media/portfolio/images/picture5_w768.webp",
+            "bytes": 85386
+          },
+          {
+            "width": 943,
+            "height": 2048,
+            "url": "/media/portfolio/images/picture5_w943.webp",
+            "bytes": 108006
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture5_w943.webp"
+      }
+    },
+    {
+      "id": "picture7",
+      "sourceFilename": "Picture7.jpg",
+      "sourcePath": "public/Porfolio/Picture7.jpg",
+      "naturalWidth": 1666,
+      "naturalHeight": 2094,
+      "ratio": 0.7956,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 669275,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 603,
+            "url": "/media/portfolio/images/picture7_w480.avif",
+            "bytes": 32744
+          },
+          {
+            "width": 768,
+            "height": 965,
+            "url": "/media/portfolio/images/picture7_w768.avif",
+            "bytes": 69068
+          },
+          {
+            "width": 1024,
+            "height": 1287,
+            "url": "/media/portfolio/images/picture7_w1024.avif",
+            "bytes": 102607
+          },
+          {
+            "width": 1280,
+            "height": 1609,
+            "url": "/media/portfolio/images/picture7_w1280.avif",
+            "bytes": 138763
+          },
+          {
+            "width": 1600,
+            "height": 2011,
+            "url": "/media/portfolio/images/picture7_w1600.avif",
+            "bytes": 181068
+          },
+          {
+            "width": 1666,
+            "height": 2094,
+            "url": "/media/portfolio/images/picture7_w1666.avif",
+            "bytes": 192259
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 603,
+            "url": "/media/portfolio/images/picture7_w480.webp",
+            "bytes": 53674
+          },
+          {
+            "width": 768,
+            "height": 965,
+            "url": "/media/portfolio/images/picture7_w768.webp",
+            "bytes": 113406
+          },
+          {
+            "width": 1024,
+            "height": 1287,
+            "url": "/media/portfolio/images/picture7_w1024.webp",
+            "bytes": 170468
+          },
+          {
+            "width": 1280,
+            "height": 1609,
+            "url": "/media/portfolio/images/picture7_w1280.webp",
+            "bytes": 231346
+          },
+          {
+            "width": 1600,
+            "height": 2011,
+            "url": "/media/portfolio/images/picture7_w1600.webp",
+            "bytes": 301892
+          },
+          {
+            "width": 1666,
+            "height": 2094,
+            "url": "/media/portfolio/images/picture7_w1666.webp",
+            "bytes": 315702
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture7_w1666.webp"
+      }
+    },
+    {
+      "id": "picture8",
+      "sourceFilename": "Picture8.jpg",
+      "sourcePath": "public/Porfolio/Picture8.jpg",
+      "naturalWidth": 1678,
+      "naturalHeight": 2109,
+      "ratio": 0.7956,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 456218,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 603,
+            "url": "/media/portfolio/images/picture8_w480.avif",
+            "bytes": 24030
+          },
+          {
+            "width": 768,
+            "height": 965,
+            "url": "/media/portfolio/images/picture8_w768.avif",
+            "bytes": 44856
+          },
+          {
+            "width": 1024,
+            "height": 1287,
+            "url": "/media/portfolio/images/picture8_w1024.avif",
+            "bytes": 60453
+          },
+          {
+            "width": 1280,
+            "height": 1609,
+            "url": "/media/portfolio/images/picture8_w1280.avif",
+            "bytes": 77313
+          },
+          {
+            "width": 1600,
+            "height": 2011,
+            "url": "/media/portfolio/images/picture8_w1600.avif",
+            "bytes": 98116
+          },
+          {
+            "width": 1678,
+            "height": 2109,
+            "url": "/media/portfolio/images/picture8_w1678.avif",
+            "bytes": 104677
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 603,
+            "url": "/media/portfolio/images/picture8_w480.webp",
+            "bytes": 39108
+          },
+          {
+            "width": 768,
+            "height": 965,
+            "url": "/media/portfolio/images/picture8_w768.webp",
+            "bytes": 71862
+          },
+          {
+            "width": 1024,
+            "height": 1287,
+            "url": "/media/portfolio/images/picture8_w1024.webp",
+            "bytes": 97404
+          },
+          {
+            "width": 1280,
+            "height": 1609,
+            "url": "/media/portfolio/images/picture8_w1280.webp",
+            "bytes": 122988
+          },
+          {
+            "width": 1600,
+            "height": 2011,
+            "url": "/media/portfolio/images/picture8_w1600.webp",
+            "bytes": 154520
+          },
+          {
+            "width": 1678,
+            "height": 2109,
+            "url": "/media/portfolio/images/picture8_w1678.webp",
+            "bytes": 159934
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture8_w1678.webp"
+      }
+    },
+    {
+      "id": "picture9",
+      "sourceFilename": "Picture9.jpg",
+      "sourcePath": "public/Porfolio/Picture9.jpg",
+      "naturalWidth": 1045,
+      "naturalHeight": 2091,
+      "ratio": 0.4998,
+      "orientation": "portrait",
+      "hasAlpha": false,
+      "originalBytes": 298278,
+      "variants": {
+        "avif": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/picture9_w480.avif",
+            "bytes": 28577
+          },
+          {
+            "width": 768,
+            "height": 1537,
+            "url": "/media/portfolio/images/picture9_w768.avif",
+            "bytes": 54349
+          },
+          {
+            "width": 1024,
+            "height": 2049,
+            "url": "/media/portfolio/images/picture9_w1024.avif",
+            "bytes": 76849
+          },
+          {
+            "width": 1045,
+            "height": 2091,
+            "url": "/media/portfolio/images/picture9_w1045.avif",
+            "bytes": 79533
+          }
+        ],
+        "webp": [
+          {
+            "width": 480,
+            "height": 960,
+            "url": "/media/portfolio/images/picture9_w480.webp",
+            "bytes": 43006
+          },
+          {
+            "width": 768,
+            "height": 1537,
+            "url": "/media/portfolio/images/picture9_w768.webp",
+            "bytes": 80200
+          },
+          {
+            "width": 1024,
+            "height": 2049,
+            "url": "/media/portfolio/images/picture9_w1024.webp",
+            "bytes": 114832
+          },
+          {
+            "width": 1045,
+            "height": 2091,
+            "url": "/media/portfolio/images/picture9_w1045.webp",
+            "bytes": 119482
+          }
+        ],
+        "fallback": "/media/portfolio/images/picture9_w1045.webp"
+      }
+    }
+  ]
+}

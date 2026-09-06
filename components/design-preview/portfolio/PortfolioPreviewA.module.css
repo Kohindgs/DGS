@@ -11,8 +11,7 @@
   font-family: var(--preview-font-body), Inter, sans-serif;
 }
 
-/* Slow GPU-transformed ambient gradient. It moves independently of the content so
-   the page feels alive without animating layout or causing scroll jank. */
+/* Slow GPU-transformed ambient gradient. */
 .page::before {
   content: "";
   position: fixed;
@@ -76,7 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   margin-bottom: clamp(14px, 1.8vw, 26px);
 }
 
@@ -149,48 +148,43 @@
   padding: clamp(36px, 4vw, 60px) clamp(16px, 3vw, 54px) clamp(96px, 9vw, 148px);
 }
 
-.workGrid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: clamp(14px, 1.5vw, 26px);
-  row-gap: clamp(42px, 5vw, 76px);
-  width: min(100%, 1840px);
+.workContainer {
+  width: min(100%, 1760px);
   margin-inline: auto;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3.5vw, 54px);
+}
+
+/* ZERO-CROP JUSTIFIED EDITORIAL ROW */
+.editorialRow {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: clamp(14px, 1.6vw, 24px);
+  width: 100%;
 }
 
 .work {
+  position: relative;
   min-width: 0;
-  align-self: start;
+  flex-basis: 0;
+  flex-grow: var(--item-ratio, 1);
+  display: flex;
+  flex-direction: column;
   animation: workIn 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: var(--delay);
-}
-
-.workLeftLarge {
-  grid-column: 1 / span 7;
-}
-
-.workRightSmall {
-  grid-column: 8 / -1;
-}
-
-.workLeftSmall {
-  grid-column: 1 / span 5;
-}
-
-.workRightLarge {
-  grid-column: 6 / -1;
-}
-
-.workFull {
-  grid-column: 1 / -1;
+  animation-delay: var(--delay, 0ms);
 }
 
 .mediaButton {
   --px: 0;
   --py: 0;
-  display: block;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
   padding: 0;
   border: 0;
   color: inherit;
@@ -201,52 +195,38 @@
 
 .mediaFrame {
   position: relative;
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  aspect-ratio: var(--media-ratio);
-  place-items: center;
+  height: 100%;
+  aspect-ratio: var(--item-ratio);
+  max-width: var(--max-intrinsic-w, 100%);
+  margin-inline: auto;
   overflow: hidden;
   background:
     radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.035), transparent 54%),
     #0d0e10;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
-  transform: translateZ(0);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  transition: border-color 340ms ease, box-shadow 340ms ease, transform 340ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.picture {
+  display: contents;
+}
+
+/* ZERO-CROP IMAGE: width: 100%, height: 100%, object-fit: contain ensures EXACT aspect ratio is preserved without 1px crop */
 .image {
-  position: absolute;
-  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transform: translate3d(calc(var(--px) * -4px), calc(var(--py) * -4px), 0) scale(1.008);
-  transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1), filter 450ms ease;
-  will-change: transform;
-}
-
-/* If the actual full-size file is still smaller than the rendered card, JS marks
-   the frame low-res. We then show it at intrinsic size instead of stretching it. */
-.mediaFrame[data-lowres="true"] .image {
-  position: relative;
-  inset: auto;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
   object-fit: contain;
+  object-position: center;
   transform: none;
+  transition: filter 340ms ease;
   will-change: auto;
-}
-
-.mediaFrame[data-lowres="true"]::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 40% 30%, rgba(183, 215, 255, 0.07), transparent 34%),
-    radial-gradient(circle at 68% 72%, rgba(161, 109, 255, 0.06), transparent 34%);
 }
 
 .mediaShade {
@@ -255,41 +235,62 @@
   pointer-events: none;
   opacity: 0;
   background:
-    linear-gradient(135deg, rgba(183, 215, 255, 0.1), transparent 36%),
-    linear-gradient(to top, rgba(5, 5, 6, 0.3), transparent 42%);
-  transition: opacity 420ms ease;
+    linear-gradient(135deg, rgba(183, 215, 255, 0.08), transparent 44%),
+    linear-gradient(to top, rgba(5, 5, 6, 0.35), transparent 48%);
+  transition: opacity 320ms ease;
 }
 
 .openGlyph {
   position: absolute;
-  right: clamp(12px, 1.3vw, 22px);
-  top: clamp(12px, 1.3vw, 22px);
+  right: clamp(12px, 1.2vw, 20px);
+  top: clamp(12px, 1.2vw, 20px);
   display: grid;
-  width: clamp(40px, 3.5vw, 56px);
+  width: clamp(38px, 3.2vw, 50px);
   aspect-ratio: 1;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.36);
   border-radius: 50%;
-  background: rgba(5, 5, 6, 0.24);
+  background: rgba(5, 5, 6, 0.38);
   color: white;
   font-family: var(--preview-font-display), Syne, sans-serif;
-  font-size: clamp(15px, 1.1vw, 19px);
+  font-size: clamp(14px, 1vw, 17px);
   opacity: 0;
-  transform: translate3d(7px, -7px, 0) scale(0.9);
-  transition: opacity 300ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1), background 300ms ease;
-  backdrop-filter: blur(10px);
+  transform: translate3d(5px, -5px, 0);
+  transition: opacity 260ms ease, transform 340ms cubic-bezier(0.16, 1, 0.3, 1), background 260ms ease;
+  backdrop-filter: blur(12px);
+}
+
+.videoBadge {
+  position: absolute;
+  left: clamp(12px, 1.2vw, 20px);
+  top: clamp(12px, 1.2vw, 20px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(5, 5, 6, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #b7d7ff;
+  font-family: var(--preview-font-display), Syne, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+/* SUBTLE ELEGANT HOVER WITHOUT CLIPPING/SCALING ARTWORK */
+.mediaButton:hover .mediaFrame,
+.mediaButton:focus-visible .mediaFrame {
+  border-color: rgba(183, 215, 255, 0.36);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42), 0 0 24px rgba(183, 215, 255, 0.08);
+  transform: translateY(-2px);
 }
 
 .mediaButton:hover .image,
 .mediaButton:focus-visible .image {
-  transform: translate3d(calc(var(--px) * -7px), calc(var(--py) * -7px), 0) scale(1.025);
-  filter: saturate(1.03) contrast(1.015);
-}
-
-.mediaButton:hover .mediaFrame[data-lowres="true"] .image,
-.mediaButton:focus-visible .mediaFrame[data-lowres="true"] .image {
-  transform: none;
-  filter: none;
+  filter: saturate(1.04) contrast(1.02);
 }
 
 .mediaButton:hover .mediaShade,
@@ -301,17 +302,17 @@
 
 .mediaButton:hover .openGlyph,
 .mediaButton:focus-visible .openGlyph {
-  transform: translate3d(0, 0, 0) scale(1);
+  transform: translate3d(0, 0, 0);
 }
 
 .mediaButton:focus-visible {
   outline: 1px solid rgba(183, 215, 255, 0.9);
-  outline-offset: 7px;
+  outline-offset: 6px;
 }
 
 .workMeta {
   display: grid;
-  grid-template-columns: auto minmax(30px, 64px) auto;
+  grid-template-columns: auto minmax(24px, 48px) auto;
   align-items: center;
   gap: 8px;
   width: max-content;
@@ -476,24 +477,12 @@ video.viewerImage {
     max-width: 100%;
   }
 
-  .workGrid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    column-gap: 14px;
-    row-gap: 44px;
+  .workContainer {
+    gap: 32px;
   }
 
-  .workLeftLarge,
-  .workLeftSmall {
-    grid-column: 1 / span 3;
-  }
-
-  .workRightSmall,
-  .workRightLarge {
-    grid-column: 4 / -1;
-  }
-
-  .workFull {
-    grid-column: 1 / -1;
+  .editorialRow {
+    gap: 14px;
   }
 }
 
@@ -536,24 +525,28 @@ video.viewerImage {
     gap: 8px;
   }
 
+  /* MOBILE 390px ZERO-CROP SINGLE COLUMN */
   .workSection {
     padding: 32px 12px 92px;
   }
 
-  .workGrid {
+  .workContainer {
     display: block;
   }
 
-  .work + .work {
-    margin-top: 34px;
+  .editorialRow {
+    display: block;
   }
 
-  .workLeftLarge,
-  .workRightSmall,
-  .workLeftSmall,
-  .workRightLarge,
-  .workFull {
+  .work {
+    display: block;
     width: 100%;
+    margin-bottom: 34px;
+  }
+
+  .mediaFrame {
+    width: 100%;
+    max-width: 100%;
   }
 
   .openGlyph {
@@ -596,6 +589,7 @@ video.viewerImage {
     animation: none !important;
   }
 
+  .mediaFrame,
   .image,
   .openGlyph {
     transition: none !important;

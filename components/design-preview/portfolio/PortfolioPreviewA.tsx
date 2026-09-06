@@ -6,32 +6,14 @@ import {
   useState,
   type CSSProperties,
   type PointerEvent,
-  type SyntheticEvent,
 } from "react";
-import type { HomepageGalleryItem } from "@/lib/portfolio/types";
+import type { PortfolioItem } from "@/lib/design-preview/portfolio-source";
 import styles from "./PortfolioPreviewA.module.css";
-
-export type PortfolioPreviewMediaItem = HomepageGalleryItem & {
-  mediaType?: "image" | "video";
-  videoSrc?: string;
-  poster?: string;
-};
 
 type Props = {
   title: string;
   industries: string[];
-  items: PortfolioPreviewMediaItem[];
-};
-
-const layoutClass = (index: number) => {
-  const pattern = [
-    styles.workLeftLarge,
-    styles.workRightSmall,
-    styles.workLeftSmall,
-    styles.workRightLarge,
-    styles.workFull,
-  ];
-  return pattern[index % pattern.length];
+  items: PortfolioItem[];
 };
 
 const pad = (value: number) => String(value).padStart(2, "0");
@@ -42,27 +24,74 @@ const hasHumanReadableTitle = (title: string) => {
   if (/^ss[_\s-]*\d+/i.test(value)) return false;
   if (/^img[_\s-]*\d+/i.test(value)) return false;
   if (/^dsc[_\s-]*\d+/i.test(value)) return false;
-  if (/\.(jpe?g|png|webp|gif|mp4|mov)$/i.test(value)) return false;
+  if (/^picture\s*\d+/i.test(value)) return false;
+  if (/^media\s*\d+/i.test(value)) return false;
+  if (/\.(jpe?g|png|webp|gif|mp4|mov|m4v)$/i.test(value)) return false;
   return true;
 };
 
-const guardAgainstUpscaling = (event: SyntheticEvent<HTMLImageElement>) => {
-  const image = event.currentTarget;
-  const frame = image.parentElement;
-  if (!frame) return;
+// ZERO-CROP JUSTIFIED EDITORIAL ROW GROUPING ALGORITHM
+// Groups items so that when each item's width is proportional to its REAL aspect ratio,
+// all items in that row share the exact same natural visual row height without 1px of crop.
+function buildEditorialRows(items: PortfolioItem[]): PortfolioItem[][] {
+  const rows: PortfolioItem[][] = [];
+  let currentRow: PortfolioItem[] = [];
+  let currentRatioSum = 0;
 
-  const renderedWidth = frame.getBoundingClientRect().width;
-  if (image.naturalWidth > 0 && image.naturalWidth + 1 < renderedWidth) {
-    frame.dataset.lowres = "true";
-  } else {
-    delete frame.dataset.lowres;
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const r = item.ratio;
+
+    // Standalone ultra-wides (panoramic >= 2.4)
+    if (r >= 2.4) {
+      if (currentRow.length > 0) {
+        rows.push(currentRow);
+        currentRow = [];
+        currentRatioSum = 0;
+      }
+      rows.push([item]);
+      continue;
+    }
+
+    const nextSum = currentRatioSum + r;
+    const nextCount = currentRow.length + 1;
+
+    // Flush row when comfortable combined ratio reached (2.4 - 3.7) or max 4 items
+    const shouldFlush =
+      currentRow.length >= 2 &&
+      (nextCount > 4 || nextSum > 3.7 || (currentRatioSum >= 3.0 && nextCount >= 3));
+
+    if (shouldFlush) {
+      rows.push(currentRow);
+      currentRow = [item];
+      currentRatioSum = r;
+    } else {
+      currentRow.push(item);
+      currentRatioSum = nextSum;
+    }
   }
-};
+
+  // Balance trailing item
+  if (currentRow.length > 0) {
+    if (currentRow.length === 1 && rows.length > 0) {
+      const prev = rows[rows.length - 1];
+      if (prev.length < 4 && prev[0].ratio < 2.4) {
+        prev.push(currentRow[0]);
+        currentRow = [];
+      }
+    }
+    if (currentRow.length > 0) rows.push(currentRow);
+  }
+
+  return rows;
+}
 
 export function PortfolioPreviewA({ title, industries, items }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeItem = activeIndex === null ? null : items[activeIndex];
   const itemCountLabel = useMemo(() => pad(items.length), [items.length]);
+
+  const rows = useMemo(() => buildEditorialRows(items), [items]);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -105,6 +134,8 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
     event.currentTarget.style.setProperty("--py", "0");
   };
 
+  let globalIndex = 0;
+
   return (
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="portfolio-preview-title">
@@ -133,69 +164,110 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
       </section>
 
       <section className={styles.workSection} aria-label="Portfolio gallery">
-        <div className={styles.workGrid}>
-          {items.map((item, index) => {
-            const aspect = item.width > 0 && item.height > 0 ? item.width / item.height : 4 / 3;
-            const isVideo = item.mediaType === "video" && Boolean(item.videoSrc);
-            const style = {
-              "--delay": `${Math.min(index % 6, 5) * 40}ms`,
-              "--media-ratio": aspect.toFixed(4),
-              "--px": "0",
-              "--py": "0",
-            } as CSSProperties;
+        <div className={styles.workContainer}>
+          {rows.map((row, rowIdx) => (
+            <div key={`row-${rowIdx}`} className={styles.editorialRow}>
+              {row.map((item) => {
+                const itemIndex = globalIndex++;
+                const isVideo = item.type === "video";
+                const aspect = item.ratio;
+                const delay = `${Math.min(itemIndex % 6, 5) * 40}ms`;
 
-            return (
-              <article
-                key={item.id}
-                className={`${styles.work} ${layoutClass(index)}`}
-                style={style}
-                data-media-kind={isVideo ? "video" : "image"}
-              >
-                <button
-                  type="button"
-                  className={styles.mediaButton}
-                  aria-label={item.title ? `View ${item.title}` : `View portfolio item ${index + 1}`}
-                  onClick={() => setActiveIndex(index)}
-                  onPointerMove={moveMedia}
-                  onPointerLeave={resetMedia}
-                >
-                  <span className={styles.mediaFrame}>
-                    {isVideo ? (
-                      <video
-                        src={item.videoSrc}
-                        poster={item.poster || item.thumbnail}
-                        muted
-                        playsInline
-                        preload="metadata"
-                        className={styles.image}
-                      />
-                    ) : (
-                      /* Full-resolution WordPress media is used in the editorial grid to avoid upscaling thumbnails. */
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
-                        src={item.media || item.thumbnail}
-                        alt={item.alt || ""}
-                        width={item.width || 640}
-                        height={item.height || 480}
-                        loading={index < 4 ? "eager" : "lazy"}
-                        decoding="async"
-                        fetchPriority={index < 2 ? "high" : "auto"}
-                        onLoad={guardAgainstUpscaling}
-                        className={styles.image}
-                      />
-                    )}
-                    <span className={styles.mediaShade} aria-hidden="true" />
-                    <span className={styles.openGlyph} aria-hidden="true">{isVideo ? "▶" : "↗"}</span>
-                  </span>
-                  <span className={styles.workMeta} aria-hidden="true">
-                    <span>{pad(index + 1)}</span>
-                    <span className={styles.workMetaLine} />
-                    <span>{itemCountLabel}</span>
-                  </span>
-                </button>
-              </article>
-            );
-          })}
+                // Resolution-aware feature sizing: ensure CSS max width respects natural width
+                const maxIntrinsicWidth = `${item.sourceWidth}px`;
+
+                const style = {
+                  "--item-ratio": aspect.toFixed(4),
+                  "--delay": delay,
+                  "--max-intrinsic-w": maxIntrinsicWidth,
+                } as CSSProperties;
+
+                const isAboveFold = itemIndex < 4;
+                const isLcpCandidate = itemIndex === 0;
+
+                return (
+                  <article
+                    key={item.id}
+                    className={styles.work}
+                    style={style}
+                    data-media-kind={isVideo ? "video" : "image"}
+                  >
+                    <button
+                      type="button"
+                      className={styles.mediaButton}
+                      aria-label={item.title ? `View ${item.title}` : `View portfolio item ${itemIndex + 1}`}
+                      onClick={() => setActiveIndex(itemIndex)}
+                      onPointerMove={moveMedia}
+                      onPointerLeave={resetMedia}
+                    >
+                      <span className={styles.mediaFrame}>
+                        {isVideo ? (
+                          <>
+                            <picture className={styles.picture}>
+                              <source
+                                srcSet={item.poster.avif}
+                                type="image/avif"
+                              />
+                              <source
+                                srcSet={item.poster.webp}
+                                type="image/webp"
+                              />
+                              <img
+                                src={item.poster.fallback}
+                                alt={item.alt || "Portfolio video poster"}
+                                width={item.poster.width}
+                                height={item.poster.height}
+                                loading={isAboveFold ? "eager" : "lazy"}
+                                decoding="async"
+                                className={styles.image}
+                              />
+                            </picture>
+                            <span className={styles.videoBadge} aria-hidden="true">
+                              <span>Film</span>
+                            </span>
+                          </>
+                        ) : (
+                          <picture className={styles.picture}>
+                            <source
+                              srcSet={item.variants.avif
+                                .map((v) => `${v.url} ${v.width}w`)
+                                .join(", ")}
+                              type="image/avif"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                            />
+                            <source
+                              srcSet={item.variants.webp
+                                .map((v) => `${v.url} ${v.width}w`)
+                                .join(", ")}
+                              type="image/webp"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                            />
+                            <img
+                              src={item.variants.fallback}
+                              alt={item.alt || ""}
+                              width={item.sourceWidth}
+                              height={item.sourceHeight}
+                              loading={isAboveFold ? "eager" : "lazy"}
+                              decoding="async"
+                              fetchPriority={isLcpCandidate ? "high" : "auto"}
+                              className={styles.image}
+                            />
+                          </picture>
+                        )}
+                        <span className={styles.mediaShade} aria-hidden="true" />
+                        <span className={styles.openGlyph} aria-hidden="true">{isVideo ? "▶" : "↗"}</span>
+                      </span>
+                      <span className={styles.workMeta} aria-hidden="true">
+                        <span>{pad(itemIndex + 1)}</span>
+                        <span className={styles.workMetaLine} />
+                        <span>{itemCountLabel}</span>
+                      </span>
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </section>
 
@@ -232,23 +304,38 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
             </button>
 
             <figure className={styles.viewerFigure}>
-              {activeItem.mediaType === "video" && activeItem.videoSrc ? (
+              {activeItem.type === "video" ? (
                 <video
-                  src={activeItem.videoSrc}
-                  poster={activeItem.poster || activeItem.thumbnail}
+                  poster={activeItem.poster.fallback}
                   controls
                   autoPlay
                   playsInline
                   preload="metadata"
                   className={styles.viewerImage}
-                />
+                >
+                  <source src={activeItem.sources.webm} type="video/webm" />
+                  <source src={activeItem.sources.mp4} type="video/mp4" />
+                </video>
               ) : (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={activeItem.media}
-                  alt={activeItem.alt || ""}
-                  className={styles.viewerImage}
-                />
+                <picture>
+                  <source
+                    srcSet={activeItem.variants.avif
+                      .map((v) => `${v.url} ${v.width}w`)
+                      .join(", ")}
+                    type="image/avif"
+                  />
+                  <source
+                    srcSet={activeItem.variants.webp
+                      .map((v) => `${v.url} ${v.width}w`)
+                      .join(", ")}
+                    type="image/webp"
+                  />
+                  <img
+                    src={activeItem.variants.fallback}
+                    alt={activeItem.alt || ""}
+                    className={styles.viewerImage}
+                  />
+                </picture>
               )}
               {hasHumanReadableTitle(activeItem.title) ? (
                 <figcaption className={styles.viewerTitle}>{activeItem.title}</figcaption>
