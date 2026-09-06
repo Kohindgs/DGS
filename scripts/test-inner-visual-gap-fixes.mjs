@@ -157,10 +157,12 @@ describe("stripCapturedFooters", () => {
 });
 
 describe("markElementorBackgroundsReady", () => {
-  it("adds e-lazyloaded to Elementor parent containers", () => {
-    const html = '<div class="elementor-element e-con e-parent" data-id="x">';
+  it("adds e-lazyloaded to Elementor parent containers, sections, and columns", () => {
+    const html = '<div class="elementor-element e-con e-parent" data-id="x"></div><section class="elementor-section elementor-top-section"></section><div class="elementor-column"></div>';
     const out = markElementorBackgroundsReady(html);
-    assert.match(out, /e-lazyloaded/);
+    assert.match(out, /class="elementor-element e-con e-parent e-lazyloaded"/);
+    assert.match(out, /class="elementor-section elementor-top-section e-lazyloaded"/);
+    assert.match(out, /class="elementor-column e-lazyloaded"/);
   });
 });
 

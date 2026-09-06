@@ -173,10 +173,13 @@ function unwrapDataBackgrounds(html: string): string {
 
 /** Elementor JS adds this class so lazy background CSS does not zero out section images. */
 export function markElementorBackgroundsReady(html: string): string {
-  return html.replace(/class=(["'])([^"']*\be-con\b[^"']*\be-parent\b[^"']*)\1/gi, (full, q, cls) => {
-    if (/\be-lazyloaded\b/.test(cls) || /\be-no-lazyload\b/.test(cls)) return full;
-    return `class=${q}${cls} e-lazyloaded${q}`;
-  });
+  return html.replace(
+    /class=(["'])([^"']*(?:\be-con\b|\belementor-section\b|\belementor-column\b)[^"']*)\1/gi,
+    (full, q, cls) => {
+      if (/\be-lazyloaded\b/.test(cls) || /\be-no-lazyload\b/.test(cls)) return full;
+      return `class=${q}${cls} e-lazyloaded${q}`;
+    },
+  );
 }
 
 /** Replace the Envira wrap with a native mount. Returns original HTML if the wrap cannot be sliced cleanly. */
