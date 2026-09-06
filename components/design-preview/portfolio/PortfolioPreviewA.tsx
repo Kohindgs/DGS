@@ -4,10 +4,16 @@ import { useEffect, useMemo, useState, type CSSProperties, type PointerEvent } f
 import type { HomepageGalleryItem } from "@/lib/portfolio/types";
 import styles from "./PortfolioPreviewA.module.css";
 
+export type PortfolioPreviewMediaItem = HomepageGalleryItem & {
+  mediaType?: "image" | "video";
+  videoSrc?: string;
+  poster?: string;
+};
+
 type Props = {
   title: string;
   industries: string[];
-  items: HomepageGalleryItem[];
+  items: PortfolioPreviewMediaItem[];
 };
 
 const layoutClass = (index: number) => {
@@ -22,6 +28,16 @@ const layoutClass = (index: number) => {
 };
 
 const pad = (value: number) => String(value).padStart(2, "0");
+
+const hasHumanReadableTitle = (title: string) => {
+  const value = title.trim();
+  if (!value) return false;
+  if (/^ss[_\s-]*\d+/i.test(value)) return false;
+  if (/^img[_\s-]*\d+/i.test(value)) return false;
+  if (/^dsc[_\s-]*\d+/i.test(value)) return false;
+  if (/\.(jpe?g|png|webp|gif|mp4|mov)$/i.test(value)) return false;
+  return true;
+};
 
 export function PortfolioPreviewA({ title, industries, items }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -100,6 +116,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
         <div className={styles.workGrid}>
           {items.map((item, index) => {
             const aspect = item.width > 0 && item.height > 0 ? item.width / item.height : 4 / 3;
+            const isVideo = item.mediaType === "video" && Boolean(item.videoSrc);
             const style = {
               "--delay": `${Math.min(index % 6, 5) * 40}ms`,
               "--media-ratio": aspect.toFixed(4),
@@ -112,6 +129,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
                 key={item.id}
                 className={`${styles.work} ${layoutClass(index)}`}
                 style={style}
+                data-media-kind={isVideo ? "video" : "image"}
               >
                 <button
                   type="button"
@@ -122,19 +140,31 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
                   onPointerLeave={resetMedia}
                 >
                   <span className={styles.mediaFrame}>
-                    {/* Exact WordPress-derived gallery media; visual treatment only. */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.thumbnail}
-                      alt={item.alt || ""}
-                      width={item.width || 640}
-                      height={item.height || 480}
-                      loading={index < 4 ? "eager" : "lazy"}
-                      decoding="async"
-                      className={styles.image}
-                    />
+                    {isVideo ? (
+                      <video
+                        src={item.videoSrc}
+                        poster={item.poster || item.thumbnail}
+                        muted
+                        playsInline
+                        preload="metadata"
+                        className={styles.image}
+                      />
+                    ) : (
+                      /* Full-resolution WordPress media is used in the editorial grid to avoid upscaling thumbnails. */
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={item.media || item.thumbnail}
+                        alt={item.alt || ""}
+                        width={item.width || 640}
+                        height={item.height || 480}
+                        loading={index < 4 ? "eager" : "lazy"}
+                        decoding="async"
+                        fetchPriority={index < 2 ? "high" : "auto"}
+                        className={styles.image}
+                      />
+                    )}
                     <span className={styles.mediaShade} aria-hidden="true" />
-                    <span className={styles.openGlyph} aria-hidden="true">↗</span>
+                    <span className={styles.openGlyph} aria-hidden="true">{isVideo ? "▶" : "↗"}</span>
                   </span>
                   <span className={styles.workMeta} aria-hidden="true">
                     <span>{pad(index + 1)}</span>
@@ -153,7 +183,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
           className={styles.viewer}
           role="dialog"
           aria-modal="true"
-          aria-label={activeItem.title || "Portfolio image viewer"}
+          aria-label={activeItem.title || "Portfolio media viewer"}
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) setActiveIndex(null);
           }}
@@ -175,19 +205,31 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
               type="button"
               className={`${styles.viewerNav} ${styles.viewerPrev}`}
               onClick={() => setActiveIndex((activeIndex - 1 + items.length) % items.length)}
-              aria-label="Previous portfolio image"
+              aria-label="Previous portfolio media"
             >
               ←
             </button>
 
             <figure className={styles.viewerFigure}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={activeItem.media}
-                alt={activeItem.alt || ""}
-                className={styles.viewerImage}
-              />
-              {activeItem.title ? (
+              {activeItem.mediaType === "video" && activeItem.videoSrc ? (
+                <video
+                  src={activeItem.videoSrc}
+                  poster={activeItem.poster || activeItem.thumbnail}
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="metadata"
+                  className={styles.viewerImage}
+                />
+              ) : (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={activeItem.media}
+                  alt={activeItem.alt || ""}
+                  className={styles.viewerImage}
+                />
+              )}
+              {hasHumanReadableTitle(activeItem.title) ? (
                 <figcaption className={styles.viewerTitle}>{activeItem.title}</figcaption>
               ) : null}
             </figure>
@@ -196,7 +238,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
               type="button"
               className={`${styles.viewerNav} ${styles.viewerNext}`}
               onClick={() => setActiveIndex((activeIndex + 1) % items.length)}
-              aria-label="Next portfolio image"
+              aria-label="Next portfolio media"
             >
               →
             </button>
