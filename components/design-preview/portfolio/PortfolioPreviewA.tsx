@@ -14,6 +14,7 @@ type Props = {
   title: string;
   industries: string[];
   items: PortfolioItem[];
+  previewMode?: boolean;
 };
 
 const pad = (value: number) => String(value).padStart(2, "0");
@@ -86,7 +87,7 @@ function buildEditorialRows(items: PortfolioItem[]): PortfolioItem[][] {
   return rows;
 }
 
-export function PortfolioPreviewA({ title, industries, items }: Props) {
+export function PortfolioPreviewA({ title, industries, items, previewMode = true }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeItem = activeIndex === null ? null : items[activeIndex];
   const itemCountLabel = useMemo(() => pad(items.length), [items.length]);
@@ -142,7 +143,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
         <div className={styles.heroGlow} aria-hidden="true" />
         <div className={styles.heroInner}>
           <div className={styles.heroTopline}>
-            <span className={styles.previewBadge}>DGS Design Preview</span>
+            {previewMode ? <span className={styles.previewBadge}>DGS Design Preview</span> : <span aria-hidden="true" />}
             <span className={styles.heroCounter} aria-hidden="true">01 / {itemCountLabel}</span>
           </div>
 
