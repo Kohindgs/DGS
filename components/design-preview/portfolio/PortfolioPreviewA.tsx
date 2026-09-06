@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState, type CSSProperties, type PointerEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type CSSProperties,
+  type PointerEvent,
+  type SyntheticEvent,
+} from "react";
 import type { HomepageGalleryItem } from "@/lib/portfolio/types";
 import styles from "./PortfolioPreviewA.module.css";
 
@@ -37,6 +44,19 @@ const hasHumanReadableTitle = (title: string) => {
   if (/^dsc[_\s-]*\d+/i.test(value)) return false;
   if (/\.(jpe?g|png|webp|gif|mp4|mov)$/i.test(value)) return false;
   return true;
+};
+
+const guardAgainstUpscaling = (event: SyntheticEvent<HTMLImageElement>) => {
+  const image = event.currentTarget;
+  const frame = image.parentElement;
+  if (!frame) return;
+
+  const renderedWidth = frame.getBoundingClientRect().width;
+  if (image.naturalWidth > 0 && image.naturalWidth + 1 < renderedWidth) {
+    frame.dataset.lowres = "true";
+  } else {
+    delete frame.dataset.lowres;
+  }
 };
 
 export function PortfolioPreviewA({ title, industries, items }: Props) {
@@ -160,6 +180,7 @@ export function PortfolioPreviewA({ title, industries, items }: Props) {
                         loading={index < 4 ? "eager" : "lazy"}
                         decoding="async"
                         fetchPriority={index < 2 ? "high" : "auto"}
+                        onLoad={guardAgainstUpscaling}
                         className={styles.image}
                       />
                     )}
