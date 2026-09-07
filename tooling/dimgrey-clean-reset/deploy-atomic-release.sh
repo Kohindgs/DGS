@@ -193,9 +193,23 @@ SetEnv TOKIO_WORKER_THREADS 2
 SetEnv DGS_PUBLIC_INDEXING false
 RewriteRule ^.builds - [F,L]
 <IfModule mod_headers.c>
-Header always set Cache-Control "private, no-store, max-age=0, must-revalidate"
-Header always set CDN-Cache-Control "no-store"
 Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+
+# Static Next.js immutable content-hashed assets
+<If "%{REQUEST_URI} =~ m#^/_next/static/#">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+  Header set CDN-Cache-Control "public, max-age=31536000"
+</If>
+# Uploaded media, posters, mirror CSS
+<ElseIf "%{REQUEST_URI} =~ m#^/(wp-content/uploads|media/portfolio|wp-mirror-css)/#">
+  Header set Cache-Control "public, max-age=604800, stale-while-revalidate=86400"
+  Header set CDN-Cache-Control "public, max-age=604800"
+</ElseIf>
+# Dynamic HTML documents and API routes remain un-cached for immediate release visibility
+<Else>
+  Header always set Cache-Control "private, no-store, max-age=0, must-revalidate"
+  Header always set CDN-Cache-Control "no-store"
+</Else>
 </IfModule>
 HT
 
