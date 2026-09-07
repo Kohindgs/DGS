@@ -10,10 +10,17 @@ import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
 import { InnerMirrorWidgets } from "@/components/mirror/InnerMirrorWidgets";
+import { WpThreeParticleBackground } from "@/components/background/WpThreeParticleBackground";
 import { JustifiedPortfolioGalleryPortal } from "@/components/portfolio/JustifiedPortfolioGalleryPortal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import type { JsonLdValue } from "@/lib/schema/jsonld";
 import type { HomepageGalleryItem } from "@/lib/portfolio/types";
+
+const THREE_JS_BG_ROUTES = new Set([
+  "/services/ai-video-production-agency/",
+  "/services/ai-production-dubai-page/",
+  "/services/shirdi-se-sai-tak-case-study/",
+]);
 
 const WP_CDN_ORIGIN = "https://www.dgeniussolutions.com";
 
@@ -57,6 +64,7 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
   const prepared = prepareInnerPageMirror(content, wordpressId);
   const runVideoPortfolio = hasNativeVideoPortfolioMount(prepared.articleHtml);
   const galleryItems = path === "/portfolio/" ? loadHomepageGallery().items : undefined;
+  const mountThreeJsBg = THREE_JS_BG_ROUTES.has(path);
 
   return (
     <>
@@ -93,6 +101,7 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
         runPortfolio={runVideoPortfolio}
       />
       <InnerMirrorWidgets />
+      {mountThreeJsBg ? <WpThreeParticleBackground /> : null}
     </>
   );
 }

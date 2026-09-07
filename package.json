@@ -99,12 +99,14 @@
     "next": "16.3.3",
     "ogl": "^1.0.11",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/node": "22.15.30",
     "@types/react": "19.2.3",
     "@types/react-dom": "19.2.3",
+    "@types/three": "^0.185.4",
     "cheerio": "1.2.0",
     "eslint": "9.32.0",
     "eslint-config-next": "16.3.3",
