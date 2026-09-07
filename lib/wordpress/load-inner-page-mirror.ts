@@ -38,14 +38,15 @@ export async function loadInnerPageMirror(routePath: string): Promise<InnerPageM
   if (
     routePath === "/services/shirdi-se-sai-tak-case-study/" &&
     parsed.body &&
-    parsed.body.includes('<div id="ai-avatar-gallery" class="ai-avatar-gallery"></div>')
+    parsed.body.includes('id="ai-avatar-gallery"')
   ) {
     const fragment = await loadOptionalFragment("shirdi-avatar-gallery.html");
     if (fragment) {
-      parsed.body = parsed.body.replace(
-        '<div id="ai-avatar-gallery" class="ai-avatar-gallery"></div>',
-        `<div id="ai-avatar-gallery" class="ai-avatar-gallery">${fragment}</div>`,
-      );
+      const start = parsed.body.indexOf('<div id="ai-avatar-gallery"');
+      const end = parsed.body.indexOf('<div id="lightbox"', start);
+      if (start !== -1 && end !== -1) {
+        parsed.body = `${parsed.body.slice(0, start)}<div id="ai-avatar-gallery" class="ai-avatar-gallery">${fragment}</div>${parsed.body.slice(end)}`;
+      }
     }
   }
 

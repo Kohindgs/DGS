@@ -174,7 +174,7 @@ export function InnerMirrorWidgets() {
           const markReady = () => thumbVideo.classList.add("is-ready");
           thumbVideo.addEventListener("loadeddata", markReady, { once: true });
           thumbVideo.addEventListener("canplay", markReady, { once: true });
-          if (thumbVideo.readyState >= 2) markReady();
+          if (thumbVideo.hasAttribute("poster") || thumbVideo.readyState >= 2) markReady();
         }
       });
 
