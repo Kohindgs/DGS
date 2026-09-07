@@ -26,16 +26,11 @@ export function InnerMirrorWidgets() {
     const root = document.querySelector(".dgs-wp-mirror-inner");
     if (!root) return;
 
-    // 0. Body theme classes sync (for pages with scoped CSS such as dgs-webdev-page and location SEO)
+    // 0. Body theme classes sync (for pages with scoped CSS such as dgs-webdev-page)
     const hasWebDev = Boolean(root.querySelector("#dgs-webdev-page, .dgs-webdev-page"));
-    const hasSeoPage = Boolean(root.querySelector(".dgs-page, #dgs-seo-page, .seo-mumbai-page"));
     if (hasWebDev) {
       document.body.classList.add("dgs-webdev-active");
       document.documentElement.classList.add("dgs-webdev-active");
-    }
-    if (hasSeoPage) {
-      document.body.classList.add("dgs-seo-page-active");
-      document.documentElement.classList.add("dgs-seo-page-active");
     }
 
     // 1. FAQ Accordions (.faq-item)
@@ -447,10 +442,6 @@ export function InnerMirrorWidgets() {
       if (hasWebDev) {
         document.body.classList.remove("dgs-webdev-active");
         document.documentElement.classList.remove("dgs-webdev-active");
-      }
-      if (hasSeoPage) {
-        document.body.classList.remove("dgs-seo-page-active");
-        document.documentElement.classList.remove("dgs-seo-page-active");
       }
       cleanupLightbox?.();
       cleanupSeoLb?.();

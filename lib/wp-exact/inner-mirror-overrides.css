@@ -82,15 +82,3 @@ body {
 .dgs-wp-mirror-inner .elementor-invisible {
   visibility: visible;
 }
-
-/* Ensure Elementor lazyload CSS never suppresses container or overlay background images. */
-.dgs-wp-mirror-inner .e-con,
-.dgs-wp-mirror-inner .elementor-section,
-.dgs-wp-mirror-inner .elementor-column,
-.dgs-wp-mirror-inner .elementor-background-overlay {
-  --e-con-lazyload: auto;
-}
-.dgs-wp-mirror-inner :is(.e-con, .elementor-section):not(.e-lazyloaded) {
-  background-image: inherit;
-}
-
