@@ -9,6 +9,7 @@ import {
   NATIVE_HOME_FORM_MOUNT,
   prepareHomepageMirror,
 } from "@/lib/wordpress/prepare-homepage-mirror";
+import { parseHtmlLinkTag } from "@/lib/wordpress/native-inner-fixes";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { buildCreativeGalleryHtml, buildHomeFormHtml } from "@/lib/wp-exact/build-mirror-swap-html";
 import { buildHomepageMirrorJsonLd } from "@/lib/schema/homepage-mirror-schemas";
@@ -52,14 +53,32 @@ export async function HomeWpMirrorPage() {
       <link rel="dns-prefetch" href={WP_CDN_ORIGIN} />
       <link rel="preconnect" href={THREE_CDN_ORIGIN} crossOrigin="anonymous" />
       <link rel="dns-prefetch" href={THREE_CDN_ORIGIN} />
+      <link
+        rel="preload"
+        as="image"
+        href="/wp-content/uploads/2026/01/thoughtful-logo-concept-featuring-ai-meaningful-way.webp"
+        type="image/webp"
+        fetchPriority="high"
+      />
 
       {jsonLdScripts.map((schema, index) => (
         <script key={`schema-${index}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
       ))}
 
-      {prepared.fontLinks?.map((linkHtml, index) => (
-        <div key={`font-${index}`} dangerouslySetInnerHTML={{ __html: linkHtml }} />
-      ))}
+      {prepared.fontLinks?.map((linkHtml, index) => {
+        const parsed = parseHtmlLinkTag(linkHtml);
+        if (!parsed) return null;
+        return (
+          <link
+            key={`font-${index}`}
+            rel={parsed.rel}
+            href={parsed.href}
+            as={parsed.as}
+            type={parsed.type}
+            crossOrigin={parsed.crossOrigin}
+          />
+        );
+      })}
 
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       <style dangerouslySetInnerHTML={{ __html: prepared.combinedStyles }} />

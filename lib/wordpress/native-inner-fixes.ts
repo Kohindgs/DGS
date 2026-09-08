@@ -191,3 +191,28 @@ export function replaceEnviraWrapWithNativeMount(html: string): string {
 export function hasNativeVideoPortfolioMount(html: string): boolean {
   return /id=["']portfolio-gallery["']/.test(html) && /id=["']load-more-btn["']/.test(html);
 }
+
+export type ParsedHtmlLink = {
+  href: string;
+  rel: string;
+  as?: string;
+  type?: string;
+  crossOrigin?: "anonymous" | "use-credentials";
+};
+
+export function parseHtmlLinkTag(tag: string): ParsedHtmlLink | null {
+  const href = readHtmlAttr(tag, "href");
+  const rel = readHtmlAttr(tag, "rel");
+  if (!href || !rel) return null;
+  const as = readHtmlAttr(tag, "as") || undefined;
+  const type = readHtmlAttr(tag, "type") || undefined;
+  const crossOriginAttr = readHtmlAttr(tag, "crossorigin");
+  const crossOrigin =
+    crossOriginAttr !== null
+      ? crossOriginAttr === "use-credentials"
+        ? "use-credentials"
+        : "anonymous"
+      : undefined;
+  return { href, rel, as, type, crossOrigin };
+}
+

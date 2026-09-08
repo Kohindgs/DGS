@@ -5,12 +5,13 @@ import { prepareInnerPageMirror } from "@/lib/wordpress/prepare-inner-page-mirro
 import {
   NATIVE_JUSTIFIED_GALLERY_ROOT_ID,
   hasNativeVideoPortfolioMount,
+  parseHtmlLinkTag,
 } from "@/lib/wordpress/native-inner-fixes";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
 import { InnerMirrorWidgets } from "@/components/mirror/InnerMirrorWidgets";
-import { WpThreeParticleBackground } from "@/components/background/WpThreeParticleBackground";
+import { DynamicThreeBackground } from "@/components/background/DynamicThreeBackground";
 import { JustifiedPortfolioGalleryPortal } from "@/components/portfolio/JustifiedPortfolioGalleryPortal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import type { JsonLdValue } from "@/lib/schema/jsonld";
@@ -73,13 +74,35 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
 
       {schemaBlocks ? <JsonLd id="page-jsonld" value={schemaBlocks} /> : null}
 
-      {prepared.fontLinks?.map((linkHtml, index) => (
-        <div key={`font-${index}`} dangerouslySetInnerHTML={{ __html: linkHtml }} />
-      ))}
+      {prepared.fontLinks?.map((linkHtml, index) => {
+        const parsed = parseHtmlLinkTag(linkHtml);
+        if (!parsed) return null;
+        return (
+          <link
+            key={`font-${index}`}
+            rel={parsed.rel}
+            href={parsed.href}
+            as={parsed.as}
+            type={parsed.type}
+            crossOrigin={parsed.crossOrigin}
+          />
+        );
+      })}
 
       {(content.cssFiles || []).map((file) => (
-        <link key={file} rel="stylesheet" href={`/wp-mirror-css/${file}`} />
+        <link
+          key={file}
+          rel="stylesheet"
+          href={`/wp-mirror-css/${file}`}
+          media="print"
+          data-mirror-css="true"
+        />
       ))}
+      <noscript>
+        {(content.cssFiles || []).map((file) => (
+          <link key={`ns-${file}`} rel="stylesheet" href={`/wp-mirror-css/${file}`} />
+        ))}
+      </noscript>
 
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       {prepared.combinedStyles ? <style dangerouslySetInnerHTML={{ __html: prepared.combinedStyles }} /> : null}
@@ -101,7 +124,7 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
         runPortfolio={runVideoPortfolio}
       />
       <InnerMirrorWidgets />
-      {mountThreeJsBg ? <WpThreeParticleBackground /> : null}
+      {mountThreeJsBg ? <DynamicThreeBackground /> : null}
     </>
   );
 }

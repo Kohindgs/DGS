@@ -23,6 +23,12 @@ function setAnswerOpen(item: HTMLElement, open: boolean) {
  */
 export function InnerMirrorWidgets() {
   useEffect(() => {
+    // Activate non-blocking mirror stylesheets
+    const mirrorLinks = document.querySelectorAll<HTMLLinkElement>('link[data-mirror-css="true"]');
+    for (let i = 0; i < mirrorLinks.length; i++) {
+      mirrorLinks[i].media = "all";
+    }
+
     const root = document.querySelector(".dgs-wp-mirror-inner");
     if (!root) return;
 
