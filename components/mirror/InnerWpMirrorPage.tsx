@@ -14,6 +14,7 @@ import { InnerMirrorWidgets } from "@/components/mirror/InnerMirrorWidgets";
 import { DynamicThreeBackground } from "@/components/background/DynamicThreeBackground";
 import { JustifiedPortfolioGalleryPortal } from "@/components/portfolio/JustifiedPortfolioGalleryPortal";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { aggregateMirrorCss } from "@/lib/wordpress/aggregate-mirror-css";
 import type { JsonLdValue } from "@/lib/schema/jsonld";
 import type { HomepageGalleryItem } from "@/lib/portfolio/types";
 
@@ -66,6 +67,7 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
   const runVideoPortfolio = hasNativeVideoPortfolioMount(prepared.articleHtml);
   const galleryItems = path === "/portfolio/" ? loadHomepageGallery().items : undefined;
   const mountThreeJsBg = THREE_JS_BG_ROUTES.has(path);
+  const aggregatedCssFiles = aggregateMirrorCss(content.cssFiles);
 
   return (
     <>
@@ -89,20 +91,19 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
         );
       })}
 
-      {(content.cssFiles || []).map((file) => (
-        <link
-          key={file}
-          rel="stylesheet"
-          href={`/wp-mirror-css/${file}`}
-          media="print"
-          data-mirror-css="true"
+      {aggregatedCssFiles.length ? (
+        <div
+          style={{ display: "contents" }}
+          dangerouslySetInnerHTML={{
+            __html: aggregatedCssFiles
+              .map(
+                (file) =>
+                  `<link rel="stylesheet" href="/wp-mirror-css/${file}" media="print" onload="this.onload=null;this.media='all'"><noscript><link rel="stylesheet" href="/wp-mirror-css/${file}"></noscript>`,
+              )
+              .join(""),
+          }}
         />
-      ))}
-      <noscript>
-        {(content.cssFiles || []).map((file) => (
-          <link key={`ns-${file}`} rel="stylesheet" href={`/wp-mirror-css/${file}`} />
-        ))}
-      </noscript>
+      ) : null}
 
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       {prepared.combinedStyles ? <style dangerouslySetInnerHTML={{ __html: prepared.combinedStyles }} /> : null}
