@@ -14,6 +14,24 @@ app
     createServer(async (req, res) => {
       try {
         const parsedUrl = parse(req.url, true);
+        const urlPath = parsedUrl.pathname || '';
+        const isStaticAsset =
+          urlPath.startsWith('/_next/static/') ||
+          urlPath.startsWith('/wp-mirror-css/') ||
+          urlPath.startsWith('/images/') ||
+          urlPath.startsWith('/media/');
+        if (!isStaticAsset) {
+          const originalSetHeader = res.setHeader.bind(res);
+          res.setHeader = (key, value) => {
+            if (typeof key === 'string' && key.toLowerCase() === 'cache-control') {
+              return originalSetHeader(
+                'Cache-Control',
+                'private, no-cache, no-store, max-age=0, must-revalidate',
+              );
+            }
+            return originalSetHeader(key, value);
+          };
+        }
         await handle(req, res, parsedUrl);
       } catch (err) {
         console.error('Error occurred handling', req.url, err);
