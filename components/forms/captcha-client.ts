@@ -160,3 +160,100 @@ export function ensureHomepageRecaptchaHost(form: HTMLFormElement): HTMLElement 
   else form.appendChild(host);
   return widget;
 }
+
+export type DeferredRecaptchaController = {
+  getWidget: () => Promise<RecaptchaV2Widget>;
+  cleanup: () => void;
+};
+
+/**
+ * Defers reCAPTCHA script loading and rendering until:
+ * 1) Form is within 300px of viewport, OR
+ * 2) User interacts with any input in the form, OR
+ * 3) Submit is triggered (await getWidget())
+ */
+export function setupDeferredRecaptcha(options: {
+  form: HTMLElement;
+  container: HTMLElement;
+  siteKey: string;
+  onToken?: (token: string) => void;
+  onExpired?: () => void;
+  onError?: () => void;
+}): DeferredRecaptchaController {
+  const { form, container, siteKey, onToken, onExpired, onError } = options;
+  let widgetPromise: Promise<RecaptchaV2Widget> | null = null;
+  let activeWidget: RecaptchaV2Widget | null = null;
+  let cleanedUp = false;
+  let observer: IntersectionObserver | null = null;
+
+  const triggerLoad = (): Promise<RecaptchaV2Widget> => {
+    if (widgetPromise) return widgetPromise;
+    cleanupTriggers();
+    widgetPromise = renderRecaptchaV2({
+      container,
+      siteKey,
+      onToken,
+      onExpired,
+      onError,
+    }).then((w) => {
+      if (cleanedUp) {
+        w.reset();
+        return w;
+      }
+      activeWidget = w;
+      return w;
+    });
+    return widgetPromise;
+  };
+
+  const onInteraction = () => {
+    triggerLoad();
+  };
+
+  const cleanupTriggers = () => {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+    form.removeEventListener("focusin", onInteraction);
+    form.removeEventListener("pointerdown", onInteraction);
+    form.removeEventListener("touchstart", onInteraction);
+    form.removeEventListener("input", onInteraction);
+  };
+
+  if (typeof IntersectionObserver !== "undefined") {
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            triggerLoad();
+            break;
+          }
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(form);
+  } else {
+    triggerLoad();
+  }
+
+  form.addEventListener("focusin", onInteraction, { passive: true, once: true });
+  form.addEventListener("pointerdown", onInteraction, { passive: true, once: true });
+  form.addEventListener("touchstart", onInteraction, { passive: true, once: true });
+  form.addEventListener("input", onInteraction, { passive: true, once: true });
+
+  return {
+    getWidget: () => triggerLoad(),
+    cleanup: () => {
+      cleanedUp = true;
+      cleanupTriggers();
+      if (activeWidget) {
+        activeWidget.reset();
+        activeWidget = null;
+      }
+      widgetPromise = null;
+    },
+  };
+}
+

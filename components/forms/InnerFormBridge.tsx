@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { getFormDefinitionForRoute } from "@/lib/forms/registry";
-import { ensureHomepageRecaptchaHost, renderRecaptchaV2, type RecaptchaV2Widget } from "./captcha-client";
+import { ensureHomepageRecaptchaHost, setupDeferredRecaptcha, type DeferredRecaptchaController } from "./captcha-client";
 
 function normalizeRoutePath(pathname: string): string {
   if (!pathname || pathname === "/") return "/";
@@ -97,8 +97,7 @@ export function InnerFormBridge() {
     );
 
     let submitting = false;
-    let captchaWidget: RecaptchaV2Widget | null = null;
-    let cancelled = false;
+    let deferredCaptcha: DeferredRecaptchaController | null = null;
 
     const recaptchaEnabled = Boolean(
       definition.captcha?.enabled && definition.captcha.provider === "recaptcha" && definition.captcha.publicSiteKey,
@@ -106,17 +105,11 @@ export function InnerFormBridge() {
 
     if (recaptchaEnabled && definition.captcha?.publicSiteKey) {
       const host = recaptchaHost(form);
-      renderRecaptchaV2({ container: host, siteKey: definition.captcha.publicSiteKey })
-        .then((widget) => {
-          if (cancelled) {
-            widget.reset();
-            return;
-          }
-          captchaWidget = widget;
-        })
-        .catch(() => {
-          if (!cancelled) captchaWidget = null;
-        });
+      deferredCaptcha = setupDeferredRecaptcha({
+        form,
+        container: host,
+        siteKey: definition.captcha.publicSiteKey,
+      });
     }
 
     const restoreSubmitChrome = () => {
@@ -151,10 +144,12 @@ export function InnerFormBridge() {
         }
 
         let captchaToken: string | undefined;
-        if (recaptchaEnabled) {
-          captchaToken = captchaWidget?.getToken();
+        if (recaptchaEnabled && deferredCaptcha) {
+          const widget = await deferredCaptcha.getWidget();
+          captchaToken = widget?.getToken();
           if (!captchaToken) {
             setFeedback(form, "backend-error", "CAPTCHA verification is required");
+            restoreSubmitChrome();
             return;
           }
         }
@@ -189,16 +184,17 @@ export function InnerFormBridge() {
       } catch {
         setFeedback(form, "network-error", "Network error while submitting the form. Please try again.");
       } finally {
-        captchaWidget?.reset();
+        if (deferredCaptcha) {
+          deferredCaptcha.getWidget().then((w) => w?.reset()).catch(() => {});
+        }
         restoreSubmitChrome();
       }
     };
 
     form.addEventListener("submit", onSubmit);
     return () => {
-      cancelled = true;
       form.removeEventListener("submit", onSubmit);
-      captchaWidget?.reset();
+      deferredCaptcha?.cleanup();
       delete form.dataset.dgsBridgeBound;
     };
   }, [pathname]);
