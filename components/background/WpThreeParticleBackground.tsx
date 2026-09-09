@@ -28,7 +28,13 @@ export function WpThreeParticleBackground() {
       }
 
       const isMobile = window.innerWidth < 768;
-      const maxDpr = isMobile ? 1.25 : 2;
+      const isLowTier =
+        typeof navigator !== "undefined" &&
+        ((navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+          // @ts-expect-error deviceMemory is in navigator on Chromium
+          (navigator.deviceMemory && navigator.deviceMemory <= 4));
+
+      const maxDpr = isMobile || isLowTier ? 1.25 : 2;
       const pixelRatio = Math.min(window.devicePixelRatio || 1, maxDpr);
 
       const scene = new THREE.Scene();
@@ -39,7 +45,7 @@ export function WpThreeParticleBackground() {
         1000,
       );
       const renderer = new THREE.WebGLRenderer({
-        antialias: !isMobile,
+        antialias: !isMobile && !isLowTier,
         alpha: true,
         powerPreference: "low-power",
       });
@@ -49,7 +55,7 @@ export function WpThreeParticleBackground() {
       container.appendChild(renderer.domElement);
       camera.position.z = 50;
 
-      const particleCount = isMobile ? 2600 : 5200;
+      const particleCount = isMobile ? (isLowTier ? 2000 : 2600) : 5200;
       const particles = new THREE.BufferGeometry();
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
@@ -92,10 +98,38 @@ export function WpThreeParticleBackground() {
       let targetY = 0;
       let scrollProgress = 0;
       let animationId: number | null = null;
+      let isHeroVisible = true;
+      let heroObserver: IntersectionObserver | null = null;
 
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
+
+      // Offscreen RAF pausing: pause loop when hero is scrolled past
+      const heroEl = document.querySelector(
+        ".dgs-hero, #top, .case-hero, .case-study-hero, [data-hero]",
+      );
+      if (heroEl && typeof IntersectionObserver !== "undefined") {
+        heroObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              isHeroVisible = entry.isIntersecting;
+              if (isHeroVisible) {
+                if (!animationId && !document.hidden && !prefersReducedMotion) {
+                  animate();
+                }
+              } else {
+                if (animationId !== null) {
+                  cancelAnimationFrame(animationId);
+                  animationId = null;
+                }
+              }
+            }
+          },
+          { rootMargin: "150px" },
+        );
+        heroObserver.observe(heroEl);
+      }
 
       const onMouseMove = (e: MouseEvent) => {
         const mx = (e.clientX / window.innerWidth) * 2 - 1;
@@ -111,7 +145,7 @@ export function WpThreeParticleBackground() {
 
       const onResize = () => {
         const currentIsMobile = window.innerWidth < 768;
-        const currentMaxDpr = currentIsMobile ? 1.25 : 2;
+        const currentMaxDpr = currentIsMobile || isLowTier ? 1.25 : 2;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -122,7 +156,7 @@ export function WpThreeParticleBackground() {
       };
 
       const animate = () => {
-        if (document.hidden) {
+        if (document.hidden || !isHeroVisible) {
           animationId = null;
           return;
         }
@@ -139,7 +173,7 @@ export function WpThreeParticleBackground() {
       };
 
       const onVisibilityChange = () => {
-        if (document.hidden) {
+        if (document.hidden || !isHeroVisible) {
           if (animationId !== null) {
             cancelAnimationFrame(animationId);
             animationId = null;
@@ -167,6 +201,10 @@ export function WpThreeParticleBackground() {
           cancelAnimationFrame(animationId);
           animationId = null;
         }
+        if (heroObserver) {
+          heroObserver.disconnect();
+          heroObserver = null;
+        }
         document.removeEventListener("mousemove", onMouseMove);
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("resize", onResize);
@@ -180,15 +218,28 @@ export function WpThreeParticleBackground() {
       };
     };
 
-    // Defer initialization so critical DOM paint and hydration finish first
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(init, { timeout: 1200 });
+    // Post-critical-paint scheduling: wait for document load + double RAF before idle init
+    const scheduleInit = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (typeof window.requestIdleCallback === "function") {
+            idleId = window.requestIdleCallback(init, { timeout: 3000 });
+          } else {
+            timerId = setTimeout(init, 200);
+          }
+        });
+      });
+    };
+
+    if (document.readyState === "complete") {
+      scheduleInit();
     } else {
-      timerId = setTimeout(init, 60);
+      window.addEventListener("load", scheduleInit, { once: true });
     }
 
     return () => {
       disposed = true;
+      window.removeEventListener("load", scheduleInit);
       if (idleId !== null && typeof window.cancelIdleCallback === "function") {
         window.cancelIdleCallback(idleId);
       }
