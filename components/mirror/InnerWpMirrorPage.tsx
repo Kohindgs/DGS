@@ -68,11 +68,25 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
   const galleryItems = path === "/portfolio/" ? loadHomepageGallery().items : undefined;
   const mountThreeJsBg = THREE_JS_BG_ROUTES.has(path);
   const aggregatedCssFiles = aggregateMirrorCss(content.cssFiles);
+  const hasWebDev = Boolean(
+    prepared.articleHtml.includes('id="dgs-webdev-page"') ||
+    prepared.articleHtml.includes('class="dgs-webdev-page"') ||
+    prepared.articleHtml.includes("dgs-webdev-page"),
+  );
 
   return (
     <>
       <link rel="preconnect" href={WP_CDN_ORIGIN} />
       <link rel="dns-prefetch" href={WP_CDN_ORIGIN} />
+
+      {hasWebDev ? (
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'document.documentElement.classList.add("dgs-webdev-active");if(document.body)document.body.classList.add("dgs-webdev-active");else document.addEventListener("DOMContentLoaded",function(){document.body.classList.add("dgs-webdev-active")});',
+          }}
+        />
+      ) : null}
 
       {schemaBlocks ? <JsonLd id="page-jsonld" value={schemaBlocks} /> : null}
 
