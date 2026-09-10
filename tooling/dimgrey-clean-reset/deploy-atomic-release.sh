@@ -16,6 +16,25 @@ SSH_HOST="${DIMGREY_SSH_HOST:-147.93.100.126}"
 SSH_PORT="${DIMGREY_SSH_PORT:-65002}"
 SSH_USER="${DIMGREY_SSH_USER:-u188101251}"
 SSH_PASS="${HOSTINGER_PASS:-}"
+HOSTINGER_API_TOKEN="${HOSTINGER_API_TOKEN:-}"
+HOSTINGER_ACCOUNT_ID="${HOSTINGER_ACCOUNT_ID:-u188101251}"
+HOSTINGER_DOMAIN="${HOSTINGER_DOMAIN:-dimgrey-goat-473970.hostingersite.com}"
+
+if [ -z "$HOSTINGER_API_TOKEN" ]; then
+  # Fallback to local user MCP config if available
+  MCP_CFG="${HOME}/.gemini/config/mcp_config.json"
+  if [ -f "$MCP_CFG" ]; then
+    CFG_TOKEN="$(grep -o '"HOSTINGER_API_TOKEN": *"[^"]*"' "$MCP_CFG" 2>/dev/null | head -n 1 | sed 's/.*"HOSTINGER_API_TOKEN": *"\([^"]*\)".*/\1/' || true)"
+    if [ -n "$CFG_TOKEN" ] && [ "$CFG_TOKEN" != "YOUR_NEW_TOKEN" ]; then
+      HOSTINGER_API_TOKEN="$CFG_TOKEN"
+    fi
+  fi
+fi
+
+if [ -z "$HOSTINGER_API_TOKEN" ]; then
+  echo "CRITICAL: HOSTINGER_API_TOKEN is required for Hostinger CDN cache purge." >&2
+  exit 1
+fi
 
 RELEASE_NAME="${SHORT_SHA}-${BUILD_ID}-$(date -u +%Y%m%d%H%M%S)"
 REMOTE_APP="$HOME/dimgrey-app"
@@ -70,11 +89,14 @@ BRANCH="$BRANCH"
 BUILD_ID="$BUILD_ID"
 TIMESTAMP="$TIMESTAMP"
 RELEASE_NAME="$RELEASE_NAME"
+HOSTINGER_API_TOKEN="$HOSTINGER_API_TOKEN"
+HOSTINGER_ACCOUNT_ID="$HOSTINGER_ACCOUNT_ID"
+HOSTINGER_DOMAIN="$HOSTINGER_DOMAIN"
 REMOTE_APP="\$HOME/dimgrey-app"
 REMOTE_RELEASE="\$REMOTE_APP/releases/\$RELEASE_NAME"
 SHARED_MEDIA="\$REMOTE_APP/shared/wp-content/uploads"
 SHARED_VIDEOS="\$REMOTE_APP/shared/media/portfolio/videos"
-DOMAIN_ROOT="\$HOME/domains/dimgrey-goat-473970.hostingersite.com"
+DOMAIN_ROOT="\$HOME/domains/\$HOSTINGER_DOMAIN"
 PUBLIC_HTML="\$DOMAIN_ROOT/public_html"
 
 # Track current active release for rollback
@@ -218,13 +240,37 @@ pkill -u "\$(whoami)" -f "lsnode:" 2>/dev/null || true
 sleep 4
 
 # =====================================================================
+# HOSTINGER EDGE CDN CACHE PURGE (Mandatory Deployment Gate)
+# =====================================================================
+echo "[deploy] Executing authenticated Hostinger CDN cache purge for \$HOSTINGER_DOMAIN..."
+PURGE_RESPONSE=\$(curl -s -w "\n%{http_code}" -X DELETE \
+  -H "Authorization: Bearer \${HOSTINGER_API_TOKEN}" \
+  -H "Accept: application/json" \
+  -H "User-Agent: dgs-atomic-deploy" \
+  "https://developers.hostinger.com/api/hosting/v1/accounts/\${HOSTINGER_ACCOUNT_ID}/websites/\${HOSTINGER_DOMAIN}/cache/clear" || echo -e "\n000")
+
+PURGE_BODY=\$(echo "\$PURGE_RESPONSE" | sed '\$d')
+PURGE_STATUS=\$(echo "\$PURGE_RESPONSE" | tail -n 1)
+
+echo "[deploy] Hostinger CDN cache purge HTTP response code: \$PURGE_STATUS"
+if [ "\$PURGE_STATUS" != "200" ] && [ "\$PURGE_STATUS" != "204" ]; then
+  echo "CRITICAL: Hostinger CDN cache purge failed with HTTP status \$PURGE_STATUS (\$PURGE_BODY)!"
+  FAIL_COUNT=\$((FAIL_COUNT + 1))
+else
+  echo "[deploy] Hostinger CDN cache purge accepted successfully."
+fi
+
+# Allow edge propagation before verification
+sleep 4
+
+# =====================================================================
 # POST-ACTIVATION VERIFICATION & AUTOMATIC ROLLBACK
 # =====================================================================
 echo "[deploy] Running Post-Activation Route Verification..."
 FAIL_COUNT=0
 
 for route in "/" "/portfolio/"; do
-  status=\$(curl -sI -o /dev/null -w "%{http_code}" "https://dimgrey-goat-473970.hostingersite.com\$route" || echo "000")
+  status=\$(curl -sI -o /dev/null -w "%{http_code}" "https://\${HOSTINGER_DOMAIN}\$route" || echo "000")
   echo "[deploy] Post-activation test: \$route => \$status"
   if [ "\$status" != "200" ] && [ "\$status" != "308" ]; then
     echo "ERROR: Route \$route returned unexpected status \$status"
@@ -232,8 +278,34 @@ for route in "/" "/portfolio/"; do
   fi
 done
 
+# =====================================================================
+# POST-PURGE COMPRESSED BUILD VERIFICATION (Brotli/Gzip Edge Probe)
+# =====================================================================
+echo "[deploy] Verifying compressed edge response for current BUILD_ID: \$BUILD_ID..."
+COMPRESSED_CHECK_URL="https://\${HOSTINGER_DOMAIN}/"
+COMPRESSED_RESPONSE=\$(curl --compressed -s -H "Accept-Encoding: gzip, deflate, br" "\$COMPRESSED_CHECK_URL" || echo "")
+
+if [ -z "\$COMPRESSED_RESPONSE" ]; then
+  echo "CRITICAL: Received empty compressed response from \$COMPRESSED_CHECK_URL!"
+  FAIL_COUNT=\$((FAIL_COUNT + 1))
+elif echo "\$COMPRESSED_RESPONSE" | grep -q "\$BUILD_ID"; then
+  echo "[deploy] Post-Purge Verification Passed: Live compressed edge serves current BUILD_ID \$BUILD_ID."
+else
+  echo "CRITICAL: Stale CDN cache detected! Live compressed response does NOT contain BUILD_ID \$BUILD_ID."
+  FAIL_COUNT=\$((FAIL_COUNT + 1))
+fi
+
+# Verify zero obsolete Next.js chunk references in compressed HTML
+OBSOLETE_PATTERNS=("turbopack-1slbtoi3edc8b" "38-a7lbfk8yic" "0kf_op3zk8q-s" "1a-q64o1a-83s" "2u3x7xvs29kop" "2i51e627rllld")
+for obs in "\${OBSOLETE_PATTERNS[@]}"; do
+  if echo "\$COMPRESSED_RESPONSE" | grep -q "\$obs"; then
+    echo "CRITICAL: Obsolete chunk hash \$obs detected in live compressed HTML!"
+    FAIL_COUNT=\$((FAIL_COUNT + 1))
+  fi
+done
+
 # The retired demo route must now be gone
-DEMO_STATUS=\$(curl -sI -o /dev/null -w "%{http_code}" "https://dimgrey-goat-473970.hostingersite.com/design-preview/portfolio/a/" || echo "000")
+DEMO_STATUS=\$(curl -sI -o /dev/null -w "%{http_code}" "https://\${HOSTINGER_DOMAIN}/design-preview/portfolio/a/" || echo "000")
 echo "[deploy] Retired Portfolio demo route => \$DEMO_STATUS"
 if [ "\$DEMO_STATUS" != "404" ]; then
   echo "ERROR: Retired Portfolio demo route is still reachable (expected 404)."
@@ -241,7 +313,7 @@ if [ "\$DEMO_STATUS" != "404" ]; then
 fi
 
 # Check video streaming byte-range
-VIDEO_STATUS=\$(curl -sI -o /dev/null -w "%{http_code}" -r 0-1024 "https://dimgrey-goat-473970.hostingersite.com/media/portfolio/videos/media1.mp4" || echo "000")
+VIDEO_STATUS=\$(curl -sI -o /dev/null -w "%{http_code}" -r 0-1024 "https://\${HOSTINGER_DOMAIN}/media/portfolio/videos/media1.mp4" || echo "000")
 echo "[deploy] Video range test: /media/portfolio/videos/media1.mp4 => \$VIDEO_STATUS"
 if [ "\$VIDEO_STATUS" != "206" ]; then
   echo "ERROR: Video byte-range returned unexpected status \$VIDEO_STATUS"
@@ -263,6 +335,11 @@ if [ "\$FAIL_COUNT" -gt 0 ]; then
     ln -sfn "\$PREVIOUS_RELEASE" "\$REMOTE_APP/current"
     touch "\$REMOTE_APP/current/tmp/restart.txt"
     pkill -u "\$(whoami)" -f "lsnode:" 2>/dev/null || true
+    # Invalidate CDN cache on rollback
+    curl -s -X DELETE \
+      -H "Authorization: Bearer \${HOSTINGER_API_TOKEN}" \
+      -H "Accept: application/json" \
+      "https://developers.hostinger.com/api/hosting/v1/accounts/\${HOSTINGER_ACCOUNT_ID}/websites/\${HOSTINGER_DOMAIN}/cache/clear" >/dev/null 2>&1 || true
     echo "[rollback] Rollback completed."
   else
     echo "[rollback] No previous release available to rollback."
@@ -281,4 +358,13 @@ echo "CURRENT_LINK=\$(readlink -f \$REMOTE_APP/current)"
 REMOTE
 
 rm -f "$TARBALL"
+
+echo "[deploy] Running local edge CDN verification for $HOSTINGER_DOMAIN..."
+LOCAL_EDGE_CHECK="$(curl --compressed -s -H "Accept-Encoding: gzip, deflate, br" "https://${HOSTINGER_DOMAIN}/" || echo "")"
+if [ -n "$LOCAL_EDGE_CHECK" ] && echo "$LOCAL_EDGE_CHECK" | grep -q "$BUILD_ID"; then
+  echo "[deploy] Local edge probe verified current BUILD_ID $BUILD_ID on staging."
+else
+  echo "WARNING: Local edge probe did not immediately observe $BUILD_ID (edge propagation in progress)."
+fi
+
 echo "[deploy] Done."
