@@ -239,6 +239,8 @@ touch "\$REMOTE_APP/current/tmp/restart.txt"
 pkill -u "\$(whoami)" -f "lsnode:" 2>/dev/null || true
 sleep 4
 
+FAIL_COUNT=0
+
 # =====================================================================
 # HOSTINGER EDGE CDN CACHE PURGE (Mandatory Deployment Gate)
 # =====================================================================
@@ -267,7 +269,6 @@ sleep 4
 # POST-ACTIVATION VERIFICATION & AUTOMATIC ROLLBACK
 # =====================================================================
 echo "[deploy] Running Post-Activation Route Verification..."
-FAIL_COUNT=0
 
 for route in "/" "/portfolio/"; do
   status=\$(curl -sI -o /dev/null -w "%{http_code}" "https://\${HOSTINGER_DOMAIN}\$route" || echo "000")
