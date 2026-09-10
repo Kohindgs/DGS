@@ -183,15 +183,44 @@ export function WpThreeParticleBackground() {
         }
       };
 
+      // Option C: render initial frame immediately so background is never blank
+      renderer.render(scene, camera);
+
+      let animationStarted = false;
+      const startContinuousAnimation = () => {
+        if (animationStarted || disposed) return;
+        animationStarted = true;
+        animate();
+      };
+
       if (prefersReducedMotion) {
-        renderer.render(scene, camera);
+        // Remains static on reduced motion
       } else {
         if (!isMobile) {
           document.addEventListener("mousemove", onMouseMove, { passive: true });
         }
         window.addEventListener("scroll", onScroll, { passive: true });
         document.addEventListener("visibilitychange", onVisibilityChange, { passive: true });
-        animate();
+
+        if (isMobile) {
+          // On mobile, start continuous RAF upon user interaction or after hero settles
+          const startTriggers = ["touchstart", "scroll", "pointerdown"];
+          const onFirstInteraction = () => {
+            startTriggers.forEach((evt) => window.removeEventListener(evt, onFirstInteraction));
+            startContinuousAnimation();
+          };
+          startTriggers.forEach((evt) =>
+            window.addEventListener(evt, onFirstInteraction, { passive: true, once: true }),
+          );
+
+          if (typeof window.requestIdleCallback === "function") {
+            window.requestIdleCallback(startContinuousAnimation, { timeout: 2000 });
+          } else {
+            setTimeout(startContinuousAnimation, 1000);
+          }
+        } else {
+          startContinuousAnimation();
+        }
       }
 
       window.addEventListener("resize", onResize, { passive: true });

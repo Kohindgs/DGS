@@ -231,7 +231,7 @@ export function setupDeferredRecaptcha(options: {
           }
         }
       },
-      { rootMargin: "300px" }
+      { rootMargin: "80px" }
     );
     observer.observe(form);
   } else {
