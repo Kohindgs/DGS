@@ -24,7 +24,9 @@ function normalizeHref(href: string) {
 }
 
 function correctionsForPath(routePath: string): Correction[] {
-  return (approved.corrections as Correction[]).filter((item) => item.path === routePath);
+  return (approved.corrections as Correction[]).filter(
+    (item) => item.path === routePath || item.path === "*" || !item.path,
+  );
 }
 
 function findCorrection(corrections: Correction[], href: string, anchor?: string) {

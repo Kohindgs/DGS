@@ -2,12 +2,21 @@ import fs from 'node:fs';
 import path from 'node:path';
 import https from 'node:https';
 import http from 'node:http';
+import { execSync } from 'node:child_process';
 
 const STAGING_ORIGIN = 'https://dimgrey-goat-473970.hostingersite.com';
 const PROD_CANONICAL = 'https://www.dgeniussolutions.com';
 const REPORT_PATH = path.resolve('data/audit/dimgrey-live-search-ai-readiness.json');
-const DEPLOYED_SHA = '92656d506d8e6016477606705d05c45765feef9e';
-const REVIEW_SHA = 'c76fe926b3b395537364295bca05a5a877859110';
+
+let CURRENT_GIT_SHA = 'unknown';
+try {
+  CURRENT_GIT_SHA = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim();
+} catch (e) {
+  // fallback if git not available
+}
+
+const DEPLOYED_SHA = process.env.DEPLOYED_SHA || CURRENT_GIT_SHA;
+const REVIEW_SHA = process.env.REVIEW_SHA || CURRENT_GIT_SHA;
 
 function decodeHtml(str) {
   if (!str) return '';
@@ -138,8 +147,15 @@ async function main() {
   };
 
   const metadataParityAudit = {
+    dimensions: {
+      title: { exact: 0, approvedDifference: 0, notComparable: 0, mismatch: 0, total: 0 },
+      description: { exact: 0, approvedDifference: 0, notComparable: 0, mismatch: 0, total: 0 },
+      h1: { exact: 0, approvedDifference: 0, notComparable: 0, mismatch: 0, total: 0 },
+      canonical: { exact: 0, approvedDifference: 0, notComparable: 0, mismatch: 0, total: 0 }
+    },
     exactMatches: { title: 0, description: 0, h1: 0, canonical: 0 },
     approvedDifferences: [],
+    notComparable: [],
     unexplainedMismatches: { title: [], description: [], h1: [], canonical: [] }
   };
 
@@ -262,44 +278,78 @@ async function main() {
     const canMatch = html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i);
     const canonical = canMatch ? canMatch[1] : '';
 
-    // Metadata Parity Evaluation
+    // Metadata Parity Evaluation across 4 explicit categories: EXACT, APPROVED_DIFF, NOT_COMPARABLE, MISMATCH
+    // 1. Canonical
+    metadataParityAudit.dimensions.canonical.total++;
     if (canonical === expectedCanonical) {
+      metadataParityAudit.dimensions.canonical.exact++;
       metadataParityAudit.exactMatches.canonical++;
     } else {
+      metadataParityAudit.dimensions.canonical.mismatch++;
       metadataParityAudit.unexplainedMismatches.canonical.push({
         path: route.path, live: canonical, expected: expectedCanonical
       });
     }
 
+    // 2. Title
+    metadataParityAudit.dimensions.title.total++;
     if (route.title) {
       if (normalizeText(decodedTitle) === normalizeText(route.title)) {
+        metadataParityAudit.dimensions.title.exact++;
         metadataParityAudit.exactMatches.title++;
       } else {
+        metadataParityAudit.dimensions.title.mismatch++;
         metadataParityAudit.unexplainedMismatches.title.push({
           path: route.path, live: decodedTitle, expected: route.title
         });
       }
+    } else {
+      metadataParityAudit.dimensions.title.notComparable++;
+      metadataParityAudit.notComparable.push({
+        path: route.path,
+        field: 'title',
+        live: decodedTitle,
+        expected: null,
+        reason: 'Route registry title is null'
+      });
     }
 
+    // 3. Meta Description
+    metadataParityAudit.dimensions.description.total++;
     if (route.description) {
       if (normalizeText(decodedDesc) === normalizeText(route.description)) {
+        metadataParityAudit.dimensions.description.exact++;
         metadataParityAudit.exactMatches.description++;
       } else {
+        metadataParityAudit.dimensions.description.mismatch++;
         metadataParityAudit.unexplainedMismatches.description.push({
           path: route.path, live: decodedDesc, expected: route.description
         });
       }
+    } else {
+      metadataParityAudit.dimensions.description.notComparable++;
+      metadataParityAudit.notComparable.push({
+        path: route.path,
+        field: 'description',
+        live: decodedDesc,
+        expected: null,
+        reason: 'Route registry description is null; renders approved site fallback description'
+      });
     }
 
+    // 4. H1
+    metadataParityAudit.dimensions.h1.total++;
     if (route.h1) {
       const normLiveH1 = normalizeText(decodedH1);
       const normExpH1 = normalizeText(route.h1);
       if (normLiveH1 === normExpH1) {
+        metadataParityAudit.dimensions.h1.exact++;
         metadataParityAudit.exactMatches.h1++;
       } else if (
         route.path === '/services/seo-services-in-mumbai/' &&
         normLiveH1.includes('seo agency in mumbai for seo services, ai search visibility and qualified leads')
       ) {
+        metadataParityAudit.dimensions.h1.approvedDifference++;
         metadataParityAudit.approvedDifferences.push({
           path: route.path,
           field: 'h1',
@@ -308,10 +358,20 @@ async function main() {
           reason: 'Approved WordPress mirror hero H1 variant'
         });
       } else {
+        metadataParityAudit.dimensions.h1.mismatch++;
         metadataParityAudit.unexplainedMismatches.h1.push({
           path: route.path, live: decodedH1, expected: route.h1
         });
       }
+    } else {
+      metadataParityAudit.dimensions.h1.notComparable++;
+      metadataParityAudit.notComparable.push({
+        path: route.path,
+        field: 'h1',
+        live: decodedH1,
+        expected: null,
+        reason: 'Route registry H1 is null; renders approved semantic fallback Contact Us'
+      });
     }
 
     // JSON-LD Schemas
@@ -393,26 +453,26 @@ async function main() {
 
     // 5. Extract Real Assets from HTML
     // Stylesheets
-    [...html.matchAll(/<link\s+[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'stylesheet', route.path));
+    [...html.matchAll(/<link\s+[^>]*?\brel=["']stylesheet["'][^>]*?\bhref=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'stylesheet', route.path));
     // Scripts
-    [...html.matchAll(/<script\s+[^>]*src=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'script', route.path));
+    [...html.matchAll(/<script\s+[^>]*?\bsrc=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'script', route.path));
     // Images
-    [...html.matchAll(/<img\s+[^>]*src=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'image', route.path));
+    [...html.matchAll(/<img\s+[^>]*?\bsrc=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'image', route.path));
     // Srcsets
-    [...html.matchAll(/(?:srcset)=["']([^"']+)["']/gi)].forEach(m => {
+    [...html.matchAll(/\b(?:srcset|data-srcset)=["']([^"']+)["']/gi)].forEach(m => {
       m[1].split(',').forEach(cand => {
         const urlPart = cand.trim().split(/\s+/)[0];
         if (urlPart) recordAsset(urlPart, 'srcset', route.path);
       });
     });
     // Video
-    [...html.matchAll(/<(?:video|source)\s+[^>]*src=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'video', route.path));
+    [...html.matchAll(/<(?:video|source)\s+[^>]*?\bsrc=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'video', route.path));
     // Video poster
-    [...html.matchAll(/<video\s+[^>]*poster=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'video-poster', route.path));
+    [...html.matchAll(/<video\s+[^>]*?\bposter=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'video-poster', route.path));
     // Preload & fonts
-    [...html.matchAll(/<link\s+[^>]*rel=["']preload["'][^>]*href=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'preload', route.path));
+    [...html.matchAll(/<link\s+[^>]*?\brel=["']preload["'][^>]*?\bhref=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'preload', route.path));
     // Icons
-    [...html.matchAll(/<link\s+[^>]*rel=["'](?:icon|shortcut icon|apple-touch-icon)["'][^>]*href=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'icon', route.path));
+    [...html.matchAll(/<link\s+[^>]*?\brel=["'](?:icon|shortcut icon|apple-touch-icon)["'][^>]*?\bhref=["']([^"']+)["']/gi)].forEach(m => recordAsset(m[1], 'icon', route.path));
 
     const routeStatus = res.statusCode === 200 && canonical === expectedCanonical && xRobotsPass && metaRobotsPass && !pageParseDefect ? 'PASS' : 'FAIL';
     console.log(`  [${String(idx + 1).padStart(2, ' ')}/96] ${route.path.padEnd(52, ' ')} => HTTP ${res.statusCode} | ${routeStatus}`);
@@ -652,11 +712,19 @@ async function main() {
         status5xx: routes5xx
       },
       metadataParity: {
+        dimensions: metadataParityAudit.dimensions,
+        exactMatches: metadataParityAudit.exactMatches,
+        approvedDifferences: metadataParityAudit.approvedDifferences.length,
+        notComparable: metadataParityAudit.notComparable.length,
         titleMismatches: metadataParityAudit.unexplainedMismatches.title.length,
         descriptionMismatches: metadataParityAudit.unexplainedMismatches.description.length,
         h1Mismatches: metadataParityAudit.unexplainedMismatches.h1.length,
         canonicalMismatches: metadataParityAudit.unexplainedMismatches.canonical.length,
-        approvedDifferences: metadataParityAudit.approvedDifferences.length
+        totalMismatches:
+          metadataParityAudit.unexplainedMismatches.title.length +
+          metadataParityAudit.unexplainedMismatches.description.length +
+          metadataParityAudit.unexplainedMismatches.h1.length +
+          metadataParityAudit.unexplainedMismatches.canonical.length
       },
       schema: {
         parseDefects: schemaExpectationAudit.parseDefects,
@@ -672,9 +740,9 @@ async function main() {
         redirectIssues: internalLinkAudit.unexpected3xx
       },
       assets: {
-        totalReferences: assetAudit.local.totalReferences,
-        uniqueAssets: assetAudit.local.uniqueAssets,
-        healthy: assetAudit.local.healthy2xx,
+        totalReferences: assetAudit.local.totalReferences + assetAudit.external.totalReferences,
+        uniqueAssets: assetAudit.local.uniqueAssets + assetAudit.external.uniqueAssets,
+        healthy: assetAudit.local.healthy2xx + assetAudit.external.healthy2xx,
         broken: assetAudit.local.status404 + assetAudit.local.status5xx + assetAudit.local.networkErrors,
         externalFailures: assetAudit.external.failures
       },
@@ -718,7 +786,10 @@ async function main() {
   console.log(`410:      ${finalReport.summary.routes.status410}`);
   console.log(`5xx:      ${finalReport.summary.routes.status5xx}`);
 
-  console.log('\nMETADATA PARITY');
+  console.log('\nMETADATA PARITY (4-Category Accounting across 96 routes)');
+  for (const [dim, counts] of Object.entries(metadataParityAudit.dimensions)) {
+    console.log(`  ${dim.toUpperCase().padEnd(12)}: Exact=${counts.exact}, ApprovedDiff=${counts.approvedDifference}, NotComparable=${counts.notComparable}, Mismatch=${counts.mismatch} (Total=${counts.total})`);
+  }
   console.log(`Title mismatches:       ${finalReport.summary.metadataParity.titleMismatches}`);
   console.log(`Description mismatches: ${finalReport.summary.metadataParity.descriptionMismatches}`);
   console.log(`H1 mismatches:          ${finalReport.summary.metadataParity.h1Mismatches}`);
@@ -762,14 +833,12 @@ async function main() {
     finalReport.summary.routes.status200 === 96 &&
     finalReport.summary.routes.status404 === 0 &&
     finalReport.summary.routes.status5xx === 0 &&
-    finalReport.summary.metadataParity.canonicalMismatches === 0 &&
-    finalReport.summary.metadataParity.titleMismatches === 0 &&
-    finalReport.summary.metadataParity.descriptionMismatches === 0 &&
-    finalReport.summary.metadataParity.h1Mismatches === 0 &&
+    finalReport.summary.metadataParity.totalMismatches === 0 &&
     finalReport.summary.schema.parseDefects === 0 &&
     finalReport.summary.schema.missingExpectedTypes === 0 &&
     finalReport.summary.schema.stagingLeaks === 0 &&
     finalReport.summary.assets.broken === 0 &&
+    finalReport.summary.assets.externalFailures === 0 &&
     finalReport.summary.internalLinks.broken === 0 &&
     finalReport.summary.stagingLeakage.htmlOccurrences === 0 &&
     finalReport.summary.stagingLeakage.sitemapOccurrences === 0 &&
@@ -778,7 +847,7 @@ async function main() {
     finalReport.summary.robots.xRobotsTagDefects === 0;
 
   if (allCriticalPass) {
-    console.log('DIMGREY SEARCH + AI LAUNCH GATE: APPROVED — VERIFIED MEASURED AUDIT');
+    console.log('DIMGREY SEARCH + AI LAUNCH GATE: APPROVED — ZERO MEASURED DEFECTS');
   } else {
     console.log('DIMGREY SEARCH + AI LAUNCH GATE: DEFECTS DETECTED — STOPPING FOR HUMAN REVIEW');
     console.log(`(Broken internal links: ${finalReport.summary.internalLinks.broken}, External asset failures: ${finalReport.summary.assets.externalFailures})`);

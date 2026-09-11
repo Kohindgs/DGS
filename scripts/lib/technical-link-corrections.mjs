@@ -14,7 +14,9 @@ export async function loadTechnicalLinkCorrections() {
 }
 
 export function correctionsForPath(approved, routePath) {
-  return (approved.corrections || []).filter((item) => item.path === routePath);
+  return (approved.corrections || []).filter(
+    (item) => item.path === routePath || item.path === "*" || !item.path,
+  );
 }
 
 function normalizeHref(href) {

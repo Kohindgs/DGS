@@ -170,6 +170,263 @@
       "classification": "C",
       "observedWordPressStatus": 404,
       "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: WordPress destination /services/saas-seo/ returns HTTP 404 with no authoritative redirect"
+    },
+    {
+      "path": "/services/",
+      "wordpressDestination": "/services/page/2/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: /services/page/2/ is a legacy pagination artifact; all 18 services are fully discoverable sitewide (Case A)"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "requiredNextDestination": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative blog canonical destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/why-local-seo-is-important-for-business-growth/",
+      "requiredNextDestination": "/blogs/local-seo-business-growth/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative blog canonical destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/how-modern-seo-strategies-are-transforming-business-growth/",
+      "requiredNextDestination": "/blogs/seo-strategies-business-growth/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative blog canonical destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/blogs/google-august-2026-spam-update/",
+      "requiredNextDestination": "/blogs/google-spam-update/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative blog canonical destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/seo-services-dubai/",
+      "requiredNextDestination": "/services/dubai-seo/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative service canonical destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/aeo-services-in-dubai/",
+      "requiredNextDestination": "/aeo-dubai/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative AEO Dubai canonical destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/google-ads/",
+      "requiredNextDestination": "/services/performance-marketing/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative performance marketing service canonical destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/category/digital-marketing/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy category archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/author/growth-manager/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy author archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/google-ai-overviews/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/featured-snippets/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/voice-search/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/aeo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/ai-search-visibility/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/ai-overview/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/ai-readiness-website/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/geo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/llm/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/aio/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/geovsseo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/llm-seo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/google-spam-update/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/ai-readiness/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/website-development/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/google-ai-search-update/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/aioverviews/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/aiseo/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/aiperformancereports/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/searchconsole/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/searchgenerativeai/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/tag/top-ai-tools-for-digital-marketing/",
+      "action": "REMOVE_BROKEN_HREF",
+      "classification": "C",
+      "observedWordPressStatus": 404,
+      "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
     }
   ]
 }

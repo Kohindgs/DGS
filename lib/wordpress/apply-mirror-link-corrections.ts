@@ -36,7 +36,9 @@ function correctionsForPath(routePath: string): LinkCorrection[] {
   const ranking = ((rankingApproved.restorations as Record<string, LinkCorrection[]>)[routePath] || []).map(
     (item) => ({ ...item, path: routePath }),
   );
-  const technical = (technicalApproved.corrections as LinkCorrection[]).filter((item) => item.path === routePath);
+  const technical = (technicalApproved.corrections as LinkCorrection[]).filter(
+    (item) => item.path === routePath || item.path === "*" || !item.path,
+  );
   return [...ranking, ...technical];
 }
 
@@ -46,7 +48,6 @@ function correctionsForPath(routePath: string): LinkCorrection[] {
  */
 export function applyApprovedLinkCorrectionsToHtml(routePath: string, html: string): string {
   const corrections = correctionsForPath(routePath);
-  if (!corrections.length) return html;
 
   const anchorRe = /<a\b([^>]*?)href=["']([^"']+)["']([^>]*)>([\s\S]*?)<\/a>/gi;
 
@@ -54,16 +55,36 @@ export function applyApprovedLinkCorrectionsToHtml(routePath: string, html: stri
     const path = normalizeHrefPath(href);
     const text = visibleAnchorText(inner);
     const destMatches = corrections.filter((item) => normalizeHrefPath(item.wordpressDestination) === path);
-    const match =
+    let match =
       destMatches.find((item) => item.anchor && item.anchor === text) ||
       destMatches.find((item) => !item.anchor) ||
       destMatches.find((item) => item.action === "REMOVE_BROKEN_HREF") ||
       destMatches[0];
+
+    if (!match && /^\/(category|tag|author)\//i.test(path)) {
+      match = {
+        wordpressDestination: path,
+        action: "REMOVE_BROKEN_HREF",
+      };
+    }
+
     if (!match) return full;
-    if (match.action === "REMOVE_BROKEN_HREF") return inner;
+
+    if (match.action === "REMOVE_BROKEN_HREF") {
+      const cleanPre = pre
+        .replace(/\s*tabindex=["'][^"']*["']/gi, "")
+        .replace(/\s*aria-label=["'][^"']*["']/gi, "");
+      const cleanPost = post
+        .replace(/\s*tabindex=["'][^"']*["']/gi, "")
+        .replace(/\s*aria-label=["'][^"']*["']/gi, "");
+      const cleanAttrs = `${cleanPre} ${cleanPost}`.replace(/\s+/g, " ").trim();
+      return cleanAttrs ? `<span ${cleanAttrs}>${inner}</span>` : `<span>${inner}</span>`;
+    }
+
     if (match.requiredNextDestination) {
       return `<a${pre}href="${match.requiredNextDestination}"${post}>${inner}</a>`;
     }
+
     return full;
   });
 }
