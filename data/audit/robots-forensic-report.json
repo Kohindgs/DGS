@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T17:02:16.928Z",
+  "generatedAt": "2026-09-11T17:11:36.722Z",
   "sources": {
     "publicDimgrey": {
       "url": "https://dimgrey-goat-473970.hostingersite.com/robots.txt",
@@ -9,9 +9,9 @@
     },
     "localStagingApp": {
       "url": "http://127.0.0.1:3025/robots.txt",
-      "status": 200,
-      "body": "User-Agent: *\nAllow: /\n\n",
-      "note": "origin app output",
+      "status": 0,
+      "body": "",
+      "note": "local app not reachable",
       "googlebotDisallowRoot": false
     },
     "repositoryStagingSimulation": {
@@ -21,7 +21,7 @@
     },
     "repositoryProductionSimulation": {
       "env": "DGS_PUBLIC_INDEXING=true",
-      "body": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Googlebot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Bingbot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nSitemap: https://www.dgeniussolutions.com/sitemap.xml\nHost: https://www.dgeniussolutions.com",
+      "body": "User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Googlebot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Bingbot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: ChatGPT-User\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: PerplexityBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Claude-SearchBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Claude-User\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: GPTBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: ClaudeBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Google-Extended\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Applebot-Extended\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: CCBot\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nUser-agent: Bytespider\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-login.php\n\nSitemap: https://www.dgeniussolutions.com/sitemap.xml\nHost: https://www.dgeniussolutions.com",
       "googlebotDisallowRoot": false
     },
     "productionWordPressReference": {

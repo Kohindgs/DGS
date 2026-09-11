@@ -114,9 +114,10 @@ async function main() {
         failedChecks++;
         results.push({ formId, route, ok: false, error: context.message });
       } else {
+        const maskedNonce = context.nonce.length > 4 ? `${context.nonce.slice(0, 2)}***${context.nonce.slice(-2)}` : '***';
         console.log(`  [PASS] Form ${String(formId).padEnd(2)} (${title}) on ${route}`);
-        console.log(`         Nonce: ${context.nonce} | Post ID: ${context.embeddedPostId}`);
-        results.push({ formId, route, ok: true, nonce: context.nonce, postId: context.embeddedPostId });
+        console.log(`         Nonce: PRESENT (${maskedNonce}, len=${context.nonce.length}) | Post ID: ${context.embeddedPostId}`);
+        results.push({ formId, route, ok: true, nonce: maskedNonce, postId: context.embeddedPostId });
       }
     }
   }
