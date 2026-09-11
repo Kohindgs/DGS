@@ -127,6 +127,25 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
 
       <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} />
 
+      {!prepared.articleHtml.includes("<h1") ? (
+        <h1
+          className="sr-only"
+          style={{
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            padding: 0,
+            margin: "-1px",
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: 0,
+          }}
+        >
+          {path === "/contact-us/" ? "Contact Us" : "D'Genius Solutions"}
+        </h1>
+      ) : null}
+
       <MirrorArticle html={prepared.articleHtml} galleryItems={galleryItems} />
 
       <div dangerouslySetInnerHTML={{ __html: assets.footerHtml }} />
