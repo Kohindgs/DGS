@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-09-11T13:41:43.044Z",
+  "timestamp": "2026-09-11T14:14:03.738Z",
   "stagingOrigin": "https://dimgrey-goat-473970.hostingersite.com",
-  "deployedSha": "92656d506d8e6016477606705d05c45765feef9e",
-  "reviewSha": "c76fe926b3b395537364295bca05a5a877859110",
+  "deployedSha": "63f3398cb9a0481d97099a9a064e6f19d2093e6b",
+  "reviewSha": "63f3398cb9a0481d97099a9a064e6f19d2093e6b",
   "summary": {
     "routes": {
       "total": 96,
@@ -13,11 +13,49 @@
       "status5xx": 0
     },
     "metadataParity": {
+      "dimensions": {
+        "title": {
+          "exact": 96,
+          "approvedDifference": 0,
+          "notComparable": 0,
+          "mismatch": 0,
+          "total": 96
+        },
+        "description": {
+          "exact": 95,
+          "approvedDifference": 0,
+          "notComparable": 1,
+          "mismatch": 0,
+          "total": 96
+        },
+        "h1": {
+          "exact": 94,
+          "approvedDifference": 1,
+          "notComparable": 1,
+          "mismatch": 0,
+          "total": 96
+        },
+        "canonical": {
+          "exact": 96,
+          "approvedDifference": 0,
+          "notComparable": 0,
+          "mismatch": 0,
+          "total": 96
+        }
+      },
+      "exactMatches": {
+        "title": 96,
+        "description": 95,
+        "h1": 94,
+        "canonical": 96
+      },
+      "approvedDifferences": 1,
+      "notComparable": 2,
       "titleMismatches": 0,
       "descriptionMismatches": 0,
       "h1Mismatches": 0,
       "canonicalMismatches": 0,
-      "approvedDifferences": 1
+      "totalMismatches": 0
     },
     "schema": {
       "parseDefects": 0,
@@ -26,18 +64,18 @@
       "stagingLeaks": 0
     },
     "internalLinks": {
-      "totalReferences": 5359,
-      "uniqueUrls": 219,
-      "healthy": 179,
-      "broken": 33,
+      "totalReferences": 5039,
+      "uniqueUrls": 187,
+      "healthy": 180,
+      "broken": 0,
       "redirectIssues": 0
     },
     "assets": {
-      "totalReferences": 9309,
-      "uniqueAssets": 1813,
-      "healthy": 1813,
+      "totalReferences": 9698,
+      "uniqueAssets": 1820,
+      "healthy": 1820,
       "broken": 0,
-      "externalFailures": 1
+      "externalFailures": 0
     },
     "stagingLeakage": {
       "htmlOccurrences": 0,
@@ -53,6 +91,36 @@
     }
   },
   "metadataParityAudit": {
+    "dimensions": {
+      "title": {
+        "exact": 96,
+        "approvedDifference": 0,
+        "notComparable": 0,
+        "mismatch": 0,
+        "total": 96
+      },
+      "description": {
+        "exact": 95,
+        "approvedDifference": 0,
+        "notComparable": 1,
+        "mismatch": 0,
+        "total": 96
+      },
+      "h1": {
+        "exact": 94,
+        "approvedDifference": 1,
+        "notComparable": 1,
+        "mismatch": 0,
+        "total": 96
+      },
+      "canonical": {
+        "exact": 96,
+        "approvedDifference": 0,
+        "notComparable": 0,
+        "mismatch": 0,
+        "total": 96
+      }
+    },
     "exactMatches": {
       "title": 96,
       "description": 95,
@@ -66,6 +134,22 @@
         "live": "SEO Agency in Mumbai for SEO Services, AI Search Visibility and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
         "expected": "SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
         "reason": "Approved WordPress mirror hero H1 variant"
+      }
+    ],
+    "notComparable": [
+      {
+        "path": "/contact-us/",
+        "field": "h1",
+        "live": "Contact Us",
+        "expected": null,
+        "reason": "Route registry H1 is null; renders approved semantic fallback Contact Us"
+      },
+      {
+        "path": "/motion-graphics/",
+        "field": "description",
+        "live": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+        "expected": null,
+        "reason": "Route registry description is null; renders approved site fallback description"
       }
     ],
     "unexplainedMismatches": {
@@ -84,423 +168,25 @@
     "details": []
   },
   "internalLinkAudit": {
-    "totalReferences": 5359,
-    "uniqueUrls": 219,
-    "healthy2xx": 179,
+    "totalReferences": 5039,
+    "uniqueUrls": 187,
+    "healthy2xx": 180,
     "approved3xx": 7,
     "unexpected3xx": 0,
-    "status404": 33,
+    "status404": 0,
     "status410": 0,
     "status5xx": 0,
     "networkErrors": 0,
-    "brokenLinks": [
-      {
-        "target": "/blogs/google-august-2026-spam-update/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/",
-          "/blogs/3-3-3-rule-in-marketing/",
-          "/blogs/ai-content-optimization/",
-          "/blogs/aeo-business/",
-          "/blogs/ai-generated-summaries-in-search-ads/",
-          "/blogs/ai-overview-ranking/",
-          "/blogs/ai-overview-seo/",
-          "/blogs/ai-search-behavior-2026/",
-          "/blogs/ai-readiness-for-websites/",
-          "/blogs/ai-tools-marketing-agencies/",
-          "/blogs/ai-video-production-for-business/",
-          "/blogs/ai-video-production-cost-india/",
-          "/blogs/ai-marketing-strategies-2026/",
-          "/blogs/ai-video-vs-traditional-video/",
-          "/blogs/ai-search-checklist-2026/",
-          "/blogs/brand-mentions-for-ai-tools/",
-          "/blogs/brand-identity-seo-trust-lead-generation/",
-          "/blogs/chatgpt-brand-visibility/",
-          "/blogs/content-writing-for-seo/",
-          "/blogs/content-strategy-high-intent-traffic/",
-          "/blogs/ai-search-optimization-ecommerce/",
-          "/blogs/core-update-strategy/",
-          "/blogs/future-of-seo/",
-          "/blogs/generative-engine-optimization-business/",
-          "/blogs/generative-engine-optimization/",
-          "/blogs/content-strategy-for-seo/",
-          "/blogs/brand-visibility-in-ai-search/",
-          "/blogs/geo-vs-seo-google-ai-search/",
-          "/blogs/google-ads-vs-meta-ads/",
-          "/blogs/google-agentic-browsing/",
-          "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
-          "/blogs/google-algorithm-business/",
-          "/blogs/google-ranking-fixes/",
-          "/blogs/google-search-console-social-media/",
-          "/blogs/google-io-2026/",
-          "/blogs/google-spam-update/",
-          "/blogs/llm-seo-ai-search/",
-          "/blogs/google-ai-overviews-image-generation/",
-          "/blogs/local-seo-business-growth/",
-          "/blogs/llm-seo-services-mumbai/",
-          "/blogs/low-social-media-reach/",
-          "/blogs/google-ai-search-update/",
-          "/blogs/modern-seo-business-growth/",
-          "/blogs/search-generative-ai-performance-reports/",
-          "/blogs/optimize-for-ai-overviews/",
-          "/blogs/schema-seo-for-small-business/",
-          "/blogs/seo-rankings-up-but-traffic-down/",
-          "/blogs/seo-services-india-2026/",
-          "/blogs/seo-strategies-business-growth/",
-          "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
-          "/blogs/optimize-content-ai-search/",
-          "/blogs/seo-friendly-website/",
-          "/blogs/topical-authority-seo/",
-          "/blogs/social-media-marketing-strategy/",
-          "/blogs/website-design-lead-generation-mumbai/",
-          "/blogs/voice-search-seo/",
-          "/blogs/website-development-quality-leads/",
-          "/blogs/website-performance-conversions/",
-          "/blogs/website-traffic-but-no-leads/",
-          "/blogs/what-is-llm-seo/",
-          "/blogs/website-development-leads/",
-          "/blogs/website-development-mistakes/"
-        ]
-      },
-      {
-        "target": "/author/growth-manager/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/"
-        ]
-      },
-      {
-        "target": "/category/digital-marketing/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/",
-          "/blogs/3-3-3-rule-in-marketing/",
-          "/blogs/ai-content-optimization/",
-          "/blogs/aeo-business/",
-          "/blogs/ai-generated-summaries-in-search-ads/",
-          "/blogs/ai-overview-ranking/",
-          "/blogs/ai-overview-seo/",
-          "/blogs/ai-search-behavior-2026/",
-          "/blogs/ai-readiness-for-websites/",
-          "/blogs/ai-tools-marketing-agencies/",
-          "/blogs/ai-video-production-for-business/",
-          "/blogs/ai-video-production-cost-india/",
-          "/blogs/ai-marketing-strategies-2026/",
-          "/blogs/ai-video-vs-traditional-video/",
-          "/blogs/ai-search-checklist-2026/",
-          "/blogs/brand-mentions-for-ai-tools/",
-          "/blogs/brand-identity-seo-trust-lead-generation/",
-          "/blogs/chatgpt-brand-visibility/",
-          "/blogs/content-writing-for-seo/",
-          "/blogs/content-strategy-high-intent-traffic/",
-          "/blogs/ai-search-optimization-ecommerce/",
-          "/blogs/core-update-strategy/",
-          "/blogs/future-of-seo/",
-          "/blogs/generative-engine-optimization-business/",
-          "/blogs/generative-engine-optimization/",
-          "/blogs/content-strategy-for-seo/",
-          "/blogs/brand-visibility-in-ai-search/",
-          "/blogs/geo-vs-seo-google-ai-search/",
-          "/blogs/google-ads-vs-meta-ads/",
-          "/blogs/google-agentic-browsing/",
-          "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
-          "/blogs/google-algorithm-business/",
-          "/blogs/google-ranking-fixes/",
-          "/blogs/google-search-console-social-media/",
-          "/blogs/google-io-2026/",
-          "/blogs/google-spam-update/",
-          "/blogs/llm-seo-ai-search/",
-          "/blogs/google-ai-overviews-image-generation/",
-          "/blogs/local-seo-business-growth/",
-          "/blogs/llm-seo-services-mumbai/",
-          "/blogs/low-social-media-reach/",
-          "/blogs/google-ai-search-update/",
-          "/blogs/modern-seo-business-growth/",
-          "/blogs/search-generative-ai-performance-reports/",
-          "/blogs/optimize-for-ai-overviews/",
-          "/blogs/schema-seo-for-small-business/",
-          "/blogs/seo-rankings-up-but-traffic-down/",
-          "/blogs/seo-services-india-2026/",
-          "/blogs/seo-strategies-business-growth/",
-          "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
-          "/blogs/optimize-content-ai-search/",
-          "/blogs/seo-friendly-website/",
-          "/blogs/topical-authority-seo/",
-          "/blogs/social-media-marketing-strategy/",
-          "/blogs/website-design-lead-generation-mumbai/",
-          "/blogs/voice-search-seo/",
-          "/blogs/website-development-quality-leads/",
-          "/blogs/website-performance-conversions/",
-          "/blogs/website-traffic-but-no-leads/",
-          "/blogs/what-is-llm-seo/",
-          "/blogs/website-development-leads/",
-          "/blogs/website-development-mistakes/"
-        ]
-      },
-      {
-        "target": "/tag/google-ai-overviews/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/aeo-business/"
-        ]
-      },
-      {
-        "target": "/tag/featured-snippets/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/aeo-business/"
-        ]
-      },
-      {
-        "target": "/tag/seo/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/aeo-business/",
-          "/blogs/future-of-seo/",
-          "/blogs/generative-engine-optimization-business/",
-          "/blogs/generative-engine-optimization/",
-          "/blogs/content-strategy-for-seo/",
-          "/blogs/geo-vs-seo-google-ai-search/",
-          "/blogs/google-spam-update/",
-          "/blogs/website-development-quality-leads/"
-        ]
-      },
-      {
-        "target": "/tag/voice-search/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/aeo-business/"
-        ]
-      },
-      {
-        "target": "/google-ai-overviews-and-the-growth-of-zero-click-searches/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/ai-search-behavior-2026/"
-        ]
-      },
-      {
-        "target": "/tag/aeo/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/aeo-business/",
-          "/blogs/ai-readiness-for-websites/",
-          "/blogs/future-of-seo/",
-          "/blogs/generative-engine-optimization-business/",
-          "/blogs/generative-engine-optimization/",
-          "/blogs/content-strategy-for-seo/",
-          "/blogs/geo-vs-seo-google-ai-search/",
-          "/blogs/google-spam-update/",
-          "/blogs/google-ai-search-update/",
-          "/blogs/website-development-quality-leads/"
-        ]
-      },
-      {
-        "target": "/tag/ai-search-visibility/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/aeo-business/"
-        ]
-      },
-      {
-        "target": "/tag/ai-overview/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/ai-readiness-for-websites/",
-          "/blogs/future-of-seo/",
-          "/blogs/generative-engine-optimization/",
-          "/blogs/google-ai-search-update/"
-        ]
-      },
-      {
-        "target": "/tag/ai-readiness-website/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/ai-readiness-for-websites/"
-        ]
-      },
-      {
-        "target": "/tag/geo/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/ai-readiness-for-websites/",
-          "/blogs/future-of-seo/",
-          "/blogs/generative-engine-optimization-business/",
-          "/blogs/generative-engine-optimization/",
-          "/blogs/content-strategy-for-seo/",
-          "/blogs/geo-vs-seo-google-ai-search/",
-          "/blogs/google-spam-update/",
-          "/blogs/google-ai-search-update/",
-          "/blogs/website-development-quality-leads/"
-        ]
-      },
-      {
-        "target": "/tag/llm/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/future-of-seo/",
-          "/blogs/generative-engine-optimization-business/",
-          "/blogs/google-spam-update/",
-          "/blogs/google-ai-search-update/",
-          "/blogs/website-development-quality-leads/"
-        ]
-      },
-      {
-        "target": "/tag/aio/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/geo-vs-seo-google-ai-search/"
-        ]
-      },
-      {
-        "target": "/tag/geovsseo/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/geo-vs-seo-google-ai-search/"
-        ]
-      },
-      {
-        "target": "/tag/llm-seo/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/geo-vs-seo-google-ai-search/",
-          "/blogs/llm-seo-ai-search/"
-        ]
-      },
-      {
-        "target": "/tag/google-spam-update/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/google-spam-update/"
-        ]
-      },
-      {
-        "target": "/tag/ai-readiness/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/llm-seo-ai-search/"
-        ]
-      },
-      {
-        "target": "/tag/website-development/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/llm-seo-ai-search/",
-          "/blogs/website-development-quality-leads/"
-        ]
-      },
-      {
-        "target": "/tag/google-ai-search-update/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/google-ai-search-update/"
-        ]
-      },
-      {
-        "target": "/why-local-seo-is-important-for-business-growth/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/modern-seo-business-growth/",
-          "/blogs/seo-services-india-2026/"
-        ]
-      },
-      {
-        "target": "/tag/aioverviews/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/search-generative-ai-performance-reports/"
-        ]
-      },
-      {
-        "target": "/tag/aiseo/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/search-generative-ai-performance-reports/"
-        ]
-      },
-      {
-        "target": "/tag/aiperformancereports/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/search-generative-ai-performance-reports/"
-        ]
-      },
-      {
-        "target": "/tag/searchconsole/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/search-generative-ai-performance-reports/"
-        ]
-      },
-      {
-        "target": "/tag/searchgenerativeai/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/search-generative-ai-performance-reports/"
-        ]
-      },
-      {
-        "target": "/how-modern-seo-strategies-are-transforming-business-growth/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/seo-services-india-2026/",
-          "/blogs/topical-authority-seo/"
-        ]
-      },
-      {
-        "target": "/tag/top-ai-tools-for-digital-marketing/",
-        "statusCode": 404,
-        "sources": [
-          "/blogs/ai-tools-marketing-agencies/"
-        ]
-      },
-      {
-        "target": "/services/aeo-services-in-dubai/",
-        "statusCode": 404,
-        "sources": [
-          "/services/ai-production-dubai-page/"
-        ]
-      },
-      {
-        "target": "/services/google-ads/",
-        "statusCode": 404,
-        "sources": [
-          "/services/ai-production-dubai-page/"
-        ]
-      },
-      {
-        "target": "/services/page/2/",
-        "statusCode": 404,
-        "sources": [
-          "/services/"
-        ]
-      },
-      {
-        "target": "/services/seo-services-dubai/",
-        "statusCode": 404,
-        "sources": [
-          "/services/ai-production-dubai-page/"
-        ]
-      }
-    ],
+    "brokenLinks": [],
     "redirectLinks": [
-      {
-        "target": "/seo-services-in-mumbai/",
-        "statusCode": 301,
-        "location": "/services/seo-services-in-mumbai/",
-        "isApproved": true,
-        "sources": [
-          "/blogs/ai-generated-summaries-in-search-ads/"
-        ]
-      },
       {
         "target": "/services/aeo/",
         "statusCode": 301,
         "location": "/services/aeo-services-in-mumbai/",
         "isApproved": true,
         "sources": [
-          "/blogs/ai-overview-ranking/",
           "/australia-page/",
+          "/blogs/ai-overview-ranking/",
           "/blogs/content-strategy-high-intent-traffic/",
           "/blogs/modern-seo-business-growth/",
           "/blogs/seo-services-india-2026/",
@@ -516,8 +202,17 @@
         "location": "/services/ai-video-production-agency/",
         "isApproved": true,
         "sources": [
-          "/blogs/ai-tools-marketing-agencies/",
-          "/australia-page/"
+          "/australia-page/",
+          "/blogs/ai-tools-marketing-agencies/"
+        ]
+      },
+      {
+        "target": "/seo-services-in-mumbai/",
+        "statusCode": 301,
+        "location": "/services/seo-services-in-mumbai/",
+        "isApproved": true,
+        "sources": [
+          "/blogs/ai-generated-summaries-in-search-ads/"
         ]
       },
       {
@@ -553,18 +248,18 @@
         "location": "/services/seo-service-pune/",
         "isApproved": true,
         "sources": [
+          "/services/seo-service-in-banglore/",
           "/services/seo-service-in-gurugram/",
-          "/services/seo-services-in-hyderabad/",
-          "/services/seo-service-in-banglore/"
+          "/services/seo-services-in-hyderabad/"
         ]
       }
     ]
   },
   "assetAudit": {
     "local": {
-      "totalReferences": 9309,
-      "uniqueAssets": 1813,
-      "healthy2xx": 1813,
+      "totalReferences": 9693,
+      "uniqueAssets": 1817,
+      "healthy2xx": 1817,
       "redirect3xx": 0,
       "status404": 0,
       "status5xx": 0,
@@ -572,115 +267,11 @@
       "brokenAssets": []
     },
     "external": {
-      "totalReferences": 389,
-      "uniqueAssets": 7,
-      "healthy2xx": 6,
-      "failures": 1,
-      "failedAssets": [
-        {
-          "url": "https://cdn.simpleicons.org/openai/FFFFFF",
-          "type": "image",
-          "statusCode": 404,
-          "sources": [
-            "/blogs/",
-            "/about-us/",
-            "/blogs/3-3-3-rule-in-marketing/",
-            "/aeo-dubai/",
-            "/better-ceasons-case-study/",
-            "/blogs/ai-content-optimization/",
-            "/blogs/aeo-business/",
-            "/blogs/ai-generated-summaries-in-search-ads/",
-            "/blogs/ai-overview-ranking/",
-            "/",
-            "/blogs/ai-overview-seo/",
-            "/blogs/ai-search-behavior-2026/",
-            "/blogs/ai-readiness-for-websites/",
-            "/blogs/ai-tools-marketing-agencies/",
-            "/blogs/ai-video-production-for-business/",
-            "/australia-page/",
-            "/blogs/ai-video-production-cost-india/",
-            "/blogs/ai-marketing-strategies-2026/",
-            "/blogs/ai-video-vs-traditional-video/",
-            "/blogs/ai-search-checklist-2026/",
-            "/blogs/brand-mentions-for-ai-tools/",
-            "/blogs/brand-identity-seo-trust-lead-generation/",
-            "/blogs/chatgpt-brand-visibility/",
-            "/blogs/content-writing-for-seo/",
-            "/blogs/content-strategy-high-intent-traffic/",
-            "/blogs/ai-search-optimization-ecommerce/",
-            "/blogs/core-update-strategy/",
-            "/blogs/future-of-seo/",
-            "/blogs/generative-engine-optimization-business/",
-            "/blogs/generative-engine-optimization/",
-            "/blogs/content-strategy-for-seo/",
-            "/blogs/brand-visibility-in-ai-search/",
-            "/blogs/geo-vs-seo-google-ai-search/",
-            "/blogs/google-ads-vs-meta-ads/",
-            "/blogs/google-agentic-browsing/",
-            "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
-            "/blogs/google-algorithm-business/",
-            "/blogs/google-ranking-fixes/",
-            "/blogs/google-search-console-social-media/",
-            "/blogs/google-io-2026/",
-            "/blogs/google-spam-update/",
-            "/blogs/llm-seo-ai-search/",
-            "/blogs/google-ai-overviews-image-generation/",
-            "/blogs/local-seo-business-growth/",
-            "/blogs/llm-seo-services-mumbai/",
-            "/blogs/low-social-media-reach/",
-            "/blogs/google-ai-search-update/",
-            "/blogs/modern-seo-business-growth/",
-            "/blogs/search-generative-ai-performance-reports/",
-            "/blogs/optimize-for-ai-overviews/",
-            "/blogs/schema-seo-for-small-business/",
-            "/blogs/seo-rankings-up-but-traffic-down/",
-            "/blogs/seo-services-india-2026/",
-            "/blogs/seo-strategies-business-growth/",
-            "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
-            "/blogs/optimize-content-ai-search/",
-            "/blogs/seo-friendly-website/",
-            "/blogs/topical-authority-seo/",
-            "/blogs/social-media-marketing-strategy/",
-            "/blogs/website-design-lead-generation-mumbai/",
-            "/blogs/voice-search-seo/",
-            "/blogs/website-development-quality-leads/",
-            "/blogs/website-performance-conversions/",
-            "/blogs/website-traffic-but-no-leads/",
-            "/blogs/what-is-llm-seo/",
-            "/career/",
-            "/case_studies/",
-            "/blogs/website-development-leads/",
-            "/motion-graphics/",
-            "/our-services/",
-            "/blogs/website-development-mistakes/",
-            "/contact-us/",
-            "/portfolio/",
-            "/privacy-policy/",
-            "/services/aeo-services-in-mumbai/",
-            "/services/ai-video-production-agency/",
-            "/seo-pricing/",
-            "/services/branding/",
-            "/services/ai-production-dubai-page/",
-            "/services/dubai-seo/",
-            "/services/geo/",
-            "/services/llm-seo-service/",
-            "/services/performance-marketing/",
-            "/services/content-creation/",
-            "/services/seo-service-in-gurugram/",
-            "/services/seo-service-pune/",
-            "/services/seo-services-in-hyderabad/",
-            "/services/seo-services-in-mumbai/",
-            "/services/seo-service-in-banglore/",
-            "/services/shirdi-se-sai-tak-case-study/",
-            "/services/social-media-marketing/",
-            "/services/website-development-amc/",
-            "/services/website-development-pune-page/",
-            "/sitemap/",
-            "/services/",
-            "/us-landing-page/"
-          ]
-        }
-      ]
+      "totalReferences": 5,
+      "uniqueAssets": 3,
+      "healthy2xx": 3,
+      "failures": 0,
+      "failedAssets": []
     }
   },
   "stagingLeakAudit": {
