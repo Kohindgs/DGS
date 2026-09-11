@@ -427,6 +427,55 @@
       "classification": "C",
       "observedWordPressStatus": 404,
       "reason": "APPROVED SOURCE-DEFECT BROKEN LINK REMOVAL: legacy tag archive without authoritative destination; preserve anchor text and styling"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/aeo/",
+      "requiredNextDestination": "/services/aeo-services-in-mumbai/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative AEO service destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/generative-ai/",
+      "requiredNextDestination": "/services/ai-video-production-agency/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative AI video production service destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/seo-services-in-mumbai/",
+      "requiredNextDestination": "/services/seo-services-in-mumbai/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative Mumbai SEO service destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/llm-seo/",
+      "requiredNextDestination": "/services/llm-seo-service/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative LLM SEO service destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/aeo/?utm_source=chatgpt.com",
+      "requiredNextDestination": "/services/aeo-services-in-mumbai/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative AEO service destination and strip tracking param"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/website-development/",
+      "requiredNextDestination": "/services/website-development-amc/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative website development AMC service destination"
+    },
+    {
+      "path": "*",
+      "wordpressDestination": "/services/seo-services-in-pune/",
+      "requiredNextDestination": "/services/seo-service-pune/",
+      "classification": "B",
+      "reason": "Update internal link to authoritative Pune SEO service destination"
     }
   ]
 }
