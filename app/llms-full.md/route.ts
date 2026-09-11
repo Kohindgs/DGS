@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/seo/site";
 export function GET() {
   const content = `# ${verifiedOrganization.name} — Full Entity & Services Index
 
-> Complete structural reference and AI retrieval document for D'Genius Solutions, a leading digital marketing, AI search optimization (AEO/GEO/LLM SEO), web development, and AI video production agency based in Mumbai, India.
+> Structural reference and machine-readable service index for D'Genius Solutions, a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
 
 - **Official Website**: ${verifiedOrganization.url}/
 - **Corporate Entity**: ${verifiedOrganization.legalName}
@@ -24,32 +24,32 @@ ${verifiedOrganization.sameAs.map((url) => `- [${new URL(url).hostname.replace("
 
 ### 1. AI Search & Emerging Retrieval Optimization
 - **[AEO Services in Mumbai](${verifiedOrganization.url}/services/aeo-services-in-mumbai/)**
-  Answer Engine Optimization targeted at winning direct answers in Google AI Overviews, conversational AI engines, featured snippets, and voice search systems.
+  AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms.
 - **[GEO Services (Generative Engine Optimization)](${verifiedOrganization.url}/services/geo/)**
-  Multi-platform generative search visibility optimizing citation frequency and brand mention authority across ChatGPT, Perplexity, and Gemini.
+  GEO services in Mumbai to improve visibility in AI Overviews, ChatGPT, and generative search results.
 - **[LLM SEO Service](${verifiedOrganization.url}/services/llm-seo-service/)**
-  Large Language Model search engine optimization designed to position business facts, entities, and solutions directly inside AI model synthesis.
+  LLM SEO services in Mumbai to improve visibility in ChatGPT, Gemini, AI Overviews and Perplexity.
 - **[AI Video Production Agency](${verifiedOrganization.url}/services/ai-video-production-agency/)**
-  Next-generation commercial and digital video production combining cinematic workflows with generative AI tools for high-conversion brand films, ads, and social content.
+  AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses.
 
 ### 2. Core Search Engine Optimization (SEO)
 - **[SEO Services in Mumbai](${verifiedOrganization.url}/services/seo-services-in-mumbai/)**
-  Comprehensive technical SEO, keyword research, on-page optimization, content architecture, and authority building for enterprise and growing businesses.
+  SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.
 
 ### 3. Web Engineering & Maintenance
 - **[Website Development](${verifiedOrganization.url}/services/website-development-pune-page/)**
-  Modern, high-performance web development utilizing clean semantic markup, fast server rendering, and responsive design.
+  Website development delivering responsive, conversion-focused and SEO-friendly websites.
 - **[Website Maintenance & AMC](${verifiedOrganization.url}/services/website-development-amc/)**
-  Annual maintenance contracts, technical support, security hardening, speed optimization, and uptime monitoring for web platforms.
+  Website development in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.
 
 ---
 
 ## Selected Work & Case Studies
 
 - **[Portfolio](${verifiedOrganization.url}/portfolio/)**
-  Curated showcase of digital marketing campaigns, performance results, and brand transformations.
+  Digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.
 - **[Shirdi Se Sai Tak Case Study](${verifiedOrganization.url}/services/shirdi-se-sai-tak-case-study/)**
-  Comprehensive case study detailing digital marketing strategy, visual design, and community reach.
+  Mythological AI avatar case study for Shirdi Se Sai Tak devotional storytelling.
 
 ---
 

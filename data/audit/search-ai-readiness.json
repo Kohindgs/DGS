@@ -1,0 +1,323 @@
+{
+  "timestamp": "2026-09-11T11:44:18.070Z",
+  "target": {
+    "host": "127.0.0.1",
+    "port": 3033
+  },
+  "matrix": {
+    "SEO": "PASS",
+    "AEO": "PASS",
+    "GEO": "PASS",
+    "LLM": "PASS",
+    "AIO": "PASS",
+    "Schema": "PASS",
+    "AI Crawlers": "PASS",
+    "Sitemap": "PASS",
+    "Blogs": "PASS",
+    "Canonicals": "PASS",
+    "Indexability": "PASS",
+    "Redirects": "PASS",
+    "Staging Leakage": "PASS",
+    "Route Health": "PASS"
+  },
+  "sections": {
+    "stagingProtection": {
+      "simulationPass": true,
+      "header": "noindex, nofollow, noarchive"
+    },
+    "productionGate": {
+      "defaultHeader": "noindex, nofollow, noarchive"
+    },
+    "llmEndpoints": {
+      "/llms.txt": {
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "contentTypeOk": true,
+        "hasProdUrl": true,
+        "hasStagingUrl": false
+      },
+      "/llms-full.txt": {
+        "status": 200,
+        "contentType": "text/plain; charset=utf-8",
+        "contentTypeOk": true,
+        "hasProdUrl": true,
+        "hasStagingUrl": false
+      },
+      "/llms.md": {
+        "status": 200,
+        "contentType": "text/markdown; charset=utf-8",
+        "contentTypeOk": true,
+        "hasProdUrl": true,
+        "hasStagingUrl": false
+      },
+      "/llms-full.md": {
+        "status": 200,
+        "contentType": "text/markdown; charset=utf-8",
+        "contentTypeOk": true,
+        "hasProdUrl": true,
+        "hasStagingUrl": false
+      }
+    },
+    "aiCrawlers": {
+      "searchDiscovery": {
+        "*": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "Googlebot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "Bingbot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "OAI-SearchBot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "ChatGPT-User": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "PerplexityBot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "Claude-SearchBot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "Claude-User": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        }
+      },
+      "training": {
+        "GPTBot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "ClaudeBot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "Google-Extended": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "Applebot-Extended": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "CCBot": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        },
+        "Bytespider": {
+          "configured": true,
+          "allow": "/",
+          "disallow": [
+            "/api/",
+            "/admin/",
+            "/wp-admin/",
+            "/wp-login.php"
+          ]
+        }
+      }
+    },
+    "sitemap": {
+      "totalUrls": 96,
+      "duplicates": false,
+      "stagingLeak": false,
+      "allProductionHost": true,
+      "disallowedRoutes": false
+    },
+    "redirectCrossProduct": {
+      "totalCombinationsTested": 124,
+      "maxHopsObserved": 1,
+      "failures": 0,
+      "pass": true
+    },
+    "blogs": {
+      "totalBlogs": 61,
+      "missingFields": 0,
+      "pass": true
+    },
+    "schemas": {
+      "/": {
+        "schemaCount": 5,
+        "types": [
+          "Organization",
+          "LocalBusiness",
+          "WebSite",
+          "WebPage",
+          "FAQPage"
+        ],
+        "hasStagingUrl": false
+      },
+      "/services/seo-services-in-mumbai/": {
+        "schemaCount": 5,
+        "types": [
+          "Organization",
+          "WebSite",
+          "WebPage",
+          "Service",
+          "BreadcrumbList"
+        ],
+        "hasStagingUrl": false
+      },
+      "/services/aeo-services-in-mumbai/": {
+        "schemaCount": 5,
+        "types": [
+          "Organization",
+          "WebSite",
+          "WebPage",
+          "Service",
+          "BreadcrumbList"
+        ],
+        "hasStagingUrl": false
+      },
+      "/services/geo/": {
+        "schemaCount": 5,
+        "types": [
+          "Organization",
+          "WebSite",
+          "WebPage",
+          "Service",
+          "BreadcrumbList"
+        ],
+        "hasStagingUrl": false
+      },
+      "/services/llm-seo-service/": {
+        "schemaCount": 5,
+        "types": [
+          "Organization",
+          "WebSite",
+          "WebPage",
+          "Service",
+          "BreadcrumbList"
+        ],
+        "hasStagingUrl": false
+      },
+      "/services/ai-video-production-agency/": {
+        "schemaCount": 5,
+        "types": [
+          "Organization",
+          "WebSite",
+          "WebPage",
+          "Service",
+          "BreadcrumbList"
+        ],
+        "hasStagingUrl": false
+      },
+      "/portfolio/": {
+        "schemaCount": 4,
+        "types": [
+          "Organization",
+          "WebSite",
+          "WebPage",
+          "BreadcrumbList"
+        ],
+        "hasStagingUrl": false
+      },
+      "/blogs/ai-content-optimization/": {
+        "schemaCount": 5,
+        "types": [
+          "Organization",
+          "WebSite",
+          "WebPage",
+          "BreadcrumbList",
+          "BlogPosting"
+        ],
+        "hasStagingUrl": false
+      }
+    },
+    "routeHealth": {
+      "totalRoutes": 96,
+      "success": 96,
+      "errors": 0,
+      "canonicalMismatches": 0,
+      "stagingLeakInHtml": 0,
+      "pass": true
+    }
+  }
+}

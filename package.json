@@ -17,6 +17,8 @@
     "audit:analytics": "node scripts/audit-live-analytics.mjs",
     "audit:performance": "node scripts/audit-live-performance.mjs",
     "audit:accessibility": "node scripts/audit-live-accessibility.mjs",
+    "audit:robots": "node scripts/audit-robots-forensic.mjs",
+    "audit:readiness": "node scripts/audit-search-ai-readiness.mjs",
     "build:tier0-content": "node scripts/build-tier0-content-baseline.mjs",
     "build:route-parity": "node scripts/build-route-parity-v2.mjs",
     "build:indexability": "node scripts/build-indexability-manifest.mjs",

@@ -2,13 +2,13 @@ import { verifiedOrganization } from "@/lib/schema/entity";
 
 const body = `# ${verifiedOrganization.name}
 
-> Full-service digital marketing agency in Mumbai specializing in SEO, AEO, GEO, LLM SEO, AI search optimization, and AI-led creative production.
+> Full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
 
 ${verifiedOrganization.url}/
 
 ## Homepage
 
-- ${verifiedOrganization.url}/ — Digital marketing agency in Mumbai (SEO, AEO, GEO, LLM SEO, websites, social, ads, AI production)
+- ${verifiedOrganization.url}/ — Full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
 
 ## Services
 

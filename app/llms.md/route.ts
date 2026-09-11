@@ -4,22 +4,22 @@ import { siteConfig } from "@/lib/seo/site";
 export function GET() {
   const content = `# ${verifiedOrganization.name}
 
-> Full-service digital marketing agency in Mumbai specializing in SEO, AEO, GEO, LLM SEO, AI search optimization, and AI-led creative production.
+> Full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
 
 Website: ${verifiedOrganization.url}/
 
 ## Core Services
 
-- [SEO Services in Mumbai](${verifiedOrganization.url}/services/seo-services-in-mumbai/): Technical SEO, local search, link building, and organic search growth strategies.
-- [AEO Services in Mumbai](${verifiedOrganization.url}/services/aeo-services-in-mumbai/): Answer Engine Optimization for Google AI Overviews, AI Mode, featured snippets, and voice search.
-- [GEO Services](${verifiedOrganization.url}/services/geo/): Generative Engine Optimization to maximize citation and brand visibility across AI search platforms.
-- [LLM SEO Services](${verifiedOrganization.url}/services/llm-seo-service/): Optimization for Large Language Model search systems including ChatGPT, Gemini, and Perplexity.
-- [AI Video Production Agency](${verifiedOrganization.url}/services/ai-video-production-agency/): AI-powered video commercials, brand films, product reels, and social campaigns.
+- [SEO Services in Mumbai](${verifiedOrganization.url}/services/seo-services-in-mumbai/): SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.
+- [AEO Services in Mumbai](${verifiedOrganization.url}/services/aeo-services-in-mumbai/): AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms.
+- [GEO Services](${verifiedOrganization.url}/services/geo/): GEO services in Mumbai to improve visibility in AI Overviews, ChatGPT, and generative search results.
+- [LLM SEO Services](${verifiedOrganization.url}/services/llm-seo-service/): LLM SEO services in Mumbai to improve visibility in ChatGPT, Gemini, AI Overviews and Perplexity.
+- [AI Video Production Agency](${verifiedOrganization.url}/services/ai-video-production-agency/): AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses.
 
 ## Key Case Studies & Portfolio
 
-- [Client Portfolio](${verifiedOrganization.url}/portfolio/): Real digital marketing case studies, organic growth campaigns, and client success stories.
-- [Shirdi Se Sai Tak Case Study](${verifiedOrganization.url}/services/shirdi-se-sai-tak-case-study/): Multi-channel brand growth, visual identity, and performance marketing case study.
+- [Client Portfolio](${verifiedOrganization.url}/portfolio/): Digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.
+- [Shirdi Se Sai Tak Case Study](${verifiedOrganization.url}/services/shirdi-se-sai-tak-case-study/): Mythological AI avatar case study for Shirdi Se Sai Tak devotional storytelling.
 
 ## Contact Information
 
