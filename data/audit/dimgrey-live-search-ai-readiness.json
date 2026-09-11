@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-09-11T14:14:03.738Z",
+  "timestamp": "2026-09-11T15:52:55.586Z",
   "stagingOrigin": "https://dimgrey-goat-473970.hostingersite.com",
-  "deployedSha": "63f3398cb9a0481d97099a9a064e6f19d2093e6b",
-  "reviewSha": "63f3398cb9a0481d97099a9a064e6f19d2093e6b",
+  "deployedSha": "e3c3e780e9245b5ff35788fe27e655f712113b2b",
+  "reviewSha": "e3c3e780e9245b5ff35788fe27e655f712113b2b",
   "summary": {
     "routes": {
       "total": 96,
@@ -65,8 +65,9 @@
     },
     "internalLinks": {
       "totalReferences": 5039,
-      "uniqueUrls": 187,
+      "uniqueUrls": 180,
       "healthy": 180,
+      "approved3xx": 0,
       "broken": 0,
       "redirectIssues": 0
     },
@@ -169,91 +170,16 @@
   },
   "internalLinkAudit": {
     "totalReferences": 5039,
-    "uniqueUrls": 187,
+    "uniqueUrls": 180,
     "healthy2xx": 180,
-    "approved3xx": 7,
+    "approved3xx": 0,
     "unexpected3xx": 0,
     "status404": 0,
     "status410": 0,
     "status5xx": 0,
     "networkErrors": 0,
     "brokenLinks": [],
-    "redirectLinks": [
-      {
-        "target": "/services/aeo/",
-        "statusCode": 301,
-        "location": "/services/aeo-services-in-mumbai/",
-        "isApproved": true,
-        "sources": [
-          "/australia-page/",
-          "/blogs/ai-overview-ranking/",
-          "/blogs/content-strategy-high-intent-traffic/",
-          "/blogs/modern-seo-business-growth/",
-          "/blogs/seo-services-india-2026/",
-          "/blogs/topical-authority-seo/",
-          "/blogs/website-design-lead-generation-mumbai/",
-          "/blogs/website-development-mistakes/",
-          "/sitemap/"
-        ]
-      },
-      {
-        "target": "/services/generative-ai/",
-        "statusCode": 301,
-        "location": "/services/ai-video-production-agency/",
-        "isApproved": true,
-        "sources": [
-          "/australia-page/",
-          "/blogs/ai-tools-marketing-agencies/"
-        ]
-      },
-      {
-        "target": "/seo-services-in-mumbai/",
-        "statusCode": 301,
-        "location": "/services/seo-services-in-mumbai/",
-        "isApproved": true,
-        "sources": [
-          "/blogs/ai-generated-summaries-in-search-ads/"
-        ]
-      },
-      {
-        "target": "/services/llm-seo/",
-        "statusCode": 301,
-        "location": "/services/llm-seo-service/",
-        "isApproved": true,
-        "sources": [
-          "/blogs/generative-engine-optimization/"
-        ]
-      },
-      {
-        "target": "/services/aeo/?utm_source=chatgpt.com",
-        "statusCode": 301,
-        "location": "/services/aeo-services-in-mumbai/",
-        "isApproved": true,
-        "sources": [
-          "/blogs/google-ai-search-update/"
-        ]
-      },
-      {
-        "target": "/services/website-development/",
-        "statusCode": 301,
-        "location": "/services/website-development-amc/",
-        "isApproved": true,
-        "sources": [
-          "/services/ai-production-dubai-page/"
-        ]
-      },
-      {
-        "target": "/services/seo-services-in-pune/",
-        "statusCode": 301,
-        "location": "/services/seo-service-pune/",
-        "isApproved": true,
-        "sources": [
-          "/services/seo-service-in-banglore/",
-          "/services/seo-service-in-gurugram/",
-          "/services/seo-services-in-hyderabad/"
-        ]
-      }
-    ]
+    "redirectLinks": []
   },
   "assetAudit": {
     "local": {

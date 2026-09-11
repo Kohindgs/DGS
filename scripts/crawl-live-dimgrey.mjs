@@ -736,6 +736,7 @@ async function main() {
         totalReferences: internalLinkAudit.totalReferences,
         uniqueUrls: internalLinkAudit.uniqueUrls,
         healthy: internalLinkAudit.healthy2xx,
+        approved3xx: internalLinkAudit.approved3xx,
         broken: internalLinkAudit.status404 + internalLinkAudit.status410 + internalLinkAudit.status5xx + internalLinkAudit.networkErrors,
         redirectIssues: internalLinkAudit.unexpected3xx
       },
@@ -804,7 +805,8 @@ async function main() {
   console.log('\nINTERNAL LINKS');
   console.log(`Total references: ${finalReport.summary.internalLinks.totalReferences}`);
   console.log(`Unique URLs:      ${finalReport.summary.internalLinks.uniqueUrls}`);
-  console.log(`Healthy:          ${finalReport.summary.internalLinks.healthy}`);
+  console.log(`Healthy (2xx):    ${finalReport.summary.internalLinks.healthy}`);
+  console.log(`Approved 3xx:     ${finalReport.summary.internalLinks.approved3xx}`);
   console.log(`Broken:           ${finalReport.summary.internalLinks.broken}`);
   console.log(`Redirect issues:  ${finalReport.summary.internalLinks.redirectIssues}`);
 
@@ -840,6 +842,8 @@ async function main() {
     finalReport.summary.assets.broken === 0 &&
     finalReport.summary.assets.externalFailures === 0 &&
     finalReport.summary.internalLinks.broken === 0 &&
+    finalReport.summary.internalLinks.approved3xx === 0 &&
+    finalReport.summary.internalLinks.redirectIssues === 0 &&
     finalReport.summary.stagingLeakage.htmlOccurrences === 0 &&
     finalReport.summary.stagingLeakage.sitemapOccurrences === 0 &&
     finalReport.summary.stagingLeakage.llmOccurrences === 0 &&
@@ -847,10 +851,10 @@ async function main() {
     finalReport.summary.robots.xRobotsTagDefects === 0;
 
   if (allCriticalPass) {
-    console.log('DIMGREY SEARCH + AI LAUNCH GATE: APPROVED — ZERO MEASURED DEFECTS');
+    console.log('DIMGREY SEARCH + AI LAUNCH GATE: APPROVED — ZERO INTERNAL REDIRECT HOPS — ZERO MEASURED DEFECTS');
   } else {
     console.log('DIMGREY SEARCH + AI LAUNCH GATE: DEFECTS DETECTED — STOPPING FOR HUMAN REVIEW');
-    console.log(`(Broken internal links: ${finalReport.summary.internalLinks.broken}, External asset failures: ${finalReport.summary.assets.externalFailures})`);
+    console.log(`(Approved 3xx: ${finalReport.summary.internalLinks.approved3xx}, Broken internal links: ${finalReport.summary.internalLinks.broken}, External asset failures: ${finalReport.summary.assets.externalFailures})`);
   }
 }
 
