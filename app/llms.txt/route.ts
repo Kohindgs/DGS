@@ -27,6 +27,8 @@ ${verifiedOrganization.url}/
 ## Optional
 
 - ${verifiedOrganization.url}/llms-full.txt
+- ${verifiedOrganization.url}/llms.md
+- ${verifiedOrganization.url}/llms-full.md
 `;
 
 export function GET() {

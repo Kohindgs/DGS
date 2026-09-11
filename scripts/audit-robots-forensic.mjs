@@ -15,13 +15,33 @@ function buildRobotsManifest(publicIndexing) {
     return { rules: [{ userAgent: "*", allow: "/" }] };
   }
   const crawlRules = { allow: "/", disallow: DISALLOWED_PATHS };
+  const searchDiscoveryCrawlers = [
+    "*",
+    "Googlebot",
+    "Bingbot",
+    "OAI-SearchBot",
+    "ChatGPT-User",
+    "PerplexityBot",
+    "Claude-SearchBot",
+    "Claude-User",
+  ];
+
+  const aiTrainingCrawlers = [
+    "GPTBot",
+    "ClaudeBot",
+    "Google-Extended",
+    "Applebot-Extended",
+    "CCBot",
+    "Bytespider",
+  ];
+
+  const allConfiguredAgents = [...searchDiscoveryCrawlers, ...aiTrainingCrawlers];
+
   return {
-    rules: [
-      { userAgent: "*", ...crawlRules },
-      { userAgent: "Googlebot", ...crawlRules },
-      { userAgent: "Bingbot", ...crawlRules },
-      { userAgent: "OAI-SearchBot", ...crawlRules },
-    ],
+    rules: allConfiguredAgents.map((userAgent) => ({
+      userAgent,
+      ...crawlRules,
+    })),
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,
   };

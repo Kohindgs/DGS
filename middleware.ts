@@ -13,6 +13,22 @@ const approvedRedirects = new Map(
 );
 
 export function middleware(request: NextRequest) {
+  const host = (request.headers.get("host") || "").toLowerCase().split(":")[0];
+  const proto = (request.headers.get("x-forwarded-proto") || request.nextUrl.protocol.replace(":", "")).toLowerCase();
+  const isStaging = host.includes("hostingersite.com") || host.includes("localhost") || host.includes("127.0.0.1");
+  const shouldApplyStagingRobots = isStaging || !isPublicIndexingEnabled();
+
+  // Enforce single-hop production canonical host and HTTPS:
+  // https://dgeniussolutions.com or http://(www.)dgeniussolutions.com -> https://www.dgeniussolutions.com
+  if (!isStaging && (host === "dgeniussolutions.com" || (host === "www.dgeniussolutions.com" && proto === "http"))) {
+    const canonicalUrl = new URL(request.nextUrl.pathname + request.nextUrl.search, "https://www.dgeniussolutions.com");
+    const response = NextResponse.redirect(canonicalUrl, 301);
+    if (shouldApplyStagingRobots) {
+      response.headers.set("X-Robots-Tag", stagingRobotsHeaderValue());
+    }
+    return response;
+  }
+
   const pathname = normalizeSitePath(request.nextUrl.pathname);
   const decisionRedirect = getApprovedRedirectDestination(pathname);
   const configRedirect = approvedRedirects.get(pathname);
@@ -23,7 +39,7 @@ export function middleware(request: NextRequest) {
     url.pathname = normalizeSitePath(redirectDestination);
     url.search = "";
     const response = NextResponse.redirect(url, configRedirect?.statusCode ?? 301);
-    if (!isPublicIndexingEnabled()) {
+    if (shouldApplyStagingRobots) {
       response.headers.set("X-Robots-Tag", stagingRobotsHeaderValue());
     }
     return response;
@@ -41,7 +57,7 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  if (!isPublicIndexingEnabled()) {
+  if (shouldApplyStagingRobots) {
     response.headers.set("X-Robots-Tag", stagingRobotsHeaderValue());
   }
 
