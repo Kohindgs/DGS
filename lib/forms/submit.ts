@@ -3,7 +3,7 @@ import { assertRouteFormMapping, getFormDefinitionById } from "./registry";
 // @ts-expect-error shared validation module consumed by production and mocked tests
 import { validateFormPayload } from "./payload-validation.mjs";
 // @ts-expect-error shared form-context module consumed by production and mocked tests
-import { fetchFormContext } from "./form-context.mjs";
+import { fetchFormContext, getWordpressBackendOrigin } from "./form-context.mjs";
 // @ts-expect-error shared Fluent Forms ajax payload builder consumed by production and mocked tests
 import { buildFluentFormsAjaxParams, interpretFluentAjaxResponse } from "./fluent-ajax-payload.mjs";
 
@@ -67,7 +67,10 @@ export async function forwardToFluentForms(options: {
     submissionAction: definition.backend.submissionAction || "fluentform_submit",
   });
 
-  const endpoint = definition.backend.submissionEndpoint;
+  const backendOrigin = getWordpressBackendOrigin();
+  const endpoint = process.env.DGS_WORDPRESS_BACKEND_ORIGIN
+    ? `${backendOrigin}/wp-admin/admin-ajax.php`
+    : (definition.backend.submissionEndpoint || `${backendOrigin}/wp-admin/admin-ajax.php`);
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {

@@ -32,6 +32,7 @@
     "validate:redirects": "node scripts/validate-redirects.mjs",
     "validate:search": "node scripts/validate-search-architecture.mjs",
     "validate:forms": "node scripts/validate-forms-readiness.mjs",
+    "check:forms:backend": "node scripts/check-forms-backend-health.mjs",
     "validate:portfolio": "node scripts/validate-portfolio-readiness.mjs",
     "validate:envira-runtime": "node scripts/validate-envira-runtime.mjs",
     "build:portfolio-alt-review": "node scripts/build-portfolio-alt-review.mjs",
