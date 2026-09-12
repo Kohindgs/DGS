@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-12T08:56:14.861Z",
+  "checkedAt": "2026-09-12T09:02:34.282Z",
   "target": "https://dimgrey-goat-473970.hostingersite.com",
   "baselineOverallSha256": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
   "baselineIntegrity": "pass",
@@ -31,17 +31,11 @@
         "WebPage",
         "WebSite"
       ],
-      "contentHashMatch": false,
+      "contentHashMatch": true,
       "content": {
         "missingHeadings": [],
-        "extraHeadings": [
-          {
-            "index": 66,
-            "level": "h3",
-            "text": "Our 4-Stage AI Video Production Process"
-          }
-        ],
-        "headingOrderChanged": true,
+        "extraHeadings": [],
+        "headingOrderChanged": false,
         "faq": {
           "missing": [],
           "extra": [],
@@ -80,11 +74,6 @@
           "detail": "EXPECTED_STAGING_NOINDEX"
         },
         {
-          "class": "D",
-          "label": "REAL_VISIBLE_CONTENT_DRIFT",
-          "detail": "1 extra headings"
-        },
-        {
           "class": "B",
           "label": "APPROVED_TECHNICAL_LINK_TARGET_CORRECTION",
           "detail": "\"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/"
@@ -93,16 +82,9 @@
           "class": "B",
           "label": "APPROVED_BROKEN_SOURCE_LINK_REMOVAL",
           "detail": "\"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved"
-        },
-        {
-          "class": "C",
-          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
-          "detail": "normalized content hash differs without structural heading/FAQ/link loss"
         }
       ],
-      "blocking": [
-        "/services/ai-video-production-agency/: [D] 1 extra headings"
-      ]
+      "blocking": []
     },
     {
       "path": "/services/aeo-services-in-mumbai/",
@@ -906,15 +888,12 @@
     "/services/ai-video-production-agency/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
     "/services/ai-video-production-agency/: [B] \"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved",
-    "/services/ai-video-production-agency/: [C] normalized content hash differs without structural heading/FAQ/link loss",
     "/services/aeo-services-in-mumbai/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/aeo-services-in-mumbai/: [B] Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)",
     "/services/geo/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/llm-seo-service/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" approved link-target correction /services/website-development/ -> /services/website-development-amc/"
   ],
-  "blockingFailures": [
-    "/services/ai-video-production-agency/: [D] 1 extra headings"
-  ],
-  "passed": false
+  "blockingFailures": [],
+  "passed": true
 }
