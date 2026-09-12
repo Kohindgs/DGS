@@ -1,0 +1,219 @@
+{
+  "capturedAt": "2026-08-29T07:25:17.680Z",
+  "approvedSha": "5002966",
+  "sourceUrl": "http://127.0.0.1:3025",
+  "viewport": {
+    "pageHeight": 15561,
+    "viewportWidth": 1440,
+    "viewportHeight": 900,
+    "usesWpMirror": true,
+    "usesNativeHome": false
+  },
+  "sectionOrder": [
+    "header",
+    "hero",
+    "rail",
+    "proof",
+    "capabilities",
+    "portfolio",
+    "caseStudies",
+    "creativeGallery",
+    "testimonials",
+    "searchAuthority",
+    "industries",
+    "whyDgs",
+    "faq",
+    "finalCta",
+    "footer"
+  ],
+  "sections": [
+    {
+      "key": "header",
+      "selector": "#dgsNav",
+      "present": true,
+      "bounds": {
+        "selector": "#dgsNav",
+        "top": 0,
+        "height": 0,
+        "width": 1440
+      }
+    },
+    {
+      "key": "hero",
+      "selector": ".dgs-v1215-hero",
+      "present": true,
+      "bounds": {
+        "selector": ".dgs-v1215-hero",
+        "top": 0,
+        "height": 996,
+        "width": 1440
+      }
+    },
+    {
+      "key": "rail",
+      "selector": ".dgs-v1215-rail",
+      "present": true,
+      "bounds": {
+        "selector": ".dgs-v1215-rail",
+        "top": 996,
+        "height": 201,
+        "width": 1440
+      }
+    },
+    {
+      "key": "proof",
+      "selector": ".dgs-v1215-proof-stack, #dgs-proof",
+      "present": true,
+      "bounds": {
+        "selector": ".dgs-v1215-proof-stack, #dgs-proof",
+        "top": 1197,
+        "height": 2994,
+        "width": 1440
+      }
+    },
+    {
+      "key": "capabilities",
+      "selector": "#dgs-v1215-services",
+      "present": true,
+      "bounds": {
+        "selector": "#dgs-v1215-services",
+        "top": 4191,
+        "height": 890,
+        "width": 1440
+      }
+    },
+    {
+      "key": "portfolio",
+      "selector": ".dgs-v1215-ai-portfolio, #portfolio",
+      "present": true,
+      "bounds": {
+        "selector": ".dgs-v1215-ai-portfolio, #portfolio",
+        "top": 5081,
+        "height": 2554,
+        "width": 1440
+      }
+    },
+    {
+      "key": "caseStudies",
+      "selector": ".dgs-v1215-case-block, #case-studies",
+      "present": true,
+      "bounds": {
+        "selector": ".dgs-v1215-case-block, #case-studies",
+        "top": 7635,
+        "height": 1211,
+        "width": 1440
+      }
+    },
+    {
+      "key": "creativeGallery",
+      "selector": "#dgs-v1215-work",
+      "present": true,
+      "bounds": {
+        "selector": "#dgs-v1215-work",
+        "top": 8846,
+        "height": 1024,
+        "width": 1440
+      }
+    },
+    {
+      "key": "testimonials",
+      "selector": ".dgs-v1215-testimonials, #testimonials",
+      "present": true,
+      "bounds": {
+        "selector": ".dgs-v1215-testimonials, #testimonials",
+        "top": 9869,
+        "height": 779,
+        "width": 1440
+      }
+    },
+    {
+      "key": "searchAuthority",
+      "selector": "#dgs-v1215-search-authority",
+      "present": true,
+      "bounds": {
+        "selector": "#dgs-v1215-search-authority",
+        "top": 10648,
+        "height": 980,
+        "width": 1440
+      }
+    },
+    {
+      "key": "industries",
+      "selector": "#dgs-v1215-industries",
+      "present": true,
+      "bounds": {
+        "selector": "#dgs-v1215-industries",
+        "top": 11628,
+        "height": 388,
+        "width": 1440
+      }
+    },
+    {
+      "key": "whyDgs",
+      "selector": "#dgs-v1215-why",
+      "present": true,
+      "bounds": {
+        "selector": "#dgs-v1215-why",
+        "top": 12016,
+        "height": 618,
+        "width": 1440
+      }
+    },
+    {
+      "key": "faq",
+      "selector": "#dgs-v1215-faq",
+      "present": true,
+      "bounds": {
+        "selector": "#dgs-v1215-faq",
+        "top": 12634,
+        "height": 792,
+        "width": 1440
+      }
+    },
+    {
+      "key": "finalCta",
+      "selector": "#contact-form, .dgs-v1215-final",
+      "present": true,
+      "bounds": {
+        "selector": "#contact-form, .dgs-v1215-final",
+        "top": 13426,
+        "height": 1346,
+        "width": 1440
+      }
+    },
+    {
+      "key": "footer",
+      "selector": "footer, .dgs-footer",
+      "present": true,
+      "bounds": {
+        "selector": "footer, .dgs-footer",
+        "top": 14772,
+        "height": 789,
+        "width": 1440
+      }
+    }
+  ],
+  "headerBounds": {
+    "selector": "#dgsNav",
+    "top": 0,
+    "height": 0,
+    "width": 1440
+  },
+  "heroBounds": {
+    "selector": ".dgs-v1215-hero",
+    "top": 0,
+    "height": 996,
+    "width": 1440
+  },
+  "footerBounds": {
+    "selector": "footer, .dgs-footer",
+    "top": 14772,
+    "height": 789,
+    "width": 1440
+  },
+  "importantSelectors": {
+    "wpMirrorRoot": 2,
+    "mirrorCanvas": 1,
+    "nativeHeader": 0
+  }
+}

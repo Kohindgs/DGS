@@ -1,0 +1,169 @@
+{
+  "videoCount": 6,
+  "originalTotalBytes": 379597833,
+  "optimizedMp4TotalBytes": 119046846,
+  "optimizedWebmTotalBytes": 95879093,
+  "posterTotalBytes": 784785,
+  "largestOptimizedVideo": {
+    "filename": "media4.mp4",
+    "bytes": 77088438
+  },
+  "items": [
+    {
+      "id": "media1",
+      "filename": "Media1.mp4",
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "duration": 38.872167,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/media1_poster.avif",
+        "webp": "/media/portfolio/posters/media1_poster.webp",
+        "fallback": "/media/portfolio/posters/media1_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/media1.webm",
+        "mp4": "/media/portfolio/videos/media1.mp4"
+      },
+      "bytes": {
+        "original": 51640936,
+        "mp4": 22556535,
+        "webm": 22914114,
+        "posterWebp": 81624,
+        "posterAvif": 71996
+      }
+    },
+    {
+      "id": "media2",
+      "filename": "Media2.mp4",
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "duration": 37.137104,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/media2_poster.avif",
+        "webp": "/media/portfolio/posters/media2_poster.webp",
+        "fallback": "/media/portfolio/posters/media2_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/media2.webm",
+        "mp4": "/media/portfolio/videos/media2.mp4"
+      },
+      "bytes": {
+        "original": 31559780,
+        "mp4": 3430012,
+        "webm": 3386627,
+        "posterWebp": 56794,
+        "posterAvif": 44011
+      }
+    },
+    {
+      "id": "media3",
+      "filename": "Media3.m4v",
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "duration": 57.016667,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/media3_poster.avif",
+        "webp": "/media/portfolio/posters/media3_poster.webp",
+        "fallback": "/media/portfolio/posters/media3_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/media3.webm",
+        "mp4": "/media/portfolio/videos/media3.mp4"
+      },
+      "bytes": {
+        "original": 4050201,
+        "mp4": 2956553,
+        "webm": 2767100,
+        "posterWebp": 20566,
+        "posterAvif": 11784
+      }
+    },
+    {
+      "id": "media4",
+      "filename": "Media4.mp4",
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "duration": 182.8,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/media4_poster.avif",
+        "webp": "/media/portfolio/posters/media4_poster.webp",
+        "fallback": "/media/portfolio/posters/media4_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/media4.webm",
+        "mp4": "/media/portfolio/videos/media4.mp4"
+      },
+      "bytes": {
+        "original": 238866499,
+        "mp4": 77088438,
+        "webm": 58875585,
+        "posterWebp": 157508,
+        "posterAvif": 121783
+      }
+    },
+    {
+      "id": "media5",
+      "filename": "Media5.mp4",
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "duration": 25.133333,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/media5_poster.avif",
+        "webp": "/media/portfolio/posters/media5_poster.webp",
+        "fallback": "/media/portfolio/posters/media5_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/media5.webm",
+        "mp4": "/media/portfolio/videos/media5.mp4"
+      },
+      "bytes": {
+        "original": 27012794,
+        "mp4": 5836714,
+        "webm": 3871751,
+        "posterWebp": 70926,
+        "posterAvif": 54957
+      }
+    },
+    {
+      "id": "media6",
+      "filename": "Media6.mp4",
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "duration": 19.886542,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/media6_poster.avif",
+        "webp": "/media/portfolio/posters/media6_poster.webp",
+        "fallback": "/media/portfolio/posters/media6_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/media6.webm",
+        "mp4": "/media/portfolio/videos/media6.mp4"
+      },
+      "bytes": {
+        "original": 26467623,
+        "mp4": 7178594,
+        "webm": 4063916,
+        "posterWebp": 51518,
+        "posterAvif": 41318
+      }
+    }
+  ]
+}

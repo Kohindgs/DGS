@@ -117,6 +117,11 @@ export function prepareHomepageMirror(content: WpMirrorContent): PreparedHomepag
 
   mainHtml = mainHtml.replace(DUPLICATE_FINAL_GROWTH_AUDIT_CTA_RE, "");
 
+  mainHtml = mainHtml.replace(
+    /(?:https:\/\/(?:www\.)?dgeniussolutions\.com)?\/wp-content\/uploads\/2026\/07\/Weavings-Home-page-\.png(?:\?[^"'\s>]*)?/g,
+    "/images/case-studies/weavings-home-page-64820.png",
+  );
+
   mainHtml = rewriteWpUrls(mainHtml);
   const segments = buildSegments(mainHtml);
 

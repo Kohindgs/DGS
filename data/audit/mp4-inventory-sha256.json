@@ -1,0 +1,637 @@
+{
+  "generatedAt": "2026-09-05T09:23:23.580Z",
+  "totalVideos": 42,
+  "totalBytes": 1140667287,
+  "totalMb": "1087.83",
+  "allReferenced": true,
+  "runtimePortfolioCount": 40,
+  "brandingShowcaseCount": 2,
+  "inventory": [
+    {
+      "filename": "Happy-Holi_New.mp4",
+      "path": "/wp-content/uploads/2026/07/Happy-Holi_New.mp4",
+      "sizeBytes": 104720083,
+      "sizeMb": "99.87",
+      "sha256": "9574b22c0c4b3f20881455648443112cf5d3646802a70152d3bb30bd6d532351",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Sai-Ki-Vaani_Choothne-Ka-Darr-1.mp4",
+      "path": "/wp-content/uploads/2026/05/Sai-Ki-Vaani_Choothne-Ka-Darr-1.mp4",
+      "sizeBytes": 97467673,
+      "sizeMb": "92.95",
+      "sha256": "5acf003f41434835a023ef8d691aff84fc93565af5ce3f86760bd179defca1b9",
+      "referencingFeature": "AI Video Portfolio tab [MYTHOLOGICAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Instagram-Episode-12-Suno-Sai-Ko-Prarthana-1.mp4",
+      "path": "/wp-content/uploads/2026/05/Instagram-Episode-12-Suno-Sai-Ko-Prarthana-1.mp4",
+      "sizeBytes": 96457523,
+      "sizeMb": "91.99",
+      "sha256": "e055bedd9bfb02eb7570ce0b549d9a4fc19bf5219d71fd7397db8e2c2caa24f3",
+      "referencingFeature": "AI Video Portfolio tab [MYTHOLOGICAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Instagram-Epsisode-7-Suno-Sai-Ko-Vishwas-2.mp4",
+      "path": "/wp-content/uploads/2026/05/Instagram-Epsisode-7-Suno-Sai-Ko-Vishwas-2.mp4",
+      "sizeBytes": 93170356,
+      "sizeMb": "88.85",
+      "sha256": "48b48b80b97b5ceed9e6fcd99872d288d035995ce3032baa7be90b3372415c3b",
+      "referencingFeature": "AI Video Portfolio tab [MYTHOLOGICAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Sai-Ki-Vaani_Derr-1.mp4",
+      "path": "/wp-content/uploads/2026/05/Sai-Ki-Vaani_Derr-1.mp4",
+      "sizeBytes": 92611919,
+      "sizeMb": "88.32",
+      "sha256": "bb232dd44e26abc0f448c84de61c806942ff430acb78d2c551d5f965c8521159",
+      "referencingFeature": "AI Video Portfolio tab [MYTHOLOGICAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Instagram-Episode-3-Suno-Sai-Ko-1.mp4",
+      "path": "/wp-content/uploads/2026/05/Instagram-Episode-3-Suno-Sai-Ko-1.mp4",
+      "sizeBytes": 84000826,
+      "sizeMb": "80.11",
+      "sha256": "5d6da9d652ff50be5cffcb45f3a886eeced852166d4ac2e9b12a8238c42870f4",
+      "referencingFeature": "AI Video Portfolio tab [MYTHOLOGICAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "BaisakhiV1.mp4",
+      "path": "/wp-content/uploads/2026/07/BaisakhiV1.mp4",
+      "sizeBytes": 76809990,
+      "sizeMb": "73.25",
+      "sha256": "c7c498a23691d91310824af11a6ac8eda0bedca9b7c6b963c6d9e0bd91eccb50",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Vachaan-5-Teaser.mp4",
+      "path": "/wp-content/uploads/2026/05/Vachaan-5-Teaser.mp4",
+      "sizeBytes": 70226656,
+      "sizeMb": "66.97",
+      "sha256": "b613d1689c5bea8ceb212168efe30bbc496883d55419dc05768fd028a2f4cbaf",
+      "referencingFeature": "AI Video Portfolio tab [MYTHOLOGICAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Non-Intro-1.mp4",
+      "path": "/wp-content/uploads/2026/07/Non-Intro-1.mp4",
+      "sizeBytes": 65610240,
+      "sizeMb": "62.57",
+      "sha256": "07a861574069c388de679fe3ab17a7d1f5342e50e2ec5e85a6c48288c5f9ead2",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Makar-Sankranti-And-Pongal-Final-1.mp4",
+      "path": "/wp-content/uploads/2026/04/Makar-Sankranti-And-Pongal-Final-1.mp4",
+      "sizeBytes": 59339479,
+      "sizeMb": "56.59",
+      "sha256": "f301dcfe7aa1534e2cf538cf5b56a769acb23b3c278b3eed1fc97313ed93ac52",
+      "referencingFeature": "AI Video Portfolio tab [MASCOT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Diwali-Campaign-Home-Credit11.mp4",
+      "path": "/wp-content/uploads/2026/04/Diwali-Campaign-Home-Credit11.mp4",
+      "sizeBytes": 32123239,
+      "sizeMb": "30.64",
+      "sha256": "99751412f364d6235fac036d863d2a8088dc26f351e74ec79743b95265d09697",
+      "referencingFeature": "AI Video Portfolio tab [TVC]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Dgs-Diwali11.mp4",
+      "path": "/wp-content/uploads/2026/04/Dgs-Diwali11.mp4",
+      "sizeBytes": 26755418,
+      "sizeMb": "25.52",
+      "sha256": "7be33e9a39b7bb1ae5e66d6e6ea0e72f7a7d45a11bfcc465e2350537cbf7a04f",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Sai-Dham-Introductionfinal-New.mp4",
+      "path": "/wp-content/uploads/2026/04/Sai-Dham-Introductionfinal-New.mp4",
+      "sizeBytes": 26185284,
+      "sizeMb": "24.97",
+      "sha256": "94299afd6c02fa965f20b91360ddc4d8bb22fba5ecae54da3a0c5c6bf41ee9b8",
+      "referencingFeature": "AI Video Portfolio tab [MYTHOLOGICAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "freepik__a-closeup-of-a-traditional-gold-necklace-with-jhum__50633.mp4",
+      "path": "/wp-content/uploads/2026/07/freepik__a-closeup-of-a-traditional-gold-necklace-with-jhum__50633.mp4",
+      "sizeBytes": 21490372,
+      "sizeMb": "20.49",
+      "sha256": "96f8cbb273137b6889778e2dc69ee14e5a25a273f6b626264f389516abfb59ac",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Navratri11.mp4",
+      "path": "/wp-content/uploads/2026/04/Navratri11.mp4",
+      "sizeBytes": 17660421,
+      "sizeMb": "16.84",
+      "sha256": "e976aae5a9cd79a88ef4aad5c41bdefd8b46ef752e7db1a7afcfa4922a3b5689",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Lohri11.mp4",
+      "path": "/wp-content/uploads/2026/04/Lohri11.mp4",
+      "sizeBytes": 16183344,
+      "sizeMb": "15.43",
+      "sha256": "c878c8d5520f2aa469e4ab3985464814c50c144fa806361ee7398472cd0364c3",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "freepik__continue-this-video-showing-the-other-lady-taking-__50626.mp4",
+      "path": "/wp-content/uploads/2026/07/freepik__continue-this-video-showing-the-other-lady-taking-__50626.mp4",
+      "sizeBytes": 14500999,
+      "sizeMb": "13.83",
+      "sha256": "513ce9433480cd0ef4e43a115bd2148729ec994dd8213ded5234ec16b5e1b0cc",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "freepik_cinematic-luxury-event-scene-elegant-indian-woman-_kling_720p_16-9_24fps_64450.mp4",
+      "path": "/wp-content/uploads/2026/07/freepik_cinematic-luxury-event-scene-elegant-indian-woman-_kling_720p_16-9_24fps_64450.mp4",
+      "sizeBytes": 14038989,
+      "sizeMb": "13.39",
+      "sha256": "eae1b249e99dda128d5cb6c0100c635c0a95d1203aca12e43add88d50fee2b82",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "freepik_cinematic-luxury-jewelry-advertisement-scene-an-el_kling_720p_3-2_24fps_64453.mp4",
+      "path": "/wp-content/uploads/2026/07/freepik_cinematic-luxury-jewelry-advertisement-scene-an-el_kling_720p_3-2_24fps_64453.mp4",
+      "sizeBytes": 12273957,
+      "sizeMb": "11.71",
+      "sha256": "d843fbf25f8b4c549f15017ce68139c2e26f245d823684386e98993ec44c9da2",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "V-3.mp4",
+      "path": "/wp-content/uploads/2026/07/V-3.mp4",
+      "sizeBytes": 10713748,
+      "sizeMb": "10.22",
+      "sha256": "7847dacf6011f99ef4d67580efc75a3d79c5887c7935a76e114c70a9cfc8424f",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Happy-Friendship-Day11.mp4",
+      "path": "/wp-content/uploads/2026/04/Happy-Friendship-Day11.mp4",
+      "sizeBytes": 10282565,
+      "sizeMb": "9.81",
+      "sha256": "8bbc7ca055360469fbb7cdd734512c28d57fca919987bc1fe92b8a33d159dcfe",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Happy-Easter.mp4",
+      "path": "/wp-content/uploads/2026/04/Happy-Easter.mp4",
+      "sizeBytes": 10265242,
+      "sizeMb": "9.79",
+      "sha256": "03716dc28dfc62fa64497a14cb1947f574097280b1de88cd52120b4d675ad467",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "V-2.mp4",
+      "path": "/wp-content/uploads/2026/07/V-2.mp4",
+      "sizeBytes": 9768175,
+      "sizeMb": "9.32",
+      "sha256": "fbe2b020599cb4757191e06c61e274f192b118a0fe0970fc7dc19dd2bfdf4ae2",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Independence-Day-Dgs11.mp4",
+      "path": "/wp-content/uploads/2026/04/Independence-Day-Dgs11.mp4",
+      "sizeBytes": 9482054,
+      "sizeMb": "9.04",
+      "sha256": "a3886a63ccc997f094bf5f87d952c59e5c200f95b7989506522d1d63175b30af",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Media1-video-converter.com_.mp4",
+      "path": "/wp-content/uploads/2026/01/Media1-video-converter.com_.mp4",
+      "sizeBytes": 9365908,
+      "sizeMb": "8.93",
+      "sha256": "13ad44a1cb7d8f0433d1ee9ee98b57683bf8cd0537a36afd87af0c9d646ae38e",
+      "referencingFeature": "Branding Showcase Video Carousel",
+      "routes": [
+        "/services/branding/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": false
+    },
+    {
+      "filename": "Hanuman-Jayanti-Final.mp4",
+      "path": "/wp-content/uploads/2026/04/Hanuman-Jayanti-Final.mp4",
+      "sizeBytes": 8814594,
+      "sizeMb": "8.41",
+      "sha256": "9e1bbb1303a6abb757204c9a862f5fe136e255809b24cbe4491c0c1d520ec884",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Children-S-Day11.mp4",
+      "path": "/wp-content/uploads/2026/04/Children-S-Day11.mp4",
+      "sizeBytes": 6569608,
+      "sizeMb": "6.27",
+      "sha256": "475eec3153ae2e8c8ec3108f1f2f737dea8fe6ddafcaf3e7e02a0a771f153f6d",
+      "referencingFeature": "AI Video Portfolio tab [FESTIVAL]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Media2-video-converter.com_.mp4",
+      "path": "/wp-content/uploads/2026/01/Media2-video-converter.com_.mp4",
+      "sizeBytes": 5106563,
+      "sizeMb": "4.87",
+      "sha256": "cb0d71717e201159375717fbf5cb1cb6faa95e15d8173aa4468544e8e9f253ae",
+      "referencingFeature": "Branding Showcase Video Carousel",
+      "routes": [
+        "/services/branding/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": false
+    },
+    {
+      "filename": "Baanganga-Test211.mp4",
+      "path": "/wp-content/uploads/2026/04/Baanganga-Test211.mp4",
+      "sizeBytes": 4929867,
+      "sizeMb": "4.70",
+      "sha256": "b8604e73091183c617692d22e3da3abfbd94ad5b36590b9d2c038f0863f0eef2",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Jewelry11.mp4",
+      "path": "/wp-content/uploads/2026/04/Jewelry11.mp4",
+      "sizeBytes": 4516371,
+      "sizeMb": "4.31",
+      "sha256": "2f62553c0cd952df76edaf00df3dc44cf192922bfd25b2ae63d6af8fba357267",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Mango-Farm-Preview11.mp4",
+      "path": "/wp-content/uploads/2026/04/Mango-Farm-Preview11.mp4",
+      "sizeBytes": 4458824,
+      "sizeMb": "4.25",
+      "sha256": "7fab44d5ea1eac1132e38340917283fc1718ecf76638d978d01c1eabc6df677e",
+      "referencingFeature": "AI Video Portfolio tab [PRODUCT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Savage-Horse11.mp4",
+      "path": "/wp-content/uploads/2026/04/Savage-Horse11.mp4",
+      "sizeBytes": 3505235,
+      "sizeMb": "3.34",
+      "sha256": "cd3b3c293f7c7c6dbaa94eeda1bcba5be82ebdf804f50b80c874786ccf211fa9",
+      "referencingFeature": "AI Video Portfolio tab [CONCEPT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Lava-Women11.mp4",
+      "path": "/wp-content/uploads/2026/04/Lava-Women11.mp4",
+      "sizeBytes": 3414346,
+      "sizeMb": "3.26",
+      "sha256": "6595dd2fc8bb26bacb3e96e8e52608587be8dfa42d8f40b4fa406257255b028c",
+      "referencingFeature": "AI Video Portfolio tab [PRODUCT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Cushion-Cut.mp4",
+      "path": "/wp-content/uploads/2026/07/Cushion-Cut.mp4",
+      "sizeBytes": 3280167,
+      "sizeMb": "3.13",
+      "sha256": "dca2be557d99670e6435f9acbb2f7a08c3f5fca250ae272ee411fc2960099991",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Ice-Cream-Cone11.mp4",
+      "path": "/wp-content/uploads/2026/04/Ice-Cream-Cone11.mp4",
+      "sizeBytes": 2748483,
+      "sizeMb": "2.62",
+      "sha256": "9c43e9c94f0ebd40f6bb69515f1a9ce735617a97d88694deb072573d6109003c",
+      "referencingFeature": "AI Video Portfolio tab [PRODUCT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Wonder-Introduction11.mp4",
+      "path": "/wp-content/uploads/2026/04/Wonder-Introduction11.mp4",
+      "sizeBytes": 2611104,
+      "sizeMb": "2.49",
+      "sha256": "d0560f563769e730bd71af483038b5f505dbdfc4ba318cb2bbc182231e252e94",
+      "referencingFeature": "AI Video Portfolio tab [MASCOT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": true,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Dark-Soya11.mp4",
+      "path": "/wp-content/uploads/2026/04/Dark-Soya11.mp4",
+      "sizeBytes": 1922945,
+      "sizeMb": "1.83",
+      "sha256": "3b0121ea15254db8bf9d21ce9cab076bf20ed002c45e69e12be76c0ce2aa247a",
+      "referencingFeature": "AI Video Portfolio tab [PRODUCT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Green-Chilli11.mp4",
+      "path": "/wp-content/uploads/2026/04/Green-Chilli11.mp4",
+      "sizeBytes": 1582824,
+      "sizeMb": "1.51",
+      "sha256": "7c06a65b134f93af176350a11b0281a6959b18a98df7820f9e23e327013f5597",
+      "referencingFeature": "AI Video Portfolio tab [PRODUCT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Baanganga-Test111.mp4",
+      "path": "/wp-content/uploads/2026/04/Baanganga-Test111.mp4",
+      "sizeBytes": 1519947,
+      "sizeMb": "1.45",
+      "sha256": "4a0722711357a58b0cf9b08ebe5be83df0a4a6d8f4b28f97c3d6fe0472ed50ed",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Video_Polishing_Request_Fulfilled.mp4",
+      "path": "/wp-content/uploads/2026/07/Video_Polishing_Request_Fulfilled.mp4",
+      "sizeBytes": 1506222,
+      "sizeMb": "1.44",
+      "sha256": "9e7ecd0327e16a31784f20752200b0477f5e5248daf56a35027f7b4b24cd34d7",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Card-Magic-Man11.mp4",
+      "path": "/wp-content/uploads/2026/04/Card-Magic-Man11.mp4",
+      "sizeBytes": 1346271,
+      "sizeMb": "1.28",
+      "sha256": "a060908931f0a6271099c2540d4db77f51d9c3f349ee10156b4d9e07aee2825f",
+      "referencingFeature": "AI Video Portfolio tab [CONCEPT]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    },
+    {
+      "filename": "Baanganga-Gold-Example11.mp4",
+      "path": "/wp-content/uploads/2026/04/Baanganga-Gold-Example11.mp4",
+      "sizeBytes": 1329456,
+      "sizeMb": "1.27",
+      "sha256": "8f79153eeb1459b9b6ef31a20d5515cb366abc48fd8ce27119c73303a7bb81c4",
+      "referencingFeature": "AI Video Portfolio tab [JEWELLERY]",
+      "routes": [
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/",
+        "/services/shirdi-se-sai-tak-case-study/"
+      ],
+      "inHtmlDirectly": false,
+      "inRuntimePortfolioData": true
+    }
+  ]
+}

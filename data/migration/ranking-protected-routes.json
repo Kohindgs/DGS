@@ -1,0 +1,42 @@
+{
+  "policyVersion": 1,
+  "frozenAt": "2026-08-29T08:30:00.000Z",
+  "sourceOfTruth": "https://www.dgeniussolutions.com",
+  "policy": "WordPress visible content is the source of truth. Migration must not induce SEO/AEO/GEO/LLM-search ranking regression on these routes.",
+  "protectedPaths": [
+    "/services/ai-video-production-agency/",
+    "/services/aeo-services-in-mumbai/",
+    "/services/geo/",
+    "/services/llm-seo-service/"
+  ],
+  "observedMetaDescriptions": {
+    "/services/ai-video-production-agency/": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
+    "/services/aeo-services-in-mumbai/": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
+    "/services/geo/": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
+    "/services/llm-seo-service/": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get a free AI search audit by D'Genius Solutions."
+  },
+  "requiredSchemaTypes": ["BreadcrumbList", "Organization", "Service", "WebPage", "WebSite"],
+  "approvedExceptions": [
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "classification": "B",
+      "field": "canonical",
+      "wordpressCanonicalPath": "/services/aeo/",
+      "requiredNextCanonicalPath": "/services/aeo-services-in-mumbai/",
+      "detail": "Next must self-canonicalize to the long URL; defective WordPress /services/aeo/ must not be restored"
+    }
+  ],
+  "normalizationArtifacts": [
+    {
+      "classification": "C",
+      "kind": "heading-template-literal",
+      "pattern": "^\\+title\\+$",
+      "reason": "WordPress REST HTML contains unresolved JS template literal"
+    },
+    {
+      "classification": "C",
+      "kind": "image-link-wrap",
+      "reason": "WordPress wraps screenshot images in empty-anchor links; Next may render img-only equivalents"
+    }
+  ]
+}

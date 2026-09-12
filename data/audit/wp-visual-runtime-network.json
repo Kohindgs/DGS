@@ -1,0 +1,129 @@
+{
+  "generatedAt": "2026-09-02T08:29:27.031Z",
+  "next": "http://127.0.0.1:3025",
+  "routes": [
+    {
+      "path": "/services/seo-services-in-mumbai/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/ai-video-production-agency/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/geo/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/branding/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/social-media-marketing/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/website-development-amc/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/content-creation/",
+      "cssCount": 36,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/performance-marketing/",
+      "cssCount": 37,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/about-us/",
+      "cssCount": 29,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/contact-us/",
+      "cssCount": 28,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/portfolio/",
+      "cssCount": 29,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/blogs/",
+      "cssCount": 29,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "cssCount": 40,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/our-services/",
+      "cssCount": 32,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    },
+    {
+      "path": "/services/",
+      "cssCount": 32,
+      "leftoverGifPlaceholders": 0,
+      "react418": [],
+      "defects": []
+    }
+  ],
+  "summary": {
+    "defectCount": 0,
+    "react418Routes": []
+  }
+}

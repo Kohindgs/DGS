@@ -17,6 +17,9 @@ export function GET() {
     `- AI Video: ${verifiedOrganization.url}/services/ai-video-production-agency/`,
     "",
     `Sitemap: ${siteConfig.url}/sitemap.xml`,
+    `Short Markdown: ${siteConfig.url}/llms.md`,
+    `Full Markdown: ${siteConfig.url}/llms-full.md`,
+    `Short Plaintext: ${siteConfig.url}/llms.txt`,
     "",
   ].join("\n");
 

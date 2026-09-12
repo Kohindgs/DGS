@@ -1,0 +1,17 @@
+{
+  "routesChecked": 96,
+  "routes200": 96,
+  "routesCanonicalMatch": 96,
+  "routesNoIndexFoundInHtml": 0,
+  "brokenInternalLinks": 0,
+  "internalRedirectHops": 0,
+  "brokenAssets": 0,
+  "redirectsChecked": 37,
+  "redirectsPassed": 37,
+  "sitemapUrlCount": 96,
+  "llmEndpointsPassed": 4,
+  "llmEndpointsTotal": 4,
+  "wpOriginOperational": true,
+  "wpOriginProtected": true,
+  "errors": []
+}

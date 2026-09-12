@@ -28,6 +28,17 @@
     { "source": "/us/", "destination": "/us-landing-page/", "statusCode": 301, "reason": "US landing alias" },
     { "source": "/index.php/", "destination": "/", "statusCode": 301, "reason": "WordPress index alias" },
     { "source": "/home/", "destination": "/", "statusCode": 301, "reason": "Home alias" },
-    { "source": "/website-development-services-in-mumbai-dgenius-solutions/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "Legacy website development slug; authoritative service is website-development-amc" }
+    { "source": "/website-development-services-in-mumbai-dgenius-solutions/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "Legacy website development slug; authoritative service is website-development-amc" },
+    { "source": "/services/website-development/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "WordPress legacy slug; authoritative website development service is website-development-amc" },
+    { "source": "/services/generative-ai/", "destination": "/services/ai-video-production-agency/", "statusCode": 301, "reason": "WordPress legacy slug; generative AI service canonical is ai-video-production-agency" },
+    { "source": "/services/llm-seo-services/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "WordPress legacy plural slug alias" },
+    { "source": "/services/aeo-services/", "destination": "/services/aeo-services-in-mumbai/", "statusCode": 301, "reason": "WordPress legacy short AEO slug alias" },
+    { "source": "/google-ai-overviews-and-the-growth-of-zero-click-searches/", "destination": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/", "statusCode": 301, "reason": "Legacy root blog path without /blogs/ prefix; authoritative blog route is /blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/" },
+    { "source": "/why-local-seo-is-important-for-business-growth/", "destination": "/blogs/local-seo-business-growth/", "statusCode": 301, "reason": "Legacy WordPress blog URL; authoritative blog canonical is /blogs/local-seo-business-growth/" },
+    { "source": "/how-modern-seo-strategies-are-transforming-business-growth/", "destination": "/blogs/seo-strategies-business-growth/", "statusCode": 301, "reason": "Legacy WordPress blog URL; authoritative blog canonical is /blogs/seo-strategies-business-growth/" },
+    { "source": "/blogs/google-august-2026-spam-update/", "destination": "/blogs/google-spam-update/", "statusCode": 301, "reason": "Historical blog slug alias; authoritative blog canonical is /blogs/google-spam-update/" },
+    { "source": "/services/seo-services-dubai/", "destination": "/services/dubai-seo/", "statusCode": 301, "reason": "WordPress legacy Dubai SEO slug alias; authoritative service canonical is /services/dubai-seo/" },
+    { "source": "/services/aeo-services-in-dubai/", "destination": "/aeo-dubai/", "statusCode": 301, "reason": "WordPress legacy Dubai AEO slug alias; authoritative route canonical is /aeo-dubai/" },
+    { "source": "/services/google-ads/", "destination": "/services/performance-marketing/", "statusCode": 301, "reason": "Legacy Google Ads service alias; authoritative service canonical is /services/performance-marketing/" }
   ]
 }

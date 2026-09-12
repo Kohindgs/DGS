@@ -46,6 +46,18 @@ export const FOOTER_SERVICES = [
   { label: "LLM SEO Services", href: "/services/llm-seo-service/" },
 ] as const;
 
+export const FOOTER_LOCATIONS = [
+  { label: "USA", href: "/us-landing-page/" },
+  { label: "Australia", href: "/australia-page/" },
+  { label: "Dubai SEO", href: "/services/dubai-seo/" },
+  { label: "Dubai AEO", href: "/aeo-dubai/" },
+  { label: "Dubai AI Video", href: "/services/ai-production-dubai-page/" },
+  { label: "Pune SEO", href: "/services/seo-service-pune/" },
+  { label: "Bangalore SEO", href: "/services/seo-service-in-banglore/" },
+  { label: "Gurugram SEO", href: "/services/seo-service-in-gurugram/" },
+  { label: "Hyderabad SEO", href: "/services/seo-services-in-hyderabad/" },
+] as const;
+
 export const REACH_US = {
   phones: ["+91 99879 22901", "+91 85919 50238"],
   email: verifiedOrganization.email,

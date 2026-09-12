@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "policy": "APPROVED_SEMANTIC_HEADING_NORMALIZATION — explicit renderer-level heading level changes with verified WordPress source evidence preserved at original level in content-blocks.",
+  "normalizations": [
+    {
+      "route": "/blogs/core-update-strategy/",
+      "wordpressId": 64990,
+      "wordpressUrl": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
+      "sourceHeading": "Frequently Asked Questions",
+      "sourceLevel": "h1",
+      "renderedLevel": "h2",
+      "reason": "Live WordPress uses a secondary H1 for the FAQ section. Next keeps a single primary page H1 and demotes in-content secondary H1 blocks to H2 via SemanticContent demoteSecondaryHeadings.",
+      "liveWordPressElement": "h1",
+      "liveWordPressEvidenceAt": "2026-08-29T15:50:00.000Z",
+      "defectResolutionId": "MULTIPLE-H1-CORE-UPDATE"
+    },
+    {
+      "route": "/blogs/brand-mentions-for-ai-tools/",
+      "wordpressId": 64968,
+      "wordpressUrl": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
+      "sourceHeading": "Frequently Asked Questions",
+      "sourceLevel": "h1",
+      "renderedLevel": "h2",
+      "reason": "Live WordPress uses a secondary H1 for the FAQ section. Next keeps a single primary page H1 and demotes in-content secondary H1 blocks to H2 via SemanticContent demoteSecondaryHeadings.",
+      "liveWordPressElement": "h1",
+      "liveWordPressEvidenceAt": "2026-08-29T15:50:00.000Z",
+      "defectResolutionId": "MULTIPLE-H1-BRAND-MENTIONS"
+    },
+    {
+      "route": "/blogs/ai-search-optimization-ecommerce/",
+      "wordpressId": 64964,
+      "wordpressUrl": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
+      "sourceHeading": "Frequently Asked Questions",
+      "sourceLevel": "h1",
+      "renderedLevel": "h2",
+      "reason": "Live WordPress uses a secondary H1 for the FAQ section. Next keeps a single primary page H1 and demotes in-content secondary H1 blocks to H2 via SemanticContent demoteSecondaryHeadings.",
+      "liveWordPressElement": "h1",
+      "liveWordPressEvidenceAt": "2026-08-29T15:50:00.000Z",
+      "defectResolutionId": "MULTIPLE-H1-AI-SEARCH-ECOMMERCE"
+    },
+    {
+      "route": "/blogs/llm-seo-ai-search/",
+      "wordpressId": 64620,
+      "wordpressUrl": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
+      "sourceHeading": "FAQs",
+      "sourceLevel": "h1",
+      "renderedLevel": "h2",
+      "reason": "Live WordPress uses a secondary H1 for the FAQ section. Next keeps a single primary page H1 and demotes in-content secondary H1 blocks to H2 via SemanticContent demoteSecondaryHeadings.",
+      "liveWordPressElement": "h1",
+      "liveWordPressEvidenceAt": "2026-08-29T15:50:00.000Z",
+      "defectResolutionId": "MULTIPLE-H1-LLM-BLOG"
+    },
+    {
+      "route": "/contact-us/",
+      "wordpressId": 62460,
+      "wordpressUrl": "https://www.dgeniussolutions.com/contact-us/",
+      "sourceHeading": "Let's build together.",
+      "sourceLevel": "h2",
+      "renderedLevel": "h1",
+      "reason": "WordPress exposes the visible contact hero line as H2. Next promotes this verified visible line to the sole page H1 via resolvePageH1 while preserving the source H2 evidence.",
+      "liveWordPressElement": "h2",
+      "liveWordPressEvidenceAt": "2026-08-29T15:50:00.000Z",
+      "defectResolutionId": "CONTACT-MISSING-H1"
+    },
+    {
+      "route": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "wordpressId": 61956,
+      "wordpressUrl": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "sourceHeading": "Google AI Overviews and the Growth of Zero-Click Searches",
+      "sourceLevel": "h2",
+      "renderedLevel": "h1",
+      "reason": "Extracted source block records the visible post title as H2, while live WordPress exposes the title as the sole entry H1. Next renders the verified title once as the page H1.",
+      "liveWordPressElement": "h1",
+      "liveWordPressEvidenceAt": "2026-08-29T15:55:00.000Z",
+      "defectResolutionId": null
+    }
+  ]
+}

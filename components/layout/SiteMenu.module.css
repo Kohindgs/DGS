@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 100000;
   background: rgba(2, 2, 2, 0.96);
   backdrop-filter: blur(12px);
   animation: menu-fade 0.35s ease;

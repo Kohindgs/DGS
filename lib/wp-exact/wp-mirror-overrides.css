@@ -214,6 +214,13 @@
   color: #fff !important;
 }
 
+/* Native option popup is a white system panel; keep closed select white. */
+#contact-form .dgs-v1215-form-shortcode select.ff-el-form-control option {
+  color: #111111 !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #111111 !important;
+}
+
 #contact-form .dgs-v1215-form-shortcode .ff-el-form-control:focus {
   outline: none !important;
   border-color: rgba(253, 92, 98, 0.55) !important;
@@ -228,6 +235,14 @@
   background: #fd5c62 !important;
   color: #fff !important;
   font-weight: 700 !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode .ff-btn-submit:disabled {
   cursor: not-allowed !important;
   opacity: 0.85 !important;
+}
+
+#contact-form .dgs-v1215-form-shortcode .ff-btn-submit:not(:disabled) {
+  cursor: pointer !important;
+  opacity: 1 !important;
 }

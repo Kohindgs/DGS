@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { unwrapMirrorLazyMedia } from "@/lib/wordpress/native-inner-fixes";
 import { rewriteWpUrls } from "./rewrite-wp-urls";
 
 const EXTRACTED = join(process.cwd(), "lib/wp-exact/extracted");
@@ -13,7 +14,9 @@ export type WpExtractedAssets = {
   homeFluentformStyles: string;
   bootV1215: string;
   bootPortfolioHome: string;
+  bootPortfolioInner: string;
   bootNav: string;
+  bootFooter: string;
 };
 
 let cached: WpExtractedAssets | null = null;
@@ -38,7 +41,9 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     homeFluentformStyles,
     bootV1215,
     bootPortfolioHome,
+    bootPortfolioInner,
     bootNav,
+    bootFooter,
   ] = await Promise.all([
     readFile(join(EXTRACTED, "nav.html"), "utf8"),
     readFile(join(EXTRACTED, "nav-styles.css"), "utf8"),
@@ -53,19 +58,25 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     readFile(join(EXTRACTED, "boot-portfolio-home.js"), "utf8").catch(() =>
       readFile(join(EXTRACTED, "boot-1.js"), "utf8"),
     ),
+    readFile(join(EXTRACTED, "boot-portfolio-8.js"), "utf8").catch(() =>
+      readFile(join(EXTRACTED, "boot-1.js"), "utf8"),
+    ),
     readFile(join(EXTRACTED, "boot-nav.js"), "utf8"),
+    readOptional(join(EXTRACTED, "boot-2.js")),
   ]);
 
   cached = {
-    navHtml: rewriteWpUrls(navHtml),
+    navHtml: unwrapMirrorLazyMedia(rewriteWpUrls(navHtml)),
     navStyles: rewriteWpUrls(navStyles),
-    footerHtml: rewriteWpUrls(footerHtml),
+    footerHtml: unwrapMirrorLazyMedia(rewriteWpUrls(footerHtml)),
     footerStyles: rewriteWpUrls(footerStyles),
     fluentformStyles: rewriteWpUrls(fluentformStyles),
     homeFluentformStyles: rewriteWpUrls(homeFluentformStyles),
     bootV1215,
     bootPortfolioHome,
+    bootPortfolioInner,
     bootNav,
+    bootFooter,
   };
 
   return cached;
