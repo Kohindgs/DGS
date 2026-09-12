@@ -16,6 +16,7 @@ export type WpExtractedAssets = {
   bootPortfolioHome: string;
   bootPortfolioInner: string;
   bootNav: string;
+  bootFooter: string;
 };
 
 let cached: WpExtractedAssets | null = null;
@@ -42,6 +43,7 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     bootPortfolioHome,
     bootPortfolioInner,
     bootNav,
+    bootFooter,
   ] = await Promise.all([
     readFile(join(EXTRACTED, "nav.html"), "utf8"),
     readFile(join(EXTRACTED, "nav-styles.css"), "utf8"),
@@ -60,6 +62,7 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
       readFile(join(EXTRACTED, "boot-1.js"), "utf8"),
     ),
     readFile(join(EXTRACTED, "boot-nav.js"), "utf8"),
+    readOptional(join(EXTRACTED, "boot-2.js")),
   ]);
 
   cached = {
@@ -73,6 +76,7 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     bootPortfolioHome,
     bootPortfolioInner,
     bootNav,
+    bootFooter,
   };
 
   return cached;

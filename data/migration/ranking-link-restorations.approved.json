@@ -26,13 +26,10 @@
         "classification": null
       },
       {
-        "headingId": "google-ads-services",
-        "anchor": "Google Ads Services",
-        "wordpressDestination": "/services/google-ads/",
-        "requiredNextDestination": null,
-        "action": "REMOVE_BROKEN_HREF",
-        "classification": "B",
-        "reason": "Frozen WordPress destination returns 404 with no authoritative redirect or migrated canonical route."
+        "headingId": "performance-marketing",
+        "anchor": "Performance Marketing",
+        "wordpressDestination": "/services/performance-marketing/",
+        "requiredNextDestination": "/services/performance-marketing/"
       },
       {
         "headingId": "website-development-company-in-mumbai",

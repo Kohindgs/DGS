@@ -74,6 +74,7 @@ export default async function PortfolioPage() {
         bootNav={assets.bootNav}
         bootV1215=""
         bootPortfolio=""
+        bootFooter={assets.bootFooter}
         runV1215={false}
         runPortfolio={false}
       />

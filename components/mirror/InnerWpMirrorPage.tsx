@@ -154,6 +154,7 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
         bootNav={assets.bootNav}
         bootV1215=""
         bootPortfolio={runVideoPortfolio ? assets.bootPortfolioInner : ""}
+        bootFooter={assets.bootFooter}
         runV1215={false}
         runPortfolio={runVideoPortfolio}
       />

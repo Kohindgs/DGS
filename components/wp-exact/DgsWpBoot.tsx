@@ -7,6 +7,7 @@ type Props = {
   bootNav: string;
   bootV1215?: string;
   bootPortfolio?: string;
+  bootFooter?: string;
   runV1215?: boolean;
   runPortfolio?: boolean;
 };
@@ -26,6 +27,7 @@ export function DgsWpBoot({
   bootNav,
   bootV1215 = "",
   bootPortfolio = "",
+  bootFooter = "",
   runV1215 = true,
   runPortfolio = true,
 }: Props) {
@@ -41,6 +43,10 @@ export function DgsWpBoot({
       runInlineScript(bootPortfolio, "portfolio");
     }
 
+    if (bootFooter) {
+      runInlineScript(bootFooter, "footer");
+    }
+
     const onTalkClick = (event: MouseEvent) => {
       const target = (event.target as HTMLElement | null)?.closest(".dgs-talk-trigger");
       if (!target) return;
@@ -50,7 +56,7 @@ export function DgsWpBoot({
 
     document.addEventListener("click", onTalkClick);
     return () => document.removeEventListener("click", onTalkClick);
-  }, [bootNav, bootV1215, bootPortfolio, runV1215, runPortfolio, openLetsTalk]);
+  }, [bootNav, bootV1215, bootPortfolio, bootFooter, runV1215, runPortfolio, openLetsTalk]);
 
   return null;
 }

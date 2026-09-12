@@ -73,7 +73,7 @@ export function isPlaceholderMediaUrl(value: string | null | undefined): boolean
   const trimmed = value.trim();
   if (!trimmed) return true;
   if (/^data:/i.test(trimmed)) return true;
-  if (/placeholder|blank\.gif|lazy-load|1x1/i.test(trimmed)) return true;
+  if (/placeholder|blank\.gif|about:blank|lazy-load|1x1/i.test(trimmed)) return true;
   if (/R0lGODlhAQABAIAAAP/i.test(trimmed)) return true;
   return false;
 }
@@ -119,7 +119,7 @@ export function unwrapLazyMediaTag(tag: string): string {
 }
 
 export function unwrapLazyMediaHtml(html: string): string {
-  return html.replace(/<(img|source|video|audio)\b[^>]*>/gi, (tag) => unwrapLazyMediaTag(tag));
+  return html.replace(/<(img|source|video|audio|iframe)\b[^>]*>/gi, (tag) => unwrapLazyMediaTag(tag));
 }
 
 /** Drop captured WordPress/Elementor footers; Next appends the shared extracted footer. */

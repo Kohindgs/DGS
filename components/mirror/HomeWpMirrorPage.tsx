@@ -97,6 +97,7 @@ export async function HomeWpMirrorPage() {
         bootNav={assets.bootNav}
         bootV1215={assets.bootV1215}
         bootPortfolio={assets.bootPortfolioHome}
+        bootFooter={assets.bootFooter}
       />
     </>
   );

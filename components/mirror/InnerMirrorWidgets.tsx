@@ -95,11 +95,14 @@ export function InnerMirrorWidgets() {
       let currentIndex = 0;
 
       const getCardVideoSrc = (item: HTMLElement): string => {
-        return (
+        let src =
           item.dataset.videoSrc ||
           item.querySelector("source")?.getAttribute("src")?.split("#")[0] ||
-          ""
-        );
+          "";
+        if (src && src.startsWith("/wp-content/uploads/")) {
+          src = `https://www.dgeniussolutions.com${src}`;
+        }
+        return src;
       };
 
       const setPlayerSource = (src: string) => {
