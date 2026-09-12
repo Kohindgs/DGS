@@ -4,6 +4,7 @@ import registryData from "@/data/migration/nextjs-route-registry.generated.json"
 import innerMirrorIndex from "@/data/wordpress/mirrors/index.json";
 import rawPostsData from "@/data/wordpress/raw/posts.json";
 import rawMediaData from "@/data/wordpress/raw/media.json";
+import { applyApprovedLinkCorrectionsToHtml } from "@/lib/wordpress/apply-mirror-link-corrections";
 
 export type BlogPostMeta = {
   path: string;
@@ -203,6 +204,8 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   if (!bodyHtml) {
     bodyHtml = html;
   }
+
+  bodyHtml = applyApprovedLinkCorrectionsToHtml(path, bodyHtml);
 
   // Extract actual FAQs if article has an explicit FAQ section with answers for FAQPage schema
   const faqs: BlogPostFaq[] = [];

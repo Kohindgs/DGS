@@ -1,0 +1,961 @@
+{
+  "totalRoutes": 62,
+  "http200": 62,
+  "httpOther": 0,
+  "h1Present": 62,
+  "schemaOk": 62,
+  "duplicateFaqSections": 0,
+  "exactContentMatches": 62,
+  "contentDifferences": 0,
+  "wordCountDifferences": [],
+  "missingSections": 0,
+  "routes": [
+    {
+      "path": "/blogs/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "CollectionPage",
+        "BreadcrumbList"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/3-3-3-rule-in-marketing/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/aeo-business/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-content-optimization/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-generated-summaries-in-search-ads/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-overview-ranking/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-overview-seo/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-readiness-for-websites/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-search-behavior-2026/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-search-checklist-2026/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-video-production-cost-india/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-video-production-for-business/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/ai-video-vs-traditional-video/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/brand-visibility-in-ai-search/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/chatgpt-brand-visibility/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/content-strategy-for-seo/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/content-writing-for-seo/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/core-update-strategy/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/future-of-seo/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/generative-engine-optimization-business/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/generative-engine-optimization/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/geo-vs-seo-google-ai-search/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-ads-vs-meta-ads/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-agentic-browsing/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-ai-overviews-image-generation/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-ai-search-update/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-algorithm-business/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-io-2026/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-ranking-fixes/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-search-console-social-media/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/google-spam-update/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/llm-seo-ai-search/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/llm-seo-services-mumbai/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/local-seo-business-growth/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/low-social-media-reach/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/modern-seo-business-growth/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/optimize-content-ai-search/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/optimize-for-ai-overviews/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/schema-seo-for-small-business/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/seo-friendly-website/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/seo-rankings-up-but-traffic-down/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/seo-services-india-2026/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/seo-strategies-business-growth/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/social-media-marketing-strategy/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/topical-authority-seo/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 0,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/voice-search-seo/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/website-development-leads/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/website-development-mistakes/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/website-development-quality-leads/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/website-performance-conversions/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/website-traffic-but-no-leads/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "status": 200,
+      "h1": true,
+      "schemas": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "BlogPosting",
+        "FAQPage"
+      ],
+      "faqHeadingsCount": 1,
+      "duplicateFaqs": false,
+      "textMatch": true
+    }
+  ]
+}
