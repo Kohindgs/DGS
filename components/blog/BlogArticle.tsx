@@ -79,6 +79,19 @@ export function BlogArticle({
           </div>
         ) : null}
 
+        {article.toc.length > 1 ? (
+          <nav aria-label="In this article" className={styles.toc}>
+            <div className={styles.tocLabel}>In this article</div>
+            <ol className={styles.tocList}>
+              {article.toc.map((item) => (
+                <li key={item.id} className={item.level === 3 ? styles.tocSubItem : undefined}>
+                  <a href={`#${item.id}`}>{item.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : null}
+
         {/* Full Semantic Article Body (contains the original single FAQ section if present) */}
         <div
           className={styles.prose}

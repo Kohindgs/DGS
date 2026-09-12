@@ -552,3 +552,37 @@
     line-height: 1.7;
   }
 }
+
+/* Article navigation and long-form usability */
+.toc {
+  margin: 0 0 44px;
+  padding: 22px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.025);
+}
+.tocLabel {
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.tocList {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 8px;
+}
+.tocList a {
+  color: rgba(255,255,255,.78);
+  text-decoration: none;
+  line-height: 1.45;
+}
+.tocList a:hover { color: #fd5c62; }
+.tocSubItem { margin-left: 16px; opacity: .88; }
+.prose h2, .prose h3 { scroll-margin-top: 110px; }
+.prose iframe, .prose video { max-width: 100%; }
+.prose figure { max-width: 100%; margin: 2rem 0; }
+.prose figcaption { margin-top: .65rem; color: rgba(255,255,255,.55); font-size: .88rem; line-height: 1.5; }
