@@ -13,3 +13,7 @@ data/forms-private/
 public/wp-content/uploads/**/*.mp4
 public/media/portfolio/videos/
 public/Porfolio/
+data/audit/blog_qa_screenshots/
+*.tar.gz
+
+

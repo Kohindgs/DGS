@@ -256,7 +256,148 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   };
 }
 
-export async function getRelatedBlogPosts(currentPath: string, limit = 3): Promise<BlogPostMeta[]> {
-  const posts = await getAllBlogPosts();
-  return posts.filter((p) => p.path !== currentPath).slice(0, limit);
+const RELATED_STOP_WORDS = new Set([
+  "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "arent",
+  "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by",
+  "can", "cannot", "could", "did", "do", "does", "doing", "down", "during", "each", "few", "for",
+  "from", "further", "had", "has", "have", "having", "he", "her", "here", "hers", "herself", "him",
+  "himself", "his", "how", "i", "if", "in", "into", "is", "it", "its", "itself", "lets", "me", "more",
+  "most", "my", "myself", "no", "nor", "not", "of", "off", "on", "once", "only", "or", "other", "ought",
+  "our", "ours", "ourselves", "out", "over", "own", "same", "she", "should", "so", "some", "such",
+  "than", "that", "the", "their", "theirs", "them", "themselves", "then", "there", "these", "they",
+  "this", "those", "through", "to", "too", "under", "until", "up", "very", "was", "we", "were", "what",
+  "when", "where", "which", "while", "who", "whom", "why", "with", "would", "you", "your", "yours",
+  "yourself", "yourselves", "dgenius", "solutions", "guide", "need", "know", "complete", "ways", "powerful",
+  "tips", "best", "vs", "2026", "helps", "smart", "proven", "simple", "step"
+]);
+
+const TOPIC_SYNONYMS: Record<string, string[]> = {
+  geo: ["generative", "engine", "optimization", "aeo", "llm", "ai-search", "perplex"],
+  generative: ["geo", "engine", "ai", "search", "llm", "overview"],
+  llm: ["geo", "ai", "search", "models", "chatgpt", "perplexity", "copilot"],
+  video: ["production", "visual", "reels", "media", "creative", "youtube"],
+  ads: ["meta", "google", "campaigns", "ppc", "advertising", "leads", "ad"],
+  website: ["design", "development", "cro", "traffic", "speed", "landing", "pages"],
+  seo: ["ranking", "search", "optimization", "google", "audit", "organic"],
+  leads: ["generation", "conversion", "traffic", "sales", "business", "growth"],
+};
+
+function tokenizeBlogText(text: string): string[] {
+  if (!text) return [];
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .split(/[\s-]+/)
+    .map((w) => w.trim())
+    .filter((w) => (w.length > 2 || w === "ai" || w === "ad" || w === "ui") && !RELATED_STOP_WORDS.has(w));
 }
+
+function calculatePostRelevance(
+  source: { slugTokens: string[]; titleTokens: string[]; descTokens: string[] },
+  candidate: { slugTokens: string[]; titleTokens: string[]; descTokens: string[] }
+): { score: number; reason: string } {
+  let score = 0;
+  const reasons: string[] = [];
+
+  for (const t of source.slugTokens) {
+    if (candidate.slugTokens.includes(t)) {
+      score += 8;
+      reasons.push(`matching core topic term "${t}"`);
+    } else if (candidate.titleTokens.includes(t)) {
+      score += 5;
+      reasons.push(`core term "${t}" in title`);
+    } else if (TOPIC_SYNONYMS[t]) {
+      for (const syn of TOPIC_SYNONYMS[t]) {
+        if (candidate.slugTokens.includes(syn) || candidate.titleTokens.includes(syn)) {
+          score += 3;
+          reasons.push(`semantic relevance between "${t}" and "${syn}"`);
+          break;
+        }
+      }
+    }
+  }
+
+  for (const t of source.titleTokens) {
+    if (candidate.slugTokens.includes(t) && !source.slugTokens.includes(t)) {
+      score += 5;
+      reasons.push(`title term "${t}" in slug`);
+    } else if (candidate.titleTokens.includes(t) && !source.slugTokens.includes(t)) {
+      score += 3;
+      reasons.push(`shared title keyword "${t}"`);
+    }
+  }
+
+  const commonDesc = source.descTokens.filter((t) => candidate.descTokens.includes(t) && !source.titleTokens.includes(t));
+  if (commonDesc.length > 0) {
+    score += Math.min(commonDesc.length, 4);
+    reasons.push(`shared conceptual context (${commonDesc.slice(0, 3).join(", ")})`);
+  }
+
+  return {
+    score,
+    reason: [...new Set(reasons)].slice(0, 2).join("; ") || "related digital marketing strategy",
+  };
+}
+
+export type RelatedBlogPostResult = BlogPostMeta & {
+  relevanceScore: number;
+  relevanceReason: string;
+};
+
+export async function getRelatedBlogPostsWithDetails(
+  currentPath: string,
+  limit = 3
+): Promise<RelatedBlogPostResult[]> {
+  const posts = await getAllBlogPosts();
+  const current = posts.find((p) => p.path === currentPath);
+  if (!current) {
+    return posts.filter((p) => p.path !== currentPath).slice(0, limit).map((p) => ({
+      ...p,
+      relevanceScore: 0,
+      relevanceReason: "fallback latest post",
+    }));
+  }
+
+  const currentTokens = {
+    slugTokens: tokenizeBlogText(current.slug),
+    titleTokens: tokenizeBlogText(current.title || current.h1),
+    descTokens: tokenizeBlogText(current.description),
+  };
+
+  const candidates = posts
+    .filter((p) => p.path !== currentPath)
+    .map((p) => {
+      const candidateTokens = {
+        slugTokens: tokenizeBlogText(p.slug),
+        titleTokens: tokenizeBlogText(p.title || p.h1),
+        descTokens: tokenizeBlogText(p.description),
+      };
+      const { score, reason } = calculatePostRelevance(currentTokens, candidateTokens);
+      return {
+        ...p,
+        relevanceScore: score,
+        relevanceReason: score > 0 ? reason : "fallback latest post",
+      };
+    });
+
+  // Sort primary matches by score descending
+  const scoredMatches = candidates.filter((c) => c.relevanceScore > 0);
+  scoredMatches.sort((a, b) => b.relevanceScore - a.relevanceScore);
+
+  // If fewer than limit, append unscored posts as fallback
+  const fallbacks = candidates.filter((c) => c.relevanceScore === 0);
+  const combined = [...scoredMatches, ...fallbacks];
+
+  return combined.slice(0, limit);
+}
+
+export async function getRelatedBlogPosts(currentPath: string, limit = 3): Promise<BlogPostMeta[]> {
+  const detailed = await getRelatedBlogPostsWithDetails(currentPath, limit);
+  return detailed.map((p) => {
+    const copy = { ...p } as Partial<RelatedBlogPostResult>;
+    delete copy.relevanceScore;
+    delete copy.relevanceReason;
+    return copy as BlogPostMeta;
+  });
+}
+

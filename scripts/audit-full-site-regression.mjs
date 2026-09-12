@@ -225,20 +225,24 @@ let assetBroken = 0;
 // test up to 50 assets to keep run fast
 const assetList = [...testedAssets].slice(0, 50);
 for (const asset of assetList) {
-  try {
-    const res = await fetch(`${BASE_URL}${asset}`, {
-      method: 'HEAD',
-      headers: { 'User-Agent': 'DGS-Full-Regression/1.0' }
-    });
+    let res;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        res = await fetch(`${BASE_URL}${asset}`, {
+          method: 'HEAD',
+          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) DGS-Full-Regression/1.0' }
+        });
+        break;
+      } catch (err) {
+        if (attempt === 1) throw err;
+        await new Promise(r => setTimeout(r, 500));
+      }
+    }
     assetCheckedCount++;
-    if (res.status >= 400) {
+    if (res && res.status >= 400) {
       assetBroken++;
       results.errors.push(`Asset ${asset} broken (HTTP ${res.status})`);
     }
-  } catch (err) {
-    assetBroken++;
-    results.errors.push(`Asset ${asset} error: ${err.message}`);
-  }
 }
 results.brokenAssets = assetBroken;
 console.log(`  Assets checked: ${assetCheckedCount}`);
