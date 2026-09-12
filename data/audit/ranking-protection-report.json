@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-09-01T18:28:10.029Z",
-  "target": "http://127.0.0.1:3025",
+  "checkedAt": "2026-09-12T08:56:14.861Z",
+  "target": "https://dimgrey-goat-473970.hostingersite.com",
   "baselineOverallSha256": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
   "baselineIntegrity": "pass",
   "expectStagingNoindex": true,
@@ -31,11 +31,17 @@
         "WebPage",
         "WebSite"
       ],
-      "contentHashMatch": true,
+      "contentHashMatch": false,
       "content": {
         "missingHeadings": [],
-        "extraHeadings": [],
-        "headingOrderChanged": false,
+        "extraHeadings": [
+          {
+            "index": 66,
+            "level": "h3",
+            "text": "Our 4-Stage AI Video Production Process"
+          }
+        ],
+        "headingOrderChanged": true,
         "faq": {
           "missing": [],
           "extra": [],
@@ -74,6 +80,11 @@
           "detail": "EXPECTED_STAGING_NOINDEX"
         },
         {
+          "class": "D",
+          "label": "REAL_VISIBLE_CONTENT_DRIFT",
+          "detail": "1 extra headings"
+        },
+        {
           "class": "B",
           "label": "APPROVED_TECHNICAL_LINK_TARGET_CORRECTION",
           "detail": "\"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/"
@@ -86,10 +97,12 @@
         {
           "class": "C",
           "label": "AUDITOR_NORMALIZATION_ARTIFACT",
-          "detail": "45 image alt differences are lazy-load/placeholder normalization only"
+          "detail": "normalized content hash differs without structural heading/FAQ/link loss"
         }
       ],
-      "blocking": []
+      "blocking": [
+        "/services/ai-video-production-agency/: [D] 1 extra headings"
+      ]
     },
     {
       "path": "/services/aeo-services-in-mumbai/",
@@ -137,57 +150,57 @@
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/SS2.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/ss3.png.webp",
             "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-9.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-10.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-11.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-15.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
             "scope": "body"
           },
@@ -211,11 +224,6 @@
           "class": "B",
           "label": "APPROVED_TECHNICAL_CORRECTION",
           "detail": "Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)"
-        },
-        {
-          "class": "C",
-          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
-          "detail": "77 image alt differences are lazy-load/placeholder normalization only"
         }
       ],
       "blocking": []
@@ -266,57 +274,57 @@
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/SS2.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/ss3.png.webp",
             "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-9.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-10.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-11.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
-            "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
-            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "href": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "destination": "https://dimgrey-goat-473970.hostingersite.com/wp-content/smush-webp/2026/07/image-15.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
             "scope": "body"
           }
@@ -328,11 +336,6 @@
           "class": "A",
           "label": "EXPECTED_STAGING_DIFFERENCE",
           "detail": "EXPECTED_STAGING_NOINDEX"
-        },
-        {
-          "class": "C",
-          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
-          "detail": "20 image alt differences are lazy-load/placeholder normalization only"
         }
       ],
       "blocking": []
@@ -396,11 +399,6 @@
           "class": "A",
           "label": "EXPECTED_STAGING_DIFFERENCE",
           "detail": "EXPECTED_STAGING_NOINDEX"
-        },
-        {
-          "class": "C",
-          "label": "AUDITOR_NORMALIZATION_ARTIFACT",
-          "detail": "49 image alt differences are lazy-load/placeholder normalization only"
         }
       ],
       "blocking": []
@@ -908,16 +906,15 @@
     "/services/ai-video-production-agency/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
     "/services/ai-video-production-agency/: [B] \"Google Ads Services\" — frozen WordPress /services/google-ads/; href removed, visible text preserved",
-    "/services/ai-video-production-agency/: [C] 45 image alt differences are lazy-load/placeholder normalization only",
+    "/services/ai-video-production-agency/: [C] normalized content hash differs without structural heading/FAQ/link loss",
     "/services/aeo-services-in-mumbai/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/aeo-services-in-mumbai/: [B] Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)",
-    "/services/aeo-services-in-mumbai/: [C] 77 image alt differences are lazy-load/placeholder normalization only",
     "/services/geo/: [A] EXPECTED_STAGING_NOINDEX",
-    "/services/geo/: [C] 20 image alt differences are lazy-load/placeholder normalization only",
     "/services/llm-seo-service/: [A] EXPECTED_STAGING_NOINDEX",
-    "/services/llm-seo-service/: [C] 49 image alt differences are lazy-load/placeholder normalization only",
     "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" approved link-target correction /services/website-development/ -> /services/website-development-amc/"
   ],
-  "blockingFailures": [],
-  "passed": true
+  "blockingFailures": [
+    "/services/ai-video-production-agency/: [D] 1 extra headings"
+  ],
+  "passed": false
 }

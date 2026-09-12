@@ -50,7 +50,8 @@ async function readJson(file) {
 }
 
 function verifyBaselineIntegrity(baselineSerialized, integrity) {
-  const actual = createHash("sha256").update(baselineSerialized).digest("hex");
+  const normalized = baselineSerialized.replace(/\r\n/g, "\n");
+  const actual = createHash("sha256").update(normalized).digest("hex");
   if (actual !== integrity.overallSha256) {
     return { ok: false, reason: `overall digest mismatch (expected ${integrity.overallSha256}, got ${actual})` };
   }
