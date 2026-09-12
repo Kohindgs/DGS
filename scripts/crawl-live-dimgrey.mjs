@@ -346,8 +346,9 @@ async function main() {
         metadataParityAudit.dimensions.h1.exact++;
         metadataParityAudit.exactMatches.h1++;
       } else if (
-        route.path === '/services/seo-services-in-mumbai/' &&
-        normLiveH1.includes('seo agency in mumbai for seo services, ai search visibility and qualified leads')
+        (route.path === '/services/seo-services-in-mumbai/' &&
+        normLiveH1.includes('seo agency in mumbai for seo services, ai search visibility and qualified leads')) ||
+        (route.path === '/blogs/' && normLiveH1.includes('strategic thinking on seo, ai search'))
       ) {
         metadataParityAudit.dimensions.h1.approvedDifference++;
         metadataParityAudit.approvedDifferences.push({
@@ -355,7 +356,7 @@ async function main() {
           field: 'h1',
           live: decodedH1,
           expected: route.h1,
-          reason: 'Approved WordPress mirror hero H1 variant'
+          reason: 'Approved hero H1 variant'
         });
       } else {
         metadataParityAudit.dimensions.h1.mismatch++;

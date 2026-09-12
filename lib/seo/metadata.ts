@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { absoluteUrl } from "./site";
+import { isPublicIndexingEnabled } from "./environment";
 
 export const DEFAULT_SHARE_IMAGE_PATH = "/images/social/dgs-default-share.png";
 export const DEFAULT_SHARE_IMAGE_URL = absoluteUrl(DEFAULT_SHARE_IMAGE_PATH);
@@ -32,9 +33,10 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
 
   const path = normalizeSitePath(input.path);
   const canonicalPath = normalizeSitePath(input.canonicalPath || path);
+  const publicIndexing = isPublicIndexingEnabled();
   const requestedIndexable = input.indexable !== false;
-  const indexable = requestedIndexable;
-  const follow = input.follow !== false;
+  const indexable = publicIndexing && requestedIndexable;
+  const follow = publicIndexing && input.follow !== false;
   const image = absoluteUrl(input.image || DEFAULT_SHARE_IMAGE_PATH);
 
   const metadata: Metadata = {

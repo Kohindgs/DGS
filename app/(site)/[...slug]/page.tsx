@@ -86,6 +86,12 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
     const posts = await getAllBlogPosts();
     const blogSchemas = [
       ...buildGlobalEntitySchemas(),
+      webPageSchema({
+        name: route.title || "Blogs - D'Genius Solutions",
+        description: route.description || "Strategic thinking on SEO, AI search, and digital growth.",
+        path,
+        organizationId: ORGANIZATION_ID,
+      }),
       blogArchiveSchema({
         name: route.title || "Blogs - D'Genius Solutions",
         description: route.description || "Strategic thinking on SEO, AI search, and digital growth.",
