@@ -19,23 +19,23 @@ function formatDate(iso: string): string {
 export function BlogCard({ post }: { post: BlogPostMeta }) {
   return (
     <article className={styles.card}>
-      <Link href={post.path} className={styles.cardImgWrap} tabIndex={-1} aria-hidden="true">
-        <Image
-          src={post.featuredImage.src}
-          alt={post.featuredImage.alt || post.title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className={styles.cardImg}
-          loading="lazy"
-        />
-      </Link>
+      {post.featuredImage?.src ? (
+        <Link href={post.path} className={styles.cardImgWrap} tabIndex={-1} aria-hidden="true">
+          <Image
+            src={post.featuredImage.src}
+            alt={post.featuredImage.alt || post.title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className={styles.cardImg}
+            loading="lazy"
+          />
+        </Link>
+      ) : null}
 
       <div className={styles.cardContent}>
         <div className={styles.tagRow}>
-          <span className={styles.categoryTag}>{post.category}</span>
-          <span>•</span>
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-          <span>•</span>
+          {post.date ? <time dateTime={post.date}>{formatDate(post.date)}</time> : null}
+          {post.date ? <span>•</span> : null}
           <span>{post.readingTimeMinutes} min read</span>
         </div>
 

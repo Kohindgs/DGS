@@ -135,7 +135,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
         datePublished: article.date,
         dateModified: article.modified,
         publisherId: ORGANIZATION_ID,
-        authorName: "D'Genius Solutions Editorial",
         imageUrl: article.featuredImage?.src,
       }),
     ];

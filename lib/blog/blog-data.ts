@@ -2,6 +2,8 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import registryData from "@/data/migration/nextjs-route-registry.generated.json";
 import innerMirrorIndex from "@/data/wordpress/mirrors/index.json";
+import rawPostsData from "@/data/wordpress/raw/posts.json";
+import rawMediaData from "@/data/wordpress/raw/media.json";
 
 export type BlogPostMeta = {
   path: string;
@@ -10,15 +12,14 @@ export type BlogPostMeta = {
   h1: string;
   description: string;
   canonical: string;
-  date: string;
-  modified: string;
-  featuredImage: {
+  date?: string;
+  modified?: string;
+  featuredImage?: {
     src: string;
     alt: string;
     width?: number;
     height?: number;
   };
-  category: string;
   readingTimeMinutes: number;
 };
 
@@ -39,16 +40,37 @@ for (const r of registryData.routes) {
   }
 }
 
-const DEFAULT_IMAGE = "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/SEO-Services.webp";
+// Map WordPress raw posts and media for genuine data
+const mediaMap = new Map<number, { src: string; alt: string }>();
+for (const m of rawMediaData as Array<{ id: number; source_url?: string; guid?: { rendered?: string }; alt_text?: string; title?: { rendered?: string } }>) {
+  const src = m.source_url || m.guid?.rendered;
+  if (src) {
+    mediaMap.set(m.id, {
+      src,
+      alt: m.alt_text || m.title?.rendered || "",
+    });
+  }
+}
 
-function extractFeaturedImageFromHtml(html: string): BlogPostMeta["featuredImage"] {
+const rawPostMap = new Map<string, { date?: string; modified?: string; featured_media?: number }>();
+for (const p of rawPostsData as Array<{ slug?: string; date?: string; modified?: string; featured_media?: number }>) {
+  if (p.slug) {
+    rawPostMap.set(p.slug, {
+      date: p.date,
+      modified: p.modified,
+      featured_media: p.featured_media,
+    });
+  }
+}
+
+function extractFeaturedImageFromHtml(html: string): BlogPostMeta["featuredImage"] | undefined {
   const cmsmastersMatch = html.match(
     /class=["'][^"']*cmsmasters-post-featured-image[^"']*["'][^>]*>[\s\S]*?<img[^>]+src=["']([^"']+)["'][^>]*alt=["']([^"']*)["']/i,
   );
   if (cmsmastersMatch) {
     return {
       src: cmsmastersMatch[1],
-      alt: cmsmastersMatch[2] || "D'Genius Solutions Blog",
+      alt: cmsmastersMatch[2] || "",
       width: 1200,
       height: 675,
     };
@@ -58,38 +80,19 @@ function extractFeaturedImageFromHtml(html: string): BlogPostMeta["featuredImage
   if (anyImgMatch) {
     return {
       src: anyImgMatch[1],
-      alt: anyImgMatch[2] || "D'Genius Solutions Blog",
+      alt: anyImgMatch[2] || "",
       width: 1200,
       height: 675,
     };
   }
 
-  return {
-    src: DEFAULT_IMAGE,
-    alt: "D'Genius Solutions Blog",
-    width: 1200,
-    height: 675,
-  };
+  return undefined;
 }
 
 function calculateReadingTime(html: string): number {
   const text = html.replace(/<[^>]+>/g, " ");
   const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(3, Math.ceil(wordCount / 200));
-}
-
-function inferCategory(title: string): string {
-  const lower = title.toLowerCase();
-  if (lower.includes("ai") || lower.includes("llm") || lower.includes("chatgpt") || lower.includes("video")) {
-    return "AI & Technology";
-  }
-  if (lower.includes("seo") || lower.includes("search") || lower.includes("google") || lower.includes("aeo") || lower.includes("geo")) {
-    return "SEO & Search";
-  }
-  if (lower.includes("website") || lower.includes("development") || lower.includes("speed")) {
-    return "Web & Tech";
-  }
-  return "Digital Marketing";
 }
 
 let cachedBlogMetas: BlogPostMeta[] | null = null;
@@ -101,8 +104,23 @@ export async function getAllBlogPosts(): Promise<BlogPostMeta[]> {
   const posts: BlogPostMeta[] = [];
 
   for (const [path, r] of routeMap.entries()) {
+    const slug = r.slug || r.path.replace(/^\/blogs\/|\/$/g, "");
+    const rawPost = rawPostMap.get(slug);
+    const date = rawPost?.date || r.date || undefined;
+    const modified = rawPost?.modified || r.modified || undefined;
+
+    let featuredImage: BlogPostMeta["featuredImage"] | undefined;
+    if (rawPost?.featured_media && mediaMap.has(rawPost.featured_media)) {
+      const media = mediaMap.get(rawPost.featured_media)!;
+      featuredImage = {
+        src: media.src,
+        alt: media.alt || r.title || "",
+        width: 1200,
+        height: 675,
+      };
+    }
+
     const filename = mirrorIndex.pages?.[path];
-    let featuredImage = { src: DEFAULT_IMAGE, alt: r.title || "Blog Article" };
     let readingTime = 5;
 
     if (filename) {
@@ -110,31 +128,37 @@ export async function getAllBlogPosts(): Promise<BlogPostMeta[]> {
         const raw = await readFile(join(process.cwd(), "data/wordpress/mirrors/pages", filename), "utf8");
         const mirror = JSON.parse(raw) as { body?: string };
         if (mirror.body) {
-          featuredImage = extractFeaturedImageFromHtml(mirror.body);
+          if (!featuredImage) {
+            featuredImage = extractFeaturedImageFromHtml(mirror.body);
+          }
           readingTime = calculateReadingTime(mirror.body);
         }
       } catch {
-        /* use defaults */
+        /* ignore */
       }
     }
 
     posts.push({
       path: r.path,
-      slug: r.slug || r.path.replace(/^\/blogs\/|\/$/g, ""),
+      slug,
       title: r.title || r.h1 || "Blog Article",
       h1: r.h1 || r.title || "Blog Article",
       description: r.description || "",
       canonical: r.canonical || `https://www.dgeniussolutions.com${r.path}`,
-      date: r.date || "2026-01-01T00:00:00",
-      modified: r.modified || r.date || "2026-01-01T00:00:00",
+      date,
+      modified,
       featuredImage,
-      category: inferCategory(r.title || ""),
       readingTimeMinutes: readingTime,
     });
   }
 
-  // Sort descending by date
-  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  // Sort descending by date where present
+  posts.sort((a, b) => {
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
   cachedBlogMetas = posts;
   return posts;
 }
@@ -180,7 +204,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
     bodyHtml = html;
   }
 
-  // Extract actual FAQs if article has an explicit FAQ section with answers
+  // Extract actual FAQs if article has an explicit FAQ section with answers for FAQPage schema
   const faqs: BlogPostFaq[] = [];
   const faqHeadingIdx = bodyHtml.search(/<h[23][^>]*>(?:FAQs?|Frequently Asked Questions)<\/h[23]>/i);
   if (faqHeadingIdx !== -1) {

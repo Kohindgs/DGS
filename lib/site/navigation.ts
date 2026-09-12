@@ -50,6 +50,7 @@ export const FOOTER_LOCATIONS = [
   { label: "USA", href: "/us-landing-page/" },
   { label: "Australia", href: "/australia-page/" },
   { label: "Dubai SEO", href: "/services/dubai-seo/" },
+  { label: "Dubai AEO", href: "/aeo-dubai/" },
   { label: "Dubai AI Video", href: "/services/ai-production-dubai-page/" },
   { label: "Pune SEO", href: "/services/seo-service-pune/" },
   { label: "Bangalore SEO", href: "/services/seo-service-in-banglore/" },

@@ -170,8 +170,8 @@ export function articleSchema(input: {
   headline: string;
   description: string;
   path: string;
-  datePublished: string;
-  dateModified: string;
+  datePublished?: string;
+  dateModified?: string;
   publisherId: string;
   authorName?: string;
   imageUrl?: string;
@@ -184,8 +184,8 @@ export function articleSchema(input: {
     mainEntityOfPage: url,
     headline: input.headline,
     description: input.description,
-    datePublished: input.datePublished,
-    dateModified: input.dateModified,
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
     publisher: { "@id": input.publisherId },
     ...(input.authorName
       ? { author: { "@type": "Person", name: input.authorName } }

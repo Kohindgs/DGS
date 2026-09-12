@@ -41,33 +41,28 @@ export function BlogArticle({
         {/* Header */}
         <header className={styles.articleHeader}>
           <div className={styles.tagRow} style={{ marginBottom: "16px" }}>
-            <span className={styles.categoryTag}>{article.category}</span>
-            <span>•</span>
             <span>{article.readingTimeMinutes} min read</span>
           </div>
 
           <h1 className={styles.articleH1}>{article.h1}</h1>
 
-          <div className={styles.articleMetaBar}>
-            <div className={styles.metaItem}>
-              <span>By</span>
-              <strong style={{ color: "#fff" }}>D&apos;Genius Solutions Editorial</strong>
+          {article.date ? (
+            <div className={styles.articleMetaBar}>
+              <div className={styles.metaItem}>
+                <span>Published:</span>
+                <time dateTime={article.date}>{formatDate(article.date)}</time>
+              </div>
+              {article.modified && article.modified !== article.date ? (
+                <>
+                  <span>•</span>
+                  <div className={styles.metaItem}>
+                    <span>Updated:</span>
+                    <time dateTime={article.modified}>{formatDate(article.modified)}</time>
+                  </div>
+                </>
+              ) : null}
             </div>
-            <span>•</span>
-            <div className={styles.metaItem}>
-              <span>Published:</span>
-              <time dateTime={article.date}>{formatDate(article.date)}</time>
-            </div>
-            {article.modified && article.modified !== article.date ? (
-              <>
-                <span>•</span>
-                <div className={styles.metaItem}>
-                  <span>Updated:</span>
-                  <time dateTime={article.modified}>{formatDate(article.modified)}</time>
-                </div>
-              </>
-            ) : null}
-          </div>
+          ) : null}
         </header>
 
         {/* Hero Featured Image */}
@@ -84,31 +79,11 @@ export function BlogArticle({
           </div>
         ) : null}
 
-        {/* Full Semantic Article Body */}
+        {/* Full Semantic Article Body (contains the original single FAQ section if present) */}
         <div
           className={styles.prose}
           dangerouslySetInnerHTML={{ __html: article.bodyHtml }}
         />
-
-        {/* Visible FAQs Section (only if article has FAQs) */}
-        {article.faqs.length > 0 ? (
-          <section aria-label="Frequently asked questions" className={styles.faqSection}>
-            <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
-            <div>
-              {article.faqs.map((faq, index) => (
-                <details key={index} className={styles.faqItem}>
-                  <summary className={styles.faqQuestion}>
-                    <span>{faq.question}</span>
-                    <span aria-hidden="true" style={{ color: "#fd5c62", fontSize: "1.2rem" }}>+</span>
-                  </summary>
-                  <div className={styles.faqAnswer}>
-                    <p>{faq.answer}</p>
-                  </div>
-                </details>
-              ))}
-            </div>
-          </section>
-        ) : null}
 
         {/* Free Consultation CTA */}
         <section aria-label="Strategy consultation" className={styles.ctaBox}>

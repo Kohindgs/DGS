@@ -298,6 +298,8 @@ body {
 }
 
 .dgs-wp-mirror-inner .process-step {
+  opacity: 1 !important;
+  transform: none !important;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;

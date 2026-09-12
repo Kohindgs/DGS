@@ -11,6 +11,31 @@ function getDef(id) {
   return DEFINITIONS.forms.find((f) => f.fluentFormId === id);
 }
 
+function queryDatabaseRow(submissionId) {
+  const phpScript = `<?php
+require_once '/home/u188101251/domains/dgeniussolutions.com/public_html/wp-load.php';
+global $wpdb;
+$row = $wpdb->get_row($wpdb->prepare("SELECT id, form_id, status, created_at FROM wpcl_fluentform_submissions WHERE id = %d", ${submissionId}), ARRAY_A);
+echo json_encode($row);
+`;
+  const sshRes = spawnSync('ssh', [
+    '-p', '65002',
+    '-o', 'BatchMode=yes',
+    '-o', 'StrictHostKeyChecking=no',
+    'u188101251@147.93.100.126',
+    'php'
+  ], { input: phpScript, encoding: 'utf8' });
+
+  if (sshRes.status === 0 && sshRes.stdout.trim()) {
+    try {
+      return JSON.parse(sshRes.stdout.trim());
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
 async function submitAndVerify(formId, route, fields) {
   const def = getDef(formId);
   if (!def) throw new Error(`Form ${formId} not found in approved definitions`);
@@ -18,7 +43,8 @@ async function submitAndVerify(formId, route, fields) {
   console.log(`\n1. Fetching context for Form ${formId} on ${route}...`);
   const context = await fetchFormContext(def, route);
   if (!context.ok) throw new Error(`Failed to fetch context: ${context.message}`);
-  console.log(`   Nonce: ${context.nonce} | Post ID: ${context.embeddedPostId}`);
+  const maskedNonce = context.nonce ? `${context.nonce.slice(0, 4)}***` : 'NONE';
+  console.log(`   Nonce: ${maskedNonce} | Post ID: ${context.embeddedPostId}`);
 
   console.log(`2. Building payload and submitting to ${BACKEND_ORIGIN}/wp-admin/admin-ajax.php...`);
   const params = buildFluentFormsAjaxParams({
@@ -59,29 +85,7 @@ async function submitAndVerify(formId, route, fields) {
   console.log(`   Fluent Forms reported SUCCESS! Submission ID: ${submissionId}`);
 
   console.log(`3. Verifying actual row in wpcl_fluentform_submissions via WordPress backend...`);
-  const phpScript = `<?php
-require_once '/home/u188101251/domains/dgeniussolutions.com/public_html/wp-load.php';
-global $wpdb;
-$row = $wpdb->get_row($wpdb->prepare("SELECT id, form_id, status, created_at FROM wpcl_fluentform_submissions WHERE id = %d", ${submissionId}), ARRAY_A);
-echo json_encode($row);
-`;
-
-  const sshRes = spawnSync('ssh', [
-    '-p', '65002',
-    '-o', 'BatchMode=yes',
-    '-o', 'StrictHostKeyChecking=no',
-    'u188101251@147.93.100.126',
-    'php'
-  ], {
-    input: phpScript,
-    encoding: 'utf8'
-  });
-
-  if (sshRes.status !== 0 || !sshRes.stdout.trim()) {
-    throw new Error(`SSH query failed: ${sshRes.stderr || 'empty output'}`);
-  }
-
-  const dbRow = JSON.parse(sshRes.stdout.trim());
+  const dbRow = queryDatabaseRow(submissionId);
   if (!dbRow || String(dbRow.id) !== String(submissionId)) {
     throw new Error(`Database row missing for submission ID: ${submissionId}`);
   }
@@ -95,7 +99,7 @@ async function run() {
   console.log('FLUENT FORMS DATABASE PERSISTENCE VERIFICATION');
   console.log('='.repeat(80));
 
-  // Form 9 (Generative AI)
+  // Form 9 (Generative AI - non-captcha)
   await submitAndVerify(9, '/services/ai-video-production-agency/', {
     'names[first_name]': 'DGS-Sprint',
     'names[last_name]': 'Form9',
@@ -108,7 +112,7 @@ async function run() {
     'hidden': 'Generative AI Page',
   });
 
-  // Form 26 (Performance Marketing)
+  // Form 26 (Performance Marketing - non-captcha)
   await submitAndVerify(26, '/services/performance-marketing/', {
     'full_name[first_name]': 'DGS-Sprint',
     'full_name[last_name]': 'Form26',
@@ -127,7 +131,8 @@ async function run() {
   });
 
   console.log('\n================================================================================');
-  console.log('ALL NON-CAPTCHA FORMS SUCCESSFULLY STORED IN WORDPRESS DATABASE (100% PASS)');
+  console.log('TESTED NON-CAPTCHA FORMS (FORM 9, FORM 26) VERIFIED IN DATABASE (PASS)');
+  console.log('Forms requiring CAPTCHA (1, 3, 4, 6, 10, 11, 19, 20, 21): MANUAL CAPTCHA E2E REQUIRED');
   console.log('================================================================================\n');
 }
 
