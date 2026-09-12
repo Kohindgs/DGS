@@ -1,0 +1,484 @@
+{
+  "timestamp": "2026-09-11T19:23:00.859Z",
+  "deployedSha": "8e2f2d52a91d4fd785c9e950fcf53fef924376eb",
+  "origin": "https://www.dgeniussolutions.com",
+  "summary": {
+    "routes": {
+      "total": 96,
+      "status200": 96,
+      "status3xx": 0,
+      "status404": 0,
+      "status5xx": 0
+    },
+    "robots": {
+      "metaRobotsDefects": 0,
+      "xRobotsDefects": 0
+    },
+    "metadataParity": {
+      "titleMismatches": 0,
+      "descriptionMismatches": 0,
+      "h1Mismatches": 0,
+      "canonicalMismatches": 0,
+      "totalMismatches": 0
+    },
+    "schema": {
+      "parseDefects": 0,
+      "stagingLeaks": 0
+    },
+    "internalLinks": {
+      "totalReferences": 5039,
+      "uniqueUrls": 180,
+      "healthy": 180,
+      "approved3xx": 0,
+      "broken": 0,
+      "redirectIssues": 0
+    },
+    "assets": {
+      "totalReferences": 4575,
+      "uniqueAssets": 1226,
+      "healthy": 1226,
+      "broken": 0,
+      "externalFailures": 0
+    },
+    "redirects": {
+      "total": 37,
+      "passing": 37,
+      "failing": 0
+    },
+    "leaks": {
+      "dimgreyOccurrences": 0,
+      "wpOriginOccurrences": 0
+    },
+    "sitemap": {
+      "status200": true,
+      "count": 96,
+      "exactMatch": true
+    }
+  },
+  "internalLinkAudit": {
+    "totalReferences": 5039,
+    "uniqueUrls": 180,
+    "healthy2xx": 180,
+    "approved3xx": 0,
+    "unexpected3xx": 0,
+    "status404": 0,
+    "status410": 0,
+    "status5xx": 0,
+    "networkErrors": 0,
+    "brokenLinks": [],
+    "redirectLinks": []
+  },
+  "assetAudit": {
+    "local": {
+      "totalReferences": 4572,
+      "uniqueAssets": 1224,
+      "healthy2xx": 1224,
+      "redirect3xx": 0,
+      "status404": 0,
+      "status5xx": 0,
+      "networkErrors": 0,
+      "brokenAssets": []
+    },
+    "external": {
+      "totalReferences": 3,
+      "uniqueAssets": 2,
+      "healthy2xx": 2,
+      "failures": 0,
+      "failedAssets": []
+    }
+  },
+  "redirectAuditResults": [
+    {
+      "source": "/services/aeo/",
+      "expectedDestination": "/services/aeo-services-in-mumbai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/aeo/",
+      "expectedDestination": "/services/aeo-services-in-mumbai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/geo/",
+      "expectedDestination": "/services/geo/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/geo/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/llm-seo/",
+      "expectedDestination": "/services/llm-seo-service/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/llm-seo/",
+      "expectedDestination": "/services/llm-seo-service/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/llm/",
+      "expectedDestination": "/services/llm-seo-service/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/generative-engine-optimization/",
+      "expectedDestination": "/services/geo/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/geo/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/seo-services/",
+      "expectedDestination": "/services/seo-services-in-mumbai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/seo-services-in-mumbai/",
+      "expectedDestination": "/services/seo-services-in-mumbai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/seo/",
+      "expectedDestination": "/services/seo-services-in-mumbai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/seo/",
+      "expectedDestination": "/services/seo-services-in-mumbai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/contact/",
+      "expectedDestination": "/contact-us/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/contact-us/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/blog/",
+      "expectedDestination": "/blogs/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/blogs/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/case-studies/",
+      "expectedDestination": "/case_studies/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/case_studies/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/dubai-seo/",
+      "expectedDestination": "/services/dubai-seo/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/dubai-seo/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/ai-production-dubai/",
+      "expectedDestination": "/services/ai-production-dubai-page/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/website-development-pune/",
+      "expectedDestination": "/services/website-development-pune-page/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/seo-service-in-bangalore/",
+      "expectedDestination": "/services/seo-service-in-banglore/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/seo-services-in-bangalore/",
+      "expectedDestination": "/services/seo-service-in-banglore/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/seo-services-in-pune/",
+      "expectedDestination": "/services/seo-service-pune/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/seo-services-in-gurugram/",
+      "expectedDestination": "/services/seo-service-in-gurugram/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/australia/",
+      "expectedDestination": "/australia-page/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/australia-page/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/us/",
+      "expectedDestination": "/us-landing-page/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/us-landing-page/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/index.php/",
+      "expectedDestination": "/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/home/",
+      "expectedDestination": "/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/website-development-services-in-mumbai-dgenius-solutions/",
+      "expectedDestination": "/services/website-development-amc/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/website-development/",
+      "expectedDestination": "/services/website-development-amc/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/generative-ai/",
+      "expectedDestination": "/services/ai-video-production-agency/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/llm-seo-services/",
+      "expectedDestination": "/services/llm-seo-service/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/aeo-services/",
+      "expectedDestination": "/services/aeo-services-in-mumbai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "expectedDestination": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/why-local-seo-is-important-for-business-growth/",
+      "expectedDestination": "/blogs/local-seo-business-growth/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/how-modern-seo-strategies-are-transforming-business-growth/",
+      "expectedDestination": "/blogs/seo-strategies-business-growth/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/blogs/google-august-2026-spam-update/",
+      "expectedDestination": "/blogs/google-spam-update/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/seo-services-dubai/",
+      "expectedDestination": "/services/dubai-seo/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/dubai-seo/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/aeo-services-in-dubai/",
+      "expectedDestination": "/aeo-dubai/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/aeo-dubai/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    },
+    {
+      "source": "/services/google-ads/",
+      "expectedDestination": "/services/performance-marketing/",
+      "statusCode": 301,
+      "locationHeader": "https://www.dgeniussolutions.com/services/performance-marketing/",
+      "is3xx": true,
+      "isDestMatch": true,
+      "destinationStatusCode": 200,
+      "pass": true
+    }
+  ],
+  "llmResults": {
+    "/llms.txt": {
+      "statusCode": 200,
+      "leaks": 0,
+      "pass": true
+    },
+    "/llms-full.txt": {
+      "statusCode": 200,
+      "leaks": 0,
+      "pass": true
+    },
+    "/llms.md": {
+      "statusCode": 200,
+      "leaks": 0,
+      "pass": true
+    },
+    "/llms-full.md": {
+      "statusCode": 200,
+      "leaks": 0,
+      "pass": true
+    }
+  }
+}

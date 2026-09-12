@@ -257,3 +257,98 @@ export function setupDeferredRecaptcha(options: {
   };
 }
 
+export type DeferredTurnstileController = {
+  getToken: () => Promise<string>;
+  cleanup: () => void;
+};
+
+export function setupDeferredTurnstile(options: {
+  form: HTMLElement;
+  container: HTMLElement;
+  siteKey: string;
+}): DeferredTurnstileController {
+  const { form, container, siteKey } = options;
+  let activeWidgetId: string | null = null;
+  let cleanedUp = false;
+  let observer: IntersectionObserver | null = null;
+
+  const triggerLoad = async (): Promise<void> => {
+    cleanupTriggers();
+    try {
+      await loadScript(TURNSTILE_SCRIPT, TURNSTILE_SCRIPT_ID);
+      if (cleanedUp || !window.turnstile?.render) return;
+      if (activeWidgetId) return;
+      container.replaceChildren();
+      activeWidgetId = window.turnstile.render(container, {
+        sitekey: siteKey,
+        theme: "dark",
+      });
+    } catch {
+      /* ignore render errors; obtainTurnstileToken will be used as fallback */
+    }
+  };
+
+  const onInteraction = () => {
+    void triggerLoad();
+  };
+
+  const cleanupTriggers = () => {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+    form.removeEventListener("focusin", onInteraction);
+    form.removeEventListener("pointerdown", onInteraction);
+    form.removeEventListener("touchstart", onInteraction);
+    form.removeEventListener("input", onInteraction);
+  };
+
+  if (typeof IntersectionObserver !== "undefined") {
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            void triggerLoad();
+            break;
+          }
+        }
+      },
+      { rootMargin: "80px" }
+    );
+    observer.observe(form);
+  } else {
+    void triggerLoad();
+  }
+
+  form.addEventListener("focusin", onInteraction, { passive: true, once: true });
+  form.addEventListener("pointerdown", onInteraction, { passive: true, once: true });
+  form.addEventListener("touchstart", onInteraction, { passive: true, once: true });
+  form.addEventListener("input", onInteraction, { passive: true, once: true });
+
+  return {
+    getToken: async () => {
+      if (activeWidgetId && window.turnstile?.getResponse) {
+        try {
+          const token = window.turnstile.getResponse(activeWidgetId);
+          if (token) return token;
+        } catch {
+          /* fallback to invisible render below */
+        }
+      }
+      return obtainTurnstileToken(siteKey);
+    },
+    cleanup: () => {
+      cleanedUp = true;
+      cleanupTriggers();
+      if (activeWidgetId && window.turnstile?.reset) {
+        try {
+          window.turnstile.reset(activeWidgetId);
+        } catch {
+          /* ignore */
+        }
+        activeWidgetId = null;
+      }
+    },
+  };
+}
+

@@ -3,7 +3,13 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { getFormDefinitionForRoute } from "@/lib/forms/registry";
-import { ensureHomepageRecaptchaHost, setupDeferredRecaptcha, type DeferredRecaptchaController } from "./captcha-client";
+import {
+  ensureHomepageRecaptchaHost,
+  setupDeferredRecaptcha,
+  setupDeferredTurnstile,
+  type DeferredRecaptchaController,
+  type DeferredTurnstileController,
+} from "./captcha-client";
 
 function normalizeRoutePath(pathname: string): string {
   if (!pathname || pathname === "/") return "/";
@@ -41,6 +47,26 @@ function recaptchaHost(form: HTMLFormElement): HTMLElement {
     return wpWidget;
   }
   return ensureHomepageRecaptchaHost(form);
+}
+
+function turnstileHost(form: HTMLFormElement): HTMLElement {
+  const existing = form.querySelector<HTMLElement>("[data-dgs-turnstile-widget]");
+  if (existing) return existing;
+  const wpWidget = form.querySelector<HTMLElement>(".cf-turnstile, .ff-el-turnstile");
+  if (wpWidget) {
+    wpWidget.setAttribute("data-dgs-turnstile-widget", "true");
+    wpWidget.replaceChildren();
+    return wpWidget;
+  }
+  const host = document.createElement("div");
+  host.setAttribute("data-dgs-turnstile-host", "true");
+  host.setAttribute("data-dgs-turnstile-widget", "true");
+  host.className = "ff-el-group ff-el-turnstile";
+  host.style.margin = "0.75rem 0";
+  const submitWrap = form.querySelector(".ff_submit_btn_wrapper");
+  if (submitWrap?.parentElement) submitWrap.parentElement.insertBefore(host, submitWrap);
+  else form.appendChild(host);
+  return host;
 }
 
 /**
@@ -98,6 +124,7 @@ export function InnerFormBridge() {
 
     let submitting = false;
     let deferredCaptcha: DeferredRecaptchaController | null = null;
+    let deferredTurnstile: DeferredTurnstileController | null = null;
 
     const recaptchaEnabled = Boolean(
       definition.captcha?.enabled && definition.captcha.provider === "recaptcha" && definition.captcha.publicSiteKey,
@@ -106,6 +133,19 @@ export function InnerFormBridge() {
     if (recaptchaEnabled && definition.captcha?.publicSiteKey) {
       const host = recaptchaHost(form);
       deferredCaptcha = setupDeferredRecaptcha({
+        form,
+        container: host,
+        siteKey: definition.captcha.publicSiteKey,
+      });
+    }
+
+    const turnstileEnabled = Boolean(
+      definition.captcha?.enabled && definition.captcha.provider === "turnstile" && definition.captcha.publicSiteKey,
+    );
+
+    if (turnstileEnabled && definition.captcha?.publicSiteKey) {
+      const host = turnstileHost(form);
+      deferredTurnstile = setupDeferredTurnstile({
         form,
         container: host,
         siteKey: definition.captcha.publicSiteKey,
@@ -147,6 +187,17 @@ export function InnerFormBridge() {
         if (recaptchaEnabled && deferredCaptcha) {
           const widget = await deferredCaptcha.getWidget();
           captchaToken = widget?.getToken();
+          if (!captchaToken) {
+            setFeedback(form, "backend-error", "CAPTCHA verification is required");
+            restoreSubmitChrome();
+            return;
+          }
+        } else if (turnstileEnabled && deferredTurnstile) {
+          try {
+            captchaToken = await deferredTurnstile.getToken();
+          } catch {
+            /* ignore error, handled by null check */
+          }
           if (!captchaToken) {
             setFeedback(form, "backend-error", "CAPTCHA verification is required");
             restoreSubmitChrome();
@@ -195,6 +246,7 @@ export function InnerFormBridge() {
     return () => {
       form.removeEventListener("submit", onSubmit);
       deferredCaptcha?.cleanup();
+      deferredTurnstile?.cleanup();
       delete form.dataset.dgsBridgeBound;
     };
   }, [pathname]);
