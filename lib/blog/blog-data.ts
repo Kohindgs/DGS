@@ -104,7 +104,7 @@ function addHeadingAnchors(html: string): { html: string; toc: BlogTocItem[] } {
   const output = html.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h\1>/gi, (full, levelRaw, attrs, inner) => {
     const text = String(inner).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
     if (!text) return full;
-    let idMatch = String(attrs).match(/\sid=["']([^"']+)["']/i);
+    const idMatch = String(attrs).match(/\sid=["']([^"']+)["']/i);
     let id = idMatch?.[1] || slugifyHeading(text, toc.length);
     const base = id; let n = 2; while (used.has(id)) id = `${base}-${n++}`; used.add(id);
     toc.push({ id, text, level: Number(levelRaw) as 2 | 3 });
