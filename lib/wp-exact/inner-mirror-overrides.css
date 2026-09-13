@@ -149,17 +149,23 @@ body {
   }
 }
 
-/* CAPTCHA / Turnstile container containment without horizontal overflow */
+/* CAPTCHA container containment without horizontal overflow or unwanted scrollbars */
 .dgs-wp-mirror-inner .ff-el-recaptcha,
-.dgs-wp-mirror-inner .ff-el-turnstile,
-.dgs-wp-mirror-inner [data-dgs-recaptcha-widget],
-.dgs-wp-mirror-inner [data-dgs-turnstile-widget] {
+.dgs-wp-mirror-inner [data-dgs-recaptcha-widget] {
   max-width: 100% !important;
-  overflow-x: auto !important;
+  overflow: visible !important;
+  min-height: 82px !important;
   display: flex !important;
   justify-content: flex-start !important;
   margin-block: 0.75rem !important;
   padding-block: 0.25rem !important;
+}
+
+.dgs-wp-mirror-inner .ff-el-recaptcha > div,
+.dgs-wp-mirror-inner .ff-el-recaptcha > div > div,
+.dgs-wp-mirror-inner [data-dgs-recaptcha-widget] > div,
+.dgs-wp-mirror-inner [data-dgs-recaptcha-widget] > div > div {
+  overflow: visible !important;
 }
 
 /* On very narrow screens (down to 360px), scale down 304px reCAPTCHA to prevent page-level scroll */
