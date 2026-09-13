@@ -665,10 +665,10 @@ body {
   }
 }
 
-/* 2. Content Creation (Form 11): eliminate 228px dead right gap */
+/* 2. Content Creation (Form 11): normalized 672px form dimensions and grid alignment */
 .dgs-wp-mirror-inner .form-content-grid {
-  grid-template-columns: minmax(0, 1fr) 320px !important;
-  max-width: 1180px !important;
+  grid-template-columns: minmax(0, 42rem) 320px !important;
+  max-width: 1040px !important;
   margin-inline: auto !important;
   gap: 48px !important;
 }
@@ -676,13 +676,14 @@ body {
 .dgs-wp-mirror-inner .form-wrapper form[id="fluentform_11"],
 .dgs-wp-mirror-inner .form-left form[id="fluentform_11"] {
   width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
+  max-width: 42rem !important;
+  margin-inline: auto !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .dgs-wp-mirror-inner .form-content-grid {
     grid-template-columns: 1fr !important;
+    max-width: 42rem !important;
     gap: 40px !important;
   }
 }
