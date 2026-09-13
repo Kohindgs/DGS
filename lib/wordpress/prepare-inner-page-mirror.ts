@@ -69,10 +69,14 @@ export function prepareInnerPageMirror(
     content.path,
     lazyBelowFold(rewriteWpUrls(body)),
   );
-  // DGS Quick Win 6: Ensure marquee ticker logos are loaded eagerly so CSS transform animations do not block them
+  // DGS Quick Win 6 & 8: Ensure continuous marquee ticker logos are loaded eagerly so CSS transform animations do not block them
   body = body.replace(
-    /(<div class="smm-news-strip-logo">\s*<img\b[^>]*?)\bloading=["']lazy["']/gi,
+    /(<(?:div|span|li)\b[^>]*class=["'][^"']*\b(?:smm-news-strip-logo|dgs-nc|nc)\b[^"']*["'][^>]*>\s*<img\b[^>]*?)\bloading=["']lazy["']/gi,
     '$1loading="eager"',
+  );
+  body = body.replace(
+    /(<(?:div|span|li)\b[^>]*class=["'][^"']*\b(?:smm-news-strip-logo|dgs-nc|nc)\b[^"']*["'][^>]*>\s*<img\b[^>]*?)\bfetchpriority=["']low["']/gi,
+    '$1',
   );
   const styles = rewriteWpUrls(content.styles || "");
   const fontLinks = content.fontLinks?.map((tag) => rewriteWpUrls(tag));
