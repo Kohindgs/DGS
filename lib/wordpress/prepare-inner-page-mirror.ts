@@ -69,6 +69,11 @@ export function prepareInnerPageMirror(
     content.path,
     lazyBelowFold(rewriteWpUrls(body)),
   );
+  // DGS Quick Win 6: Ensure marquee ticker logos are loaded eagerly so CSS transform animations do not block them
+  body = body.replace(
+    /(<div class="smm-news-strip-logo">\s*<img\b[^>]*?)\bloading=["']lazy["']/gi,
+    '$1loading="eager"',
+  );
   const styles = rewriteWpUrls(content.styles || "");
   const fontLinks = content.fontLinks?.map((tag) => rewriteWpUrls(tag));
   const articleHtml = `<article data-migration-content data-wordpress-id="${wordpressId}">${body}</article>`;
