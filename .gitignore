@@ -15,5 +15,7 @@ public/media/portfolio/videos/
 public/Porfolio/
 data/audit/blog_qa_screenshots/
 *.tar.gz
+scratch/
+
 
 
