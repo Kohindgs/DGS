@@ -602,3 +602,114 @@ body {
   }
 }
 
+/* ==========================================================================
+   Priority 11: Site-Wide Form Normalization & Dimension Repair Pass
+   ========================================================================== */
+
+/* 1. Branding (Form 10): normalize narrow 335px squish to full ~672px */
+.dgs-wp-mirror-inner .bp-form-container {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+  width: 100% !important;
+}
+
+.dgs-wp-mirror-inner .bp-form-left {
+  padding: 36px 40px 24px !important;
+  border-right: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dgs-wp-mirror-inner .bp-form-headline {
+  font-size: 2rem !important;
+  margin-bottom: 12px !important;
+}
+
+.dgs-wp-mirror-inner .bp-form-subline {
+  margin-bottom: 20px !important;
+}
+
+.dgs-wp-mirror-inner .bp-form-features {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 20px !important;
+}
+
+.dgs-wp-mirror-inner .bp-form-right {
+  padding: 36px 40px !important;
+  width: 100% !important;
+}
+
+.dgs-wp-mirror-inner .bp-form-wrapper form[id="fluentform_10"],
+.dgs-wp-mirror-inner form[id="fluentform_10"] {
+  width: 100% !important;
+  max-width: 42rem !important;
+  margin-inline: auto !important;
+}
+
+@media (max-width: 768px) {
+  .dgs-wp-mirror-inner .bp-form-left,
+  .dgs-wp-mirror-inner .bp-form-right {
+    padding: 24px 20px !important;
+  }
+  .dgs-wp-mirror-inner .bp-form-features {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+}
+
+/* 2. Content Creation (Form 11): eliminate 228px dead right gap */
+.dgs-wp-mirror-inner .form-content-grid {
+  grid-template-columns: minmax(0, 1fr) 320px !important;
+  max-width: 1180px !important;
+  margin-inline: auto !important;
+  gap: 48px !important;
+}
+
+.dgs-wp-mirror-inner .form-wrapper form[id="fluentform_11"],
+.dgs-wp-mirror-inner .form-left form[id="fluentform_11"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .dgs-wp-mirror-inner .form-content-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+/* 3. Performance Marketing (Form 26): constrain wide 1090px box */
+.dgs-wp-mirror-inner #dgs-performance-page .dgs-form-box,
+.dgs-wp-mirror-inner .dgs-form-box {
+  max-width: 780px !important;
+  margin-inline: auto !important;
+}
+
+/* 4. Website Development (Form 6): normalize container and form relationship */
+.dgs-wp-mirror-inner .form-glass {
+  max-width: 780px !important;
+  margin-inline: auto !important;
+}
+
+.dgs-wp-mirror-inner .form-glass form[id="fluentform_6"],
+.dgs-wp-mirror-inner .wdgs-fluent-form form[id="fluentform_6"] {
+  max-width: 100% !important;
+}
+
+/* 5. SEO Services: suppress inactive modal/lightbox empty image rendering */
+.dgs-wp-mirror-inner #seo-lb:not(.on),
+.dgs-wp-mirror-inner .dgs-lb:not(.on) {
+  display: none !important;
+}
+
+.dgs-wp-mirror-inner #seo-lbimg:not([src]),
+.dgs-wp-mirror-inner #seo-lbimg[src=""],
+.dgs-wp-mirror-inner .dgs-lbimg:not([src]),
+.dgs-wp-mirror-inner .dgs-lbimg[src=""] {
+  display: none !important;
+}
+
+

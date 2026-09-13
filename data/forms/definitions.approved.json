@@ -1284,11 +1284,12 @@
         "hidden"
       ],
       "captcha": {
-        "enabled": false,
-        "provider": null,
-        "publicSiteKey": null,
-        "siteKeyEnvRef": null,
-        "secretKeyEnvRef": null
+        "enabled": true,
+        "provider": "recaptcha",
+        "version": "v2_explicit",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
       },
       "submitButtonText": "Submit Form",
       "confirmation": {
@@ -3301,11 +3302,12 @@
         "business_confirmation[]"
       ],
       "captcha": {
-        "enabled": false,
-        "provider": null,
-        "publicSiteKey": null,
-        "siteKeyEnvRef": null,
-        "secretKeyEnvRef": null
+        "enabled": true,
+        "provider": "recaptcha",
+        "version": "v2_explicit",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
       },
       "submitButtonText": "Submit Form",
       "confirmation": {
