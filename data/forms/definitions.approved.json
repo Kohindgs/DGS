@@ -741,10 +741,11 @@
       ],
       "captcha": {
         "enabled": true,
-        "provider": "turnstile",
-        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
-        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
-        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+        "provider": "recaptcha",
+        "version": "v2_explicit",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
       },
       "submitButtonText": "Submit Form",
       "confirmation": {
@@ -1004,10 +1005,11 @@
       ],
       "captcha": {
         "enabled": true,
-        "provider": "turnstile",
-        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
-        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
-        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+        "provider": "recaptcha",
+        "version": "v2_explicit",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
       },
       "submitButtonText": "Submit Form",
       "confirmation": {
@@ -1606,10 +1608,11 @@
       ],
       "captcha": {
         "enabled": true,
-        "provider": "turnstile",
-        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
-        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
-        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+        "provider": "recaptcha",
+        "version": "v2_explicit",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
       },
       "submitButtonText": "Submit Form",
       "confirmation": {
@@ -1904,10 +1907,11 @@
       ],
       "captcha": {
         "enabled": true,
-        "provider": "turnstile",
-        "publicSiteKey": "0x4AAAAAACEtYgQis2AyFxPk",
-        "siteKeyEnvRef": "env:NEXT_PUBLIC_TURNSTILE_SITE_KEY",
-        "secretKeyEnvRef": "env:TURNSTILE_SECRET_KEY"
+        "provider": "recaptcha",
+        "version": "v2_explicit",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
       },
       "submitButtonText": "Submit Form",
       "confirmation": {

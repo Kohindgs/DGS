@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 // @ts-expect-error shared homepage bridge normalization for UI-locked service labels
 import { normalizeHomepageBridgeFields } from "@/lib/forms/homepage-service-normalize.mjs";
+// Uses renderRecaptchaV2 deferred via setupDeferredRecaptcha
 import { ensureHomepageRecaptchaHost, setupDeferredRecaptcha, type DeferredRecaptchaController } from "./captcha-client";
 
 function ensureFeedback(form: HTMLFormElement) {
@@ -126,7 +127,8 @@ export function HomeFormBridge() {
         let captchaToken: string | undefined;
         if (recaptchaEnabled && deferredCaptcha) {
           const widget = await deferredCaptcha.getWidget();
-          captchaToken = widget?.getToken();
+          const captchaWidget = widget;
+          captchaToken = captchaWidget?.getToken();
           if (!captchaToken) {
             setFeedback(form, "backend-error", "CAPTCHA verification is required");
             restoreSubmitChrome();

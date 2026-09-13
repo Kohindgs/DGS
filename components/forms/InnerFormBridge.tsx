@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { getFormDefinitionForRoute } from "@/lib/forms/registry";
+// Uses renderRecaptchaV2 deferred via setupDeferredRecaptcha
 import {
   ensureHomepageRecaptchaHost,
   setupDeferredRecaptcha,
@@ -40,7 +41,7 @@ function setFeedback(form: HTMLFormElement, status: string, message: string) {
 function recaptchaHost(form: HTMLFormElement): HTMLElement {
   const existing = form.querySelector<HTMLElement>("[data-dgs-recaptcha-widget]");
   if (existing) return existing;
-  const wpWidget = form.querySelector<HTMLElement>(".g-recaptcha, .ff-el-recaptcha");
+  const wpWidget = form.querySelector<HTMLElement>(".g-recaptcha, .ff-el-recaptcha, .cf-turnstile, .ff-el-turnstile");
   if (wpWidget) {
     wpWidget.setAttribute("data-dgs-recaptcha-widget", "true");
     wpWidget.replaceChildren();
