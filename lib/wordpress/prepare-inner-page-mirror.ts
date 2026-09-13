@@ -78,11 +78,6 @@ export function prepareInnerPageMirror(
     /(<(?:div|span|li)\b[^>]*class=["'][^"']*\b(?:smm-news-strip-logo|dgs-nc|nc|dgs-press-chip)\b[^"']*["'][^>]*>\s*<img\b[^>]*?)\bfetchpriority=["']low["']/gi,
     '$1',
   );
-  // DGS Quick Win 9: Ensure LLM SEO lightbox modal image target has valid initial slide src
-  body = body.replace(
-    /(<img\b[^>]*\bid=["']llm-lbimg["'][^>]*\bsrc=["'])["']/gi,
-    '$1/wp-content/uploads/2026/03/LLM-SEO-1.webp"',
-  );
   const styles = rewriteWpUrls(content.styles || "");
   const fontLinks = content.fontLinks?.map((tag) => rewriteWpUrls(tag));
   const articleHtml = `<article data-migration-content data-wordpress-id="${wordpressId}">${body}</article>`;
