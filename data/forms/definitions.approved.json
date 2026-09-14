@@ -1382,14 +1382,13 @@
         {
           "name": "url",
           "label": "Company Name",
-          "type": "url",
+          "type": "text",
           "required": true,
           "placeholder": "",
           "defaultValue": "",
           "options": [],
           "validationMessages": {
-            "required": "This field is required",
-            "url": "This field must contain a valid url"
+            "required": "This field is required"
           },
           "conditionalLogic": {
             "enabled": false
@@ -1567,31 +1566,6 @@
             "enabled": false
           },
           "hidden": true
-        },
-        {
-          "name": "dropdown_2",
-          "label": "Dropdown",
-          "type": "select",
-          "required": false,
-          "placeholder": "- Select -",
-          "defaultValue": "",
-          "options": [
-            {
-              "label": "Option 1",
-              "value": "Option 1"
-            },
-            {
-              "label": "Option 2",
-              "value": "Option 2"
-            }
-          ],
-          "validationMessages": {
-            "required": "This field is required"
-          },
-          "conditionalLogic": {
-            "enabled": false
-          },
-          "hidden": false
         }
       ],
       "allowedFieldKeys": [
@@ -1604,8 +1578,7 @@
         "dropdown_1",
         "description",
         "Branding_Page",
-        "hidden",
-        "dropdown_2"
+        "hidden"
       ],
       "captcha": {
         "enabled": true,
@@ -1706,14 +1679,13 @@
         {
           "name": "url",
           "label": "Company Name",
-          "type": "url",
+          "type": "text",
           "required": true,
           "placeholder": "",
           "defaultValue": "",
           "options": [],
           "validationMessages": {
-            "required": "This field is required",
-            "url": "This field must contain a valid url"
+            "required": "This field is required"
           },
           "conditionalLogic": {
             "enabled": false

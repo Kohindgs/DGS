@@ -93,25 +93,35 @@ export async function forwardToFluentForms(options: {
   }
 
   const interpreted = interpretFluentAjaxResponse(parsed, response.ok);
-  const safeMessage = String(
-    interpreted.message || definition.confirmation?.message || "Submitted",
-  );
 
   if (!interpreted.success) {
+    let failureMsg = "";
+    if (interpreted.fieldErrors?.["g-recaptcha-response"]) {
+      failureMsg = "reCAPTCHA verification failed. Please complete the CAPTCHA and try again.";
+    } else if (interpreted.errorText && typeof interpreted.errorText === "string") {
+      failureMsg = interpreted.errorText;
+    } else if (interpreted.message && typeof interpreted.message === "string") {
+      failureMsg = interpreted.message;
+    } else if (interpreted.fieldErrors && Object.keys(interpreted.fieldErrors).length > 0) {
+      failureMsg = "Please correct the highlighted fields and try again.";
+    } else {
+      failureMsg = definition.failureMessage || "Unable to submit the form. Please check the highlighted fields and try again.";
+    }
+
     return {
       ok: false,
-      message:
-        interpreted.errorText ||
-        safeMessage ||
-        definition.failureMessage ||
-        "Submission failed",
+      message: failureMsg,
       fieldErrors: interpreted.fieldErrors,
     };
   }
 
+  const successMsg = String(
+    interpreted.message || definition.confirmation?.message || "Thank you for your submission.",
+  );
+
   return {
     ok: true,
-    message: definition.confirmation?.message || safeMessage || "Thank you for your submission.",
+    message: successMsg,
     submissionId: interpreted.submissionId,
   };
 }

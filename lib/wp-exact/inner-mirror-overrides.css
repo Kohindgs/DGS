@@ -719,4 +719,204 @@ body {
   display: none !important;
 }
 
+/* ==========================================================================
+   DGS Form UX Cleanup 2026 (Forms 4, 9, 10, 11, 26)
+   ========================================================================== */
+
+/* Fix 4: Visually hide reCAPTCHA response textarea without removing or modifying element */
+.dgs-wp-mirror-inner form textarea[name="g-recaptcha-response"],
+.dgs-wp-mirror-inner form textarea.g-recaptcha-response,
+.dgs-wp-mirror-inner form #g-recaptcha-response,
+.dgs-wp-mirror-inner form textarea[id^="g-recaptcha-response"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Field Validation Error Highlight & Inline Error Text */
+.dgs-wp-mirror-inner .dgs-field-error,
+.dgs-wp-mirror-inner form input.dgs-field-error,
+.dgs-wp-mirror-inner form select.dgs-field-error,
+.dgs-wp-mirror-inner form textarea.dgs-field-error {
+  border-color: #ff4d4f !important;
+  outline: 1px solid #ff4d4f !important;
+  box-shadow: 0 0 0 1px #ff4d4f, 0 0 8px rgba(255, 77, 79, 0.35) !important;
+}
+
+.dgs-wp-mirror-inner form input[type="checkbox"].dgs-field-error {
+  border-color: #ff4d4f !important;
+  outline: 2px solid #ff4d4f !important;
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.35) !important;
+}
+
+.dgs-wp-mirror-inner .dgs-inline-error {
+  color: #ff4d4f !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  margin-top: 4px !important;
+  line-height: 1.3 !important;
+  display: block !important;
+}
+
+/* Fix 1: Form 10 Branding dummy dropdown removal/suppression */
+#fluentform_10 .ff-el-group:has([name="dropdown_2"]),
+#fluentform_10 [name="dropdown_2"] {
+  display: none !important;
+}
+
+/* Fix 5: Form 4 (SMM) URL Field Styling */
+.dgs-wp-mirror-inner .smm-form-shell input[type="url"],
+.dgs-wp-mirror-inner form#fluentform_4 input[type="url"] {
+  width: 100% !important;
+  background: rgb(15 15 25 / 0.9) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  padding: 12px 14px !important;
+  color: var(--color-text, #ffffff) !important;
+  font-size: 14px !important;
+  outline: none !important;
+  transition: border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dgs-wp-mirror-inner .smm-form-shell input[type="url"]:focus,
+.dgs-wp-mirror-inner form#fluentform_4 input[type="url"]:focus {
+  border-color: var(--dgs-cyan, #72c1d8) !important;
+  box-shadow: 0 0 0 1px var(--dgs-cyan, #72c1d8) !important;
+  background: rgb(8 8 16 / 0.98) !important;
+}
+
+/* Fix 3: Form 26 Performance Marketing Desktop Row Pairings & Checkboxes */
+.dgs-wp-mirror-inner #fluentform_26 {
+  width: 100% !important;
+  max-width: 760px !important;
+  margin-inline: auto !important;
+}
+
+@media (min-width: 768px) {
+  .dgs-wp-mirror-inner #fluentform_26 fieldset {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 20px !important;
+    row-gap: 16px !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 input[type="hidden"],
+  .dgs-wp-mirror-inner #fluentform_26 legend {
+    display: none !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-full-name,
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-start-timeline,
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-message,
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-business-confirmation,
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-contact-consent,
+  .dgs-wp-mirror-inner #fluentform_26 [data-dgs-recaptcha-widget],
+  .dgs-wp-mirror-inner #fluentform_26 .ff-el-recaptcha,
+  .dgs-wp-mirror-inner #fluentform_26 .g-recaptcha,
+  .dgs-wp-mirror-inner #fluentform_26 .cf-turnstile,
+  .dgs-wp-mirror-inner #fluentform_26 .ff_submit_btn_wrapper {
+    grid-column: 1 / -1 !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-business-email {
+    grid-column: 1 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-phone {
+    grid-column: 2 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-company-name {
+    grid-column: 1 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-company-website {
+    grid-column: 2 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-role {
+    grid-column: 1 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .dgs-wp-mirror-inner #fluentform_26 .dgs-budget {
+    grid-column: 2 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Form 26 Checkbox alignment & dark theme glass styling */
+.dgs-wp-mirror-inner #fluentform_26 .ff-el-form-check {
+  display: flex !important;
+  align-items: flex-start !important;
+  margin-top: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+.dgs-wp-mirror-inner #fluentform_26 .ff-el-form-check-label {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  cursor: pointer !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.45 !important;
+  margin: 0 !important;
+}
+
+.dgs-wp-mirror-inner #fluentform_26 .ff-el-form-check-label p {
+  margin: 0 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.45 !important;
+  color: inherit !important;
+}
+
+.dgs-wp-mirror-inner #fluentform_26 .ff-el-form-check-input {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  margin-top: 2px !important;
+  margin-right: 0 !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-content: center !important;
+  transition: all 0.2s ease !important;
+}
+
+.dgs-wp-mirror-inner #fluentform_26 .ff-el-form-check-input:checked {
+  background-color: #6366f1 !important;
+  border-color: #6366f1 !important;
+}
+
+.dgs-wp-mirror-inner #fluentform_26 .ff-el-form-check-input:checked::before {
+  content: "" !important;
+  width: 9px !important;
+  height: 5px !important;
+  border-left: 2px solid #ffffff !important;
+  border-bottom: 2px solid #ffffff !important;
+  transform: rotate(-45deg) translate(1px, -1px) !important;
+  display: block !important;
+}
+
+.dgs-wp-mirror-inner #fluentform_26 .ff-el-form-check-input:focus-visible {
+  outline: 2px solid #818cf8 !important;
+  outline-offset: 2px !important;
+}
+
+
 
