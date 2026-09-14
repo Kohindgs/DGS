@@ -137,6 +137,11 @@ export function InnerFormBridge() {
       }
     }
 
+    const urlInput = form.querySelector<HTMLInputElement>("input[type='url'], input[name='url']");
+    if (urlInput && !urlInput.placeholder) {
+      urlInput.placeholder = "https://www.example.com";
+    }
+
     const button = form.querySelector<HTMLButtonElement>(
       "button.ff-btn-submit, button[type='button'], button[type='submit']",
     );
@@ -198,7 +203,11 @@ export function InnerFormBridge() {
         for (const [key, value] of data.entries()) {
           if (typeof value !== "string") continue;
           if (!visibleFieldNames.has(key)) continue;
-          fields[key] = value;
+          let val = value.trim();
+          if (key === "url" && val && !/^https?:\/\//i.test(val)) {
+            val = `https://${val}`;
+          }
+          fields[key] = val;
         }
 
         const clientErrors: Record<string, string> = {};

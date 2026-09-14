@@ -790,6 +790,11 @@ body {
   background: rgb(8 8 16 / 0.98) !important;
 }
 
+.dgs-wp-mirror-inner .smm-form-shell input[type="url"]::placeholder,
+.dgs-wp-mirror-inner form#fluentform_4 input[type="url"]::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
 /* Fix 3: Form 26 Performance Marketing Desktop Row Pairings & Checkboxes */
 .dgs-wp-mirror-inner #fluentform_26 {
   width: 100% !important;

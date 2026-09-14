@@ -684,10 +684,10 @@
         },
         {
           "name": "url",
-          "label": "Website",
+          "label": "Website (Add http:// or https://)",
           "type": "url",
           "required": true,
-          "placeholder": "",
+          "placeholder": "https://www.example.com",
           "defaultValue": "",
           "options": [],
           "validationMessages": {
@@ -2915,24 +2915,24 @@
           "defaultValue": "",
           "options": [
             {
-              "label": "\u20b975,000 to \u20b91 lakh",
-              "value": "\u20b975,000 to \u20b91 lakh"
+              "label": "₹75,000 to ₹1 lakh",
+              "value": "₹75,000 to ₹1 lakh"
             },
             {
-              "label": "\u20b91 lakh to \u20b93 lakh",
-              "value": "\u20b91 lakh to \u20b93 lakh"
+              "label": "₹1 lakh to ₹3 lakh",
+              "value": "₹1 lakh to ₹3 lakh"
             },
             {
-              "label": "\u20b93 lakh to \u20b95 lakh",
-              "value": "\u20b93 lakh to \u20b95 lakh"
+              "label": "₹3 lakh to ₹5 lakh",
+              "value": "₹3 lakh to ₹5 lakh"
             },
             {
-              "label": "\u20b95 lakh to \u20b910 lakh",
-              "value": "\u20b95 lakh to \u20b910 lakh"
+              "label": "₹5 lakh to ₹10 lakh",
+              "value": "₹5 lakh to ₹10 lakh"
             },
             {
-              "label": "\u20b910 lakh plus",
-              "value": "\u20b910 lakh plus"
+              "label": "₹10 lakh plus",
+              "value": "₹10 lakh plus"
             },
             {
               "label": "Not sure yet",
