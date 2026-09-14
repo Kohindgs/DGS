@@ -923,5 +923,225 @@ body {
   outline-offset: 2px !important;
 }
 
+/* ==========================================================================
+   Phase 3 & 4: 2026 Wide-Canvas Layout System & Tier-0 Visual Enhancement
+   Strict Content Lock: 100% Presentation-Only (No text, heading, schema or URL changes)
+   ========================================================================== */
 
+/* 1. Page Container Widths: scale to wide 1680px canvas */
+.dgs-wp-mirror-inner .dgs-wrap,
+.dgs-wp-mirror-inner .dgs-container,
+.dgs-wp-mirror-inner .elementor-section.elementor-section-boxed > .elementor-container,
+.dgs-wp-mirror-inner .cmsmasters-container {
+  max-width: min(calc(100% - (2 * var(--page-gutter))), 1680px) !important;
+  margin-inline: auto !important;
+}
 
+.dgs-wp-mirror-inner .dgs-wrap--s {
+  max-width: min(calc(100% - (2 * var(--page-gutter))), 1200px) !important;
+  margin-inline: auto !important;
+}
+
+/* 2. Modern Typography & Balance */
+.dgs-wp-mirror-inner h1,
+.dgs-wp-mirror-inner h2,
+.dgs-wp-mirror-inner h3,
+.dgs-wp-mirror-inner .dgs-hero-title,
+.dgs-wp-mirror-inner .dgs-h2,
+.dgs-wp-mirror-inner .dgs-h3,
+.dgs-wp-mirror-inner .dgs-section-title {
+  text-wrap: balance !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* 3. Hero Section Enhancement across Tier-0 Pages */
+.dgs-wp-mirror-inner .dgs-hero {
+  padding-top: clamp(60px, 7vw, 100px) !important;
+  padding-bottom: clamp(48px, 6vw, 80px) !important;
+}
+
+.dgs-wp-mirror-inner .dgs-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(253, 92, 98, 0.3) !important;
+  background: rgba(253, 92, 98, 0.08) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 18px rgba(253, 92, 98, 0.15) !important;
+}
+
+.dgs-wp-mirror-inner .dgs-hero-stats {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: clamp(32px, 4vw, 56px) !important;
+}
+
+.dgs-wp-mirror-inner .dgs-stat {
+  background: rgba(255, 255, 255, 0.025) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 18px !important;
+  padding: 20px 24px !important;
+  backdrop-filter: blur(10px) !important;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+.dgs-wp-mirror-inner .dgs-stat:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+@media (max-width: 992px) {
+  .dgs-wp-mirror-inner .dgs-hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .dgs-wp-mirror-inner .dgs-hero-stats {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 4. Glassmorphism Card System (Tier-0 & Inner Pages) */
+.dgs-wp-mirror-inner .dgs-card,
+.dgs-wp-mirror-inner .dgs-case,
+.dgs-wp-mirror-inner .dgs-stack-card,
+.dgs-wp-mirror-inner .dgs-case-card,
+.dgs-wp-mirror-inner .dgs-results-card {
+  background: rgba(255, 255, 255, 0.025) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dgs-wp-mirror-inner .dgs-card:hover,
+.dgs-wp-mirror-inner .dgs-case:hover,
+.dgs-wp-mirror-inner .dgs-stack-card:hover,
+.dgs-wp-mirror-inner .dgs-case-card:hover,
+.dgs-wp-mirror-inner .dgs-results-card:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(253, 92, 98, 0.35) !important;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.55),
+    0 0 24px rgba(253, 92, 98, 0.12) !important;
+}
+
+/* 5. Direct Answer & Explanation Sections readability */
+.dgs-wp-mirror-inner .dgs-note,
+.dgs-wp-mirror-inner .dgs-fill,
+.dgs-wp-mirror-inner .dgs-hero-desc {
+  font-size: 1.12rem !important;
+  line-height: 1.75 !important;
+  color: rgba(250, 248, 243, 0.88) !important;
+}
+
+/* 6. Button & CTA Polish */
+.dgs-wp-mirror-inner .dgs-btn--fill {
+  background: linear-gradient(135deg, #fd5c62 0%, #eb444b 100%) !important;
+  border: 1px solid rgba(253, 92, 98, 0.3) !important;
+  box-shadow: 0 6px 24px rgba(253, 92, 98, 0.35) !important;
+  border-radius: 999px !important;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+.dgs-wp-mirror-inner .dgs-btn--fill:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 30px rgba(253, 92, 98, 0.55) !important;
+}
+
+.dgs-wp-mirror-inner .dgs-btn--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-radius: 999px !important;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease !important;
+}
+
+.dgs-wp-mirror-inner .dgs-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 7. Client Logos Marquee / Grid Polish */
+.dgs-wp-mirror-inner .dgs-client {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px 24px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 14px !important;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease !important;
+}
+
+.dgs-wp-mirror-inner .dgs-client:hover {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dgs-wp-mirror-inner .dgs-client img {
+  filter: grayscale(100%) opacity(0.7) !important;
+  transition: filter 0.25s ease !important;
+}
+
+.dgs-wp-mirror-inner .dgs-client:hover img {
+  filter: grayscale(0%) opacity(1) !important;
+}
+
+/* 8. FAQ Accordion Dark Polish */
+.dgs-wp-mirror-inner .faq-item {
+  background: rgba(255, 255, 255, 0.025) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  margin-bottom: 14px !important;
+  overflow: hidden !important;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease !important;
+}
+
+.dgs-wp-mirror-inner .faq-item:hover {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.dgs-wp-mirror-inner .faq-q {
+  padding: 18px 24px !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 1.05rem !important;
+}
+
+.dgs-wp-mirror-inner .faq-a {
+  padding: 0 24px 20px !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 0.98rem !important;
+  line-height: 1.65 !important;
+}
+
+/* 9. Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .dgs-wp-mirror-inner .dgs-stat,
+  .dgs-wp-mirror-inner .dgs-card,
+  .dgs-wp-mirror-inner .dgs-case,
+  .dgs-wp-mirror-inner .dgs-stack-card,
+  .dgs-wp-mirror-inner .dgs-btn--fill,
+  .dgs-wp-mirror-inner .dgs-btn--ghost {
+    transition: none !important;
+    transform: none !important;
+  }
+}

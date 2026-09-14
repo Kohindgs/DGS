@@ -246,3 +246,56 @@
   cursor: pointer !important;
   opacity: 1 !important;
 }
+
+/* ==========================================================================
+   Homepage 2026 Wide-Canvas Layout System & Tier-0 Visual Enhancement
+   Strict Content Lock: 100% Presentation-Only (No text, heading, schema or URL changes)
+   ========================================================================== */
+
+/* 1. Scale shell to 1680px */
+.dgs-v1215-shell {
+  max-width: min(calc(100% - (2 * var(--page-gutter))), 1680px) !important;
+  margin-inline: auto !important;
+}
+
+/* 2. Text wrap balance on headings */
+.dgs-v1215 h1,
+.dgs-v1215 h2,
+.dgs-v1215 h3,
+.dgs-v1215-title {
+  text-wrap: balance !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* 3. Hero button glow */
+.dgs-v1215-hero .dgs-v1215-btn {
+  border-radius: 999px !important;
+  box-shadow: 0 6px 24px rgba(253, 92, 98, 0.35) !important;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+.dgs-v1215-hero .dgs-v1215-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 30px rgba(253, 92, 98, 0.55) !important;
+}
+
+/* 4. Final CTA card glass styling */
+#contact-form .dgs-v1215-final-card {
+  border-radius: 28px !important;
+  border: 1px solid rgba(253, 92, 98, 0.25) !important;
+  background: linear-gradient(135deg, rgba(253, 92, 98, 0.08) 0%, rgba(255, 128, 56, 0.05) 50%, rgba(0, 212, 255, 0.03) 100%) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45) !important;
+  padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px) !important;
+}
+
+/* 5. Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .dgs-v1215-hero .dgs-v1215-btn,
+  .dgs-native-gallery__item {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+

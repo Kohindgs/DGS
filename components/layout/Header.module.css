@@ -4,84 +4,127 @@
   left: 0;
   right: 0;
   z-index: 99999;
-  height: 100px;
+  height: 92px;
   pointer-events: none;
+  transition: transform 0.35s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .bar {
   pointer-events: auto;
-  height: 100px;
+  height: 76px;
+  width: min(calc(100% - 40px), 1760px);
+  margin: 10px auto 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
-  transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
-  background: transparent;
+  padding: 0 24px 0 28px;
+  border-radius: 999px;
+  background: rgba(8, 9, 11, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
 }
 
 .scrolled .bar {
-  background: rgba(8, 8, 8, 0.93);
-  backdrop-filter: blur(14px);
+  background: rgba(7, 8, 10, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
 }
 
 .logoLink {
   display: inline-flex;
   align-items: center;
-  height: 100px;
+  height: 76px;
   flex-shrink: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.logoLink:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
 .logoLink img {
-  width: 117px;
-  height: 117px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .letsTalkBtn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 22px;
-  border-radius: 100px;
-  border: none;
-  background: #fd5c62;
-  color: #fff;
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(253, 92, 98, 0.3);
+  background: linear-gradient(135deg, #fd5c62 0%, #eb444b 100%);
+  color: #ffffff;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(253, 92, 98, 0.28);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .letsTalkBtn:hover {
-  transform: scale(1.04);
-  box-shadow: 0 0 22px rgba(253, 92, 98, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(253, 92, 98, 0.5);
 }
 
 .talkIcon {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
+  transition: transform 0.25s ease;
+}
+
+.letsTalkBtn:hover .talkIcon {
+  transform: translate(2px, -2px);
 }
 
 .menuBtn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 18px;
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: transparent;
-  color: #fff;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f0f2f5;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.menuBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+  color: #ffffff;
 }
 
 .menuLines {
@@ -95,22 +138,42 @@
   width: 16px;
   height: 2px;
   background: currentColor;
+  border-radius: 2px;
   font-style: normal;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.menuBtn:hover .menuLines em:nth-child(1) {
+  transform: translateY(-1px);
+}
+.menuBtn:hover .menuLines em:nth-child(3) {
+  transform: translateY(1px);
 }
 
 @media (max-width: 768px) {
+  .header {
+    height: 72px;
+  }
   .bar {
-    padding: 0 20px;
+    height: 60px;
+    width: calc(100% - 20px);
+    margin-top: 8px;
+    padding: 0 14px 0 18px;
+    border-radius: 18px;
   }
-
+  .logoLink {
+    height: 60px;
+  }
   .logoLink img {
-    width: 84px;
-    height: 84px;
+    width: 76px;
+    height: 76px;
   }
-
-  .letsTalkBtn,
+  .letsTalkBtn {
+    display: none;
+  }
   .menuBtn {
-    padding: 9px 14px;
+    min-height: 40px;
+    padding: 8px 14px;
     font-size: 11px;
   }
 }
