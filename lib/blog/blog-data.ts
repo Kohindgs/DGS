@@ -230,6 +230,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   }
 
   bodyHtml = applyApprovedLinkCorrectionsToHtml(path, bodyHtml);
+  bodyHtml = bodyHtml.replace(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi, "<h2$1>$2</h2>");
   const anchored = addHeadingAnchors(bodyHtml);
   bodyHtml = anchored.html;
 
