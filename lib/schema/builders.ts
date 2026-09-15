@@ -90,6 +90,34 @@ export function webPageSchema(input: {
   };
 }
 
+export function blogArchiveSchema(input: {
+  name: string;
+  description: string;
+  path: string;
+  organizationId: string;
+  posts: Array<{ name: string; path: string; position: number }>;
+}) {
+  const url = absoluteUrl(input.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    url,
+    name: input.name,
+    description: input.description,
+    about: { "@id": input.organizationId },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: input.posts.map((p) => ({
+        "@type": "ListItem",
+        position: p.position,
+        name: p.name,
+        url: absoluteUrl(p.path),
+      })),
+    },
+  };
+}
+
 export function serviceSchema(input: {
   name: string;
   description: string;
@@ -142,8 +170,8 @@ export function articleSchema(input: {
   headline: string;
   description: string;
   path: string;
-  datePublished: string;
-  dateModified: string;
+  datePublished?: string;
+  dateModified?: string;
   publisherId: string;
   authorName?: string;
   imageUrl?: string;
@@ -156,8 +184,8 @@ export function articleSchema(input: {
     mainEntityOfPage: url,
     headline: input.headline,
     description: input.description,
-    datePublished: input.datePublished,
-    dateModified: input.dateModified,
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
     publisher: { "@id": input.publisherId },
     ...(input.authorName
       ? { author: { "@type": "Person", name: input.authorName } }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   FOOTER_CONTACT_LINES,
+  FOOTER_LOCATIONS,
   FOOTER_QUICK_LINKS,
   FOOTER_SERVICES,
   LEGAL_LINKS,
@@ -70,6 +71,17 @@ export function SiteFooter() {
               <h3 className={styles.colTitle}>Services</h3>
               <ul className={styles.colList}>
                 {FOOTER_SERVICES.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav className={styles.column} aria-label="Locations">
+              <h3 className={styles.colTitle}>Locations</h3>
+              <ul className={styles.colList}>
+                {FOOTER_LOCATIONS.map((item) => (
                   <li key={item.href}>
                     <Link href={item.href}>{item.label}</Link>
                   </li>

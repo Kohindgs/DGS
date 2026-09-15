@@ -2,18 +2,30 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { loadRouteRegistry, getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
-import type { ContentBlock, HeadingBlock } from "@/lib/content/types";
 import { slugToPath } from "@/lib/nextjs/path";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { JsonLd } from "@/components/seo/JsonLd";
-import { SemanticContent } from "@/components/content/SemanticContent";
 import { assertProtectedRouteSearchPolicy } from "@/lib/migration/search-policy";
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
-import { resolvePageH1 } from "@/lib/migration/page-h1";
 import { getRetiredRoute } from "@/lib/migration/retired-routes";
 import { getRouteDecision, shouldExcludeFromStaticGeneration } from "@/lib/migration/route-decisions";
-import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
-import Link from "next/link";
+import { applyRankingLinkRestorations } from "@/lib/migration/ranking-link-restorations";
+import { applyTechnicalLinkCorrections } from "@/lib/migration/technical-link-corrections";
+import { InnerWpMirrorPage } from "@/components/mirror/InnerWpMirrorPage";
+import { buildPageBreadcrumbs } from "@/lib/navigation/page-breadcrumbs";
+import { getAllBlogPosts, getBlogPostBySlug, getRelatedBlogPosts } from "@/lib/blog/blog-data";
+import { BlogArchive } from "@/components/blog/BlogArchive";
+import { BlogArticle } from "@/components/blog/BlogArticle";
+import { JsonLd } from "@/components/seo/JsonLd";
+import type { JsonLdValue } from "@/lib/schema/jsonld";
+import { buildGlobalEntitySchemas } from "@/lib/schema/page-schemas";
+import {
+  articleSchema,
+  blogArchiveSchema,
+  breadcrumbSchema,
+  faqSchema,
+  webPageSchema,
+} from "@/lib/schema/builders";
+import { ORGANIZATION_ID, WEBSITE_ID } from "@/lib/schema/entity";
 
 export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
@@ -61,10 +73,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
     notFound();
   }
 
-  if (!route) {
-    notFound();
-  }
-
   if (route.protected) {
     assertProtectedRouteSearchPolicy({
       path: route.path,
@@ -74,78 +82,90 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
     });
   }
 
-  const blocks = (await loadContentBlocks())[path]?.blocks || [];
-  const breadcrumbs = buildBreadcrumbs(path, route);
-  const schemaBlocks = buildRouteSchemas({ route, path, blocks, breadcrumbs });
+  if (path === "/blogs/") {
+    const posts = await getAllBlogPosts();
+    const blogSchemas = [
+      ...buildGlobalEntitySchemas(),
+      webPageSchema({
+        name: route.title || "Blogs - D'Genius Solutions",
+        description: route.description || "Strategic thinking on SEO, AI search, and digital growth.",
+        path,
+        organizationId: ORGANIZATION_ID,
+      }),
+      blogArchiveSchema({
+        name: route.title || "Blogs - D'Genius Solutions",
+        description: route.description || "Strategic thinking on SEO, AI search, and digital growth.",
+        path,
+        organizationId: ORGANIZATION_ID,
+        posts: posts.map((p, idx) => ({ name: p.title, path: p.path, position: idx + 1 })),
+      }),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Blogs", path: "/blogs/" },
+      ]),
+    ];
 
-  const pageH1 = resolvePageH1(route, blocks);
-  const isH1 = (b: ContentBlock): b is HeadingBlock => b.type === "heading" && b.level === 1;
-  const isDuplicateHeading = (b: ContentBlock): b is HeadingBlock =>
-    b.type === "heading" && b.text.trim() === pageH1.trim();
-  const contentBlocks = blocks.filter((b) => !isH1(b) && !isDuplicateHeading(b));
-  const showContactForm = path === "/contact-us/";
-
-  return (
-    <main className="page-main" id="main-content">
-      {breadcrumbs.length > 0 && (
-        <nav aria-label="Breadcrumb" className="page-breadcrumbs">
-          <ol>
-            {breadcrumbs.map((item, i) => (
-              <li key={item.path}>
-                {i > 0 && <span className="page-breadcrumbs__sep">/</span>}
-                {i === breadcrumbs.length - 1 ? (
-                  <span aria-current="page">{item.name}</span>
-                ) : (
-                  <Link href={item.path}>{item.name}</Link>
-                )}
-              </li>
-            ))}
-          </ol>
-        </nav>
-      )}
-
-      <article data-migration-content data-wordpress-id={route.wordpressId}>
-        <div className="container readable-copy">
-          <h1>{pageH1}</h1>
-        </div>
-        <div className="container semantic-content-wrap">
-          <SemanticContent blocks={contentBlocks} demoteSecondaryHeadings />
-        </div>
-        {showContactForm ? (
-          <section className="container contact-form-section" aria-labelledby="contact-form-heading">
-            <h2 id="contact-form-heading" className="visually-hidden">
-              Contact form
-            </h2>
-            <PublicLeadForm id="dgContact" route="/contact-us/" />
-          </section>
-        ) : null}
-      </article>
-
-      <JsonLd id="page-jsonld" value={schemaBlocks} />
-    </main>
-  );
-}
-
-function buildBreadcrumbs(path: string, route: { path: string; wordpressType: string; title: string | null }) {
-  const segments = path.split("/").filter(Boolean);
-  const crumbs = [{ name: "Home", path: "/" }];
-
-  if (route.wordpressType === "service" && segments[0] === "services") {
-    crumbs.push({ name: "Services", path: "/our-services/" });
-    crumbs.push({ name: route.title || "Service", path });
-  } else if (route.wordpressType === "post" && segments[0] === "blogs") {
-    crumbs.push({ name: "Blogs", path: "/blogs/" });
-    crumbs.push({ name: route.title || "Post", path });
-  } else if (path === "/") {
-    return [];
-  } else {
-    let built = "";
-    for (let i = 0; i < segments.length; i++) {
-      built += "/" + segments[i];
-      const name = segments[i].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-      crumbs.push({ name, path: built + "/" });
-    }
+    return (
+      <>
+        <JsonLd value={blogSchemas as unknown as JsonLdValue} />
+        <BlogArchive posts={posts} />
+      </>
+    );
   }
 
-  return crumbs;
+  if (path.startsWith("/blogs/") && path !== "/blogs/") {
+    const article = await getBlogPostBySlug(path);
+    if (!article) {
+      notFound();
+    }
+    const relatedPosts = await getRelatedBlogPosts(path, 3);
+    const breadcrumbItems = [
+      { name: "Home", path: "/" },
+      { name: "Blogs", path: "/blogs/" },
+      { name: article.title, path: article.path },
+    ];
+    const articleSchemas: Record<string, unknown>[] = [
+      ...buildGlobalEntitySchemas(),
+      webPageSchema({
+        name: article.title,
+        description: article.description,
+        path: article.path,
+        organizationId: ORGANIZATION_ID,
+        websiteId: WEBSITE_ID,
+      }),
+      breadcrumbSchema(breadcrumbItems),
+      articleSchema({
+        headline: article.h1 || article.title,
+        description: article.description,
+        path: article.path,
+        datePublished: article.date,
+        dateModified: article.modified,
+        publisherId: ORGANIZATION_ID,
+        imageUrl: article.featuredImage?.src,
+      }),
+    ];
+
+    if (article.faqs.length > 0) {
+      articleSchemas.push(
+        faqSchema(article.faqs.map((f) => ({ question: f.question, answer: f.answer }))),
+      );
+    }
+
+    return (
+      <>
+        <JsonLd value={articleSchemas as unknown as JsonLdValue} />
+        <BlogArticle article={article} relatedPosts={relatedPosts} />
+      </>
+    );
+  }
+
+  const blocks = (await loadContentBlocks())[path]?.blocks || [];
+  const restoredBlocks = applyTechnicalLinkCorrections(
+    path,
+    applyRankingLinkRestorations(path, blocks),
+  );
+  const breadcrumbs = buildPageBreadcrumbs(path, route);
+  const schemaBlocks = buildRouteSchemas({ route, path, blocks: restoredBlocks, breadcrumbs });
+
+  return <InnerWpMirrorPage path={path} wordpressId={route.wordpressId} schemaBlocks={schemaBlocks} />;
 }

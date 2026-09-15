@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "policy": "EXTRACTION_DEFECT_CORRECTED — archive hub headings corrected to match live WordPress visible titles.",
+  "archives": [
+    {
+      "route": "/blogs/",
+      "wordpressId": 26492,
+      "wordpressUrl": "https://www.dgeniussolutions.com/blogs/",
+      "priorExtractedHeading": "Archives",
+      "correctedExtractedHeading": "Blogs",
+      "liveWordPressHeading": "Blogs",
+      "liveWordPressElement": "h1",
+      "status": "EXTRACTION_DEFECT_CORRECTED",
+      "liveWordPressEvidenceAt": "2026-08-29T15:50:00.000Z"
+    },
+    {
+      "route": "/our-services/",
+      "wordpressId": 55355,
+      "wordpressUrl": "https://www.dgeniussolutions.com/our-services/",
+      "priorExtractedHeading": "Archives",
+      "correctedExtractedHeading": "Our Services",
+      "liveWordPressHeading": "Our Services",
+      "liveWordPressElement": "h1",
+      "status": "EXTRACTION_DEFECT_CORRECTED",
+      "liveWordPressEvidenceAt": "2026-08-29T15:50:00.000Z"
+    }
+  ]
+}

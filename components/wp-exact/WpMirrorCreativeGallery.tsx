@@ -13,6 +13,7 @@ export function WpMirrorCreativeGallery({ items }: Props) {
   return (
     <div className="dgs-native-gallery">
       {preview.map((item) => (
+        // eslint-disable-next-line @next/next/no-html-link-for-pages
         <a
           key={item.id}
           href="/portfolio/"
@@ -31,6 +32,7 @@ export function WpMirrorCreativeGallery({ items }: Props) {
         </a>
       ))}
       <div className="dgs-native-gallery__cta-row">
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a href="/portfolio/" className="dgs-v1215-btn dgs-v1215-btn-primary dgs-native-gallery__cta">
           View Portfolio
           <span>→</span>

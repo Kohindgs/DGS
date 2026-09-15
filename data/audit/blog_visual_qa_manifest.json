@@ -1,0 +1,622 @@
+[
+  {
+    "route": "/blogs/",
+    "desktopScreenshot": "blog-archive-desktop-1440.png",
+    "mobileScreenshot": "blog-archive-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/3-3-3-rule-in-marketing/",
+    "desktopScreenshot": "3-3-3-rule-in-marketing-desktop-1440.png",
+    "mobileScreenshot": "3-3-3-rule-in-marketing-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/aeo-business/",
+    "desktopScreenshot": "aeo-business-desktop-1440.png",
+    "mobileScreenshot": "aeo-business-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-content-optimization/",
+    "desktopScreenshot": "ai-content-optimization-desktop-1440.png",
+    "mobileScreenshot": "ai-content-optimization-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-generated-summaries-in-search-ads/",
+    "desktopScreenshot": "ai-generated-summaries-in-search-ads-desktop-1440.png",
+    "mobileScreenshot": "ai-generated-summaries-in-search-ads-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-marketing-strategies-2026/",
+    "desktopScreenshot": "ai-marketing-strategies-2026-desktop-1440.png",
+    "mobileScreenshot": "ai-marketing-strategies-2026-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-overview-ranking/",
+    "desktopScreenshot": "ai-overview-ranking-desktop-1440.png",
+    "mobileScreenshot": "ai-overview-ranking-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-overview-seo/",
+    "desktopScreenshot": "ai-overview-seo-desktop-1440.png",
+    "mobileScreenshot": "ai-overview-seo-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-readiness-for-websites/",
+    "desktopScreenshot": "ai-readiness-for-websites-desktop-1440.png",
+    "mobileScreenshot": "ai-readiness-for-websites-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-search-behavior-2026/",
+    "desktopScreenshot": "ai-search-behavior-2026-desktop-1440.png",
+    "mobileScreenshot": "ai-search-behavior-2026-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-search-checklist-2026/",
+    "desktopScreenshot": "ai-search-checklist-2026-desktop-1440.png",
+    "mobileScreenshot": "ai-search-checklist-2026-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-search-optimization-ecommerce/",
+    "desktopScreenshot": "ai-search-optimization-ecommerce-desktop-1440.png",
+    "mobileScreenshot": "ai-search-optimization-ecommerce-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-tools-marketing-agencies/",
+    "desktopScreenshot": "ai-tools-marketing-agencies-desktop-1440.png",
+    "mobileScreenshot": "ai-tools-marketing-agencies-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-video-production-cost-india/",
+    "desktopScreenshot": "ai-video-production-cost-india-desktop-1440.png",
+    "mobileScreenshot": "ai-video-production-cost-india-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-video-production-for-business/",
+    "desktopScreenshot": "ai-video-production-for-business-desktop-1440.png",
+    "mobileScreenshot": "ai-video-production-for-business-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/ai-video-vs-traditional-video/",
+    "desktopScreenshot": "ai-video-vs-traditional-video-desktop-1440.png",
+    "mobileScreenshot": "ai-video-vs-traditional-video-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/brand-identity-seo-trust-lead-generation/",
+    "desktopScreenshot": "brand-identity-seo-trust-lead-generation-desktop-1440.png",
+    "mobileScreenshot": "brand-identity-seo-trust-lead-generation-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/brand-mentions-for-ai-tools/",
+    "desktopScreenshot": "brand-mentions-for-ai-tools-desktop-1440.png",
+    "mobileScreenshot": "brand-mentions-for-ai-tools-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/brand-visibility-in-ai-search/",
+    "desktopScreenshot": "brand-visibility-in-ai-search-desktop-1440.png",
+    "mobileScreenshot": "brand-visibility-in-ai-search-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/chatgpt-brand-visibility/",
+    "desktopScreenshot": "chatgpt-brand-visibility-desktop-1440.png",
+    "mobileScreenshot": "chatgpt-brand-visibility-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/content-strategy-for-seo/",
+    "desktopScreenshot": "content-strategy-for-seo-desktop-1440.png",
+    "mobileScreenshot": "content-strategy-for-seo-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/content-strategy-high-intent-traffic/",
+    "desktopScreenshot": "content-strategy-high-intent-traffic-desktop-1440.png",
+    "mobileScreenshot": "content-strategy-high-intent-traffic-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/content-writing-for-seo/",
+    "desktopScreenshot": "content-writing-for-seo-desktop-1440.png",
+    "mobileScreenshot": "content-writing-for-seo-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/core-update-strategy/",
+    "desktopScreenshot": "core-update-strategy-desktop-1440.png",
+    "mobileScreenshot": "core-update-strategy-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/future-of-seo/",
+    "desktopScreenshot": "future-of-seo-desktop-1440.png",
+    "mobileScreenshot": "future-of-seo-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/generative-engine-optimization-business/",
+    "desktopScreenshot": "generative-engine-optimization-business-desktop-1440.png",
+    "mobileScreenshot": "generative-engine-optimization-business-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/generative-engine-optimization/",
+    "desktopScreenshot": "generative-engine-optimization-desktop-1440.png",
+    "mobileScreenshot": "generative-engine-optimization-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/geo-vs-seo-google-ai-search/",
+    "desktopScreenshot": "geo-vs-seo-google-ai-search-desktop-1440.png",
+    "mobileScreenshot": "geo-vs-seo-google-ai-search-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-ads-vs-meta-ads/",
+    "desktopScreenshot": "google-ads-vs-meta-ads-desktop-1440.png",
+    "mobileScreenshot": "google-ads-vs-meta-ads-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-agentic-browsing/",
+    "desktopScreenshot": "google-agentic-browsing-desktop-1440.png",
+    "mobileScreenshot": "google-agentic-browsing-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+    "desktopScreenshot": "google-ai-overviews-and-the-growth-of-zero-click-searches-desktop-1440.png",
+    "mobileScreenshot": "google-ai-overviews-and-the-growth-of-zero-click-searches-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-ai-overviews-image-generation/",
+    "desktopScreenshot": "google-ai-overviews-image-generation-desktop-1440.png",
+    "mobileScreenshot": "google-ai-overviews-image-generation-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-ai-search-update/",
+    "desktopScreenshot": "google-ai-search-update-desktop-1440.png",
+    "mobileScreenshot": "google-ai-search-update-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-algorithm-business/",
+    "desktopScreenshot": "google-algorithm-business-desktop-1440.png",
+    "mobileScreenshot": "google-algorithm-business-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-io-2026/",
+    "desktopScreenshot": "google-io-2026-desktop-1440.png",
+    "mobileScreenshot": "google-io-2026-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-ranking-fixes/",
+    "desktopScreenshot": "google-ranking-fixes-desktop-1440.png",
+    "mobileScreenshot": "google-ranking-fixes-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-search-console-social-media/",
+    "desktopScreenshot": "google-search-console-social-media-desktop-1440.png",
+    "mobileScreenshot": "google-search-console-social-media-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/google-spam-update/",
+    "desktopScreenshot": "google-spam-update-desktop-1440.png",
+    "mobileScreenshot": "google-spam-update-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/llm-seo-ai-search/",
+    "desktopScreenshot": "llm-seo-ai-search-desktop-1440.png",
+    "mobileScreenshot": "llm-seo-ai-search-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/llm-seo-services-mumbai/",
+    "desktopScreenshot": "llm-seo-services-mumbai-desktop-1440.png",
+    "mobileScreenshot": "llm-seo-services-mumbai-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/local-seo-business-growth/",
+    "desktopScreenshot": "local-seo-business-growth-desktop-1440.png",
+    "mobileScreenshot": "local-seo-business-growth-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/low-social-media-reach/",
+    "desktopScreenshot": "low-social-media-reach-desktop-1440.png",
+    "mobileScreenshot": "low-social-media-reach-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/modern-seo-business-growth/",
+    "desktopScreenshot": "modern-seo-business-growth-desktop-1440.png",
+    "mobileScreenshot": "modern-seo-business-growth-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/optimize-content-ai-search/",
+    "desktopScreenshot": "optimize-content-ai-search-desktop-1440.png",
+    "mobileScreenshot": "optimize-content-ai-search-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/optimize-for-ai-overviews/",
+    "desktopScreenshot": "optimize-for-ai-overviews-desktop-1440.png",
+    "mobileScreenshot": "optimize-for-ai-overviews-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/schema-seo-for-small-business/",
+    "desktopScreenshot": "schema-seo-for-small-business-desktop-1440.png",
+    "mobileScreenshot": "schema-seo-for-small-business-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/search-generative-ai-performance-reports/",
+    "desktopScreenshot": "search-generative-ai-performance-reports-desktop-1440.png",
+    "mobileScreenshot": "search-generative-ai-performance-reports-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/seo-friendly-website/",
+    "desktopScreenshot": "seo-friendly-website-desktop-1440.png",
+    "mobileScreenshot": "seo-friendly-website-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/seo-rankings-up-but-traffic-down/",
+    "desktopScreenshot": "seo-rankings-up-but-traffic-down-desktop-1440.png",
+    "mobileScreenshot": "seo-rankings-up-but-traffic-down-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/seo-services-india-2026/",
+    "desktopScreenshot": "seo-services-india-2026-desktop-1440.png",
+    "mobileScreenshot": "seo-services-india-2026-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/seo-strategies-business-growth/",
+    "desktopScreenshot": "seo-strategies-business-growth-desktop-1440.png",
+    "mobileScreenshot": "seo-strategies-business-growth-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+    "desktopScreenshot": "social-media-conversion-why-your-followers-are-not-becoming-customers-desktop-1440.png",
+    "mobileScreenshot": "social-media-conversion-why-your-followers-are-not-becoming-customers-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/social-media-marketing-strategy/",
+    "desktopScreenshot": "social-media-marketing-strategy-desktop-1440.png",
+    "mobileScreenshot": "social-media-marketing-strategy-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/topical-authority-seo/",
+    "desktopScreenshot": "topical-authority-seo-desktop-1440.png",
+    "mobileScreenshot": "topical-authority-seo-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/voice-search-seo/",
+    "desktopScreenshot": "voice-search-seo-desktop-1440.png",
+    "mobileScreenshot": "voice-search-seo-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/website-design-lead-generation-mumbai/",
+    "desktopScreenshot": "website-design-lead-generation-mumbai-desktop-1440.png",
+    "mobileScreenshot": "website-design-lead-generation-mumbai-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/website-development-leads/",
+    "desktopScreenshot": "website-development-leads-desktop-1440.png",
+    "mobileScreenshot": "website-development-leads-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/website-development-mistakes/",
+    "desktopScreenshot": "website-development-mistakes-desktop-1440.png",
+    "mobileScreenshot": "website-development-mistakes-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/website-development-quality-leads/",
+    "desktopScreenshot": "website-development-quality-leads-desktop-1440.png",
+    "mobileScreenshot": "website-development-quality-leads-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/website-performance-conversions/",
+    "desktopScreenshot": "website-performance-conversions-desktop-1440.png",
+    "mobileScreenshot": "website-performance-conversions-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/website-traffic-but-no-leads/",
+    "desktopScreenshot": "website-traffic-but-no-leads-desktop-1440.png",
+    "mobileScreenshot": "website-traffic-but-no-leads-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  },
+  {
+    "route": "/blogs/what-is-llm-seo/",
+    "desktopScreenshot": "what-is-llm-seo-desktop-1440.png",
+    "mobileScreenshot": "what-is-llm-seo-mobile-390.png",
+    "horizontalOverflowDesktop": false,
+    "horizontalOverflowMobile": false,
+    "brokenImages": 0,
+    "missingH1": false,
+    "visualWarnings": []
+  }
+]

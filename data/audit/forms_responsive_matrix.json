@@ -1,0 +1,1092 @@
+{
+  "1": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 298,
+        "leftSpace": 31,
+        "rightSpace": 31,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 328,
+        "leftSpace": 31,
+        "rightSpace": 31,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 368,
+        "leftSpace": 31,
+        "rightSpace": 31,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 680,
+        "leftSpace": 44,
+        "rightSpace": 44,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 680,
+        "leftSpace": 172,
+        "rightSpace": 172,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": false,
+      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://dimgrey-goat-473970.hostingersite.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 680,
+        "leftSpace": 380,
+        "rightSpace": 380,
+        "winWidth": 1440
+      }
+    }
+  },
+  "3": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 294,
+        "leftSpace": 33,
+        "rightSpace": 33,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 316,
+        "leftSpace": 37,
+        "rightSpace": 37,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 356,
+        "leftSpace": 37,
+        "rightSpace": 37,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 651,
+        "leftSpace": 59,
+        "rightSpace": 59,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 304,
+        "rightSpace": 304,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 384,
+        "rightSpace": 384,
+        "winWidth": 1440
+      }
+    }
+  },
+  "4": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 360,
+        "leftSpace": 0,
+        "rightSpace": 0,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 390,
+        "leftSpace": 0,
+        "rightSpace": 0,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 430,
+        "leftSpace": 0,
+        "rightSpace": 0,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 48,
+        "rightSpace": 48,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 304,
+        "rightSpace": 304,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 384,
+        "rightSpace": 384,
+        "winWidth": 1440
+      }
+    }
+  },
+  "6": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 290,
+        "leftSpace": 35,
+        "rightSpace": 35,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 312,
+        "leftSpace": 39,
+        "rightSpace": 39,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 352,
+        "leftSpace": 39,
+        "rightSpace": 39,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 48,
+        "rightSpace": 48,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 304,
+        "rightSpace": 304,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 384,
+        "rightSpace": 384,
+        "winWidth": 1440
+      }
+    }
+  },
+  "9": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 270,
+        "leftSpace": 45,
+        "rightSpace": 45,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 300,
+        "leftSpace": 45,
+        "rightSpace": 45,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 340,
+        "leftSpace": 45,
+        "rightSpace": 45,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 612,
+        "leftSpace": 78,
+        "rightSpace": 78,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 304,
+        "rightSpace": 304,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 384,
+        "rightSpace": 384,
+        "winWidth": 1440
+      }
+    }
+  },
+  "10": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 290,
+        "leftSpace": 35,
+        "rightSpace": 35,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 320,
+        "leftSpace": 35,
+        "rightSpace": 35,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 348,
+        "leftSpace": 41,
+        "rightSpace": 41,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 656,
+        "leftSpace": 56,
+        "rightSpace": 56,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 268,
+        "leftSpace": 486,
+        "rightSpace": 526,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 335,
+        "leftSpace": 526,
+        "rightSpace": 579,
+        "winWidth": 1440
+      }
+    }
+  },
+  "11": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 320,
+        "leftSpace": 20,
+        "rightSpace": 20,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 350,
+        "leftSpace": 20,
+        "rightSpace": 20,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 390,
+        "leftSpace": 20,
+        "rightSpace": 20,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 48,
+        "rightSpace": 48,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 114,
+        "rightSpace": 494,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 194,
+        "rightSpace": 574,
+        "winWidth": 1440
+      }
+    }
+  },
+  "19": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 234,
+        "leftSpace": 63,
+        "rightSpace": 63,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 264,
+        "leftSpace": 63,
+        "rightSpace": 63,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 304,
+        "leftSpace": 63,
+        "rightSpace": 63,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 642,
+        "leftSpace": 63,
+        "rightSpace": 63,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 304,
+        "rightSpace": 304,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 384,
+        "rightSpace": 384,
+        "winWidth": 1440
+      }
+    }
+  },
+  "20": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 210,
+        "leftSpace": 75,
+        "rightSpace": 75,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 240,
+        "leftSpace": 75,
+        "rightSpace": 75,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 280,
+        "leftSpace": 75,
+        "rightSpace": 75,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 618,
+        "leftSpace": 75,
+        "rightSpace": 75,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 304,
+        "rightSpace": 304,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 384,
+        "rightSpace": 384,
+        "winWidth": 1440
+      }
+    }
+  },
+  "21": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 270,
+        "leftSpace": 45,
+        "rightSpace": 45,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 300,
+        "leftSpace": 45,
+        "rightSpace": 45,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 320,
+        "leftSpace": 55,
+        "rightSpace": 55,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 658,
+        "leftSpace": 55,
+        "rightSpace": 55,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 176,
+        "rightSpace": 176,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 304,
+        "rightSpace": 304,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 672,
+        "leftSpace": 384,
+        "rightSpace": 384,
+        "winWidth": 1440
+      }
+    }
+  },
+  "26": {
+    "360": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 240,
+        "leftSpace": 60,
+        "rightSpace": 60,
+        "winWidth": 360
+      }
+    },
+    "390": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 270,
+        "leftSpace": 60,
+        "rightSpace": 60,
+        "winWidth": 390
+      }
+    },
+    "430": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 310,
+        "leftSpace": 60,
+        "rightSpace": 60,
+        "winWidth": 430
+      }
+    },
+    "768": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 563,
+        "leftSpace": 102,
+        "rightSpace": 102,
+        "winWidth": 768
+      }
+    },
+    "1024": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 774,
+        "leftSpace": 125,
+        "rightSpace": 125,
+        "winWidth": 1024
+      }
+    },
+    "1280": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 969,
+        "leftSpace": 156,
+        "rightSpace": 156,
+        "winWidth": 1280
+      }
+    },
+    "1440": {
+      "pass": true,
+      "details": {
+        "found": true,
+        "hasHorizontalScroll": false,
+        "captchaContained": true,
+        "btnOk": true,
+        "isCentered": true,
+        "formWidth": 1090,
+        "leftSpace": 175,
+        "rightSpace": 175,
+        "winWidth": 1440
+      }
+    }
+  }
+}

@@ -1,0 +1,1042 @@
+{
+  "path": "/services/ai-video-production-agency/",
+  "slug": "ai-video",
+  "checkedAt": "2026-08-29T07:45:49.509Z",
+  "target": "http://127.0.0.1:3025",
+  "wordpressSource": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+  "httpStatus": 200,
+  "indexability": {
+    "robots": "noindex, nofollow",
+    "xRobotsTag": "noindex, nofollow, noarchive",
+    "hasNoindex": true,
+    "classification": "A",
+    "label": "EXPECTED_STAGING_NOINDEX",
+    "expectStagingNoindex": true
+  },
+  "canonical": {
+    "next": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+    "nextPath": "/services/ai-video-production-agency/",
+    "desiredPath": "/services/ai-video-production-agency/",
+    "wordpressObservedPath": "/services/ai-video-production-agency/",
+    "selfCanonical": true
+  },
+  "schemaTypes": [
+    "BreadcrumbList",
+    "ImageObject",
+    "ListItem",
+    "Organization",
+    "PostalAddress",
+    "Service",
+    "WebPage",
+    "WebSite"
+  ],
+  "content": {
+    "hashMatch": false,
+    "sourceSha256": "a51f012ae7b0567ca39d54c765abf575ae42c16ba0d31fb518f98ef34a1d6dd8",
+    "targetSha256": "155bea5f7af17cdb4c39b447774b5d117e691185da4afcf28ba4f4f3259b95cc",
+    "headings": {
+      "missing": [
+        {
+          "index": 90,
+          "level": "h3",
+          "text": "'+title+'"
+        }
+      ],
+      "extra": [],
+      "textDifferences": [],
+      "order": {
+        "orderChanged": true,
+        "sourceOrder": [
+          "h1:AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
+          "h2:AI Video Production Service In Mumbai For Ads, Brand Films, Product Videos And Social Campaigns",
+          "h2:AI Video Production House In Mumbai For Brands",
+          "h3:AI Video Production Services In Mumbai",
+          "h3:AI Production Services In Mumbai",
+          "h3:AI Video Services In Mumbai",
+          "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+          "h2:Proof-Led AI Video Production For Brands",
+          "h3:AI Mascot Videos",
+          "h3:AI Product Videos",
+          "h3:AI Jewellery Videos",
+          "h3:AI Festival Campaigns",
+          "h3:AI Concept Films",
+          "h3:Explore The AI Video Portfolio",
+          "h2:AI-Generated Video Work",
+          "h2:AI Video Production Services Mean Faster, Scalable And Campaign-Ready Brand Content",
+          "h3:Campaign-Led Concepts",
+          "h3:Scripts, Hooks & Storyboards",
+          "h3:AI Visual Direction",
+          "h3:Editing & Motion Design",
+          "h3:Multiple Creative Versions",
+          "h3:Built For Marketing Outcomes",
+          "h2:An AI Video Production Agency In Mumbai Built For Brand Visibility",
+          "h3:Creative Strategy Before AI Tools",
+          "h3:AI Production + Performance Thinking",
+          "h3:Full-Funnel Digital Team",
+          "h3:Brand-Safe Human Direction",
+          "h3:Scalable Content For Campaigns",
+          "h3:Mumbai Agency, India-Wide Delivery",
+          "h2:AI Video Production House In Mumbai For AI Ads, Films And Commercials",
+          "h3:AI Film Studio For Mumbai Brands",
+          "h3:AI Ad Film Production Company",
+          "h3:AI Video Production House In Mumbai",
+          "h2:Crawlable AI Video Case Study Signals",
+          "h3:AI Mascot Brand Recall Videos",
+          "h3:AI Product Launch Videos",
+          "h3:AI Jewellery And Luxury Videos",
+          "h3:AI Avatar And Spokesperson Videos",
+          "h3:AI Festival Campaign Videos",
+          "h3:AI TVC Style Campaign Videos",
+          "h2:AI Video Production Services In Mumbai For Ads, Films And Campaigns",
+          "h3:AI Video Ads",
+          "h3:AI Product Videos",
+          "h3:AI Brand Films",
+          "h3:AI Social Media Reels",
+          "h3:AI Mascot & Character Videos",
+          "h3:AI Festival & Campaign Videos",
+          "h2:Mumbai-Based AI Video Production House For India",
+          "h3:AI Video Production Agency In Mumbai",
+          "h3:AI Video Production Agency In India",
+          "h3:Mumbai, Maharashtra, India",
+          "h2:AI Video Production House Serving Mumbai Business Hubs",
+          "h3:Andheri, Bandra, Goregaon And Malad",
+          "h3:BKC, Lower Parel And Powai",
+          "h3:Navi Mumbai And Thane",
+          "h2:Create More Campaign Video Assets With Fewer Production Bottlenecks",
+          "h3:Long timelines, shoot logistics and limited content output.",
+          "h3:Faster concepts, scalable content output and campaign-ready AI videos.",
+          "h2:How Brands Can Use AI Videos Across The Funnel",
+          "h3:Product Launch Campaigns",
+          "h3:Performance Ad Testing",
+          "h3:Brand Recall Campaigns",
+          "h3:Festival Content Calendars",
+          "h3:Website Conversion Support",
+          "h3:Sales & Presentation Assets",
+          "h2:How Our AI Video Production House In Mumbai Creates Videos",
+          "h3:Creative Brief & Strategy",
+          "h3:Script, Concept & Storyboard",
+          "h3:AI Visual & Video Generation",
+          "h3:Editing, Sound & Delivery",
+          "h3:Looks interesting, but may not create business enquiries.",
+          "h3:AI videos planned to attract attention, explain the offer and move buyers to action.",
+          "h2:AI Video Production For Brands That Need Content At Scale",
+          "h3:FMCG & Food",
+          "h3:Jewellery & Fashion",
+          "h3:Real Estate & Architecture",
+          "h3:Education & Training",
+          "h3:Healthcare & Wellness",
+          "h3:Corporate & B2B",
+          "h2:AI Video Is Becoming A Content Advantage",
+          "h2:Trusted By Industry Leaders",
+          "h2:Everything About AI Video Production",
+          "h2:Connect AI Video With Search, Ads And Website Conversions",
+          "h3:SEO Services In Mumbai",
+          "h3:AEO Services In Mumbai",
+          "h3:Optimize For AI Overviews",
+          "h3:Google Ads Services",
+          "h3:Website Development Company In Mumbai",
+          "h3:Future Of SEO",
+          "h2:Get Your Free AI Video Concept Plan",
+          "h3:'+title+'"
+        ],
+        "targetOrder": [
+          "h1:AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
+          "h2:AI Video Production Service In Mumbai For Ads, Brand Films, Product Videos And Social Campaigns",
+          "h2:AI Video Production House In Mumbai For Brands",
+          "h3:AI Video Production Services In Mumbai",
+          "h3:AI Production Services In Mumbai",
+          "h3:AI Video Services In Mumbai",
+          "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+          "h2:Proof-Led AI Video Production For Brands",
+          "h3:AI Mascot Videos",
+          "h3:AI Product Videos",
+          "h3:AI Jewellery Videos",
+          "h3:AI Festival Campaigns",
+          "h3:AI Concept Films",
+          "h3:Explore The AI Video Portfolio",
+          "h2:AI-Generated Video Work",
+          "h2:AI Video Production Services Mean Faster, Scalable And Campaign-Ready Brand Content",
+          "h3:Campaign-Led Concepts",
+          "h3:Scripts, Hooks & Storyboards",
+          "h3:AI Visual Direction",
+          "h3:Editing & Motion Design",
+          "h3:Multiple Creative Versions",
+          "h3:Built For Marketing Outcomes",
+          "h2:An AI Video Production Agency In Mumbai Built For Brand Visibility",
+          "h3:Creative Strategy Before AI Tools",
+          "h3:AI Production + Performance Thinking",
+          "h3:Full-Funnel Digital Team",
+          "h3:Brand-Safe Human Direction",
+          "h3:Scalable Content For Campaigns",
+          "h3:Mumbai Agency, India-Wide Delivery",
+          "h2:AI Video Production House In Mumbai For AI Ads, Films And Commercials",
+          "h3:AI Film Studio For Mumbai Brands",
+          "h3:AI Ad Film Production Company",
+          "h3:AI Video Production House In Mumbai",
+          "h2:Crawlable AI Video Case Study Signals",
+          "h3:AI Mascot Brand Recall Videos",
+          "h3:AI Product Launch Videos",
+          "h3:AI Jewellery And Luxury Videos",
+          "h3:AI Avatar And Spokesperson Videos",
+          "h3:AI Festival Campaign Videos",
+          "h3:AI TVC Style Campaign Videos",
+          "h2:AI Video Production Services In Mumbai For Ads, Films And Campaigns",
+          "h3:AI Video Ads",
+          "h3:AI Product Videos",
+          "h3:AI Brand Films",
+          "h3:AI Social Media Reels",
+          "h3:AI Mascot & Character Videos",
+          "h3:AI Festival & Campaign Videos",
+          "h2:Mumbai-Based AI Video Production House For India",
+          "h3:AI Video Production Agency In Mumbai",
+          "h3:AI Video Production Agency In India",
+          "h3:Mumbai, Maharashtra, India",
+          "h2:AI Video Production House Serving Mumbai Business Hubs",
+          "h3:Andheri, Bandra, Goregaon And Malad",
+          "h3:BKC, Lower Parel And Powai",
+          "h3:Navi Mumbai And Thane",
+          "h2:Create More Campaign Video Assets With Fewer Production Bottlenecks",
+          "h3:Long timelines, shoot logistics and limited content output.",
+          "h3:Faster concepts, scalable content output and campaign-ready AI videos.",
+          "h2:How Brands Can Use AI Videos Across The Funnel",
+          "h3:Product Launch Campaigns",
+          "h3:Performance Ad Testing",
+          "h3:Brand Recall Campaigns",
+          "h3:Festival Content Calendars",
+          "h3:Website Conversion Support",
+          "h3:Sales & Presentation Assets",
+          "h2:How Our AI Video Production House In Mumbai Creates Videos",
+          "h3:Creative Brief & Strategy",
+          "h3:Script, Concept & Storyboard",
+          "h3:AI Visual & Video Generation",
+          "h3:Editing, Sound & Delivery",
+          "h3:Looks interesting, but may not create business enquiries.",
+          "h3:AI videos planned to attract attention, explain the offer and move buyers to action.",
+          "h2:AI Video Production For Brands That Need Content At Scale",
+          "h3:FMCG & Food",
+          "h3:Jewellery & Fashion",
+          "h3:Real Estate & Architecture",
+          "h3:Education & Training",
+          "h3:Healthcare & Wellness",
+          "h3:Corporate & B2B",
+          "h2:AI Video Is Becoming A Content Advantage",
+          "h2:Trusted By Industry Leaders",
+          "h2:Everything About AI Video Production",
+          "h2:Connect AI Video With Search, Ads And Website Conversions",
+          "h3:SEO Services In Mumbai",
+          "h3:AEO Services In Mumbai",
+          "h3:Optimize For AI Overviews",
+          "h3:Google Ads Services",
+          "h3:Website Development Company In Mumbai",
+          "h3:Future Of SEO",
+          "h2:Get Your Free AI Video Concept Plan"
+        ]
+      }
+    },
+    "paragraphs": {
+      "missing": [
+        "'+label+'",
+        "'+title+'",
+        "'+label+'"
+      ],
+      "extra": [
+        "Mumbai Local AI video production support for Andheri, Bandra, BKC, Lower Parel, Powai, Navi Mumbai and Thane. Service AI video service for ads, brand films, product launches, explainers, reels and website campaigns. Proof Creative direction, scripts, portfolio work, editing, sound and campaign-ready final delivery.",
+        "✓ AI video ads and short commercial videos for Meta, YouTube, Google Ads and landing pages. ✓ AI product videos, avatar videos, brand films, mascot videos and social-first campaign creatives. ✓ AI video production services in Mumbai for startups, agencies, ecommerce brands and growing companies. ✓ Human-led scripting, editing, voiceover, subtitles, sound design and final campaign polish.",
+        "Target Keyword",
+        "Target Keyword",
+        "Target Keyword",
+        "Trusted By 200+ Brands",
+        "Featured Work",
+        "Featured Work",
+        "Featured Work",
+        "Featured Work",
+        "Featured Work",
+        "View Work",
+        "×",
+        "‹",
+        "›",
+        "Strategy",
+        "Creative",
+        "Production",
+        "Post",
+        "Scale",
+        "Growth",
+        "DGS Advantage",
+        "DGS Advantage",
+        "DGS Advantage",
+        "DGS Advantage",
+        "DGS Advantage",
+        "DGS Advantage",
+        "Mumbai Local",
+        "Mumbai Local",
+        "Mumbai Local"
+      ],
+      "wordingDifferences": [
+        {
+          "source": "We combine generative AI video tools with creative strategy, scripts, storyboards, editing, voiceovers, music, motion graphics and platform formatting. This helps brands create AI ads, product videos, AI avatar videos, brand films, reels and campaign assets without depending on slow production cycles.",
+          "target": "Mumbai Local AI video production support for Andheri, Bandra, BKC, Lower Parel, Powai, Navi Mumbai and Thane. Service AI video service for ads, brand films, product launches, explainers, reels and website campaigns. Proof Creative direction, scripts, portfolio work, editing, sound and campaign-ready final delivery."
+        },
+        {
+          "source": "AI Overview Answer",
+          "target": "We combine generative AI video tools with creative strategy, scripts, storyboards, editing, voiceovers, music, motion graphics and platform formatting. This helps brands create AI ads, product videos, AI avatar videos, brand films, reels and campaign assets without depending on slow production cycles."
+        },
+        {
+          "source": "D’Genius Solutions is an AI video production house in Mumbai providing end-to-end AI video production services for brands. We create AI-generated ads, product videos, brand films, AI avatar videos, mascot videos, jewellery videos, social media reels and campaign creatives. The production process combines human creative direction, AI video generation, scripting, storyboarding, editing, sound design and motion graphics so every video is built for clarity, brand recall and campaign use.",
+          "target": "✓ AI video ads and short commercial videos for Meta, YouTube, Google Ads and landing pages. ✓ AI product videos, avatar videos, brand films, mascot videos and social-first campaign creatives. ✓ AI video production services in Mumbai for startups, agencies, ecommerce brands and growing companies. ✓ Human-led scripting, editing, voiceover, subtitles, sound design and final campaign polish."
+        },
+        {
+          "source": "Our AI video production services in Mumbai cover the complete workflow: concept, script, storyboard, AI visual direction, video generation, editing, voiceover, music, subtitles and final exports. Each AI video production service in Mumbai can be tailored to a single campaign or an ongoing content requirement. Brands use this service for ads, product launches, reels, website videos and lead-generation campaigns.",
+          "target": "AI Overview Answer"
+        },
+        {
+          "source": "Our AI production services in Mumbai help brands create AI-led campaign videos, product visuals, avatar videos, brand stories and digital ad content. Every project is planned with a clear message, target audience, platform format and business goal.",
+          "target": "D’Genius Solutions is an AI video production house in Mumbai providing end-to-end AI video production services for brands. We create AI-generated ads, product videos, brand films, AI avatar videos, mascot videos, jewellery videos, social media reels and campaign creatives. The production process combines human creative direction, AI video generation, scripting, storyboarding, editing, sound design and motion graphics so every video is built for clarity, brand recall and campaign use."
+        },
+        {
+          "source": "Our AI video services in Mumbai are designed for businesses that need professional videos without long shoot timelines. We create short ads, product clips, explainers, social media videos, AI avatars, mascots and brand films for digital-first marketing.",
+          "target": "Target Keyword"
+        },
+        {
+          "source": "Real brand work across digital marketing, websites, SEO, creative design, social media, performance marketing and AI production.",
+          "target": "Our AI video production services in Mumbai cover the complete workflow: concept, script, storyboard, AI visual direction, video generation, editing, voiceover, music, subtitles and final exports. Each AI video production service in Mumbai can be tailored to a single campaign or an ongoing content requirement. Brands use this service for ads, product launches, reels, website videos and lead-generation campaigns."
+        },
+        {
+          "source": "Featured AI Video Work",
+          "target": "Target Keyword"
+        },
+        {
+          "source": "Before choosing an AI video production house or agency in Mumbai, brands want to see real output, not only service claims. D’Genius Solutions showcases AI video work across mascots, products, jewellery, festival campaigns, AI avatar videos, concept films and TVC-style videos so buyers can judge creative quality, editing style and campaign fit before enquiring.",
+          "target": "Our AI production services in Mumbai help brands create AI-led campaign videos, product visuals, avatar videos, brand stories and digital ad content. Every project is planned with a clear message, target audience, platform format and business goal."
+        },
+        {
+          "source": "Character-led mascot videos for brand recall, festive greetings, product communication and social media storytelling.",
+          "target": "Target Keyword"
+        },
+        {
+          "source": "Product-focused AI videos for food, FMCG, beauty, e-commerce, packaging, launch campaigns and performance ads.",
+          "target": "Our AI video services in Mumbai are designed for businesses that need professional videos without long shoot timelines. We create short ads, product clips, explainers, social media videos, AI avatars, mascots and brand films for digital-first marketing."
+        },
+        {
+          "source": "Premium AI jewellery visuals for gold collections, luxury campaigns, model-led showcases and social-first product stories.",
+          "target": "Trusted By 200+ Brands"
+        },
+        {
+          "source": "Diwali, Navratri, Independence Day, Lohri, Easter, Friendship Day and topical AI videos for always-on campaign calendars.",
+          "target": "Real brand work across digital marketing, websites, SEO, creative design, social media, performance marketing and AI production."
+        },
+        {
+          "source": "Cinematic AI concept films, AI avatar visuals, launch ideas and storytelling videos built for attention and recall.",
+          "target": "Featured AI Video Work"
+        },
+        {
+          "source": "Jump to the full portfolio with playable AI mascot, festival, AI avatar, product, jewellery, concept and TVC-style videos.",
+          "target": "Before choosing an AI video production house or agency in Mumbai, brands want to see real output, not only service claims. D’Genius Solutions showcases AI video work across mascots, products, jewellery, festival campaigns, AI avatar videos, concept films and TVC-style videos so buyers can judge creative quality, editing style and campaign fit before enquiring."
+        },
+        {
+          "source": "AI Video Portfolio",
+          "target": "Featured Work"
+        },
+        {
+          "source": "Explore AI video production work across mascot videos, festival campaigns, AI avatar videos, product videos, jewellery videos, concept films, AI ad films and TVC-style AI production created for brands in Mumbai and India.",
+          "target": "Character-led mascot videos for brand recall, festive greetings, product communication and social media storytelling."
+        },
+        {
+          "source": "What Is An AI Video Production Agency?",
+          "target": "Featured Work"
+        },
+        {
+          "source": "An AI video production house helps brands plan, generate, edit and deliver marketing videos using AI-assisted workflows and human creative direction. D’Genius Solutions creates videos for advertising, social media, product launches, brand campaigns, explainers, AI avatar content, product videos and digital-first storytelling. Our process combines strategy, scripting, visual generation, voiceover, editing, motion design and platform formatting so businesses in Mumbai and India can produce useful video content faster and at scale.",
+          "target": "Product-focused AI videos for food, FMCG, beauty, e-commerce, packaging, launch campaigns and performance ads."
+        },
+        {
+          "source": "AI video production often uses modern generative video, AI filmmaking and avatar tools such as Runway , Google Veo and Synthesia , combined with human creative direction, editing, storyboarding, sound design and brand strategy.",
+          "target": "Featured Work"
+        }
+      ],
+      "sourceCount": 114,
+      "targetCount": 187
+    },
+    "listItems": {
+      "missing": [],
+      "extra": [],
+      "sourceCount": 0,
+      "targetCount": 0
+    },
+    "faq": {
+      "missing": [],
+      "extra": [],
+      "answerDiffs": []
+    },
+    "images": {
+      "missing": [
+        {
+          "index": 41,
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/f43e05c46553d32c6f3c2e40726b7070_1742972415.avif",
+          "alt": "Client brand logo"
+        },
+        {
+          "index": 43,
+          "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/c7a0b6_7b153a1579c943279fffb93ca08b39b1mv2-1.avif",
+          "alt": "Client brand logo"
+        },
+        {
+          "index": 48,
+          "src": "",
+          "alt": ""
+        }
+      ],
+      "extra": [
+        {
+          "index": 41,
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2026%2F06%2Ff43e05c46553d32c6f3c2e40726b7070_1742972415.avif&w=3840&q=75",
+          "alt": "Client brand logo"
+        },
+        {
+          "index": 43,
+          "src": "/_next/image/?url=https%3A%2F%2Fwww.dgeniussolutions.com%2Fwp-content%2Fuploads%2F2026%2F06%2Fc7a0b6_7b153a1579c943279fffb93ca08b39b1mv2-1.avif&w=3840&q=75",
+          "alt": "Client brand logo"
+        }
+      ],
+      "altDiffs": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla Education Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Saint Gobain client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla Fashion and Retail Limited client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Pantaloons client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Jaipur Kurti client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Nutriuits client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Raymond client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Plush Puppy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Candour London client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Styleup client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Onida client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aaram client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Trazact client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "M Power Aditya Birla Education Trust client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Compuage client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Solco client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Structural Specialties client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "MKA client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Club Med client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Druva client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Farm Classics client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Kreedo client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Marigold Lane client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Kotak Mahindra Bank client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Ujaas client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla Integrated School client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla World Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aditya Birla Education Trust client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Humanxt client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "ClearFX Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "IND client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Sir Brandzalot client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Planet Smart City client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Novotel client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Meryl client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "MedArtha client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "LG client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Hanwha Techwin client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Compuage client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Client brand logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Blanco client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Amazonia client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Client brand logo",
+          "targetAlt": "Eureka Forbes client logo"
+        }
+      ]
+    },
+    "order": {
+      "orderChanged": true,
+      "sourceOrder": [
+        "h1:AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
+        "h2:AI Video Production Service In Mumbai For Ads, Brand Films, Product Videos And Social Campaigns",
+        "h2:AI Video Production House In Mumbai For Brands",
+        "h3:AI Video Production Services In Mumbai",
+        "h3:AI Production Services In Mumbai",
+        "h3:AI Video Services In Mumbai",
+        "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+        "h2:Proof-Led AI Video Production For Brands",
+        "h3:AI Mascot Videos",
+        "h3:AI Product Videos",
+        "h3:AI Jewellery Videos",
+        "h3:AI Festival Campaigns",
+        "h3:AI Concept Films",
+        "h3:Explore The AI Video Portfolio",
+        "h2:AI-Generated Video Work",
+        "h2:AI Video Production Services Mean Faster, Scalable And Campaign-Ready Brand Content",
+        "h3:Campaign-Led Concepts",
+        "h3:Scripts, Hooks & Storyboards",
+        "h3:AI Visual Direction",
+        "h3:Editing & Motion Design",
+        "h3:Multiple Creative Versions",
+        "h3:Built For Marketing Outcomes",
+        "h2:An AI Video Production Agency In Mumbai Built For Brand Visibility",
+        "h3:Creative Strategy Before AI Tools",
+        "h3:AI Production + Performance Thinking",
+        "h3:Full-Funnel Digital Team",
+        "h3:Brand-Safe Human Direction",
+        "h3:Scalable Content For Campaigns",
+        "h3:Mumbai Agency, India-Wide Delivery",
+        "h2:AI Video Production House In Mumbai For AI Ads, Films And Commercials",
+        "h3:AI Film Studio For Mumbai Brands",
+        "h3:AI Ad Film Production Company",
+        "h3:AI Video Production House In Mumbai",
+        "h2:Crawlable AI Video Case Study Signals",
+        "h3:AI Mascot Brand Recall Videos",
+        "h3:AI Product Launch Videos",
+        "h3:AI Jewellery And Luxury Videos",
+        "h3:AI Avatar And Spokesperson Videos",
+        "h3:AI Festival Campaign Videos",
+        "h3:AI TVC Style Campaign Videos",
+        "h2:AI Video Production Services In Mumbai For Ads, Films And Campaigns",
+        "h3:AI Video Ads",
+        "h3:AI Product Videos",
+        "h3:AI Brand Films",
+        "h3:AI Social Media Reels",
+        "h3:AI Mascot & Character Videos",
+        "h3:AI Festival & Campaign Videos",
+        "h2:Mumbai-Based AI Video Production House For India",
+        "h3:AI Video Production Agency In Mumbai",
+        "h3:AI Video Production Agency In India",
+        "h3:Mumbai, Maharashtra, India",
+        "h2:AI Video Production House Serving Mumbai Business Hubs",
+        "h3:Andheri, Bandra, Goregaon And Malad",
+        "h3:BKC, Lower Parel And Powai",
+        "h3:Navi Mumbai And Thane",
+        "h2:Create More Campaign Video Assets With Fewer Production Bottlenecks",
+        "h3:Long timelines, shoot logistics and limited content output.",
+        "h3:Faster concepts, scalable content output and campaign-ready AI videos.",
+        "h2:How Brands Can Use AI Videos Across The Funnel",
+        "h3:Product Launch Campaigns",
+        "h3:Performance Ad Testing",
+        "h3:Brand Recall Campaigns",
+        "h3:Festival Content Calendars",
+        "h3:Website Conversion Support",
+        "h3:Sales & Presentation Assets",
+        "h2:How Our AI Video Production House In Mumbai Creates Videos",
+        "h3:Creative Brief & Strategy",
+        "h3:Script, Concept & Storyboard",
+        "h3:AI Visual & Video Generation",
+        "h3:Editing, Sound & Delivery",
+        "h3:Looks interesting, but may not create business enquiries.",
+        "h3:AI videos planned to attract attention, explain the offer and move buyers to action.",
+        "h2:AI Video Production For Brands That Need Content At Scale",
+        "h3:FMCG & Food",
+        "h3:Jewellery & Fashion",
+        "h3:Real Estate & Architecture",
+        "h3:Education & Training",
+        "h3:Healthcare & Wellness",
+        "h3:Corporate & B2B",
+        "h2:AI Video Is Becoming A Content Advantage",
+        "h2:Trusted By Industry Leaders",
+        "h2:Everything About AI Video Production",
+        "h2:Connect AI Video With Search, Ads And Website Conversions",
+        "h3:SEO Services In Mumbai",
+        "h3:AEO Services In Mumbai",
+        "h3:Optimize For AI Overviews",
+        "h3:Google Ads Services",
+        "h3:Website Development Company In Mumbai",
+        "h3:Future Of SEO",
+        "h2:Get Your Free AI Video Concept Plan",
+        "h3:'+title+'"
+      ],
+      "targetOrder": [
+        "h1:AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
+        "h2:AI Video Production Service In Mumbai For Ads, Brand Films, Product Videos And Social Campaigns",
+        "h2:AI Video Production House In Mumbai For Brands",
+        "h3:AI Video Production Services In Mumbai",
+        "h3:AI Production Services In Mumbai",
+        "h3:AI Video Services In Mumbai",
+        "h2:Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+        "h2:Proof-Led AI Video Production For Brands",
+        "h3:AI Mascot Videos",
+        "h3:AI Product Videos",
+        "h3:AI Jewellery Videos",
+        "h3:AI Festival Campaigns",
+        "h3:AI Concept Films",
+        "h3:Explore The AI Video Portfolio",
+        "h2:AI-Generated Video Work",
+        "h2:AI Video Production Services Mean Faster, Scalable And Campaign-Ready Brand Content",
+        "h3:Campaign-Led Concepts",
+        "h3:Scripts, Hooks & Storyboards",
+        "h3:AI Visual Direction",
+        "h3:Editing & Motion Design",
+        "h3:Multiple Creative Versions",
+        "h3:Built For Marketing Outcomes",
+        "h2:An AI Video Production Agency In Mumbai Built For Brand Visibility",
+        "h3:Creative Strategy Before AI Tools",
+        "h3:AI Production + Performance Thinking",
+        "h3:Full-Funnel Digital Team",
+        "h3:Brand-Safe Human Direction",
+        "h3:Scalable Content For Campaigns",
+        "h3:Mumbai Agency, India-Wide Delivery",
+        "h2:AI Video Production House In Mumbai For AI Ads, Films And Commercials",
+        "h3:AI Film Studio For Mumbai Brands",
+        "h3:AI Ad Film Production Company",
+        "h3:AI Video Production House In Mumbai",
+        "h2:Crawlable AI Video Case Study Signals",
+        "h3:AI Mascot Brand Recall Videos",
+        "h3:AI Product Launch Videos",
+        "h3:AI Jewellery And Luxury Videos",
+        "h3:AI Avatar And Spokesperson Videos",
+        "h3:AI Festival Campaign Videos",
+        "h3:AI TVC Style Campaign Videos",
+        "h2:AI Video Production Services In Mumbai For Ads, Films And Campaigns",
+        "h3:AI Video Ads",
+        "h3:AI Product Videos",
+        "h3:AI Brand Films",
+        "h3:AI Social Media Reels",
+        "h3:AI Mascot & Character Videos",
+        "h3:AI Festival & Campaign Videos",
+        "h2:Mumbai-Based AI Video Production House For India",
+        "h3:AI Video Production Agency In Mumbai",
+        "h3:AI Video Production Agency In India",
+        "h3:Mumbai, Maharashtra, India",
+        "h2:AI Video Production House Serving Mumbai Business Hubs",
+        "h3:Andheri, Bandra, Goregaon And Malad",
+        "h3:BKC, Lower Parel And Powai",
+        "h3:Navi Mumbai And Thane",
+        "h2:Create More Campaign Video Assets With Fewer Production Bottlenecks",
+        "h3:Long timelines, shoot logistics and limited content output.",
+        "h3:Faster concepts, scalable content output and campaign-ready AI videos.",
+        "h2:How Brands Can Use AI Videos Across The Funnel",
+        "h3:Product Launch Campaigns",
+        "h3:Performance Ad Testing",
+        "h3:Brand Recall Campaigns",
+        "h3:Festival Content Calendars",
+        "h3:Website Conversion Support",
+        "h3:Sales & Presentation Assets",
+        "h2:How Our AI Video Production House In Mumbai Creates Videos",
+        "h3:Creative Brief & Strategy",
+        "h3:Script, Concept & Storyboard",
+        "h3:AI Visual & Video Generation",
+        "h3:Editing, Sound & Delivery",
+        "h3:Looks interesting, but may not create business enquiries.",
+        "h3:AI videos planned to attract attention, explain the offer and move buyers to action.",
+        "h2:AI Video Production For Brands That Need Content At Scale",
+        "h3:FMCG & Food",
+        "h3:Jewellery & Fashion",
+        "h3:Real Estate & Architecture",
+        "h3:Education & Training",
+        "h3:Healthcare & Wellness",
+        "h3:Corporate & B2B",
+        "h2:AI Video Is Becoming A Content Advantage",
+        "h2:Trusted By Industry Leaders",
+        "h2:Everything About AI Video Production",
+        "h2:Connect AI Video With Search, Ads And Website Conversions",
+        "h3:SEO Services In Mumbai",
+        "h3:AEO Services In Mumbai",
+        "h3:Optimize For AI Overviews",
+        "h3:Google Ads Services",
+        "h3:Website Development Company In Mumbai",
+        "h3:Future Of SEO",
+        "h2:Get Your Free AI Video Concept Plan"
+      ]
+    }
+  },
+  "links": {
+    "wordpressContextual": [
+      {
+        "anchor": "Runway",
+        "href": "https://runwayml.com/",
+        "destination": "https://runwayml.com/",
+        "path": "/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Google Veo",
+        "href": "https://deepmind.google/technologies/veo/",
+        "destination": "https://deepmind.google/technologies/veo/",
+        "path": "/technologies/veo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Synthesia",
+        "href": "https://www.synthesia.io/",
+        "destination": "https://www.synthesia.io/",
+        "path": "/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services In Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO Services In Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Optimize For AI Overviews",
+        "href": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+        "destination": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+        "path": "/blogs/optimize-for-ai-overviews/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Google Ads Services",
+        "href": "https://www.dgeniussolutions.com/services/google-ads/",
+        "destination": "https://www.dgeniussolutions.com/services/google-ads/",
+        "path": "/services/google-ads/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Website Development Company In Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/website-development/",
+        "destination": "https://www.dgeniussolutions.com/services/website-development/",
+        "path": "/services/website-development/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Future Of SEO",
+        "href": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+        "destination": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+        "path": "/blogs/future-of-seo/",
+        "scope": "body"
+      }
+    ],
+    "nextContextual": [
+      {
+        "anchor": "Runway",
+        "href": "https://runwayml.com/",
+        "destination": "https://runwayml.com/",
+        "path": "/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Google Veo",
+        "href": "https://deepmind.google/technologies/veo/",
+        "destination": "https://deepmind.google/technologies/veo/",
+        "path": "/technologies/veo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Synthesia",
+        "href": "https://www.synthesia.io/",
+        "destination": "https://www.synthesia.io/",
+        "path": "/",
+        "scope": "body"
+      }
+    ],
+    "nextGlobal": [],
+    "missingInNext": [
+      {
+        "anchor": "SEO Services In Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO Services In Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Optimize For AI Overviews",
+        "href": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+        "destination": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+        "path": "/blogs/optimize-for-ai-overviews/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Google Ads Services",
+        "href": "https://www.dgeniussolutions.com/services/google-ads/",
+        "destination": "https://www.dgeniussolutions.com/services/google-ads/",
+        "path": "/services/google-ads/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Website Development Company In Mumbai",
+        "href": "https://www.dgeniussolutions.com/services/website-development/",
+        "destination": "https://www.dgeniussolutions.com/services/website-development/",
+        "path": "/services/website-development/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Future Of SEO",
+        "href": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+        "destination": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+        "path": "/blogs/future-of-seo/",
+        "scope": "body"
+      }
+    ],
+    "extraInNext": [],
+    "destinationStatus": [
+      {
+        "path": "/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/technologies/veo/",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/aeo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/blogs/optimize-for-ai-overviews/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/google-ads/",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/services/website-development/",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/blogs/future-of-seo/",
+        "httpStatus": 200,
+        "redirect": null
+      }
+    ]
+  },
+  "findings": [
+    {
+      "class": "A",
+      "label": "EXPECTED_STAGING_DIFFERENCE",
+      "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "1 missing headings"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "heading order changed"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "3 missing paragraphs"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "76 extra paragraphs"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "image/alt differences detected"
+    },
+    {
+      "class": "E",
+      "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+      "detail": "6 contextual links missing in Next"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "normalized visible content hash differs from WordPress baseline"
+    }
+  ],
+  "classifications": {
+    "A": 1,
+    "D": 6,
+    "E": 1
+  }
+}

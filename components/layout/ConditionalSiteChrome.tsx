@@ -3,12 +3,12 @@
 import { usePathname } from "next/navigation";
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
-/** Hides default site chrome on the homepage — WP mirror supplies its own nav/footer. */
+/** Mirror pages supply captured WP chrome; native blog pages need Next chrome. */
 export function ConditionalSiteChrome({ children }: Props) {
   const pathname = usePathname();
-  if (pathname === "/") return null;
-  return <>{children}</>;
+  const isBlog = pathname === "/blogs" || pathname?.startsWith("/blogs/");
+  return isBlog ? <>{children}</> : null;
 }

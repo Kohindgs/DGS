@@ -1,0 +1,51 @@
+{
+  "version": "2B.1A",
+  "target": "http://127.0.0.1:3025/",
+  "presentation": {
+    "width": 1600,
+    "height": 1000,
+    "localPath": "/images/case-studies/weavings-home-page-64820.png",
+    "sourceLocalPath": "/images/case-studies/weavings-home-page-64820-source.png",
+    "padColor": "#020202",
+    "alt": "Live preview of Weavings website",
+    "presentationSha256": "261c52a5b21c6a744b107a247acb26f3909793e0d01ecbd89dd7c2dc724745f8"
+  },
+  "routes": {
+    "/services/website-development-amc/": {
+      "desktop-1440": {
+        "imageTop": 1946.875,
+        "imageBottom": 2793.3125,
+        "contentBelowTop": 2817.3125,
+        "scrollHeight": 23992,
+        "imageHeight": 846.4375,
+        "imageWidth": 1353.59375
+      },
+      "mobile-390": {
+        "imageTop": 2703.484375,
+        "imageBottom": 2922.234375,
+        "contentBelowTop": 2946.234375,
+        "scrollHeight": 29790,
+        "imageHeight": 218.75,
+        "imageWidth": 350
+      }
+    },
+    "/services/website-development-pune-page/": {
+      "desktop-1440": {
+        "imageTop": 1975.671875,
+        "imageBottom": 2822.109375,
+        "contentBelowTop": 2846.109375,
+        "scrollHeight": 23240,
+        "imageHeight": 846.4375,
+        "imageWidth": 1353.59375
+      },
+      "mobile-390": {
+        "imageTop": 2782.984375,
+        "imageBottom": 3001.734375,
+        "contentBelowTop": 3025.734375,
+        "scrollHeight": 29169,
+        "imageHeight": 218.75,
+        "imageWidth": 350
+      }
+    }
+  }
+}

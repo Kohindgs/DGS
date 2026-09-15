@@ -1,0 +1,1882 @@
+{
+  "path": "/services/seo-services-in-mumbai/",
+  "slug": "seo-mumbai",
+  "checkedAt": "2026-08-29T07:45:49.923Z",
+  "target": "http://127.0.0.1:3025",
+  "wordpressSource": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+  "httpStatus": 200,
+  "indexability": {
+    "robots": "noindex, nofollow",
+    "xRobotsTag": "noindex, nofollow, noarchive",
+    "hasNoindex": true,
+    "classification": "A",
+    "label": "EXPECTED_STAGING_NOINDEX",
+    "expectStagingNoindex": true
+  },
+  "canonical": {
+    "next": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+    "nextPath": "/services/seo-services-in-mumbai/",
+    "desiredPath": "/services/seo-services-in-mumbai/",
+    "wordpressObservedPath": "/services/seo-services-in-mumbai/",
+    "selfCanonical": true
+  },
+  "schemaTypes": [
+    "BreadcrumbList",
+    "ImageObject",
+    "ListItem",
+    "Organization",
+    "PostalAddress",
+    "Service",
+    "WebPage",
+    "WebSite"
+  ],
+  "content": {
+    "hashMatch": false,
+    "sourceSha256": "a9c8f5ac08e77c99447870aede38bcfb72aec896db10ec8b1375c93ee37e6b21",
+    "targetSha256": "c278e7f95df46cc2445e4036af43f79f586abe7b7a7cf17a36fdb0f743cec631",
+    "headings": {
+      "missing": [
+        {
+          "index": 73,
+          "level": "h3",
+          "text": "SEO Services in Pune"
+        },
+        {
+          "index": 74,
+          "level": "h3",
+          "text": "SEO Services in Bangalore"
+        },
+        {
+          "index": 75,
+          "level": "h3",
+          "text": "SEO Services in Hyderabad"
+        },
+        {
+          "index": 76,
+          "level": "h3",
+          "text": "SEO Services in Gurugram"
+        }
+      ],
+      "extra": [],
+      "textDifferences": [
+        {
+          "source": "h3: SEO Services in Pune",
+          "target": "h1: SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗"
+        },
+        {
+          "source": "h3: SEO Services in Bangalore",
+          "target": "h2: Selected clients we have worked with"
+        },
+        {
+          "source": "h3: SEO Services in Hyderabad",
+          "target": "h2: What does an SEO agency in Mumbai do?"
+        }
+      ],
+      "order": {
+        "orderChanged": true,
+        "sourceOrder": [
+          "h1:SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
+          "h2:Selected clients we have worked with",
+          "h2:What does an SEO agency in Mumbai do?",
+          "h2:How we build a strong local search base",
+          "h2:Business outcomes our SEO services compound",
+          "h3:Better visibility for important searches",
+          "h3:Stronger local discovery",
+          "h3:More useful enquiries",
+          "h2:Results delivered by a Mumbai SEO services company",
+          "h3:TheWorldGrad",
+          "h3:Weavings Manpower Solutions",
+          "h2:Real Search Results Supporting SEO and AI Visibility",
+          "h3:DGS Search and AI Visibility Screenshots",
+          "h3:Brand visibility strengthened inside Google AI Overviews",
+          "h3:Structured content earned stronger AI-assisted discovery",
+          "h3:Brand information surfaced as a relevant AI Overview source",
+          "h3:Answer engine optimization connected visibility with buyer intent",
+          "h3:Weavings Search and AI Visibility Screenshots",
+          "h3:Search strategy connected authority with qualified demand",
+          "h3:Search visibility improved through coordinated SEO execution",
+          "h3:Answer-ready content strengthened AI-assisted discovery",
+          "h3:AI search visibility reinforced brand authority and discovery",
+          "h2:A simple framework for steady organic growth",
+          "h3:Build a clean technical base",
+          "h3:Improve local search signals",
+          "h3:Create helpful service content",
+          "h2:SEO services built around the full growth system",
+          "h3:Crawl, indexation and website quality",
+          "h3:Pages aligned with buyer search intent",
+          "h3:Google Maps and nearby discovery",
+          "h3:Brand signals, links and digital PR",
+          "h3:Category, product and revenue visibility",
+          "h3:Complex services and longer sales journeys",
+          "h3:Protect visibility during major change",
+          "h3:Search and AI discovery readiness",
+          "h2:Why choose DGS as your SEO agency in Mumbai",
+          "h3:We start with the problems first",
+          "h3:We build local trust signals",
+          "h3:We make reporting easy to understand",
+          "h2:Recognition that backs execution quality",
+          "h3:Best Place to Work",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h2:Brand visibility beyond the website",
+          "h2:Technical SEO audit for better crawling & indexing",
+          "h3:Crawl checks",
+          "h3:Indexing checks",
+          "h3:Page quality checks",
+          "h2:Tools used to diagnose, measure and improve",
+          "h3:Google Search Console, GA4 and GTM",
+          "h3:Screaming Frog, PageSpeed and Lighthouse",
+          "h3:Looker Studio, Bing Webmaster Tools and Rank Math",
+          "h2:Reporting connected to visibility and enquiries",
+          "h3:Keyword groups, clicks and impressions",
+          "h3:Indexing, crawling and page experience",
+          "h3:Maps visibility and local actions",
+          "h3:Forms, calls, WhatsApp and bookings",
+          "h3:Landing-page and topic performance",
+          "h3:Verified citations and recommendations",
+          "h2:How to choose the best SEO company in Mumbai",
+          "h2:A transparent standard for evaluating an SEO partner",
+          "h3:Evidence before recommendations",
+          "h3:A roadmap tied to business goals",
+          "h3:SEO plus development support",
+          "h3:Useful pages, not publishing volume",
+          "h3:Progress, actions and next priorities",
+          "h3:No false ranking guarantees",
+          "h2:Pricing depends on scope & competition",
+          "h3:Local visibility foundation",
+          "h3:Organic growth campaign",
+          "h3:Competitive search strategy",
+          "h2:Industry-focused SEO for competitive markets",
+          "h2:SEO services across major Indian cities",
+          "h3:SEO Services in Pune",
+          "h3:SEO Services in Bangalore",
+          "h3:SEO Services in Hyderabad",
+          "h3:SEO Services in Gurugram",
+          "h2:Build a search presence that brings better enquiries",
+          "h2:Frequently asked questions",
+          "h2:Ready to grow with SEO services in Mumbai?"
+        ],
+        "targetOrder": [
+          "h1:SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
+          "h2:Selected clients we have worked with",
+          "h2:What does an SEO agency in Mumbai do?",
+          "h2:How we build a strong local search base",
+          "h2:Business outcomes our SEO services compound",
+          "h3:Better visibility for important searches",
+          "h3:Stronger local discovery",
+          "h3:More useful enquiries",
+          "h2:Results delivered by a Mumbai SEO services company",
+          "h3:TheWorldGrad",
+          "h3:Weavings Manpower Solutions",
+          "h2:Real Search Results Supporting SEO and AI Visibility",
+          "h3:DGS Search and AI Visibility Screenshots",
+          "h3:Brand visibility strengthened inside Google AI Overviews",
+          "h3:Structured content earned stronger AI-assisted discovery",
+          "h3:Brand information surfaced as a relevant AI Overview source",
+          "h3:Answer engine optimization connected visibility with buyer intent",
+          "h3:Weavings Search and AI Visibility Screenshots",
+          "h3:Search strategy connected authority with qualified demand",
+          "h3:Search visibility improved through coordinated SEO execution",
+          "h3:Answer-ready content strengthened AI-assisted discovery",
+          "h3:AI search visibility reinforced brand authority and discovery",
+          "h2:A simple framework for steady organic growth",
+          "h3:Build a clean technical base",
+          "h3:Improve local search signals",
+          "h3:Create helpful service content",
+          "h2:SEO services built around the full growth system",
+          "h3:Crawl, indexation and website quality",
+          "h3:Pages aligned with buyer search intent",
+          "h3:Google Maps and nearby discovery",
+          "h3:Brand signals, links and digital PR",
+          "h3:Category, product and revenue visibility",
+          "h3:Complex services and longer sales journeys",
+          "h3:Protect visibility during major change",
+          "h3:Search and AI discovery readiness",
+          "h2:Why choose DGS as your SEO agency in Mumbai",
+          "h3:We start with the problems first",
+          "h3:We build local trust signals",
+          "h3:We make reporting easy to understand",
+          "h2:Recognition that backs execution quality",
+          "h3:Best Place to Work",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h2:Brand visibility beyond the website",
+          "h2:Technical SEO audit for better crawling & indexing",
+          "h3:Crawl checks",
+          "h3:Indexing checks",
+          "h3:Page quality checks",
+          "h2:Tools used to diagnose, measure and improve",
+          "h3:Google Search Console, GA4 and GTM",
+          "h3:Screaming Frog, PageSpeed and Lighthouse",
+          "h3:Looker Studio, Bing Webmaster Tools and Rank Math",
+          "h2:Reporting connected to visibility and enquiries",
+          "h3:Keyword groups, clicks and impressions",
+          "h3:Indexing, crawling and page experience",
+          "h3:Maps visibility and local actions",
+          "h3:Forms, calls, WhatsApp and bookings",
+          "h3:Landing-page and topic performance",
+          "h3:Verified citations and recommendations",
+          "h2:How to choose the best SEO company in Mumbai",
+          "h2:A transparent standard for evaluating an SEO partner",
+          "h3:Evidence before recommendations",
+          "h3:A roadmap tied to business goals",
+          "h3:SEO plus development support",
+          "h3:Useful pages, not publishing volume",
+          "h3:Progress, actions and next priorities",
+          "h3:No false ranking guarantees",
+          "h2:Pricing depends on scope & competition",
+          "h3:Local visibility foundation",
+          "h3:Organic growth campaign",
+          "h3:Competitive search strategy",
+          "h2:Industry-focused SEO for competitive markets",
+          "h2:SEO services across major Indian cities",
+          "h2:Build a search presence that brings better enquiries",
+          "h2:Frequently asked questions",
+          "h2:Ready to grow with SEO services in Mumbai?"
+        ]
+      }
+    },
+    "paragraphs": {
+      "missing": [
+        "Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers.",
+        "Search strategy for Bangalore companies, startups, and service brands that need better visibility and stronger website enquiries.",
+        "Website optimization, local search improvements, and ranking support for Hyderabad businesses competing online.",
+        "Search growth campaigns for Gurugram businesses focused on visibility, trust, traffic quality, and better enquiries."
+      ],
+      "extra": [
+        "D'Genius Solutions — Digital Growth Studio Khar West · Mumbai · India SEO / Local / AI Search",
+        "Search growth built for Mumbai businesses",
+        "Call +91-99879 22901",
+        "200+ Brands Supported 6x Organic Traffic Growth 1.82M Search Impressions 918 Organic Keywords Ranked",
+        "Scroll to explore",
+        "Technical SEO ✦ Local SEO ✦ AI SEO · AEO ✦ GEO · LLM Visibility ✦ Content Authority ✦ Lead Tracking ✦ Technical SEO ✦ Local SEO ✦ AI SEO · AEO ✦ GEO · LLM Visibility ✦ Content Authority ✦ Lead Tracking ✦",
+        "Trusted by 200+ brands",
+        "(00) — Direct answer",
+        "Technical Implementation Search Intent Architecture Local Search Authority Development Lead Attribution AI Search Readiness",
+        "(01) — What we do",
+        "Mumbai-Based Team 200+ Brands Website Health Local Visibility Lead Reporting",
+        "(02) — What we improve",
+        "01",
+        "Visibility",
+        "02",
+        "Local Discovery",
+        "03",
+        "Enquiries",
+        "(04) — Case studies",
+        "Education SEO · Ongoing",
+        "95% KW Growth 2.5x Backlinks 6x Traffic",
+        "View full case study",
+        "TWG TheWorldGrad SEO Growth",
+        "B2B Staffing · Ongoing",
+        "17.4K Clicks 1.82M Impressions 918 Organic KWs",
+        "View full case study",
+        "WM Weavings Manpower B2B SEO",
+        "Case Studies & Results",
+        "DGS",
+        "DGS · AI Overview"
+      ],
+      "wordingDifferences": [
+        {
+          "source": "D'Genius Solutions is a Mumbai SEO agency helping businesses improve Google rankings, local visibility, organic traffic and qualified enquiries through technical SEO, content optimisation, local SEO, authority development and measurable search strategy.",
+          "target": "D'Genius Solutions — Digital Growth Studio Khar West · Mumbai · India SEO / Local / AI Search"
+        },
+        {
+          "source": "Updated for 2026 Practical search strategy for Google, Maps, AI Overviews and local discovery across Khar West, Bandra, BKC, Andheri, Lower Parel, Thane & Navi Mumbai.",
+          "target": "Search growth built for Mumbai businesses"
+        },
+        {
+          "source": "Brand partnerships across finance, retail, education, healthcare, technology, hospitality, consumer and professional services.",
+          "target": "D'Genius Solutions is a Mumbai SEO agency helping businesses improve Google rankings, local visibility, organic traffic and qualified enquiries through technical SEO, content optimisation, local SEO, authority development and measurable search strategy."
+        },
+        {
+          "source": "An SEO agency in Mumbai improves how a business is crawled, understood, ranked and chosen across Google Search, Google Maps and AI-assisted discovery. D'Genius Solutions audits technical health, maps search intent, strengthens service pages, improves local signals, builds authority and tracks calls, forms, WhatsApp enquiries and qualified organic growth.",
+          "target": "Updated for 2026 Practical search strategy for Google, Maps, AI Overviews and local discovery across Khar West, Bandra, BKC, Andheri, Lower Parel, Thane & Navi Mumbai."
+        },
+        {
+          "source": "Because DGS also develops and maintains websites, technical recommendations can be implemented across WordPress, HTML, PHP, Next.js and React instead of remaining unresolved audit items. This connects our website development and AMC capability with specialist AEO , GEO and LLM SEO expertise.",
+          "target": "Call +91-99879 22901"
+        },
+        {
+          "source": "SEO services in Mumbai that help businesses improve visibility across Google Search, Google Maps and AI-powered results — so they attract more relevant traffic and qualified enquiries.",
+          "target": "200+ Brands Supported 6x Organic Traffic Growth 1.82M Search Impressions 918 Organic Keywords Ranked"
+        },
+        {
+          "source": "D'Genius Solutions is based in Khar West, Mumbai. We find what is stopping your website from getting found, then build a practical plan to fix rankings, local discovery, traffic quality and conversions — mapped to your services, customers, locations and competitors. The same framework powers our SEO services across India.",
+          "target": "Scroll to explore"
+        },
+        {
+          "source": "For businesses targeting nearby customers, we optimize location relevance for \"SEO services near me\" style searches across Khar West, Bandra, Andheri, BKC, Lower Parel, Thane, and Navi Mumbai.",
+          "target": "Technical SEO ✦ Local SEO ✦ AI SEO · AEO ✦ GEO · LLM Visibility ✦ Content Authority ✦ Lead Tracking ✦ Technical SEO ✦ Local SEO ✦ AI SEO · AEO ✦ GEO · LLM Visibility ✦ Content Authority ✦ Lead Tracking ✦"
+        },
+        {
+          "source": "The location areas shown across this page are service coverage areas only — they do not represent separate offices. Our official business location remains Khar West .",
+          "target": "Trusted by 200+ brands"
+        },
+        {
+          "source": "The goal is not only to improve the website — it is to appear for relevant searches, earn trust faster, and generate enquiries your sales team can use. Designed as SEO services for business growth, not vanity traffic.",
+          "target": "Brand partnerships across finance, retail, education, healthcare, technology, hospitality, consumer and professional services."
+        },
+        {
+          "source": "We focus on terms that connect to real services, real locations, and real buyer needs — instead of chasing random traffic.",
+          "target": "(00) — Direct answer"
+        },
+        {
+          "source": "We improve signals that help customers find you through local search, Google Maps, reviews, and nearby service queries.",
+          "target": "An SEO agency in Mumbai improves how a business is crawled, understood, ranked and chosen across Google Search, Google Maps and AI-assisted discovery. D'Genius Solutions audits technical health, maps search intent, strengthens service pages, improves local signals, builds authority and tracks calls, forms, WhatsApp enquiries and qualified organic growth."
+        },
+        {
+          "source": "The aim is not just traffic. We work to improve calls, forms, WhatsApp messages, bookings, and actions that matter to sales.",
+          "target": "Because DGS also develops and maintains websites, technical recommendations can be implemented across WordPress, HTML, PHP, Next.js and React instead of remaining unresolved audit items. This connects our website development and AMC capability with specialist AEO , GEO and LLM SEO expertise."
+        },
+        {
+          "source": "See how our strategies improved keyword visibility, organic traffic, website structure, and enquiry quality — built around measurable goals, showing how SEO services for business growth should perform beyond rankings alone.",
+          "target": "Technical Implementation Search Intent Architecture Local Search Authority Development Lead Attribution AI Search Readiness"
+        },
+        {
+          "source": "An overseas education brand needed stronger visibility for student research, counselling, and study-abroad decision searches.",
+          "target": "(01) — What we do"
+        },
+        {
+          "source": "A B2B staffing brand needed better discovery for contract staffing, payroll outsourcing, and employer-led search journeys.",
+          "target": "SEO services in Mumbai that help businesses improve visibility across Google Search, Google Maps and AI-powered results — so they attract more relevant traffic and qualified enquiries."
+        },
+        {
+          "source": "Explore selected SEO, AEO and AI-search work that demonstrates how D'Genius Solutions builds visibility, authority and stronger paths to qualified enquiries.",
+          "target": "D'Genius Solutions is based in Khar West, Mumbai. We find what is stopping your website from getting found, then build a practical plan to fix rankings, local discovery, traffic quality and conversions — mapped to your services, customers, locations and competitors. The same framework powers our SEO services across India."
+        },
+        {
+          "source": "If we can do it for ourselves, we can do it for your brand.",
+          "target": "For businesses targeting nearby customers, we optimize location relevance for \"SEO services near me\" style searches across Khar West, Bandra, Andheri, BKC, Lower Parel, Thane, and Navi Mumbai."
+        },
+        {
+          "source": "These campaign snapshots show how D'Genius Solutions applies structured content, technical SEO, internal linking, authority development and answer-ready page improvements.",
+          "target": "The location areas shown across this page are service coverage areas only — they do not represent separate offices. Our official business location remains Khar West ."
+        },
+        {
+          "source": "The examples demonstrate relevant execution experience; they do not imply that identical rankings or AI visibility can be guaranteed for every website.",
+          "target": "Mumbai-Based Team 200+ Brands Website Health Local Visibility Lead Reporting"
+        }
+      ],
+      "sourceCount": 105,
+      "targetCount": 271
+    },
+    "listItems": {
+      "missing": [],
+      "extra": [],
+      "sourceCount": 18,
+      "targetCount": 18
+    },
+    "faq": {
+      "missing": [],
+      "extra": [],
+      "answerDiffs": []
+    },
+    "images": {
+      "missing": [
+        {
+          "index": 46,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "DGS Google AI Overview visibility result screenshot"
+        },
+        {
+          "index": 47,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "DGS AI search citation visibility result screenshot"
+        },
+        {
+          "index": 48,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "DGS AI Overview source inclusion result screenshot"
+        },
+        {
+          "index": 49,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "DGS answer engine optimization search visibility screenshot"
+        },
+        {
+          "index": 50,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Weavings commercial SEO and lead generation result screenshot"
+        },
+        {
+          "index": 51,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Weavings SEO search visibility result screenshot"
+        },
+        {
+          "index": 52,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Weavings AEO and AI search visibility result screenshot"
+        },
+        {
+          "index": 53,
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "alt": "Weavings AI search visibility and authority result screenshot"
+        },
+        {
+          "index": 54,
+          "src": "",
+          "alt": "Search visibility proof enlarged"
+        }
+      ],
+      "extra": [],
+      "altDiffs": [
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Aditya Birla Education Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Saint Gobain client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Pantaloons client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Jaipur Kurti client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Nutriuits client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Raymond client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Plush Puppy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Candour London client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "StyleUp client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Onida client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Aaram client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Transzact client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Mpower – Aditya Birla Education Trust client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Compuage client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Solco client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Structural Specialties client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "MKA client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Club Med client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Druva client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Farm Classics client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Kreedo client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Marigold Lane client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Kotak Mahindra Bank client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Ujaas client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Aditya Birla Integrated School client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Aditya Birla World Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Aditya Birla Education Trust client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "TheWorldGrad client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "HumanXT client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "ClearFX Academy client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "IND client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Weavings client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Sir Brandzalot client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Planet Smart City client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Novotel client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Meryl client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "MedArtha client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "LG client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Hanwha Techwin client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Blanco client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Amazonia client logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "TheWorldGrad SEO case study website screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "TheWorldGrad logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Weavings Manpower SEO case study website screenshot",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Weavings logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "TheWorldGrad website SEO performance",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Weavings Manpower website SEO performance",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Prime Insights Best Place to Work 2024 award for D",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "GLA award for excellence in SEO content and performance marketing",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Corporate Connect highly regarded digital marketing agency award",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "United News of India brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Lokmat Times brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Ahmedabad Mirror brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Brand presence media logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Brand presence media logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Brand presence media logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Republic News Today brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "The News Cartel brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "JioNews brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Dailyhunt brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "KBK Times brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "UFO News brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Indian BusinessLine brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "One India brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Bhaskar Live brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "United News of India brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Lokmat Times brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Ahmedabad Mirror brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Brand presence media logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Brand presence media logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Brand presence media logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Republic News Today brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "The News Cartel brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "JioNews brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Dailyhunt brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "KBK Times brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "UFO News brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Indian BusinessLine brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "One India brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        },
+        {
+          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+          "sourceAlt": "Bhaskar Live brand presence logo",
+          "targetAlt": "Eureka Forbes client logo"
+        }
+      ]
+    },
+    "order": {
+      "orderChanged": true,
+      "sourceOrder": [
+        "h1:SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
+        "h2:Selected clients we have worked with",
+        "h2:What does an SEO agency in Mumbai do?",
+        "h2:How we build a strong local search base",
+        "h2:Business outcomes our SEO services compound",
+        "h3:Better visibility for important searches",
+        "h3:Stronger local discovery",
+        "h3:More useful enquiries",
+        "h2:Results delivered by a Mumbai SEO services company",
+        "h3:TheWorldGrad",
+        "h3:Weavings Manpower Solutions",
+        "h2:Real Search Results Supporting SEO and AI Visibility",
+        "h3:DGS Search and AI Visibility Screenshots",
+        "h3:Brand visibility strengthened inside Google AI Overviews",
+        "h3:Structured content earned stronger AI-assisted discovery",
+        "h3:Brand information surfaced as a relevant AI Overview source",
+        "h3:Answer engine optimization connected visibility with buyer intent",
+        "h3:Weavings Search and AI Visibility Screenshots",
+        "h3:Search strategy connected authority with qualified demand",
+        "h3:Search visibility improved through coordinated SEO execution",
+        "h3:Answer-ready content strengthened AI-assisted discovery",
+        "h3:AI search visibility reinforced brand authority and discovery",
+        "h2:A simple framework for steady organic growth",
+        "h3:Build a clean technical base",
+        "h3:Improve local search signals",
+        "h3:Create helpful service content",
+        "h2:SEO services built around the full growth system",
+        "h3:Crawl, indexation and website quality",
+        "h3:Pages aligned with buyer search intent",
+        "h3:Google Maps and nearby discovery",
+        "h3:Brand signals, links and digital PR",
+        "h3:Category, product and revenue visibility",
+        "h3:Complex services and longer sales journeys",
+        "h3:Protect visibility during major change",
+        "h3:Search and AI discovery readiness",
+        "h2:Why choose DGS as your SEO agency in Mumbai",
+        "h3:We start with the problems first",
+        "h3:We build local trust signals",
+        "h3:We make reporting easy to understand",
+        "h2:Recognition that backs execution quality",
+        "h3:Best Place to Work",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h2:Brand visibility beyond the website",
+        "h2:Technical SEO audit for better crawling & indexing",
+        "h3:Crawl checks",
+        "h3:Indexing checks",
+        "h3:Page quality checks",
+        "h2:Tools used to diagnose, measure and improve",
+        "h3:Google Search Console, GA4 and GTM",
+        "h3:Screaming Frog, PageSpeed and Lighthouse",
+        "h3:Looker Studio, Bing Webmaster Tools and Rank Math",
+        "h2:Reporting connected to visibility and enquiries",
+        "h3:Keyword groups, clicks and impressions",
+        "h3:Indexing, crawling and page experience",
+        "h3:Maps visibility and local actions",
+        "h3:Forms, calls, WhatsApp and bookings",
+        "h3:Landing-page and topic performance",
+        "h3:Verified citations and recommendations",
+        "h2:How to choose the best SEO company in Mumbai",
+        "h2:A transparent standard for evaluating an SEO partner",
+        "h3:Evidence before recommendations",
+        "h3:A roadmap tied to business goals",
+        "h3:SEO plus development support",
+        "h3:Useful pages, not publishing volume",
+        "h3:Progress, actions and next priorities",
+        "h3:No false ranking guarantees",
+        "h2:Pricing depends on scope & competition",
+        "h3:Local visibility foundation",
+        "h3:Organic growth campaign",
+        "h3:Competitive search strategy",
+        "h2:Industry-focused SEO for competitive markets",
+        "h2:SEO services across major Indian cities",
+        "h3:SEO Services in Pune",
+        "h3:SEO Services in Bangalore",
+        "h3:SEO Services in Hyderabad",
+        "h3:SEO Services in Gurugram",
+        "h2:Build a search presence that brings better enquiries",
+        "h2:Frequently asked questions",
+        "h2:Ready to grow with SEO services in Mumbai?"
+      ],
+      "targetOrder": [
+        "h1:SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
+        "h2:Selected clients we have worked with",
+        "h2:What does an SEO agency in Mumbai do?",
+        "h2:How we build a strong local search base",
+        "h2:Business outcomes our SEO services compound",
+        "h3:Better visibility for important searches",
+        "h3:Stronger local discovery",
+        "h3:More useful enquiries",
+        "h2:Results delivered by a Mumbai SEO services company",
+        "h3:TheWorldGrad",
+        "h3:Weavings Manpower Solutions",
+        "h2:Real Search Results Supporting SEO and AI Visibility",
+        "h3:DGS Search and AI Visibility Screenshots",
+        "h3:Brand visibility strengthened inside Google AI Overviews",
+        "h3:Structured content earned stronger AI-assisted discovery",
+        "h3:Brand information surfaced as a relevant AI Overview source",
+        "h3:Answer engine optimization connected visibility with buyer intent",
+        "h3:Weavings Search and AI Visibility Screenshots",
+        "h3:Search strategy connected authority with qualified demand",
+        "h3:Search visibility improved through coordinated SEO execution",
+        "h3:Answer-ready content strengthened AI-assisted discovery",
+        "h3:AI search visibility reinforced brand authority and discovery",
+        "h2:A simple framework for steady organic growth",
+        "h3:Build a clean technical base",
+        "h3:Improve local search signals",
+        "h3:Create helpful service content",
+        "h2:SEO services built around the full growth system",
+        "h3:Crawl, indexation and website quality",
+        "h3:Pages aligned with buyer search intent",
+        "h3:Google Maps and nearby discovery",
+        "h3:Brand signals, links and digital PR",
+        "h3:Category, product and revenue visibility",
+        "h3:Complex services and longer sales journeys",
+        "h3:Protect visibility during major change",
+        "h3:Search and AI discovery readiness",
+        "h2:Why choose DGS as your SEO agency in Mumbai",
+        "h3:We start with the problems first",
+        "h3:We build local trust signals",
+        "h3:We make reporting easy to understand",
+        "h2:Recognition that backs execution quality",
+        "h3:Best Place to Work",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h2:Brand visibility beyond the website",
+        "h2:Technical SEO audit for better crawling & indexing",
+        "h3:Crawl checks",
+        "h3:Indexing checks",
+        "h3:Page quality checks",
+        "h2:Tools used to diagnose, measure and improve",
+        "h3:Google Search Console, GA4 and GTM",
+        "h3:Screaming Frog, PageSpeed and Lighthouse",
+        "h3:Looker Studio, Bing Webmaster Tools and Rank Math",
+        "h2:Reporting connected to visibility and enquiries",
+        "h3:Keyword groups, clicks and impressions",
+        "h3:Indexing, crawling and page experience",
+        "h3:Maps visibility and local actions",
+        "h3:Forms, calls, WhatsApp and bookings",
+        "h3:Landing-page and topic performance",
+        "h3:Verified citations and recommendations",
+        "h2:How to choose the best SEO company in Mumbai",
+        "h2:A transparent standard for evaluating an SEO partner",
+        "h3:Evidence before recommendations",
+        "h3:A roadmap tied to business goals",
+        "h3:SEO plus development support",
+        "h3:Useful pages, not publishing volume",
+        "h3:Progress, actions and next priorities",
+        "h3:No false ranking guarantees",
+        "h2:Pricing depends on scope & competition",
+        "h3:Local visibility foundation",
+        "h3:Organic growth campaign",
+        "h3:Competitive search strategy",
+        "h2:Industry-focused SEO for competitive markets",
+        "h2:SEO services across major Indian cities",
+        "h2:Build a search presence that brings better enquiries",
+        "h2:Frequently asked questions",
+        "h2:Ready to grow with SEO services in Mumbai?"
+      ]
+    }
+  },
+  "links": {
+    "wordpressContextual": [
+      {
+        "anchor": "website development and AMC capability",
+        "href": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "destination": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "path": "/services/website-development-amc/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "01 / Pune ↗ SEO Services in Pune Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers. Pune Search Local Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "02 / Bangalore ↗ SEO Services in Bangalore Search strategy for Bangalore companies, startups, and service brands that need better visibility and stronger website enquiries. Bangalore Growth Organic Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "03 / Hyderabad ↗ SEO Services in Hyderabad Website optimization, local search improvements, and ranking support for Hyderabad businesses competing online. Hyderabad Search Lead Quality",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "04 / Gurugram ↗ SEO Services in Gurugram Search growth campaigns for Gurugram businesses focused on visibility, trust, traffic quality, and better enquiries. Gurugram Growth Search Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "WhatsApp DGS ↗",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%20want%20an%20SEO%20growth%20review%20for%20my%20Mumbai%20business.",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%20want%20an%20SEO%20growth%20review%20for%20my%20Mumbai%20business.",
+        "path": "/919987922901/",
+        "scope": "body"
+      }
+    ],
+    "nextContextual": [
+      {
+        "anchor": "website development and AMC capability",
+        "href": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "destination": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "path": "/services/website-development-amc/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "GEO",
+        "href": "https://www.dgeniussolutions.com/services/geo/",
+        "destination": "https://www.dgeniussolutions.com/services/geo/",
+        "path": "/services/geo/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO",
+        "href": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "01 / Pune↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Pune",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers.",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Pune SearchLocal Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "02 / Bangalore↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Bangalore",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Search strategy for Bangalore companies, startups, and service brands that need better visibility and stronger website enquiries.",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Bangalore GrowthOrganic Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "03 / Hyderabad↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Hyderabad",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Website optimization, local search improvements, and ranking support for Hyderabad businesses competing online.",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Hyderabad SearchLead Quality",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "04 / Gurugram↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Gurugram",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Search growth campaigns for Gurugram businesses focused on visibility, trust, traffic quality, and better enquiries.",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Gurugram GrowthSearch Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "WhatsApp DGS ↗",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%20want%20an%20SEO%20growth%20review%20for%20my%20Mumbai%20business.",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%20want%20an%20SEO%20growth%20review%20for%20my%20Mumbai%20business.",
+        "path": "/919987922901/",
+        "scope": "body"
+      }
+    ],
+    "nextGlobal": [],
+    "missingInNext": [
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "01 / Pune ↗ SEO Services in Pune Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers. Pune Search Local Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "02 / Bangalore ↗ SEO Services in Bangalore Search strategy for Bangalore companies, startups, and service brands that need better visibility and stronger website enquiries. Bangalore Growth Organic Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "03 / Hyderabad ↗ SEO Services in Hyderabad Website optimization, local search improvements, and ranking support for Hyderabad businesses competing online. Hyderabad Search Lead Quality",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "04 / Gurugram ↗ SEO Services in Gurugram Search growth campaigns for Gurugram businesses focused on visibility, trust, traffic quality, and better enquiries. Gurugram Growth Search Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      }
+    ],
+    "extraInNext": [
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "01 / Pune↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Pune",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Organic visibility, local discovery, technical fixes, and content improvements for Pune businesses targeting ready-to-contact customers.",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Pune SearchLocal Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+        "path": "/services/seo-service-pune/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "02 / Bangalore↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Bangalore",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Search strategy for Bangalore companies, startups, and service brands that need better visibility and stronger website enquiries.",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Bangalore GrowthOrganic Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+        "path": "/services/seo-service-in-banglore/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "03 / Hyderabad↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Hyderabad",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Website optimization, local search improvements, and ranking support for Hyderabad businesses competing online.",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Hyderabad SearchLead Quality",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+        "path": "/services/seo-services-in-hyderabad/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "04 / Gurugram↗",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO Services in Gurugram",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Search growth campaigns for Gurugram businesses focused on visibility, trust, traffic quality, and better enquiries.",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Gurugram GrowthSearch Leads",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+        "path": "/services/seo-service-in-gurugram/",
+        "scope": "body"
+      }
+    ],
+    "destinationStatus": [
+      {
+        "path": "/services/website-development-amc/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/aeo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/geo/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/llm-seo-service/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-service-pune/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-service-in-banglore/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-services-in-hyderabad/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-service-in-gurugram/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/919987922901/",
+        "httpStatus": 404,
+        "redirect": null
+      }
+    ]
+  },
+  "findings": [
+    {
+      "class": "A",
+      "label": "EXPECTED_STAGING_DIFFERENCE",
+      "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "4 missing headings"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "heading order changed"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "4 missing paragraphs"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "170 extra paragraphs"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "image/alt differences detected"
+    },
+    {
+      "class": "E",
+      "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+      "detail": "12 contextual links missing in Next"
+    },
+    {
+      "class": "E",
+      "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+      "detail": "36 extra contextual links in Next"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "normalized visible content hash differs from WordPress baseline"
+    }
+  ],
+  "classifications": {
+    "A": 1,
+    "D": 6,
+    "E": 2
+  }
+}

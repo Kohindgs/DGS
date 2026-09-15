@@ -1,0 +1,182 @@
+{
+  "timestamp": "2026-09-11T19:26:33.729Z",
+  "apiEndpoint": "https://www.dgeniussolutions.com/api/forms/submit",
+  "captchaBypassRemoved": true,
+  "totalForms": 11,
+  "summary": {
+    "totalForms": 11,
+    "nonCaptchaTestedPass": 2,
+    "nonCaptchaTestedFail": 0,
+    "captchaGatedEnforced": 9,
+    "captchaManualRequired": 9
+  },
+  "nonCaptchaForms": [
+    {
+      "formId": 9,
+      "title": "Generative AI",
+      "route": "/services/ai-video-production-agency/",
+      "status": "PASS",
+      "httpStatus": 200,
+      "submissionId": 147,
+      "inDatabase": true,
+      "captchaConfig": {
+        "hasCaptcha": false,
+        "provider": "none",
+        "siteKey": null,
+        "interactiveRequired": false
+      }
+    },
+    {
+      "formId": 26,
+      "title": "DGS Performance Marketing Page Form",
+      "route": "/services/performance-marketing/",
+      "status": "PASS",
+      "httpStatus": 200,
+      "submissionId": 148,
+      "inDatabase": true,
+      "captchaConfig": {
+        "hasCaptcha": false,
+        "provider": "none",
+        "siteKey": null,
+        "interactiveRequired": false
+      }
+    }
+  ],
+  "captchaForms": [
+    {
+      "formId": 1,
+      "title": "Home Page Form",
+      "route": "/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Google reCAPTCHA v2 (Visible / Checkbox)",
+        "siteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "interactiveRequired": true
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 1 on /"
+    },
+    {
+      "formId": 3,
+      "title": "Free SEO Audit Form",
+      "route": "/services/seo-services-in-mumbai/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Google reCAPTCHA v2 (Visible / Checkbox)",
+        "siteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "interactiveRequired": true
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 3 on /services/seo-services-in-mumbai/"
+    },
+    {
+      "formId": 4,
+      "title": "Social Media FORM",
+      "route": "/services/social-media-marketing/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Cloudflare Turnstile",
+        "siteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "interactiveRequired": false
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 4 on /services/social-media-marketing/"
+    },
+    {
+      "formId": 6,
+      "title": "Website Development Form",
+      "route": "/services/website-development-amc/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Cloudflare Turnstile",
+        "siteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "interactiveRequired": false
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 6 on /services/website-development-amc/"
+    },
+    {
+      "formId": 10,
+      "title": "Branding Form (#10)",
+      "route": "/services/branding/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Cloudflare Turnstile",
+        "siteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "interactiveRequired": false
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 10 on /services/branding/"
+    },
+    {
+      "formId": 11,
+      "title": "Content Creation Form",
+      "route": "/services/content-creation/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Cloudflare Turnstile",
+        "siteKey": "0x4AAAAAACEtYgQis2AyFxPk",
+        "interactiveRequired": false
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 11 on /services/content-creation/"
+    },
+    {
+      "formId": 19,
+      "title": "Free AEO Audit Form",
+      "route": "/services/aeo-services-in-mumbai/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Google reCAPTCHA v2 (Visible / Checkbox)",
+        "siteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "interactiveRequired": true
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 19 on /services/aeo-services-in-mumbai/"
+    },
+    {
+      "formId": 20,
+      "title": "Free LLM Audit Form",
+      "route": "/services/llm-seo-service/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Google reCAPTCHA v2 (Visible / Checkbox)",
+        "siteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "interactiveRequired": true
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 20 on /services/llm-seo-service/"
+    },
+    {
+      "formId": 21,
+      "title": "Free GEO Audit Form",
+      "route": "/services/geo/",
+      "pageRenders": true,
+      "captchaConfig": {
+        "hasCaptcha": true,
+        "provider": "Google reCAPTCHA v2 (Visible / Checkbox)",
+        "siteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "interactiveRequired": true
+      },
+      "captchaEnforced": true,
+      "rejectionDetail": "CAPTCHA verification is required",
+      "classification": "MANUAL BROWSER CAPTCHA TEST REQUIRED: Form 21 on /services/geo/"
+    }
+  ]
+}

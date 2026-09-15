@@ -1,0 +1,73 @@
+{
+  "phase": "2C.1",
+  "generatedAt": "2026-08-31T12:30:00.000Z",
+  "reviewShaAtStart": "eb84238e523e3a4af9a0b2aac808a8f768a99f35",
+  "applicationSourceSha": "570d3cee287975d5263fe3dcb3f012786212b843",
+  "status": "BLOCKED_AUTHENTICATED_CONFIGURATION_UNAVAILABLE",
+  "mcp": {
+    "requiredNamespaces": [
+      "emcp-dgeniussolutions-com",
+      "wsp-www-dgeniussolutions-com"
+    ],
+    "cloudAgentNamespacesAvailable": [
+      "Figma",
+      "cursor",
+      "cursor-cloud",
+      "cursor-subscriptions"
+    ],
+    "cloudAgentMcpBridge": "HOSTINGER_WORDPRESS_MCP_CAPABILITY_GAP",
+    "configPresentOnVm": {
+      "global": "~/.cursor/mcp.json",
+      "project": ".cursor/mcp.json"
+    },
+    "endpointProbe": {
+      "url": "https://www.dgeniussolutions.com/wp-json/mcp/emcp-tools-server",
+      "httpStatus": 401,
+      "note": "Auth required; no agent MCP bridge to supply credentials"
+    },
+    "desktopMcpReportedGreenByUser": true,
+    "writeOrSideEffectToolsUsed": false,
+    "submissionsOrPiiAccessed": false
+  },
+  "architectureAssessment": {
+    "nextJsOutput": "server-capable (no static export in next.config.ts)",
+    "recommendedPathAfterUnblock": "same-origin Next.js API route with allowlisted form IDs forwarding verified public Fluent Forms payload to WordPress",
+    "apiRoutesPresent": false,
+    "formsCurrentlyDisabled": true,
+    "dataSubmissionDisabledLocations": [
+      "components/forms/PublicLeadForm.tsx",
+      "components/wp-exact/WpMirrorHomeForm.tsx"
+    ]
+  },
+  "requiredFormIds": [1, 3, 4, 6, 9, 10, 11, 19, 20, 21, 26],
+  "blockedForms": [
+    { "fluentFormId": 1, "routes": ["/", "/contact-us/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:1" },
+    { "fluentFormId": 3, "routes": ["/services/seo-services-in-mumbai/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:3" },
+    { "fluentFormId": 4, "routes": ["/services/social-media-marketing/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:4" },
+    { "fluentFormId": 6, "routes": ["/services/website-development-amc/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:6" },
+    { "fluentFormId": 9, "routes": ["/services/ai-video-production-agency/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:9" },
+    { "fluentFormId": 10, "routes": ["/services/branding/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:10" },
+    { "fluentFormId": 11, "routes": ["/services/content-creation/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:11" },
+    { "fluentFormId": 19, "routes": ["/services/aeo-services-in-mumbai/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:19" },
+    { "fluentFormId": 20, "routes": ["/services/llm-seo-service/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:20" },
+    { "fluentFormId": 21, "routes": ["/services/geo/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:21" },
+    { "fluentFormId": 26, "routes": ["/services/performance-marketing/"], "code": "AUTHENTICATED_FLUENT_FORM_CONFIGURATION_UNAVAILABLE:26" }
+  ],
+  "formsActivated": 0,
+  "formsBlocked": 11,
+  "stagingSubmission": "NOT_RUN—PRODUCTION_SUBMISSION_NOT_AUTHORIZED",
+  "definitionsApprovedPath": "data/forms/definitions.approved.json",
+  "definitionsApprovedFormCount": 0,
+  "nextUnblockOptions": [
+    "Run Phase 2C.1 from local Cursor Agent where emcp-dgeniussolutions-com or wsp-www-dgeniussolutions-com MCP tools are visible",
+    "Place manual Fluent Forms configuration export in git-ignored data/forms-private/fluent-forms-authenticated-export/ and re-run inventory normalization"
+  ],
+  "safety": {
+    "productionWordPressWrites": false,
+    "productionSubmissions": false,
+    "credentialsCommitted": false,
+    "customerDataCommitted": false,
+    "pr20DraftUnmerged": true,
+    "dimgreySha": "e1e51a1"
+  }
+}

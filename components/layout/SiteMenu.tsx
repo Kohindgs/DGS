@@ -36,17 +36,22 @@ export function SiteMenu() {
             <Image src={DGS_LOGO.src} alt={DGS_LOGO.alt} width={DGS_LOGO.width} height={DGS_LOGO.height} />
           </Link>
           <button type="button" className={styles.closeBtn} onClick={closeMenu} aria-label="Close menu">
-            Close
+            <span>Close</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className={styles.closeIcon}>
+              <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
           </button>
         </div>
 
         <div className={styles.grid}>
           <nav className={styles.primaryNav} aria-label="Main">
-            <ul>
-              {TOP_LEVEL_NAV.map((item) => (
+            <span className={styles.columnLabel}>Navigation</span>
+            <ul className={styles.navList}>
+              {TOP_LEVEL_NAV.map((item, index) => (
                 <li key={item.href}>
                   <Link href={item.href} onClick={closeMenu} className={styles.navLink}>
-                    {item.label}
+                    <span className={styles.navIndex}>{String(index + 1).padStart(2, "0")}</span>
+                    <span className={styles.navText}>{item.label}</span>
                   </Link>
                 </li>
               ))}
@@ -54,12 +59,14 @@ export function SiteMenu() {
           </nav>
 
           <div className={styles.servicesBlock}>
-            <h2 className={styles.sectionTitle}>Our Services</h2>
+            <span className={styles.columnLabel}>Our Capabilities</span>
+            <h2 className={styles.sectionTitle}>Digital &amp; AI Services</h2>
             <ul className={styles.serviceList}>
               {SERVICE_NAV.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} onClick={closeMenu}>
-                    {item.label}
+                  <Link href={item.href} onClick={closeMenu} className={styles.serviceLink}>
+                    <span className={styles.serviceDot} aria-hidden="true"></span>
+                    <span className={styles.serviceText}>{item.label}</span>
                   </Link>
                 </li>
               ))}
@@ -67,27 +74,33 @@ export function SiteMenu() {
           </div>
 
           <div className={styles.reachBlock}>
+            <span className={styles.columnLabel}>Connect</span>
             <h2 className={styles.sectionTitle}>Reach Us</h2>
-            <p>
-              <a href={`tel:${REACH_US.phones[0].replace(/\s/g, "")}`}>{REACH_US.phones[0]}</a>
-            </p>
-            <p>
-              <a href={`tel:${REACH_US.phones[1].replace(/\s/g, "")}`}>{REACH_US.phones[1]}</a>
-            </p>
-            <p>
-              <a href={`mailto:${REACH_US.email}`}>{REACH_US.email}</a>
-            </p>
+            <div className={styles.contactDetails}>
+              <p className={styles.contactItem}>
+                <span className={styles.contactType}>Direct</span>
+                <a href={`tel:${REACH_US.phones[0].replace(/\s/g, "")}`}>{REACH_US.phones[0]}</a>
+              </p>
+              <p className={styles.contactItem}>
+                <span className={styles.contactType}>Alternate</span>
+                <a href={`tel:${REACH_US.phones[1].replace(/\s/g, "")}`}>{REACH_US.phones[1]}</a>
+              </p>
+              <p className={styles.contactItem}>
+                <span className={styles.contactType}>Inquiries</span>
+                <a href={`mailto:${REACH_US.email}`}>{REACH_US.email}</a>
+              </p>
+            </div>
             <address className={styles.address}>
               {REACH_US.addressLines.map((line) => (
                 <span key={line}>{line}</span>
               ))}
             </address>
 
-            <h3 className={styles.sectionTitle}>Follow Us</h3>
+            <h3 className={styles.socialTitle}>Follow DGS</h3>
             <ul className={styles.socialList}>
               {SOCIAL_LINKS.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} target="_blank" rel="noopener noreferrer">
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
                     {item.label}
                   </a>
                 </li>
@@ -95,7 +108,10 @@ export function SiteMenu() {
             </ul>
 
             <Link href="/contact-us/" className={styles.ctaBtn} onClick={closeMenu}>
-              Start a Project
+              <span>Start a Project</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 13L13 1M13 1H4M13 1V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
           </div>
         </div>

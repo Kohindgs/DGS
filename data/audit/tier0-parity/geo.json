@@ -1,0 +1,860 @@
+{
+  "path": "/services/geo/",
+  "slug": "geo",
+  "checkedAt": "2026-08-29T07:45:49.767Z",
+  "target": "http://127.0.0.1:3025",
+  "wordpressSource": "https://www.dgeniussolutions.com/services/geo/",
+  "httpStatus": 200,
+  "indexability": {
+    "robots": "noindex, nofollow",
+    "xRobotsTag": "noindex, nofollow, noarchive",
+    "hasNoindex": true,
+    "classification": "A",
+    "label": "EXPECTED_STAGING_NOINDEX",
+    "expectStagingNoindex": true
+  },
+  "canonical": {
+    "next": "https://www.dgeniussolutions.com/services/geo/",
+    "nextPath": "/services/geo/",
+    "desiredPath": "/services/geo/",
+    "wordpressObservedPath": "/services/geo/",
+    "selfCanonical": true
+  },
+  "schemaTypes": [
+    "BreadcrumbList",
+    "ImageObject",
+    "ListItem",
+    "Organization",
+    "PostalAddress",
+    "Service",
+    "WebPage",
+    "WebSite"
+  ],
+  "content": {
+    "hashMatch": false,
+    "sourceSha256": "10be78497394777ae798674bd7f97cf154127a76ac784e69b86a6646e81fc187",
+    "targetSha256": "515da68d94c26c748396f87078c899072a2b98ba57c5b1763dc717bf442e18dc",
+    "headings": {
+      "missing": [],
+      "extra": [],
+      "textDifferences": [],
+      "order": {
+        "orderChanged": false,
+        "sourceOrder": [
+          "h1:Generative Engine Optimization (GEO) Services in Mumbai",
+          "h2:Generative Engine Optimization Services in Mumbai",
+          "h3:What businesses can use GEO for",
+          "h2:What Is Generative Engine Optimization?",
+          "h3:GEO helps your brand appear inside AI-led discovery.",
+          "h3:Where GEO matters most",
+          "h2:GEO Services We Provide in Mumbai",
+          "h3:AI Visibility Audit",
+          "h3:AI Search Query Research",
+          "h3:Entity Optimization",
+          "h3:AI-Ready Content Optimization",
+          "h3:Structured Data and Crawl Clarity",
+          "h3:Digital PR and Citation Building",
+          "h3:Answer Engine Optimization",
+          "h3:AI Visibility Tracking",
+          "h3:SEO, AEO and LLM SEO Integration",
+          "h2:How GEO Helps You Rank in AI Search Results",
+          "h3:Structured expertise",
+          "h3:Brand signal consistency",
+          "h3:AI-source readiness",
+          "h3:Rank in search engines",
+          "h3:Appear in AI answers",
+          "h3:Reinforce authority across platforms",
+          "h2:How D'Genius Solutions Builds GEO Visibility",
+          "h3:AI visibility benchmarking",
+          "h3:Search and prompt intent research",
+          "h3:Entity and knowledge audit",
+          "h3:Content and competitor gap analysis",
+          "h3:Technical SEO and structured data",
+          "h3:Answer and service page optimization",
+          "h3:Authority and citation building",
+          "h3:AI visibility monitoring and refinement",
+          "h3:Lead and conversion path optimization",
+          "h2:How We Measure GEO Performance",
+          "h2:GEO for Measurable Growth",
+          "h3:GEO strengthens your existing SEO foundation.",
+          "h3:What we optimize",
+          "h2:The Business Impact of GEO",
+          "h2:Search and AI Visibility Proof",
+          "h3:DGS Search and AI Visibility Screenshots",
+          "h3:Brand visibility strengthened inside Google AI Overviews",
+          "h3:Structured content earned stronger AI-assisted discovery",
+          "h3:Brand information surfaced as a relevant AI Overview source",
+          "h3:Answer engine optimization connected visibility with buyer intent",
+          "h3:Weavings Search and AI Visibility Screenshots",
+          "h3:Search strategy connected authority with qualified demand",
+          "h3:Search visibility improved through coordinated SEO execution",
+          "h3:Answer-ready content strengthened AI-assisted discovery",
+          "h3:AI search visibility reinforced brand authority and discovery",
+          "h2:GEO & AI Visibility Proof Points",
+          "h3:Weavings: LLM-led visibility for contract staffing discovery",
+          "h3:TheWorldGrad: Structured SEO authority that compounds over time",
+          "h2:Recognized for SEO, Content & Performance Marketing",
+          "h3:Best Place to Work",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h2:Why Businesses Choose D'Genius Solutions for GEO",
+          "h3:AI search mapping",
+          "h3:Answer-ready pages",
+          "h3:Schema and crawl clarity",
+          "h2:Future-Proof Your Brand for AI Search",
+          "h2:Generative Engine Optimization FAQs",
+          "h2:Get Your Free GEO Audit"
+        ],
+        "targetOrder": [
+          "h1:Generative Engine Optimization (GEO) Services in Mumbai",
+          "h2:Generative Engine Optimization Services in Mumbai",
+          "h3:What businesses can use GEO for",
+          "h2:What Is Generative Engine Optimization?",
+          "h3:GEO helps your brand appear inside AI-led discovery.",
+          "h3:Where GEO matters most",
+          "h2:GEO Services We Provide in Mumbai",
+          "h3:AI Visibility Audit",
+          "h3:AI Search Query Research",
+          "h3:Entity Optimization",
+          "h3:AI-Ready Content Optimization",
+          "h3:Structured Data and Crawl Clarity",
+          "h3:Digital PR and Citation Building",
+          "h3:Answer Engine Optimization",
+          "h3:AI Visibility Tracking",
+          "h3:SEO, AEO and LLM SEO Integration",
+          "h2:How GEO Helps You Rank in AI Search Results",
+          "h3:Structured expertise",
+          "h3:Brand signal consistency",
+          "h3:AI-source readiness",
+          "h3:Rank in search engines",
+          "h3:Appear in AI answers",
+          "h3:Reinforce authority across platforms",
+          "h2:How D'Genius Solutions Builds GEO Visibility",
+          "h3:AI visibility benchmarking",
+          "h3:Search and prompt intent research",
+          "h3:Entity and knowledge audit",
+          "h3:Content and competitor gap analysis",
+          "h3:Technical SEO and structured data",
+          "h3:Answer and service page optimization",
+          "h3:Authority and citation building",
+          "h3:AI visibility monitoring and refinement",
+          "h3:Lead and conversion path optimization",
+          "h2:How We Measure GEO Performance",
+          "h2:GEO for Measurable Growth",
+          "h3:GEO strengthens your existing SEO foundation.",
+          "h3:What we optimize",
+          "h2:The Business Impact of GEO",
+          "h2:Search and AI Visibility Proof",
+          "h3:DGS Search and AI Visibility Screenshots",
+          "h3:Brand visibility strengthened inside Google AI Overviews",
+          "h3:Structured content earned stronger AI-assisted discovery",
+          "h3:Brand information surfaced as a relevant AI Overview source",
+          "h3:Answer engine optimization connected visibility with buyer intent",
+          "h3:Weavings Search and AI Visibility Screenshots",
+          "h3:Search strategy connected authority with qualified demand",
+          "h3:Search visibility improved through coordinated SEO execution",
+          "h3:Answer-ready content strengthened AI-assisted discovery",
+          "h3:AI search visibility reinforced brand authority and discovery",
+          "h2:GEO & AI Visibility Proof Points",
+          "h3:Weavings: LLM-led visibility for contract staffing discovery",
+          "h3:TheWorldGrad: Structured SEO authority that compounds over time",
+          "h2:Recognized for SEO, Content & Performance Marketing",
+          "h3:Best Place to Work",
+          "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+          "h3:Excellence in SEO, Content & Performance Marketing",
+          "h2:Why Businesses Choose D'Genius Solutions for GEO",
+          "h3:AI search mapping",
+          "h3:Answer-ready pages",
+          "h3:Schema and crawl clarity",
+          "h2:Future-Proof Your Brand for AI Search",
+          "h2:Generative Engine Optimization FAQs",
+          "h2:Get Your Free GEO Audit"
+        ]
+      }
+    },
+    "paragraphs": {
+      "missing": [],
+      "extra": [
+        "AI-First GEO Agency — Generative Engine Optimization",
+        "Call +91-99879 22901",
+        "WhatsApp",
+        "GEO Services in Mumbai",
+        "GEO Overview",
+        "GEO Services",
+        "02 / Research",
+        "03 / Entity",
+        "04 / Content",
+        "05 / Technical",
+        "06 / Authority",
+        "08 / Tracking",
+        "09 / Integration",
+        "AI Search Visibility",
+        "01 / Authority",
+        "02 / Entity",
+        "Our Process",
+        "Measurement",
+        "AI Overview Appearances Track relevant Google AI Overview visibility and source inclusion across priority commercial queries. AI Citation Frequency Measure how often the brand or website is referenced across supported AI-search journeys. Brand Recommendation Coverage Review visibility when users ask for providers, agencies, comparisons and shortlists. Organic Search Growth Monitor impressions, clicks, rankings and branded discovery alongside AI visibility. Entity Recognition Check whether search and AI systems consistently understand the business, services, expertise and location. Qualified Leads Connect visibility improvements with enquiries, calls, forms and other measurable conversion actions.",
+        "Business Impact",
+        "Why GEO Matters",
+        "Better AI Visibility Your brand becomes easier for AI platforms to understand, summarize, and recommend when users ask relevant questions. Stronger Entity Recognition Consistent business, service, location, and authority signals help AI systems identify your brand more accurately. Higher Trust Perception Clear proof, structured expertise, and credible content help build trust before the user even reaches your website. Earlier Buyer Influence GEO helps your brand enter the conversation when users are still comparing vendors and forming shortlists. Reduced Paid Dependence Better AI and organic visibility can reduce overdependence on paid channels over time. Future-Ready Discovery Your website becomes better prepared for how search is evolving across AI Overviews, answer engines, and conversational platforms.",
+        "Proof & Results",
+        "DGS",
+        "DGS · AI Overview",
+        "DGS · AI Search",
+        "DGS · AEO Growth",
+        "DGS · Commercial AEO",
+        "Weavings",
+        "Weavings · Commercial SEO"
+      ],
+      "wordingDifferences": [
+        {
+          "source": "D'Genius Solutions provides Generative Engine Optimization services in Mumbai to help businesses improve visibility across Google AI Overviews, ChatGPT, Gemini, Perplexity and other AI-powered search experiences through entity optimization, answer-ready content, structured data, authority building and AI-search strategy.",
+          "target": "AI-First GEO Agency — Generative Engine Optimization"
+        },
+        {
+          "source": "Trusted by Leading Brands",
+          "target": "D'Genius Solutions provides Generative Engine Optimization services in Mumbai to help businesses improve visibility across Google AI Overviews, ChatGPT, Gemini, Perplexity and other AI-powered search experiences through entity optimization, answer-ready content, structured data, authority building and AI-search strategy."
+        },
+        {
+          "source": "D'Genius Solutions is a Generative Engine Optimization agency in Mumbai helping businesses improve visibility across Google AI Overviews, ChatGPT, Gemini, Perplexity and other AI-search experiences. Our GEO work combines AI visibility audits, entity optimization, answer-focused content, structured data, digital PR, authority building, citation readiness and AI visibility tracking.",
+          "target": "Call +91-99879 22901"
+        },
+        {
+          "source": "GEO works alongside SEO services in Mumbai , Answer Engine Optimization and LLM SEO services to strengthen discovery across traditional search and AI-powered recommendations.",
+          "target": "WhatsApp"
+        },
+        {
+          "source": "GEO is not a replacement for SEO. It is the next visibility layer built for AI-generated answers, AI summaries, citations, and conversational search journeys.",
+          "target": "Trusted by Leading Brands"
+        },
+        {
+          "source": "Generative Engine Optimization is the process of structuring your website, brand signals, content, and authority so AI platforms can understand your business and reference it accurately.",
+          "target": "GEO Services in Mumbai"
+        },
+        {
+          "source": "Instead of only fighting for search rankings, GEO helps your brand become visible when users ask AI tools for recommendations, comparisons, expert opinions, or vendor shortlists.",
+          "target": "D'Genius Solutions is a Generative Engine Optimization agency in Mumbai helping businesses improve visibility across Google AI Overviews, ChatGPT, Gemini, Perplexity and other AI-search experiences. Our GEO work combines AI visibility audits, entity optimization, answer-focused content, structured data, digital PR, authority building, citation readiness and AI visibility tracking."
+        },
+        {
+          "source": "Each service is designed to make your business easier to understand, verify, retrieve and recommend across search engines and AI-powered answer systems.",
+          "target": "GEO works alongside SEO services in Mumbai , Answer Engine Optimization and LLM SEO services to strengthen discovery across traditional search and AI-powered recommendations."
+        },
+        {
+          "source": "Benchmark how often your brand appears across Google AI Overviews and major AI assistants for commercially relevant queries.",
+          "target": "GEO Overview"
+        },
+        {
+          "source": "Map recommendation, comparison, problem and service queries that buyers use when discovering providers through AI search.",
+          "target": "GEO is not a replacement for SEO. It is the next visibility layer built for AI-generated answers, AI summaries, citations, and conversational search journeys."
+        },
+        {
+          "source": "Strengthen relationships between your brand, services, location, expertise, leadership and authoritative public references.",
+          "target": "Generative Engine Optimization is the process of structuring your website, brand signals, content, and authority so AI platforms can understand your business and reference it accurately."
+        },
+        {
+          "source": "Restructure service pages and supporting content into clear, factual, answer-ready sections that are easier to retrieve and summarize.",
+          "target": "Instead of only fighting for search rankings, GEO helps your brand become visible when users ask AI tools for recommendations, comparisons, expert opinions, or vendor shortlists."
+        },
+        {
+          "source": "Align relevant schema, internal linking, page architecture and crawl signals with the visible content and business entity.",
+          "target": "GEO Services"
+        },
+        {
+          "source": "Strengthen legitimate third-party references, brand mentions and authority signals that support trust across search and AI systems.",
+          "target": "Each service is designed to make your business easier to understand, verify, retrieve and recommend across search engines and AI-powered answer systems."
+        },
+        {
+          "source": "Improve direct answers, question-led sections and snippet-friendly content for featured snippets, voice search and answer engines.",
+          "target": "Benchmark how often your brand appears across Google AI Overviews and major AI assistants for commercially relevant queries."
+        },
+        {
+          "source": "Track AI mentions, source inclusion, organic visibility, branded discovery and measurable traffic or conversions from AI-assisted journeys.",
+          "target": "02 / Research"
+        },
+        {
+          "source": "Connect GEO with SEO, AEO and LLM SEO so the same authority signals support rankings, snippets and AI recommendations together.",
+          "target": "Map recommendation, comparison, problem and service queries that buyers use when discovering providers through AI search."
+        },
+        {
+          "source": "AI engines do not evaluate websites only by keywords. They look for clarity, authority, entity consistency, trustworthy signals, and answer-ready content.",
+          "target": "03 / Entity"
+        },
+        {
+          "source": "We build clear service pages, content clusters, and answer-led sections that help AI systems interpret your expertise with less ambiguity.",
+          "target": "Strengthen relationships between your brand, services, location, expertise, leadership and authoritative public references."
+        },
+        {
+          "source": "We strengthen your brand entity through consistent name, services, location, founder, proof, and business information across public sources.",
+          "target": "04 / Content"
+        }
+      ],
+      "sourceCount": 53,
+      "targetCount": 104
+    },
+    "listItems": {
+      "missing": [],
+      "extra": [],
+      "sourceCount": 15,
+      "targetCount": 15
+    },
+    "faq": {
+      "missing": [],
+      "extra": [],
+      "answerDiffs": []
+    },
+    "images": {
+      "missing": [],
+      "extra": [],
+      "altDiffs": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "MKA",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Candour London",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Plush Puppy",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Aertrip",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS Google AI Overview visibility result screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS AI search citation visibility result screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS AI Overview source inclusion result screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "DGS answer engine optimization search visibility screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings commercial SEO and lead generation result screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings SEO search visibility result screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings AEO and AI search visibility result screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings AI search visibility and authority result screenshot",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings Manpower website case study preview",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Weavings Manpower logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad website case study preview",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "TheWorldGrad logo",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Prime Insights Best Place to Work award for D",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "Corporate Connect highly regarded digital marketing agency award for D",
+          "targetAlt": "Weavings"
+        },
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
+          "sourceAlt": "GLA award for excellence in SEO content and performance marketing for D",
+          "targetAlt": "Weavings"
+        }
+      ]
+    },
+    "order": {
+      "orderChanged": false,
+      "sourceOrder": [
+        "h1:Generative Engine Optimization (GEO) Services in Mumbai",
+        "h2:Generative Engine Optimization Services in Mumbai",
+        "h3:What businesses can use GEO for",
+        "h2:What Is Generative Engine Optimization?",
+        "h3:GEO helps your brand appear inside AI-led discovery.",
+        "h3:Where GEO matters most",
+        "h2:GEO Services We Provide in Mumbai",
+        "h3:AI Visibility Audit",
+        "h3:AI Search Query Research",
+        "h3:Entity Optimization",
+        "h3:AI-Ready Content Optimization",
+        "h3:Structured Data and Crawl Clarity",
+        "h3:Digital PR and Citation Building",
+        "h3:Answer Engine Optimization",
+        "h3:AI Visibility Tracking",
+        "h3:SEO, AEO and LLM SEO Integration",
+        "h2:How GEO Helps You Rank in AI Search Results",
+        "h3:Structured expertise",
+        "h3:Brand signal consistency",
+        "h3:AI-source readiness",
+        "h3:Rank in search engines",
+        "h3:Appear in AI answers",
+        "h3:Reinforce authority across platforms",
+        "h2:How D'Genius Solutions Builds GEO Visibility",
+        "h3:AI visibility benchmarking",
+        "h3:Search and prompt intent research",
+        "h3:Entity and knowledge audit",
+        "h3:Content and competitor gap analysis",
+        "h3:Technical SEO and structured data",
+        "h3:Answer and service page optimization",
+        "h3:Authority and citation building",
+        "h3:AI visibility monitoring and refinement",
+        "h3:Lead and conversion path optimization",
+        "h2:How We Measure GEO Performance",
+        "h2:GEO for Measurable Growth",
+        "h3:GEO strengthens your existing SEO foundation.",
+        "h3:What we optimize",
+        "h2:The Business Impact of GEO",
+        "h2:Search and AI Visibility Proof",
+        "h3:DGS Search and AI Visibility Screenshots",
+        "h3:Brand visibility strengthened inside Google AI Overviews",
+        "h3:Structured content earned stronger AI-assisted discovery",
+        "h3:Brand information surfaced as a relevant AI Overview source",
+        "h3:Answer engine optimization connected visibility with buyer intent",
+        "h3:Weavings Search and AI Visibility Screenshots",
+        "h3:Search strategy connected authority with qualified demand",
+        "h3:Search visibility improved through coordinated SEO execution",
+        "h3:Answer-ready content strengthened AI-assisted discovery",
+        "h3:AI search visibility reinforced brand authority and discovery",
+        "h2:GEO & AI Visibility Proof Points",
+        "h3:Weavings: LLM-led visibility for contract staffing discovery",
+        "h3:TheWorldGrad: Structured SEO authority that compounds over time",
+        "h2:Recognized for SEO, Content & Performance Marketing",
+        "h3:Best Place to Work",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h2:Why Businesses Choose D'Genius Solutions for GEO",
+        "h3:AI search mapping",
+        "h3:Answer-ready pages",
+        "h3:Schema and crawl clarity",
+        "h2:Future-Proof Your Brand for AI Search",
+        "h2:Generative Engine Optimization FAQs",
+        "h2:Get Your Free GEO Audit"
+      ],
+      "targetOrder": [
+        "h1:Generative Engine Optimization (GEO) Services in Mumbai",
+        "h2:Generative Engine Optimization Services in Mumbai",
+        "h3:What businesses can use GEO for",
+        "h2:What Is Generative Engine Optimization?",
+        "h3:GEO helps your brand appear inside AI-led discovery.",
+        "h3:Where GEO matters most",
+        "h2:GEO Services We Provide in Mumbai",
+        "h3:AI Visibility Audit",
+        "h3:AI Search Query Research",
+        "h3:Entity Optimization",
+        "h3:AI-Ready Content Optimization",
+        "h3:Structured Data and Crawl Clarity",
+        "h3:Digital PR and Citation Building",
+        "h3:Answer Engine Optimization",
+        "h3:AI Visibility Tracking",
+        "h3:SEO, AEO and LLM SEO Integration",
+        "h2:How GEO Helps You Rank in AI Search Results",
+        "h3:Structured expertise",
+        "h3:Brand signal consistency",
+        "h3:AI-source readiness",
+        "h3:Rank in search engines",
+        "h3:Appear in AI answers",
+        "h3:Reinforce authority across platforms",
+        "h2:How D'Genius Solutions Builds GEO Visibility",
+        "h3:AI visibility benchmarking",
+        "h3:Search and prompt intent research",
+        "h3:Entity and knowledge audit",
+        "h3:Content and competitor gap analysis",
+        "h3:Technical SEO and structured data",
+        "h3:Answer and service page optimization",
+        "h3:Authority and citation building",
+        "h3:AI visibility monitoring and refinement",
+        "h3:Lead and conversion path optimization",
+        "h2:How We Measure GEO Performance",
+        "h2:GEO for Measurable Growth",
+        "h3:GEO strengthens your existing SEO foundation.",
+        "h3:What we optimize",
+        "h2:The Business Impact of GEO",
+        "h2:Search and AI Visibility Proof",
+        "h3:DGS Search and AI Visibility Screenshots",
+        "h3:Brand visibility strengthened inside Google AI Overviews",
+        "h3:Structured content earned stronger AI-assisted discovery",
+        "h3:Brand information surfaced as a relevant AI Overview source",
+        "h3:Answer engine optimization connected visibility with buyer intent",
+        "h3:Weavings Search and AI Visibility Screenshots",
+        "h3:Search strategy connected authority with qualified demand",
+        "h3:Search visibility improved through coordinated SEO execution",
+        "h3:Answer-ready content strengthened AI-assisted discovery",
+        "h3:AI search visibility reinforced brand authority and discovery",
+        "h2:GEO & AI Visibility Proof Points",
+        "h3:Weavings: LLM-led visibility for contract staffing discovery",
+        "h3:TheWorldGrad: Structured SEO authority that compounds over time",
+        "h2:Recognized for SEO, Content & Performance Marketing",
+        "h3:Best Place to Work",
+        "h3:Highly Regarded Digital Marketing Agency to Watch Out",
+        "h3:Excellence in SEO, Content & Performance Marketing",
+        "h2:Why Businesses Choose D'Genius Solutions for GEO",
+        "h3:AI search mapping",
+        "h3:Answer-ready pages",
+        "h3:Schema and crawl clarity",
+        "h2:Future-Proof Your Brand for AI Search",
+        "h2:Generative Engine Optimization FAQs",
+        "h2:Get Your Free GEO Audit"
+      ]
+    }
+  },
+  "links": {
+    "wordpressContextual": [
+      {
+        "anchor": "WhatsApp",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20GEO%20services",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20GEO%20services",
+        "path": "/919987922901/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Answer Engine Optimization",
+        "href": "/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services",
+        "href": "/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO",
+        "href": "/services/seo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "/services/aeo-services-in-mumbai/",
+        "destination": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO",
+        "href": "/services/llm-seo-service/",
+        "destination": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "scope": "body"
+      }
+    ],
+    "nextContextual": [
+      {
+        "anchor": "WhatsApp",
+        "href": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20GEO%20services",
+        "destination": "https://wa.me/919987922901?text=Hi%2C%20I%E2%80%99m%20interested%20in%20GEO%20services",
+        "path": "/919987922901/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO services in Mumbai",
+        "href": "/services/seo-services-in-mumbai/",
+        "destination": "http://127.0.0.1:3025/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "Answer Engine Optimization",
+        "href": "/services/aeo-services-in-mumbai/",
+        "destination": "http://127.0.0.1:3025/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO services",
+        "href": "/services/llm-seo-service/",
+        "destination": "http://127.0.0.1:3025/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      },
+      {
+        "anchor": "SEO",
+        "href": "/services/seo-services-in-mumbai/",
+        "destination": "http://127.0.0.1:3025/services/seo-services-in-mumbai/",
+        "path": "/services/seo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "AEO",
+        "href": "/services/aeo-services-in-mumbai/",
+        "destination": "http://127.0.0.1:3025/services/aeo-services-in-mumbai/",
+        "path": "/services/aeo-services-in-mumbai/",
+        "scope": "body"
+      },
+      {
+        "anchor": "LLM SEO",
+        "href": "/services/llm-seo-service/",
+        "destination": "http://127.0.0.1:3025/services/llm-seo-service/",
+        "path": "/services/llm-seo-service/",
+        "scope": "body"
+      }
+    ],
+    "nextGlobal": [],
+    "missingInNext": [
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "scope": "body"
+      },
+      {
+        "anchor": "",
+        "href": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "scope": "body"
+      }
+    ],
+    "extraInNext": [],
+    "destinationStatus": [
+      {
+        "path": "/919987922901/",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/services/seo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/aeo-services-in-mumbai/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/services/llm-seo-service/",
+        "httpStatus": 200,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      },
+      {
+        "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
+        "httpStatus": 404,
+        "redirect": null
+      }
+    ]
+  },
+  "findings": [
+    {
+      "class": "A",
+      "label": "EXPECTED_STAGING_DIFFERENCE",
+      "detail": "robots=noindex, nofollow x-robots=noindex, nofollow, noarchive"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "51 extra paragraphs"
+    },
+    {
+      "class": "D",
+      "label": "REAL_VISIBLE_CONTENT_DRIFT",
+      "detail": "image/alt differences detected"
+    },
+    {
+      "class": "E",
+      "label": "REAL_INTERNAL_LINK_PARITY_DEFECT",
+      "detail": "8 contextual links missing in Next"
+    },
+    {
+      "class": "C",
+      "label": "AUDITOR_NORMALIZATION_ARTIFACT",
+      "detail": "normalized text hash differs but structured diff shows no major heading/paragraph loss — likely wrapper/normalization artifact"
+    }
+  ],
+  "classifications": {
+    "A": 1,
+    "D": 2,
+    "E": 1,
+    "C": 1
+  }
+}

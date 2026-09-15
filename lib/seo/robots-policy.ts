@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/lib/seo/site";
-import { isPublicIndexingEnabled } from "@/lib/seo/environment";
+import { siteConfig } from "./site";
+import { isPublicIndexingEnabled } from "./environment";
 
 const DISALLOWED_PATHS = ["/api/", "/admin/", "/wp-admin/", "/wp-login.php"];
 
@@ -24,19 +24,38 @@ export function buildRobotsManifest(): MetadataRoute.Robots {
     };
   }
 
+  const crawlRules = {
+    allow: "/",
+    disallow: DISALLOWED_PATHS,
+  };
+
+  const searchDiscoveryCrawlers = [
+    "*",
+    "Googlebot",
+    "Bingbot",
+    "OAI-SearchBot",
+    "ChatGPT-User",
+    "PerplexityBot",
+    "Claude-SearchBot",
+    "Claude-User",
+  ];
+
+  const aiTrainingCrawlers = [
+    "GPTBot",
+    "ClaudeBot",
+    "Google-Extended",
+    "Applebot-Extended",
+    "CCBot",
+    "Bytespider",
+  ];
+
+  const allConfiguredAgents = [...searchDiscoveryCrawlers, ...aiTrainingCrawlers];
+
   return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: DISALLOWED_PATHS,
-      },
-      {
-        userAgent: "OAI-SearchBot",
-        allow: "/",
-        disallow: DISALLOWED_PATHS,
-      },
-    ],
+    rules: allConfiguredAgents.map((userAgent) => ({
+      userAgent,
+      ...crawlRules,
+    })),
     sitemap: `${siteConfig.url}/sitemap.xml`,
     host: siteConfig.url,
   };

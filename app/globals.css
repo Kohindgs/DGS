@@ -33,14 +33,19 @@
   --space-24: 6rem;
   --space-32: 8rem;
 
-  --container-max: 1280px;
+  --container-max: 1440px;
   --container-narrow: 960px;
 
-  --page-gutter: clamp(20px, 3vw, 72px);
+  --page-gutter: clamp(16px, 3vw, 64px);
   --content-max: 1440px;
-  --wide-max: 1680px;
-  --text-max: 72ch;
+  --wide-max: 1760px;
+  --text-max: 75ch;
   --section-y: clamp(64px, 7vw, 144px);
+
+  --glass-surface: rgba(10, 10, 14, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.18);
+  --glass-glow: 0 24px 60px rgba(0, 0, 0, 0.45);
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -67,11 +72,15 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 body {
   background: #020202;
   color: #d2d2cf;
+  overflow-x: clip;
+  max-width: 100%;
   font-family: var(--font-body), system-ui, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
@@ -158,6 +167,13 @@ button {
 
 .page-main {
   padding-block: var(--section-y);
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.semantic-content-wrap {
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 .page-breadcrumbs {
@@ -210,6 +226,16 @@ button {
 .semantic-content img {
   height: auto;
   border-radius: var(--radius-md);
+}
+
+.semantic-content ul,
+.semantic-content ol {
+  padding-left: 1.2rem;
+}
+
+.semantic-table {
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 .home-portfolio {
