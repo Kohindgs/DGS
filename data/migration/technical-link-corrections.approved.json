@@ -202,13 +202,6 @@
     },
     {
       "path": "*",
-      "wordpressDestination": "/blogs/google-august-2026-spam-update/",
-      "requiredNextDestination": "/blogs/google-spam-update/",
-      "classification": "B",
-      "reason": "Update internal link to authoritative blog canonical destination"
-    },
-    {
-      "path": "*",
       "wordpressDestination": "/services/seo-services-dubai/",
       "requiredNextDestination": "/services/dubai-seo/",
       "classification": "B",

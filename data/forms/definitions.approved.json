@@ -354,7 +354,11 @@
       "title": "Free SEO Audit Form",
       "shortcode": "[fluentform id=\"3\"]",
       "sourceRoutes": [
-        "/services/seo-services-in-mumbai/"
+        "/services/seo-services-in-mumbai/",
+        "/services/seo-service-in-banglore/",
+        "/services/seo-service-in-gurugram/",
+        "/services/seo-service-pune/",
+        "/services/seo-services-in-hyderabad/"
       ],
       "approvalState": "APPROVED_FOR_IMPLEMENTATION",
       "activationEnabled": true,
@@ -612,7 +616,11 @@
         "submissionAction": "fluentform_submit",
         "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
         "wordpressPageIds": {
-          "/services/seo-services-in-mumbai/": 40278
+          "/services/seo-services-in-mumbai/": 40278,
+          "/services/seo-service-in-banglore/": 64528,
+          "/services/seo-service-in-gurugram/": 64543,
+          "/services/seo-service-pune/": 64509,
+          "/services/seo-services-in-hyderabad/": 64533
         }
       },
       "provenance": {

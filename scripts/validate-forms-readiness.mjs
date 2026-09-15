@@ -100,7 +100,7 @@ if (!errors.length) {
     errors.push("Shared Form ID 1 must map to both / and /contact-us/");
   }
 
-  if (routes.size !== 12) errors.push(`Expected 12 route mappings, found ${routes.size}`);
+  if (routes.size !== 16) errors.push(`Expected 16 route mappings, found ${routes.size}`);
 
   const activationReady = forms.every(
     (form) => form.activationEnabled === true && form.approvalState === "APPROVED_FOR_IMPLEMENTATION",

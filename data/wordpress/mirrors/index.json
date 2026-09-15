@@ -105,6 +105,10 @@
     "/thank-you/": "thank-you.json",
     "/us-landing-page/": "us-landing-page.json",
     "/website-development-services-in-mumbai-dgenius-solutions/": "website-development-services-in-mumbai-dgenius-solutions.json",
-    "/services/": "services.json"
+    "/services/": "services.json",
+    "/blogs/aeo-in-2026/": "blogs__aeo-in-2026.json",
+    "/blogs/google-ads-ai-max-2026/": "blogs__google-ads-ai-max-2026.json",
+    "/blogs/seo-company-in-mumbai/": "blogs__seo-company-in-mumbai.json",
+    "/blogs/google-august-2026-spam-update/": "blogs__google-august-2026-spam-update.json"
   }
 }

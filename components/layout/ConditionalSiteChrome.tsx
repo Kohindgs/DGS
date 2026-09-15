@@ -1,11 +1,14 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 type Props = {
   children?: React.ReactNode;
 };
 
-/** Inner pages and homepage supply extracted WordPress nav/footer; hide Next chrome. */
-export function ConditionalSiteChrome(props: Props) {
-  void props.children;
-  return null;
+/** Mirror pages supply captured WP chrome; native blog pages need Next chrome. */
+export function ConditionalSiteChrome({ children }: Props) {
+  const pathname = usePathname();
+  const isBlog = pathname === "/blogs" || pathname?.startsWith("/blogs/");
+  return isBlog ? <>{children}</> : null;
 }

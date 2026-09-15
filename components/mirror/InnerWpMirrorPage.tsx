@@ -11,6 +11,7 @@ import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { loadHomepageGallery } from "@/lib/portfolio/load-homepage-gallery";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
 import { InnerMirrorWidgets } from "@/components/mirror/InnerMirrorWidgets";
+import { DgsLocationFaqBoot } from "@/components/mirror/DgsLocationFaqBoot";
 import { DynamicThreeBackground } from "@/components/background/DynamicThreeBackground";
 import { JustifiedPortfolioGalleryPortal } from "@/components/portfolio/JustifiedPortfolioGalleryPortal";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -159,6 +160,7 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
         runPortfolio={runVideoPortfolio}
       />
       <InnerMirrorWidgets />
+      <DgsLocationFaqBoot />
       {mountThreeJsBg ? <DynamicThreeBackground /> : null}
     </>
   );
