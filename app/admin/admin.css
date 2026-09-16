@@ -155,3 +155,40 @@
   opacity: .5;
   cursor: not-allowed;
 }
+
+.dgs-admin-header-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.dgs-admin-header-actions a,
+.dgs-admin-card a,
+.dgs-admin-import-head a { color: #d8c7ff; text-decoration: none; font-weight: 700; }
+
+.dgs-admin-blog-importer { max-width: 1280px; margin: 0 auto; }
+.dgs-admin-upload-form,
+.dgs-admin-import-panel,
+.dgs-admin-import-result { border: 1px solid rgba(255,255,255,.08); border-radius: 22px; background: rgba(255,255,255,.035); padding: 24px; }
+.dgs-admin-upload-form { display: grid; gap: 18px; }
+.dgs-admin-upload-form label { display: grid; gap: 8px; color: #d8d8df; }
+.dgs-admin-upload-form input[type="file"] { border: 1px dashed rgba(255,255,255,.18); border-radius: 14px; padding: 16px; background: #101014; color: #fff; }
+.dgs-admin-upload-form button,
+.dgs-admin-import-head button { width: fit-content; border: 0; border-radius: 12px; padding: 13px 18px; background: linear-gradient(135deg,#a900ff,#6a35ff); color: #fff; font-weight: 800; cursor: pointer; }
+.dgs-admin-upload-form button:disabled,
+.dgs-admin-import-head button:disabled { opacity: .5; cursor: not-allowed; }
+.dgs-admin-help { color: #a8a8b3; margin: 0; }
+.dgs-admin-help code { color: #d8c7ff; }
+
+.dgs-admin-import-result { margin-top: 18px; }
+.dgs-admin-import-head { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+.dgs-admin-import-head h2 { margin: 12px 0 6px; }
+.dgs-admin-import-head p { color: #a8a8b3; }
+.dgs-admin-optimization-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.dgs-admin-optimization-grid article,
+.dgs-admin-import-panel { margin-top: 14px; border: 1px solid rgba(255,255,255,.07); border-radius: 16px; background: #0e0e12; padding: 18px; overflow: auto; }
+.dgs-admin-optimization-grid h3,
+.dgs-admin-import-panel h3 { margin: 0 0 10px; }
+.dgs-admin-optimization-grid pre,
+.dgs-admin-import-panel pre { margin: 0; white-space: pre-wrap; color: #c9c9d3; font: 12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace; }
+.dgs-admin-import-panel ul { margin: 10px 0 0 18px; color: #b8b8c2; }
+
+@media (max-width: 760px) {
+  .dgs-admin-optimization-grid { grid-template-columns: 1fr; }
+  .dgs-admin-import-head { flex-direction: column; }
+}

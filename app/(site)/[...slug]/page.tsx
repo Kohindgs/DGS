@@ -26,6 +26,8 @@ import {
   webPageSchema,
 } from "@/lib/schema/builders";
 import { ORGANIZATION_ID, WEBSITE_ID } from "@/lib/schema/entity";
+import { isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { cmsBlogToPublicPost, getPublishedCmsBlogBySlug, listPublishedCmsBlogs } from "@/lib/cms/blogs";
 
 export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
@@ -41,6 +43,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   const { slug } = await params;
   const path = slugToPath(slug || []);
   const route = await getRouteByPath(path);
+
+  if (!route && path.startsWith("/blogs/") && path !== "/blogs/" && isCmsDatabaseConfigured()) {
+    try {
+      const slugValue = path.replace(/^\/blogs\/|\/$/g, "");
+      const cmsBlog = await getPublishedCmsBlogBySlug(slugValue);
+      const article = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
+      if (article) {
+        return buildPageMetadata({ title: article.title, description: article.description, path: article.path, canonicalPath: article.path, indexable: true, image: article.featuredImage?.src, type: "article" });
+      }
+    } catch {
+      // Unknown CMS routes stay unavailable if the CMS database is unreachable.
+    }
+  }
 
   if (!route) {
     return { title: "Not Found" };
@@ -69,6 +84,32 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   const path = slugToPath(slug || []);
   const route = await getRouteByPath(path);
 
+  if (!route && path.startsWith("/blogs/") && path !== "/blogs/" && isCmsDatabaseConfigured()) {
+    try {
+      const slugValue = path.replace(/^\/blogs\/|\/$/g, "");
+      const cmsBlog = await getPublishedCmsBlogBySlug(slugValue);
+      const article = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
+      if (article) {
+        const relatedPosts = await getRelatedBlogPosts(path, 3);
+        const breadcrumbItems = [
+          { name: "Home", path: "/" },
+          { name: "Blogs", path: "/blogs/" },
+          { name: article.title, path: article.path },
+        ];
+        const articleSchemas: Record<string, unknown>[] = [
+          ...buildGlobalEntitySchemas(),
+          webPageSchema({ name: article.title, description: article.description, path: article.path, organizationId: ORGANIZATION_ID, websiteId: WEBSITE_ID }),
+          breadcrumbSchema(breadcrumbItems),
+          articleSchema({ headline: article.h1 || article.title, description: article.description, path: article.path, datePublished: article.date, dateModified: article.modified, publisherId: ORGANIZATION_ID, imageUrl: article.featuredImage?.src }),
+        ];
+        if (article.faqs.length > 0) articleSchemas.push(faqSchema(article.faqs.map((f) => ({ question: f.question, answer: f.answer }))));
+        return <><JsonLd value={articleSchemas as unknown as JsonLdValue} /><BlogArticle article={article} relatedPosts={relatedPosts} /></>;
+      }
+    } catch {
+      // Do not expose an unpublished or unavailable CMS post.
+    }
+  }
+
   if (!route) {
     notFound();
   }
@@ -83,7 +124,16 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   }
 
   if (path === "/blogs/") {
-    const posts = await getAllBlogPosts();
+    let posts = await getAllBlogPosts();
+    if (isCmsDatabaseConfigured()) {
+      try {
+        const nativePosts = (await listPublishedCmsBlogs()).map(cmsBlogToPublicPost).filter((post) => post !== null);
+        const existingPaths = new Set(posts.map((post) => post.path));
+        posts = [...nativePosts.filter((post) => !existingPaths.has(post.path)), ...posts];
+      } catch {
+        // Keep the existing archive available if the native CMS is unavailable.
+      }
+    }
     const blogSchemas = [
       ...buildGlobalEntitySchemas(),
       webPageSchema({

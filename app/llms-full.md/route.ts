@@ -1,7 +1,18 @@
 import { verifiedOrganization } from "@/lib/schema/entity";
 import { siteConfig } from "@/lib/seo/site";
+import { isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
 
-export function GET() {
+export async function GET() {
+  let cmsBlogLines: string[] = [];
+  if (isCmsDatabaseConfigured()) {
+    try {
+      cmsBlogLines = (await listPublishedCmsBlogs(50)).map((blog) => `- ${blog.title}: ${siteConfig.url}/blogs/${blog.slug}/`);
+    } catch {
+      cmsBlogLines = [];
+    }
+  }
+
   const content = `# ${verifiedOrganization.name} — Full Entity & Services Index
 
 > Structural reference and machine-readable service index for D'Genius Solutions, a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
@@ -50,6 +61,12 @@ ${verifiedOrganization.sameAs.map((url) => `- [${new URL(url).hostname.replace("
   Digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.
 - **[Shirdi Se Sai Tak Case Study](${verifiedOrganization.url}/services/shirdi-se-sai-tak-case-study/)**
   Mythological AI avatar case study for Shirdi Se Sai Tak devotional storytelling.
+
+---
+
+## Published Insights
+
+${cmsBlogLines.length ? cmsBlogLines.join("\n") : "Published blog index is available in the XML sitemap."}
 
 ---
 
