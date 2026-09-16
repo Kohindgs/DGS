@@ -1,7 +1,18 @@
 import { siteConfig } from "@/lib/seo/site";
+import { isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
 import { verifiedOrganization } from "@/lib/schema/entity";
 
-export function GET() {
+export async function GET() {
+  let cmsBlogLines: string[] = [];
+  if (isCmsDatabaseConfigured()) {
+    try {
+      cmsBlogLines = (await listPublishedCmsBlogs(50)).map((blog) => `- ${blog.title}: ${siteConfig.url}/blogs/${blog.slug}/`);
+    } catch {
+      cmsBlogLines = [];
+    }
+  }
+
   const body = [
     `# ${verifiedOrganization.name}`,
     "",
@@ -15,6 +26,9 @@ export function GET() {
     `- GEO: ${verifiedOrganization.url}/services/geo/`,
     `- LLM SEO: ${verifiedOrganization.url}/services/llm-seo-service/`,
     `- AI Video: ${verifiedOrganization.url}/services/ai-video-production-agency/`,
+    "",
+    "Published insights:",
+    ...(cmsBlogLines.length ? cmsBlogLines : ["See sitemap for published blog URLs."]),
     "",
     `Sitemap: ${siteConfig.url}/sitemap.xml`,
     `Short Markdown: ${siteConfig.url}/llms.md`,
