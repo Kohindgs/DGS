@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 
 const sections = [
@@ -10,8 +11,9 @@ const sections = [
   ["Users", "Roles, access and audit history"],
 ] as const;
 
-export default function AdminPage() {
+export default async function AdminPage() {
   if (process.env.DGS_ADMIN_ENABLED !== "true") notFound();
+  if (!(await hasAdminSession())) redirect("/admin/login/");
 
   const databaseReady = isCmsDatabaseConfigured();
 
