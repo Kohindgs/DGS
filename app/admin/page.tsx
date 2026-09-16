@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
@@ -35,7 +36,7 @@ export default async function AdminPage() {
             <div className="dgs-admin-card-dot" aria-hidden="true" />
             <h2>{title}</h2>
             <p>{description}</p>
-            <span>Foundation ready</span>
+            {title === "Blogs" ? <Link href="/admin/blogs/">Manage Blogs</Link> : <span>Foundation ready</span>}
           </article>
         ))}
       </section>

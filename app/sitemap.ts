@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { getIndexableRoutes } from "@/lib/nextjs/routes";
 import { siteConfig } from "@/lib/seo/site";
-import { careerJobPath, getActiveCareerJobs } from "@/lib/careers/jobs";
+import { careerJobPath, getActiveCareerJobs } from "@/lib/careers/jobs";`r`nimport { isCmsDatabaseConfigured } from "@/lib/cms/db";`r`nimport { listPublishedCmsBlogs } from "@/lib/cms/blogs";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = await getIndexableRoutes();
@@ -28,5 +28,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: job.datePosted,
   }));
 
-  return [...migratedRoutes, ...careerJobs];
+  const entries: MetadataRoute.Sitemap = [...migratedRoutes, ...careerJobs];`r`n`r`n  if (isCmsDatabaseConfigured()) {`r`n    try {`r`n      const existing = new Set(entries.map((entry) => entry.url.replace(/\/$/, "")));`r`n      for (const blog of await listPublishedCmsBlogs()) {`r`n        const url = `${siteConfig.url}/blogs/${blog.slug}/`;`r`n        if (!existing.has(url.replace(/\/$/, ""))) {`r`n          entries.push({ url, lastModified: blog.updated_at });`r`n        }`r`n      }`r`n    } catch {`r`n      // Preserve the static sitemap if the native CMS is temporarily unavailable.`r`n    }`r`n  }`r`n`r`n  return entries;
 }
