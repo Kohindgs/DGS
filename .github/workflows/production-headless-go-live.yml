@@ -1,0 +1,183 @@
+﻿name: DGS Headless Production Go-Live
+
+on:
+  push:
+    branches:
+      - deploy/headless-go-live-fa4fdb6
+
+permissions:
+  contents: read
+
+env:
+  PROD_HOST: 147.93.100.126
+  PROD_PORT: '65002'
+  PROD_USER: u188101251
+  PROD_ROOT: /home/u188101251/production-app
+  TARGET_SHA: fa4fdb6496ba728d5bc45e7dceff68a345d164a1
+  HOSTINGER_PASS: ${{ secrets.HOSTINGER_PASS }}
+  HOSTINGER_SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout validated release
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_SHA }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install and validate
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck
+          npm run build
+          test -f .next/server/app/blogs/seo-company-in-mumbai.html
+          test -f .next/server/app/blogs/google-ads-ai-max-2026.html
+          test -f .next/server/app/blogs/aeo-in-2026.html
+          test -f .next/server/app/portfolio.html
+
+      - name: Prepare SSH authentication
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -p "$PROD_PORT" "$PROD_HOST" >> ~/.ssh/known_hosts
+          if [ -n "$HOSTINGER_SSH_KEY" ]; then
+            printf '%s\n' "$HOSTINGER_SSH_KEY" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            echo "AUTH_MODE=key" >> "$GITHUB_ENV"
+          elif [ -n "$HOSTINGER_PASS" ]; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq sshpass
+            echo "AUTH_MODE=password" >> "$GITHUB_ENV"
+          else
+            echo "No Hostinger SSH secret is configured. Refusing production changes."
+            exit 78
+          fi
+
+      - name: Verify production access
+        run: |
+          if [ "$AUTH_MODE" = key ]; then
+            ssh -p "$PROD_PORT" -o BatchMode=yes "$PROD_USER@$PROD_HOST" "readlink -f $PROD_ROOT/current"
+          else
+            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" "readlink -f $PROD_ROOT/current"
+          fi
+
+      - name: Package validated release
+        run: |
+          BUILD_ID="$(cat .next/BUILD_ID)"
+          echo "BUILD_ID=$BUILD_ID" >> "$GITHUB_ENV"
+          tar -czf /tmp/dgs-prod-release.tar.gz \
+            --exclude='.next/cache' \
+            --exclude='public/media/portfolio/videos' \
+            --exclude='*.mp4' \
+            .next app components data lib public \
+            middleware.ts next.config.ts next-env.d.ts \
+            package.json package-lock.json server.js tsconfig.json
+
+      - name: Upload release
+        run: |
+          if [ "$AUTH_MODE" = key ]; then
+            scp -P "$PROD_PORT" /tmp/dgs-prod-release.tar.gz "$PROD_USER@$PROD_HOST:/tmp/dgs-prod-release.tar.gz"
+          else
+            sshpass -p "$HOSTINGER_PASS" scp -P "$PROD_PORT" /tmp/dgs-prod-release.tar.gz "$PROD_USER@$PROD_HOST:/tmp/dgs-prod-release.tar.gz"
+          fi
+
+      - name: Atomic production activation
+        run: |
+          cat > /tmp/remote-deploy.sh <<'REMOTE'
+          set -euo pipefail
+          ROOT=/home/u188101251/production-app
+          PREVIOUS="$(readlink -f "$ROOT/current")"
+          RELEASE="$ROOT/releases/fa4fdb6-${BUILD_ID}-$(date -u +%Y%m%d%H%M%S)"
+          echo "$PREVIOUS" > "$ROOT/previous-before-fa4fdb6.txt"
+          mkdir -p "$RELEASE/tmp"
+          tar -xzf /tmp/dgs-prod-release.tar.gz -C "$RELEASE"
+          rm -f /tmp/dgs-prod-release.tar.gz
+          ln -sfn "$ROOT/shared/node_modules" "$RELEASE/node_modules"
+          if [ -d "$ROOT/shared/wp-content/uploads" ]; then
+            find "$ROOT/shared/wp-content/uploads" -type f -name "*.mp4" | while read -r f; do
+              rel="${f#$ROOT/shared/wp-content/uploads/}"
+              target="$RELEASE/public/wp-content/uploads/$rel"
+              mkdir -p "$(dirname "$target")"
+              ln -sfn "$f" "$target"
+            done
+          fi
+          if [ -d "$ROOT/shared/media/portfolio/videos" ]; then
+            mkdir -p "$RELEASE/public/media/portfolio/videos"
+            find "$ROOT/shared/media/portfolio/videos" -type f | while read -r f; do
+              ln -sfn "$f" "$RELEASE/public/media/portfolio/videos/$(basename "$f")"
+            done
+          fi
+          cat > "$RELEASE/.env.production" <<'ENV'
+          DGS_PUBLIC_INDEXING=true
+          DGS_WORDPRESS_BACKEND_ORIGIN=https://wp-origin.dgeniussolutions.com
+          NEXT_PUBLIC_SITE_URL=https://www.dgeniussolutions.com
+          ENV
+          test "$(cat "$RELEASE/.next/BUILD_ID")" = "$BUILD_ID"
+          test -f "$RELEASE/.next/server/app/blogs/seo-company-in-mumbai.html"
+          test -f "$RELEASE/.next/server/app/blogs/google-ads-ai-max-2026.html"
+          test -f "$RELEASE/.next/server/app/blogs/aeo-in-2026.html"
+          test -f "$RELEASE/.next/server/app/portfolio.html"
+          ln -sfn "$RELEASE" "$ROOT/current_new"
+          mv -Tf "$ROOT/current_new" "$ROOT/current"
+          touch "$ROOT/current/tmp/restart.txt"
+          echo "DEPLOYED_RELEASE=$RELEASE"
+          REMOTE
+          if [ "$AUTH_MODE" = key ]; then
+            ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" "BUILD_ID='$BUILD_ID' bash -s" < /tmp/remote-deploy.sh
+          else
+            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" "BUILD_ID='$BUILD_ID' bash -s" < /tmp/remote-deploy.sh
+          fi
+
+          echo "DEPLOY_SWITCHED=true" >> "$GITHUB_ENV"
+
+      - name: Verify live production
+        run: |
+          sleep 6
+          urls=(
+            'https://www.dgeniussolutions.com/'
+            'https://www.dgeniussolutions.com/services/seo-services-in-mumbai/'
+            'https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/'
+            'https://www.dgeniussolutions.com/services/geo/'
+            'https://www.dgeniussolutions.com/services/llm-seo-service/'
+            'https://www.dgeniussolutions.com/services/ai-video-production-agency/'
+            'https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/'
+            'https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/'
+            'https://www.dgeniussolutions.com/blogs/aeo-in-2026/'
+            'https://www.dgeniussolutions.com/robots.txt'
+            'https://www.dgeniussolutions.com/sitemap.xml'
+          )
+          for u in "${urls[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "$u")"
+            echo "$code $u"
+            test "$code" = 200
+          done
+          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/wp-json/dgs/v1/form-context?form_id=1')" = 200
+          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/sitemap_index.xml')" = 404
+
+      - name: Roll back on verification failure
+        if: failure()
+        run: |
+          if [ "${DEPLOY_SWITCHED:-false}" != true ]; then exit 0; fi
+          cat > /tmp/rollback.sh <<'REMOTE'
+          set -euo pipefail
+          ROOT=/home/u188101251/production-app
+          PREVIOUS="$(cat "$ROOT/previous-before-fa4fdb6.txt" 2>/dev/null || true)"
+          if [ -n "$PREVIOUS" ] && [ -d "$PREVIOUS" ]; then
+            ln -sfn "$PREVIOUS" "$ROOT/current_rollback"
+            mv -Tf "$ROOT/current_rollback" "$ROOT/current"
+            touch "$ROOT/current/tmp/restart.txt"
+            echo "ROLLED_BACK_TO=$PREVIOUS"
+          fi
+          REMOTE
+          if [ "$AUTH_MODE" = key ]; then
+            ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/rollback.sh || true
+          else
+            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/rollback.sh || true
+          fi
