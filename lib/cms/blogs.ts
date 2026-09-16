@@ -1,5 +1,6 @@
 import "server-only";
-import { cmsQuery } from "@/lib/cms/db";
+import { randomUUID } from "node:crypto";
+import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import type { BlogOptimizationPackage } from "@/lib/cms/blog-import";
 import type { StoredBlogImage } from "@/lib/cms/blog-media";
 
@@ -22,15 +23,12 @@ export type CmsBlogContent = {
 
 export type CmsPublishedBlog = CmsBlogSummary & {
   excerpt: string | null;
-  content: CmsBlogContent[];
+  content: unknown;
 };
 
 export async function listCmsBlogs(limit = 50) {
   const safeLimit = Math.min(Math.max(limit, 1), 100);
-  const result = await cmsQuery<CmsBlogSummary>(
-    `SELECT id, slug, title, status, published_at, updated_at
-     FROM blog_posts ORDER BY updated_at DESC LIMIT $1`, [safeLimit]);
-  return result.rows;
+  return (await cmsQuery<CmsBlogSummary>(`SELECT id, slug, title, status, published_at, updated_at FROM blog_posts ORDER BY updated_at DESC LIMIT ?`, [safeLimit])).rows;
 }
 export type CreateCmsBlogInput = {
   title: string;
@@ -40,13 +38,15 @@ export type CreateCmsBlogInput = {
 };
 
 export async function createCmsBlog(input: CreateCmsBlogInput) {
-  const result = await cmsQuery<CmsBlogSummary>(
-    `INSERT INTO blog_posts (title, slug, excerpt, content, status)
-     VALUES ($1, $2, $3, $4::jsonb, 'draft')
-     RETURNING id, slug, title, status, published_at, updated_at`,
-    [input.title.trim(), input.slug.trim().toLowerCase(), input.excerpt?.trim() || null, JSON.stringify(input.content || [])],
+  const id = randomUUID();
+  await cmsExecute(
+    `INSERT INTO blog_posts (id, title, slug, excerpt, content, status) VALUES (?, ?, ?, ?, ?, 'draft')`,
+    [id, input.title.trim(), input.slug.trim().toLowerCase(), input.excerpt?.trim() || null, JSON.stringify(input.content || [])],
   );
-  return result.rows[0];
+  return (await cmsQuery<CmsBlogSummary>(
+    `SELECT id, slug, title, status, published_at, updated_at FROM blog_posts WHERE id=? LIMIT 1`,
+    [id],
+  )).rows[0];
 }
 
 export async function attachImportedBlogPackage(input: {
@@ -55,67 +55,80 @@ export async function attachImportedBlogPackage(input: {
   title: string;
   content: CmsBlogContent;
 }) {
-  await cmsQuery(`UPDATE blog_posts SET content=$2::jsonb, updated_at=now() WHERE id=$1`, [input.blogId, JSON.stringify([input.content])]);
+  await cmsExecute(`UPDATE blog_posts SET content=?, updated_at=NOW() WHERE id=?`, [JSON.stringify([input.content]), input.blogId]);
   let featuredMediaId: string | null = null;
 
   for (const image of input.content.images) {
-    const media = await cmsQuery<{ id: string }>(
-      `INSERT INTO media (storage_key, url, mime_type, alt_text, width, height, source)
-       VALUES ($1,$2,$3,$4,$5,$6,'native-blog-import')
-       ON CONFLICT (storage_key) DO UPDATE SET url=EXCLUDED.url, mime_type=EXCLUDED.mime_type, alt_text=EXCLUDED.alt_text, width=EXCLUDED.width, height=EXCLUDED.height
-       RETURNING id`,
-      [`blogs/${input.slug}/${image.filename}`, image.url, image.mimeType, image.altText, image.width || null, image.height || null],
+    const storageKey = `blogs/${input.slug}/${image.filename}`;
+    const mediaId = randomUUID();
+    await cmsExecute(
+      `INSERT INTO media (id, storage_key, url, mime_type, alt_text, width, height, source)
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'native-blog-import')
+       ON DUPLICATE KEY UPDATE url=VALUES(url), mime_type=VALUES(mime_type), alt_text=VALUES(alt_text), width=VALUES(width), height=VALUES(height)`,
+      [mediaId, storageKey, image.url, image.mimeType, image.altText, image.width || null, image.height || null],
     );
-    if (image.featured) featuredMediaId = media.rows[0]?.id || null;
+    const media = (await cmsQuery<{ id: string }>(`SELECT id FROM media WHERE storage_key=? LIMIT 1`, [storageKey])).rows[0];
+    if (image.featured) featuredMediaId = media?.id || null;
   }
 
   if (featuredMediaId) {
-    await cmsQuery(`UPDATE blog_posts SET featured_media_id=$2 WHERE id=$1`, [input.blogId, featuredMediaId]);
+    await cmsExecute(`UPDATE blog_posts SET featured_media_id=? WHERE id=?`, [featuredMediaId, input.blogId]);
   }
+
   const seo = input.content.optimization.seo;
-  await cmsQuery(
-    `INSERT INTO seo_metadata (entity_type, entity_id, title, description, canonical_url, robots_index, robots_follow, schema_json, updated_at)
-     VALUES ('blog_post',$1,$2,$3,$4,false,true,$5::jsonb,now())
-     ON CONFLICT (entity_type, entity_id) DO UPDATE SET title=EXCLUDED.title, description=EXCLUDED.description, canonical_url=EXCLUDED.canonical_url, robots_index=EXCLUDED.robots_index, robots_follow=EXCLUDED.robots_follow, schema_json=EXCLUDED.schema_json, updated_at=now()`,
-    [input.blogId, seo.title, seo.description, `https://www.dgeniussolutions.com${seo.canonicalPath}`, JSON.stringify(input.content.optimization.schemas)],
+  await cmsExecute(
+    `INSERT INTO seo_metadata (id, entity_type, entity_id, title, description, canonical_url, robots_index, robots_follow, schema_json, updated_at)
+     VALUES (?, 'blog_post', ?, ?, ?, ?, 0, 1, ?, NOW())
+     ON DUPLICATE KEY UPDATE title=VALUES(title), description=VALUES(description), canonical_url=VALUES(canonical_url), robots_index=VALUES(robots_index), robots_follow=VALUES(robots_follow), schema_json=VALUES(schema_json), updated_at=NOW()`,
+    [randomUUID(), input.blogId, seo.title, seo.description, `https://www.dgeniussolutions.com${seo.canonicalPath}`, JSON.stringify(input.content.optimization.schemas)],
   );
 }
 
 export async function getPublishedCmsBlogBySlug(slug: string) {
-  const result = await cmsQuery<CmsPublishedBlog>(
-    `SELECT id, slug, title, excerpt, content, status, published_at, updated_at
-     FROM blog_posts WHERE slug=$1 AND status='published' LIMIT 1`,
+  return (await cmsQuery<CmsPublishedBlog>(
+    `SELECT id, slug, title, excerpt, content, status, published_at, updated_at FROM blog_posts WHERE slug=? AND status='published' LIMIT 1`,
     [slug.toLowerCase()],
-  );
-  return result.rows[0] || null;
+  )).rows[0] || null;
 }
 
 export async function publishCmsBlog(id: string) {
-  const result = await cmsQuery<CmsBlogSummary>(
-    `UPDATE blog_posts SET status='published', published_at=COALESCE(published_at, now()), updated_at=now()
-     WHERE id=$1 AND status IN ('draft','review')
-     RETURNING id, slug, title, status, published_at, updated_at`,
+  await cmsExecute(
+    `UPDATE blog_posts SET status='published', published_at=COALESCE(published_at, NOW()), updated_at=NOW() WHERE id=? AND status IN ('draft','review')`,
     [id],
   );
-  if (result.rows[0]) {
-    await cmsQuery(`UPDATE seo_metadata SET robots_index=true, updated_at=now() WHERE entity_type='blog_post' AND entity_id=$1`, [id]);
-  }
-  return result.rows[0] || null;
+  const blog = (await cmsQuery<CmsBlogSummary>(
+    `SELECT id, slug, title, status, published_at, updated_at FROM blog_posts WHERE id=? AND status='published' LIMIT 1`,
+    [id],
+  )).rows[0] || null;
+  if (blog) await cmsExecute(`UPDATE seo_metadata SET robots_index=1, updated_at=NOW() WHERE entity_type='blog_post' AND entity_id=?`, [id]);
+  return blog;
 }
 
 export async function listPublishedCmsBlogs(limit = 100) {
   const safeLimit = Math.min(Math.max(limit, 1), 200);
-  const result = await cmsQuery<CmsPublishedBlog>(
+  return (await cmsQuery<CmsPublishedBlog>(
     `SELECT id, slug, title, excerpt, content, status, published_at, updated_at
      FROM blog_posts WHERE status='published'
-     ORDER BY published_at DESC NULLS LAST, updated_at DESC LIMIT $1`,
+     ORDER BY (published_at IS NULL), published_at DESC, updated_at DESC LIMIT ?`,
     [safeLimit],
-  );
-  return result.rows;
+  )).rows;
 }
 
 function stripHtmlText(html: string) {
   return html.replace(/<[^>]+>/g, " ").replace(/&[^;]+;/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function normalizeContent(value: unknown): CmsBlogContent[] {
+  if (Array.isArray(value)) return value as CmsBlogContent[];
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed as CmsBlogContent[] : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
 }
 
 function buildCmsToc(html: string) {
@@ -145,7 +158,7 @@ function extractCmsFaqs(html: string) {
 }
 
 export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
-  const content = blog.content?.[0];
+  const content = normalizeContent(blog.content)[0];
   if (!content) return null;
   const optimized = content.optimization;
   const anchored = buildCmsToc(content.bodyHtml);

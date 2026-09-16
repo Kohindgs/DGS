@@ -1,133 +1,138 @@
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
 CREATE TABLE IF NOT EXISTS users (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  email text NOT NULL UNIQUE,
-  display_name text NOT NULL,
-  role text NOT NULL DEFAULT 'editor',
-  password_hash text,
-  is_active boolean NOT NULL DEFAULT true,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now()
-);
-
-CREATE TABLE IF NOT EXISTS authors (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  name text NOT NULL,
-  slug text NOT NULL UNIQUE,
-  bio text,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now()
-);
-
-CREATE TABLE IF NOT EXISTS categories (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  name text NOT NULL,
-  slug text NOT NULL UNIQUE
-);
-CREATE TABLE IF NOT EXISTS tags (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  name text NOT NULL,
-  slug text NOT NULL UNIQUE
-);
+  id CHAR(36) PRIMARY KEY,
+  email VARCHAR(320) NOT NULL UNIQUE,
+  display_name VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL DEFAULT 'editor',
+  password_hash TEXT,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS media (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  storage_key text NOT NULL UNIQUE,
-  url text NOT NULL,
-  mime_type text NOT NULL,
-  alt_text text,
-  width integer,
-  height integer,
-  source text NOT NULL DEFAULT 'native',
-  created_at timestamptz NOT NULL DEFAULT now()
-);
+  id CHAR(36) PRIMARY KEY,
+  storage_key VARCHAR(512) NOT NULL UNIQUE,
+  url TEXT NOT NULL,
+  mime_type VARCHAR(100) NOT NULL,
+  alt_text TEXT,
+  width INT,
+  height INT,
+  source VARCHAR(100) NOT NULL DEFAULT 'native',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE authors
-  ADD COLUMN IF NOT EXISTS avatar_media_id uuid REFERENCES media(id) ON DELETE SET NULL;
+CREATE TABLE IF NOT EXISTS authors (
+  id CHAR(36) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) NOT NULL UNIQUE,
+  bio TEXT,
+  avatar_media_id CHAR(36),  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_authors_avatar FOREIGN KEY (avatar_media_id) REFERENCES media(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS categories (
+  id CHAR(36) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS tags (
+  id CHAR(36) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS blog_posts (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  slug text NOT NULL UNIQUE,
-  title text NOT NULL,
-  excerpt text,
-  content jsonb NOT NULL DEFAULT '[]'::jsonb,
-  status text NOT NULL DEFAULT 'draft',  author_id uuid REFERENCES authors(id) ON DELETE SET NULL,
-  featured_media_id uuid REFERENCES media(id) ON DELETE SET NULL,
-  published_at timestamptz,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  updated_at timestamptz NOT NULL DEFAULT now()
-);
+  id CHAR(36) PRIMARY KEY,
+  slug VARCHAR(255) NOT NULL UNIQUE,
+  title VARCHAR(512) NOT NULL,
+  excerpt TEXT,
+  content JSON NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'draft',
+  author_id CHAR(36),
+  featured_media_id CHAR(36),
+  published_at DATETIME NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  CONSTRAINT fk_blog_author FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE SET NULL,
+  CONSTRAINT fk_blog_featured_media FOREIGN KEY (featured_media_id) REFERENCES media(id) ON DELETE SET NULL,
+  INDEX idx_blog_posts_status (status),
+  INDEX idx_blog_posts_published_at (published_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS blog_revisions (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  blog_post_id uuid NOT NULL REFERENCES blog_posts(id) ON DELETE CASCADE,
-  snapshot jsonb NOT NULL,
-  created_by uuid REFERENCES users(id) ON DELETE SET NULL,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
+  id CHAR(36) PRIMARY KEY,
+  blog_post_id CHAR(36) NOT NULL,
+  snapshot JSON NOT NULL,
+  created_by CHAR(36),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_revision_blog FOREIGN KEY (blog_post_id) REFERENCES blog_posts(id) ON DELETE CASCADE,
+  CONSTRAINT fk_revision_user FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS blog_post_categories (
-  blog_post_id uuid NOT NULL REFERENCES blog_posts(id) ON DELETE CASCADE,
-  category_id uuid NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
-  PRIMARY KEY (blog_post_id, category_id)
-);
+  blog_post_id CHAR(36) NOT NULL,
+  category_id CHAR(36) NOT NULL,
+  PRIMARY KEY (blog_post_id, category_id),
+  CONSTRAINT fk_bpc_blog FOREIGN KEY (blog_post_id) REFERENCES blog_posts(id) ON DELETE CASCADE,
+  CONSTRAINT fk_bpc_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS blog_post_tags (
-  blog_post_id uuid NOT NULL REFERENCES blog_posts(id) ON DELETE CASCADE,
-  tag_id uuid NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
-  PRIMARY KEY (blog_post_id, tag_id)
-);
+  blog_post_id CHAR(36) NOT NULL,
+  tag_id CHAR(36) NOT NULL,
+  PRIMARY KEY (blog_post_id, tag_id),
+  CONSTRAINT fk_bpt_blog FOREIGN KEY (blog_post_id) REFERENCES blog_posts(id) ON DELETE CASCADE,  CONSTRAINT fk_bpt_tag FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS leads (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  source_form_key text,
-  source_route text,
-  name text,
-  email text,
-  phone text,
-  company text,
-  payload jsonb NOT NULL DEFAULT '{}'::jsonb,
-  status text NOT NULL DEFAULT 'new',
-  created_at timestamptz NOT NULL DEFAULT now()
-);
+  id CHAR(36) PRIMARY KEY,
+  source_form_key VARCHAR(255),
+  source_route VARCHAR(512),
+  name VARCHAR(255),
+  email VARCHAR(320),
+  phone VARCHAR(100),
+  company VARCHAR(255),
+  payload JSON NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'new',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_leads_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS form_submissions (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  form_key text NOT NULL,
-  source_route text,
-  payload jsonb NOT NULL,
-  lead_id uuid REFERENCES leads(id) ON DELETE SET NULL,
-  provider text NOT NULL DEFAULT 'native',
-  provider_submission_id text,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-
-CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads(created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_form_submissions_created_at ON form_submissions(created_at DESC);
+  id CHAR(36) PRIMARY KEY,
+  form_key VARCHAR(255) NOT NULL,
+  source_route VARCHAR(512),
+  payload JSON NOT NULL,
+  lead_id CHAR(36),
+  provider VARCHAR(100) NOT NULL DEFAULT 'native',
+  provider_submission_id VARCHAR(255),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_form_submissions_created_at (created_at),
+  CONSTRAINT fk_form_lead FOREIGN KEY (lead_id) REFERENCES leads(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 CREATE TABLE IF NOT EXISTS seo_metadata (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  entity_type text NOT NULL,
-  entity_id uuid NOT NULL,
-  title text,
-  description text,
-  canonical_url text,
-  robots_index boolean NOT NULL DEFAULT true,
-  robots_follow boolean NOT NULL DEFAULT true,
-  schema_json jsonb,
-  updated_at timestamptz NOT NULL DEFAULT now(),
-  UNIQUE (entity_type, entity_id)
-);
+  id CHAR(36) PRIMARY KEY,
+  entity_type VARCHAR(100) NOT NULL,
+  entity_id CHAR(36) NOT NULL,
+  title VARCHAR(512),
+  description TEXT,
+  canonical_url TEXT,
+  robots_index BOOLEAN NOT NULL DEFAULT TRUE,
+  robots_follow BOOLEAN NOT NULL DEFAULT TRUE,
+  schema_json JSON,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_seo_entity (entity_type, entity_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS audit_logs (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid REFERENCES users(id) ON DELETE SET NULL,
-  action text NOT NULL,
-  entity_type text,
-  entity_id uuid,
-  details jsonb NOT NULL DEFAULT '{}'::jsonb,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-
-CREATE INDEX IF NOT EXISTS idx_blog_posts_status ON blog_posts(status);
-CREATE INDEX IF NOT EXISTS idx_blog_posts_published_at ON blog_posts(published_at DESC);
-CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at DESC);
+  id CHAR(36) PRIMARY KEY,
+  user_id CHAR(36),
+  action VARCHAR(255) NOT NULL,
+  entity_type VARCHAR(100),
+  entity_id CHAR(36),
+  details JSON NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_audit_logs_created_at (created_at),
+  CONSTRAINT fk_audit_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
