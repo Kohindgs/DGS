@@ -99,3 +99,59 @@
   .dgs-admin-grid { grid-template-columns: 1fr; }
   .dgs-admin-badge { white-space: normal; }
 }
+
+.dgs-admin-login-shell {
+  display: grid;
+  place-items: center;
+}
+
+.dgs-admin-login-card {
+  width: min(100%, 460px);
+  padding: 32px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 24px;
+  background: rgba(255,255,255,.035);
+}
+
+.dgs-admin-login-card h1 { margin-bottom: 10px; }
+.dgs-admin-login-message { margin-top: 16px; color: #f7d757; }
+
+.dgs-admin-login-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.dgs-admin-login-form label {
+  display: grid;
+  gap: 8px;
+  color: #d8d8df;
+}
+.dgs-admin-login-form input {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: #101014;
+  color: #fff;
+  padding: 13px 14px;
+  outline: none;
+}
+
+.dgs-admin-login-form input:focus {
+  border-color: rgba(169,0,255,.75);
+  box-shadow: 0 0 0 3px rgba(169,0,255,.12);
+}
+
+.dgs-admin-login-form button {
+  border-radius: 12px;
+  padding: 13px 16px;
+  background: linear-gradient(135deg, #a900ff, #6a35ff);
+  color: #fff;
+  font-weight: 700;
+}
+
+.dgs-admin-login-form button:disabled,
+.dgs-admin-login-form input:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
