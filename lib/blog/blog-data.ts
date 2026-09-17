@@ -37,6 +37,10 @@ export type BlogPostDetail = BlogPostMeta & {
   toc: BlogTocItem[];
 };
 
+const BLOG_H1_CORRECTIONS: Record<string, string> = {
+  "/blogs/geo-vs-seo-google-ai-search/": "GEO vs SEO: How to Rank in Google and AI Search",
+};
+
 const routeMap = new Map<string, typeof registryData.routes[0]>();
 for (const r of registryData.routes) {
   if (r.path.startsWith("/blogs/") && r.path !== "/blogs/") {
@@ -167,7 +171,7 @@ export async function getAllBlogPosts(): Promise<BlogPostMeta[]> {
       path: r.path,
       slug,
       title: r.title || r.h1 || "Blog Article",
-      h1: r.h1 || r.title || "Blog Article",
+      h1: BLOG_H1_CORRECTIONS[r.path] || r.h1 || r.title || "Blog Article",
       description: r.description || "",
       canonical: r.canonical || `https://www.dgeniussolutions.com${r.path}`,
       date,
@@ -234,12 +238,18 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   const anchored = addHeadingAnchors(bodyHtml);
   bodyHtml = anchored.html;
 
-  // Extract actual FAQs if article has an explicit FAQ section with answers for FAQPage schema
+  // Extract actual FAQs only from an explicit visible FAQ section.
   const faqs: BlogPostFaq[] = [];
-  const faqHeadingIdx = bodyHtml.search(/<h[23][^>]*>(?:FAQs?|Frequently Asked Questions)<\/h[23]>/i);
+  const headings = [...bodyHtml.matchAll(/<h[234][^>]*>([\s\S]*?)<\/h[234]>/gi)];
+  let faqHeading: RegExpMatchArray | undefined;
+  for (const match of headings) {
+    const text = match[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    if (/\bfaqs?\b|frequently asked questions/i.test(text)) faqHeading = match;
+  }
+  const faqHeadingIdx = faqHeading?.index ?? -1;
   if (faqHeadingIdx !== -1) {
     const faqSnippet = bodyHtml.slice(faqHeadingIdx);
-    const qMatches = [...faqSnippet.matchAll(/<h[23][^>]*>([\s\S]*?)<\/h[23]>\s*<p>([\s\S]*?)<\/p>/gi)];
+    const qMatches = [...faqSnippet.matchAll(/<h[234][^>]*>([\s\S]*?)<\/h[234]>\s*<p[^>]*>([\s\S]*?)<\/p>/gi)];
     for (const qm of qMatches) {
       const q = qm[1].replace(/<[^>]+>/g, "").trim();
       const a = qm[2].replace(/<[^>]+>/g, "").trim();

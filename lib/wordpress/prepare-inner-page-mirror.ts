@@ -17,6 +17,21 @@ function stripLeadingCloseTags(html: string): string {
   return html.replace(/^(?:\s*<\/(?:div|header|section|main|span|nav|aside)>)+/i, "").trim();
 }
 
+function normalizeSemanticH1(path: string, html: string): string {
+  let output = html;
+  output = output.replace(
+    /<h1\b([^>]*class=["'][^"']*\bdgs-hero-title\b[^"']*["'][^>]*)>\s*<span\b[^>]*class=["']dgs-sr["'][^>]*>([\s\S]*?)<\/span>([\s\S]*?)<\/h1>/gi,
+    '<div$1><h1 class="dgs-sr">$2</h1>$3</div>',
+  );
+  if (path === "/career/") {
+    output = output.replace(/Join Our<br\s*\/?>\s*<span/gi, "Join Our<br> <span");
+  }
+  if (path === "/services/") {
+    output = output.replace(/<h1([^>]*)>Archives:\s*<span>Services<\/span><\/h1>/i, '<h1$1>Our <span>Services</span></h1>');
+  }
+  return output;
+}
+
 function lazyBelowFold(html: string): string {
   let count = 0;
   return html.replace(/<img\b[^>]*>/gi, (tag) => {
@@ -65,6 +80,7 @@ export function prepareInnerPageMirror(
       /<iframe\b[^>]*\b(?:humanxt\.com)[^>]*><\/iframe>/gi,
       '<img loading="lazy" class="live-preview-image e-lazyloaded" src="https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp" alt="HumanXT website preview by D’Genius Solutions" width="1600" height="1000" loading="lazy" decoding="async" referrerpolicy="no-referrer" />',
     );
+  body = normalizeSemanticH1(content.path, body);
   body = applyApprovedLinkCorrectionsToHtml(
     content.path,
     lazyBelowFold(rewriteWpUrls(body)),

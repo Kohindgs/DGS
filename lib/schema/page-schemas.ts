@@ -88,13 +88,54 @@ export function buildRouteSchemas(input: {
   return schemas;
 }
 
+function blockText(block: ContentBlock): string {
+  if (block.type === "heading") return block.text.trim();
+  if (block.type === "paragraph") return block.content.map((span) => span.text).join("").trim();
+  return "";
+}
+
+function cleanFaqQuestion(text: string): string {
+  return text.replace(/\s*\+\s*$/, "").trim();
+}
+
+function isFaqHeading(text: string): boolean {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  return /^(?:frequently asked questions|common questions)$/i.test(normalized) || /\bfaqs?$/i.test(normalized);
+}
+
 function extractFaqsFromBlocks(blocks: ContentBlock[]) {
-  return blocks
+  const typed = blocks
     .filter((b): b is Extract<ContentBlock, { type: "faq" }> => b.type === "faq")
-    .flatMap((b) =>
-      (b.items || []).map((item) => ({
-        question: item.question,
-        answer: (item.answer || [{ text: "" }]).map((span) => span.text).join(""),
-      })),
-    );
+    .flatMap((b) => (b.items || []).map((item) => ({
+      question: item.question.trim(),
+      answer: (item.answer || [{ text: "" }]).map((span) => span.text).join("").trim(),
+    })));
+  if (typed.length > 0) return typed;
+
+  const start = blocks.findIndex((b) => b.type === "heading" && isFaqHeading(b.text));
+  if (start < 0) return [];
+  const section = blocks.slice(start + 1);
+  const stop = section.findIndex((b) => b.type === "heading" && !isFaqHeading(b.text));
+  const scoped = stop >= 0 ? section.slice(0, stop) : section;
+  const out: Array<{ question: string; answer: string }> = [];
+
+  for (let i = 0; i < scoped.length; i += 1) {
+    const block = scoped[i];
+    if (block.type !== "paragraph") continue;
+    const text = blockText(block).replace(/\s+/g, " ");
+    const inline = text.match(/^(.+?\?)\s*\+\s*(.+)$/);
+    if (inline) {
+      out.push({ question: cleanFaqQuestion(inline[1]), answer: inline[2].trim() });
+      continue;
+    }
+    if (!/\?\s*\+?$/.test(text)) continue;
+    const question = cleanFaqQuestion(text);
+    const next = scoped[i + 1];
+    const answer = next?.type === "paragraph" ? blockText(next).replace(/\s+/g, " ") : "";
+    if (question && answer) {
+      out.push({ question, answer });
+      i += 1;
+    }
+  }
+  return out;
 }
