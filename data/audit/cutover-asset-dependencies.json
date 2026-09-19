@@ -1203,8 +1203,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Standee_rays-1-scaled.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee_rays-1-scaled.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee_rays-1-scaled.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee_rays-1-scaled.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee_rays-1-scaled.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1216,11 +1216,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee_rays-1-scaled.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee_rays-1-scaled.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee_rays-1-scaled-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee_rays-1-scaled-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee_rays-1-scaled-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee_rays-1-scaled-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1232,7 +1232,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee_rays-1-scaled-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee_rays-1-scaled-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Standee_rays-1-469x1024.jpg.webp",
@@ -1523,8 +1523,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Wedding-Story6.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story6.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Wedding-Story6.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story6.webp",
+      "pathname": "/wp-content/uploads/2026/04/Wedding-Story6.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1536,11 +1536,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story6.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story6.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story6-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Wedding-Story6-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story6-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Wedding-Story6-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1552,7 +1552,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story6-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story6-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Wedding-Story6-576x1024.jpg.webp",
@@ -1587,8 +1587,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Wedding-Story3.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story3.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Wedding-Story3.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story3.webp",
+      "pathname": "/wp-content/uploads/2026/04/Wedding-Story3.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1600,11 +1600,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story3.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story3.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story3-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Wedding-Story3-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story3-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Wedding-Story3-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1616,7 +1616,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story3-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story3-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Wedding-Story3-576x1024.jpg.webp",
@@ -1651,8 +1651,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Wedding-Story2.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story2.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Wedding-Story2.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story2.webp",
+      "pathname": "/wp-content/uploads/2026/04/Wedding-Story2.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1664,11 +1664,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story2.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story2.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story2-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Wedding-Story2-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Story2-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Wedding-Story2-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1680,7 +1680,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story2-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Wedding-Story2-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Wedding-Story2-576x1024.jpg.webp",
@@ -1715,8 +1715,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Purple-Collage.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Purple-Collage.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Purple-Collage.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Purple-Collage.webp",
+      "pathname": "/wp-content/uploads/2026/04/Purple-Collage.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1728,11 +1728,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Purple-Collage.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Purple-Collage.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Purple-Collage-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Purple-Collage-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Purple-Collage-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Purple-Collage-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1744,7 +1744,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Purple-Collage-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Purple-Collage-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Purple-Collage-576x1024.jpg.webp",
@@ -1779,8 +1779,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Pink-Collage.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Pink-Collage.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Pink-Collage.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Pink-Collage.webp",
+      "pathname": "/wp-content/uploads/2026/04/Pink-Collage.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1792,11 +1792,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Pink-Collage.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Pink-Collage.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Pink-Collage-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Pink-Collage-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Pink-Collage-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Pink-Collage-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1808,7 +1808,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Pink-Collage-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Pink-Collage-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Pink-Collage-576x1024.jpg.webp",
@@ -1843,8 +1843,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Main_.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Main_.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Main_.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Main_.webp",
+      "pathname": "/wp-content/uploads/2026/04/Main_.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1856,11 +1856,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Main_.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Main_.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Main_-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Main_-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Main_-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Main_-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1872,7 +1872,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Main_-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Main_-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Main_-576x1024.jpg.webp",
@@ -1907,8 +1907,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree_New-1.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1.webp",
+      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1920,11 +1920,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1936,7 +1936,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-1-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree_New-1-576x1024.jpg.webp",
@@ -1971,8 +1971,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree_New.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New.webp",
+      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -1984,11 +1984,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -2000,7 +2000,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree_New-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree_New-576x1024.jpg.webp",
@@ -2035,8 +2035,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree.webp",
+      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -2048,11 +2048,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Karva-chauth-Story-saree-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -2064,7 +2064,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Karva-chauth-Story-saree-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Karva-chauth-Story-saree-576x1024.jpg.webp",
@@ -2723,8 +2723,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Diwali-GridOpt1.1-1-scaled.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled.webp",
+      "pathname": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -2736,11 +2736,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -2752,7 +2752,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Diwali-GridOpt1.1-1-scaled-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Diwali-GridOpt1.1-1-1024x1024.jpg.webp",
@@ -2963,8 +2963,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Unlock-Powerful-dreams.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Unlock-Powerful-dreams.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Unlock-Powerful-dreams.webp",
+      "pathname": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -2976,11 +2976,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Unlock-Powerful-dreams-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Unlock-Powerful-dreams-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -2992,7 +2992,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Unlock-Powerful-dreams-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Unlock-Powerful-dreams-819x1024.jpg.webp",
@@ -3027,8 +3027,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/11.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/11.jpg",
-      "pathname": "/wp-content/uploads/2026/04/11.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/11.webp",
+      "pathname": "/wp-content/uploads/2026/04/11.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3040,11 +3040,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/11.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/11.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/11-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/11-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/11-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/11-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3056,7 +3056,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/11-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/11-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/11-576x1024.jpg.webp",
@@ -3091,8 +3091,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Standee-Option-5-scaled.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-5-scaled.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee-Option-5-scaled.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-5-scaled.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee-Option-5-scaled.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3104,11 +3104,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-5-scaled.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-5-scaled.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-5-scaled-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee-Option-5-scaled-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-5-scaled-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee-Option-5-scaled-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3120,7 +3120,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-5-scaled-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-5-scaled-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Standee-Option-5-512x1024.jpg.webp",
@@ -3155,8 +3155,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Standee-Option-4-scaled.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-4-scaled.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee-Option-4-scaled.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-4-scaled.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee-Option-4-scaled.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3168,11 +3168,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-4-scaled.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-4-scaled.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-4-scaled-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee-Option-4-scaled-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-4-scaled-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee-Option-4-scaled-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3184,7 +3184,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-4-scaled-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-4-scaled-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Standee-Option-4-512x1024.jpg.webp",
@@ -3219,8 +3219,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Standee-Option-6-1-scaled.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-6-1-scaled.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-6-1-scaled.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3232,11 +3232,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-6-1-scaled-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Standee-Option-6-1-scaled-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -3248,7 +3248,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Standee-Option-6-1-scaled-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Standee-Option-6-1-512x1024.jpg.webp",
@@ -4163,8 +4163,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/Dusshera.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dusshera.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Dusshera.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dusshera.webp",
+      "pathname": "/wp-content/uploads/2026/04/Dusshera.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -4176,11 +4176,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Dusshera.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Dusshera.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dusshera-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/Dusshera-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dusshera-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/Dusshera-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -4192,7 +4192,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/Dusshera-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/Dusshera-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/Dusshera-576x1024.jpg.webp",
@@ -4515,8 +4515,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/3-Grid_03.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_03.jpg",
-      "pathname": "/wp-content/uploads/2026/04/3-Grid_03.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_03.webp",
+      "pathname": "/wp-content/uploads/2026/04/3-Grid_03.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -4528,11 +4528,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_03.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_03.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_03-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/3-Grid_03-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_03-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/3-Grid_03-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -4544,7 +4544,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_03-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_03-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/3-Grid_03-1024x1024.jpg.webp",
@@ -4579,8 +4579,8 @@
       "localPublicPath": "/wp-content/smush-webp/2026/04/3-Grid_01.jpg.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_01.jpg",
-      "pathname": "/wp-content/uploads/2026/04/3-Grid_01.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_01.webp",
+      "pathname": "/wp-content/uploads/2026/04/3-Grid_01.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -4592,11 +4592,11 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_01.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_01.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_01-75x50_c.jpg",
-      "pathname": "/wp-content/uploads/2026/04/3-Grid_01-75x50_c.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/3-Grid_01-75x50_c.webp",
+      "pathname": "/wp-content/uploads/2026/04/3-Grid_01-75x50_c.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -4608,7 +4608,7 @@
       ],
       "routeCount": 2,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_01-75x50_c.jpg"
+      "localPublicPath": "/wp-content/uploads/2026/04/3-Grid_01-75x50_c.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/3-Grid_01-1024x1024.jpg.webp",
@@ -5260,8 +5260,8 @@
       "localPublicPath": "/wp-content/uploads/2025/12/Weavings-Website-scaled.png"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img65.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img65.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img65.webp",
+      "pathname": "/wp-content/uploads/2025/12/img65.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5281,11 +5281,11 @@
       ],
       "routeCount": 12,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img65.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img65.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img67.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img67.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img67.webp",
+      "pathname": "/wp-content/uploads/2025/12/img67.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5305,11 +5305,11 @@
       ],
       "routeCount": 12,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img67.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img67.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img69.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img69.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img69.webp",
+      "pathname": "/wp-content/uploads/2025/12/img69.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5329,11 +5329,11 @@
       ],
       "routeCount": 12,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img69.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img69.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img71.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img71.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img71.webp",
+      "pathname": "/wp-content/uploads/2025/12/img71.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5351,11 +5351,11 @@
       ],
       "routeCount": 10,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img71.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img71.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img73.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img73.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img73.webp",
+      "pathname": "/wp-content/uploads/2025/12/img73.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5373,11 +5373,11 @@
       ],
       "routeCount": 10,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img73.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img73.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img75.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img75.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img75.webp",
+      "pathname": "/wp-content/uploads/2025/12/img75.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5395,11 +5395,11 @@
       ],
       "routeCount": 10,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img75.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img75.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img77.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img77.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img77.webp",
+      "pathname": "/wp-content/uploads/2025/12/img77.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5419,11 +5419,11 @@
       ],
       "routeCount": 12,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img77.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img77.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img79.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img79.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img79.webp",
+      "pathname": "/wp-content/uploads/2025/12/img79.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5441,7 +5441,7 @@
       ],
       "routeCount": 10,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img79.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img79.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Eureka_21_3_23.webp",
@@ -5548,8 +5548,8 @@
       "localPublicPath": "/wp-content/uploads/2025/11/ABET.png"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img83.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img83.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img83.webp",
+      "pathname": "/wp-content/uploads/2025/12/img83.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5567,11 +5567,11 @@
       ],
       "routeCount": 10,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img83.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img83.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img167.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img167.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img167.webp",
+      "pathname": "/wp-content/uploads/2025/12/img167.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5582,11 +5582,11 @@
       ],
       "routeCount": 3,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img167.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img167.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img423.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img423.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img423.webp",
+      "pathname": "/wp-content/uploads/2025/12/img423.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5604,11 +5604,11 @@
       ],
       "routeCount": 10,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img423.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img423.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img428.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img428.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img428.webp",
+      "pathname": "/wp-content/uploads/2025/12/img428.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -5619,7 +5619,7 @@
       ],
       "routeCount": 3,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img428.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img428.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/03/LLM-SEO-1.webp",
@@ -17291,8 +17291,8 @@
       "localPublicPath": "/wp-content/uploads/2026/03/Why-Website-Performance-Still-Decides-Conversions-in-2026-600x450.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/65c8a883abd5e0a9d4d75962f0a4c830.jpg",
-      "pathname": "/wp-content/litespeed/avatar/65c8a883abd5e0a9d4d75962f0a4c830.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/65c8a883abd5e0a9d4d75962f0a4c830.webp",
+      "pathname": "/wp-content/litespeed/avatar/65c8a883abd5e0a9d4d75962f0a4c830.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17301,11 +17301,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/litespeed/avatar/65c8a883abd5e0a9d4d75962f0a4c830.jpg"
+      "localPublicPath": "/wp-content/litespeed/avatar/65c8a883abd5e0a9d4d75962f0a4c830.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/24292a6ce8d14d284ea12ecff04534b0.jpg",
-      "pathname": "/wp-content/litespeed/avatar/24292a6ce8d14d284ea12ecff04534b0.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/24292a6ce8d14d284ea12ecff04534b0.webp",
+      "pathname": "/wp-content/litespeed/avatar/24292a6ce8d14d284ea12ecff04534b0.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17314,11 +17314,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/litespeed/avatar/24292a6ce8d14d284ea12ecff04534b0.jpg"
+      "localPublicPath": "/wp-content/litespeed/avatar/24292a6ce8d14d284ea12ecff04534b0.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/bc91c0cd2d7faf8638b5ec0f8c520dc0.jpg",
-      "pathname": "/wp-content/litespeed/avatar/bc91c0cd2d7faf8638b5ec0f8c520dc0.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/bc91c0cd2d7faf8638b5ec0f8c520dc0.webp",
+      "pathname": "/wp-content/litespeed/avatar/bc91c0cd2d7faf8638b5ec0f8c520dc0.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17327,11 +17327,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/litespeed/avatar/bc91c0cd2d7faf8638b5ec0f8c520dc0.jpg"
+      "localPublicPath": "/wp-content/litespeed/avatar/bc91c0cd2d7faf8638b5ec0f8c520dc0.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/ba9ae58ec05dd7aa1bc318e20b1b8ea3.jpg",
-      "pathname": "/wp-content/litespeed/avatar/ba9ae58ec05dd7aa1bc318e20b1b8ea3.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/ba9ae58ec05dd7aa1bc318e20b1b8ea3.webp",
+      "pathname": "/wp-content/litespeed/avatar/ba9ae58ec05dd7aa1bc318e20b1b8ea3.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17340,7 +17340,7 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/litespeed/avatar/ba9ae58ec05dd7aa1bc318e20b1b8ea3.jpg"
+      "localPublicPath": "/wp-content/litespeed/avatar/ba9ae58ec05dd7aa1bc318e20b1b8ea3.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/06/ChatGPT-Image-Jun-8-2026-12_29_18-PM.png.webp",
@@ -17435,8 +17435,8 @@
       "localPublicPath": "/wp-content/uploads/2025/11/71-service-projects-placeholder.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img81.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img81.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img81.webp",
+      "pathname": "/wp-content/uploads/2025/12/img81.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17452,11 +17452,11 @@
       ],
       "routeCount": 8,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img81.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img81.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img87.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img87.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img87.webp",
+      "pathname": "/wp-content/uploads/2025/12/img87.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17472,11 +17472,11 @@
       ],
       "routeCount": 8,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img87.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img87.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img93.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img93.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img93.webp",
+      "pathname": "/wp-content/uploads/2025/12/img93.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17492,11 +17492,11 @@
       ],
       "routeCount": 8,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img93.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img93.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img345.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img345.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img345.webp",
+      "pathname": "/wp-content/uploads/2025/12/img345.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17512,11 +17512,11 @@
       ],
       "routeCount": 8,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img345.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img345.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img421.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img421.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img421.webp",
+      "pathname": "/wp-content/uploads/2025/12/img421.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17532,7 +17532,7 @@
       ],
       "routeCount": 8,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img421.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img421.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/06/AEO_DGenius-Solutions-768x586.webp",
@@ -17914,8 +17914,8 @@
       "localPublicPath": "/wp-content/uploads/2026/01/Wonder-Visiting-Card_Mockup1.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Media1-video-converter.com_.mp4",
-      "pathname": "/wp-content/uploads/2026/01/Media1-video-converter.com_.mp4",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Media1-video-converter.com_.webm",
+      "pathname": "/wp-content/uploads/2026/01/Media1-video-converter.com_.webm",
       "assetType": "video",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17924,7 +17924,7 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/01/Media1-video-converter.com_.mp4"
+      "localPublicPath": "/wp-content/uploads/2026/01/Media1-video-converter.com_.webm"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/qd8lvn62midfefpxh9cx.webp",
@@ -17966,8 +17966,8 @@
       "localPublicPath": "/wp-content/uploads/2026/01/wli88npu4bcbpkpjtv9h.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Media2-video-converter.com_.mp4",
-      "pathname": "/wp-content/uploads/2026/01/Media2-video-converter.com_.mp4",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Media2-video-converter.com_.webm",
+      "pathname": "/wp-content/uploads/2026/01/Media2-video-converter.com_.webm",
       "assetType": "video",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -17976,7 +17976,7 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2026/01/Media2-video-converter.com_.mp4"
+      "localPublicPath": "/wp-content/uploads/2026/01/Media2-video-converter.com_.webm"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/Transparent_mockup-WF-01-2-scaled.webp",
@@ -18466,8 +18466,8 @@
       "localPublicPath": "/wp-content/uploads/2025/06/uah0cj18qlbdxfokpvrx-2.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img95.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img95.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img95.webp",
+      "pathname": "/wp-content/uploads/2025/12/img95.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18476,11 +18476,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img95.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img95.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img97.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img97.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img97.webp",
+      "pathname": "/wp-content/uploads/2025/12/img97.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18489,11 +18489,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img97.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img97.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img99.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img99.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img99.webp",
+      "pathname": "/wp-content/uploads/2025/12/img99.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18502,11 +18502,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img99.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img99.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img101.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img101.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img101.webp",
+      "pathname": "/wp-content/uploads/2025/12/img101.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18515,11 +18515,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img101.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img101.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img103.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img103.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img103.webp",
+      "pathname": "/wp-content/uploads/2025/12/img103.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18528,11 +18528,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img103.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img103.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img105.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img105.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img105.webp",
+      "pathname": "/wp-content/uploads/2025/12/img105.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18541,11 +18541,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img105.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img105.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img107.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img107.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img107.webp",
+      "pathname": "/wp-content/uploads/2025/12/img107.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18554,11 +18554,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img107.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img107.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img157.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img157.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img157.webp",
+      "pathname": "/wp-content/uploads/2025/12/img157.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18567,11 +18567,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img157.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img157.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img159.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img159.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img159.webp",
+      "pathname": "/wp-content/uploads/2025/12/img159.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18580,11 +18580,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img159.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img159.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img161.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img161.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img161.webp",
+      "pathname": "/wp-content/uploads/2025/12/img161.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18593,11 +18593,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img161.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img161.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img163.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img163.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img163.webp",
+      "pathname": "/wp-content/uploads/2025/12/img163.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18606,11 +18606,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img163.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img163.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img165.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img165.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img165.webp",
+      "pathname": "/wp-content/uploads/2025/12/img165.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18619,11 +18619,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img165.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img165.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img169.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img169.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img169.webp",
+      "pathname": "/wp-content/uploads/2025/12/img169.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18632,11 +18632,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img169.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img169.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img171.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img171.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img171.webp",
+      "pathname": "/wp-content/uploads/2025/12/img171.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18645,11 +18645,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img171.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img171.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img173.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img173.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img173.webp",
+      "pathname": "/wp-content/uploads/2025/12/img173.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18658,11 +18658,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img173.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img173.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img175.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img175.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img175.webp",
+      "pathname": "/wp-content/uploads/2025/12/img175.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18671,11 +18671,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img175.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img175.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img177.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img177.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img177.webp",
+      "pathname": "/wp-content/uploads/2025/12/img177.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18684,11 +18684,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img177.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img177.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img181.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img181.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img181.webp",
+      "pathname": "/wp-content/uploads/2025/12/img181.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18697,11 +18697,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img181.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img181.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img183.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img183.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img183.webp",
+      "pathname": "/wp-content/uploads/2025/12/img183.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18710,11 +18710,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img183.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img183.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img189.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img189.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img189.webp",
+      "pathname": "/wp-content/uploads/2025/12/img189.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18723,11 +18723,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img189.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img189.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img193.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img193.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img193.webp",
+      "pathname": "/wp-content/uploads/2025/12/img193.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18736,11 +18736,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img193.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img193.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img195.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img195.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img195.webp",
+      "pathname": "/wp-content/uploads/2025/12/img195.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18749,11 +18749,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img195.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img195.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img201.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img201.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img201.webp",
+      "pathname": "/wp-content/uploads/2025/12/img201.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18762,11 +18762,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img201.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img201.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img253.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img253.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img253.webp",
+      "pathname": "/wp-content/uploads/2025/12/img253.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18775,11 +18775,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img253.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img253.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img259.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img259.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img259.webp",
+      "pathname": "/wp-content/uploads/2025/12/img259.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18788,11 +18788,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img259.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img259.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img261.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img261.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img261.webp",
+      "pathname": "/wp-content/uploads/2025/12/img261.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18801,11 +18801,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img261.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img261.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img263.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img263.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img263.webp",
+      "pathname": "/wp-content/uploads/2025/12/img263.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18814,11 +18814,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img263.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img263.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img265.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img265.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img265.webp",
+      "pathname": "/wp-content/uploads/2025/12/img265.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18827,11 +18827,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img265.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img265.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img267.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img267.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img267.webp",
+      "pathname": "/wp-content/uploads/2025/12/img267.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18840,11 +18840,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img267.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img267.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img269.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img269.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img269.webp",
+      "pathname": "/wp-content/uploads/2025/12/img269.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18853,11 +18853,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img269.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img269.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img271.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img271.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img271.webp",
+      "pathname": "/wp-content/uploads/2025/12/img271.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18866,11 +18866,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img271.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img271.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img273.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img273.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img273.webp",
+      "pathname": "/wp-content/uploads/2025/12/img273.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18879,11 +18879,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img273.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img273.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img275.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img275.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img275.webp",
+      "pathname": "/wp-content/uploads/2025/12/img275.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18892,11 +18892,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img275.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img275.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img277.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img277.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img277.webp",
+      "pathname": "/wp-content/uploads/2025/12/img277.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18905,11 +18905,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img277.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img277.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img279.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img279.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img279.webp",
+      "pathname": "/wp-content/uploads/2025/12/img279.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18918,11 +18918,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img279.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img279.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img281.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img281.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img281.webp",
+      "pathname": "/wp-content/uploads/2025/12/img281.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18931,11 +18931,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img281.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img281.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img283.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img283.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img283.webp",
+      "pathname": "/wp-content/uploads/2025/12/img283.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18944,11 +18944,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img283.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img283.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img285.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img285.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img285.webp",
+      "pathname": "/wp-content/uploads/2025/12/img285.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18957,11 +18957,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img285.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img285.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img287.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img287.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img287.webp",
+      "pathname": "/wp-content/uploads/2025/12/img287.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18970,11 +18970,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img287.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img287.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img289.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img289.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img289.webp",
+      "pathname": "/wp-content/uploads/2025/12/img289.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18983,11 +18983,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img289.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img289.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img291.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img291.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img291.webp",
+      "pathname": "/wp-content/uploads/2025/12/img291.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -18996,11 +18996,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img291.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img291.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img293.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img293.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img293.webp",
+      "pathname": "/wp-content/uploads/2025/12/img293.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19009,11 +19009,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img293.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img293.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img347.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img347.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img347.webp",
+      "pathname": "/wp-content/uploads/2025/12/img347.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19022,11 +19022,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img347.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img347.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img349.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img349.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img349.webp",
+      "pathname": "/wp-content/uploads/2025/12/img349.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19035,11 +19035,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img349.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img349.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img355.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img355.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img355.webp",
+      "pathname": "/wp-content/uploads/2025/12/img355.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19048,11 +19048,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img355.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img355.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img357.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img357.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img357.webp",
+      "pathname": "/wp-content/uploads/2025/12/img357.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19061,11 +19061,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img357.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img357.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img367.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img367.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img367.webp",
+      "pathname": "/wp-content/uploads/2025/12/img367.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19074,11 +19074,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img367.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img367.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img369.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img369.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img369.webp",
+      "pathname": "/wp-content/uploads/2025/12/img369.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19087,11 +19087,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img369.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img369.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img377.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img377.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img377.webp",
+      "pathname": "/wp-content/uploads/2025/12/img377.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19100,11 +19100,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img377.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img377.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img379.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img379.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img379.webp",
+      "pathname": "/wp-content/uploads/2025/12/img379.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19113,11 +19113,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img379.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img379.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img381.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img381.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img381.webp",
+      "pathname": "/wp-content/uploads/2025/12/img381.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19126,11 +19126,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img381.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img381.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img383.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img383.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img383.webp",
+      "pathname": "/wp-content/uploads/2025/12/img383.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19139,11 +19139,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img383.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img383.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img385.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img385.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img385.webp",
+      "pathname": "/wp-content/uploads/2025/12/img385.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19152,11 +19152,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img385.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img385.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img387.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img387.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img387.webp",
+      "pathname": "/wp-content/uploads/2025/12/img387.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19165,11 +19165,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img387.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img387.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img417.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img417.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img417.webp",
+      "pathname": "/wp-content/uploads/2025/12/img417.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19178,11 +19178,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img417.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img417.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img419.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img419.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img419.webp",
+      "pathname": "/wp-content/uploads/2025/12/img419.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19191,11 +19191,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img419.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img419.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img426.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img426.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img426.webp",
+      "pathname": "/wp-content/uploads/2025/12/img426.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19204,11 +19204,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img426.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img426.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img431.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img431.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img431.webp",
+      "pathname": "/wp-content/uploads/2025/12/img431.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19217,11 +19217,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img431.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img431.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img433.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img433.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img433.webp",
+      "pathname": "/wp-content/uploads/2025/12/img433.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19230,11 +19230,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img433.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img433.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img436.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img436.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img436.webp",
+      "pathname": "/wp-content/uploads/2025/12/img436.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19243,11 +19243,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img436.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img436.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img439.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img439.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img439.webp",
+      "pathname": "/wp-content/uploads/2025/12/img439.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19256,11 +19256,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img439.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img439.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img442.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img442.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img442.webp",
+      "pathname": "/wp-content/uploads/2025/12/img442.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19269,11 +19269,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img442.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img442.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img445.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img445.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img445.webp",
+      "pathname": "/wp-content/uploads/2025/12/img445.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19282,11 +19282,11 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img445.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img445.webp"
     },
     {
-      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img447.jpg",
-      "pathname": "/wp-content/uploads/2025/12/img447.jpg",
+      "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/img447.webp",
+      "pathname": "/wp-content/uploads/2025/12/img447.webp",
       "assetType": "image",
       "classification": "A",
       "reason": "Required for visual/brand parity on migrated Next.js host",
@@ -19295,7 +19295,7 @@
       ],
       "routeCount": 1,
       "localExists": false,
-      "localPublicPath": "/wp-content/uploads/2025/12/img447.jpg"
+      "localPublicPath": "/wp-content/uploads/2025/12/img447.webp"
     },
     {
       "url": "https://www.dgeniussolutions.com/wp-content/uploads/2025/06/Social-Media-Marketing_DGenius-Solutions.webp",
