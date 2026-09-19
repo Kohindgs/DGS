@@ -388,11 +388,24 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                     continue
             deduped.append((a, b, t))
         rows = deduped
+
+        # Enforce strictly forward, non-overlapping subtitle timing.
+        # This prevents captions from visually jumping backward at chunk joins.
+        clean_rows = []
+        prev_end = 0.0
+        for a, b, t in rows:
+            a = max(float(a), prev_end)
+            b = max(float(b), a + 0.08)
+            clean_rows.append((a, b, t))
+            prev_end = b
+        rows = clean_rows
+
         cues = []
         if self.include_title.get():
             first_voice = rows[0][0] if rows else 3.0
-            title_end = max(1.5, min(3.5, first_voice - 0.15)) if first_voice > 0.4 else 1.5
-            cues.append((0.0, title_end, src.stem.strip()))
+            title_end = max(1.0, min(3.5, first_voice - 0.10)) if first_voice > 0.2 else min(1.0, first_voice)
+            if title_end > 0.05:
+                cues.append((0.0, title_end, src.stem.strip()))
         cues.extend(rows)
 
         out = Path(outdir) / f"{src.stem}.srt"
