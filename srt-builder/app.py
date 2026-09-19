@@ -1,4 +1,4 @@
-import os, re, sys, json, time, tempfile, subprocess, threading, queue
+import os, re, sys, json, time, tempfile, subprocess, threading, queue, base64, html, webbrowser
 from pathlib import Path
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -51,6 +51,7 @@ class SRTApp:
         self.files = []
         self.q = queue.Queue()
         self.running = False
+        self.generated_pairs = []
 
         main = ttk.Frame(root, padding=16)
         main.pack(fill="both", expand=True)
@@ -103,6 +104,8 @@ class SRTApp:
         controls.pack(fill="x", pady=(10,6))
         self.start_btn = ttk.Button(controls, text="Create SRT", command=self.start)
         self.start_btn.pack(side="left")
+        self.preview_btn = ttk.Button(controls, text="Preview Video + SRT", command=self.preview_selected, state="disabled")
+        self.preview_btn.pack(side="left", padx=(8,0))
         self.progress = ttk.Progressbar(controls, mode="determinate", maximum=100)
         self.progress.pack(side="left", fill="x", expand=True, padx=10)
         self.status = ttk.Label(controls, text="Ready")
@@ -140,6 +143,31 @@ class SRTApp:
         if folder:
             self.output_var.set(folder)
 
+    def srt_to_vtt(self, srt_path):
+        text = Path(srt_path).read_text(encoding="utf-8-sig")
+        text = re.sub(r"(\d{2}:\d{2}:\d{2}),(\d{3})", r"\1.\2", text)
+        return "WEBVTT\n\n" + text
+
+    def preview_selected(self):
+        if not self.generated_pairs:
+            messagebox.showwarning(APP_NAME, "Create an SRT first.")
+            return
+        video_path, srt_path = self.generated_pairs[-1]
+        try:
+            vtt = self.srt_to_vtt(srt_path)
+            video_uri = Path(video_path).resolve().as_uri()
+            vtt_data = "data:text/vtt;base64," + base64.b64encode(vtt.encode("utf-8")).decode("ascii")
+            title = html.escape(Path(video_path).stem)
+            page = f"""<!doctype html><html><head><meta charset=\"utf-8\"><title>{title} - Subtitle Preview</title>
+<style>body{{margin:0;background:#111;color:#fff;font-family:Arial,sans-serif}}.wrap{{max-width:1200px;margin:20px auto;padding:0 16px}}video{{width:100%;max-height:78vh;background:#000}}h2{{font-size:18px;font-weight:600}}p{{color:#bbb}}</style></head><body><div class=\"wrap\"><h2>{title}</h2><p>Preview only — subtitles are not burned into the video.</p><video controls autoplay><source src=\"{video_uri}\"><track kind=\"subtitles\" src=\"{vtt_data}\" default></video></div></body></html>"""
+            preview_dir = Path(tempfile.gettempdir()) / "GeniusSRTPreview"
+            preview_dir.mkdir(parents=True, exist_ok=True)
+            html_path = preview_dir / "preview.html"
+            html_path.write_text(page, encoding="utf-8")
+            webbrowser.open(html_path.as_uri())
+        except Exception as e:
+            messagebox.showerror(APP_NAME, f"Preview failed: {e}")
+
     def emit(self, kind, value):
         self.q.put((kind, value))
 
@@ -156,6 +184,8 @@ class SRTApp:
                     self.status.configure(text=value)
                 elif kind == "progress":
                     self.progress["value"] = value
+                elif kind == "preview_ready":
+                    self.preview_btn.configure(state="normal")
                 elif kind == "done":
                     self.running = False
                     self.start_btn.configure(state="normal")
@@ -290,9 +320,12 @@ class SRTApp:
                     raise
 
             total = len(self.files)
+            self.generated_pairs = []
             for idx, src in enumerate(self.files, 1):
                 self.emit("status", f"{idx}/{total}: {Path(src).name}")
-                self.transcribe_file(src, outdir, model, detector, lang_override, glossary)
+                srt_path = self.transcribe_file(src, outdir, model, detector, lang_override, glossary)
+                self.generated_pairs.append((src, str(srt_path)))
+                self.emit("preview_ready", True)
             self.emit("progress", 100)
             self.emit("status", "Done")
             self.emit("done", f"Finished {total} file(s).\nSRT files saved to:\n{outdir}")
