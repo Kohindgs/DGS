@@ -1,0 +1,44 @@
+name: Build Genius SRT Creator Windows EXE
+
+on:
+  push:
+    branches:
+      - srt-macos-builder
+    paths:
+      - 'srt-builder/**'
+      - '.github/workflows/build-srt-windows.yml'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r srt-builder/requirements.txt
+
+      - name: Build Windows EXE
+        shell: cmd
+        run: >
+          pyinstaller --noconfirm --clean --onefile --windowed
+          --name Genius-SRT-Creator
+          --collect-all faster_whisper
+          --collect-all ctranslate2
+          --collect-all imageio_ffmpeg
+          srt-builder/app.py
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: Genius-SRT-Creator-Windows
+          path: dist/Genius-SRT-Creator.exe
+          if-no-files-found: error
