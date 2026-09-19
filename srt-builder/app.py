@@ -353,20 +353,30 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                             b = start + w.end
                             mid = (a + b) / 2
                             if keep_start <= mid <= keep_end:
-                                group.append((a, b, w.word))
-                                joined = "".join(x[2] for x in group).strip()
-                                if len(joined) >= 42 or (group[-1][1] - group[0][0]) >= 3.8 or re.search(r"[.!?।]$", joined):
+                                # A noticeable pause means the previous phrase is complete.
+                                if group and (a - group[-1][1]) >= 0.32:
+                                    joined = "".join(x[2] for x in group).strip()
                                     tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
                                     unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
                                     if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
-                                        result.append((group[0][0], group[-1][1], joined))
+                                        result.append((max(0.0, group[0][0] - 0.05), group[-1][1] + 0.06, joined))
+                                    group = []
+                                group.append((a, b, w.word))
+                                joined = "".join(x[2] for x in group).strip()
+                                word_count = len(re.findall(r"[\w\u0900-\u0D7F]+", joined))
+                                # Short word-timed micro-phrases feel synchronized for speech and songs.
+                                if word_count >= 4 or (group[-1][1] - group[0][0]) >= 1.40 or re.search(r"[.!?।]$", joined):
+                                    tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
+                                    unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
+                                    if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
+                                        result.append((max(0.0, group[0][0] - 0.05), group[-1][1] + 0.06, joined))
                                     group = []
                         if group:
                             joined = "".join(x[2] for x in group).strip()
                             tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
                             unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
                             if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
-                                result.append((group[0][0], group[-1][1], joined))
+                                result.append((max(0.0, group[0][0] - 0.05), group[-1][1] + 0.06, joined))
                     else:
                         t = seg.text.strip()
                         a = start + seg.start
@@ -416,15 +426,17 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
             deduped.append((a, b, t))
         rows = deduped
 
-        # Enforce strictly forward, non-overlapping subtitle timing.
-        # This prevents captions from visually jumping backward at chunk joins.
+        # Preserve the actual speech start time. If cues collide, shorten the
+        # previous cue rather than delaying the next spoken/sung word.
         clean_rows = []
-        prev_end = 0.0
         for a, b, t in rows:
-            a = max(float(a), prev_end)
+            a = max(0.0, float(a))
             b = max(float(b), a + 0.08)
+            if clean_rows and a < clean_rows[-1][1]:
+                pa, pb, pt = clean_rows[-1]
+                trimmed_end = max(pa + 0.08, a - 0.02)
+                clean_rows[-1] = (pa, trimmed_end, pt)
             clean_rows.append((a, b, t))
-            prev_end = b
         rows = clean_rows
 
         cues = []
