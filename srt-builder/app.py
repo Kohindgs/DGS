@@ -179,79 +179,63 @@ class SRTApp:
         self.progress["value"] = 0
         threading.Thread(target=self.worker, daemon=True).start()
 
-    def detect_language(self, src, dur, detector, td):
-        starts = sorted(set(max(0.0, min(max(0.0, dur-DETECT_LEN), dur*p)) for p in (0.20,0.50,0.80)))
-        votes = {}
-        details = []
-        for n, start in enumerate(starts):
-            wav = Path(td) / f"detect_{n}.wav"
-            ffmpeg_extract(src, start, DETECT_LEN, wav)
-            segs, info = detector.transcribe(str(wav), beam_size=1, vad_filter=False, condition_on_previous_text=False)
-            text = " ".join(s.text.strip() for s in segs if s.text.strip())
-            prob = float(info.language_probability or 0.0)
+    def detect_language(self, src, detector):
+        segs, info = detector.transcribe(
+            str(src), beam_size=1, vad_filter=False,
+            condition_on_previous_text=False, chunk_length=30,
+            language_detection_segments=3
+        )
+        preview = []
+        for seg in segs:
+            text = seg.text.strip()
             if text:
-                weight = max(0.05, prob) * min(2.0, max(0.5, len(text)/30))
-                votes[info.language] = votes.get(info.language, 0.0) + weight
-            details.append((start, info.language, prob, text[:80]))
-        lang = max(votes, key=votes.get) if votes else "en"
-        return lang, details
+                preview.append(text)
+            if len(preview) >= 3:
+                break
+        return info.language or "en", float(info.language_probability or 0.0), " ".join(preview)[:160]
 
     def transcribe_file(self, src, outdir, model, detector, lang_override, glossary):
         src = Path(src)
         dur = media_duration(src)
         rows = []
         self.emit("log", f"Processing: {src.name}")
-        with tempfile.TemporaryDirectory() as td:
-            if lang_override:
-                lang = lang_override
-                self.emit("log", f"Language locked: {lang}")
-            else:
-                lang, details = self.detect_language(src, dur, detector, td)
-                self.emit("log", f"Detected language: {lang}")
-                for st, lc, pr, txt in details:
-                    self.emit("log", f"  sample {st:.0f}s -> {lc} ({pr:.2f}) {txt}")
+        if lang_override:
+            lang = lang_override
+            self.emit("log", f"Language locked: {lang}")
+        else:
+            lang, prob, preview = self.detect_language(src, detector)
+            self.emit("log", f"Detected language: {lang} ({prob:.2f})")
+            if preview:
+                self.emit("log", f"Preview: {preview}")
 
-            start = 0.0
-            while start < dur:
-                wav = Path(td) / f"chunk_{int(start):05}.wav"
-                ffmpeg_extract(src, start, WINDOW, wav)
-                kwargs = dict(
-                    language=lang, beam_size=8, best_of=8, patience=1.2,
-                    vad_filter=False, condition_on_previous_text=False,
-                    word_timestamps=True
-                )
-                if glossary:
-                    kwargs["hotwords"] = glossary
-                    kwargs["initial_prompt"] = glossary
-                segs, _ = model.transcribe(str(wav), **kwargs)
+        kwargs = dict(
+            language=lang, beam_size=8, best_of=8, patience=1.2,
+            vad_filter=False, condition_on_previous_text=False,
+            word_timestamps=True, chunk_length=30
+        )
+        if glossary:
+            kwargs["hotwords"] = glossary
+            kwargs["initial_prompt"] = glossary
 
-                chunk_end = min(start + WINDOW, dur)
-                keep_start = 0.0 if start == 0 else start + OVERLAP/2
-                keep_end = dur if chunk_end >= dur else chunk_end - OVERLAP/2
-
-                for seg in segs:
-                    words = getattr(seg, "words", None) or []
-                    if words:
+        segs, _ = model.transcribe(str(src), **kwargs)
+        for seg in segs:
+            words = getattr(seg, "words", None) or []
+            if words:
+                group = []
+                for w in words:
+                    group.append((w.start, w.end, w.word))
+                    joined = "".join(x[2] for x in group).strip()
+                    if len(joined) >= 42 or (group[-1][1]-group[0][0]) >= 3.8 or re.search(r"[.!?।]$", joined):
+                        rows.append((group[0][0], group[-1][1], joined))
                         group = []
-                        for w in words:
-                            a = start + w.start
-                            b = start + w.end
-                            mid = (a+b)/2
-                            if keep_start <= mid <= keep_end:
-                                group.append((a,b,w.word))
-                                joined = "".join(x[2] for x in group).strip()
-                                if len(joined) >= 42 or (group[-1][1]-group[0][0]) >= 3.8 or re.search(r"[.!?।]$", joined):
-                                    rows.append((group[0][0], group[-1][1], joined))
-                                    group = []
-                        if group:
-                            rows.append((group[0][0], group[-1][1], "".join(x[2] for x in group).strip()))
-                    else:
-                        t = seg.text.strip()
-                        a, b = start + seg.start, start + seg.end
-                        if t and keep_start <= (a+b)/2 <= keep_end:
-                            rows.append((a,b,t))
-                start += STRIDE
-                self.emit("progress", min(99, int((start/max(dur,0.1))*100)))
+                if group:
+                    rows.append((group[0][0], group[-1][1], "".join(x[2] for x in group).strip()))
+            else:
+                t = seg.text.strip()
+                if t:
+                    rows.append((seg.start, seg.end, t))
+            if dur > 0:
+                self.emit("progress", min(99, int((seg.end / dur) * 100)))
 
         rows.sort(key=lambda x: x[0])
         cues = []
@@ -286,9 +270,24 @@ class SRTApp:
             compute = "float16" if use_cuda else "int8"
             self.emit("log", f"Device: {device} / {compute}")
             self.emit("status", "Loading detector")
+            self.emit("log", "Loading language detector...")
             detector = WhisperModel("small", device=device, compute_type=compute)
+
             self.emit("status", f"Loading {model_name}")
-            model = WhisperModel(model_name, device=device, compute_type=compute)
+            self.emit("log", f"Preparing model: {model_name}. First use may download several GB.")
+            try:
+                model = WhisperModel(model_name, device=device, compute_type=compute)
+                self.emit("log", f"Model ready: {model_name}")
+            except Exception as model_error:
+                if model_name != "medium":
+                    self.emit("log", f"{model_name} failed: {model_error}")
+                    self.emit("status", "Falling back to medium")
+                    self.emit("log", "Falling back to medium for reliable processing...")
+                    model_name = "medium"
+                    model = WhisperModel(model_name, device=device, compute_type=compute)
+                    self.emit("log", "Model ready: medium")
+                else:
+                    raise
 
             total = len(self.files)
             for idx, src in enumerate(self.files, 1):
