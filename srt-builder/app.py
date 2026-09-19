@@ -4,20 +4,45 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import av, ctranslate2, imageio_ffmpeg
 from faster_whisper import WhisperModel
+from faster_whisper.audio import decode_audio
 
 APP_NAME = "Genius SRT Creator"
-WINDOW = 30.0
-OVERLAP = 6.0
+WINDOW = 20.0
+OVERLAP = 3.0
 STRIDE = WINDOW - OVERLAP
-DETECT_LEN = 6.0
+DETECT_LEN = 10.0
 EXTS = {".mp4",".mov",".mkv",".avi",".m4v",".mp3",".wav",".m4a"}
 
 LANGS = {
     "Auto": None, "English":"en", "Hindi":"hi", "Marathi":"mr",
     "Gujarati":"gu", "Bengali":"bn", "Punjabi":"pa", "Tamil":"ta",
     "Telugu":"te", "Kannada":"kn", "Malayalam":"ml", "Urdu":"ur",
-    "Odia":"or", "Assamese":"as"
+    "Odia":"or", "Assamese":"as", "Sanskrit":"sa"
 }
+
+LANG_HINTS = {
+    "english":"en", "eng":"en",
+    "hindi":"hi", "हिंदी":"hi",
+    "marathi":"mr", "मराठी":"mr",
+    "gujarati":"gu", "ગુજરાતી":"gu",
+    "bengali":"bn", "bangla":"bn", "বাংলা":"bn",
+    "punjabi":"pa", "ਪੰਜਾਬੀ":"pa",
+    "tamil":"ta", "தமிழ்":"ta",
+    "telugu":"te", "తెలుగు":"te",
+    "kannada":"kn", "ಕನ್ನಡ":"kn",
+    "malayalam":"ml", "മലയാളം":"ml",
+    "urdu":"ur", "اردو":"ur",
+    "odia":"or", "oriya":"or", "ଓଡ଼ିଆ":"or",
+    "assamese":"as", "অসমীয়া":"as",
+    "sanskrit":"sa", "संस्कृत":"sa"
+}
+
+def filename_language_hint(path):
+    name = Path(path).stem.lower()
+    for key, code in LANG_HINTS.items():
+        if key in name:
+            return code
+    return None
 
 def stamp(sec):
     ms = int(round(sec * 1000))
@@ -156,10 +181,22 @@ class SRTApp:
         try:
             vtt = self.srt_to_vtt(srt_path)
             video_uri = Path(video_path).resolve().as_uri()
-            vtt_data = "data:text/vtt;base64," + base64.b64encode(vtt.encode("utf-8")).decode("ascii")
+            vtt_b64 = base64.b64encode(vtt.encode("utf-8")).decode("ascii")
             title = html.escape(Path(video_path).stem)
             page = f"""<!doctype html><html><head><meta charset=\"utf-8\"><title>{title} - Subtitle Preview</title>
-<style>body{{margin:0;background:#111;color:#fff;font-family:Arial,sans-serif}}.wrap{{max-width:1200px;margin:20px auto;padding:0 16px}}video{{width:100%;max-height:78vh;background:#000}}h2{{font-size:18px;font-weight:600}}p{{color:#bbb}}</style></head><body><div class=\"wrap\"><h2>{title}</h2><p>Preview only — subtitles are not burned into the video.</p><video controls autoplay><source src=\"{video_uri}\"><track kind=\"subtitles\" src=\"{vtt_data}\" default></video></div></body></html>"""
+<style>body{{margin:0;background:#111;color:#fff;font-family:Arial,sans-serif}}.wrap{{max-width:1200px;margin:20px auto;padding:0 16px}}video{{width:100%;max-height:78vh;background:#000}}h2{{font-size:18px;font-weight:600}}p{{color:#bbb}}button{{padding:10px 14px;margin-right:8px}}</style></head><body><div class=\"wrap\"><h2>{title}</h2><p>Preview only — subtitles are not burned into the video. Use the controls to pause and scrub for sync checking.</p><video id=\"player\" controls autoplay><source src=\"{video_uri}\"></video><p><button id=\"toggle\">Subtitles On/Off</button><button id=\"back\">-5 sec</button><button id=\"forward\">+5 sec</button></p></div><script>
+const v=document.getElementById('player');
+const txt=atob('{vtt_b64}');
+const bytes=Uint8Array.from(txt,c=>c.charCodeAt(0));
+const blob=new Blob([bytes],{{type:'text/vtt'}});
+const track=document.createElement('track');
+track.kind='subtitles'; track.label='Generated SRT'; track.srclang='auto'; track.default=true; track.src=URL.createObjectURL(blob);
+v.appendChild(track);
+v.addEventListener('loadedmetadata',()=>{{if(v.textTracks[0])v.textTracks[0].mode='showing';}});
+document.getElementById('toggle').onclick=()=>{{if(!v.textTracks[0])return;v.textTracks[0].mode=v.textTracks[0].mode==='showing'?'hidden':'showing';}};
+document.getElementById('back').onclick=()=>{{v.currentTime=Math.max(0,v.currentTime-5);}};
+document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.duration||v.currentTime+5,v.currentTime+5);}};
+</script></body></html>"""
             preview_dir = Path(tempfile.gettempdir()) / "GeniusSRTPreview"
             preview_dir.mkdir(parents=True, exist_ok=True)
             html_path = preview_dir / "preview.html"
@@ -186,6 +223,8 @@ class SRTApp:
                     self.progress["value"] = value
                 elif kind == "preview_ready":
                     self.preview_btn.configure(state="normal")
+                elif kind == "auto_preview":
+                    self.preview_selected()
                 elif kind == "done":
                     self.running = False
                     self.start_btn.configure(state="normal")
@@ -209,66 +248,130 @@ class SRTApp:
         self.progress["value"] = 0
         threading.Thread(target=self.worker, daemon=True).start()
 
-    def detect_language(self, src, detector):
-        segs, info = detector.transcribe(
-            str(src), beam_size=1, vad_filter=False,
-            condition_on_previous_text=False, chunk_length=30,
-            language_detection_segments=3
-        )
-        preview = []
-        for seg in segs:
-            text = seg.text.strip()
-            if text:
-                preview.append(text)
-            if len(preview) >= 3:
-                break
-        return info.language or "en", float(info.language_probability or 0.0), " ".join(preview)[:160]
+    def detect_language(self, src, audio, detector):
+        hint = filename_language_hint(src)
+        if hint:
+            return hint, 1.0, f"filename hint: {hint}", [hint]
+
+        sr = 16000
+        sample_len = int(DETECT_LEN * sr)
+        if len(audio) <= sample_len:
+            starts = [0]
+        else:
+            starts = sorted(set(
+                int(max(0, min(len(audio) - sample_len, len(audio) * p)))
+                for p in (0.15, 0.35, 0.55, 0.75, 0.90)
+            ))
+
+        scores = {}
+        details = []
+        for start in starts:
+            sample = audio[start:start + sample_len]
+            lang, prob, probs = detector.detect_language(
+                audio=sample, vad_filter=False, language_detection_segments=1
+            )
+            details.append(f"{start/sr:.0f}s:{lang} {prob:.2f}")
+            for code, value in probs:
+                scores[code] = scores.get(code, 0.0) + float(value)
+
+        if not scores:
+            return "en", 0.0, "no language score", ["en"]
+
+        ordered = [k for k, _ in sorted(scores.items(), key=lambda kv: kv[1], reverse=True)]
+        top = ordered[0]
+
+        if top == "sa":
+            modern = max(("mr", "hi"), key=lambda k: scores.get(k, 0.0))
+            if scores.get(modern, 0.0) >= scores.get("sa", 0.0) * 0.35:
+                top = modern
+
+        total = max(sum(scores.values()), 1e-9)
+        confidence = scores.get(top, 0.0) / total
+        candidates = [x for x in ordered if x != top][:4]
+        return top, confidence, ", ".join(details), [top] + candidates
 
     def transcribe_file(self, src, outdir, model, detector, lang_override, glossary, beam_size=3):
         src = Path(src)
-        dur = media_duration(src)
-        rows = []
         self.emit("log", f"Processing: {src.name}")
+        self.emit("status", f"Decoding audio - {src.name}")
+        audio = decode_audio(str(src))
+        dur = len(audio) / 16000.0
+        rows = []
+
         if lang_override:
             lang = lang_override
+            candidates = [lang]
             self.emit("log", f"Language locked: {lang}")
         else:
-            lang, prob, preview = self.detect_language(src, detector)
+            lang, prob, detail, candidates = self.detect_language(src, audio, detector)
             self.emit("log", f"Detected language: {lang} ({prob:.2f})")
-            if preview:
-                self.emit("log", f"Preview: {preview}")
+            if detail:
+                self.emit("log", f"Detection: {detail}")
 
-        kwargs = dict(
-            language=lang, beam_size=beam_size, best_of=beam_size, patience=1.0,
-            vad_filter=False, condition_on_previous_text=False,
-            word_timestamps=True, chunk_length=30
-        )
-        if glossary:
-            kwargs["hotwords"] = glossary
-            kwargs["initial_prompt"] = glossary
+        def collect_rows(language):
+            result = []
+            kwargs = dict(
+                language=language, beam_size=beam_size, best_of=beam_size, patience=1.0,
+                vad_filter=False, condition_on_previous_text=False,
+                word_timestamps=True, chunk_length=30
+            )
+            if glossary:
+                kwargs["hotwords"] = glossary
+                kwargs["initial_prompt"] = glossary
 
-        self.emit("status", f"Transcribing 0% - {src.name}")
-        segs, _ = model.transcribe(str(src), **kwargs)
-        for seg in segs:
-            words = getattr(seg, "words", None) or []
-            if words:
-                group = []
-                for w in words:
-                    group.append((w.start, w.end, w.word))
-                    joined = "".join(x[2] for x in group).strip()
-                    if len(joined) >= 42 or (group[-1][1]-group[0][0]) >= 3.8 or re.search(r"[.!?।]$", joined):
-                        rows.append((group[0][0], group[-1][1], joined))
+            self.emit("status", f"Transcribing 0% - {src.name}")
+            sr = 16000
+            start = 0.0
+            while start < dur:
+                end = min(dur, start + WINDOW)
+                chunk = audio[int(start * sr):int(end * sr)]
+                if len(chunk) == 0:
+                    break
+                segs, _ = model.transcribe(chunk, **kwargs)
+                keep_start = 0.0 if start == 0 else start + OVERLAP / 2
+                keep_end = dur if end >= dur else end - OVERLAP / 2
+                for seg in segs:
+                    words = getattr(seg, "words", None) or []
+                    if words:
                         group = []
-                if group:
-                    rows.append((group[0][0], group[-1][1], "".join(x[2] for x in group).strip()))
-            else:
-                t = seg.text.strip()
-                if t:
-                    rows.append((seg.start, seg.end, t))
-            if dur > 0:
-                pct = min(99, int((seg.end / dur) * 100))
+                        for w in words:
+                            a = start + w.start
+                            b = start + w.end
+                            mid = (a + b) / 2
+                            if keep_start <= mid <= keep_end:
+                                group.append((a, b, w.word))
+                                joined = "".join(x[2] for x in group).strip()
+                                if len(joined) >= 42 or (group[-1][1] - group[0][0]) >= 3.8 or re.search(r"[.!?।]$", joined):
+                                    if re.search(r"[\w\u0900-\u0D7F]", joined):
+                                        result.append((group[0][0], group[-1][1], joined))
+                                    group = []
+                        if group:
+                            joined = "".join(x[2] for x in group).strip()
+                            if re.search(r"[\w\u0900-\u0D7F]", joined):
+                                result.append((group[0][0], group[-1][1], joined))
+                    else:
+                        t = seg.text.strip()
+                        a = start + seg.start
+                        b = start + seg.end
+                        mid = (a + b) / 2
+                        if t and keep_start <= mid <= keep_end and re.search(r"[\w\u0900-\u0D7F]", t):
+                            result.append((a, b, t))
+                pct = min(99, int((end / max(dur, 0.1)) * 100))
                 self.emit("progress", pct)
                 self.emit("status", f"Transcribing {pct}% - {src.name}")
+                start += STRIDE
+            return result
+
+        rows = collect_rows(lang)
+        if not rows and not lang_override:
+            self.emit("log", "No subtitle lines on first pass. Retrying language candidates...")
+            for retry_lang in candidates[1:]:
+                self.emit("log", f"Retrying as {retry_lang}...")
+                rows = collect_rows(retry_lang)
+                if rows:
+                    lang = retry_lang
+                    self.emit("log", f"Recovered subtitles using {retry_lang}.")
+                    break
 
         rows.sort(key=lambda x: x[0])
         cues = []
@@ -300,8 +403,8 @@ class SRTApp:
             use_cuda = ctranslate2.get_cuda_device_count() > 0
             device = "cuda" if use_cuda else "cpu"
             if accuracy == "Auto Recommended":
-                model_name = "turbo" if use_cuda else "small"
-                beam_size = 2
+                model_name = "turbo" if use_cuda else "medium"
+                beam_size = 3 if use_cuda else 2
                 compute = "int8_float16" if use_cuda else "int8"
             elif accuracy.startswith("Maximum"):
                 model_name = "large-v3"
@@ -353,6 +456,8 @@ class SRTApp:
                 self.emit("preview_ready", True)
             self.emit("progress", 100)
             self.emit("status", "Done")
+            if self.generated_pairs:
+                self.emit("auto_preview", True)
             self.emit("done", f"Finished {total} file(s).\nSRT files saved to:\n{outdir}")
         except Exception as e:
             self.emit("error", f"{type(e).__name__}: {e}")
