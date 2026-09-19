@@ -9,7 +9,7 @@ export type BlogImportImage = {
 };
 
 export type BlogOptimizationPackage = {
-  seo: { title: string; description: string; h1: string; canonicalPath: string; focusKeyword: string; secondaryKeywords: string[] };
+  seo: { title: string; description: string; h1: string; canonicalPath: string; focusKeyword: string; secondaryKeywords: string[]; internalLinks: Array<{ path: string; anchor: string; reason: string }> };
   aeo: { conciseAnswer: string; questions: string[] };
   geo: { entities: string[]; topics: string[]; keyFacts: string[] };
   llm: { answerSummary: string; citableFacts: string[]; semanticHeadings: string[] };
@@ -51,6 +51,14 @@ function extractFaqPairs(html: string) {
   }
   return pairs.slice(0, 8);
 }
+const SERVICE_LINK_RULES = [
+  { path: "/services/seo-services-in-mumbai/", terms: ["search engine optimization", "technical seo", "local seo", "seo"], reason: "Relevant DGS SEO service" },
+  { path: "/services/aeo-services-in-mumbai/", terms: ["answer engine optimization", "answer engines", "aeo"], reason: "Relevant DGS AEO service" },
+  { path: "/services/geo/", terms: ["generative engine optimization", "generative search", "geo"], reason: "Relevant DGS GEO service" },
+  { path: "/services/llm-seo-service/", terms: ["llm seo", "chatgpt", "perplexity", "large language model"], reason: "Relevant DGS LLM SEO service" },
+  { path: "/services/ai-video-production-agency/", terms: ["ai video", "video production", "ai-generated video"], reason: "Relevant DGS AI Video service" },
+] as const;
+
 function keywordCandidates(text: string) {
   const stop = new Set(["the","and","for","with","that","this","from","your","you","are","was","were","have","has","had","into","about","their","they","our","can","will","how","what","when","where","why"]);
   const counts = new Map<string, number>();
@@ -59,6 +67,29 @@ function keywordCandidates(text: string) {
     counts.set(token, (counts.get(token) || 0) + 1);
   }
   return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([key]) => key).slice(0, 10);
+}
+
+function internalLinkSuggestions(text: string) {
+  const lower = text.toLowerCase();
+  return SERVICE_LINK_RULES.flatMap((rule) => {
+    const anchor = rule.terms.find((term) => lower.includes(term));
+    return anchor ? [{ path: rule.path, anchor, reason: rule.reason }] : [];
+  }).slice(0, 4);
+}
+
+function injectInternalLinks(html: string, links: Array<{ path: string; anchor: string }>) {
+  let output = html;
+  for (const link of links) {
+    let applied = false;
+    const escaped = link.anchor.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(`(<p[^>]*>)([\\s\\S]*?\\b)(${escaped})(\\b[\\s\\S]*?<\\/p>)`, "i");
+    output = output.replace(pattern, (full, open, before, anchor, after) => {
+      if (applied || /<a\b/i.test(full)) return full;
+      applied = true;
+      return `${open}${before}<a href="${link.path}">${anchor}</a>${after}`;
+    });
+  }
+  return output;
 }
 
 function buildOptimization(title: string, slug: string, html: string): BlogOptimizationPackage {
@@ -75,6 +106,7 @@ function buildOptimization(title: string, slug: string, html: string): BlogOptim
   const canonicalUrl = `https://www.dgeniussolutions.com${canonicalPath}`;
   const facts = sentences.filter((s) => /\d|\b(is|are|means|helps|includes|requires)\b/i.test(s)).slice(0, 8);
   const entities = [...new Set(text.match(/\b[A-Z][A-Za-z0-9.&'-]+(?:\s+[A-Z][A-Za-z0-9.&'-]+){0,3}\b/g) || [])].slice(0, 12);
+  const internalLinks = internalLinkSuggestions(`${title} ${text}`);
   const schemas: Record<string, unknown>[] = [
     {
       "@context": "https://schema.org",
@@ -114,6 +146,7 @@ function buildOptimization(title: string, slug: string, html: string): BlogOptim
       canonicalPath,
       focusKeyword,
       secondaryKeywords: keywords.slice(1, 7),
+      internalLinks,
     },
     aeo: { conciseAnswer, questions: faqPairs.map((item) => item.question) },
     geo: { entities, topics: keywords.slice(0, 8), keyFacts: facts },
@@ -133,7 +166,9 @@ export async function parseBlogDocx(buffer: Buffer, filename: string): Promise<P
   const text = stripHtml(bodyHtml);
   const excerpt = sentenceList(text).slice(0, 2).join(" ").slice(0, 320);
   const sourceHash = createHash("sha256").update(buffer).digest("hex");
-  return { title, slug, excerpt, bodyHtml, sourceHash, optimization: buildOptimization(title, slug, bodyHtml) };
+  const optimization = buildOptimization(title, slug, bodyHtml);
+  bodyHtml = injectInternalLinks(bodyHtml, optimization.seo.internalLinks);
+  return { title, slug, excerpt, bodyHtml, sourceHash, optimization };
 }
 
 export function imageMatchesSlug(filename: string, slug: string) {
