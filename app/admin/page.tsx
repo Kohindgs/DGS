@@ -36,7 +36,7 @@ export default async function AdminPage() {
             <div className="dgs-admin-card-dot" aria-hidden="true" />
             <h2>{title}</h2>
             <p>{description}</p>
-            {title === "Blogs" ? <Link href="/admin/blogs/">Manage Blogs</Link> : title === "Leads" ? <Link href="/admin/leads/">View Leads</Link> : <span>Foundation ready</span>}
+            {title === "Blogs" ? <Link href="/admin/blogs/">Manage Blogs</Link> : title === "Leads" ? <Link href="/admin/leads/">View Leads</Link> : title === "Forms" ? <Link href="/admin/forms/">Manage Forms</Link> : <span>Foundation ready</span>}
           </article>
         ))}
       </section>

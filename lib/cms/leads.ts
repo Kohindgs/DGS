@@ -95,3 +95,10 @@ export async function listRecentLeads(limit = 100) {
     [safeLimit],
   )).rows;
 }
+
+export async function getFormSubmissionCounts() {
+  const rows = (await cmsQuery<{ form_key: string; total: number | string }>(
+    `SELECT form_key, COUNT(*) AS total FROM form_submissions GROUP BY form_key ORDER BY form_key`,
+  )).rows;
+  return new Map(rows.map((row) => [row.form_key, Number(row.total)]));
+}
