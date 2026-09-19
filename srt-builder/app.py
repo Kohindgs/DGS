@@ -303,6 +303,34 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
             if detail:
                 self.emit("log", f"Detection: {detail}")
 
+        prompt_echo_phrases = {
+            "mr": [
+                "मराठी कविता किंवा गाणे", "प्रत्येक ओळ अचूक लिहा",
+                "सुरुवातीची कोणतीही ओळ सोडू नका", "कोणतीही ओळ सोडू नका"
+            ],
+            "hi": [
+                "हिंदी कविता या गीत", "हर पंक्ति ठीक से लिखें",
+                "शुरुआती कोई पंक्ति न छोड़ें", "कोई पंक्ति न छोड़ें"
+            ],
+            "en": [
+                "transcribe every spoken or sung word", "do not skip any opening line",
+                "do not skip any line"
+            ]
+        }
+
+        def norm_text(text):
+            return re.sub(r"[^\w\u0900-\u0D7F]+", "", text.lower())
+
+        def is_prompt_echo(text, language):
+            n = norm_text(text)
+            if not n:
+                return True
+            for phrase in prompt_echo_phrases.get(language, []):
+                p = norm_text(phrase)
+                if p and (p in n or n in p or difflib.SequenceMatcher(None, n, p).ratio() >= 0.72):
+                    return True
+            return False
+
         def collect_rows(language):
             result = []
             kwargs = dict(
@@ -338,8 +366,6 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                     local_kwargs["no_speech_threshold"] = 1.0
                     local_kwargs["log_prob_threshold"] = None
                     local_kwargs["compression_ratio_threshold"] = None
-                    if not glossary and language in opening_prompts:
-                        local_kwargs["initial_prompt"] = opening_prompts[language]
 
                 segs, _ = model.transcribe(chunk, **local_kwargs)
                 keep_start = 0.0 if first_chunk else start + OVERLAP / 2
@@ -358,7 +384,7 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                                     joined = "".join(x[2] for x in group).strip()
                                     tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
                                     unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
-                                    if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
+                                    if re.search(r"[\w\u0900-\u0D7F]", joined) and not is_prompt_echo(joined, language) and not (len(tokens) >= 8 and unique_ratio < 0.28):
                                         result.append((max(0.0, group[0][0] - 0.05), group[-1][1] + 0.06, joined))
                                     group = []
                                 group.append((a, b, w.word))
@@ -368,21 +394,21 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                                 if word_count >= 4 or (group[-1][1] - group[0][0]) >= 1.40 or re.search(r"[.!?।]$", joined):
                                     tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
                                     unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
-                                    if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
+                                    if re.search(r"[\w\u0900-\u0D7F]", joined) and not is_prompt_echo(joined, language) and not (len(tokens) >= 8 and unique_ratio < 0.28):
                                         result.append((max(0.0, group[0][0] - 0.05), group[-1][1] + 0.06, joined))
                                     group = []
                         if group:
                             joined = "".join(x[2] for x in group).strip()
                             tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
                             unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
-                            if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
+                            if re.search(r"[\w\u0900-\u0D7F]", joined) and not is_prompt_echo(joined, language) and not (len(tokens) >= 8 and unique_ratio < 0.28):
                                 result.append((max(0.0, group[0][0] - 0.05), group[-1][1] + 0.06, joined))
                     else:
                         t = seg.text.strip()
                         a = start + seg.start
                         b = start + seg.end
                         mid = (a + b) / 2
-                        if t and keep_start <= mid <= keep_end and re.search(r"[\w\u0900-\u0D7F]", t):
+                        if t and keep_start <= mid <= keep_end and re.search(r"[\w\u0900-\u0D7F]", t) and not is_prompt_echo(t, language):
                             result.append((a, b, t))
                 pct = min(99, int((end / max(dur, 0.1)) * 100))
                 self.emit("progress", pct)
@@ -395,6 +421,57 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
             return result
 
         rows = collect_rows(lang)
+
+        # Independent opening recovery: use the small detector model with a
+        # language-aware prompt, but never allow prompt text into subtitles.
+        if dur > 0.5:
+            opening_prompts = {
+                "mr": "मराठी कविता किंवा गाणे. प्रत्येक ओळ अचूक लिहा. सुरुवातीची कोणतीही ओळ सोडू नका.",
+                "hi": "हिंदी कविता या गीत। हर पंक्ति ठीक से लिखें। शुरुआती कोई पंक्ति न छोड़ें।",
+                "en": "Transcribe every spoken or sung word from the very beginning. Do not skip any opening line."
+            }
+            op_audio = audio[:int(min(dur, 30.0) * 16000)]
+            op_kwargs = dict(
+                language=lang, beam_size=3, best_of=3, patience=1.0,
+                vad_filter=False, condition_on_previous_text=False,
+                word_timestamps=True, chunk_length=30, no_speech_threshold=1.0,
+                log_prob_threshold=None, compression_ratio_threshold=None
+            )
+            if not glossary and lang in opening_prompts:
+                op_kwargs["initial_prompt"] = opening_prompts[lang]
+            try:
+                op_segs, _ = detector.transcribe(op_audio, **op_kwargs)
+                op_rows = []
+                for seg in op_segs:
+                    words = getattr(seg, "words", None) or []
+                    group = []
+                    for w in words:
+                        a = float(w.start); b = float(w.end)
+                        if b <= a or (b - a) > 4.0:
+                            continue
+                        if group and a - group[-1][1] >= 0.32:
+                            txt = "".join(x[2] for x in group).strip()
+                            if txt and not is_prompt_echo(txt, lang):
+                                op_rows.append((max(0.0, group[0][0]-0.05), group[-1][1]+0.06, txt))
+                            group = []
+                        group.append((a, b, w.word))
+                        txt = "".join(x[2] for x in group).strip()
+                        wc = len(re.findall(r"[\w\u0900-\u0D7F]+", txt))
+                        if wc >= 4 or (group[-1][1]-group[0][0]) >= 1.40 or re.search(r"[.!?।]$", txt):
+                            if txt and not is_prompt_echo(txt, lang):
+                                toks = re.findall(r"[\w\u0900-\u0D7F]+", txt.lower())
+                                ur = (len(set(toks))/len(toks)) if toks else 0.0
+                                if not (len(toks) >= 6 and ur < 0.40):
+                                    op_rows.append((max(0.0, group[0][0]-0.05), group[-1][1]+0.06, txt))
+                            group = []
+                    if group:
+                        txt = "".join(x[2] for x in group).strip()
+                        if txt and not is_prompt_echo(txt, lang):
+                            op_rows.append((max(0.0, group[0][0]-0.05), group[-1][1]+0.06, txt))
+                rows.extend(op_rows)
+            except Exception as opening_error:
+                self.emit("log", f"Opening recovery skipped: {opening_error}")
+
         if not rows and not lang_override:
             self.emit("log", "No subtitle lines on first pass. Retrying language candidates...")
             for retry_lang in candidates[1:]:
@@ -488,7 +565,7 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                             continue
                         if group and (a - group[-1][1]) >= 0.32:
                             txt = "".join(x[2] for x in group).strip()
-                            if txt:
+                            if txt and not is_prompt_echo(txt, lang):
                                 recovered.append((max(gs, group[0][0] - 0.05), min(ge, group[-1][1] + 0.06), txt))
                             group = []
                         group.append((a, b, w.word))
@@ -499,7 +576,7 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                             group = []
                     if group:
                         txt = "".join(x[2] for x in group).strip()
-                        if txt:
+                        if txt and not is_prompt_echo(txt, lang):
                             recovered.append((max(gs, group[0][0] - 0.05), min(ge, group[-1][1] + 0.06), txt))
                 return recovered
 
