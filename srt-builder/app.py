@@ -7,8 +7,8 @@ from faster_whisper import WhisperModel
 from faster_whisper.audio import decode_audio
 
 APP_NAME = "Genius SRT Creator"
-WINDOW = 20.0
-OVERLAP = 3.0
+WINDOW = 30.0
+OVERLAP = 6.0
 STRIDE = WINDOW - OVERLAP
 DETECT_LEN = 10.0
 EXTS = {".mp4",".mov",".mkv",".avi",".m4v",".mp3",".wav",".m4a"}
@@ -308,7 +308,8 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
             kwargs = dict(
                 language=language, beam_size=beam_size, best_of=beam_size, patience=1.0,
                 vad_filter=False, condition_on_previous_text=False,
-                word_timestamps=True, chunk_length=30
+                word_timestamps=True, chunk_length=30,
+                no_speech_threshold=0.90
             )
             if glossary:
                 kwargs["hotwords"] = glossary
@@ -355,12 +356,16 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                                 group.append((a, b, w.word))
                                 joined = "".join(x[2] for x in group).strip()
                                 if len(joined) >= 42 or (group[-1][1] - group[0][0]) >= 3.8 or re.search(r"[.!?।]$", joined):
-                                    if re.search(r"[\w\u0900-\u0D7F]", joined):
+                                    tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
+                                    unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
+                                    if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
                                         result.append((group[0][0], group[-1][1], joined))
                                     group = []
                         if group:
                             joined = "".join(x[2] for x in group).strip()
-                            if re.search(r"[\w\u0900-\u0D7F]", joined):
+                            tokens = re.findall(r"[\w\u0900-\u0D7F]+", joined.lower())
+                            unique_ratio = (len(set(tokens)) / len(tokens)) if tokens else 0.0
+                            if re.search(r"[\w\u0900-\u0D7F]", joined) and not (len(tokens) >= 8 and unique_ratio < 0.28):
                                 result.append((group[0][0], group[-1][1], joined))
                     else:
                         t = seg.text.strip()
