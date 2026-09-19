@@ -73,9 +73,9 @@ class SRTApp:
         opts.pack(fill="x", pady=8)
 
         ttk.Label(opts, text="Accuracy").grid(row=0, column=0, sticky="w")
-        self.accuracy = tk.StringVar(value="Maximum Accuracy - large-v3")
+        self.accuracy = tk.StringVar(value="Auto Recommended")
         ttk.Combobox(opts, textvariable=self.accuracy, state="readonly",
-                     values=["Maximum Accuracy - large-v3","Balanced - medium","Fast - small"],
+                     values=["Auto Recommended","Maximum Accuracy - large-v3","Balanced - medium","Fast - small"],
                      width=30).grid(row=0, column=1, sticky="ew", padx=8)
 
         ttk.Label(opts, text="Language").grid(row=1, column=0, sticky="w", pady=8)
@@ -224,7 +224,7 @@ class SRTApp:
                 break
         return info.language or "en", float(info.language_probability or 0.0), " ".join(preview)[:160]
 
-    def transcribe_file(self, src, outdir, model, detector, lang_override, glossary):
+    def transcribe_file(self, src, outdir, model, detector, lang_override, glossary, beam_size=3):
         src = Path(src)
         dur = media_duration(src)
         rows = []
@@ -239,7 +239,7 @@ class SRTApp:
                 self.emit("log", f"Preview: {preview}")
 
         kwargs = dict(
-            language=lang, beam_size=8, best_of=8, patience=1.2,
+            language=lang, beam_size=beam_size, best_of=beam_size, patience=1.0,
             vad_filter=False, condition_on_previous_text=False,
             word_timestamps=True, chunk_length=30
         )
@@ -247,6 +247,7 @@ class SRTApp:
             kwargs["hotwords"] = glossary
             kwargs["initial_prompt"] = glossary
 
+        self.emit("status", f"Transcribing 0% - {src.name}")
         segs, _ = model.transcribe(str(src), **kwargs)
         for seg in segs:
             words = getattr(seg, "words", None) or []
@@ -265,7 +266,9 @@ class SRTApp:
                 if t:
                     rows.append((seg.start, seg.end, t))
             if dur > 0:
-                self.emit("progress", min(99, int((seg.end / dur) * 100)))
+                pct = min(99, int((seg.end / dur) * 100))
+                self.emit("progress", pct)
+                self.emit("status", f"Transcribing {pct}% - {src.name}")
 
         rows.sort(key=lambda x: x[0])
         cues = []
@@ -287,7 +290,6 @@ class SRTApp:
     def worker(self):
         try:
             accuracy = self.accuracy.get()
-            model_name = "large-v3" if accuracy.startswith("Maximum") else ("medium" if accuracy.startswith("Balanced") else "small")
             lang_override = LANGS.get(self.language.get())
             glossary = self.glossary.get("1.0", "end").strip()
             outdir = self.output_var.get().strip()
@@ -297,11 +299,34 @@ class SRTApp:
 
             use_cuda = ctranslate2.get_cuda_device_count() > 0
             device = "cuda" if use_cuda else "cpu"
-            compute = "float16" if use_cuda else "int8"
+            if accuracy == "Auto Recommended":
+                model_name = "turbo" if use_cuda else "small"
+                beam_size = 2
+                compute = "int8_float16" if use_cuda else "int8"
+            elif accuracy.startswith("Maximum"):
+                model_name = "large-v3"
+                beam_size = 4 if use_cuda else 2
+                compute = "float16" if use_cuda else "int8"
+            elif accuracy.startswith("Balanced"):
+                model_name = "medium"
+                beam_size = 3 if use_cuda else 2
+                compute = "int8_float16" if use_cuda else "int8"
+            else:
+                model_name = "small"
+                beam_size = 2
+                compute = "int8_float16" if use_cuda else "int8"
             self.emit("log", f"Device: {device} / {compute}")
+            self.emit("log", f"Profile: {accuracy} -> {model_name}, beam {beam_size}")
             self.emit("status", "Loading detector")
             self.emit("log", "Loading language detector...")
-            detector = WhisperModel("small", device=device, compute_type=compute)
+            try:
+                detector = WhisperModel("small", device=device, compute_type=compute)
+            except Exception as detector_error:
+                self.emit("log", f"GPU detector unavailable: {detector_error}")
+                device = "cpu"
+                compute = "int8"
+                self.emit("log", "Switching to CPU mode...")
+                detector = WhisperModel("small", device=device, compute_type=compute)
 
             self.emit("status", f"Loading {model_name}")
             self.emit("log", f"Preparing model: {model_name}. First use may download several GB.")
@@ -323,7 +348,7 @@ class SRTApp:
             self.generated_pairs = []
             for idx, src in enumerate(self.files, 1):
                 self.emit("status", f"{idx}/{total}: {Path(src).name}")
-                srt_path = self.transcribe_file(src, outdir, model, detector, lang_override, glossary)
+                srt_path = self.transcribe_file(src, outdir, model, detector, lang_override, glossary, beam_size=beam_size)
                 self.generated_pairs.append((src, str(srt_path)))
                 self.emit("preview_ready", True)
             self.emit("progress", 100)
