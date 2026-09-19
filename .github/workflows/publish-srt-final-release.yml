@@ -1,0 +1,48 @@
+name: Publish Genius SRT Creator Final Release
+
+on:
+  push:
+    branches:
+      - srt-macos-builder
+    paths:
+      - '.github/workflows/publish-srt-final-release.yml'
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download validated Windows and macOS artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p release/win release/mac
+          curl -L -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/10586345214/zip" \
+            -o windows.zip
+          curl -L -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/10584719740/zip" \
+            -o macos.zip
+          unzip -o windows.zip -d release/win
+          unzip -o macos.zip -d release/mac
+          cp release/win/*.exe release/Genius-SRT-Creator-Windows-FINAL.exe
+          cp release/mac/*.dmg release/Genius-SRT-Creator-macOS-FINAL.dmg
+          ls -lh release/Genius-SRT-Creator-Windows-FINAL.exe release/Genius-SRT-Creator-macOS-FINAL.dmg
+
+      - name: Publish public release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: genius-srt-voicecoverage-v1
+          name: Genius SRT Creator - Final Voice Coverage
+          target_commitish: srt-macos-builder
+          body: |
+            Final validated build with opening-verse capture, full-video voice coverage,
+            regional/English transcription, subtitle preview, and forward-only timing.
+          files: |
+            release/Genius-SRT-Creator-Windows-FINAL.exe
+            release/Genius-SRT-Creator-macOS-FINAL.dmg
