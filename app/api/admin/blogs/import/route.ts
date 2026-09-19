@@ -9,6 +9,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const MAX_DOCX_BYTES = 10 * 1024 * 1024;
+const MAX_DOCUMENTS = 25;
 
 async function authorize() {
   if (process.env.DGS_ADMIN_ENABLED !== "true") return 404;
@@ -17,45 +18,87 @@ async function authorize() {
   return 200;
 }
 
-function isImageFile(file: File) {
-  return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
+function isMediaFile(file: File) {
+  return ["image/jpeg", "image/png", "image/webp", "video/mp4"].includes(file.type);
+}
+
+function duplicateError(error: unknown) {
+  if (!error || typeof error !== "object" || !("code" in error)) return false;
+  const code = String((error as { code?: unknown }).code || "");
+  return code === "23505" || code === "ER_DUP_ENTRY";
 }
 export async function POST(request: Request) {
   const status = await authorize();
   if (status !== 200) return NextResponse.json({ ok: false }, { status });
 
   const form = await request.formData();
-  const document = form.get("document");
-  if (!(document instanceof File) || !document.name.toLowerCase().endsWith(".docx")) {
-    return NextResponse.json({ ok: false, message: "A .docx blog file is required" }, { status: 400 });
+  const documents = [
+    ...form.getAll("documents"),
+    ...form.getAll("document"),
+  ].filter((item): item is File => item instanceof File && item.name.toLowerCase().endsWith(".docx"));
+
+  if (!documents.length) {
+    return NextResponse.json({ ok: false, message: "At least one .docx blog file is required" }, { status: 400 });
   }
-  if (document.size > MAX_DOCX_BYTES) {
-    return NextResponse.json({ ok: false, message: "Word file exceeds 10 MB" }, { status: 413 });
+  if (documents.length > MAX_DOCUMENTS) {
+    return NextResponse.json({ ok: false, message: `Maximum ${MAX_DOCUMENTS} Word files per batch` }, { status: 413 });
+  }
+  if (documents.some((document) => document.size > MAX_DOCX_BYTES)) {
+    return NextResponse.json({ ok: false, message: "One or more Word files exceed 10 MB" }, { status: 413 });
   }
 
-  const parsed = await parseBlogDocx(Buffer.from(await document.arrayBuffer()), document.name);
-  const imageFiles = form.getAll("images").filter((item): item is File => item instanceof File && isImageFile(item));
-  const images: BlogImportImage[] = [];
-  for (const file of imageFiles) {
-    images.push({ filename: file.name, mimeType: file.type, buffer: Buffer.from(await file.arrayBuffer()) });
+  const mediaFiles = form.getAll("images").filter((item): item is File => item instanceof File && isMediaFile(item));
+  const media: BlogImportImage[] = [];
+  for (const file of mediaFiles) {
+    media.push({ filename: file.name, mimeType: file.type, buffer: Buffer.from(await file.arrayBuffer()) });
   }
 
-  let storedImages = [] as Awaited<ReturnType<typeof storeBlogImages>>;
-  try {
-    storedImages = await storeBlogImages(parsed.slug, parsed.title, images);
-    const blog = await createCmsBlog({ title: parsed.title, slug: parsed.slug, excerpt: parsed.excerpt });
-    await attachImportedBlogPackage({
-      blogId: blog.id,
-      slug: parsed.slug,
-      title: parsed.title,
-      content: { version: 1, bodyHtml: injectInlineBlogImages(parsed.bodyHtml, storedImages), sourceHash: parsed.sourceHash, optimization: parsed.optimization, images: storedImages },
-    });
-    return NextResponse.json({ ok: true, blog, optimization: parsed.optimization, images: storedImages, originalsRetained: false }, { status: 201 });
-  } catch (error) {
-    await removeStoredBlogImages(parsed.slug);
-    const pgCode = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code || "") : "";
-    if (pgCode === "23505") return NextResponse.json({ ok: false, message: "A blog with this slug already exists" }, { status: 409 });
-    console.error("Word blog import failed", error);
-    return NextResponse.json({ ok: false, message: "Blog import failed" }, { status: 500 });
+  const results: Array<Record<string, unknown>> = [];
+  const failures: Array<{ filename: string; message: string }> = [];
+  for (const document of documents) {
+    const parsed = await parseBlogDocx(Buffer.from(await document.arrayBuffer()), document.name);
+    let storedImages = [] as Awaited<ReturnType<typeof storeBlogImages>>;
+    try {
+      storedImages = await storeBlogImages(parsed.slug, parsed.title, media);
+      const blog = await createCmsBlog({
+        title: parsed.title,
+        slug: parsed.slug,
+        excerpt: parsed.excerpt,
+      });
+      await attachImportedBlogPackage({
+        blogId: blog.id,
+        slug: parsed.slug,
+        title: parsed.title,
+        content: {
+          version: 1,
+          bodyHtml: injectInlineBlogImages(parsed.bodyHtml, storedImages),
+          sourceHash: parsed.sourceHash,
+          optimization: parsed.optimization,
+          images: storedImages,
+        },
+      });
+      results.push({
+        blog,
+        sourceFilename: document.name,
+        optimization: parsed.optimization,
+        images: storedImages,
+        originalsRetained: false,
+      });
+    } catch (error) {
+      await removeStoredBlogImages(parsed.slug);
+      failures.push({
+        filename: document.name,
+        message: duplicateError(error) ? "A blog with this title/slug already exists" : "Blog import failed",
+      });
+      if (!duplicateError(error)) console.error("Word blog import failed", document.name, error);
+    }
   }
+  const responseStatus = results.length && failures.length ? 207 : results.length ? 201 : 400;
+  return NextResponse.json({
+    ok: failures.length === 0,
+    imported: results.length,
+    failed: failures.length,
+    results,
+    failures,
+  }, { status: responseStatus });
 }

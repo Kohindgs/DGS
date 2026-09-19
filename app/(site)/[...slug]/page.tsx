@@ -3,7 +3,8 @@ import { Metadata } from "next";
 import { loadRouteRegistry, getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
 import { slugToPath } from "@/lib/nextjs/path";
-import { buildPageMetadata } from "@/lib/seo/metadata";`r`nimport { getPageSeoOverride } from "@/lib/seo/page-overrides";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { getPageSeoOverride } from "@/lib/seo/page-overrides";
 import { assertProtectedRouteSearchPolicy } from "@/lib/migration/search-policy";
 import { buildRouteSchemas } from "@/lib/schema/page-schemas";
 import { getRetiredRoute } from "@/lib/migration/retired-routes";
@@ -14,7 +15,8 @@ import { InnerWpMirrorPage } from "@/components/mirror/InnerWpMirrorPage";
 import { buildPageBreadcrumbs } from "@/lib/navigation/page-breadcrumbs";
 import { getAllBlogPosts, getBlogPostBySlug, getRelatedBlogPosts } from "@/lib/blog/blog-data";
 import { BlogArchive } from "@/components/blog/BlogArchive";
-import { BlogArticle } from "@/components/blog/BlogArticle";`r`nimport { BlogWpChrome } from "@/components/blog/BlogWpChrome";
+import { BlogArticle } from "@/components/blog/BlogArticle";
+import { BlogWpChrome } from "@/components/blog/BlogWpChrome";
 import { JsonLd } from "@/components/seo/JsonLd";
 import type { JsonLdValue } from "@/lib/schema/jsonld";
 import { buildGlobalEntitySchemas } from "@/lib/schema/page-schemas";
@@ -62,8 +64,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   }
 
   const decision = getRouteDecision(path);
-  const title = route.title || "Page";
-  const description = route.description || "";
+  const seoOverride = getPageSeoOverride(path);
+  const title = seoOverride?.title || route.title || "Page";
+  const description = seoOverride?.description || route.description || "";
   const canonicalFromRoute = route.desiredCanonicalPath || route.canonical || path;
   const canonicalPath = decision?.canonicalPath || canonicalFromRoute;
 
@@ -103,7 +106,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
           articleSchema({ headline: article.h1 || article.title, description: article.description, path: article.path, datePublished: article.date, dateModified: article.modified, publisherId: ORGANIZATION_ID, imageUrl: article.featuredImage?.src }),
         ];
         if (article.faqs.length > 0) articleSchemas.push(faqSchema(article.faqs.map((f) => ({ question: f.question, answer: f.answer }))));
-        return <><JsonLd value={articleSchemas as unknown as JsonLdValue} /><BlogWpChrome><BlogWpChrome><BlogArticle article={article} relatedPosts={relatedPosts} /></BlogWpChrome></BlogWpChrome></>;
+        return <><JsonLd value={articleSchemas as unknown as JsonLdValue} /><BlogWpChrome><BlogArticle article={article} relatedPosts={relatedPosts} /></BlogWpChrome></>;
       }
     } catch {
       // Do not expose an unpublished or unavailable CMS post.

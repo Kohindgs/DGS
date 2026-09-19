@@ -162,7 +162,7 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
   if (!content) return null;
   const optimized = content.optimization;
   const anchored = buildCmsToc(content.bodyHtml);
-  const featured = content.images.find((image) => image.featured) || content.images[0];
+  const featured = content.images.find((image) => image.featured && image.mimeType === "image/webp") || content.images.find((image) => image.mimeType === "image/webp");
   const text = stripHtmlText(anchored.html);
   return {
     path: optimized.seo.canonicalPath,

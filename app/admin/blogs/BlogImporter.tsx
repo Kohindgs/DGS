@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 
-type ImportResult = {
+type ImportItem = {
   blog: { id: string; slug: string; title: string; status: string };
+  sourceFilename: string;
   optimization: {
     seo: Record<string, unknown>;
     aeo: Record<string, unknown>;
@@ -11,40 +12,62 @@ type ImportResult = {
     llm: Record<string, unknown>;
     schemas: Record<string, unknown>[];
   };
-  images: Array<{ filename: string; url: string; altText: string; featured: boolean; bytes: number }>;
-  originalsRetained: boolean;
+  images: Array<{
+    filename: string;
+    url: string;
+    mimeType: "image/webp" | "video/webm";
+    altText: string;
+    featured: boolean;
+    bytes: number;
+  }>;
+};
+
+type ImportResponse = {
+  imported: number;
+  failed: number;
+  results: ImportItem[];
+  failures: Array<{ filename: string; message: string }>;
+  message?: string;
 };
 
 export function BlogImporter() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
-  const [result, setResult] = useState<ImportResult | null>(null);
+  const [results, setResults] = useState<ImportItem[]>([]);
+  const [failures, setFailures] = useState<ImportResponse["failures"]>([]);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
-    setMessage("Processing Word document and optimizing images...");
-    setResult(null);
+    setMessage("Processing Word documents and optimizing images/videos...");
+    setResults([]);
+    setFailures([]);
+
     const form = new FormData(event.currentTarget);
     const response = await fetch("/api/admin/blogs/import", { method: "POST", body: form });
-    const data = await response.json();
+    const data = await response.json() as ImportResponse;
     setBusy(false);
-    if (!response.ok) {
+
+    if (!response.ok && response.status !== 207) {
       setMessage(data.message || "Import failed");
       return;
     }
-    setResult(data);
-    setMessage("Draft created. Review the optimization package before publishing.");
+    setResults(data.results || []);
+    setFailures(data.failures || []);
+    setMessage(
+      data.failed
+        ? `Created ${data.imported} draft(s); ${data.failed} file(s) need attention.`
+        : `Created ${data.imported} optimized draft(s). Review before publishing.`,
+    );
   }
 
-  async function publish() {
-    if (!result) return;
+  async function publish(item: ImportItem) {
     setBusy(true);
-    setMessage("Publishing...");
+    setMessage(`Publishing ${item.blog.title}...`);
     const response = await fetch("/api/admin/blogs/publish", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: result.blog.id }),
+      body: JSON.stringify({ id: item.blog.id }),
     });
     const data = await response.json();
     setBusy(false);
@@ -52,35 +75,74 @@ export function BlogImporter() {
       setMessage(data.message || "Publish failed");
       return;
     }
-    setResult({ ...result, blog: { ...result.blog, status: data.blog.status } });
-    setMessage(`Published at /blogs/${result.blog.slug}/`);
+    setResults((current) => current.map((entry) =>
+      entry.blog.id === item.blog.id
+        ? { ...entry, blog: { ...entry.blog, status: data.blog.status } }
+        : entry,
+    ));
+    setMessage(`Published at /blogs/${item.blog.slug}/`);
   }
 
   return (
     <div className="dgs-admin-blog-importer">
       <form onSubmit={onSubmit} className="dgs-admin-upload-form">
         <label>
-          Word blog (.docx)
-          <input name="document" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required disabled={busy} />
+          Word blogs (.docx) — bulk upload
+          <input
+            name="documents"
+            type="file"
+            accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            multiple
+            required
+            disabled={busy}
+          />
         </label>
         <label>
-          Blog images
-          <input name="images" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple disabled={busy} />
+          Blog images and videos — bulk upload
+          <input
+            name="images"
+            type="file"
+            accept=".jpg,.jpeg,.png,.webp,.mp4,image/jpeg,image/png,image/webp,video/mp4"
+            multiple
+            disabled={busy}
+          />
         </label>
-        <p className="dgs-admin-help">Use matching names: <code>blog-name.docx</code>, <code>blog-name-featured.jpg</code>, <code>blog-name-01.png</code>. Originals are discarded after processing; only optimized WebP files remain.</p>
-        <button type="submit" disabled={busy}>{busy ? "Working..." : "Create optimized draft"}</button>
+        <p className="dgs-admin-help">
+          Match media to each Word filename/title: <code>blog-name.docx</code>,{" "}
+          <code>blog-name-featured.jpg</code>, <code>blog-name-01.png</code>,{" "}
+          <code>blog-name-01.mp4</code>. Images become high-quality WebP; MP4 becomes high-quality WebM.
+        </p>
+        <button type="submit" disabled={busy}>
+          {busy ? "Working..." : "Create optimized drafts"}
+        </button>
       </form>
 
       {message ? <p className="dgs-admin-login-message">{message}</p> : null}
-      {result ? (
-        <section className="dgs-admin-import-result">
+
+      {failures.length ? (
+        <article className="dgs-admin-import-panel">
+          <h3>Needs attention</h3>
+          <ul>
+            {failures.map((failure) => (
+              <li key={failure.filename}><strong>{failure.filename}</strong> · {failure.message}</li>
+            ))}
+          </ul>
+        </article>
+      ) : null}
+
+      {results.map((result) => (
+        <section className="dgs-admin-import-result" key={result.blog.id}>
           <div className="dgs-admin-import-head">
             <div>
               <span className="dgs-admin-badge">{result.blog.status}</span>
               <h2>{result.blog.title}</h2>
-              <p>/blogs/{result.blog.slug}/</p>
+              <p>{result.sourceFilename} → /blogs/{result.blog.slug}/</p>
             </div>
-            {result.blog.status !== "published" ? <button onClick={publish} disabled={busy}>Publish approved blog</button> : <a href={`/blogs/${result.blog.slug}/`} target="_blank" rel="noreferrer">View live blog</a>}
+            {result.blog.status !== "published" ? (
+              <button onClick={() => publish(result)} disabled={busy}>Publish approved blog</button>
+            ) : (
+              <a href={`/blogs/${result.blog.slug}/`} target="_blank" rel="noreferrer">View live blog</a>
+            )}
           </div>
 
           <div className="dgs-admin-optimization-grid">
@@ -96,13 +158,18 @@ export function BlogImporter() {
           </article>
 
           <article className="dgs-admin-import-panel">
-            <h3>Images</h3>
+            <h3>Media</h3>
             {result.images.length ? (
-              <ul>{result.images.map((image) => <li key={image.url}><strong>{image.featured ? "Featured" : "Inline"}</strong> · {image.filename} · alt: {image.altText} · {Math.round(image.bytes / 1024)} KB</li>)}</ul>
-            ) : <p>No matching images were uploaded.</p>}
+              <ul>{result.images.map((media) => (
+                <li key={media.url}>
+                  <strong>{media.featured ? "Featured" : media.mimeType === "video/webm" ? "Video" : "Inline"}</strong>
+                  {" · "}{media.filename} · {Math.round(media.bytes / 1024)} KB
+                </li>
+              ))}</ul>
+            ) : <p>No matching media was uploaded.</p>}
           </article>
         </section>
-      ) : null}
+      ))}
     </div>
   );
 }
