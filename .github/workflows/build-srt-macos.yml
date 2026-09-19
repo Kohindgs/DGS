@@ -1,0 +1,45 @@
+name: Build Genius SRT Creator macOS DMG
+
+on:
+  push:
+    branches:
+      - srt-macos-builder
+    paths:
+      - 'srt-builder/**'
+      - '.github/workflows/build-srt-macos.yml'
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r srt-builder/requirements.txt
+
+      - name: Verify Tkinter
+        run: python -c "import tkinter; print('tk ok')"
+
+      - name: Build macOS app
+        run: |
+          pyinstaller --noconfirm --clean --windowed             --name "Genius SRT Creator"             --collect-all faster_whisper             --collect-all ctranslate2             --collect-all imageio_ffmpeg             srt-builder/app.py
+
+      - name: Create DMG
+        run: |
+          hdiutil create             -volname "Genius SRT Creator"             -srcfolder "dist/Genius SRT Creator.app"             -ov -format UDZO             "Genius-SRT-Creator.dmg"
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: Genius-SRT-Creator-macOS
+          path: Genius-SRT-Creator.dmg
+          if-no-files-found: error
