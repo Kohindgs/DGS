@@ -108,6 +108,49 @@ export async function getPublishedCmsBlogBySlug(slug: string) {
   )).rows[0] || null;
 }
 
+export async function validateCmsBlogForPublish(id: string) {
+  const blog = (await cmsQuery<CmsPublishedBlog>(
+    `SELECT id, slug, title, excerpt, content, status, published_at, updated_at
+     FROM blog_posts WHERE id=? LIMIT 1`,
+    [id],
+  )).rows[0];
+
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  if (!blog) return { ok: false, errors: ["Draft not found"], warnings, blog: null };
+
+  const content = normalizeContent(blog.content)[0];
+  if (!content) {
+    errors.push("Optimization package is missing");
+    return { ok: false, errors, warnings, blog };
+  }
+
+  const plainText = stripHtmlText(content.bodyHtml || "");
+  if (plainText.length < 200) errors.push("Blog body is too short or empty");
+
+  const seo = content.optimization?.seo;
+  if (!seo?.title?.trim()) errors.push("SEO title is missing");
+  if (!seo?.description?.trim()) errors.push("Meta description is missing");
+  if (seo?.canonicalPath !== `/blogs/${blog.slug}/`) errors.push("Canonical path does not match the blog URL");
+
+  const aeo = content.optimization?.aeo;
+  if (!aeo?.conciseAnswer?.trim()) errors.push("AEO concise answer is missing");
+
+  const geo = content.optimization?.geo;
+  if (!(geo?.entities?.length || geo?.topics?.length)) errors.push("GEO entities/topics are missing");
+
+  const llm = content.optimization?.llm;
+  if (!llm?.answerSummary?.trim()) errors.push("LLM answer summary is missing");
+  if (!llm?.semanticHeadings?.length) warnings.push("No semantic H2/H3 headings detected");
+
+  const schemaTypes = new Set((content.optimization?.schemas || []).map((schema) => String(schema?.["@type"] || "")));
+  if (!schemaTypes.has("BlogPosting")) errors.push("BlogPosting schema is missing");
+  if (!schemaTypes.has("BreadcrumbList")) errors.push("Breadcrumb schema is missing");
+  if (!content.images?.length) warnings.push("No matched blog image was uploaded");
+
+  return { ok: errors.length === 0, errors, warnings, blog };
+}
+
 export async function publishCmsBlog(id: string) {
   await cmsExecute(
     `UPDATE blog_posts SET status='published', published_at=COALESCE(published_at, NOW()), updated_at=NOW() WHERE id=? AND status IN ('draft','review')`,

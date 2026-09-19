@@ -1,7 +1,22 @@
 import { verifiedOrganization } from "@/lib/schema/entity";
 import { siteConfig } from "@/lib/seo/site";
+import { isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
 
-export function GET() {
+export const dynamic = "force-dynamic";
+
+export async function GET() {
+  let blogLines = "";
+  if (isCmsDatabaseConfigured()) {
+    try {
+      blogLines = (await listPublishedCmsBlogs(12))
+        .map((blog) => `- [${blog.title}](${siteConfig.url}/blogs/${blog.slug}/)`)
+        .join("\n");
+    } catch {
+      blogLines = "";
+    }
+  }
+
   const content = `# ${verifiedOrganization.name}
 
 > Full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
@@ -15,6 +30,10 @@ Website: ${verifiedOrganization.url}/
 - [GEO Services](${verifiedOrganization.url}/services/geo/): GEO services in Mumbai to improve visibility in AI Overviews, ChatGPT, and generative search results.
 - [LLM SEO Services](${verifiedOrganization.url}/services/llm-seo-service/): LLM SEO services in Mumbai to improve visibility in ChatGPT, Gemini, AI Overviews and Perplexity.
 - [AI Video Production Agency](${verifiedOrganization.url}/services/ai-video-production-agency/): AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses.
+
+## Published Insights
+
+${blogLines || `- [Blog Index](${siteConfig.url}/blogs/)`}
 
 ## Key Case Studies & Portfolio
 

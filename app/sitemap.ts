@@ -5,6 +5,9 @@ import { careerJobPath, getActiveCareerJobs } from "@/lib/careers/jobs";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = await getIndexableRoutes();
 
