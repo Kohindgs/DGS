@@ -36,18 +36,18 @@ export default async function AdminPage() {
             <div className="dgs-admin-card-dot" aria-hidden="true" />
             <h2>{title}</h2>
             <p>{description}</p>
-            {title === "Blogs" ? <Link href="/admin/blogs/">Manage Blogs</Link> : <span>Foundation ready</span>}
+            {title === "Blogs" ? <Link href="/admin/blogs/">Manage Blogs</Link> : title === "Leads" ? <Link href="/admin/leads/">View Leads</Link> : <span>Foundation ready</span>}
           </article>
         ))}
       </section>
 
       <section className="dgs-admin-status">
         <h2>Migration status</h2>
-        <p>WordPress remains the temporary forms, CMS and media backend while native modules are built and verified.</p>
+        <p>WordPress remains the temporary utility backend for forms, assessment and SMTP while native CMS modules are built and verified.</p>
         <ul>
           <li>Headless WordPress bridge: active</li>
           <li>Fluent Forms context bridge: verified 11/11</li>
-          <li>Native PostgreSQL schema: source-ready</li>
+          <li>Native MySQL schema: source-ready</li>
           <li>Production cutover: not started</li>
         </ul>
       </section>
