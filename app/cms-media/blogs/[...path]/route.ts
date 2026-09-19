@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { open, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { NextResponse } from "next/server";
 import { getCmsMediaRoot } from "@/lib/cms/blog-media";
@@ -6,21 +6,56 @@ import { getCmsMediaRoot } from "@/lib/cms/blog-media";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET(_: Request, { params }: { params: Promise<{ path: string[] }> }) {
+function mediaType(filename: string) {
+  const lower = filename.toLowerCase();
+  if (lower.endsWith(".webp")) return "image/webp";
+  if (lower.endsWith(".webm")) return "video/webm";
+  return null;
+}
+
+export async function GET(request: Request, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params;
   if (!path?.length || path.some((part) => !/^[a-zA-Z0-9._-]+$/.test(part))) {
     return new NextResponse("Not found", { status: 404 });
   }
-  if (!path[path.length - 1].toLowerCase().endsWith(".webp")) {
-    return new NextResponse("Not found", { status: 404 });
-  }
+
+  const contentType = mediaType(path[path.length - 1]);
+  if (!contentType) return new NextResponse("Not found", { status: 404 });
 
   try {
     const filePath = join(getCmsMediaRoot(), "blogs", ...path);
+    const range = request.headers.get("range");
+    if (contentType === "video/webm" && range) {
+      const size = (await stat(filePath)).size;
+      const match = range.match(/bytes=(\d*)-(\d*)/);
+      const start = Math.min(Number(match?.[1] || 0), Math.max(size - 1, 0));
+      const requestedEnd = match?.[2] ? Number(match[2]) : start + 1024 * 1024 - 1;
+      const end = Math.min(Number.isFinite(requestedEnd) ? requestedEnd : size - 1, size - 1);
+      const length = Math.max(end - start + 1, 0);
+      const handle = await open(filePath, "r");
+      const body = Buffer.alloc(length);
+      try {
+        await handle.read(body, 0, length, start);
+      } finally {
+        await handle.close();
+      }
+      return new NextResponse(new Uint8Array(body), {
+        status: 206,
+        headers: {
+          "Content-Type": contentType,
+          "Accept-Ranges": "bytes",
+          "Content-Range": `bytes ${start}-${end}/${size}`,
+          "Content-Length": String(length),
+          "Cache-Control": "public, max-age=31536000, immutable",
+          "X-Content-Type-Options": "nosniff",
+        },
+      });
+    }
     const body = await readFile(filePath);
     return new NextResponse(new Uint8Array(body), {
       headers: {
-        "Content-Type": "image/webp",
+        "Content-Type": contentType,
+        "Accept-Ranges": contentType === "video/webm" ? "bytes" : "none",
         "Cache-Control": "public, max-age=31536000, immutable",
         "X-Content-Type-Options": "nosniff",
       },

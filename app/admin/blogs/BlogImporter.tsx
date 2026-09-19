@@ -12,6 +12,7 @@ type ImportResult = {
     schemas: Record<string, unknown>[];
   };
   images: Array<{ filename: string; url: string; altText: string; featured: boolean; bytes: number }>;
+  videos: Array<{ filename: string; url: string; bytes: number }>;
   originalsRetained: boolean;
 };
 
@@ -23,7 +24,7 @@ export function BlogImporter() {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
-    setMessage("Processing Word document and optimizing images...");
+    setMessage("Processing Word document and optimizing media...");
     setResult(null);
     const form = new FormData(event.currentTarget);
     const response = await fetch("/api/admin/blogs/import", { method: "POST", body: form });
@@ -67,7 +68,11 @@ export function BlogImporter() {
           Blog images
           <input name="images" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple disabled={busy} />
         </label>
-        <p className="dgs-admin-help">Use matching names: <code>blog-name.docx</code>, <code>blog-name-featured.jpg</code>, <code>blog-name-01.png</code>. Originals are discarded after processing; only optimized WebP files remain.</p>
+        <label>
+          Blog videos
+          <input name="videos" type="file" accept=".mp4,video/mp4" multiple disabled={busy} />
+        </label>
+        <p className="dgs-admin-help">Use matching names: <code>blog-name.docx</code>, <code>blog-name-featured.jpg</code>, <code>blog-name-01.jpg</code>, <code>blog-name-01.mp4</code>. Images become high-quality WebP and MP4 becomes VP9 WebM. Originals are discarded after successful conversion.</p>
         <button type="submit" disabled={busy}>{busy ? "Working..." : "Create optimized draft"}</button>
       </form>
 
@@ -100,6 +105,13 @@ export function BlogImporter() {
             {result.images.length ? (
               <ul>{result.images.map((image) => <li key={image.url}><strong>{image.featured ? "Featured" : "Inline"}</strong> · {image.filename} · alt: {image.altText} · {Math.round(image.bytes / 1024)} KB</li>)}</ul>
             ) : <p>No matching images were uploaded.</p>}
+          </article>
+
+          <article className="dgs-admin-import-panel">
+            <h3>Videos</h3>
+            {result.videos?.length ? (
+              <ul>{result.videos.map((video) => <li key={video.url}>{video.filename} · {Math.round(video.bytes / 1024 / 1024 * 10) / 10} MB</li>)}</ul>
+            ) : <p>No matching MP4 videos were uploaded.</p>}
           </article>
         </section>
       ) : null}

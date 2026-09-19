@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import type { BlogOptimizationPackage } from "@/lib/cms/blog-import";
 import type { StoredBlogImage } from "@/lib/cms/blog-media";
+import type { StoredBlogVideo } from "@/lib/cms/blog-video";
 
 export type CmsBlogSummary = {
   id: string;
@@ -19,6 +20,7 @@ export type CmsBlogContent = {
   sourceHash: string;
   optimization: BlogOptimizationPackage;
   images: StoredBlogImage[];
+  videos?: StoredBlogVideo[];
 };
 
 export type CmsPublishedBlog = CmsBlogSummary & {
@@ -69,6 +71,16 @@ export async function attachImportedBlogPackage(input: {
     );
     const media = (await cmsQuery<{ id: string }>(`SELECT id FROM media WHERE storage_key=? LIMIT 1`, [storageKey])).rows[0];
     if (image.featured) featuredMediaId = media?.id || null;
+  }
+
+  for (const video of input.content.videos || []) {
+    const storageKey = `blogs/${input.slug}/${video.filename}`;
+    await cmsExecute(
+      `INSERT INTO media (id, storage_key, url, mime_type, alt_text, width, height, source)
+       VALUES (?, ?, ?, ?, NULL, NULL, NULL, 'native-blog-import')
+       ON DUPLICATE KEY UPDATE url=VALUES(url), mime_type=VALUES(mime_type)`,
+      [randomUUID(), storageKey, video.url, video.mimeType],
+    );
   }
 
   if (featuredMediaId) {

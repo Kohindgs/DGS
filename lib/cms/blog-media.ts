@@ -43,7 +43,10 @@ export async function storeBlogImages(slug: string, title: string, images: BlogI
     if (!ALLOWED.has(image.mimeType) || image.buffer.length > MAX_IMAGE_BYTES) continue;
     const featured = image === preferred;
     const filename = `${safeStem(image.filename)}.webp`;
-    const converted = sharp(image.buffer).rotate().resize({ width: featured ? 1600 : 1400, withoutEnlargement: true }).webp({ quality: 82, effort: 4 });
+    const converted = sharp(image.buffer)
+      .rotate()
+      .resize({ width: featured ? 1600 : 1400, withoutEnlargement: true })
+      .webp({ quality: 92, nearLossless: true, smartSubsample: true, effort: 5 });
     const metadata = await converted.metadata();
     const output = await converted.toBuffer();
     await writeFile(join(dir, filename), output);

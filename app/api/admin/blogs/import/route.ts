@@ -3,6 +3,7 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { parseBlogDocx, type BlogImportImage } from "@/lib/cms/blog-import";
 import { injectInlineBlogImages, removeStoredBlogImages, storeBlogImages } from "@/lib/cms/blog-media";
+import { injectInlineBlogVideos, storeBlogVideos } from "@/lib/cms/blog-video";
 import { attachImportedBlogPackage, createCmsBlog } from "@/lib/cms/blogs";
 
 export const runtime = "nodejs";
@@ -19,6 +20,10 @@ async function authorize() {
 
 function isImageFile(file: File) {
   return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
+}
+
+function isVideoFile(file: File) {
+  return file.type === "video/mp4" || file.name.toLowerCase().endsWith(".mp4");
 }
 export async function POST(request: Request) {
   const status = await authorize();
@@ -39,18 +44,32 @@ export async function POST(request: Request) {
   for (const file of imageFiles) {
     images.push({ filename: file.name, mimeType: file.type, buffer: Buffer.from(await file.arrayBuffer()) });
   }
+  const videoFiles = form.getAll("videos").filter((item): item is File => item instanceof File && isVideoFile(item));
+  const videos: BlogImportImage[] = [];
+  for (const file of videoFiles) {
+    videos.push({ filename: file.name, mimeType: file.type || "video/mp4", buffer: Buffer.from(await file.arrayBuffer()) });
+  }
 
   let storedImages = [] as Awaited<ReturnType<typeof storeBlogImages>>;
+  let storedVideos = [] as Awaited<ReturnType<typeof storeBlogVideos>>;
   try {
     storedImages = await storeBlogImages(parsed.slug, parsed.title, images);
+    storedVideos = await storeBlogVideos(parsed.slug, videos);
     const blog = await createCmsBlog({ title: parsed.title, slug: parsed.slug, excerpt: parsed.excerpt });
     await attachImportedBlogPackage({
       blogId: blog.id,
       slug: parsed.slug,
       title: parsed.title,
-      content: { version: 1, bodyHtml: injectInlineBlogImages(parsed.bodyHtml, storedImages), sourceHash: parsed.sourceHash, optimization: parsed.optimization, images: storedImages },
+      content: {
+        version: 1,
+        bodyHtml: injectInlineBlogVideos(injectInlineBlogImages(parsed.bodyHtml, storedImages), storedVideos),
+        sourceHash: parsed.sourceHash,
+        optimization: parsed.optimization,
+        images: storedImages,
+        videos: storedVideos,
+      },
     });
-    return NextResponse.json({ ok: true, blog, optimization: parsed.optimization, images: storedImages, originalsRetained: false }, { status: 201 });
+    return NextResponse.json({ ok: true, blog, optimization: parsed.optimization, images: storedImages, videos: storedVideos, originalsRetained: false }, { status: 201 });
   } catch (error) {
     await removeStoredBlogImages(parsed.slug);
     const pgCode = typeof error === "object" && error && "code" in error ? String((error as { code?: unknown }).code || "") : "";
