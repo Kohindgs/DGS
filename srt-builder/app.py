@@ -1,8 +1,8 @@
-import os, re, sys, json, time, tempfile, subprocess, threading, queue, base64, html, webbrowser
+import os, re, sys, json, time, tempfile, subprocess, threading, queue, base64, html, webbrowser, difflib
 from pathlib import Path
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-import av, ctranslate2, imageio_ffmpeg
+import av, ctranslate2
 from faster_whisper import WhisperModel
 from faster_whisper.audio import decode_audio
 
@@ -39,10 +39,15 @@ LANG_HINTS = {
 
 def filename_language_hint(path):
     name = Path(path).stem.lower()
+    matches = []
     for key, code in LANG_HINTS.items():
-        if key in name:
-            return code
-    return None
+        pos = name.rfind(key)
+        if pos >= 0:
+            matches.append((pos, len(key), code, key))
+    if not matches:
+        return None
+    matches.sort(key=lambda x: (x[0], x[1]))
+    return matches[-1][2]
 
 def stamp(sec):
     ms = int(round(sec * 1000))
@@ -56,16 +61,6 @@ def media_duration(path):
         if container.duration:
             return float(container.duration * av.time_base)
     return 0.0
-
-def ffmpeg_extract(src, start, length, out):
-    exe = imageio_ffmpeg.get_ffmpeg_exe()
-    cmd = [exe, "-y", "-hide_banner", "-loglevel", "error",
-           "-ss", str(start), "-i", str(src), "-t", str(length),
-           "-vn", "-ac", "1", "-ar", "16000", "-af", "loudnorm", str(out)]
-    kwargs = {"check": True}
-    if os.name == "nt":
-        kwargs["creationflags"] = 0x08000000
-    subprocess.run(cmd, **kwargs)
 
 class SRTApp:
     def __init__(self, root):
@@ -374,6 +369,25 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                     break
 
         rows.sort(key=lambda x: x[0])
+        deduped = []
+        for row in rows:
+            a, b, t = row
+            t = re.sub(r"\s+", " ", t).strip()
+            if not t:
+                continue
+            if deduped:
+                pa, pb, pt = deduped[-1]
+                n1 = re.sub(r"[^\w\u0900-\u0D7F]+", "", pt.lower())
+                n2 = re.sub(r"[^\w\u0900-\u0D7F]+", "", t.lower())
+                overlap = max(0.0, min(pb, b) - max(pa, a))
+                similarity = difflib.SequenceMatcher(None, n1, n2).ratio() if n1 and n2 else 0.0
+                contained = bool(n1 and n2 and (n1 in n2 or n2 in n1))
+                if overlap > 0.25 and (similarity >= 0.62 or contained):
+                    if len(n2) > len(n1):
+                        deduped[-1] = (min(pa, a), max(pb, b), t)
+                    continue
+            deduped.append((a, b, t))
+        rows = deduped
         cues = []
         if self.include_title.get():
             first_voice = rows[0][0] if rows else 3.0
