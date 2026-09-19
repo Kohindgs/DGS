@@ -426,6 +426,95 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
             deduped.append((a, b, t))
         rows = deduped
 
+        # Second-pass recovery for long uncovered gaps. This is intentionally
+        # language-aware and conservative: it only inserts reasonably confident
+        # word-timed phrases and rejects repetitive / malformed hallucinations.
+        if rows:
+            recovery_prompts = {
+                "mr": "मराठी कविता किंवा गाणे. प्रत्येक ओळ अचूक लिहा. कोणतीही ओळ सोडू नका.",
+                "hi": "हिंदी कविता या गीत। हर पंक्ति ठीक से लिखें। कोई पंक्ति न छोड़ें।",
+                "en": "Transcribe every spoken or sung word accurately. Do not skip any line."
+            }
+
+            def recover_gap(gs, ge):
+                recovered = []
+                if ge - gs < 1.60:
+                    return recovered
+                rs = max(0.0, gs - 0.35)
+                re_ = min(dur, ge + 0.35)
+                chunk = audio[int(rs * 16000):int(re_ * 16000)]
+                if len(chunk) == 0:
+                    return recovered
+                rk = dict(
+                    language=lang, beam_size=max(3, beam_size), best_of=max(3, beam_size),
+                    patience=1.0, vad_filter=False, condition_on_previous_text=False,
+                    word_timestamps=True, chunk_length=30, no_speech_threshold=1.0,
+                    log_prob_threshold=None, compression_ratio_threshold=None
+                )
+                if glossary:
+                    rk["hotwords"] = glossary
+                    rk["initial_prompt"] = glossary
+                elif lang in recovery_prompts:
+                    rk["initial_prompt"] = recovery_prompts[lang]
+
+                segs, _ = model.transcribe(chunk, **rk)
+                for seg in segs:
+                    words = getattr(seg, "words", None) or []
+                    if not words:
+                        continue
+                    probs = [float(getattr(w, "probability", 0.0) or 0.0) for w in words]
+                    if not probs or (sum(probs) / len(probs)) < 0.48:
+                        continue
+                    raw = "".join(w.word for w in words).strip()
+                    toks = re.findall(r"[\w\u0900-\u0D7F]+", raw.lower())
+                    if not toks:
+                        continue
+                    if max(len(x) for x in toks) > 20:
+                        continue
+                    if len(toks) >= 4 and (len(set(toks)) / len(toks)) < 0.40:
+                        continue
+                    if re.search(r"(.)\1{5,}", raw):
+                        continue
+
+                    group = []
+                    for w in words:
+                        a = rs + float(w.start)
+                        b = rs + float(w.end)
+                        mid = (a + b) / 2
+                        if not (gs - 0.10 <= mid <= ge + 0.10):
+                            continue
+                        p = float(getattr(w, "probability", 0.0) or 0.0)
+                        if p < 0.30:
+                            continue
+                        if group and (a - group[-1][1]) >= 0.32:
+                            txt = "".join(x[2] for x in group).strip()
+                            if txt:
+                                recovered.append((max(gs, group[0][0] - 0.05), min(ge, group[-1][1] + 0.06), txt))
+                            group = []
+                        group.append((a, b, w.word))
+                        txt = "".join(x[2] for x in group).strip()
+                        wc = len(re.findall(r"[\w\u0900-\u0D7F]+", txt))
+                        if wc >= 4 or (group[-1][1] - group[0][0]) >= 1.40 or re.search(r"[.!?।]$", txt):
+                            recovered.append((max(gs, group[0][0] - 0.05), min(ge, group[-1][1] + 0.06), txt))
+                            group = []
+                    if group:
+                        txt = "".join(x[2] for x in group).strip()
+                        if txt:
+                            recovered.append((max(gs, group[0][0] - 0.05), min(ge, group[-1][1] + 0.06), txt))
+                return recovered
+
+            recovered_rows = []
+            for i in range(1, len(rows)):
+                gap_start = rows[i-1][1]
+                gap_end = rows[i][0]
+                if gap_end - gap_start >= 1.60:
+                    recovered_rows.extend(recover_gap(gap_start, gap_end))
+            if dur - rows[-1][1] >= 1.60:
+                recovered_rows.extend(recover_gap(rows[-1][1], dur))
+            if recovered_rows:
+                rows.extend(recovered_rows)
+                rows.sort(key=lambda x: x[0])
+
         # Preserve the actual speech start time. If cues collide, shorten the
         # previous cue rather than delaying the next spoken/sung word.
         clean_rows = []
