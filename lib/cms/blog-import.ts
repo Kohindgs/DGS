@@ -137,7 +137,10 @@ export async function parseBlogDocx(buffer: Buffer, filename: string): Promise<P
 }
 
 export function imageMatchesSlug(filename: string, slug: string) {
-  const stem = filename.replace(/\.[^.]+$/, "");
-  const normalized = slugify(stem.replace(/-(featured|hero|cover|\d+)$/i, ""));
+  const stem = slugify(filename.replace(/\.[^.]+$/, ""));
+  const normalized = stem
+    .replace(/-(featured|hero|cover)(-\d+)?$/i, "")
+    .replace(/-(image|img|video)-?\d*$/i, "")
+    .replace(/-\d+$/i, "");
   return normalized === slug;
 }

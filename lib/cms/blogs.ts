@@ -96,6 +96,11 @@ export async function attachImportedBlogPackage(input: {
   );
 }
 
+export async function deleteCmsDraftBlog(id: string) {
+  await cmsExecute(`DELETE FROM seo_metadata WHERE entity_type='blog_post' AND entity_id=?`, [id]);
+  await cmsExecute(`DELETE FROM blog_posts WHERE id=? AND status='draft'`, [id]);
+}
+
 export async function getPublishedCmsBlogBySlug(slug: string) {
   return (await cmsQuery<CmsPublishedBlog>(
     `SELECT id, slug, title, excerpt, content, status, published_at, updated_at FROM blog_posts WHERE slug=? AND status='published' LIMIT 1`,
