@@ -26,10 +26,11 @@
         "classification": null
       },
       {
-        "headingId": "performance-marketing",
-        "anchor": "Performance Marketing",
-        "wordpressDestination": "/services/performance-marketing/",
-        "requiredNextDestination": "/services/performance-marketing/"
+        "headingId": "google-ads-services",
+        "anchor": "Google Ads Services",
+        "wordpressDestination": "/services/google-ads/",
+        "requiredNextDestination": "/services/performance-marketing/",
+        "classification": "B"
       },
       {
         "headingId": "website-development-company-in-mumbai",

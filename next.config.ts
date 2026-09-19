@@ -10,20 +10,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "www.dgeniussolutions.com" },
       { protocol: "https", hostname: "dgeniussolutions.com" },
-      { protocol: "https", hostname: "s.wordpress.com" },
     ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/wp-content/uploads/:path*.mp4",
-        destination: "https://www.dgeniussolutions.com/wp-content/uploads/:path*.mp4",
-      },
-      {
-        source: "/wp-content/uploads/:path*.webm",
-        destination: "https://www.dgeniussolutions.com/wp-content/uploads/:path*.webm",
-      },
-    ];
   },
   async headers() {
     return [

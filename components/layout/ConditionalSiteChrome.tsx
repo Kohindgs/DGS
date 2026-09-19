@@ -1,14 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
 type Props = {
   children?: React.ReactNode;
 };
 
-/** Mirror pages supply captured WP chrome; native blog pages need Next chrome. */
+/** Public pages now supply the captured DGS chrome directly where required. */
 export function ConditionalSiteChrome({ children }: Props) {
-  const pathname = usePathname();
-  const isBlog = pathname === "/blogs" || pathname?.startsWith("/blogs/");
-  return isBlog ? <>{children}</> : null;
+  void children;
+  return null;
 }

@@ -5,6 +5,7 @@ import innerMirrorIndex from "@/data/wordpress/mirrors/index.json";
 import rawPostsData from "@/data/wordpress/raw/posts.json";
 import rawMediaData from "@/data/wordpress/raw/media.json";
 import { applyApprovedLinkCorrectionsToHtml } from "@/lib/wordpress/apply-mirror-link-corrections";
+import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
 
 export type BlogPostMeta = {
   path: string;
@@ -54,7 +55,7 @@ for (const m of rawMediaData as Array<{ id: number; source_url?: string; guid?: 
   const src = m.source_url || m.guid?.rendered;
   if (src) {
     mediaMap.set(m.id, {
-      src,
+      src: rewriteWpUrls(src),
       alt: m.alt_text || m.title?.rendered || "",
     });
   }
@@ -77,7 +78,7 @@ function extractFeaturedImageFromHtml(html: string): BlogPostMeta["featuredImage
   );
   if (cmsmastersMatch) {
     return {
-      src: cmsmastersMatch[1],
+      src: rewriteWpUrls(cmsmastersMatch[1]),
       alt: cmsmastersMatch[2] || "",
       width: 1200,
       height: 675,
@@ -87,7 +88,7 @@ function extractFeaturedImageFromHtml(html: string): BlogPostMeta["featuredImage
   const anyImgMatch = html.match(/<img[^>]+src=["'](https?:\/\/[^"']+\.(?:webp|png|jpg|jpeg))["'][^>]*alt=["']([^"']*)["']/i);
   if (anyImgMatch) {
     return {
-      src: anyImgMatch[1],
+      src: rewriteWpUrls(anyImgMatch[1]),
       alt: anyImgMatch[2] || "",
       width: 1200,
       height: 675,
@@ -234,6 +235,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   }
 
   bodyHtml = applyApprovedLinkCorrectionsToHtml(path, bodyHtml);
+  bodyHtml = rewriteWpUrls(bodyHtml);
   bodyHtml = bodyHtml.replace(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi, "<h2$1>$2</h2>");
   const anchored = addHeadingAnchors(bodyHtml);
   bodyHtml = anchored.html;

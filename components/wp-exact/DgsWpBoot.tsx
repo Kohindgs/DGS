@@ -55,7 +55,35 @@ export function DgsWpBoot({
     };
 
     document.addEventListener("click", onTalkClick);
-    return () => document.removeEventListener("click", onTalkClick);
+
+    const footerMap = document.querySelector<HTMLIFrameElement>("#footerMapEmbed iframe[data-src]");
+    let mapObserver: IntersectionObserver | null = null;
+    const loadFooterMap = () => {
+      if (!footerMap || footerMap.src !== "about:blank") return;
+      const nextSrc = footerMap.dataset.src;
+      if (nextSrc) footerMap.src = nextSrc;
+    };
+    if (footerMap) {
+      if ("IntersectionObserver" in window) {
+        mapObserver = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((entry) => entry.isIntersecting)) {
+              loadFooterMap();
+              mapObserver?.disconnect();
+            }
+          },
+          { rootMargin: "800px 0px" },
+        );
+        mapObserver.observe(footerMap);
+      } else {
+        loadFooterMap();
+      }
+    }
+
+    return () => {
+      document.removeEventListener("click", onTalkClick);
+      mapObserver?.disconnect();
+    };
   }, [bootNav, bootV1215, bootPortfolio, bootFooter, runV1215, runPortfolio, openLetsTalk]);
 
   return null;

@@ -1,17 +1,11 @@
 export const WP_ORIGIN = "https://www.dgeniussolutions.com";
-const WP_ORIGIN_PATTERN = /https:\/\/(?:www\.)?dgeniussolutions\.com/gi;
+const WP_ASSET_ORIGIN_PATTERN = /https:\/\/(?:(?:www\.)?dgeniussolutions\.com|wp-origin\.dgeniussolutions\.com)/gi;
 
-/** Rewrites internal page and asset URLs to site-relative paths, preserving large media streaming assets. */
+/** Rewrites captured WordPress page and media URLs to site-relative paths. */
 export function rewriteWpUrls(html: string): string {
-  const out = html.replace(WP_ORIGIN_PATTERN, (match, offset, source) => {
+  const out = html.replace(WP_ASSET_ORIGIN_PATTERN, (match, offset, source) => {
     const next = source[offset + match.length];
-    if (next !== "/") return match;
-    const after = source.slice(offset + match.length);
-    const urlMatch = after.match(/^[^\s"'<>]+/);
-    if (urlMatch && /\.(mp4|webm|ogv)(\?.*)?$/i.test(urlMatch[0])) {
-      return match;
-    }
-    return "";
+    return next === "/" ? "" : match;
   });
 
   return out.replaceAll('href="/#', 'href="#');

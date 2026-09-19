@@ -5,7 +5,6 @@ import { ChromeProvider } from "@/components/layout/ChromeProvider";
 import { SiteMenu } from "@/components/layout/SiteMenu";
 import { LetsTalkModal } from "@/components/layout/LetsTalkModal";
 import { ConditionalSiteChrome } from "@/components/layout/ConditionalSiteChrome";
-import { ScrollProvider } from "@/components/motion/ScrollProvider";
 
 export default function SiteChromeLayout({
   children,
@@ -14,18 +13,16 @@ export default function SiteChromeLayout({
 }>) {
   return (
     <ChromeProvider>
-      <ScrollProvider>
-        <SkipLink />
-        <ConditionalSiteChrome>
-          <SiteHeader />
-          <SiteMenu />
-        </ConditionalSiteChrome>
-        <LetsTalkModal />
-        {children}
-        <ConditionalSiteChrome>
-          <SiteFooter />
-        </ConditionalSiteChrome>
-      </ScrollProvider>
+      <SkipLink />
+      <ConditionalSiteChrome>
+        <SiteHeader />
+        <SiteMenu />
+      </ConditionalSiteChrome>
+      <LetsTalkModal />
+      {children}
+      <ConditionalSiteChrome>
+        <SiteFooter />
+      </ConditionalSiteChrome>
     </ChromeProvider>
   );
 }

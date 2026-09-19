@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-29T16:59:24.953Z",
-  "target": "http://127.0.0.1:3025",
-  "expectStagingNoindex": true,
+  "generatedAt": "2026-09-19T11:56:46.152Z",
+  "target": "http://192.168.0.167:3195",
+  "expectStagingNoindex": false,
   "rankingBaselineDigest": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
   "summary": {
-    "totalUrls": 141,
+    "totalUrls": 151,
     "classified": {
-      "200_RETAINED": 96,
-      "301_REDIRECT": 30,
+      "200_RETAINED": 100,
+      "301_REDIRECT": 36,
       "308_REDIRECT": 0,
       "410_RETIRED": 1,
       "NOINDEX_RETAINED": 9,
@@ -19,31 +19,31 @@
     "visualMirrorStatus": {
       "VISUAL_MIRROR_COMPLETE": 1,
       "VISUAL_MIRROR_PARTIAL": 3,
-      "VISUAL_MIRROR_PENDING": 96,
+      "VISUAL_MIRROR_PENDING": 100,
       "RANKING_PROTECTED": 5,
-      "NOT_APPLICABLE": 36
+      "NOT_APPLICABLE": 42
     },
-    "retainedRoutesChecked": 105,
-    "retainedPassing": 105,
+    "retainedRoutesChecked": 109,
+    "retainedPassing": 109,
     "retainedFailing": 0,
-    "contentComplete": 98,
+    "contentComplete": 34,
     "contentIncomplete": 0,
     "rankingProtected": 5,
-    "intentionallyNative": 2,
+    "intentionallyNative": 70,
     "contentReviewRequired": 0,
     "contentStatusReconciles": true,
     "visualStatusReconciles": true,
     "retainedHtmlVisualCounts": {
       "VISUAL_MIRROR_COMPLETE": 1,
       "VISUAL_MIRROR_PARTIAL": 3,
-      "VISUAL_MIRROR_PENDING": 96,
+      "VISUAL_MIRROR_PENDING": 100,
       "RANKING_PROTECTED": 5,
       "NOT_APPLICABLE": 0
     },
     "globalChromeAudit": {
       "source": "rendered-homepage-chrome-with-canonical-fallback",
-      "uniqueInternalLinks": 20,
-      "checked": 20,
+      "uniqueInternalLinks": 29,
+      "checked": 29,
       "notFound404": 0,
       "gone410": 0,
       "serverError5xx": 0,
@@ -67,7 +67,7 @@
         "note": "Homepage AI icon row uses external CDN assets excluded from blocking audit on /."
       }
     },
-    "visualMirrorPending": 96,
+    "visualMirrorPending": 100,
     "blockingFailureCount": 0,
     "contentFindingCount": 0,
     "tier0Paths": [
@@ -80,8 +80,8 @@
     "auditCoverage": {
       "allImagesChecked": true,
       "allLinksChecked": true,
-      "uniqueImageUrlsChecked": 76,
-      "uniqueInternalUrlsChecked": 37,
+      "uniqueImageUrlsChecked": 438,
+      "uniqueInternalUrlsChecked": 97,
       "displayedSummaryCapsOnly": {
         "brokenImagesPerRoute": 8,
         "brokenLinksPerRoute": 8,
@@ -101,9 +101,9 @@
     "counts": {
       "VISUAL_MIRROR_COMPLETE": 1,
       "VISUAL_MIRROR_PARTIAL": 3,
-      "VISUAL_MIRROR_PENDING": 96,
+      "VISUAL_MIRROR_PENDING": 100,
       "RANKING_PROTECTED": 5,
-      "NOT_APPLICABLE": 36
+      "NOT_APPLICABLE": 42
     }
   },
   "inventory": [
@@ -151,30 +151,15 @@
         "descriptionPresent": true,
         "h1": "Full Service Digital Marketing Agency In Mumbai",
         "canonicalPath": "/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "Answer",
-          "City",
-          "ContactPoint",
-          "Country",
-          "EntryPoint",
           "FAQPage",
-          "GeoCoordinates",
-          "HowTo",
           "ImageObject",
-          "ItemList",
-          "ListItem",
           "LocalBusiness",
-          "Offer",
-          "OfferCatalog",
-          "OpeningHoursSpecification",
           "Organization",
-          "Person",
-          "Place",
           "PostalAddress",
           "Question",
-          "SearchAction",
-          "Service",
           "WebPage",
           "WebSite"
         ],
@@ -190,130 +175,22 @@
           "faqAnswerDiffs": [],
           "missingLists": [],
           "missingLinks": [],
-          "missingImages": [
-            {
-              "alt": "Digital marketing, SEO, AEO, GEO, LLM SEO and AI production agency visual for D'Genius Solutions",
-              "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/01/thoughtful-logo-concept-featuring-ai-meaningful-way.webp",
-              "wordpressId": 63505,
-              "blockIndex": 3,
-              "blockType": "image"
-            },
-            {
-              "alt": "Prime Insights Best Place to Work award for D'Genius Solutions Pvt. Ltd.",
-              "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
-              "wordpressId": 63505,
-              "blockIndex": 62,
-              "blockType": "image"
-            },
-            {
-              "alt": "Corporate Connect highly regarded digital marketing agency award for D'Genius Solutions Pvt. Ltd.",
-              "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
-              "wordpressId": 63505,
-              "blockIndex": 66,
-              "blockType": "image"
-            },
-            {
-              "alt": "GLA award for excellence in SEO content and performance marketing for D'Genius Solutions Pvt. Ltd.",
-              "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==",
-              "wordpressId": 63505,
-              "blockIndex": 70,
-              "blockType": "image"
-            }
-          ],
-          "renderedHeadingCount": 47,
+          "missingImages": [],
+          "renderedHeadingCount": 48,
           "renderedImageCount": 69
         },
         "imageAudit": {
-          "checkedCount": 68,
-          "brokenCount": 2,
+          "checkedCount": 69,
+          "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
-          "externalDependencyCount": 5,
-          "brokenImages": [
-            {
-              "src": "https://cdn.simpleicons.org/openai/FFFFFF",
-              "sourceUrl": "https://cdn.simpleicons.org/openai/FFFFFF",
-              "status": 404,
-              "classification": "BROKEN",
-              "routes": [
-                "/"
-              ],
-              "wordpressWorks": false,
-              "nextWorks": null
-            },
-            {
-              "src": "https://cdn.simpleicons.org/microsoftcopilot/FFFFFF",
-              "sourceUrl": "https://cdn.simpleicons.org/microsoftcopilot/FFFFFF",
-              "status": 404,
-              "classification": "BROKEN",
-              "routes": [
-                "/"
-              ],
-              "wordpressWorks": false,
-              "nextWorks": null
-            }
-          ],
+          "externalDependencyCount": 0,
+          "brokenImages": [],
           "rateLimitedImages": [],
-          "externalDependencyImages": [
-            {
-              "src": "https://cdn.simpleicons.org/openai/FFFFFF",
-              "sourceUrl": "https://cdn.simpleicons.org/openai/FFFFFF",
-              "status": 404,
-              "classification": "BROKEN",
-              "routes": [
-                "/"
-              ],
-              "wordpressWorks": false,
-              "nextWorks": null
-            },
-            {
-              "src": "https://cdn.simpleicons.org/perplexity/FFFFFF",
-              "sourceUrl": "https://cdn.simpleicons.org/perplexity/FFFFFF",
-              "status": 200,
-              "classification": "OK",
-              "routes": [
-                "/"
-              ],
-              "wordpressWorks": true,
-              "nextWorks": null
-            },
-            {
-              "src": "https://cdn.simpleicons.org/googlegemini/FFFFFF",
-              "sourceUrl": "https://cdn.simpleicons.org/googlegemini/FFFFFF",
-              "status": 200,
-              "classification": "OK",
-              "routes": [
-                "/"
-              ],
-              "wordpressWorks": true,
-              "nextWorks": null
-            },
-            {
-              "src": "https://cdn.simpleicons.org/anthropic/FFFFFF",
-              "sourceUrl": "https://cdn.simpleicons.org/anthropic/FFFFFF",
-              "status": 200,
-              "classification": "OK",
-              "routes": [
-                "/"
-              ],
-              "wordpressWorks": true,
-              "nextWorks": null
-            },
-            {
-              "src": "https://cdn.simpleicons.org/microsoftcopilot/FFFFFF",
-              "sourceUrl": "https://cdn.simpleicons.org/microsoftcopilot/FFFFFF",
-              "status": 404,
-              "classification": "BROKEN",
-              "routes": [
-                "/"
-              ],
-              "wordpressWorks": false,
-              "nextWorks": null
-            }
-          ]
+          "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 14,
+          "checkedCount": 20,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -372,7 +249,7 @@
         "descriptionPresent": true,
         "h1": "Innovators Driven by Passion & Purpose Since 2021",
         "canonicalPath": "/about-us/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -399,7 +276,7 @@
           "renderedImageCount": 2
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 2,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -465,17 +342,20 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "AEO Dubai",
+        "title": "AEO Agency in Dubai | AI Search & Google AI Overviews | DGS",
         "descriptionPresent": true,
         "h1": "AEO Agency in Dubai for AI Search Visibility, Google AI Overviews & Qualified Leads",
         "canonicalPath": "/aeo-dubai/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -483,20 +363,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 78,
-          "renderedImageCount": 31
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 19,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -565,7 +434,7 @@
         "descriptionPresent": true,
         "h1": "AEO Services In Mumbai Built To Win AI Answers And Qualified Leads",
         "canonicalPath": "/aeo-services-mumbai-google-ads-landing-page/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -589,10 +458,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 31,
-          "renderedImageCount": 34
+          "renderedImageCount": 41
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 26,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -686,7 +555,7 @@
         "descriptionPresent": true,
         "h1": "AI Motion Graphic Designer",
         "canonicalPath": "/ai-motion-graphic-designer/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -782,7 +651,7 @@
         "descriptionPresent": true,
         "h1": "AI Production Videos For Brands That Need Campaign Ready Content Faster",
         "canonicalPath": "/ai-production-videos-google-ads-landing-page/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -809,7 +678,7 @@
           "renderedImageCount": 10
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 10,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -875,11 +744,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "Australia Page",
+        "title": "Digital Marketing Agency in Australia | SEO, Ads, Web & AI | DGS",
         "descriptionPresent": true,
         "h1": "Full Service Digital Marketing Agency In Australia",
         "canonicalPath": "/australia-page/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "Answer",
           "BreadcrumbList",
@@ -905,11 +774,11 @@
           "missingLists": [],
           "missingLinks": [],
           "missingImages": [],
-          "renderedHeadingCount": 2,
-          "renderedImageCount": 0
+          "renderedHeadingCount": 61,
+          "renderedImageCount": 115
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 115,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -919,7 +788,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 10,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1004,7 +873,7 @@
         "descriptionPresent": true,
         "h1": "Better Ceasons Website Development",
         "canonicalPath": "/better-ceasons-case-study/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -1118,17 +987,19 @@
       },
       "template": "BlogArchive",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Digital Marketing Blogs D'Genius Solutions in Mumbai",
         "descriptionPresent": true,
-        "h1": "Blogs",
+        "h1": "Strategic Thinking on SEO, AI Search & Growth",
         "canonicalPath": "/blogs/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
+          "CollectionPage",
           "ImageObject",
+          "ItemList",
           "ListItem",
           "Organization",
           "PostalAddress",
@@ -1139,20 +1010,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 11,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 73,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1162,7 +1022,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 85,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1175,7 +1035,9 @@
         "brokenInternalLinks": []
       },
       "failures": [],
-      "warnings": []
+      "warnings": [
+        "H1 text differs from registry: \"Strategic Thinking on SEO, AI Search & Growth\""
+      ]
     },
     {
       "path": "/blogs/3-3-3-rule-in-marketing/",
@@ -1214,21 +1076,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster",
         "canonicalPath": "/blogs/3-3-3-rule-in-marketing/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1236,20 +1101,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 25,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1259,7 +1113,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1311,21 +1165,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization",
         "canonicalPath": "/blogs/aeo-business/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1333,20 +1190,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 29,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1356,7 +1202,79 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
+          "brokenCount": 0,
+          "avoidableRedirectCount": 0,
+          "ambiguousCount": 0,
+          "rateLimitedCount": 0,
+          "brokenInternalLinks": [],
+          "avoidableRedirects": [],
+          "ambiguousLinks": []
+        },
+        "brokenImages": [],
+        "brokenInternalLinks": []
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "path": "/blogs/aeo-in-2026/",
+      "migrationClass": "200_RETAINED",
+      "sources": [
+        "nextjs-route-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": {
+        "wordpressId": 65303,
+        "wordpressType": "post",
+        "proposedAction": "KEEP_SAME_URL",
+        "protected": false,
+        "indexable": true,
+        "includeInSitemap": true
+      },
+      "redirect": null,
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "contentStatus": "INTENTIONALLY_NATIVE",
+      "liveChecks": {
+        "status": 200,
+        "title": "AEO in 2026 How to Rank on ChatGPT and Perplexity",
+        "descriptionPresent": true,
+        "h1": "AEO in 2026 How to Rank on ChatGPT and Perplexity",
+        "canonicalPath": "/blogs/aeo-in-2026/",
+        "robots": "index, follow",
+        "schemaTypes": [
+          "Answer",
+          "BlogPosting",
+          "BreadcrumbList",
+          "FAQPage",
+          "ImageObject",
+          "ListItem",
+          "Organization",
+          "PostalAddress",
+          "Question",
+          "WebPage",
+          "WebSite"
+        ],
+        "hasBreadcrumbs": true,
+        "hasHeader": true,
+        "hasFooter": true,
+        "usesWpMirror": null,
+        "content": null,
+        "imageAudit": {
+          "checkedCount": 12,
+          "brokenCount": 0,
+          "blockingBrokenCount": 0,
+          "rateLimitedCount": 0,
+          "externalDependencyCount": 0,
+          "brokenImages": [],
+          "rateLimitedImages": [],
+          "externalDependencyImages": []
+        },
+        "linkAudit": {
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1407,21 +1325,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Content Optimization: 7 Proven Ways to Boost Results",
         "descriptionPresent": true,
         "h1": "AI Content Optimization: 7 Proven Ways to Boost Results",
         "canonicalPath": "/blogs/ai-content-optimization/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1429,20 +1350,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 16,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1452,7 +1362,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 3,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1504,21 +1414,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI-Generated Summaries in Search Ads: What This Means for Advertisers - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "AI-Generated Summaries in Search Ads: What This Means for Advertisers",
         "canonicalPath": "/blogs/ai-generated-summaries-in-search-ads/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1526,20 +1439,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 23,
-          "renderedImageCount": 3
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 15,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1549,7 +1451,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1600,21 +1502,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "How AI Is Reshaping Digital Marketing Strategies in 2026",
         "descriptionPresent": true,
         "h1": "How AI Is Reshaping Digital Marketing Strategies in 2026",
         "canonicalPath": "/blogs/ai-marketing-strategies-2026/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1622,20 +1527,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 18,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1645,7 +1539,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1697,21 +1591,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Overview: 7 Powerful Ways to Boost Search Visibility",
         "descriptionPresent": true,
         "h1": "How to Rank in Google AI Overviews in 2026",
         "canonicalPath": "/blogs/ai-overview-ranking/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1719,20 +1616,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 19,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1742,28 +1628,13 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/aeo/",
-              "anchor": "Answer Engine Optimization",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/aeo-services-in-mumbai/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/aeo-services-in-mumbai/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
@@ -1809,21 +1680,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews",
         "canonicalPath": "/blogs/ai-overview-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1831,20 +1705,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 26,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1854,7 +1717,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -1906,21 +1769,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026 - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026",
         "canonicalPath": "/blogs/ai-readiness-for-websites/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -1928,20 +1794,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 28,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -1951,7 +1806,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 7,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2003,14 +1858,14 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Search Behavior: 7 Proven Changes Businesses Must Know",
         "descriptionPresent": true,
         "h1": "How AI Is Transforming Search Behavior in 2026",
         "canonicalPath": "/blogs/ai-search-behavior-2026/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BlogPosting",
           "BreadcrumbList",
@@ -2025,20 +1880,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 18,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2048,7 +1892,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2100,21 +1944,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Search Checklist 2026 for Modern Websites",
         "descriptionPresent": true,
         "h1": "AI Search Checklist 2026 10 Essential Checks for Better Rankings",
         "canonicalPath": "/blogs/ai-search-checklist-2026/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2122,20 +1969,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 20,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2145,7 +1981,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 5,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2197,21 +2033,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026 - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026",
         "canonicalPath": "/blogs/ai-search-optimization-ecommerce/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2219,20 +2058,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 22,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2242,7 +2070,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 3,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2293,21 +2121,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Top AI Tools for Digital Marketing Agencies in 2026",
         "descriptionPresent": true,
         "h1": "Top AI Tools for Digital Marketing Agencies in 2026",
         "canonicalPath": "/blogs/ai-tools-marketing-agencies/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2315,20 +2146,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 19,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2338,7 +2158,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2390,21 +2210,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "How Much Does AI Video Production Cost in India in 2026? - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "How Much Does AI Video Production Cost in India in 2026?",
         "canonicalPath": "/blogs/ai-video-production-cost-india/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2412,20 +2235,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 42,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2435,7 +2247,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2487,21 +2299,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "11 Ways AI Video Production for Business Helps Create More Content Faster",
         "descriptionPresent": true,
         "h1": "AI Video Production for Business: How It Helps Brands Create More Content Faster",
         "canonicalPath": "/blogs/ai-video-production-for-business/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2509,20 +2324,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 34,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2532,7 +2336,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 5,
+          "checkedCount": 25,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2584,21 +2388,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "AI Video vs Traditional Video 7 Proven Differences for Brands",
         "descriptionPresent": true,
         "h1": "AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
         "canonicalPath": "/blogs/ai-video-vs-traditional-video/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2606,20 +2413,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 33,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2629,7 +2425,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 5,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2681,21 +2477,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation",
         "canonicalPath": "/blogs/brand-identity-seo-trust-lead-generation/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2703,20 +2502,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 21,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2726,7 +2514,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 3,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2778,21 +2566,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Brand Mentions for AI Tools: 7 Powerful Ways to Build Trust",
         "descriptionPresent": true,
         "h1": "How Brand Mentions Help AI Tools Trust and Recommend Your Business",
         "canonicalPath": "/blogs/brand-mentions-for-ai-tools/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2800,20 +2591,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 33,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2823,7 +2603,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2875,21 +2655,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Brand Visibility in AI Search: 7 Proven Measurement Methods",
         "descriptionPresent": true,
         "h1": "Brand Visibility in AI Search: 7 Ways to Measure It",
         "canonicalPath": "/blogs/brand-visibility-in-ai-search/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2897,20 +2680,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 23,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -2920,7 +2692,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -2972,21 +2744,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "ChatGPT brand visibility: 7 Critical Reasons Competitors Win",
         "descriptionPresent": true,
         "h1": "ChatGPT Brand Visibility: Why Does ChatGPT Recommend Your Competitors but Not Your Brand?",
         "canonicalPath": "/blogs/chatgpt-brand-visibility/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -2994,20 +2769,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 19,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3017,7 +2781,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3069,21 +2833,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss",
         "canonicalPath": "/blogs/content-strategy-for-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3091,20 +2858,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 23,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3114,7 +2870,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3165,21 +2921,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "7 Smart Content Strategy Tips for High-Intent Traffic",
         "descriptionPresent": true,
         "h1": "7 Smart Content Strategy Tips for High-Intent Traffic",
         "canonicalPath": "/blogs/content-strategy-high-intent-traffic/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3187,20 +2946,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 21,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3210,28 +2958,13 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 23,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/aeo/",
-              "anchor": "Answer Engine Optimization",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/aeo-services-in-mumbai/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/aeo-services-in-mumbai/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
@@ -3277,21 +3010,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Content Writing for SEO: 9 Ways to Rank and Convert - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Content Writing for SEO: 9 Ways to Rank and Convert",
         "canonicalPath": "/blogs/content-writing-for-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3299,20 +3035,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 31,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3322,7 +3047,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 6,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3374,21 +3099,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Core Update Strategy: 8 Proven Ways to Protect Rankings",
         "descriptionPresent": true,
         "h1": "How to Build a Google Core Update-Resistant Content Strategy",
         "canonicalPath": "/blogs/core-update-strategy/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3396,20 +3124,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 26,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3419,7 +3136,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3471,14 +3188,14 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Is SEO Dead in 2026? What Business Owners Need to Know",
         "descriptionPresent": true,
         "h1": "Is SEO Dead in 2026? What Business Owners Need to Know",
         "canonicalPath": "/blogs/future-of-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BlogPosting",
           "BreadcrumbList",
@@ -3493,20 +3210,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 18,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3516,7 +3222,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 6,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3568,21 +3274,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026 - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026",
         "canonicalPath": "/blogs/generative-engine-optimization-business/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3590,20 +3299,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 20,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3613,7 +3311,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3665,21 +3363,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "7 Ways Generative Engine Optimization Helps Your Business",
         "descriptionPresent": true,
         "h1": "What Is Generative Engine Optimization and How Can It Help Your Business?",
         "canonicalPath": "/blogs/generative-engine-optimization/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3687,20 +3388,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 55,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3710,28 +3400,13 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 7,
+          "checkedCount": 25,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/llm-seo/",
-              "anchor": "LLM SEO services",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/llm-seo-service/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/llm-seo-service/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
@@ -3777,21 +3452,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "GEO vs SEO: 7 Powerful Ways Businesses Can Rank in Google and AI Search",
         "descriptionPresent": true,
-        "h1": "GEO vs SEO: How to Rank in Google and AI Searc",
+        "h1": "GEO vs SEO: How to Rank in Google and AI Search",
         "canonicalPath": "/blogs/geo-vs-seo-google-ai-search/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3799,20 +3477,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 30,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3822,7 +3489,81 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 25,
+          "brokenCount": 0,
+          "avoidableRedirectCount": 0,
+          "ambiguousCount": 0,
+          "rateLimitedCount": 0,
+          "brokenInternalLinks": [],
+          "avoidableRedirects": [],
+          "ambiguousLinks": []
+        },
+        "brokenImages": [],
+        "brokenInternalLinks": []
+      },
+      "failures": [],
+      "warnings": [
+        "H1 text differs from registry: \"GEO vs SEO: How to Rank in Google and AI Search\""
+      ]
+    },
+    {
+      "path": "/blogs/google-ads-ai-max-2026/",
+      "migrationClass": "200_RETAINED",
+      "sources": [
+        "nextjs-route-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": {
+        "wordpressId": 65297,
+        "wordpressType": "post",
+        "proposedAction": "KEEP_SAME_URL",
+        "protected": false,
+        "indexable": true,
+        "includeInSitemap": true
+      },
+      "redirect": null,
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "contentStatus": "INTENTIONALLY_NATIVE",
+      "liveChecks": {
+        "status": 200,
+        "title": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes",
+        "descriptionPresent": true,
+        "h1": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes",
+        "canonicalPath": "/blogs/google-ads-ai-max-2026/",
+        "robots": "index, follow",
+        "schemaTypes": [
+          "Answer",
+          "BlogPosting",
+          "BreadcrumbList",
+          "FAQPage",
+          "ImageObject",
+          "ListItem",
+          "Organization",
+          "PostalAddress",
+          "Question",
+          "WebPage",
+          "WebSite"
+        ],
+        "hasBreadcrumbs": true,
+        "hasHeader": true,
+        "hasFooter": true,
+        "usesWpMirror": null,
+        "content": null,
+        "imageAudit": {
+          "checkedCount": 12,
+          "brokenCount": 0,
+          "blockingBrokenCount": 0,
+          "rateLimitedCount": 0,
+          "externalDependencyCount": 0,
+          "brokenImages": [],
+          "rateLimitedImages": [],
+          "externalDependencyImages": []
+        },
+        "linkAudit": {
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3874,21 +3615,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026? - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026?",
         "canonicalPath": "/blogs/google-ads-vs-meta-ads/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -3896,20 +3640,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 32,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -3919,7 +3652,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -3971,14 +3704,14 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google Agentic Browsing: 7 Website Changes for 2026 - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Google Agentic Browsing: 7 Website Changes for 2026",
         "canonicalPath": "/blogs/google-agentic-browsing/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BlogPosting",
           "BreadcrumbList",
@@ -3993,20 +3726,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 24,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4016,7 +3738,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 5,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4067,21 +3789,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google AI Overviews and the Growth of Zero-Click Searches",
         "descriptionPresent": true,
         "h1": "Google AI Overviews and the Growth of Zero-Click Searches",
         "canonicalPath": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4089,20 +3814,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 19,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4112,7 +3826,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4164,21 +3878,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take",
         "canonicalPath": "/blogs/google-ai-overviews-image-generation/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4186,20 +3903,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 30,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4209,7 +3915,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4261,21 +3967,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads",
         "canonicalPath": "/blogs/google-ai-search-update/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4283,20 +3992,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 34,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4306,28 +4004,13 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/aeo/",
-              "anchor": "Answer Engine Optimization",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/aeo-services-in-mumbai/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/aeo-services-in-mumbai/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
@@ -4373,21 +4056,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google Algorithm: 5 Critical Reasons Business Search Rankings Change",
         "descriptionPresent": true,
         "h1": "Google Algorithm for Businesses: What It Means for Search Visibility",
         "canonicalPath": "/blogs/google-algorithm-business/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4395,20 +4081,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 20,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4418,7 +4093,79 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 5,
+          "checkedCount": 23,
+          "brokenCount": 0,
+          "avoidableRedirectCount": 0,
+          "ambiguousCount": 0,
+          "rateLimitedCount": 0,
+          "brokenInternalLinks": [],
+          "avoidableRedirects": [],
+          "ambiguousLinks": []
+        },
+        "brokenImages": [],
+        "brokenInternalLinks": []
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "path": "/blogs/google-august-2026-spam-update/",
+      "migrationClass": "200_RETAINED",
+      "sources": [
+        "nextjs-route-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": {
+        "wordpressId": 65289,
+        "wordpressType": "post",
+        "proposedAction": "KEEP_SAME_URL",
+        "protected": false,
+        "indexable": true,
+        "includeInSitemap": true
+      },
+      "redirect": null,
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "contentStatus": "INTENTIONALLY_NATIVE",
+      "liveChecks": {
+        "status": 200,
+        "title": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings",
+        "descriptionPresent": true,
+        "h1": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings",
+        "canonicalPath": "/blogs/google-august-2026-spam-update/",
+        "robots": "index, follow",
+        "schemaTypes": [
+          "Answer",
+          "BlogPosting",
+          "BreadcrumbList",
+          "FAQPage",
+          "ImageObject",
+          "ListItem",
+          "Organization",
+          "PostalAddress",
+          "Question",
+          "WebPage",
+          "WebSite"
+        ],
+        "hasBreadcrumbs": true,
+        "hasHeader": true,
+        "hasFooter": true,
+        "usesWpMirror": null,
+        "content": null,
+        "imageAudit": {
+          "checkedCount": 12,
+          "brokenCount": 0,
+          "blockingBrokenCount": 0,
+          "rateLimitedCount": 0,
+          "externalDependencyCount": 0,
+          "brokenImages": [],
+          "rateLimitedImages": [],
+          "externalDependencyImages": []
+        },
+        "linkAudit": {
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4470,21 +4217,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google I/O 2026 SEO Updates That Will Transform AI Search - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Google I/O 2026 SEO Updates That Will Transform AI Search",
         "canonicalPath": "/blogs/google-io-2026/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4492,20 +4242,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 44,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4515,7 +4254,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 6,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4567,21 +4306,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google Ranking: 7 Proven Fixes for Better Visibility",
         "descriptionPresent": true,
         "h1": "7 Critical Reasons Why Your Business Is Not Ranking on Google",
         "canonicalPath": "/blogs/google-ranking-fixes/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4589,20 +4331,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 50,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4612,7 +4343,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4664,21 +4395,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026 - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026",
         "canonicalPath": "/blogs/google-search-console-social-media/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4686,20 +4420,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 26,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4709,7 +4432,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 3,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4761,21 +4484,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
         "descriptionPresent": true,
         "h1": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
         "canonicalPath": "/blogs/google-spam-update/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4783,20 +4509,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 23,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4806,7 +4521,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4858,21 +4573,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models",
         "canonicalPath": "/blogs/llm-seo-ai-search/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4880,20 +4598,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 24,
-          "renderedImageCount": 3
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 15,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -4903,7 +4610,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -4955,21 +4662,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "LLM SEO Services: 7 Proven Ways to Improve AI Visibility",
         "descriptionPresent": true,
         "h1": "Key LLM SEO Services for Modern Businesses in Mumbai",
         "canonicalPath": "/blogs/llm-seo-services-mumbai/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -4977,20 +4687,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 21,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5000,7 +4699,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5052,21 +4751,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Local SEO: 7 Proven Ways to Grow Your Business",
         "descriptionPresent": true,
         "h1": "Why Local SEO Is Important for Business Growth",
         "canonicalPath": "/blogs/local-seo-business-growth/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5074,20 +4776,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 20,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5097,7 +4788,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5149,21 +4840,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Low Social Media Reach in 2026? 9 Proven Fixes",
         "descriptionPresent": true,
         "h1": "Low Social Media Reach in 2026? Why Trending Audio and Hashtags Are Not Enough",
         "canonicalPath": "/blogs/low-social-media-reach/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5171,20 +4865,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 26,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5194,7 +4877,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5246,21 +4929,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Modern SEO Strategies for Business Growth 2026",
         "descriptionPresent": true,
         "h1": "How Modern SEO Strategies Are Transforming Business Growth",
         "canonicalPath": "/blogs/modern-seo-business-growth/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5268,20 +4954,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 18,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5291,7 +4966,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5343,21 +5018,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Optimize Content for AI Search With 11 Proven Strategies",
         "descriptionPresent": true,
         "h1": "How to Optimize Content for ChatGPT, Gemini, Perplexity and Google AI Mode",
         "canonicalPath": "/blogs/optimize-content-ai-search/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5365,20 +5043,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 42,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5388,7 +5055,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 3,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5440,21 +5107,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "How to Optimize for AI Overviews in 2026 | DGS",
         "descriptionPresent": true,
         "h1": "Optimize for AI Overviews in 2026: Proven Growth Guide",
         "canonicalPath": "/blogs/optimize-for-ai-overviews/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5462,20 +5132,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 26,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5485,7 +5144,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 8,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5537,21 +5196,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Schema SEO for Small Business: 7 Easy Steps for 2026 - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Schema SEO for Small Business: 7 Easy Steps for 2026",
         "canonicalPath": "/blogs/schema-seo-for-small-business/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5559,20 +5221,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 42,
-          "renderedImageCount": 1
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 1,
+          "checkedCount": 13,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5582,7 +5233,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5634,14 +5285,14 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility",
         "canonicalPath": "/blogs/search-generative-ai-performance-reports/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BlogPosting",
           "BreadcrumbList",
@@ -5656,20 +5307,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 21,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5679,7 +5319,79 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 6,
+          "checkedCount": 25,
+          "brokenCount": 0,
+          "avoidableRedirectCount": 0,
+          "ambiguousCount": 0,
+          "rateLimitedCount": 0,
+          "brokenInternalLinks": [],
+          "avoidableRedirects": [],
+          "ambiguousLinks": []
+        },
+        "brokenImages": [],
+        "brokenInternalLinks": []
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "path": "/blogs/seo-company-in-mumbai/",
+      "migrationClass": "200_RETAINED",
+      "sources": [
+        "nextjs-route-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": {
+        "wordpressId": 65293,
+        "wordpressType": "post",
+        "proposedAction": "KEEP_SAME_URL",
+        "protected": false,
+        "indexable": true,
+        "includeInSitemap": true
+      },
+      "redirect": null,
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
+      "contentStatus": "INTENTIONALLY_NATIVE",
+      "liveChecks": {
+        "status": 200,
+        "title": "7 Proven Tips to Hire an SEO Agency in Mumbai",
+        "descriptionPresent": true,
+        "h1": "7 Proven Tips to Hire an SEO Agency in Mumbai",
+        "canonicalPath": "/blogs/seo-company-in-mumbai/",
+        "robots": "index, follow",
+        "schemaTypes": [
+          "Answer",
+          "BlogPosting",
+          "BreadcrumbList",
+          "FAQPage",
+          "ImageObject",
+          "ListItem",
+          "Organization",
+          "PostalAddress",
+          "Question",
+          "WebPage",
+          "WebSite"
+        ],
+        "hasBreadcrumbs": true,
+        "hasHeader": true,
+        "hasFooter": true,
+        "usesWpMirror": null,
+        "content": null,
+        "imageAudit": {
+          "checkedCount": 12,
+          "brokenCount": 0,
+          "blockingBrokenCount": 0,
+          "rateLimitedCount": 0,
+          "externalDependencyCount": 0,
+          "brokenImages": [],
+          "rateLimitedImages": [],
+          "externalDependencyImages": []
+        },
+        "linkAudit": {
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5731,21 +5443,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site",
         "canonicalPath": "/blogs/seo-friendly-website/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5753,20 +5468,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 29,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5776,7 +5480,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5828,21 +5532,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling",
         "canonicalPath": "/blogs/seo-rankings-up-but-traffic-down/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5850,20 +5557,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 51,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5873,7 +5569,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -5924,21 +5620,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Rising Demand for SEO Services in India in 2026",
         "descriptionPresent": true,
         "h1": "Rising Demand for SEO Services in India in 2026",
         "canonicalPath": "/blogs/seo-services-india-2026/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -5946,20 +5645,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 19,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -5969,7 +5657,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6021,21 +5709,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
         "descriptionPresent": true,
         "h1": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
         "canonicalPath": "/blogs/seo-strategies-business-growth/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6043,20 +5734,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 17,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6066,7 +5746,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6118,21 +5798,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Social Media Conversion: 9 Reasons Followers Don't Buy",
         "descriptionPresent": true,
         "h1": "Social Media Conversion: Why Your Followers Are Not Becoming Customers",
         "canonicalPath": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6140,20 +5823,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 22,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6163,7 +5835,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 3,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6215,21 +5887,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Social Media Marketing Strategy 2026 for Small Businesses",
         "descriptionPresent": true,
         "h1": "Social Media Marketing Strategy 2026 for Small Businesses",
         "canonicalPath": "/blogs/social-media-marketing-strategy/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6237,20 +5912,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 19,
-          "renderedImageCount": 2
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 16,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6260,7 +5924,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6311,21 +5975,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Why Topical Authority Matters More Than Keyword Density in 2026",
         "descriptionPresent": true,
         "h1": "Why Topical Authority Matters More Than Keyword Density in 2026",
         "canonicalPath": "/blogs/topical-authority-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6333,20 +6000,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 20,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6356,7 +6012,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6408,21 +6064,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches",
         "canonicalPath": "/blogs/voice-search-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6430,20 +6089,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 39,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6453,7 +6101,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 7,
+          "checkedCount": 24,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6506,21 +6154,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Why Website Design Directly Affects Lead Generation",
         "descriptionPresent": true,
         "h1": "Why Website Design Directly Affects Lead Generation",
         "canonicalPath": "/blogs/website-design-lead-generation-mumbai/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6528,20 +6179,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 20,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6551,28 +6191,13 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/aeo/",
-              "anchor": "Answer Engine Optimization",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/aeo-services-in-mumbai/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/aeo-services-in-mumbai/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
@@ -6617,21 +6242,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "How to Turn Website Traffic Into Qualified Leads",
         "descriptionPresent": true,
         "h1": "How to Turn Website Traffic Into Qualified Leads",
         "canonicalPath": "/blogs/website-development-leads/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6639,20 +6267,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 21,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6662,7 +6279,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6713,21 +6330,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Website Development Mistakes That Hurt Business Growth",
         "descriptionPresent": true,
         "h1": "Website Development Mistakes That Hurt Business Growth",
         "canonicalPath": "/blogs/website-development-mistakes/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6735,20 +6355,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 26,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6758,28 +6367,13 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 23,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/aeo/",
-              "anchor": "Answer Engine Optimization",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/aeo-services-in-mumbai/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/aeo-services-in-mumbai/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
@@ -6825,21 +6419,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "7 Website Development Features That Help Businesses Generate Quality Leads - D'Genius Solutions",
         "descriptionPresent": true,
         "h1": "7 Website Development Features That Help Businesses Generate Quality Leads",
         "canonicalPath": "/blogs/website-development-quality-leads/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6847,20 +6444,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 18,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6870,7 +6456,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -6921,21 +6507,24 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Why Website Performance Still Decides Conversions in 2026",
         "descriptionPresent": true,
         "h1": "Why Website Performance Still Decides Conversions in 2026",
         "canonicalPath": "/blogs/website-performance-conversions/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -6943,20 +6532,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 21,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -6966,7 +6544,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 2,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -7018,21 +6596,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Website Traffic but No Leads? 9 Proven Fixes That Work",
         "descriptionPresent": true,
         "h1": "Website Traffic but No Leads? 9 Proven Fixes That Work",
         "canonicalPath": "/blogs/website-traffic-but-no-leads/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -7040,20 +6621,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 21,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -7063,7 +6633,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -7115,21 +6685,24 @@
       },
       "template": "BlogPost",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "What Is LLM SEO? Powerful 2026 Guide to AI Search Optimization",
         "descriptionPresent": true,
         "h1": "What Is LLM SEO and Why Businesses Should Care in 2026",
         "canonicalPath": "/blogs/what-is-llm-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BlogPosting",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "WebPage",
           "WebSite"
         ],
@@ -7137,20 +6710,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 36,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 12,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -7160,7 +6722,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 4,
+          "checkedCount": 23,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -7212,41 +6774,25 @@
       },
       "template": null,
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
-        "title": "Career",
+        "title": "Careers at D'Genius Solutions | Jobs in Khar West, Mumbai",
         "descriptionPresent": true,
-        "h1": "Join Our Team",
+        "h1": "Build work that moves brands forward.",
         "canonicalPath": "/career/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
-          "BreadcrumbList",
-          "ImageObject",
-          "ListItem",
-          "Organization",
-          "PostalAddress",
-          "WebPage",
-          "WebSite"
+          "ItemList",
+          "ListItem"
         ],
-        "hasBreadcrumbs": true,
+        "hasBreadcrumbs": false,
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 9,
-          "renderedImageCount": 0
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 8,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -7256,7 +6802,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 20,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -7269,7 +6815,9 @@
         "brokenInternalLinks": []
       },
       "failures": [],
-      "warnings": []
+      "warnings": [
+        "H1 text differs from registry: \"Build work that moves brands forward.\""
+      ]
     },
     {
       "path": "/case-studies/",
@@ -7340,7 +6888,7 @@
         "descriptionPresent": true,
         "h1": "Our Work Across Websites, SEO, AI Search, Content, Branding & AI Video",
         "canonicalPath": "/case_studies/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -7364,17 +6912,29 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 28,
-          "renderedImageCount": 0
+          "renderedImageCount": 2
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 2,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
-          "externalDependencyCount": 0,
+          "externalDependencyCount": 1,
           "brokenImages": [],
           "rateLimitedImages": [],
-          "externalDependencyImages": []
+          "externalDependencyImages": [
+            {
+              "src": "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1400",
+              "sourceUrl": "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1400",
+              "status": 200,
+              "classification": "OK",
+              "routes": [
+                "/case_studies/"
+              ],
+              "wordpressWorks": true,
+              "nextWorks": null
+            }
+          ]
         },
         "linkAudit": {
           "checkedCount": 0,
@@ -7435,9 +6995,9 @@
         "status": 200,
         "title": "Contact Us",
         "descriptionPresent": true,
-        "h1": "Let's build together.",
+        "h1": "Contact Us",
         "canonicalPath": "/contact-us/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -7460,7 +7020,7 @@
           "missingLists": [],
           "missingLinks": [],
           "missingImages": [],
-          "renderedHeadingCount": 4,
+          "renderedHeadingCount": 2,
           "renderedImageCount": 0
         },
         "imageAudit": {
@@ -7565,6 +7125,31 @@
       "warnings": []
     },
     {
+      "path": "/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "migrationClass": "301_REDIRECT",
+      "sources": [
+        "redirect-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": null,
+      "redirect": {
+        "destination": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+        "statusCode": 301,
+        "reason": "Legacy root blog path without /blogs/ prefix; authoritative blog route is /blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/"
+      },
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "NOT_APPLICABLE",
+      "contentStatus": "NOT_APPLICABLE",
+      "liveChecks": {
+        "status": 301,
+        "location": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/"
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
       "path": "/home/",
       "migrationClass": "301_REDIRECT",
       "sources": [
@@ -7590,6 +7175,31 @@
       "warnings": []
     },
     {
+      "path": "/how-modern-seo-strategies-are-transforming-business-growth/",
+      "migrationClass": "301_REDIRECT",
+      "sources": [
+        "redirect-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": null,
+      "redirect": {
+        "destination": "/blogs/seo-strategies-business-growth/",
+        "statusCode": 301,
+        "reason": "Legacy WordPress blog URL; authoritative blog canonical is /blogs/seo-strategies-business-growth/"
+      },
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "NOT_APPLICABLE",
+      "contentStatus": "NOT_APPLICABLE",
+      "liveChecks": {
+        "status": 301,
+        "location": "/blogs/seo-strategies-business-growth/"
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
       "path": "/index.php/",
       "migrationClass": "301_REDIRECT",
       "sources": [
@@ -7608,8 +7218,8 @@
       "visualMirrorStatus": "NOT_APPLICABLE",
       "contentStatus": "NOT_APPLICABLE",
       "liveChecks": {
-        "status": 308,
-        "location": "/index.php"
+        "status": 301,
+        "location": "/"
       },
       "failures": [],
       "warnings": []
@@ -7659,7 +7269,7 @@
         "descriptionPresent": true,
         "h1": "AI Motion Graphic Designer",
         "canonicalPath": "/indriya-test/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -7851,7 +7461,7 @@
         "descriptionPresent": true,
         "h1": "AI Motion Graphic Designer",
         "canonicalPath": "/motion-graphics/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -7947,7 +7557,7 @@
         "descriptionPresent": true,
         "h1": "Our Services",
         "canonicalPath": "/our-services/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -7971,10 +7581,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 8,
-          "renderedImageCount": 0
+          "renderedImageCount": 9
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 1,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -7984,7 +7594,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 10,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -8044,7 +7654,7 @@
         "descriptionPresent": true,
         "h1": "PORTFOLIO",
         "canonicalPath": "/portfolio/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -8060,7 +7670,7 @@
         "usesWpMirror": null,
         "content": null,
         "imageAudit": {
-          "checkedCount": 14,
+          "checkedCount": 94,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -8070,7 +7680,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 20,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -8129,7 +7739,7 @@
         "descriptionPresent": true,
         "h1": "Privacy Policy for D'Genius Solutions",
         "canonicalPath": "/privacy-policy/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -8246,7 +7856,7 @@
         "descriptionPresent": true,
         "h1": "SEO Executive",
         "canonicalPath": "/seo-executive-assessment/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -8342,7 +7952,7 @@
         "descriptionPresent": true,
         "h1": "SEO Manager",
         "canonicalPath": "/seo-manager-assessment/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -8439,7 +8049,7 @@
         "descriptionPresent": true,
         "h1": "Search that sells. Priced with purpose.",
         "canonicalPath": "/seo-pricing/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -8463,10 +8073,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 14,
-          "renderedImageCount": 38
+          "renderedImageCount": 158
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 29,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -8560,7 +8170,7 @@
         "descriptionPresent": true,
         "h1": "SEO Services In Mumbai Built To Grow Your Search Visibility And Leads",
         "canonicalPath": "/seo-services-mumbai-google-ads-landing-page/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -8584,10 +8194,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 31,
-          "renderedImageCount": 34
+          "renderedImageCount": 41
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 26,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -8697,13 +8307,17 @@
         "status": 200,
         "title": "Services - D'Genius Solutions",
         "descriptionPresent": true,
-        "h1": "Archives: Services",
+        "h1": "Our Services",
         "canonicalPath": "/services/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
+          "ImageObject",
           "ListItem",
-          "Organization"
+          "Organization",
+          "PostalAddress",
+          "WebPage",
+          "WebSite"
         ],
         "hasBreadcrumbs": true,
         "hasHeader": true,
@@ -8711,7 +8325,7 @@
         "usesWpMirror": null,
         "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 2,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -8721,7 +8335,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 1,
+          "checkedCount": 10,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -8732,6 +8346,33 @@
         },
         "brokenImages": [],
         "brokenInternalLinks": []
+      },
+      "failures": [],
+      "warnings": [
+        "H1 text differs from registry: \"Our Services\""
+      ]
+    },
+    {
+      "path": "/services/aeo-services-in-dubai/",
+      "migrationClass": "301_REDIRECT",
+      "sources": [
+        "redirect-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": null,
+      "redirect": {
+        "destination": "/aeo-dubai/",
+        "statusCode": 301,
+        "reason": "WordPress legacy Dubai AEO slug alias; authoritative route canonical is /aeo-dubai/"
+      },
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "NOT_APPLICABLE",
+      "contentStatus": "NOT_APPLICABLE",
+      "liveChecks": {
+        "status": 301,
+        "location": "/aeo-dubai/"
       },
       "failures": [],
       "warnings": []
@@ -8780,13 +8421,16 @@
         "descriptionPresent": true,
         "h1": "AEO Services in Mumbai from a Mumbai-Based AEO Agency",
         "canonicalPath": "/services/aeo-services-in-mumbai/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -8797,7 +8441,7 @@
         "usesWpMirror": null,
         "content": null,
         "imageAudit": {
-          "checkedCount": 2,
+          "checkedCount": 69,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -8912,11 +8556,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "AI Production Dubai page - D'Genius Solutions",
+        "title": "AI Video Production Agency in Dubai | Ads, Reels & Brand Films | DGS",
         "descriptionPresent": true,
         "h1": "AI Video Production Agency In Dubai For Ads, Reels & Brand Films",
         "canonicalPath": "/services/ai-production-dubai-page/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -8944,7 +8588,7 @@
           "renderedImageCount": 6
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 6,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -8954,7 +8598,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 0,
+          "checkedCount": 5,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -9038,7 +8682,7 @@
         "descriptionPresent": true,
         "h1": "AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
         "canonicalPath": "/services/ai-video-production-agency/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -9055,7 +8699,7 @@
         "usesWpMirror": null,
         "content": null,
         "imageAudit": {
-          "checkedCount": 2,
+          "checkedCount": 48,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9065,7 +8709,7 @@
           "externalDependencyImages": []
         },
         "linkAudit": {
-          "checkedCount": 5,
+          "checkedCount": 6,
           "brokenCount": 0,
           "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
@@ -9120,11 +8764,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "Branding Services | 100+ Clients | D'Genius Solutions",
+        "title": "Branding Agency in Mumbai | Brand Strategy & Identity Design | DGS",
         "descriptionPresent": true,
         "h1": "TRANSFORM YOUR BRAND IDENTITY INTO MARKET DOMINANCE",
         "canonicalPath": "/services/branding/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -9149,10 +8793,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 21,
-          "renderedImageCount": 14
+          "renderedImageCount": 15
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 14,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9217,11 +8861,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "Content Creation Services | 100+ Clients | D'Genius Solutions",
+        "title": "Content Marketing Agency in Mumbai | Content Creation & SEO | DGS",
         "descriptionPresent": true,
         "h1": "Content that transforms brands",
         "canonicalPath": "/services/content-creation/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "Answer",
           "BreadcrumbList",
@@ -9248,7 +8892,7 @@
           "missingLists": [],
           "missingLinks": [],
           "missingImages": [],
-          "renderedHeadingCount": 33,
+          "renderedHeadingCount": 34,
           "renderedImageCount": 0
         },
         "imageAudit": {
@@ -9317,11 +8961,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "Dubai SEO - D'Genius Solutions",
+        "title": "SEO Agency in Dubai | SEO Services for UAE Growth | DGS",
         "descriptionPresent": true,
         "h1": "SEO Agency in Dubai for Rankings, Leads & Local Growth",
         "canonicalPath": "/services/dubai-seo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -9346,10 +8990,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 53,
-          "renderedImageCount": 52
+          "renderedImageCount": 53
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 32,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9468,13 +9112,16 @@
         "descriptionPresent": true,
         "h1": "Generative Engine Optimization (GEO) Services in Mumbai",
         "canonicalPath": "/services/geo/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -9485,7 +9132,7 @@
         "usesWpMirror": null,
         "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 19,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9506,6 +9153,31 @@
         },
         "brokenImages": [],
         "brokenInternalLinks": []
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "path": "/services/google-ads/",
+      "migrationClass": "301_REDIRECT",
+      "sources": [
+        "redirect-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": null,
+      "redirect": {
+        "destination": "/services/performance-marketing/",
+        "statusCode": 301,
+        "reason": "Legacy Google Ads service alias; authoritative service canonical is /services/performance-marketing/"
+      },
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "NOT_APPLICABLE",
+      "contentStatus": "NOT_APPLICABLE",
+      "liveChecks": {
+        "status": 301,
+        "location": "/services/performance-marketing/"
       },
       "failures": [],
       "warnings": []
@@ -9554,13 +9226,16 @@
         "descriptionPresent": true,
         "h1": "LLM SEO Services in Mumbai for AI Search Visibility",
         "canonicalPath": "/services/llm-seo-service/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -9571,7 +9246,7 @@
         "usesWpMirror": null,
         "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 32,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9711,11 +9386,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "Performance Marketing - D'Genius Solutions",
+        "title": "Performance Marketing Agency in Mumbai | Google & Meta Ads | DGS",
         "descriptionPresent": true,
         "h1": "Performance Marketing for Qualified Leads, Sales & ROI",
         "canonicalPath": "/services/performance-marketing/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -9743,7 +9418,7 @@
           "renderedImageCount": 52
         },
         "imageAudit": {
-          "checkedCount": 2,
+          "checkedCount": 52,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9835,15 +9510,18 @@
         "status": 200,
         "title": "SEO services in Bangalore",
         "descriptionPresent": true,
-        "h1": "SEO Agency in Bangalore for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Bangalore ↗",
+        "h1": "SEO Agency in Bangalore for Rankings, Qualified Traffic and Leads —",
         "canonicalPath": "/services/seo-service-in-banglore/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -9852,20 +9530,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 76,
-          "renderedImageCount": 47
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 36,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9877,33 +9544,20 @@
         "linkAudit": {
           "checkedCount": 8,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/seo-services-in-pune/",
-              "anchor": "",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/seo-service-pune/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/seo-service-pune/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
         "brokenInternalLinks": []
       },
       "failures": [],
-      "warnings": []
+      "warnings": [
+        "H1 text differs from registry: \"SEO Agency in Bangalore for Rankings, Qualified Traffic and Leads —\""
+      ]
     },
     {
       "path": "/services/seo-service-in-gurugram/",
@@ -9947,15 +9601,18 @@
         "status": 200,
         "title": "SEO Services in Gurugram | SEO Agency in Gurugram for Rankings & Leads | DGS",
         "descriptionPresent": true,
-        "h1": "SEO Agency in Gurugram for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Gurugram ↗",
+        "h1": "SEO Agency in Gurugram for Rankings, Qualified Traffic and Leads —",
         "canonicalPath": "/services/seo-service-in-gurugram/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -9964,20 +9621,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 76,
-          "renderedImageCount": 47
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 36,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -9989,33 +9635,20 @@
         "linkAudit": {
           "checkedCount": 8,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/seo-services-in-pune/",
-              "anchor": "",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/seo-service-pune/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/seo-service-pune/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
         "brokenInternalLinks": []
       },
       "failures": [],
-      "warnings": []
+      "warnings": [
+        "H1 text differs from registry: \"SEO Agency in Gurugram for Rankings, Qualified Traffic and Leads —\""
+      ]
     },
     {
       "path": "/services/seo-service-pune/",
@@ -10059,15 +9692,18 @@
         "status": 200,
         "title": "SEO Services in Pune | SEO Agency in Pune for Rankings & Leads | DGS",
         "descriptionPresent": true,
-        "h1": "SEO Agency in Pune for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Pune ↗",
+        "h1": "SEO Agency in Pune for Rankings, Qualified Traffic and Leads",
         "canonicalPath": "/services/seo-service-pune/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -10076,20 +9712,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 76,
-          "renderedImageCount": 47
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 36,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -10110,6 +9735,33 @@
         },
         "brokenImages": [],
         "brokenInternalLinks": []
+      },
+      "failures": [],
+      "warnings": [
+        "H1 text differs from registry: \"SEO Agency in Pune for Rankings, Qualified Traffic and Leads\""
+      ]
+    },
+    {
+      "path": "/services/seo-services-dubai/",
+      "migrationClass": "301_REDIRECT",
+      "sources": [
+        "redirect-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": null,
+      "redirect": {
+        "destination": "/services/dubai-seo/",
+        "statusCode": 301,
+        "reason": "WordPress legacy Dubai SEO slug alias; authoritative service canonical is /services/dubai-seo/"
+      },
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "NOT_APPLICABLE",
+      "contentStatus": "NOT_APPLICABLE",
+      "liveChecks": {
+        "status": 301,
+        "location": "/services/dubai-seo/"
       },
       "failures": [],
       "warnings": []
@@ -10206,15 +9858,18 @@
         "status": 200,
         "title": "SEO Services in Hyderabad | SEO Agency in Hyderabad for Rankings & Leads | DGS",
         "descriptionPresent": true,
-        "h1": "SEO Agency in Hyderabad for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Hyderabad ↗",
+        "h1": "SEO Agency in Hyderabad for Rankings, Qualified Traffic and Leads —",
         "canonicalPath": "/services/seo-services-in-hyderabad/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -10223,20 +9878,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 76,
-          "renderedImageCount": 47
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 36,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -10248,33 +9892,20 @@
         "linkAudit": {
           "checkedCount": 8,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/seo-services-in-pune/",
-              "anchor": "",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/seo-service-pune/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/seo-service-pune/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
         "brokenInternalLinks": []
       },
       "failures": [],
-      "warnings": []
+      "warnings": [
+        "H1 text differs from registry: \"SEO Agency in Hyderabad for Rankings, Qualified Traffic and Leads —\""
+      ]
     },
     {
       "path": "/services/seo-services-in-mumbai/",
@@ -10318,15 +9949,18 @@
         "status": 200,
         "title": "SEO Services in Mumbai | SEO Agency for Rankings & Leads | DGS",
         "descriptionPresent": true,
-        "h1": "SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
+        "h1": "SEO Agency in Mumbai for SEO Services, AI Search Visibility and Qualified Leads",
         "canonicalPath": "/services/seo-services-in-mumbai/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
+          "Answer",
           "BreadcrumbList",
+          "FAQPage",
           "ImageObject",
           "ListItem",
           "Organization",
           "PostalAddress",
+          "Question",
           "Service",
           "WebPage",
           "WebSite"
@@ -10337,7 +9971,7 @@
         "usesWpMirror": null,
         "content": null,
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 71,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -10360,7 +9994,9 @@
         "brokenInternalLinks": []
       },
       "failures": [],
-      "warnings": []
+      "warnings": [
+        "H1 text differs from registry: \"SEO Agency in Mumbai for SEO Services, AI Search Visibility and Qualified Leads\""
+      ]
     },
     {
       "path": "/services/seo-services-in-pune/",
@@ -10456,7 +10092,7 @@
         "descriptionPresent": true,
         "h1": "Mythological AI Avatar Case Study For Shirdi Se Sai Tak Sai Baba Devotional Storytelling",
         "canonicalPath": "/services/shirdi-se-sai-tak-case-study/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -10480,7 +10116,7 @@
           "missingLists": [],
           "missingLinks": [],
           "missingImages": [],
-          "renderedHeadingCount": 35,
+          "renderedHeadingCount": 41,
           "renderedImageCount": 0
         },
         "imageAudit": {
@@ -10549,11 +10185,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "Social Media Marketing | 100+ Clients | D'Genius Solutions",
+        "title": "Social Media Marketing Agency in Mumbai | Content, Ads & Growth | DGS",
         "descriptionPresent": true,
         "h1": "Transform Your Social Media Into a Strategic Revenue Channel",
         "canonicalPath": "/services/social-media-marketing/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -10581,7 +10217,7 @@
           "renderedImageCount": 87
         },
         "imageAudit": {
-          "checkedCount": 0,
+          "checkedCount": 87,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -10650,7 +10286,7 @@
         "descriptionPresent": true,
         "h1": "Website Development Company in Mumbai Built for Leads, SEO & Growth",
         "canonicalPath": "/services/website-development-amc/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -10675,10 +10311,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 75,
-          "renderedImageCount": 1
+          "renderedImageCount": 2
         },
         "imageAudit": {
-          "checkedCount": 1,
+          "checkedCount": 2,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -10756,11 +10392,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "Website Development Pune Page - D'Genius Solutions",
+        "title": "Website Development Company in Pune | Web Design & AMC | DGS",
         "descriptionPresent": true,
         "h1": "Website Development Company in Pune Built for Leads, SEO & Growth",
         "canonicalPath": "/services/website-development-pune-page/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -10785,10 +10421,10 @@
           "missingLinks": [],
           "missingImages": [],
           "renderedHeadingCount": 75,
-          "renderedImageCount": 1
+          "renderedImageCount": 2
         },
         "imageAudit": {
-          "checkedCount": 1,
+          "checkedCount": 2,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -10934,14 +10570,14 @@
       },
       "template": "StandardPage",
       "visualMirrorStatus": "VISUAL_MIRROR_PENDING",
-      "contentStatus": "CONTENT_COMPLETE",
+      "contentStatus": "INTENTIONALLY_NATIVE",
       "liveChecks": {
         "status": 200,
         "title": "Sitemap | D'Genius Solutions - Web Design & SEO Mumbai",
         "descriptionPresent": true,
         "h1": "Explore D'Genius Solutions",
         "canonicalPath": "/sitemap/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -10955,18 +10591,7 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 9,
-          "renderedImageCount": 1
-        },
+        "content": null,
         "imageAudit": {
           "checkedCount": 1,
           "brokenCount": 0,
@@ -10980,26 +10605,11 @@
         "linkAudit": {
           "checkedCount": 15,
           "brokenCount": 0,
-          "avoidableRedirectCount": 1,
+          "avoidableRedirectCount": 0,
           "ambiguousCount": 0,
           "rateLimitedCount": 0,
           "brokenInternalLinks": [],
-          "avoidableRedirects": [
-            {
-              "path": "/services/aeo/",
-              "anchor": "Answer Engine Optimization",
-              "classification": "AVOIDABLE_INTERNAL_REDIRECT",
-              "status": 301,
-              "finalStatus": 200,
-              "finalPath": "/services/aeo-services-in-mumbai/",
-              "redirectHops": [
-                {
-                  "status": 301,
-                  "location": "/services/aeo-services-in-mumbai/"
-                }
-              ]
-            }
-          ],
+          "avoidableRedirects": [],
           "ambiguousLinks": []
         },
         "brokenImages": [],
@@ -11052,7 +10662,7 @@
         "descriptionPresent": true,
         "h1": "Social Media Executive",
         "canonicalPath": "/social-media-executive/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -11149,7 +10759,7 @@
         "descriptionPresent": true,
         "h1": "You're All Set. We'll Be in Touch Soon.",
         "canonicalPath": "/thank-you/",
-        "robots": "noindex, nofollow",
+        "robots": "noindex, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -11242,11 +10852,11 @@
       "contentStatus": "CONTENT_COMPLETE",
       "liveChecks": {
         "status": 200,
-        "title": "US Digital Marketing Services for Search Visibility and Leads",
+        "title": "Digital Marketing Services for US Businesses | SEO, AEO & Growth | DGS",
         "descriptionPresent": true,
         "h1": "Digital Marketing Services Designed for the US Market.",
         "canonicalPath": "/us-landing-page/",
-        "robots": "noindex, nofollow",
+        "robots": "index, follow",
         "schemaTypes": [
           "BreadcrumbList",
           "ImageObject",
@@ -11260,20 +10870,9 @@
         "hasHeader": true,
         "hasFooter": true,
         "usesWpMirror": null,
-        "content": {
-          "contentComplete": true,
-          "missingHeadings": [],
-          "missingParagraphs": [],
-          "missingFaqs": [],
-          "faqAnswerDiffs": [],
-          "missingLists": [],
-          "missingLinks": [],
-          "missingImages": [],
-          "renderedHeadingCount": 44,
-          "renderedImageCount": 57
-        },
+        "content": null,
         "imageAudit": {
-          "checkedCount": 3,
+          "checkedCount": 54,
           "brokenCount": 0,
           "blockingBrokenCount": 0,
           "rateLimitedCount": 0,
@@ -11369,6 +10968,31 @@
       "liveChecks": {
         "status": 301,
         "location": "/services/website-development-amc/"
+      },
+      "failures": [],
+      "warnings": []
+    },
+    {
+      "path": "/why-local-seo-is-important-for-business-growth/",
+      "migrationClass": "301_REDIRECT",
+      "sources": [
+        "redirect-registry"
+      ],
+      "wordpress": null,
+      "nextRegistry": null,
+      "redirect": {
+        "destination": "/blogs/local-seo-business-growth/",
+        "statusCode": 301,
+        "reason": "Legacy WordPress blog URL; authoritative blog canonical is /blogs/local-seo-business-growth/"
+      },
+      "retired": null,
+      "indexability": null,
+      "template": null,
+      "visualMirrorStatus": "NOT_APPLICABLE",
+      "contentStatus": "NOT_APPLICABLE",
+      "liveChecks": {
+        "status": 301,
+        "location": "/blogs/local-seo-business-growth/"
       },
       "failures": [],
       "warnings": []

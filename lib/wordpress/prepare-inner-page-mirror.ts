@@ -1,4 +1,6 @@
 import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
+import { applyLocationSeoContent } from "@/lib/seo/location-seo-content";
+import { applyInternationalPageContent } from "@/lib/seo/international-page-content";
 import { applyApprovedLinkCorrectionsToHtml } from "./apply-mirror-link-corrections";
 import {
   markElementorBackgroundsReady,
@@ -28,6 +30,36 @@ function normalizeSemanticH1(path: string, html: string): string {
   }
   if (path === "/services/") {
     output = output.replace(/<h1([^>]*)>Archives:\s*<span>Services<\/span><\/h1>/i, '<h1$1>Our <span>Services</span></h1>');
+  }
+  return output;
+}
+
+function applyServiceSearchCorrections(path: string, html: string): string {
+  let output = html;
+  if (path === "/services/performance-marketing/") {
+    output = output.replace(/Performance Marketing for Qualified Leads, Sales & ROI/g, "Performance Marketing Agency in Mumbai for Qualified Leads, Sales & ROI");
+    output = output.replace(/Talk To Our SEO Team/g, "Talk To Our Performance Marketing Team");
+  }
+  if (path === "/services/social-media-marketing/") {
+    output = output.replace(/Transform Your Social Media Into a Strategic Revenue Channel/g, "Social Media Marketing Agency in Mumbai for Content, Ads & Growth");
+  }
+  if (path === "/services/branding/") {
+    output = output.replace(/TRANSFORM YOUR BRAND IDENTITY INTO MARKET DOMINANCE/g, "Branding Agency in Mumbai for Brand Strategy, Identity & Design");
+  }
+  if (path === "/services/content-creation/") {
+    output = output.replace(/Content that transforms brands/g, "Content Marketing Agency in Mumbai for SEO, Social & Brand Content");
+  }
+  if (path === "/services/seo-service-pune/") {
+    output = output.replace(/SEO Agency in Pune for Rankings, Qualified Traffic and Leads —\s*/g, "SEO Agency in Pune for Rankings, Qualified Traffic and Leads");
+  }
+  if (path === "/services/website-development-pune-page/") {
+    output = output.replace(/Talk To Our SEO Team/g, "Talk To Our Website Development Team");
+  }
+  if (path === "/services/ai-video-production-agency/") {
+    output = output.replace(
+      '<h3><a href="/services/performance-marketing/">Performance Marketing</a></h3>',
+      '<h3><a href="/services/performance-marketing/">Google Ads Services</a></h3>',
+    );
   }
   return output;
 }
@@ -80,7 +112,9 @@ export function prepareInnerPageMirror(
       /<iframe\b[^>]*\b(?:humanxt\.com)[^>]*><\/iframe>/gi,
       '<img loading="lazy" class="live-preview-image e-lazyloaded" src="https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp" alt="HumanXT website preview by D’Genius Solutions" width="1600" height="1000" loading="lazy" decoding="async" referrerpolicy="no-referrer" />',
     );
-  body = normalizeSemanticH1(content.path, body);
+  body = applyServiceSearchCorrections(content.path, normalizeSemanticH1(content.path, body));
+  body = applyInternationalPageContent(content.path, body);
+  body = applyLocationSeoContent(content.path, body);
   body = applyApprovedLinkCorrectionsToHtml(
     content.path,
     lazyBelowFold(rewriteWpUrls(body)),

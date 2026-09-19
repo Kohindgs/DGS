@@ -73,6 +73,7 @@ export function BlogArticle({
               alt={article.featuredImage.alt || article.title}
               fill
               priority
+              unoptimized
               sizes="(max-width: 1400px) 100vw, 1400px"
               className={styles.featuredImg}
             />

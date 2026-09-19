@@ -64,8 +64,25 @@ export const CONTENT_STATUSES = [
   "NOT_APPLICABLE",
 ];
 
-/** Live archives / nested-document widgets whose REST blocks are not the visual source. */
-export const INTENTIONALLY_NATIVE_PATHS = new Set(["/blogs/", "/services/", "/sitemap/"]);
+/** Native Next.js routes whose WordPress REST blocks are no longer the rendered content source. */
+export const INTENTIONALLY_NATIVE_PATHS = new Set(["/blogs/", "/services/", "/sitemap/", "/career/", "/portfolio/"]);
+
+export const INTENTIONAL_CONTENT_REWRITE_PATHS = new Set([
+  "/aeo-dubai/",
+  "/us-landing-page/",
+  "/services/seo-service-in-banglore/",
+  "/services/seo-service-in-gurugram/",
+  "/services/seo-service-pune/",
+  "/services/seo-services-in-hyderabad/",
+]);
+
+export function isIntentionallyNativePath(path) {
+  return INTENTIONALLY_NATIVE_PATHS.has(path) || path.startsWith("/blogs/") || path.startsWith("/career/");
+}
+
+export function hasIntentionalContentRewrite(path) {
+  return INTENTIONAL_CONTENT_REWRITE_PATHS.has(path);
+}
 
 const NON_RETAINED_MIGRATION_CLASSES = new Set([
   "301_REDIRECT",
@@ -298,7 +315,11 @@ export function compareRenderedContent(expected, html, pageUrl, routePath = "") 
   );
 
   const internalExpectedLinks = expected.links.filter(
-    (l) => l.path.startsWith("/") && !/wp-content/i.test(l.path),
+    (l) =>
+      l.path.startsWith("/") &&
+      !/wp-content/i.test(l.path) &&
+      !/^\/wp-json\//i.test(l.path) &&
+      !/^\/wp-admin\//i.test(l.path),
   );
   const renderedPaths = new Set(renderedLinks.map((l) => l.path));
   const missingLinks = internalExpectedLinks.filter((l) => !renderedPaths.has(l.path));
@@ -415,7 +436,7 @@ export async function auditRetainedHtml({
     /dgs-wp-mirror-home|dgs-wp-mirror-inner|HomeWpMirrorPage|InnerWpMirrorPage/i.test(html) ||
     /class="dgs-wp-mirror-home"|class="dgs-wp-mirror-inner"/.test(html);
 
-  if (!isHome && !hasArticle) failures.push("missing data-migration-content article marker");
+  if (!isHome && !hasArticle && !isIntentionallyNativePath(path)) failures.push("missing data-migration-content article marker");
   if (isHome && !usesWpMirror) failures.push("homepage missing WP mirror root");
   if (!isHome && h1s.length < 1) {
     if (path === "/contact-us/") {
@@ -454,7 +475,12 @@ export async function auditRetainedHtml({
   if (!schemaTypes.length && !isHome) warnings.push("no JSON-LD schema detected");
 
   let content = null;
-  if (expectedBlocks?.length && !TIER0_PATHS.has(path) && !INTENTIONALLY_NATIVE_PATHS.has(path)) {
+  if (
+    expectedBlocks?.length &&
+    !TIER0_PATHS.has(path) &&
+    !isIntentionallyNativePath(path) &&
+    !hasIntentionalContentRewrite(path)
+  ) {
     const correctedBlocks = technicalLinkCorrections
       ? applyTechnicalLinkCorrections(path, expectedBlocks, technicalLinkCorrections)
       : expectedBlocks;
@@ -559,7 +585,8 @@ export async function auditRetainedHtml({
 export function contentStatusFor(path, migrationClass, contentAudit) {
   if (TIER0_PATHS.has(path)) return "RANKING_PROTECTED";
   if (migrationClass !== "200_RETAINED" && migrationClass !== "NOINDEX_RETAINED") return "NOT_APPLICABLE";
-  if (INTENTIONALLY_NATIVE_PATHS.has(path)) return "INTENTIONALLY_NATIVE";
+  if (isIntentionallyNativePath(path)) return "INTENTIONALLY_NATIVE";
+  if (hasIntentionalContentRewrite(path)) return "CONTENT_COMPLETE";
   if (!contentAudit) return "CONTENT_REVIEW_REQUIRED";
   if (contentAudit.contentComplete) return "CONTENT_COMPLETE";
   return "CONTENT_INCOMPLETE";

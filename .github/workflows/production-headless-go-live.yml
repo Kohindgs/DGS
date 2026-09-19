@@ -1,4 +1,4 @@
-﻿name: DGS Headless Production Go-Live
+name: DGS Headless Production Go-Live
 
 on:
   push:
@@ -13,7 +13,6 @@ env:
   PROD_PORT: '65002'
   PROD_USER: u188101251
   PROD_ROOT: /home/u188101251/production-app
-  TARGET_SHA: fa4fdb6496ba728d5bc45e7dceff68a345d164a1
   HOSTINGER_PASS: ${{ secrets.HOSTINGER_PASS }}
   HOSTINGER_SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
 
@@ -24,8 +23,6 @@ jobs:
     steps:
       - name: Checkout validated release
         uses: actions/checkout@v4
-        with:
-          ref: ${{ env.TARGET_SHA }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -36,11 +33,13 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           npm run typecheck
-          npm run build
+          DGS_PUBLIC_INDEXING=true npm run build
           test -f .next/server/app/blogs/seo-company-in-mumbai.html
           test -f .next/server/app/blogs/google-ads-ai-max-2026.html
           test -f .next/server/app/blogs/aeo-in-2026.html
           test -f .next/server/app/portfolio.html
+          grep -F '<meta name="robots" content="index, follow"/>' .next/server/app/index.html
+          grep -F '<meta name="googlebot" content="index, follow' .next/server/app/index.html
 
       - name: Prepare SSH authentication
         run: |
@@ -124,6 +123,8 @@ jobs:
           test -f "$RELEASE/.next/server/app/blogs/google-ads-ai-max-2026.html"
           test -f "$RELEASE/.next/server/app/blogs/aeo-in-2026.html"
           test -f "$RELEASE/.next/server/app/portfolio.html"
+          grep -q 'name="robots" content="index, follow"' "$RELEASE/.next/server/app/index.html"
+          grep -q 'name="googlebot" content="index, follow' "$RELEASE/.next/server/app/index.html"
           ln -sfn "$RELEASE" "$ROOT/current_new"
           mv -Tf "$ROOT/current_new" "$ROOT/current"
           touch "$ROOT/current/tmp/restart.txt"
@@ -147,6 +148,14 @@ jobs:
             'https://www.dgeniussolutions.com/services/geo/'
             'https://www.dgeniussolutions.com/services/llm-seo-service/'
             'https://www.dgeniussolutions.com/services/ai-video-production-agency/'
+            'https://www.dgeniussolutions.com/services/dubai-seo/'
+            'https://www.dgeniussolutions.com/aeo-dubai/'
+            'https://www.dgeniussolutions.com/services/ai-production-dubai-page/'
+            'https://www.dgeniussolutions.com/australia-page/'
+            'https://www.dgeniussolutions.com/us-landing-page/'
+            'https://www.dgeniussolutions.com/career/'
+            'https://www.dgeniussolutions.com/career/junior-hr-generalist/'
+            'https://www.dgeniussolutions.com/seo-executive-assessment/'
             'https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/'
             'https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/'
             'https://www.dgeniussolutions.com/blogs/aeo-in-2026/'
@@ -159,7 +168,11 @@ jobs:
             test "$code" = 200
           done
           test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/wp-json/dgs/v1/form-context?form_id=1')" = 200
+          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/wp-json/dgs/v1/form-context?form_id=15&post_id=55238')" = 200
           test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/sitemap_index.xml')" = 404
+          live_home="$(curl -sS 'https://www.dgeniussolutions.com/')"
+          echo "$live_home" | grep -F '<meta name="robots" content="index, follow"/>'
+          echo "$live_home" | grep -F '<meta name="googlebot" content="index, follow'
 
       - name: Roll back on verification failure
         if: failure()

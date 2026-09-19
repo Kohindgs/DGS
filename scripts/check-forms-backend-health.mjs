@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import https from 'node:https';
 import http from 'node:http';
-import { resolveFormContextFromHtml, getWordpressBackendOrigin } from '../lib/forms/form-context.mjs';
+import { fetchFormContext, getWordpressBackendOrigin } from '../lib/forms/form-context.mjs';
 
 const BACKEND_ORIGIN = getWordpressBackendOrigin();
 const DEFINITIONS_PATH = path.resolve('data/forms/definitions.approved.json');
@@ -96,23 +96,11 @@ async function main() {
     const formId = def.fluentFormId;
     const title = def.title;
     for (const route of def.sourceRoutes) {
-      const pageUrl = `${BACKEND_ORIGIN}${route}`;
-      const pageRes = await fetchUrl(pageUrl, {
-        headers: { Accept: 'text/html' }
-      });
-
-      if (pageRes.statusCode !== 200) {
-        console.log(`  [FAIL] Form ${String(formId).padEnd(2)} (${title}) on ${route}: HTTP ${pageRes.statusCode}`);
-        failedChecks++;
-        results.push({ formId, route, ok: false, error: `HTTP ${pageRes.statusCode}` });
-        continue;
-      }
-
-      const context = resolveFormContextFromHtml(pageRes.body, def, route);
+      const context = await fetchFormContext(def, route, fetch, true);
       if (!context.ok || !context.nonce) {
-        console.log(`  [FAIL] Form ${String(formId).padEnd(2)} (${title}) on ${route}: Missing nonce/context`);
+        console.log(`  [FAIL] Form ${String(formId).padEnd(2)} (${title}) on ${route}: ${context.message || 'Missing nonce/context'}`);
         failedChecks++;
-        results.push({ formId, route, ok: false, error: context.message });
+        results.push({ formId, route, ok: false, error: context.message || 'Missing nonce/context' });
       } else {
         const maskedNonce = context.nonce.length > 4 ? `${context.nonce.slice(0, 2)}***${context.nonce.slice(-2)}` : '***';
         console.log(`  [PASS] Form ${String(formId).padEnd(2)} (${title}) on ${route}`);

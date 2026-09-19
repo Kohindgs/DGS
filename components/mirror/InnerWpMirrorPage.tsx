@@ -25,8 +25,6 @@ const THREE_JS_BG_ROUTES = new Set([
   "/services/shirdi-se-sai-tak-case-study/",
 ]);
 
-const WP_CDN_ORIGIN = "https://www.dgeniussolutions.com";
-
 async function loadMirrorOverridesCss(): Promise<string> {
   try {
     return await readFile(join(process.cwd(), "lib/wp-exact/inner-mirror-overrides.css"), "utf8");
@@ -77,9 +75,6 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
 
   return (
     <>
-      <link rel="preconnect" href={WP_CDN_ORIGIN} />
-      <link rel="dns-prefetch" href={WP_CDN_ORIGIN} />
-
       {hasWebDev ? (
         <script
           dangerouslySetInnerHTML={{

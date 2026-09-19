@@ -925,3 +925,16 @@ body {
 
 
 
+
+/* LLM SEO hero: keep above-the-fold content visible immediately for faster LCP. */
+.dgs-wp-mirror-inner .dgs-llm-hero .dgs-hero-title,
+.dgs-wp-mirror-inner .dgs-llm-hero .dgs-hero-description,
+.dgs-wp-mirror-inner .dgs-llm-hero .dgs-hero-cta,
+.dgs-wp-mirror-inner .dgs-llm-hero .dgs-update-line,
+.dgs-wp-mirror-inner .dgs-llm-hero .dgs-trust-badges {
+  animation: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  will-change: auto !important;
+}

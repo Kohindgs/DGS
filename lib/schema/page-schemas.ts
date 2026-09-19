@@ -11,6 +11,7 @@ import {
 } from "@/lib/schema/builders";
 import { ORGANIZATION_ID, WEBSITE_ID, verifiedOrganization } from "@/lib/schema/entity";
 import type { BreadcrumbItem } from "@/lib/schema/builders";
+import { getPageSeoOverride } from "@/lib/seo/page-overrides";
 
 export function buildGlobalEntitySchemas(): Record<string, unknown>[] {
   return [
@@ -40,12 +41,15 @@ export function buildRouteSchemas(input: {
   breadcrumbs: BreadcrumbItem[];
 }): Record<string, unknown>[] {
   const { route, path, blocks, breadcrumbs } = input;
+  const seoOverride = getPageSeoOverride(path);
+  const pageTitle = seoOverride?.title || route.title || route.h1 || "Page";
+  const pageDescription = seoOverride?.description || route.description || "";
   const schemas = [...buildGlobalEntitySchemas()];
 
   schemas.push(
     webPageSchema({
-      name: route.title || route.h1 || "Page",
-      description: route.description || "",
+      name: pageTitle,
+      description: pageDescription,
       path,
       organizationId: ORGANIZATION_ID,
       websiteId: WEBSITE_ID,
@@ -55,8 +59,8 @@ export function buildRouteSchemas(input: {
   if (route.wordpressType === "service") {
     schemas.push(
       serviceSchema({
-        name: route.title || "",
-        description: route.description || "",
+        name: pageTitle,
+        description: pageDescription,
         path,
         providerId: ORGANIZATION_ID,
       }),
@@ -68,7 +72,8 @@ export function buildRouteSchemas(input: {
   }
 
   const pageFaqs = extractFaqsFromBlocks(blocks);
-  if (pageFaqs.length > 0) {
+  const faqSchemaExcludedPaths = new Set(["/better-ceasons-case-study/"]);
+  if (pageFaqs.length > 0 && !faqSchemaExcludedPaths.has(path)) {
     schemas.push(faqSchema(pageFaqs));
   }
 

@@ -37,15 +37,19 @@ Centralize metadata, canonicals, robots, sitemap generation, breadcrumbs and sch
 
 Extract verified creative assets and map them to a custom portfolio data model. Build `/portfolio/` without Envira frontend CSS/JS.
 
-## Phase 6 — Forms
+## Phase 6 — Careers and job-post pages
 
-Map real Fluent Forms IDs, fields, validation, CAPTCHA, notifications, webhooks and analytics. Build a custom Next.js presentation while preserving the verified backend.
+Build the careers experience as a native Next.js content system. Keep `/career/` as the main listing page, create individual internal job-detail pages, add valid `JobPosting` schema, unique metadata/canonicals, breadcrumbs and internal links, and use a reusable job-post content model/template so new openings can be published without rebuilding the site. Preserve the current application/form backend until the final forms migration.
 
-## Phase 7 — Performance
+## Phase 7 — Forms
+
+Map real Fluent Forms IDs, fields, validation, CAPTCHA, notifications, webhooks and analytics. Build a custom Next.js presentation while preserving the verified backend until the approved replacement is ready.
+
+## Phase 8 — Performance
 
 Target excellent Core Web Vitals by reducing JavaScript, CSS, DOM size, render-blocking resources, third-party scripts and image/video weight.
 
-## Phase 8 — Visual system
+## Phase 9 — Visual system
 
 Only after technical/content parity is proven, build the new DGS visual language on top of the clean architecture.
 

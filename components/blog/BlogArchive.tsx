@@ -47,6 +47,7 @@ export function BlogArchive({ posts }: { posts: BlogPostMeta[] }) {
                   alt={featured.featuredImage.alt || featured.title}
                   fill
                   priority
+                  unoptimized
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   className={styles.featuredImg}
                 />

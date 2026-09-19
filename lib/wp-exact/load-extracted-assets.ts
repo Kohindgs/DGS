@@ -68,7 +68,8 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
   cached = {
     navHtml: unwrapMirrorLazyMedia(rewriteWpUrls(navHtml)),
     navStyles: rewriteWpUrls(navStyles),
-    footerHtml: unwrapMirrorLazyMedia(rewriteWpUrls(footerHtml)),
+    // Keep the footer map iframe lazy; footer images already have real src values.
+    footerHtml: rewriteWpUrls(footerHtml),
     footerStyles: rewriteWpUrls(footerStyles),
     fluentformStyles: rewriteWpUrls(fluentformStyles),
     homeFluentformStyles: rewriteWpUrls(homeFluentformStyles),
