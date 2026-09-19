@@ -317,13 +317,31 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
             self.emit("status", f"Transcribing 0% - {src.name}")
             sr = 16000
             start = 0.0
+            first_chunk = True
             while start < dur:
-                end = min(dur, start + WINDOW)
+                chunk_window = 30.0 if first_chunk else WINDOW
+                end = min(dur, start + chunk_window)
                 chunk = audio[int(start * sr):int(end * sr)]
                 if len(chunk) == 0:
                     break
-                segs, _ = model.transcribe(chunk, **kwargs)
-                keep_start = 0.0 if start == 0 else start + OVERLAP / 2
+
+                local_kwargs = dict(kwargs)
+                if first_chunk:
+                    opening_prompts = {
+                        "mr": "मराठी कविता किंवा गाणे. प्रत्येक ओळ अचूक लिहा. सुरुवातीची कोणतीही ओळ सोडू नका.",
+                        "hi": "हिंदी कविता या गीत। हर पंक्ति ठीक से लिखें। शुरुआती कोई पंक्ति न छोड़ें।",
+                        "en": "Transcribe every spoken or sung word from the very beginning. Do not skip any opening line."
+                    }
+                    local_kwargs["beam_size"] = max(3, int(local_kwargs.get("beam_size", 1)))
+                    local_kwargs["best_of"] = max(3, int(local_kwargs.get("best_of", 1)))
+                    local_kwargs["no_speech_threshold"] = 1.0
+                    local_kwargs["log_prob_threshold"] = None
+                    local_kwargs["compression_ratio_threshold"] = None
+                    if not glossary and language in opening_prompts:
+                        local_kwargs["initial_prompt"] = opening_prompts[language]
+
+                segs, _ = model.transcribe(chunk, **local_kwargs)
+                keep_start = 0.0 if first_chunk else start + OVERLAP / 2
                 keep_end = dur if end >= dur else end - OVERLAP / 2
                 for seg in segs:
                     words = getattr(seg, "words", None) or []
@@ -354,7 +372,11 @@ document.getElementById('forward').onclick=()=>{{v.currentTime=Math.min(v.durati
                 pct = min(99, int((end / max(dur, 0.1)) * 100))
                 self.emit("progress", pct)
                 self.emit("status", f"Transcribing {pct}% - {src.name}")
-                start += STRIDE
+                if first_chunk:
+                    start = max(0.0, end - OVERLAP)
+                    first_chunk = False
+                else:
+                    start += STRIDE
             return result
 
         rows = collect_rows(lang)
