@@ -47,7 +47,10 @@ export default async function AdminLeadsPage() {
               {["new","contacted","qualified","won","lost","spam"].map(s=><option key={s}>{s}</option>)}
             </select><button type="submit">Save</button>
           </form></td>
-          <td><details><summary>View payload</summary><pre>{textPayload(lead.payload)}</pre></details></td>
+          <td>
+            {lead.source_form_key === "career-application" ? <p><a href={`/api/admin/leads/${lead.id}/resume`}>Download CV</a></p> : null}
+            <details><summary>View payload</summary><pre>{textPayload(lead.payload)}</pre></details>
+          </td>
         </tr>)}</tbody>
       </table></div>
       {!leads.length ? <p className="dgs-admin-help">No native leads captured yet.</p> : null}

@@ -51,8 +51,6 @@ export default async function CareerPage() {
 
   return (
     <>
-      <link rel="stylesheet" href="/vendor/fluentforms/fluent-forms-public.css" />
-      <link rel="stylesheet" href="/vendor/fluentforms/fluentform-public-default.css" />
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       <style dangerouslySetInnerHTML={{ __html: assets.footerStyles }} />
       <JsonLd id="career-list-jsonld" value={itemList} />
@@ -142,11 +140,11 @@ export default async function CareerPage() {
             <h2 id="apply-heading">Send us your application</h2>
             <p>
               Choose the role, add your details and upload your CV. Applications are
-              routed through our existing recruitment form backend.
+              captured directly in the native DGS CMS recruitment inbox.
             </p>
           </div>
           <div className={styles.formCard}>
-            <CareerApplicationForm />
+            <CareerApplicationForm positions={jobs.map((job) => job.title)} />
           </div>
         </section>
       </main>

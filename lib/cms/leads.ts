@@ -17,6 +17,14 @@ export async function listCmsLeads(limit = 200) {
   return rows;
 }
 
+export async function getCmsLead(id: string) {
+  if (!isCmsDatabaseConfigured()) return null;
+  const { rows } = await cmsQuery<CmsLead>(
+    "SELECT * FROM leads WHERE id = ? LIMIT 1", [id],
+  );
+  return rows[0] || null;
+}
+
 export async function createCmsLead(input: {
   formKey: string; route: string; name?: string; email?: string;
   phone?: string; company?: string; payload: Record<string, unknown>;
