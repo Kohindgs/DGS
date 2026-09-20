@@ -171,3 +171,41 @@ CREATE TABLE IF NOT EXISTS portfolio_items (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_portfolio_active_order (active, sort_order)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS assessment_assignments (
+  id CHAR(36) PRIMARY KEY,
+  assessment_key VARCHAR(100) NOT NULL,
+  token_hash CHAR(64) NOT NULL UNIQUE,
+  candidate_name VARCHAR(255) NOT NULL,
+  candidate_email VARCHAR(320) NOT NULL,
+  candidate_phone VARCHAR(100) NOT NULL,
+  experience VARCHAR(255),
+  notice_period VARCHAR(255),
+  expires_at DATETIME NULL,
+  used_at DATETIME NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_assessment_assignments_key (assessment_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS assessment_attempts (
+  id CHAR(36) PRIMARY KEY,
+  assignment_id CHAR(36) NOT NULL,
+  assessment_key VARCHAR(100) NOT NULL,
+  candidate_name VARCHAR(255) NOT NULL,
+  candidate_email VARCHAR(320) NOT NULL,
+  candidate_phone VARCHAR(100) NOT NULL,
+  experience VARCHAR(255),
+  notice_period VARCHAR(255),
+  objective_score INT NOT NULL DEFAULT 0,
+  objective_total INT NOT NULL DEFAULT 0,
+  answers JSON NOT NULL,
+  activity JSON NOT NULL,
+  review_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  reviewer_notes TEXT,
+  started_at DATETIME NOT NULL,
+  submitted_at DATETIME NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_assessment_attempts_key_date (assessment_key, created_at),
+  INDEX idx_assessment_attempts_status (review_status),
+  CONSTRAINT fk_assessment_attempt_assignment FOREIGN KEY (assignment_id) REFERENCES assessment_assignments(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
