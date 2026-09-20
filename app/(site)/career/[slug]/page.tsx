@@ -5,7 +5,7 @@ import {
   careerApplyPath,
   careerJobPath,
   getActiveCareerJobs,
-  getCareerJob,
+  loadCareerJob,
   type CareerJob,
 } from "@/lib/careers/jobs";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
@@ -27,7 +27,7 @@ export async function generateMetadata({
   params,
 }: CareerJobPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const job = getCareerJob(slug);
+  const job = await loadCareerJob(slug);
   if (!job) return {};
 
   const path = careerJobPath(job);
@@ -125,7 +125,7 @@ export default async function CareerJobPage({
   params,
 }: CareerJobPageProps) {
   const { slug } = await params;
-  const job = getCareerJob(slug);
+  const job = await loadCareerJob(slug);
   if (!job) notFound();
 
   const assets = await loadWpExtractedAssets();

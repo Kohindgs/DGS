@@ -4,12 +4,13 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 
 const sections = [
-  ["Blogs", "Draft, review and publish native posts"],
-  ["Leads", "Native lead inbox and status tracking"],
-  ["Media", "Uploads, alt text and asset metadata"],
-  ["Forms", "Native form definitions and submissions"],
-  ["SEO", "Metadata, canonicals and schema controls"],
-  ["Users", "Roles, access and audit history"],
+  ["Blogs", "Draft, review and publish native posts", "/admin/blogs/"],
+  ["Careers", "Create, publish and unpublish job openings", "/admin/careers/"],
+  ["Leads", "Native lead inbox and status tracking", "/admin/leads/"],
+  ["Forms", "Verified form inventory and migration controls", "/admin/forms/"],
+  ["Media", "Uploads, alt text and asset metadata", ""],
+  ["SEO", "Metadata, canonicals and schema controls", ""],
+  ["Users", "Roles, access and audit history", ""],
 ] as const;
 
 export default async function AdminPage() {
@@ -31,12 +32,12 @@ export default async function AdminPage() {
         </span>
       </header>
       <section className="dgs-admin-grid" aria-label="CMS sections">
-        {sections.map(([title, description]) => (
+        {sections.map(([title, description, href]) => (
           <article className="dgs-admin-card" key={title}>
             <div className="dgs-admin-card-dot" aria-hidden="true" />
             <h2>{title}</h2>
             <p>{description}</p>
-            {title === "Blogs" ? <Link href="/admin/blogs/">Manage Blogs</Link> : <span>Foundation ready</span>}
+            {href ? <Link href={href}>Manage {title}</Link> : <span>Foundation ready</span>}
           </article>
         ))}
       </section>

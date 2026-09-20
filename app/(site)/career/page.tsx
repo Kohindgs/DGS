@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { CareerApplicationForm } from "@/components/careers/CareerApplicationForm";
-import { careerApplyPath, careerJobPath, getActiveCareerJobs } from "@/lib/careers/jobs";
+import { careerApplyPath, careerJobPath, loadActiveCareerJobs } from "@/lib/careers/jobs";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function CareerPage() {
   const [assets, jobs] = await Promise.all([
     loadWpExtractedAssets(),
-    Promise.resolve(getActiveCareerJobs()),
+    loadActiveCareerJobs(),
   ]);
 
   const itemList = {

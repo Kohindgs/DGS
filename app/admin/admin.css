@@ -192,3 +192,42 @@
   .dgs-admin-optimization-grid { grid-template-columns: 1fr; }
   .dgs-admin-import-head { flex-direction: column; }
 }
+
+.dgs-admin-two-column { max-width:1280px; margin:0 auto; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr); gap:18px; align-items:start; }
+.dgs-admin-editor-form { display:grid; gap:14px; margin-top:18px; }
+.dgs-admin-editor-form label { display:grid; gap:7px; color:#d8d8df; font-size:.92rem; }
+.dgs-admin-editor-form input,.dgs-admin-editor-form textarea,.dgs-admin-editor-form select,.dgs-admin-inline-form select {
+  width:100%; border:1px solid rgba(255,255,255,.12); border-radius:11px; background:#101014; color:#fff; padding:11px 12px;
+}
+.dgs-admin-editor-form textarea { resize:vertical; }
+.dgs-admin-editor-form button,.dgs-admin-record button,.dgs-admin-inline-form button {
+  border:0; border-radius:10px; padding:10px 14px; background:linear-gradient(135deg,#a900ff,#6a35ff); color:#fff; font-weight:800; cursor:pointer;
+}
+.dgs-admin-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.dgs-admin-record-list { display:grid; gap:12px; margin-top:14px; }
+.dgs-admin-record { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; border:1px solid rgba(255,255,255,.08); border-radius:16px; background:#0e0e12; padding:18px; }
+.dgs-admin-record h3 { margin:8px 0 5px; }
+.dgs-admin-record p { margin:0 0 8px; color:#a8a8b3; }
+.dgs-admin-record code,.dgs-admin-route-chips code { color:#d8c7ff; font-size:.78rem; }
+.dgs-admin-state { display:inline-flex; border-radius:999px; padding:5px 9px; background:rgba(255,255,255,.07); color:#c9c9d3; font-size:.72rem; font-weight:800; text-transform:uppercase; }
+.dgs-admin-state.live { color:#7df3b4; background:rgba(125,243,180,.1); }
+
+.dgs-admin-table-wrap { overflow:auto; }
+.dgs-admin-table { width:100%; border-collapse:collapse; min-width:980px; }
+.dgs-admin-table th,.dgs-admin-table td { padding:13px 12px; text-align:left; vertical-align:top; border-bottom:1px solid rgba(255,255,255,.07); }
+.dgs-admin-table th { color:#cfcfd7; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; }
+.dgs-admin-table td,.dgs-admin-table span { color:#aaaab4; font-size:.88rem; }
+.dgs-admin-table strong { color:#fff; }
+.dgs-admin-table details pre { max-width:420px; white-space:pre-wrap; color:#c9c9d3; font-size:.75rem; }
+.dgs-admin-inline-form { display:flex; gap:8px; min-width:190px; }
+.dgs-admin-inline-form button { padding:8px 10px; }
+.dgs-admin-route-chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+.dgs-admin-route-chips code { background:rgba(255,255,255,.05); border-radius:8px; padding:5px 7px; }
+.dgs-admin-form-meta { display:grid; gap:4px; min-width:180px; }
+.dgs-admin-form-meta span { color:#888894; font-size:.72rem; text-transform:uppercase; margin-top:5px; }
+.dgs-admin-form-meta strong { color:#e8e8ed; font-size:.86rem; }
+@media (max-width:900px) {
+  .dgs-admin-two-column { grid-template-columns:1fr; }
+  .dgs-admin-form-grid { grid-template-columns:1fr; }
+  .dgs-admin-record { flex-direction:column; }
+}

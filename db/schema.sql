@@ -136,3 +136,26 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   INDEX idx_audit_logs_created_at (created_at),
   CONSTRAINT fk_audit_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS career_jobs (
+  id CHAR(36) PRIMARY KEY,
+  slug VARCHAR(255) NOT NULL UNIQUE,
+  title VARCHAR(512) NOT NULL,
+  summary TEXT NOT NULL,
+  employment_type VARCHAR(50) NOT NULL DEFAULT 'FULL_TIME',
+  employment_label VARCHAR(100) NOT NULL DEFAULT 'Full-time',
+  location VARCHAR(255) NOT NULL,
+  workplace_type VARCHAR(100) NOT NULL DEFAULT 'On-site',
+  schedule VARCHAR(255) NOT NULL,
+  experience VARCHAR(255) NOT NULL,
+  compensation VARCHAR(255) NOT NULL,
+  overview TEXT NOT NULL,
+  responsibilities JSON NOT NULL,
+  requirements JSON NOT NULL,
+  benefits JSON NOT NULL,
+  date_posted DATE NOT NULL,
+  active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_career_jobs_active_date (active, date_posted)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
