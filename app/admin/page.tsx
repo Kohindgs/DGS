@@ -27,7 +27,7 @@ export default async function AdminPage() {
         <div>
           <p className="dgs-admin-kicker">D&apos;Genius Solutions</p>
           <h1>DGS CMS</h1>
-          <p>Native Next.js content, forms, leads, media and SEO administration.</p>
+          <p>Native Next.js content, careers, forms, leads, portfolio, assessments, media and SEO administration.</p>
         </div>
         <span className={databaseReady ? "dgs-admin-badge ready" : "dgs-admin-badge"}>
           {databaseReady ? "Database configured" : "Database not configured"}
@@ -46,12 +46,12 @@ export default async function AdminPage() {
 
       <section className="dgs-admin-status">
         <h2>Migration status</h2>
-        <p>WordPress remains the temporary forms, CMS and media backend while native modules are built and verified.</p>
+        <p>The native CMS is code-complete for the current migration blocks; WordPress remains only as a compatibility fallback while production activation is completed.</p>
         <ul>
-          <li>Headless WordPress bridge: active</li>
-          <li>Fluent Forms context bridge: verified 11/11</li>
-          <li>Native PostgreSQL schema: source-ready</li>
-          <li>Production cutover: not started</li>
+          <li>Headless WordPress bridge: retained as compatibility fallback</li>
+          <li>Native careers, leads, portfolio and assessments: implemented</li>
+          <li>Native MySQL schema: deployment-ready</li>
+          <li>Production activation: requires persistent server config + schema application</li>
         </ul>
       </section>
     </main>

@@ -42,6 +42,7 @@
     "release:validate": "npm run release:validate:search && npm run validate:forms && npm run validate:portfolio && npm run validate:analytics",
     "migration:baseline": "npm run extract:wordpress && npm run normalize:wordpress && npm run extract:envira && npm run audit:live && npm run audit:targets && npm run audit:tier0 && npm run audit:analytics && npm run audit:performance && npm run audit:accessibility && npm run build:content-blocks && npm run build:tier0-content && npm run build:route-parity && npm run build:indexability && npm run build:links && npm run build:route-registry && npm run verify:tier0 && npm run validate:redirects && npm run validate:search",
     "check": "npm run validate:redirects && npm run validate:search && npm run lint && npm run typecheck && npm run build",
+    "cms:schema:apply": "node scripts/apply-cms-schema.mjs",
     "capture:wp-visual": "node scripts/capture-wp-visual-reference.mjs",
     "capture:next-visual": "node scripts/capture-next-visual-reference.mjs",
     "compare:visual": "node scripts/compare-visual-reference.mjs",

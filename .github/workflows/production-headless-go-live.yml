@@ -75,7 +75,7 @@ jobs:
             --exclude='.next/cache' \
             --exclude='public/media/portfolio/videos' \
             --exclude='*.mp4' \
-            .next app components data lib public \
+            .next app components data db lib public scripts \
             middleware.ts next.config.ts next-env.d.ts \
             package.json package-lock.json server.js tsconfig.json
 
@@ -99,6 +99,21 @@ jobs:
           tar -xzf /tmp/dgs-prod-release.tar.gz -C "$RELEASE"
           rm -f /tmp/dgs-prod-release.tar.gz
           ln -sfn "$ROOT/shared/node_modules" "$RELEASE/node_modules"
+          SHARED_ENV="$ROOT/shared/.env.production"
+          if [ ! -f "$SHARED_ENV" ]; then
+            echo "Missing persistent production config: $SHARED_ENV"
+            exit 78
+          fi
+          cp "$SHARED_ENV" "$RELEASE/.env.production"
+          {
+            echo "DGS_PUBLIC_INDEXING=true"
+            echo "DGS_WORDPRESS_BACKEND_ORIGIN=https://wp-origin.dgeniussolutions.com"
+            echo "NEXT_PUBLIC_SITE_URL=https://www.dgeniussolutions.com"
+            echo "DGS_ADMIN_ENABLED=true"
+            echo "DGS_PRIVATE_UPLOAD_DIR=$ROOT/shared/private/careers"
+            echo "DGS_CMS_MEDIA_DIR=$ROOT/shared/cms-media"
+          } >> "$RELEASE/.env.production"
+          chmod 600 "$RELEASE/.env.production"
           if [ -d "$ROOT/shared/wp-content/uploads" ]; then
             find "$ROOT/shared/wp-content/uploads" -type f -name "*.mp4" | while read -r f; do
               rel="${f#$ROOT/shared/wp-content/uploads/}"
@@ -113,11 +128,28 @@ jobs:
               ln -sfn "$f" "$RELEASE/public/media/portfolio/videos/$(basename "$f")"
             done
           fi
-          cat > "$RELEASE/.env.production" <<'ENV'
-          DGS_PUBLIC_INDEXING=true
-          DGS_WORDPRESS_BACKEND_ORIGIN=https://wp-origin.dgeniussolutions.com
-          NEXT_PUBLIC_SITE_URL=https://www.dgeniussolutions.com
-          ENV
+          mkdir -p "$ROOT/shared/private/careers" "$ROOT/shared/cms-media"
+          chmod 700 "$ROOT/shared/private" "$ROOT/shared/private/careers"
+          required_keys=(
+            DGS_ADMIN_EMAIL
+            DGS_ADMIN_PASSWORD
+            DGS_ADMIN_SESSION_SECRET
+            DGS_SMTP_HOST
+            DGS_SMTP_USER
+            DGS_SMTP_PASSWORD
+          )
+          for key in "${required_keys[@]}"; do
+            if ! grep -q "^${key}=." "$RELEASE/.env.production"; then
+              echo "Missing required production setting: $key"
+              exit 78
+            fi
+          done
+          if ! grep -Eq '^(DGS_DATABASE_URL|DGS_MYSQL_HOST)=.' "$RELEASE/.env.production"; then
+            echo "Missing CMS database configuration"
+            exit 78
+          fi
+          cd "$RELEASE"
+          npm run cms:schema:apply
           test "$(cat "$RELEASE/.next/BUILD_ID")" = "$BUILD_ID"
           test -f "$RELEASE/.next/server/app/blogs/seo-company-in-mumbai.html"
           test -f "$RELEASE/.next/server/app/blogs/google-ads-ai-max-2026.html"
