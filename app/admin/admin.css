@@ -231,3 +231,14 @@
   .dgs-admin-form-grid { grid-template-columns:1fr; }
   .dgs-admin-record { flex-direction:column; }
 }
+
+.dgs-admin-portfolio-preview { min-width:220px; flex:0 0 220px; }
+.dgs-admin-portfolio-form { flex:1; grid-template-columns:2fr 2fr 100px 130px auto; align-items:end; margin-top:0; }
+.dgs-admin-portfolio-form button { min-height:42px; }
+@media (max-width:1100px) {
+  .dgs-admin-portfolio-form { grid-template-columns:1fr 1fr; width:100%; }
+  .dgs-admin-portfolio-preview { min-width:0; flex-basis:auto; }
+}
+@media (max-width:700px) {
+  .dgs-admin-portfolio-form { grid-template-columns:1fr; }
+}

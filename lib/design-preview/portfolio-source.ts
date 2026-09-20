@@ -90,11 +90,37 @@ function readPortfolioHero() {
   };
 }
 
-export function loadPortfolioDesignPreviewSource() {
+export function loadPortfolioDesignPreviewSourceStatic() {
   const hero = readPortfolioHero();
-
   return {
     ...hero,
     items: orderPortfolioMedia(portfolioMedia.items),
   };
+}
+
+export async function loadPortfolioDesignPreviewSource() {
+  const source = loadPortfolioDesignPreviewSourceStatic();
+  const { listPortfolioOverrides } = await import("@/lib/cms/portfolio");
+  const overrides = await listPortfolioOverrides();
+  if (!overrides.length) return source;
+
+  const byId = new Map(overrides.map((row) => [row.source_item_id, row]));
+  const items = source.items
+    .map((item, index) => {
+      const override = byId.get(item.id);
+      return {
+        item: override ? {
+          ...item,
+          title: override.title || item.title,
+          alt: override.alt_text || item.alt,
+        } : item,
+        active: override ? Boolean(override.active) : true,
+        order: override ? Number(override.sort_order) : index,
+      };
+    })
+    .filter((entry) => entry.active)
+    .sort((a,b) => a.order - b.order)
+    .map((entry) => entry.item);
+
+  return { ...source, items };
 }

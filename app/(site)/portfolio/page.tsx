@@ -48,7 +48,7 @@ export default async function PortfolioPage() {
     : [];
 
   const [source, assets] = await Promise.all([
-    Promise.resolve(loadPortfolioDesignPreviewSource()),
+    loadPortfolioDesignPreviewSource(),
     loadWpExtractedAssets(),
   ]);
 

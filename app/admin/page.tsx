@@ -8,6 +8,7 @@ const sections = [
   ["Careers", "Create, publish and unpublish job openings", "/admin/careers/"],
   ["Leads", "Native lead inbox and status tracking", "/admin/leads/"],
   ["Forms", "Verified form inventory and migration controls", "/admin/forms/"],
+  ["Portfolio", "Visibility, order, titles and alt text for approved work", "/admin/portfolio/"],
   ["Media", "Uploads, alt text and asset metadata", ""],
   ["SEO", "Metadata, canonicals and schema controls", ""],
   ["Users", "Roles, access and audit history", ""],
