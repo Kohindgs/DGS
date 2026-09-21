@@ -27,6 +27,8 @@ function usesRecaptchaV2(definition: FormDefinition) {
 
 export function FluentLeadForm({ id = "contact-form", route, definition, className }: FluentLeadFormProps) {
   const fields = useMemo(() => visibleFields(definition), [definition]);
+  const isSeoAuditPilot = Number(definition.fluentFormId) === 3;
+  const resolvedClassName = className || `${styles.form}${isSeoAuditPilot ? ` ${styles.pageAlignedSeo}` : ""}`;
   const recaptchaEnabled = usesRecaptchaV2(definition);
   const [values, setValues] = useState<Record<string, string>>(() => {
     const initial: Record<string, string> = {};
@@ -148,8 +150,9 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
   return (
     <form
       id={id}
-      className={className || styles.form}
+      className={resolvedClassName}
       data-migration-form
+      data-native-pilot={isSeoAuditPilot ? "seo-audit-form-3" : undefined}
       data-wordpress-form={String(definition.fluentFormId)}
       data-route={route}
       data-submission="enabled"
@@ -190,6 +193,25 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
                   </option>
                 ))}
               </select>
+            ) : field.type === "checkbox" ? (
+              <span className={styles.checkboxWrap}>
+                <input
+                  id={inputId}
+                  name={field.name}
+                  type="checkbox"
+                  checked={Boolean(values[field.name])}
+                  required={field.required}
+                  onChange={(event) =>
+                    setValues((current) => ({
+                      ...current,
+                      [field.name]: event.target.checked
+                        ? (field.options?.[0]?.value || "1")
+                        : "",
+                    }))
+                  }
+                />
+                <span>{field.options?.[0]?.label || field.label}</span>
+              </span>
             ) : (
               <input
                 {...common}

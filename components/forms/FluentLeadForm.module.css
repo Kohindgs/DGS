@@ -85,3 +85,57 @@
   max-width: 100%;
   overflow-x: auto;
 }
+
+.pageAlignedSeo {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 16px;
+}
+
+.pageAlignedSeo .field {
+  grid-column: 1 / -1;
+}
+
+.pageAlignedSeo .field[data-migration-field="names[first_name]"],
+.pageAlignedSeo .field[data-migration-field="names[last_name]"] {
+  grid-column: auto;
+}
+
+.pageAlignedSeo .captcha,
+.pageAlignedSeo .success,
+.pageAlignedSeo .errorBanner,
+.pageAlignedSeo .submit {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .pageAlignedSeo {
+    grid-template-columns: 1fr;
+  }
+
+  .pageAlignedSeo .field[data-migration-field="names[first_name]"],
+  .pageAlignedSeo .field[data-migration-field="names[last_name]"] {
+    grid-column: 1;
+  }
+}
+
+.checkboxWrap {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.checkboxWrap input[type="checkbox"] {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  min-height: 18px;
+  margin-top: 2px;
+  padding: 0;
+}
