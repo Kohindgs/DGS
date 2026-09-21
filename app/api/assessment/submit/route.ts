@@ -22,7 +22,10 @@ export async function POST(request:Request) {
     const definition=getAssessmentByKey(attempt.assessment_key);
     if(!definition) return NextResponse.json({ok:false,message:"Assessment configuration missing."},{status:400});
 
-    const elapsed=Date.now()-new Date(attempt.started_at.replace(" ","T")+"Z").getTime();
+    const startedTime = attempt.started_at instanceof Date
+      ? attempt.started_at.getTime()
+      : new Date(String(attempt.started_at).includes("T") ? String(attempt.started_at) : String(attempt.started_at).replace(" ", "T") + "Z").getTime();
+    const elapsed = Date.now() - startedTime;
     const allowedMs=(definition.durationMinutes+5)*60*1000;
     if(elapsed>allowedMs) return NextResponse.json({ok:false,message:"Assessment time has expired."},{status:408});
 

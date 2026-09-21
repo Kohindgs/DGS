@@ -13,7 +13,7 @@ export type AssessmentAttempt = {
   candidate_email:string; candidate_phone:string; experience:string|null;
   notice_period:string|null; objective_score:number; objective_total:number;
   answers:string|Record<string,unknown>; activity:string|Record<string,unknown>;
-  review_status:string; reviewer_notes:string|null; started_at:string; submitted_at:string|null;
+  review_status:string; reviewer_notes:string|null; started_at:string|Date; submitted_at:string|Date|null;
 };
 
 const tokenHash=(token:string)=>createHash("sha256").update(token).digest("hex");

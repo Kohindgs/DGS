@@ -103,7 +103,7 @@ export default async function AssessmentAdminPage({
               <h3>{attempt.candidate_name}</h3>
               <p>{attempt.assessment_key} · {attempt.candidate_email} · {attempt.candidate_phone}</p>
               <p>Objective score: <strong>{attempt.objective_score}/{attempt.objective_total}</strong></p>
-              <p>Started: {attempt.started_at} · Submitted: {attempt.submitted_at||"In progress"}</p>
+              <p>Started: {String(attempt.started_at)} · Submitted: {attempt.submitted_at ? String(attempt.submitted_at) : "In progress"}</p>
               <details><summary>Answers</summary><pre>{JSON.stringify(answers,null,2)}</pre></details>
               <details><summary>Activity indicators</summary><pre>{JSON.stringify(activity,null,2)}</pre></details>
             </div>
