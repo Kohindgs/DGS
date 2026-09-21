@@ -6,6 +6,8 @@ import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { ASSESSMENTS } from "@/lib/assessments/definitions";
 import { createAssessmentAssignment, listAssessmentAttempts, updateAssessmentReview } from "@/lib/cms/assessments";
 
+export const dynamic = "force-dynamic";
+
 function parseJson(value:unknown) {
   if(typeof value!=="string") return value as Record<string,unknown>;
   try{return JSON.parse(value) as Record<string,unknown>;}catch{return {};}

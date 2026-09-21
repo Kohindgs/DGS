@@ -5,6 +5,8 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { listCmsLeads, updateLeadStatus } from "@/lib/cms/leads";
 
+export const dynamic = "force-dynamic";
+
 async function changeStatus(formData: FormData) {
   "use server";
   if (!(await hasAdminSession())) redirect("/admin/login/");

@@ -6,6 +6,8 @@ import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { listPortfolioOverrides, upsertPortfolioOverride } from "@/lib/cms/portfolio";
 import { loadPortfolioDesignPreviewSourceStatic } from "@/lib/design-preview/portfolio-source";
 
+export const dynamic = "force-dynamic";
+
 async function saveItem(formData: FormData) {
   "use server";
   if (!(await hasAdminSession())) redirect("/admin/login/");

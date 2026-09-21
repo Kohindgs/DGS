@@ -4,6 +4,8 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { BlogImporter } from "./BlogImporter";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminBlogsPage() {
   if (process.env.DGS_ADMIN_ENABLED !== "true") notFound();
   if (!(await hasAdminSession())) redirect("/admin/login/");

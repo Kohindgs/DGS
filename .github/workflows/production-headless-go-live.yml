@@ -33,7 +33,7 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           npm run typecheck
-          DGS_PUBLIC_INDEXING=true npm run build
+          DGS_PUBLIC_INDEXING=true DGS_ADMIN_ENABLED=true npm run build
           test -f .next/server/app/blogs/seo-company-in-mumbai.html
           test -f .next/server/app/blogs/google-ads-ai-max-2026.html
           test -f .next/server/app/blogs/aeo-in-2026.html
@@ -187,7 +187,10 @@ jobs:
             'https://www.dgeniussolutions.com/us-landing-page/'
             'https://www.dgeniussolutions.com/career/'
             'https://www.dgeniussolutions.com/career/junior-hr-generalist/'
+            'https://www.dgeniussolutions.com/portfolio/'
             'https://www.dgeniussolutions.com/seo-executive-assessment/'
+            'https://www.dgeniussolutions.com/seo-manager-assessment/'
+            'https://www.dgeniussolutions.com/admin/login/'
             'https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/'
             'https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/'
             'https://www.dgeniussolutions.com/blogs/aeo-in-2026/'

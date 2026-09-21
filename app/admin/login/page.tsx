@@ -1,6 +1,8 @@
 import { notFound, redirect } from "next/navigation";
 import { hasAdminSession, isAdminAuthConfigured } from "@/lib/cms/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminLoginPage({
   searchParams,
 }: {

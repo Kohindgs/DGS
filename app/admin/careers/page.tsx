@@ -5,6 +5,8 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { createCmsCareerJob, listCmsCareerJobs, setCmsCareerJobActive } from "@/lib/cms/careers";
 
+export const dynamic = "force-dynamic";
+
 function lines(value: FormDataEntryValue | null) {
   return JSON.stringify(String(value || "").split(/\r?\n/).map(v=>v.trim()).filter(Boolean));
 }

@@ -3,6 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 
+export const dynamic = "force-dynamic";
+
 const sections = [
   ["Blogs", "Draft, review and publish native posts", "/admin/blogs/"],
   ["Careers", "Create, publish and unpublish job openings", "/admin/careers/"],
