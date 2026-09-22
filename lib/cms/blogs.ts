@@ -362,7 +362,12 @@ export async function createCmsBlog(input: CreateCmsBlogInput): Promise<CmsBlogS
     [id]
   );
 
-  return created.rows[0];
+  const row = created.rows[0];
+  if (!row) return null as unknown as CmsBlogSummary;
+  return {
+    ...row,
+    needs_review: Boolean(row.needs_review),
+  };
 }
 
 // 5. Update Blog Post
