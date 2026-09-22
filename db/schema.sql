@@ -209,3 +209,58 @@ CREATE TABLE IF NOT EXISTS assessment_attempts (
   INDEX idx_assessment_attempts_status (review_status),
   CONSTRAINT fk_assessment_attempt_assignment FOREIGN KEY (assignment_id) REFERENCES assessment_assignments(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS media_assets (
+  id CHAR(36) PRIMARY KEY,
+  filename VARCHAR(255) NOT NULL,
+  original_filename VARCHAR(255) NOT NULL,
+  storage_path VARCHAR(512) NOT NULL,
+  public_url VARCHAR(512) NOT NULL,
+  mime_type VARCHAR(100) NOT NULL,
+  media_type VARCHAR(50) NOT NULL DEFAULT 'image',
+  extension VARCHAR(20) NOT NULL,
+  width INT NULL,
+  height INT NULL,
+  duration_seconds DECIMAL(10,2) NULL,
+  file_size BIGINT NOT NULL,
+  original_file_size BIGINT NOT NULL,
+  optimised_file_size BIGINT NULL,
+  alt_text TEXT NULL,
+  is_decorative BOOLEAN NOT NULL DEFAULT FALSE,
+  title VARCHAR(255) NULL,
+  caption TEXT NULL,
+  description TEXT NULL,
+  conversion_status VARCHAR(50) NOT NULL DEFAULT 'ready',
+  conversion_error TEXT NULL,
+  source VARCHAR(100) NOT NULL DEFAULT 'upload',
+  source_id VARCHAR(255) NULL,
+  checksum VARCHAR(64) NOT NULL,
+  poster_url VARCHAR(512) NULL,
+  original_storage_path VARCHAR(512) NULL,
+  original_url VARCHAR(512) NULL,
+  category VARCHAR(50) NOT NULL DEFAULT 'general',
+  created_by CHAR(36) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at TIMESTAMP NULL,
+  INDEX idx_media_type (media_type),
+  INDEX idx_media_checksum (checksum),
+  INDEX idx_media_created_at (created_at),
+  INDEX idx_media_category (category),
+  INDEX idx_media_deleted (deleted_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS media_usage (
+  id CHAR(36) PRIMARY KEY,
+  media_id CHAR(36) NOT NULL,
+  usage_type VARCHAR(50) NOT NULL DEFAULT 'page',
+  entity_type VARCHAR(100) NOT NULL,
+  entity_id VARCHAR(255) NOT NULL,
+  route VARCHAR(512) NOT NULL,
+  field VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_media_usage_media (media_id),
+  INDEX idx_media_usage_route (route),
+  CONSTRAINT fk_media_usage_asset FOREIGN KEY (media_id) REFERENCES media_assets(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

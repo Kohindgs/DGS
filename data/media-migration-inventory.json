@@ -1,0 +1,43 @@
+{
+  "totalDistinctMediaUrls": 679,
+  "nativeMediaCount": 375,
+  "wpImagesCount": 6,
+  "wpVideosCount": 0,
+  "externalMediaCount": 125,
+  "brokenMediaCount": 173,
+  "duplicateReferencedMediaCount": 286,
+  "potentiallyUnusedPhysicalMediaCount": 0,
+  "samples": {
+    "nativeMedia": [
+      "/media/portfolio/images/wp_63158_w480.webp",
+      "/media/portfolio/images/wp_63158_w768.webp",
+      "/media/portfolio/images/wp_63158_w1024.webp"
+    ],
+    "wpImages": [
+      "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Grid_New-scaled.png",
+      "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wedding-Grid_New-1024x1024.png",
+      "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/1x1-scaled.webp"
+    ],
+    "wpVideos": [],
+    "externalMedia": [
+      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/img/flags.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/img/flags@2x.png",
+      "https://www.dgeniussolutions.com/wp-content/litespeed/avatar/65c8a883abd5e0a9d4d75962f0a4c830.jpg?ver=1788051336"
+    ],
+    "duplicates": [
+      {
+        "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_01-3-1.png.webp",
+        "count": 4
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_01-3-1-1024x576.png.webp",
+        "count": 3
+      },
+      {
+        "url": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/04/SS_02-3.png.webp",
+        "count": 4
+      }
+    ],
+    "potentiallyUnused": []
+  }
+}

@@ -47,11 +47,11 @@ const connection=await mysql.createConnection(connectionOptions());
 try {
   await connection.query(schema);
   const [rows]=await connection.query(
-    "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME IN ('career_jobs','leads','form_submissions','portfolio_items','assessment_assignments','assessment_attempts') ORDER BY TABLE_NAME"
+    "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME IN ('career_jobs','leads','form_submissions','portfolio_items','assessment_assignments','assessment_attempts','media_assets','media_usage') ORDER BY TABLE_NAME"
   );
   const names=rows.map((row)=>row.TABLE_NAME);
   console.log(JSON.stringify({ok:true,tables:names},null,2));
-  if(names.length!==6) throw new Error("CMS schema verification failed");
+  if(names.length!==8) throw new Error("CMS schema verification failed");
 } finally {
   await connection.end();
 }

@@ -5,6 +5,7 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { listPortfolioOverrides, upsertPortfolioOverride } from "@/lib/cms/portfolio";
 import { loadPortfolioDesignPreviewSourceStatic } from "@/lib/design-preview/portfolio-source";
+import PortfolioItemRow from "./PortfolioItemRow";
 
 export const dynamic = "force-dynamic";
 
@@ -45,31 +46,15 @@ export default async function AdminPortfolioPage() {
     <section className="dgs-admin-import-panel">
       <div className="dgs-admin-record-list">
 
-        {source.items.map((item,index)=>{
-          const row=byId.get(item.id);
-          const active=row ? Boolean(row.active) : true;
-          return <article className="dgs-admin-record" key={item.id}>
-            <div className="dgs-admin-portfolio-preview">
-              <span className={active?"dgs-admin-state live":"dgs-admin-state"}>{active?"Visible":"Hidden"}</span>
-              <h3>{item.title || item.id}</h3>
-              <p>{item.type} · {item.sourceWidth}×{item.sourceHeight}</p>
-              <code>{item.id}</code>
-            </div>
-            <form action={saveItem} className="dgs-admin-editor-form dgs-admin-portfolio-form">
-              <input type="hidden" name="sourceItemId" value={item.id}/>
-              <label>Title<input name="title" defaultValue={row?.title || item.title} /></label>
-              <label>Alt text<input name="altText" defaultValue={row?.alt_text || item.alt} /></label>
-              <label>Order<input name="sortOrder" type="number" defaultValue={row?.sort_order ?? index} /></label>
-              <label>Visibility
-                <select name="active" defaultValue={String(active)}>
-                  <option value="true">Visible</option>
-                  <option value="false">Hidden</option>
-                </select>
-              </label>
-              <button type="submit">Save</button>
-            </form>
-          </article>;
-        })}
+        {source.items.map((item, index) => (
+          <PortfolioItemRow
+            key={item.id}
+            item={item}
+            row={byId.get(item.id)}
+            index={index}
+            saveItemAction={saveItem}
+          />
+        ))}
       </div>
     </section>}
   </main>;
