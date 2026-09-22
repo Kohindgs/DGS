@@ -13,6 +13,7 @@ const sections = [
   ["Portfolio", "Visibility, order, titles and alt text for approved work", "/admin/portfolio/"],
   ["Assessment", "Secure candidate tests, scoring and HR review", "/admin/assessment/"],
   ["Media", "Uploads, alt text and asset metadata", "/admin/media/"],
+  ["Search Updates", "Google Search status incidents, core updates and ranking alerts", "/admin/search-updates/"],
   ["SEO", "Metadata, canonicals and schema controls", ""],
   ["Users", "Roles, access and audit history", ""],
 ] as const;

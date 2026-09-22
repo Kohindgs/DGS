@@ -38,6 +38,7 @@
     { "source": "/how-modern-seo-strategies-are-transforming-business-growth/", "destination": "/blogs/seo-strategies-business-growth/", "statusCode": 301, "reason": "Legacy WordPress blog URL; authoritative blog canonical is /blogs/seo-strategies-business-growth/" },
     { "source": "/services/seo-services-dubai/", "destination": "/services/dubai-seo/", "statusCode": 301, "reason": "WordPress legacy Dubai SEO slug alias; authoritative service canonical is /services/dubai-seo/" },
     { "source": "/services/aeo-services-in-dubai/", "destination": "/aeo-dubai/", "statusCode": 301, "reason": "WordPress legacy Dubai AEO slug alias; authoritative route canonical is /aeo-dubai/" },
-    { "source": "/services/google-ads/", "destination": "/services/performance-marketing/", "statusCode": 301, "reason": "Legacy Google Ads service alias; authoritative service canonical is /services/performance-marketing/" }
+    { "source": "/services/google-ads/", "destination": "/services/performance-marketing/", "statusCode": 301, "reason": "Legacy Google Ads service alias; authoritative service canonical is /services/performance-marketing/" },
+    { "source": "/career/junior-hr-generalist/", "destination": "/career/", "statusCode": 301, "reason": "Archived role redirected to active careers hub" }
   ]
 }

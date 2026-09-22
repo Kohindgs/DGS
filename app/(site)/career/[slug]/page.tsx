@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import {
   careerApplyPath,
   careerJobPath,
@@ -27,6 +27,9 @@ export async function generateMetadata({
   params,
 }: CareerJobPageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === "junior-hr-generalist") {
+    permanentRedirect("/career/");
+  }
   const job = await loadCareerJob(slug);
   if (!job) return {};
 
@@ -58,7 +61,7 @@ export async function generateMetadata({
 }
 
 function buildJobSchema(job: CareerJob) {
-  return {
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
@@ -92,6 +95,27 @@ function buildJobSchema(job: CareerJob) {
     directApply: true,
     url: absoluteUrl(careerJobPath(job)),
   };
+
+  if (job.education) {
+    schema.educationRequirements = job.education;
+  }
+  if (job.experience) {
+    schema.experienceRequirements = job.experience;
+  }
+  if (job.compensation && job.compensation.includes("10,000") && job.compensation.includes("15,000")) {
+    schema.baseSalary = {
+      "@type": "MonetaryAmount",
+      currency: "INR",
+      value: {
+        "@type": "QuantitativeValue",
+        minValue: 10000,
+        maxValue: 15000,
+        unitText: "MONTH",
+      },
+    };
+  }
+
+  return schema;
 }
 
 function buildBreadcrumbSchema(job: CareerJob) {
@@ -125,6 +149,9 @@ export default async function CareerJobPage({
   params,
 }: CareerJobPageProps) {
   const { slug } = await params;
+  if (slug === "junior-hr-generalist") {
+    permanentRedirect("/career/");
+  }
   const job = await loadCareerJob(slug);
   if (!job) notFound();
 
@@ -158,6 +185,7 @@ export default async function CareerJobPage({
               {[
                 ["Location", job.location],
                 ["Experience", job.experience],
+                ...(job.education ? [["Education", job.education]] : []),
                 ["Schedule", job.schedule],
                 ["Compensation", job.compensation],
               ].map(([label, value]) => (

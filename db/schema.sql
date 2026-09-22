@@ -164,6 +164,7 @@ CREATE TABLE IF NOT EXISTS career_jobs (
   responsibilities JSON NOT NULL,
   requirements JSON NOT NULL,
   benefits JSON NOT NULL,
+  creative_requirements JSON NULL,
   date_posted DATE NOT NULL,
   active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -273,5 +274,28 @@ CREATE TABLE IF NOT EXISTS media_usage (
   INDEX idx_media_usage_media (media_id),
   INDEX idx_media_usage_route (route),
   CONSTRAINT fk_media_usage_asset FOREIGN KEY (media_id) REFERENCES media_assets(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS google_search_updates (
+  id CHAR(36) PRIMARY KEY,
+  title VARCHAR(512) NOT NULL,
+  source VARCHAR(255) NOT NULL,
+  source_url VARCHAR(1024) NOT NULL,
+  published_at DATETIME NOT NULL,
+  detected_at DATETIME NOT NULL,
+  category VARCHAR(100) NOT NULL,
+  severity VARCHAR(50) NOT NULL,
+  summary TEXT NOT NULL,
+  impact_analysis TEXT NOT NULL,
+  recommended_actions JSON NOT NULL,
+  affected_dgs_areas JSON NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'new',
+  notified_at DATETIME NULL,
+  reviewed_at DATETIME NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_gsu_published (published_at),
+  INDEX idx_gsu_severity_status (severity, status),
+  INDEX idx_gsu_source_url (source_url(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

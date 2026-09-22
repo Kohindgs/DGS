@@ -69,6 +69,14 @@ try {
     }
   }
 
+  // Column migration for career_jobs
+  const [careerCols] = await connection.query("DESCRIBE career_jobs");
+  const careerExistingCols = new Set(careerCols.map((c) => c.Field));
+  if (!careerExistingCols.has("creative_requirements")) {
+    await connection.query("ALTER TABLE career_jobs ADD COLUMN creative_requirements JSON NULL");
+    console.log("Applied column migration: career_jobs.creative_requirements");
+  }
+
   const expectedTables = [
     "assessment_assignments",
     "assessment_attempts",
@@ -80,6 +88,7 @@ try {
     "career_jobs",
     "categories",
     "form_submissions",
+    "google_search_updates",
     "leads",
     "media_assets",
     "media_usage",
