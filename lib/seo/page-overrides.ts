@@ -8,6 +8,10 @@ const PAGE_SEO_OVERRIDES: Record<string, PageSeoOverride> = {
     title: "Performance Marketing Agency in Mumbai | Google & Meta Ads | DGS",
     description: "Performance marketing agency in Mumbai for Google Ads, Meta Ads, PPC, landing page optimisation, remarketing, conversion tracking and ROI-focused campaign growth.",
   },
+  "/services/ai-video-production-agency/": {
+    title: "Generative AI & AI Video Production Agency in Mumbai | DGS",
+    description: "Generative AI and AI video production agency in Mumbai creating AI ads, brand films, product videos, generative AI visuals and campaign content for brands.",
+  },
   "/services/social-media-marketing/": {
     title: "Social Media Marketing Agency in Mumbai | Content, Ads & Growth | DGS",
   },
