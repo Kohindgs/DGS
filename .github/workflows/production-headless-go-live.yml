@@ -15,6 +15,7 @@ env:
   PROD_ROOT: /home/u188101251/production-app
   HOSTINGER_PASS: ${{ secrets.HOSTINGER_PASS }}
   HOSTINGER_SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+  HOSTINGER_KNOWN_HOSTS: ${{ secrets.HOSTINGER_KNOWN_HOSTS }}
 
 jobs:
   deploy:
@@ -45,10 +46,42 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan -p "$PROD_PORT" "$PROD_HOST" >> ~/.ssh/known_hosts
+
+          # 1. Pinned Host Key with Retry ssh-keyscan fallback
+          if [ -n "$HOSTINGER_KNOWN_HOSTS" ]; then
+            echo "Using trusted pinned HOSTINGER_KNOWN_HOSTS..."
+            printf '%s\n' "$HOSTINGER_KNOWN_HOSTS" > ~/.ssh/known_hosts
+            chmod 600 ~/.ssh/known_hosts
+          else
+            echo "HOSTINGER_KNOWN_HOSTS secret not set; scanning host keys with retry..."
+            scan_success=false
+            for attempt in 1 2 3 4 5; do
+              echo "Host key scan attempt $attempt/5..."
+              if ssh-keyscan -T 10 -p "$PROD_PORT" "$PROD_HOST" > /tmp/hostkeys 2>/dev/null; then
+                if [ -s /tmp/hostkeys ]; then
+                  cat /tmp/hostkeys >> ~/.ssh/known_hosts
+                  chmod 600 ~/.ssh/known_hosts
+                  scan_success=true
+                  echo "ssh-keyscan succeeded on attempt $attempt"
+                  break
+                fi
+              fi
+              sleep 5
+            done
+            if [ "$scan_success" != "true" ]; then
+              echo "ERROR: Failed to retrieve Hostinger SSH host keys after 5 attempts."
+              exit 1
+            fi
+          fi
+
+          # 2. Private Key Preparation & Validation
           if [ -n "$HOSTINGER_SSH_KEY" ]; then
             printf '%s\n' "$HOSTINGER_SSH_KEY" > ~/.ssh/id_ed25519
             chmod 600 ~/.ssh/id_ed25519
+            if ! ssh-keygen -y -f ~/.ssh/id_ed25519 > /dev/null 2>&1; then
+              echo "ERROR: HOSTINGER_SSH_KEY secret is invalid or malformed."
+              exit 1
+            fi
             echo "AUTH_MODE=key" >> "$GITHUB_ENV"
           elif [ -n "$HOSTINGER_PASS" ]; then
             sudo apt-get update -qq
@@ -61,10 +94,26 @@ jobs:
 
       - name: Verify production access
         run: |
-          if [ "$AUTH_MODE" = key ]; then
-            ssh -p "$PROD_PORT" -o BatchMode=yes "$PROD_USER@$PROD_HOST" "readlink -f $PROD_ROOT/current"
-          else
-            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" "readlink -f $PROD_ROOT/current"
+          ssh_connected=false
+          for attempt in 1 2 3 4 5; do
+            echo "Testing production SSH access (attempt $attempt/5)..."
+            if [ "$AUTH_MODE" = key ]; then
+              if ssh -p "$PROD_PORT" -o BatchMode=yes -o ConnectTimeout=10 "$PROD_USER@$PROD_HOST" "readlink -f $PROD_ROOT/current"; then
+                ssh_connected=true
+                break
+              fi
+            else
+              if sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" -o ConnectTimeout=10 "$PROD_USER@$PROD_HOST" "readlink -f $PROD_ROOT/current"; then
+                ssh_connected=true
+                break
+              fi
+            fi
+            echo "SSH connection attempt $attempt failed; retrying in 5s..."
+            sleep 5
+          done
+          if [ "$ssh_connected" != "true" ]; then
+            echo "ERROR: Failed to establish production SSH access after 5 attempts."
+            exit 1
           fi
 
       - name: Package validated release
@@ -81,10 +130,26 @@ jobs:
 
       - name: Upload release
         run: |
-          if [ "$AUTH_MODE" = key ]; then
-            scp -P "$PROD_PORT" /tmp/dgs-prod-release.tar.gz "$PROD_USER@$PROD_HOST:/tmp/dgs-prod-release.tar.gz"
-          else
-            sshpass -p "$HOSTINGER_PASS" scp -P "$PROD_PORT" /tmp/dgs-prod-release.tar.gz "$PROD_USER@$PROD_HOST:/tmp/dgs-prod-release.tar.gz"
+          scp_uploaded=false
+          for attempt in 1 2 3; do
+            echo "Uploading release archive to production (attempt $attempt/3)..."
+            if [ "$AUTH_MODE" = key ]; then
+              if scp -P "$PROD_PORT" -o BatchMode=yes -o ConnectTimeout=15 /tmp/dgs-prod-release.tar.gz "$PROD_USER@$PROD_HOST:/tmp/dgs-prod-release.tar.gz"; then
+                scp_uploaded=true
+                break
+              fi
+            else
+              if sshpass -p "$HOSTINGER_PASS" scp -P "$PROD_PORT" -o ConnectTimeout=15 /tmp/dgs-prod-release.tar.gz "$PROD_USER@$PROD_HOST:/tmp/dgs-prod-release.tar.gz"; then
+                scp_uploaded=true
+                break
+              fi
+            fi
+            echo "SCP upload attempt $attempt failed; retrying in 5s..."
+            sleep 5
+          done
+          if [ "$scp_uploaded" != "true" ]; then
+            echo "ERROR: Failed to upload release archive after 3 attempts."
+            exit 1
           fi
 
       - name: Atomic production activation
@@ -163,29 +228,97 @@ jobs:
           echo "DEPLOYED_RELEASE=$RELEASE"
           REMOTE
           if [ "$AUTH_MODE" = key ]; then
-            ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" "BUILD_ID='$BUILD_ID' bash -s" < /tmp/remote-deploy.sh
+            ssh -p "$PROD_PORT" -o BatchMode=yes -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" "BUILD_ID='$BUILD_ID' bash -s" < /tmp/remote-deploy.sh
           else
-            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" "BUILD_ID='$BUILD_ID' bash -s" < /tmp/remote-deploy.sh
+            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" "BUILD_ID='$BUILD_ID' bash -s" < /tmp/remote-deploy.sh
           fi
 
           echo "DEPLOY_SWITCHED=true" >> "$GITHUB_ENV"
 
       - name: Verify live production
         run: |
-          sleep 6
-          urls=(
+          # 1. Warmup Readiness Loop (probe up to 90 seconds)
+          echo "Waiting for production Passenger/Node readiness..."
+          warmup_ok=false
+          for i in $(seq 1 45); do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' 'https://www.dgeniussolutions.com/' || echo "000")"
+            if [ "$code" = "200" ]; then
+              echo "Production application ready after $((i * 2))s (HTTP 200)."
+              warmup_ok=true
+              break
+            fi
+            sleep 2
+          done
+          if [ "$warmup_ok" != "true" ]; then
+            echo "ERROR: Production application failed to become ready within 90 seconds."
+            exit 1
+          fi
+
+          # 2. Verification Helpers with Retries
+          check_status() {
+            local url="$1"
+            local expected="$2"
+            local passed=false
+            local last_code=""
+            for attempt in 1 2 3; do
+              last_code="$(curl -sS -o /dev/null -w '%{http_code}' "$url" || echo "000")"
+              if [ "$last_code" = "$expected" ]; then
+                echo "✓ [$last_code] $url (attempt $attempt)"
+                passed=true
+                break
+              fi
+              echo "  [Attempt $attempt] $url: expected $expected, got $last_code. Retrying in 2s..."
+              sleep 2
+            done
+            if [ "$passed" != "true" ]; then
+              echo "FAIL: $url expected HTTP $expected but received HTTP $last_code after 3 attempts"
+              return 1
+            fi
+          }
+
+          check_redirect() {
+            local url="$1"
+            local expected_dest="$2"
+            local passed=false
+            local last_code=""
+            local last_loc=""
+            for attempt in 1 2 3; do
+              last_code="$(curl -sS -o /dev/null -w '%{http_code}' "$url" || echo "000")"
+              last_loc="$(curl -sS -I "$url" | tr -d '\r' | awk -F': ' 'tolower($1)=="location"{print $2}' || true)"
+              if [ "$last_code" = "301" ] && [ "$last_loc" = "$expected_dest" ]; then
+                final_code="$(curl -sS -o /dev/null -w '%{http_code}' "$expected_dest" || echo "000")"
+                if [ "$final_code" = "200" ]; then
+                  echo "✓ [301 -> 200] $url -> $last_loc (attempt $attempt)"
+                  passed=true
+                  break
+                fi
+              fi
+              echo "  [Attempt $attempt] $url: expected 301 -> $expected_dest, got $last_code -> $last_loc. Retrying in 2s..."
+              sleep 2
+            done
+            if [ "$passed" != "true" ]; then
+              echo "FAIL: Redirect verification failed for $url (Status: $last_code, Location: $last_loc)"
+              return 1
+            fi
+          }
+
+          # 3. HTTP 200 Route Verification
+          echo "Verifying HTTP 200 routes..."
+          routes_200=(
             'https://www.dgeniussolutions.com/'
             'https://www.dgeniussolutions.com/services/seo-services-in-mumbai/'
             'https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/'
             'https://www.dgeniussolutions.com/services/geo/'
             'https://www.dgeniussolutions.com/services/llm-seo-service/'
             'https://www.dgeniussolutions.com/services/ai-video-production-agency/'
+            'https://www.dgeniussolutions.com/services/performance-marketing/'
             'https://www.dgeniussolutions.com/services/dubai-seo/'
             'https://www.dgeniussolutions.com/aeo-dubai/'
             'https://www.dgeniussolutions.com/services/ai-production-dubai-page/'
             'https://www.dgeniussolutions.com/australia-page/'
             'https://www.dgeniussolutions.com/us-landing-page/'
             'https://www.dgeniussolutions.com/career/'
+            'https://www.dgeniussolutions.com/career/generative-ai-artist/'
             'https://www.dgeniussolutions.com/portfolio/'
             'https://www.dgeniussolutions.com/seo-executive-assessment/'
             'https://www.dgeniussolutions.com/seo-manager-assessment/'
@@ -196,21 +329,37 @@ jobs:
             'https://www.dgeniussolutions.com/robots.txt'
             'https://www.dgeniussolutions.com/sitemap.xml'
           )
-          for u in "${urls[@]}"; do
-            code="$(curl -sS -o /dev/null -w '%{http_code}' "$u")"
-            echo "$code $u"
-            test "$code" = 200
+          for u in "${routes_200[@]}"; do
+            check_status "$u" 200
           done
-          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://www.dgeniussolutions.com/career/junior-hr-generalist/')" = 301
-          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://www.dgeniussolutions.com/wp-login.php')" = 403
+
+          # 4. 301 Permanent Redirect Route
+          echo "Verifying permanent redirects..."
+          check_redirect 'https://www.dgeniussolutions.com/career/junior-hr-generalist/' 'https://www.dgeniussolutions.com/career/'
+
+          # 5. WordPress Retired Lockdown Routes (HTTP 403)
+          echo "Verifying WordPress retirement lockdown..."
+          check_status 'https://www.dgeniussolutions.com/wp-login.php' 403
+          check_status 'https://www.dgeniussolutions.com/wp-admin/' 403
+          check_status 'https://www.dgeniussolutions.com/xmlrpc.php' 403
+          check_status 'https://www.dgeniussolutions.com/wp-cron.php' 403
+          check_status 'https://www.dgeniussolutions.com/wp-json/' 403
+
+          # 6. Indexing & Robot Tag Verification
+          echo "Verifying home page robots meta tags..."
           live_home="$(curl -sS 'https://www.dgeniussolutions.com/')"
           echo "$live_home" | grep -F '<meta name="robots" content="index, follow"/>'
           echo "$live_home" | grep -F '<meta name="googlebot" content="index, follow'
+          echo "ALL LIVE VERIFICATION CHECKS PASSED!"
 
       - name: Roll back on verification failure
-        if: failure()
+        if: failure() && env.DEPLOY_SWITCHED == 'true'
         run: |
-          if [ "${DEPLOY_SWITCHED:-false}" != true ]; then exit 0; fi
+          if [ "${DEPLOY_SWITCHED:-false}" != "true" ]; then
+            echo "Production release was not switched; skipping rollback."
+            exit 0
+          fi
+          echo "Deployment verification failed after release switch. Initiating rollback..."
           cat > /tmp/rollback.sh <<'REMOTE'
           set -euo pipefail
           ROOT=/home/u188101251/production-app
@@ -223,7 +372,7 @@ jobs:
           fi
           REMOTE
           if [ "$AUTH_MODE" = key ]; then
-            ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/rollback.sh || true
+            ssh -p "$PROD_PORT" -o BatchMode=yes -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/rollback.sh || true
           else
-            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/rollback.sh || true
+            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/rollback.sh || true
           fi
