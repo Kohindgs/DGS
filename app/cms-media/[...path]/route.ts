@@ -1,6 +1,7 @@
 import { open, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
-import { NextResponse } from "next/server";
+import { headers as getHeaders } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { getCmsMediaRoot } from "@/lib/cms/media-storage";
 
 export const runtime = "nodejs";
@@ -19,7 +20,7 @@ function getMimeType(filename: string): string | null {
   return null;
 }
 
-export async function GET(request: Request, { params }: { params: Promise<{ path: string[] }> }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params;
   if (!path?.length) {
     return new NextResponse("Not found", { status: 404 });
@@ -43,10 +44,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ path
 
   try {
     const filePath = join(getCmsMediaRoot(), ...path);
-    const isVideo = contentType.startsWith("video/");
-    const range = request.headers.get("range");
+    const incomingHeaders = await getHeaders();
+    const range = request.headers.get("range") || incomingHeaders.get("range") || "";
 
-    if (isVideo && range) {
+    if (range) {
       const size = (await stat(filePath)).size;
       const match = range.match(/bytes=(\d*)-(\d*)/);
       const start = Math.min(Number(match?.[1] || 0), Math.max(size - 1, 0));
@@ -64,6 +65,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ path
 
       return new NextResponse(new Uint8Array(body), {
         status: 206,
+        statusText: "Partial Content",
         headers: {
           "Content-Type": contentType,
           "Accept-Ranges": "bytes",
@@ -79,7 +81,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ path
     return new NextResponse(new Uint8Array(body), {
       headers: {
         "Content-Type": contentType,
-        "Accept-Ranges": isVideo ? "bytes" : "none",
+        "Accept-Ranges": "bytes",
         "Cache-Control": "public, max-age=31536000, immutable",
         "X-Content-Type-Options": "nosniff",
       },

@@ -52,7 +52,8 @@ app
           urlPath.startsWith('/_next/static/') ||
           urlPath.startsWith('/wp-mirror-css/') ||
           urlPath.startsWith('/images/') ||
-          urlPath.startsWith('/media/');
+          urlPath.startsWith('/media/') ||
+          urlPath.startsWith('/cms-media/');
         if (!isStaticAsset) {
           const originalSetHeader = res.setHeader.bind(res);
           res.setHeader = (key, value) => {
