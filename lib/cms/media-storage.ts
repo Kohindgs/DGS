@@ -68,3 +68,5 @@ export function getUniqueStorageFilename(subdir: MediaSubdir, targetFilename: st
 export function computeFileChecksum(buffer: Buffer): string {
   return createHash("sha256").update(buffer).digest("hex");
 }
+
+export const calculateBufferChecksum = computeFileChecksum;

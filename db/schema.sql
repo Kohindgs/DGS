@@ -52,12 +52,23 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   status VARCHAR(50) NOT NULL DEFAULT 'draft',
   author_id CHAR(36),
   featured_media_id CHAR(36),
+  featured_image_url VARCHAR(512) NULL,
+  seo_title VARCHAR(255) NULL,
+  seo_description TEXT NULL,
+  focus_keyword VARCHAR(255) NULL,
+  word_count INT NOT NULL DEFAULT 0,
+  reading_time_minutes INT NOT NULL DEFAULT 3,
+  needs_review BOOLEAN NOT NULL DEFAULT TRUE,
+  scheduled_for DATETIME NULL,
   published_at DATETIME NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  CONSTRAINT fk_blog_author FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE SET NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_blog_author FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE SET NULL,
   CONSTRAINT fk_blog_featured_media FOREIGN KEY (featured_media_id) REFERENCES media(id) ON DELETE SET NULL,
   INDEX idx_blog_posts_status (status),
-  INDEX idx_blog_posts_published_at (published_at)
+  INDEX idx_blog_posts_published_at (published_at),
+  INDEX idx_blog_posts_scheduled (scheduled_for),
+  INDEX idx_blog_posts_needs_review (needs_review)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS blog_revisions (

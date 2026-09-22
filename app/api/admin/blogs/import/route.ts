@@ -1,16 +1,17 @@
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { parseBlogDocx, type BlogImportImage } from "@/lib/cms/blog-import";
-import { injectInlineBlogImages, removeStoredBlogImages, storeBlogImages } from "@/lib/cms/blog-media";
-import { injectInlineBlogVideos, storeBlogVideos } from "@/lib/cms/blog-video";
+import { parseBlogDocx, imageMatchesSlug, type BlogImportImage } from "@/lib/cms/blog-import";
 import { attachImportedBlogPackage, createCmsBlog, deleteCmsDraftBlog } from "@/lib/cms/blogs";
+import { processUploadedImage } from "@/lib/cms/media-processor";
+import { calculateBufferChecksum } from "@/lib/cms/media-storage";
+import { createMediaAssetFromProcessed, getMediaAssetByChecksum, recordMediaUsage, type MediaAsset } from "@/lib/cms/media";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const MAX_DOCX_BYTES = 10 * 1024 * 1024;
-const MAX_DOCUMENTS = 25;
+const MAX_DOCX_BYTES = 15 * 1024 * 1024;
+const MAX_DOCUMENTS = 30;
 
 async function authorize() {
   if (process.env.DGS_ADMIN_ENABLED !== "true") return 404;
@@ -20,16 +21,23 @@ async function authorize() {
 }
 
 function isDocxFile(file: File) {
-  return file.name.toLowerCase().endsWith(".docx");
+  const name = file.name.toLowerCase();
+  return name.endsWith(".docx");
 }
 
 function isImageFile(file: File) {
-  return ["image/jpeg", "image/png", "image/webp"].includes(file.type);
+  const type = file.type.toLowerCase();
+  const name = file.name.toLowerCase();
+  return (
+    type.startsWith("image/") ||
+    name.endsWith(".jpg") ||
+    name.endsWith(".jpeg") ||
+    name.endsWith(".png") ||
+    name.endsWith(".webp") ||
+    name.endsWith(".gif")
+  );
 }
 
-function isVideoFile(file: File) {
-  return file.type === "video/mp4" || file.name.toLowerCase().endsWith(".mp4");
-}
 function errorMessage(error: unknown) {
   const value = error as { code?: unknown; errno?: unknown; message?: unknown };
   const code = String(value?.code || "");
@@ -37,21 +45,7 @@ function errorMessage(error: unknown) {
   if (code === "ER_DUP_ENTRY" || errno === 1062) {
     return "A blog with this filename/slug already exists";
   }
-  const message = String(value?.message || "");
-  if (/ffmpeg|video conversion/i.test(message)) return "Video conversion failed";
-  return "Blog import failed";
-}
-
-async function toAssets(files: File[]) {
-  const assets: BlogImportImage[] = [];
-  for (const file of files) {
-    assets.push({
-      filename: file.name,
-      mimeType: file.type,
-      buffer: Buffer.from(await file.arrayBuffer()),
-    });
-  }
-  return assets;
+  return String(value?.message || "Blog import failed");
 }
 
 export async function POST(request: Request) {
@@ -66,97 +60,209 @@ export async function POST(request: Request) {
   if (!documents.length && legacyDocument instanceof File && isDocxFile(legacyDocument)) {
     documents.push(legacyDocument);
   }
+
   if (!documents.length) {
-    return NextResponse.json({ ok: false, message: "At least one .docx blog file is required" }, { status: 400 });
-  }
-  if (documents.length > MAX_DOCUMENTS) {
-    return NextResponse.json({ ok: false, message: `Upload up to ${MAX_DOCUMENTS} Word files per batch` }, { status: 413 });
-  }
-  if (documents.some((file) => file.size > MAX_DOCX_BYTES)) {
-    return NextResponse.json({ ok: false, message: "Each Word file must be 10 MB or smaller" }, { status: 413 });
+    return NextResponse.json(
+      { ok: false, message: "At least one Word (.docx) file is required" },
+      { status: 400 }
+    );
   }
 
+  if (documents.length > MAX_DOCUMENTS) {
+    return NextResponse.json(
+      { ok: false, message: `Upload up to ${MAX_DOCUMENTS} Word files per batch` },
+      { status: 413 }
+    );
+  }
+
+  if (documents.some((file) => file.size > MAX_DOCX_BYTES)) {
+    return NextResponse.json(
+      { ok: false, message: "Each Word file must be 15 MB or smaller" },
+      { status: 413 }
+    );
+  }
+
+  // Extract all uploaded images
   const imageFiles = form
     .getAll("images")
     .filter((item): item is File => item instanceof File && isImageFile(item));
-  const videoFiles = form
-    .getAll("videos")
-    .filter((item): item is File => item instanceof File && isVideoFile(item));
 
-  const [images, videos] = await Promise.all([
-    toAssets(imageFiles),
-    toAssets(videoFiles),
-  ]);
+  // 1. Process all uploaded images through native Media CMS
+  const processedMediaByOriginalName = new Map<string, MediaAsset>();
+  const rawImageBuffers: BlogImportImage[] = [];
 
+  for (const imgFile of imageFiles) {
+    try {
+      const buffer = Buffer.from(await imgFile.arrayBuffer());
+      rawImageBuffers.push({
+        filename: imgFile.name,
+        mimeType: imgFile.type || "image/jpeg",
+        buffer,
+      });
+
+      const checksum = calculateBufferChecksum(buffer);
+      let asset = await getMediaAssetByChecksum(checksum);
+
+      if (!asset) {
+        const processed = await processUploadedImage(buffer, imgFile.name);
+        asset = await createMediaAssetFromProcessed(processed, "image", checksum, {
+          category: "blog",
+          source: "word-blog-bulk-import",
+          altText: imgFile.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " "),
+        });
+      }
+
+      processedMediaByOriginalName.set(imgFile.name, asset);
+    } catch (err) {
+      console.warn("Failed to process image through Media CMS:", imgFile.name, err);
+    }
+  }
+
+  // 2. Parse Word documents, match images, and create draft/review posts
   const results: Array<Record<string, unknown>> = [];
   const failed: Array<{ filename: string; message: string }> = [];
 
   for (const document of documents) {
     let blogId: string | null = null;
-    let slug: string | null = null;
 
     try {
-      const parsed = await parseBlogDocx(
-        Buffer.from(await document.arrayBuffer()),
-        document.name,
-      );
-      slug = parsed.slug;
+      const docBuffer = Buffer.from(await document.arrayBuffer());
+      const parsed = await parseBlogDocx(docBuffer, document.name);
+
+      // Create draft in blog_posts
       const blog = await createCmsBlog({
         title: parsed.title,
         slug: parsed.slug,
         excerpt: parsed.excerpt,
+        word_count: parsed.wordCount,
+        reading_time_minutes: parsed.readingTimeMinutes,
+        status: "review",
       });
       blogId = blog.id;
 
-      const storedImages = await storeBlogImages(parsed.slug, parsed.title, images);
-      const storedVideos = await storeBlogVideos(parsed.slug, videos);
-      const bodyHtml = injectInlineBlogVideos(
-        injectInlineBlogImages(parsed.bodyHtml, storedImages),
-        storedVideos,
-      );
+      // Find matching images for this blog
+      const matchedImages: Array<{
+        asset: MediaAsset;
+        isFeatured: boolean;
+        originalName: string;
+      }> = [];
 
+      for (const [origName, asset] of processedMediaByOriginalName.entries()) {
+        if (imageMatchesSlug(origName, parsed.slug)) {
+          const isFeatured = /-(featured|hero|cover|banner)\.[^.]+$/i.test(origName);
+          matchedImages.push({ asset, isFeatured, originalName: origName });
+        }
+      }
+
+      // If no image is specifically tagged as featured, pick the first matched
+      if (matchedImages.length > 0 && !matchedImages.some((m) => m.isFeatured)) {
+        matchedImages[0].isFeatured = true;
+      }
+
+      const featuredMatch = matchedImages.find((m) => m.isFeatured);
+      const featuredImageUrl = featuredMatch?.asset.public_url || null;
+      const featuredMediaAssetId = featuredMatch?.asset.id;
+
+      // Format images list for blog content
+      const storedImages = matchedImages.map((m) => ({
+        filename: m.asset.filename,
+        url: m.asset.public_url,
+        mimeType: m.asset.mime_type,
+        featured: m.isFeatured,
+        altText: m.asset.alt_text || parsed.title,
+        width: m.asset.width || undefined,
+        height: m.asset.height || undefined,
+        bytes: Number(m.asset.file_size || 0),
+      }));
+
+      // Inject inline images into body HTML after H2 tags if supporting images exist
+      let bodyHtml = parsed.bodyHtml;
+      const inlineImages = matchedImages.filter((m) => !m.isFeatured);
+      if (inlineImages.length > 0) {
+        let inlineIdx = 0;
+        bodyHtml = bodyHtml.replace(/(<\/h2>)/gi, (match) => {
+          const item = inlineImages[inlineIdx++];
+          if (!item) return match;
+          const figure = `<figure class="dgs-blog-inline-image"><img src="${item.asset.public_url}" alt="${(item.asset.alt_text || parsed.title).replace(/"/g, "&quot;")}" width="${item.asset.width || 1200}" height="${item.asset.height || 675}" loading="lazy" decoding="async" /></figure>`;
+          return `${match}\n${figure}`;
+        });
+      }
+
+      // Attach blog package and bind with Media CMS usage tracking
       await attachImportedBlogPackage({
         blogId: blog.id,
         slug: parsed.slug,
         title: parsed.title,
+        featuredImageUrl: featuredImageUrl || undefined,
+        featuredMediaAssetId,
         content: {
           version: 1,
           bodyHtml,
           sourceHash: parsed.sourceHash,
           optimization: parsed.optimization,
           images: storedImages,
-          videos: storedVideos,
         },
       });
 
+      // Record usage for all matched images in Media CMS
+      for (const m of matchedImages) {
+        try {
+          await recordMediaUsage({
+            mediaId: m.asset.id,
+            entityType: "blog_post",
+            entityId: blog.id,
+            route: `/blogs/${parsed.slug}/`,
+            field: m.isFeatured ? "featured_image" : "inline_image",
+          });
+        } catch {
+          // Non-blocking
+        }
+      }
+
       results.push({
-        blog,
+        blog: {
+          id: blog.id,
+          slug: parsed.slug,
+          title: parsed.title,
+          status: "review",
+          featured_image_url: featuredImageUrl,
+          word_count: parsed.wordCount,
+          reading_time_minutes: parsed.readingTimeMinutes,
+          needs_review: true,
+        },
         optimization: parsed.optimization,
-        images: storedImages,
-        videos: storedVideos,
-        originalsRetained: false,
+        matchedImagesCount: matchedImages.length,
+        featuredImage: featuredImageUrl,
+        needsReview: true,
+        message: "Draft created in Review status. Requires editor sign-off before publishing.",
       });
     } catch (error) {
-      if (slug) await removeStoredBlogImages(slug);
       if (blogId) await deleteCmsDraftBlog(blogId);
       failed.push({ filename: document.name, message: errorMessage(error) });
-      console.error("Word blog import failed", document.name, error);
+      console.error("Word blog import failed:", document.name, error);
     }
   }
+
   if (!results.length) {
-    return NextResponse.json({
-      ok: false,
-      message: failed[0]?.message || "No blogs were imported",
-      results,
-      failed,
-    }, { status: 409 });
+    return NextResponse.json(
+      {
+        ok: false,
+        message: failed[0]?.message || "No blogs were imported",
+        results,
+        failed,
+      },
+      { status: 409 }
+    );
   }
 
-  return NextResponse.json({
-    ok: failed.length === 0,
-    results,
-    failed,
-    total: documents.length,
-    imported: results.length,
-  }, { status: failed.length ? 207 : 201 });
+  return NextResponse.json(
+    {
+      ok: failed.length === 0,
+      results,
+      failed,
+      total: documents.length,
+      imported: results.length,
+    },
+    { status: failed.length ? 207 : 201 }
+  );
 }
