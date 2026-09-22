@@ -1,7 +1,28 @@
 export type JsonLdValue = Record<string, unknown> | Record<string, unknown>[];
 
+function filterSelfServingReviews(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value
+      .filter((item) => {
+        if (!item || typeof item !== "object") return true;
+        const type = (item as Record<string, unknown>)["@type"];
+        return type !== "Review" && !(Array.isArray(type) && type.includes("Review"));
+      })
+      .map(filterSelfServingReviews);
+  }
+  if (value && typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    const type = record["@type"];
+    if (type === "Review" || (Array.isArray(type) && type.includes("Review"))) {
+      return null;
+    }
+  }
+  return value;
+}
+
 export function serializeJsonLd(value: JsonLdValue) {
-  return JSON.stringify(value).replace(/</g, "\\u003c");
+  const sanitized = filterSelfServingReviews(value);
+  return JSON.stringify(sanitized).replace(/</g, "\\u003c");
 }
 
 export function collectSchemaTypes(value: unknown, found = new Set<string>()): string[] {
@@ -28,6 +49,9 @@ export function mergeJsonLd(...values: (JsonLdValue | null | undefined)[]): Reco
   for (const item of flattened) {
     const id = typeof item["@id"] === "string" ? item["@id"] : null;
     const type = Array.isArray(item["@type"]) ? item["@type"].join("|") : String(item["@type"] || "");
+    if (type === "Review" || (Array.isArray(item["@type"]) && item["@type"].includes("Review"))) {
+      continue;
+    }
     const key = id || `${type}:${JSON.stringify(item)}`;
     if (seen.has(key)) continue;
     seen.add(key);

@@ -141,12 +141,26 @@ function lazyBelowFold(html: string): string {
   });
 }
 
+function stripReviewStructuredData(html: string): string {
+  let output = html;
+  output = output.replace(/\s*itemscope\s+itemtype=["']https?:\/\/schema\.org\/Review["']/gi, "");
+  output = output.replace(/\s*itemtype=["']https?:\/\/schema\.org\/Review["']\s*itemscope/gi, "");
+  output = output.replace(/\s*itemtype=["']https?:\/\/schema\.org\/Review["']/gi, "");
+  output = output.replace(/\s*itemprop=["']reviewBody["']/gi, "");
+  output = output.replace(/\s*itemprop=["']itemReviewed["']/gi, "");
+  output = output.replace(/\s*itemprop=["']reviewRating["']/gi, "");
+  output = output.replace(/\s*itemprop=["']author["']/gi, "");
+  return output;
+}
+
 export function prepareInnerPageMirror(
   content: InnerPageMirrorContent,
   wordpressId: number,
 ): PreparedInnerPageMirror {
-  let body = markElementorBackgroundsReady(
-    unwrapMirrorLazyMedia(stripCapturedFooters(stripLeadingCloseTags(content.body || ""))),
+  let body = stripReviewStructuredData(
+    markElementorBackgroundsReady(
+      unwrapMirrorLazyMedia(stripCapturedFooters(stripLeadingCloseTags(content.body || ""))),
+    ),
   );
   if (content.path === "/portfolio/") {
     body = replaceEnviraWrapWithNativeMount(body);
