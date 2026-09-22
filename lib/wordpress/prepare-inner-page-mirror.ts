@@ -37,16 +37,32 @@ function normalizeSemanticH1(path: string, html: string): string {
 function applyServiceSearchCorrections(path: string, html: string): string {
   let output = html;
   if (path === "/services/performance-marketing/") {
+    output = output.replace(
+      /Performance Marketing for\s*(<span\b[^>]*class=["'][^"']*\bdgs-gradient\b[^"']*["']>\s*Qualified Leads, Sales & ROI\s*<\/span>)/i,
+      "Performance Marketing Agency in Mumbai for $1",
+    );
     output = output.replace(/Performance Marketing for Qualified Leads, Sales & ROI/g, "Performance Marketing Agency in Mumbai for Qualified Leads, Sales & ROI");
     output = output.replace(/Talk To Our SEO Team/g, "Talk To Our Performance Marketing Team");
   }
   if (path === "/services/social-media-marketing/") {
+    output = output.replace(
+      /Transform Your Social Media Into a\s*<span class=["']smm-gradient-text["']>Strategic Revenue Channel<\/span>/i,
+      'Social Media Marketing Agency in Mumbai for\n<span class="smm-gradient-text">Content, Ads & Growth</span>',
+    );
     output = output.replace(/Transform Your Social Media Into a Strategic Revenue Channel/g, "Social Media Marketing Agency in Mumbai for Content, Ads & Growth");
   }
   if (path === "/services/branding/") {
-    output = output.replace(/TRANSFORM YOUR BRAND IDENTITY INTO MARKET DOMINANCE/g, "Branding Agency in Mumbai for Brand Strategy, Identity & Design");
+    output = output.replace(
+      /<span class=["']bp-t-line["']>TRANSFORM YOUR<\/span>\s*<span class=["']bp-t-line["']>BRAND IDENTITY INTO<\/span>\s*<span class=["']bp-t-line bp-t-grad["']>MARKET DOMINANCE<\/span>/i,
+      '<span class="bp-t-line">BRANDING AGENCY IN MUMBAI FOR</span>\n<span class="bp-t-line">BRAND STRATEGY, IDENTITY</span>\n<span class="bp-t-line bp-t-grad">& DESIGN</span>',
+    );
+    output = output.replace(/TRANSFORM YOUR BRAND IDENTITY INTO MARKET DOMINANCE/g, "BRANDING AGENCY IN MUMBAI FOR BRAND STRATEGY, IDENTITY & DESIGN");
   }
   if (path === "/services/content-creation/") {
+    output = output.replace(
+      /<span class=["']line["']>Content that<\/span>\s*<span class=["']line["']><span class=["']gradient-word["']>transforms<\/span><\/span>\s*<span class=["']line["']>brands<\/span>/i,
+      '<span class="line">Content Marketing Agency</span>\n<span class="line"><span class="gradient-word">in Mumbai</span></span>\n<span class="line">for SEO, Social & Brand Content</span>',
+    );
     output = output.replace(/Content that transforms brands/g, "Content Marketing Agency in Mumbai for SEO, Social & Brand Content");
   }
   if (path === "/services/seo-service-pune/") {
