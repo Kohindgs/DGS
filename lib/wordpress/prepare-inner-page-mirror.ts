@@ -78,15 +78,7 @@ function applyServiceSearchCorrections(path: string, html: string): string {
     );
     output = output.replace(
       '<p class="dgs-eyebrow">AI Video Production Services In Mumbai',
-      '<p class="dgs-eyebrow">Generative AI Services In Mumbai | AI Video Production Services In Mumbai',
-    );
-    output = output.replace(
-      /<span>AI Video Production House In Mumbai<\/span>/g,
-      "<span>Generative AI & AI Video Production Agency In Mumbai</span>",
-    );
-    output = output.replace(
-      /Our AI video production services in Mumbai cover/g,
-      "Our generative AI and AI video production services in Mumbai cover",
+      '<p class="dgs-eyebrow">AI Video Production Services In Mumbai | Generative AI Services In Mumbai',
     );
   }
   return output;
