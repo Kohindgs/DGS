@@ -12,9 +12,12 @@ function nativeIds() {
   );
 }
 
-export function isNativeFormEnabled(fluentFormId: number) {
+export function isNativeFormEnabled(fluentFormId?: number) {
   const ids = nativeIds();
-  return ids.has("*") || ids.has(String(fluentFormId));
+  if (ids.size === 0 || ids.has("*")) {
+    return true;
+  }
+  return fluentFormId ? ids.has(String(fluentFormId)) : true;
 }
 
 async function verifyRecaptcha(token?: string) {

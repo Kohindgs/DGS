@@ -186,7 +186,6 @@ jobs:
             'https://www.dgeniussolutions.com/australia-page/'
             'https://www.dgeniussolutions.com/us-landing-page/'
             'https://www.dgeniussolutions.com/career/'
-            'https://www.dgeniussolutions.com/career/junior-hr-generalist/'
             'https://www.dgeniussolutions.com/portfolio/'
             'https://www.dgeniussolutions.com/seo-executive-assessment/'
             'https://www.dgeniussolutions.com/seo-manager-assessment/'
@@ -202,9 +201,8 @@ jobs:
             echo "$code $u"
             test "$code" = 200
           done
-          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/wp-json/dgs/v1/form-context?form_id=1')" = 200
-          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/wp-json/dgs/v1/form-context?form_id=15&post_id=55238')" = 200
-          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://wp-origin.dgeniussolutions.com/sitemap_index.xml')" = 404
+          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://www.dgeniussolutions.com/career/junior-hr-generalist/')" = 301
+          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://www.dgeniussolutions.com/wp-login.php')" = 403
           live_home="$(curl -sS 'https://www.dgeniussolutions.com/')"
           echo "$live_home" | grep -F '<meta name="robots" content="index, follow"/>'
           echo "$live_home" | grep -F '<meta name="googlebot" content="index, follow'
