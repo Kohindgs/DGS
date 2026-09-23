@@ -43,6 +43,14 @@ export function verifyAdminSessionToken(token: string) {
 }
 
 export async function hasAdminSession() {
+  try {
+    const { getCurrentCmsUser } = await import("./auth-db");
+    const dbUser = await getCurrentCmsUser();
+    if (dbUser && (dbUser.is_active === 1 || dbUser.is_active === true)) {
+      return true;
+    }
+  } catch {}
+
   if (!isAdminAuthConfigured()) return false;
   const store = await cookies();
   const token = store.get(COOKIE_NAME)?.value || "";
@@ -66,3 +74,4 @@ export function validateAdminCredentials(email: string, password: string) {
   return safeEqualText(email.trim().toLowerCase(), process.env.DGS_ADMIN_EMAIL!.trim().toLowerCase())
     && safeEqualText(password, process.env.DGS_ADMIN_PASSWORD!);
 }
+

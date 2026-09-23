@@ -1,0 +1,930 @@
+/* DGS CMS SaaS V2 - Materio Inspired Design System */
+
+:root {
+  --dgs-bg-app: #12131e;
+  --dgs-bg-sidebar: #171826;
+  --dgs-bg-card: #1c1d2e;
+  --dgs-bg-card-hover: #222338;
+  --dgs-bg-input: #151622;
+  --dgs-border: rgba(255, 255, 255, 0.08);
+  --dgs-border-subtle: rgba(255, 255, 255, 0.04);
+  
+  --dgs-primary: #7367F0;
+  --dgs-primary-glow: rgba(115, 103, 240, 0.25);
+  --dgs-primary-light: rgba(115, 103, 240, 0.12);
+  --dgs-primary-hover: #6559e8;
+  
+  --dgs-success: #28C76F;
+  --dgs-success-light: rgba(40, 199, 111, 0.12);
+  --dgs-warning: #FF9F43;
+  --dgs-warning-light: rgba(255, 159, 67, 0.12);
+  --dgs-danger: #EA5455;
+  --dgs-danger-light: rgba(234, 84, 85, 0.12);
+  --dgs-info: #00CFE8;
+  --dgs-info-light: rgba(0, 207, 232, 0.12);
+  
+  --dgs-text-main: #E6E6EF;
+  --dgs-text-muted: #9E9EAE;
+  --dgs-text-dim: #6F7082;
+  
+  --dgs-radius-sm: 8px;
+  --dgs-radius-md: 12px;
+  --dgs-radius-lg: 16px;
+  --dgs-radius-pill: 999px;
+  
+  --dgs-shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  --dgs-shadow-elevation: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* Base SaaS Shell */
+.dgs-saas-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--dgs-bg-app);
+  color: var(--dgs-text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.dgs-saas-wrapper {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar Styles */
+.dgs-saas-sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background: var(--dgs-bg-sidebar);
+  border-right: 1px solid var(--dgs-border);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 50;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.dgs-saas-sidebar.collapsed {
+  width: 76px;
+  min-width: 76px;
+}
+
+.dgs-saas-sidebar-brand {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--dgs-border-subtle);
+}
+
+.dgs-saas-brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--dgs-text-main);
+}
+
+.dgs-saas-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--dgs-radius-sm);
+  background: var(--dgs-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dgs-saas-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.dgs-saas-brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.dgs-saas-brand-subtitle {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--dgs-primary);
+  font-weight: 600;
+}
+
+.dgs-saas-sidebar-close {
+  background: none;
+  border: none;
+  color: var(--dgs-text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Navigation List */
+.dgs-saas-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dgs-saas-nav-header {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--dgs-text-dim);
+  padding: 0 12px 6px;
+}
+
+.dgs-saas-nav-divider {
+  height: 1px;
+  background: var(--dgs-border-subtle);
+  margin: 8px 12px;
+}
+
+.dgs-saas-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dgs-saas-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--dgs-radius-sm);
+  color: var(--dgs-text-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.dgs-saas-nav-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dgs-text-dim);
+  transition: all 0.15s ease;
+}
+
+.dgs-saas-nav-link:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.dgs-saas-nav-link:hover .dgs-saas-nav-bullet {
+  background: var(--dgs-primary);
+  box-shadow: 0 0 8px var(--dgs-primary-glow);
+}
+
+.dgs-saas-nav-link.active {
+  background: linear-gradient(72.47deg, var(--dgs-primary) 22.16%, #8f85f3 76.47%);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 10px var(--dgs-primary-glow);
+}
+
+.dgs-saas-nav-link.active .dgs-saas-nav-bullet {
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.dgs-saas-nav-label {
+  flex: 1;
+}
+
+.dgs-saas-nav-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--dgs-radius-pill);
+  text-transform: uppercase;
+}
+
+.dgs-saas-nav-badge.primary { background: rgba(255, 255, 255, 0.2); color: #fff; }
+.dgs-saas-nav-badge.success { background: var(--dgs-success-light); color: var(--dgs-success); }
+.dgs-saas-nav-badge.warning { background: var(--dgs-warning-light); color: var(--dgs-warning); }
+.dgs-saas-nav-badge.info { background: var(--dgs-info-light); color: var(--dgs-info); }
+
+.dgs-saas-sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--dgs-border-subtle);
+}
+
+.dgs-saas-user-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dgs-saas-avatar-mini {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--dgs-primary-light);
+  color: var(--dgs-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dgs-saas-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.dgs-saas-user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.dgs-saas-user-role {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--dgs-primary);
+}
+
+/* Header Styles */
+.dgs-saas-header {
+  height: 64px;
+  position: sticky;
+  top: 0;
+  background: rgba(23, 24, 38, 0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--dgs-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 40;
+}
+
+.dgs-saas-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dgs-saas-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--dgs-text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--dgs-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.dgs-saas-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.dgs-saas-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+}
+
+.dgs-saas-breadcrumb-item {
+  color: var(--dgs-text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.dgs-saas-breadcrumb-item:hover {
+  color: #fff;
+}
+
+.dgs-saas-breadcrumb-separator {
+  color: var(--dgs-text-dim);
+}
+
+.dgs-saas-breadcrumb-current {
+  color: #fff;
+  font-weight: 600;
+}
+
+.dgs-saas-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dgs-saas-search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-pill);
+  padding: 6px 14px;
+  color: var(--dgs-text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.15s;
+}
+
+.dgs-saas-search-trigger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.dgs-saas-search-kbd {
+  font-size: 0.7rem;
+  font-family: monospace;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dgs-saas-icon-btn {
+  background: none;
+  border: none;
+  color: var(--dgs-text-muted);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.dgs-saas-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.dgs-saas-user-dropdown-container {
+  position: relative;
+}
+
+.dgs-saas-avatar-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.dgs-saas-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dgs-primary), #8f85f3);
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px var(--dgs-primary-glow);
+}
+
+.dgs-saas-dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+.dgs-saas-profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 240px;
+  background: var(--dgs-bg-card);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-md);
+  box-shadow: var(--dgs-shadow-elevation);
+  z-index: 70;
+  padding: 8px 0;
+  animation: dgsFadeIn 0.15s ease;
+}
+
+.dgs-saas-profile-dropdown-header {
+  padding: 12px 16px;
+}
+
+.dgs-saas-profile-name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.dgs-saas-profile-email {
+  font-size: 0.78rem;
+  color: var(--dgs-text-muted);
+  margin: 2px 0 6px;
+  word-break: break-all;
+}
+
+.dgs-saas-profile-role-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--dgs-radius-pill);
+  background: var(--dgs-primary-light);
+  color: var(--dgs-primary);
+}
+
+.dgs-saas-profile-dropdown-divider {
+  height: 1px;
+  background: var(--dgs-border);
+  margin: 6px 0;
+}
+
+.dgs-saas-dropdown-item {
+  display: block;
+  padding: 9px 16px;
+  font-size: 0.88rem;
+  color: var(--dgs-text-muted);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.dgs-saas-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.dgs-saas-dropdown-item.logout {
+  color: var(--dgs-danger);
+}
+
+.dgs-saas-dropdown-item.logout:hover {
+  background: var(--dgs-danger-light);
+  color: var(--dgs-danger);
+}
+
+/* Fluid Work Area */
+.dgs-saas-main {
+  flex: 1;
+  min-width: 0;
+  padding: clamp(20px, 3vw, 40px);
+}
+
+.dgs-saas-content-fluid {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Cards & Surface Components */
+.dgs-saas-card {
+  background: var(--dgs-bg-card);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-md);
+  box-shadow: var(--dgs-shadow-card);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.dgs-saas-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--dgs-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dgs-saas-card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.dgs-saas-card-subtitle {
+  font-size: 0.82rem;
+  color: var(--dgs-text-muted);
+  margin: 4px 0 0;
+}
+
+.dgs-saas-card-body {
+  padding: 24px;
+}
+
+/* KPI Stat Cards Grid */
+.dgs-saas-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.dgs-saas-kpi-card {
+  background: var(--dgs-bg-card);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-md);
+  padding: 22px 24px;
+  box-shadow: var(--dgs-shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dgs-saas-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--dgs-shadow-elevation);
+}
+
+.dgs-saas-kpi-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dgs-text-muted);
+  margin-bottom: 8px;
+}
+
+.dgs-saas-kpi-value {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+
+.dgs-saas-kpi-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.dgs-saas-kpi-delta.positive { color: var(--dgs-success); }
+.dgs-saas-kpi-delta.negative { color: var(--dgs-danger); }
+.dgs-saas-kpi-delta.neutral { color: var(--dgs-text-muted); }
+
+/* Table Components */
+.dgs-saas-table-toolbar {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--dgs-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dgs-saas-table-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--dgs-bg-input);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-sm);
+  padding: 8px 14px;
+  color: var(--dgs-text-muted);
+  min-width: 260px;
+}
+
+.dgs-saas-table-search-input {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 0.88rem;
+  outline: none;
+  width: 100%;
+}
+
+.dgs-saas-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dgs-saas-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.dgs-saas-table th {
+  padding: 14px 18px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dgs-text-dim);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--dgs-border);
+  white-space: nowrap;
+}
+
+.dgs-saas-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.dgs-saas-table th.sortable:hover {
+  color: #fff;
+}
+
+.dgs-saas-th-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dgs-saas-sort-indicator {
+  font-size: 0.7rem;
+  color: var(--dgs-primary);
+}
+
+.dgs-saas-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--dgs-border-subtle);
+  color: var(--dgs-text-main);
+  vertical-align: middle;
+}
+
+.dgs-saas-table tr:hover td {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.dgs-saas-table tr.selected td {
+  background: var(--dgs-primary-light);
+}
+
+.dgs-saas-table-empty {
+  text-align: center;
+  padding: 48px !important;
+  color: var(--dgs-text-muted);
+}
+
+.dgs-saas-table-pagination {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid var(--dgs-border-subtle);
+  font-size: 0.85rem;
+  color: var(--dgs-text-muted);
+}
+
+.dgs-saas-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dgs-saas-pagesize-select {
+  background: var(--dgs-bg-input);
+  border: 1px solid var(--dgs-border);
+  color: #fff;
+  border-radius: var(--dgs-radius-sm);
+  padding: 4px 8px;
+  margin-left: 6px;
+}
+
+.dgs-saas-pagination-btn {
+  background: var(--dgs-bg-input);
+  border: 1px solid var(--dgs-border);
+  color: var(--dgs-text-main);
+  padding: 6px 14px;
+  border-radius: var(--dgs-radius-sm);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.dgs-saas-pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Badges & Status Chips */
+.dgs-saas-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--dgs-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dgs-saas-chip.success { background: var(--dgs-success-light); color: var(--dgs-success); }
+.dgs-saas-chip.warning { background: var(--dgs-warning-light); color: var(--dgs-warning); }
+.dgs-saas-chip.danger { background: var(--dgs-danger-light); color: var(--dgs-danger); }
+.dgs-saas-chip.info { background: var(--dgs-info-light); color: var(--dgs-info); }
+.dgs-saas-chip.primary { background: var(--dgs-primary-light); color: var(--dgs-primary); }
+
+/* Buttons */
+.dgs-saas-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--dgs-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.dgs-saas-btn.primary {
+  background: linear-gradient(72.47deg, var(--dgs-primary) 22.16%, #8f85f3 76.47%);
+  color: #fff;
+  box-shadow: 0 2px 10px var(--dgs-primary-glow);
+}
+
+.dgs-saas-btn.primary:hover {
+  box-shadow: 0 4px 16px var(--dgs-primary-glow);
+}
+
+.dgs-saas-btn.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--dgs-border);
+  color: #fff;
+}
+
+.dgs-saas-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dgs-saas-btn.danger {
+  background: var(--dgs-danger);
+  color: #fff;
+}
+
+.dgs-saas-btn.sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+/* Global Search Modal */
+.dgs-saas-search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding-top: 15vh;
+}
+
+.dgs-saas-search-modal {
+  width: min(92vw, 620px);
+  background: var(--dgs-bg-card);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-md);
+  box-shadow: var(--dgs-shadow-elevation);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 70vh;
+}
+
+.dgs-saas-search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--dgs-border);
+}
+
+.dgs-saas-search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.05rem;
+  outline: none;
+}
+
+.dgs-saas-search-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--dgs-border);
+  color: var(--dgs-text-muted);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.dgs-saas-search-results {
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.dgs-saas-search-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  color: var(--dgs-text-main);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.dgs-saas-search-result-item:hover {
+  background: var(--dgs-primary-light);
+  color: #fff;
+}
+
+.dgs-saas-search-item-title {
+  font-weight: 500;
+}
+
+.dgs-saas-search-item-category {
+  font-size: 0.75rem;
+  color: var(--dgs-text-muted);
+  margin-left: 8px;
+}
+
+.dgs-saas-search-item-enter {
+  font-size: 0.8rem;
+  color: var(--dgs-primary);
+}
+
+/* Animations */
+@keyframes dgsFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Breakpoints: 390px, 768px, 1024px, 1440px, 1920px, 4K */
+@media (min-width: 1025px) {
+  .mobile-only { display: none !important; }
+}
+
+@media (max-width: 1024px) {
+  .desktop-only { display: none !important; }
+  .dgs-saas-sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    z-index: 99;
+  }
+  .dgs-saas-sidebar.mobile-open {
+    left: 0;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  }
+  .dgs-saas-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 90;
+  }
+}
+
+@media (max-width: 640px) {
+  .dgs-saas-header { padding: 0 16px; }
+  .dgs-saas-main { padding: 16px; }
+  .dgs-saas-search-trigger .dgs-saas-search-text,
+  .dgs-saas-search-trigger .dgs-saas-search-kbd {
+    display: none;
+  }
+  .dgs-saas-search-trigger { padding: 8px; border-radius: 50%; }
+}
+
+/* 4K Viewports (3840px) Optimization */
+@media (min-width: 2560px) {
+  .dgs-saas-kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .dgs-saas-main {
+    padding: 48px;
+  }
+}
