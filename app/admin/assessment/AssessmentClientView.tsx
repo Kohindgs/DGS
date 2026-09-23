@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
+import PageHeader from "@/components/admin/PageHeader";
 import {
   Sparkles,
   CheckCircle2,
@@ -363,7 +364,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
       sortable: true,
       render: (j) => (
         <div>
-          <strong style={{ color: "#fff", fontSize: "0.92rem" }}>{j.role_title}</strong>
+          <strong style={{ color: "var(--dgs-text-primary)", fontSize: "0.92rem" }}>{j.role_title}</strong>
           <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)" }}>ID: {j.id.slice(0, 8)}…</div>
         </div>
       ),
@@ -398,7 +399,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
       key: "role_title",
       header: "Associated Role",
       sortable: true,
-      render: (v) => <span style={{ color: "#fff", fontWeight: 600 }}>{v.role_title || "Role"}</span>,
+      render: (v) => <span style={{ color: "var(--dgs-text-primary)", fontWeight: 600 }}>{v.role_title || "Role"}</span>,
     },
     {
       key: "difficulty",
@@ -435,7 +436,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
       sortable: true,
       render: (c) => (
         <div>
-          <strong style={{ color: "#fff" }}>{c.name}</strong>
+          <strong style={{ color: "var(--dgs-text-primary)" }}>{c.name}</strong>
           <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)" }}>{c.email}</div>
         </div>
       ),
@@ -484,38 +485,31 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-      {/* Top Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
-        <div>
-          <h2 style={{ fontSize: "1.45rem", fontWeight: 700, color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
-            <Sparkles size={22} style={{ color: "var(--dgs-purple-light)" }} />
-            Assessment &amp; Recruitment Intelligence OS
-          </h2>
-          <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-            AI-driven technical testing, multi-dimensional candidate evaluation, and immutable assessment blueprints.
-          </p>
-        </div>
-
-        {/* Live Gemini Connection Tester */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <button
-            type="button"
-            className="dgs-saas-btn secondary sm"
-            onClick={handleTestConnection}
-            disabled={apiHealth.testing}
-            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
-          >
-            <RefreshCw size={13} className={apiHealth.testing ? "spin" : ""} />
-            {apiHealth.testing ? "Pinging Gemini…" : "Test Gemini AI Connection"}
-          </button>
-          {apiHealth.ok !== undefined && (
-            <span className={`dgs-saas-chip ${apiHealth.ok ? "success" : "danger"}`}>
-              {apiHealth.ok ? <CheckCircle2 size={12} style={{ marginRight: 4 }} /> : <XCircle size={12} style={{ marginRight: 4 }} />}
-              {apiHealth.message}
-            </span>
-          )}
-        </div>
-      </div>
+      {/* Unified Enterprise Page Header */}
+      <PageHeader
+        title="Assessment & Recruitment Intelligence OS"
+        subtitle="AI-driven technical testing, multi-dimensional candidate evaluation, and immutable assessment blueprints."
+        actions={
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button
+              type="button"
+              className="dgs-saas-btn secondary sm"
+              onClick={handleTestConnection}
+              disabled={apiHealth.testing}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+            >
+              <RefreshCw size={13} className={apiHealth.testing ? "spin" : ""} />
+              {apiHealth.testing ? "Pinging Gemini…" : "Test Gemini AI Connection"}
+            </button>
+            {apiHealth.ok !== undefined && (
+              <span className={`dgs-saas-chip sm ${apiHealth.ok ? "success" : "danger"}`}>
+                {apiHealth.ok ? <CheckCircle2 size={12} style={{ marginRight: 4 }} /> : <XCircle size={12} style={{ marginRight: 4 }} />}
+                {apiHealth.message}
+              </span>
+            )}
+          </div>
+        }
+      />
 
       {/* KPI Cards Grid */}
       <div className="dgs-saas-kpi-grid">
@@ -683,7 +677,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
         <div className="dgs-saas-search-overlay" onClick={() => setShowCreateJdModal(false)}>
           <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "650px", maxWidth: "95vw" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
-              <h3 style={{ margin: 0, color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
+              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
                 <FileText size={18} /> New Job Description
               </h3>
               <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
@@ -700,7 +694,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                     placeholder="e.g. Senior Technical SEO Strategist"
                     value={newJdTitle}
                     onChange={(e) => setNewJdTitle(e.target.value)}
-                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                   />
                 </label>
                 <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
@@ -708,7 +702,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                   <select
                     value={newJdLevel}
                     onChange={(e) => setNewJdLevel(e.target.value)}
-                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                   >
                     <option value="junior">Junior</option>
                     <option value="mid">Mid-Level</option>
@@ -726,7 +720,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                   placeholder="e.g. SEO &amp; Organic Search"
                   value={newJdDept}
                   onChange={(e) => setNewJdDept(e.target.value)}
-                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                 />
               </label>
 
@@ -738,7 +732,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                   placeholder="Paste complete JD specifications here..."
                   value={newJdContent}
                   onChange={(e) => setNewJdContent(e.target.value)}
-                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff", resize: "vertical" }}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", resize: "vertical" }}
                 />
               </label>
 
@@ -760,11 +754,11 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
         <div className="dgs-saas-search-overlay" onClick={() => setSelectedJdForGen(null)}>
           <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "520px", maxWidth: "95vw" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
-              <h3 style={{ margin: 0, color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
+              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
                 <Sparkles size={18} style={{ color: "var(--dgs-purple-light)" }} /> Generate Assessment with Gemini
               </h3>
               <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
-                Role: <strong style={{ color: "#fff" }}>{selectedJdForGen.role_title}</strong>
+                Role: <strong style={{ color: "var(--dgs-text-primary)" }}>{selectedJdForGen.role_title}</strong>
               </p>
             </div>
             <form onSubmit={handleGenerateTest} style={{ padding: "24px", display: "grid", gap: "16px" }}>
@@ -773,7 +767,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                 <select
                   value={difficulty}
                   onChange={(e) => setDifficulty(e.target.value as any)}
-                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                 >
                   <option value="junior">Junior (Foundational agency process &amp; concepts)</option>
                   <option value="mid">Mid-Level (Hands-on execution &amp; troubleshooting)</option>
@@ -791,7 +785,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                     max={25}
                     value={mcqCount}
                     onChange={(e) => setMcqCount(Number(e.target.value))}
-                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                   />
                 </label>
                 <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
@@ -802,7 +796,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                     max={10}
                     value={shortCount}
                     onChange={(e) => setShortCount(Number(e.target.value))}
-                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                   />
                 </label>
                 <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
@@ -813,7 +807,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                     max={5}
                     value={longCount}
                     onChange={(e) => setLongCount(Number(e.target.value))}
-                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                   />
                 </label>
               </div>
@@ -825,7 +819,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                   placeholder="e.g. Core Web Vitals, programmatic SEO, schema markup, high-intent client communication"
                   value={focusAreas}
                   onChange={(e) => setFocusAreas(e.target.value)}
-                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff", resize: "vertical" }}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", resize: "vertical" }}
                 />
               </label>
 
@@ -853,7 +847,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
             {/* Blueprint Header */}
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
-                <h3 style={{ margin: 0, color: "#fff", display: "flex", alignItems: "center", gap: "10px" }}>
+                <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "10px" }}>
                   <FileSpreadsheet size={20} />
                   Blueprint: {selectedVersion.jd_title || "Assessment Version"} (v{selectedVersion.version_number})
                 </h3>
@@ -936,7 +930,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                     )}
                   </div>
 
-                  <p style={{ margin: "0 0 12px 0", color: "#fff", fontSize: "0.9rem", lineHeight: "1.4" }}>
+                  <p style={{ margin: "0 0 12px 0", color: "var(--dgs-text-primary)", fontSize: "0.9rem", lineHeight: "1.4" }}>
                     {q.prompt || q.question}
                   </p>
 
@@ -968,7 +962,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
                   {/* Rubric for Written Answers */}
                   {q.rubric && (
-                    <div style={{ marginTop: "10px", fontSize: "0.78rem", color: "var(--dgs-text-dim)", background: "rgba(255,255,255,0.02)", padding: "8px 12px", borderRadius: "4px" }}>
+                    <div style={{ marginTop: "10px", fontSize: "0.78rem", color: "var(--dgs-text-dim)", background: "var(--dgs-bg-surface-secondary)", padding: "8px 12px", borderRadius: "4px" }}>
                       <strong>Evaluation Rubric:</strong> {q.rubric}
                     </div>
                   )}
@@ -984,7 +978,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
         <div className="dgs-saas-search-overlay" onClick={() => setRegenQuestionModal({ open: false, question: null, recommendation: "", loading: false })}>
           <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "520px" }}>
             <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--dgs-border)" }}>
-              <h3 style={{ margin: 0, color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
+              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
                 <Sparkles size={16} /> AI Question Regeneration
               </h3>
               <p style={{ margin: "4px 0 0", fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>
@@ -994,7 +988,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
             <div style={{ padding: "22px", display: "grid", gap: "14px" }}>
               <div style={{ background: "var(--dgs-bg-card)", padding: "12px", borderRadius: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
                 <strong>Current Prompt:</strong>
-                <p style={{ margin: "4px 0 0", color: "#fff" }}>
+                <p style={{ margin: "4px 0 0", color: "var(--dgs-text-primary)" }}>
                   {regenQuestionModal.question?.prompt || regenQuestionModal.question?.question}
                 </p>
               </div>
@@ -1006,7 +1000,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                   placeholder="e.g. Make this question harder, test practical Next.js 15 Server Actions error handling and cache revalidation"
                   value={regenQuestionModal.recommendation}
                   onChange={(e) => setRegenQuestionModal((prev) => ({ ...prev, recommendation: e.target.value }))}
-                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "#fff" }}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                 />
               </label>
 
@@ -1043,7 +1037,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
             <div style={{ padding: "16px 20px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <Eye size={18} />
-                <strong style={{ color: "#fff" }}>Candidate Test Preview Mode</strong>
+                <strong style={{ color: "var(--dgs-text-primary)" }}>Candidate Test Preview Mode</strong>
                 <span className="dgs-saas-chip info" style={{ fontSize: "0.68rem" }}>ZERO ANSWERS REVEALED</span>
               </div>
               <button type="button" className="dgs-saas-btn secondary sm" onClick={() => setShowPreviewModal(false)}>
@@ -1055,7 +1049,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                 <div style={{ fontSize: "0.78rem", color: "var(--dgs-purple-light)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                   D&apos;Genius Solutions · Technical Assessment
                 </div>
-                <h1 style={{ fontSize: "1.4rem", margin: "6px 0 4px", color: "#fff" }}>
+                <h1 style={{ fontSize: "1.4rem", margin: "6px 0 4px", color: "var(--dgs-text-primary)" }}>
                   {selectedVersion.jd_title || "Technical Candidate Assessment"}
                 </h1>
                 <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
@@ -1065,7 +1059,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
               {(selectedVersion.test_data?.questions || []).map((q: any, i: number) => (
                 <div key={q.id || i} style={{ background: "var(--dgs-bg-card)", border: "1px solid var(--dgs-border)", borderRadius: "8px", padding: "16px" }}>
-                  <div style={{ fontWeight: 600, color: "#fff", marginBottom: "10px", fontSize: "0.92rem" }}>
+                  <div style={{ fontWeight: 600, color: "var(--dgs-text-primary)", marginBottom: "10px", fontSize: "0.92rem" }}>
                     {i + 1}. {q.prompt || q.question}
                   </div>
                   {q.type === "mcq" && q.options && (
@@ -1083,7 +1077,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                       rows={4}
                       disabled
                       placeholder="Candidate writes response here..."
-                      style={{ width: "100%", background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px", color: "#fff" }}
+                      style={{ width: "100%", background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px", color: "var(--dgs-text-primary)" }}
                     />
                   )}
                 </div>
@@ -1106,7 +1100,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <Activity size={20} style={{ color: "var(--dgs-purple-light)" }} />
                 <div>
-                  <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>
+                  <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", fontSize: "1.1rem" }}>
                     {candidateDetail.candidate_name || candidateDetail.name} — Candidate Evaluation Workstation
                   </h3>
                   <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)" }}>
@@ -1151,7 +1145,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
               <div style={{ borderRight: "1px solid var(--dgs-border)", padding: "18px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div>
                   <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>Candidate Overview</div>
-                  <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", marginTop: "4px" }}>
+                  <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--dgs-text-primary)", marginTop: "4px" }}>
                     {candidateDetail.candidate_name || candidateDetail.name}
                   </div>
                   <div style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>{candidateDetail.candidate_email}</div>
@@ -1160,17 +1154,17 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
                 {/* Screening Rules (REQ-28) */}
                 <div style={{ background: "var(--dgs-bg-card)", border: "1px solid var(--dgs-border)", borderRadius: "8px", padding: "12px" }}>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--dgs-text-primary)", marginBottom: "8px" }}>
                     Screening Status
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem" }}>
                       <span style={{ color: "var(--dgs-text-muted)" }}>Experience:</span>
-                      <strong style={{ color: "#fff" }}>{candidateDetail.experience || "2+ years"}</strong>
+                      <strong style={{ color: "var(--dgs-text-primary)" }}>{candidateDetail.experience || "2+ years"}</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem" }}>
                       <span style={{ color: "var(--dgs-text-muted)" }}>Notice Period:</span>
-                      <strong style={{ color: "#fff" }}>{candidateDetail.notice_period || "Immediate"}</strong>
+                      <strong style={{ color: "var(--dgs-text-primary)" }}>{candidateDetail.notice_period || "Immediate"}</strong>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem" }}>
                       <span style={{ color: "var(--dgs-text-muted)" }}>Qualification:</span>
@@ -1181,10 +1175,10 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
                 {/* Private Documents (REQ-10, REQ-31) */}
                 <div>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--dgs-text-primary)", marginBottom: "8px" }}>
                     Candidate Documents
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)", background: "rgba(255,255,255,0.02)", padding: "10px", borderRadius: "6px" }}>
+                  <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)", background: "var(--dgs-bg-surface-secondary)", padding: "10px", borderRadius: "6px" }}>
                     Private Storage (Outside Web Root)
                   </div>
                 </div>
@@ -1219,7 +1213,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                         <strong style={{ fontSize: "0.85rem", color: "var(--dgs-purple-light)" }}>Question {idx + 1}</strong>
                         <span className="dgs-saas-chip info" style={{ fontSize: "0.65rem" }}>{qKey}</span>
                       </div>
-                      <div style={{ fontSize: "0.88rem", color: "#fff", marginTop: "4px" }}>
+                      <div style={{ fontSize: "0.88rem", color: "var(--dgs-text-primary)", marginTop: "4px" }}>
                         <strong>Candidate Answer:</strong>
                         <div style={{ marginTop: "4px", background: "var(--dgs-bg-input)", padding: "8px 10px", borderRadius: "4px", color: "var(--dgs-text-main)", fontSize: "0.85rem" }}>
                           {String(aVal)}
@@ -1235,7 +1229,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
                 {/* Anti-Cheat Activity Logs (REQ-21) */}
                 <div style={{ marginTop: "14px", borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#fff", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--dgs-text-primary)", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
                     <Shield size={14} /> Anti-Cheat Activity Timeline
                   </div>
                   {Array.isArray(candidateDetail.activity_log || candidateDetail.activity) ? (
@@ -1264,7 +1258,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
                 {/* Visual Fit Graph (REQ-13) */}
                 <div style={{ background: "var(--dgs-bg-card)", border: "1px solid var(--dgs-border)", borderRadius: "8px", padding: "14px", display: "grid", gap: "10px" }}>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#fff" }}>Fit Breakdown</div>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--dgs-text-primary)" }}>Fit Breakdown</div>
                   {[
                     { label: "Technical Skills", pct: 90 },
                     { label: "Experience Fit", pct: 85 },
@@ -1276,7 +1270,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                         <span>{dim.label}</span>
                         <span>{dim.pct}%</span>
                       </div>
-                      <div style={{ width: "100%", height: "6px", background: "rgba(255,255,255,0.06)", borderRadius: "3px", overflow: "hidden" }}>
+                      <div style={{ width: "100%", height: "6px", background: "var(--dgs-bg-surface-secondary)", borderRadius: "3px", overflow: "hidden" }}>
                         <div style={{ width: `${dim.pct}%`, height: "100%", background: "var(--dgs-purple)" }} />
                       </div>
                     </div>
@@ -1285,7 +1279,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
 
                 {/* HR Notes Textarea */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                  <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "#fff" }}>
+                  <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--dgs-text-primary)" }}>
                     HR Evaluation Notes
                   </label>
                   <textarea
@@ -1293,7 +1287,7 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                     value={hrNotes}
                     onChange={(e) => setHrNotes(e.target.value)}
                     placeholder="Enter candidate strengths, interview observations, or compensation notes..."
-                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px", color: "#fff", fontSize: "0.82rem", resize: "vertical" }}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px", color: "var(--dgs-text-primary)", fontSize: "0.82rem", resize: "vertical" }}
                   />
                   <button
                     type="button"

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import PageHeader from "@/components/admin/PageHeader";
+import { Plus } from "lucide-react";
 import type { MediaAsset, MediaStats, MediaUsage } from "@/lib/cms/media";
 
 interface MediaLibraryViewProps {
@@ -155,41 +157,63 @@ export default function MediaLibraryView({
   };
 
   return (
-    <div className="dgs-admin-media-shell">
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       {toastMessage && (
         <div className="dgs-media-toast" role="status">
           {toastMessage}
         </div>
       )}
 
+      {/* Page Header */}
+      <PageHeader
+        title="Media Library & Digital Assets"
+        subtitle="WebP-reconciled media assets, automated compression telemetry, and usage references."
+        actions={
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button
+              type="button"
+              className="dgs-saas-btn secondary sm"
+              onClick={() => setShowImportModal(true)}
+            >
+              Import WordPress Media
+            </button>
+            <button
+              type="button"
+              className="dgs-saas-btn primary sm"
+              onClick={() => setShowUploadModal(true)}
+            >
+              <Plus size={14} />
+              <span>Upload Media</span>
+            </button>
+          </div>
+        }
+      />
+
       {stats && (
-        <section className="dgs-admin-media-metrics" aria-label="Media Statistics">
-          <div className="dgs-media-metric-card">
-            <span className="dgs-media-metric-label">Total Media</span>
-            <strong className="dgs-media-metric-val">{stats.totalAssets}</strong>
-            <span className="dgs-media-metric-sub">{stats.totalImages} images · {stats.totalVideos} videos</span>
+        <div className="dgs-saas-kpi-grid">
+          <div className="dgs-saas-kpi-card">
+            <div className="dgs-saas-kpi-title">Total Media Assets</div>
+            <div className="dgs-saas-kpi-value">{stats.totalAssets}</div>
+            <div className="dgs-saas-kpi-delta positive">{stats.totalImages} images · {stats.totalVideos} videos</div>
           </div>
-          <div className="dgs-media-metric-card">
-            <span className="dgs-media-metric-label">Optimised Storage</span>
-            <strong className="dgs-media-metric-val">{formatBytes(stats.totalCurrentBytes)}</strong>
-            <span className="dgs-media-metric-sub">from {formatBytes(stats.totalOriginalBytes)}</span>
+          <div className="dgs-saas-kpi-card">
+            <div className="dgs-saas-kpi-title">Optimised Storage</div>
+            <div className="dgs-saas-kpi-value">{formatBytes(stats.totalCurrentBytes)}</div>
+            <div className="dgs-saas-kpi-delta neutral">from {formatBytes(stats.totalOriginalBytes)}</div>
           </div>
-          <div className="dgs-media-metric-card highlight">
-            <span className="dgs-media-metric-label">Storage Savings</span>
-            <strong className="dgs-media-metric-val">{stats.savingsPercentage}%</strong>
-            <span className="dgs-media-metric-sub">{formatBytes(stats.totalSavingsBytes)} saved</span>
+          <div className="dgs-saas-kpi-card">
+            <div className="dgs-saas-kpi-title">Storage Savings</div>
+            <div className="dgs-saas-kpi-value">{stats.savingsPercentage}%</div>
+            <div className="dgs-saas-kpi-delta positive">{formatBytes(stats.totalSavingsBytes)} saved</div>
           </div>
-          <div className="dgs-media-metric-card">
-            <span className="dgs-media-metric-label">Unused Assets</span>
-            <strong className="dgs-media-metric-val">{stats.unusedCount}</strong>
-            <span className="dgs-media-metric-sub">not referenced on site</span>
+          <div className="dgs-saas-kpi-card">
+            <div className="dgs-saas-kpi-title">Missing Alt Text</div>
+            <div className="dgs-saas-kpi-value" style={{ color: stats.missingAltCount > 0 ? "var(--dgs-warning)" : "var(--dgs-success)" }}>
+              {stats.missingAltCount}
+            </div>
+            <div className="dgs-saas-kpi-delta neutral">images needing accessibility alt</div>
           </div>
-          <div className="dgs-media-metric-card warning">
-            <span className="dgs-media-metric-label">Missing Alt Text</span>
-            <strong className="dgs-media-metric-val">{stats.missingAltCount}</strong>
-            <span className="dgs-media-metric-sub">images needing attention</span>
-          </div>
-        </section>
+        </div>
       )}
 
       <section className="dgs-media-toolbar">

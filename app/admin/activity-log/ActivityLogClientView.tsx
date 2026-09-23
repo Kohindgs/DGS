@@ -34,7 +34,7 @@ export default function ActivityLogClientView({ initialLogs }: Props) {
       sortable: true,
       render: (log) => (
         <div>
-          <div style={{ fontWeight: 600, color: "#fff" }}>{log.actor_email}</div>
+          <div style={{ fontWeight: 600, color: "var(--dgs-text-primary)" }}>{log.actor_email}</div>
           <span className="dgs-saas-chip primary" style={{ fontSize: "0.65rem", padding: "1px 6px" }}>
             {log.role.toUpperCase()}
           </span>
@@ -86,7 +86,7 @@ export default function ActivityLogClientView({ initialLogs }: Props) {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <div>
-          <h2 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff", margin: 0 }}>Immutable Audit Log</h2>
+          <h2 style={{ fontSize: "1.3rem", fontWeight: 700, color: "var(--dgs-text-primary)", margin: 0 }}>Immutable Audit Log</h2>
           <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
             Superadmin-only append-only activity trail. Cryptographically filtered against sensitive secrets.
           </p>
@@ -117,12 +117,12 @@ export default function ActivityLogClientView({ initialLogs }: Props) {
         <div className="dgs-saas-search-overlay" onClick={() => setInspectEntry(null)}>
           <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "640px" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
-              <h3 style={{ margin: 0, color: "#fff" }}>Audit Event Inspection</h3>
+              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)" }}>Audit Event Inspection</h3>
             </div>
             <div style={{ padding: "24px", overflowY: "auto", display: "grid", gap: "16px" }}>
               <div>
                 <strong style={{ color: "var(--dgs-text-dim)", fontSize: "0.75rem", textTransform: "uppercase" }}>Event Details</strong>
-                <div style={{ color: "#fff", marginTop: "4px", fontSize: "0.95rem" }}>{inspectEntry.summary}</div>
+                <div style={{ color: "var(--dgs-text-primary)", marginTop: "4px", fontSize: "0.95rem" }}>{inspectEntry.summary}</div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", fontSize: "0.85rem" }}>
                 <div><strong>Timestamp:</strong> {new Date(inspectEntry.created_at).toLocaleString()}</div>

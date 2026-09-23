@@ -1,1089 +1,1027 @@
 /* ==========================================================================
-   DGS CMS V3 — Apple macOS / iOS Premium Glassmorphic Design System
-   Target: Enterprise SaaS, Corporate Clients, Operations OS
-   Typography: Native Apple SF Pro / Segoe UI
-   Aesthetics: Restrained Frosted Glass, Ambient DGS Haze, Clean Minimalism
+   DGS CMS V4 — Premium Enterprise SaaS Design System
+   Benchmarks: Linear (density & speed) + Stripe (tables & precision)
+               + Vercel (restraint & typography) + Attio (workspace & CRM)
+               + Notion (hierarchy) + DGS Brand Identity
    ========================================================================== */
 
 :root {
-  /* Canvas & Glassmorphic Surfaces (Dark Mode - Default Graphite) */
-  --dgs-bg-app: #161618;
-  --dgs-bg-app-rgb: 22, 22, 24;
-  --dgs-bg-surface: #1C1C1E;
-  --dgs-bg-surface-elevated: #222225;
-  --dgs-bg-sidebar: rgba(24, 24, 28, 0.78);
-  --dgs-bg-card: rgba(28, 28, 34, 0.68);
-  --dgs-bg-card-hover: rgba(36, 36, 44, 0.82);
-  --dgs-bg-input: rgba(20, 20, 26, 0.75);
-  
-  /* Borders & Rims */
-  --dgs-border: rgba(255, 255, 255, 0.08);
-  --dgs-border-subtle: rgba(255, 255, 255, 0.05);
-  --dgs-border-focus: rgba(115, 103, 240, 0.55);
-  
-  /* Typography Colors */
-  --dgs-text-main: #F5F5F7;
-  --dgs-text-muted: #9898A0;
-  --dgs-text-dim: #63636B;
-  
-  /* Restrained DGS Brand Accent Palette */
-  --dgs-primary: #7367F0;
-  --dgs-primary-hover: #8377FF;
-  --dgs-primary-light: rgba(115, 103, 240, 0.14);
-  --dgs-primary-glow: rgba(115, 103, 240, 0.22);
-  
-  --dgs-cyan: #00C2FF;
-  --dgs-blue: #2E5BFF;
-  --dgs-purple: #8A3FFC;
-  --dgs-magenta: #E01E5A;
-  --dgs-orange: #FF6B00;
-  
-  /* Semantic Status Colors (Standard Enterprise) */
-  --dgs-success: #34C759;
-  --dgs-success-light: rgba(52, 199, 89, 0.12);
-  --dgs-warning: #FF9500;
-  --dgs-warning-light: rgba(255, 149, 0, 0.12);
-  --dgs-danger: #FF3B30;
-  --dgs-danger-light: rgba(255, 59, 48, 0.12);
-  --dgs-info: #007AFF;
-  --dgs-info-light: rgba(0, 122, 255, 0.12);
-  
-  /* DGS Accents & Gradients (Used Sparingly for CTA / Focus / Indicators) */
-  --dgs-gradient-primary: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
-  --dgs-gradient-brand: linear-gradient(135deg, #00C2FF 0%, #7367F0 50%, #FF416C 100%);
-  --dgs-gradient-violet: linear-gradient(135deg, #7367F0 0%, #8A3FFC 100%);
-  --dgs-gradient-cyan: linear-gradient(135deg, #00C2FF 0%, #2E5BFF 100%);
-  
-  /* macOS Frosted Glass Specifications */
-  --dgs-glass-bg: rgba(28, 28, 34, 0.68);
-  --dgs-glass-bg-hover: rgba(36, 36, 44, 0.82);
-  --dgs-glass-border: 1px solid rgba(255, 255, 255, 0.08);
-  --dgs-glass-blur: blur(24px) saturate(180%);
-  --dgs-glass-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.09);
-  
-  /* Apple Geometry & Spacing */
-  --dgs-radius-xs: 6px;
-  --dgs-radius-sm: 10px;
-  --dgs-radius-md: 14px;
-  --dgs-radius-lg: 20px;
-  --dgs-radius-xl: 28px;
+  /* Font Family Stack */
+  --dgs-font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --dgs-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Typography Scale */
+  --dgs-text-page-title: 26px;
+  --dgs-weight-page-title: 650;
+  --dgs-text-page-sub: 14px;
+  --dgs-text-section: 18px;
+  --dgs-weight-section: 600;
+  --dgs-text-card-title: 15px;
+  --dgs-weight-card-title: 600;
+  --dgs-text-body: 14px;
+  --dgs-text-meta: 12px;
+  --dgs-text-nav: 14px;
+
+  /* Layout Dimensions */
+  --dgs-sidebar-width: 248px;
+  --dgs-sidebar-collapsed-width: 64px;
+  --dgs-header-height: 56px;
+  --dgs-content-padding: 28px;
+
+  /* Radius System (Crisp, Understated) */
+  --dgs-radius-xs: 4px;
+  --dgs-radius-sm: 6px;
+  --dgs-radius-md: 8px;
+  --dgs-radius-lg: 12px;
   --dgs-radius-pill: 9999px;
-  
-  --dgs-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.28);
-  --dgs-shadow-popover: 0 16px 40px rgba(0, 0, 0, 0.45);
-}
 
-/* Light Mode Overrides (Apple Light Neutrals) */
-[data-theme="light"] {
-  --dgs-bg-app: #F5F5F7;
-  --dgs-bg-app-rgb: 245, 245, 247;
+  /* Density Default (Comfortable) */
+  --dgs-table-row-height: 44px;
+  --dgs-table-cell-padding-y: 11px;
+  --dgs-table-cell-padding-x: 16px;
+  --dgs-input-height: 38px;
+
+  /* Transitions */
+  --dgs-transition-fast: 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  --dgs-transition-normal: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* DGS Brand Accent Palette (5% of UI - Primary CTA, active line, progress) */
+  --dgs-brand-blue: #0066FF;
+  --dgs-brand-purple: #7000FF;
+  --dgs-gradient-primary: linear-gradient(135deg, #0066FF 0%, #7000FF 100%);
+  --dgs-gradient-subtle: linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(112, 0, 255, 0.08) 100%);
+
+  /* ========================================================================
+     LIGHT MODE (DEFAULT FIRST-CLASS CITIZEN)
+     ======================================================================== */
+  --dgs-bg-app: #F7F8FA;
   --dgs-bg-surface: #FFFFFF;
-  --dgs-bg-surface-elevated: #F2F2F7;
-  --dgs-bg-sidebar: rgba(255, 255, 255, 0.82);
-  --dgs-bg-card: rgba(255, 255, 255, 0.78);
-  --dgs-bg-card-hover: rgba(255, 255, 255, 0.95);
-  --dgs-bg-input: rgba(245, 245, 247, 0.85);
-  
-  --dgs-border: rgba(0, 0, 0, 0.08);
-  --dgs-border-subtle: rgba(0, 0, 0, 0.04);
-  --dgs-border-focus: rgba(115, 103, 240, 0.45);
-  
-  --dgs-text-main: #1D1D1F;
-  --dgs-text-muted: #6E6E73;
-  --dgs-text-dim: #86868B;
-  
-  --dgs-glass-bg: rgba(255, 255, 255, 0.78);
-  --dgs-glass-bg-hover: rgba(255, 255, 255, 0.95);
-  --dgs-glass-border: 1px solid rgba(0, 0, 0, 0.08);
-  --dgs-glass-shadow: 0 8px 28px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  
-  --dgs-shadow-card: 0 2px 14px rgba(0, 0, 0, 0.06);
-  --dgs-shadow-popover: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --dgs-bg-surface-secondary: #F3F4F6;
+  --dgs-bg-surface-hover: #F8F9FA;
+  --dgs-bg-surface-active: #EEF0F3;
+  --dgs-bg-card: #FFFFFF;
+  --dgs-bg-sidebar: #FFFFFF;
+  --dgs-bg-header: rgba(255, 255, 255, 0.92);
+  --dgs-bg-input: #FFFFFF;
+
+  /* Light Borders */
+  --dgs-border: #E5E7EB;
+  --dgs-border-subtle: #F0F2F5;
+  --dgs-border-hover: #D1D5DB;
+  --dgs-border-focus: #0066FF;
+
+  /* Light Typography */
+  --dgs-text-primary: #111318;
+  --dgs-text-secondary: #4B5563;
+  --dgs-text-muted: #6B7280;
+  --dgs-text-dim: #9CA3AF;
+
+  /* Light Semantic Colors */
+  --dgs-success: #16A34A;
+  --dgs-success-bg: rgba(22, 163, 74, 0.08);
+  --dgs-success-border: rgba(22, 163, 74, 0.2);
+
+  --dgs-warning: #D97706;
+  --dgs-warning-bg: rgba(217, 119, 6, 0.08);
+  --dgs-warning-border: rgba(217, 119, 6, 0.2);
+
+  --dgs-danger: #DC2626;
+  --dgs-danger-bg: rgba(220, 38, 38, 0.08);
+  --dgs-danger-border: rgba(220, 38, 38, 0.2);
+
+  --dgs-info: #2563EB;
+  --dgs-info-bg: rgba(37, 99, 235, 0.08);
+  --dgs-info-border: rgba(37, 99, 235, 0.2);
+
+  /* Light Shadows */
+  --dgs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --dgs-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --dgs-shadow-popover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --dgs-shadow-drawer: -4px 0 24px rgba(0, 0, 0, 0.08);
 }
 
-/* Base Reset & Apple Typography */
+/* ========================================================================
+   DARK MODE (NEUTRAL GRAPHITE — ZERO GAMING OR RGB NEON)
+   ======================================================================== */
+[data-theme="dark"],
+.dark {
+  --dgs-bg-app: #111214;
+  --dgs-bg-surface: #17181B;
+  --dgs-bg-surface-secondary: #1E2024;
+  --dgs-bg-surface-hover: #23252A;
+  --dgs-bg-surface-active: #2A2D32;
+  --dgs-bg-card: #17181B;
+  --dgs-bg-sidebar: #141517;
+  --dgs-bg-header: rgba(20, 21, 23, 0.92);
+  --dgs-bg-input: #111214;
+
+  /* Dark Borders */
+  --dgs-border: #2A2D32;
+  --dgs-border-subtle: #202226;
+  --dgs-border-hover: #373A40;
+  --dgs-border-focus: #3B82F6;
+
+  /* Dark Typography */
+  --dgs-text-primary: #F3F4F6;
+  --dgs-text-secondary: #9CA3AF;
+  --dgs-text-muted: #6B7280;
+  --dgs-text-dim: #4B5563;
+
+  /* Dark Semantic Colors */
+  --dgs-success: #22C55E;
+  --dgs-success-bg: rgba(34, 197, 94, 0.12);
+  --dgs-success-border: rgba(34, 197, 94, 0.25);
+
+  --dgs-warning: #F59E0B;
+  --dgs-warning-bg: rgba(245, 158, 11, 0.12);
+  --dgs-warning-border: rgba(245, 158, 11, 0.25);
+
+  --dgs-danger: #EF4444;
+  --dgs-danger-bg: rgba(239, 68, 68, 0.12);
+  --dgs-danger-border: rgba(239, 68, 68, 0.25);
+
+  --dgs-info: #3B82F6;
+  --dgs-info-bg: rgba(59, 130, 246, 0.12);
+  --dgs-info-border: rgba(59, 130, 246, 0.25);
+
+  /* Dark Shadows */
+  --dgs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --dgs-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --dgs-shadow-popover: 0 12px 30px rgba(0, 0, 0, 0.6);
+  --dgs-shadow-drawer: -6px 0 30px rgba(0, 0, 0, 0.65);
+}
+
+/* Compact Density Modifier */
+[data-density="compact"] {
+  --dgs-table-row-height: 36px;
+  --dgs-table-cell-padding-y: 8px;
+  --dgs-table-cell-padding-x: 12px;
+  --dgs-input-height: 34px;
+  --dgs-content-padding: 20px;
+}
+
+/* ========================================================================
+   BASE APPLICATION RESET
+   ======================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-body, html {
+body {
   margin: 0;
   padding: 0;
+  background-color: var(--dgs-bg-app);
+  color: var(--dgs-text-primary);
+  font-family: var(--dgs-font-sans);
+  font-size: var(--dgs-text-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Strip any ambient neon orbs or gaming artifacts */
+.dgs-ambient-backdrop,
+.dgs-ambient-orb,
+.dgs-orb-magenta,
+.dgs-orb-purple,
+.dgs-orb-cyan,
+.dgs-orb-orange {
+  display: none !important;
+}
+
+/* ========================================================================
+   APPLICATION SHELL LAYOUT
+   ======================================================================== */
 .dgs-saas-layout {
   display: flex;
   min-height: 100vh;
   width: 100%;
-  background: var(--dgs-bg-app);
-  color: var(--dgs-text-main);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  position: relative;
+  background-color: var(--dgs-bg-app);
 }
 
-/* Subtle Ambient DGS Haze (Faint 5-8% Opacity — Beautiful even without gradients) */
-.dgs-ambient-backdrop {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-  opacity: 0.08;
-  filter: blur(120px);
-}
-
-.dgs-ambient-orb {
-  position: absolute;
-  border-radius: 50%;
-  transform: translate3d(0, 0, 0);
-}
-
-.dgs-orb-magenta {
-  width: 50vw;
-  height: 50vw;
-  top: -15vw;
-  right: -10vw;
-  background: radial-gradient(circle, #7367F0 0%, #8A3FFC 50%, transparent 70%);
-}
-
-.dgs-orb-purple {
-  width: 45vw;
-  height: 45vw;
-  bottom: -10vw;
-  left: -10vw;
-  background: radial-gradient(circle, #00C2FF 0%, #2E5BFF 50%, transparent 70%);
-}
-
-.dgs-orb-cyan, .dgs-orb-orange {
-  display: none; /* Removed heavy colorful neon blobs */
-}
-
-/* Main Workspace Wrapper */
 .dgs-saas-wrapper {
   flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
-  position: relative;
-  z-index: 1;
+  min-width: 0;
+  margin-left: var(--dgs-sidebar-width);
+  transition: margin-left var(--dgs-transition-normal);
 }
 
-/* Central Column Workspace */
-.dgs-neon-workspace {
+.dgs-saas-layout.sidebar-collapsed .dgs-saas-wrapper {
+  margin-left: var(--dgs-sidebar-collapsed-width);
+}
+
+/* Main Working Area */
+.dgs-neon-workspace,
+.dgs-saas-content {
   flex: 1;
-  display: flex;
+  padding: var(--dgs-content-padding);
+  max-width: 100%;
   width: 100%;
-  min-height: 0;
+  min-width: 0;
 }
 
 .dgs-neon-center-column {
-  flex: 1;
-  min-width: 0;
   width: 100%;
-  padding: clamp(20px, 2.5vw, 36px);
-  margin: 0 auto;
-  max-width: 1720px;
+  max-width: 100%;
 }
 
-@media (min-width: 2560px) {
-  .dgs-neon-center-column {
-    max-width: 2400px;
-    padding: 48px;
-  }
-}
-
-/* ==========================================================================
-   Collapsible Left Sidebar (260px expanded / 72px collapsed)
-   ========================================================================== */
-.dgs-saas-sidebar {
-  width: 260px;
-  min-width: 260px;
-  height: 100vh;
+/* ========================================================================
+   TOPBAR COMPACT HEADER (56px)
+   ======================================================================== */
+.dgs-saas-header {
+  height: var(--dgs-header-height);
   position: sticky;
   top: 0;
-  background: var(--dgs-bg-sidebar);
-  backdrop-filter: var(--dgs-glass-blur);
-  border-right: 1px solid var(--dgs-border);
-  display: flex;
-  flex-direction: column;
-  transition: width 180ms cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 50;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.dgs-saas-sidebar.collapsed {
-  width: 72px;
-  min-width: 72px;
-}
-
-/* Sidebar Brand Header */
-.dgs-saas-sidebar-brand {
-  height: 66px;
+  z-index: 40;
+  background-color: var(--dgs-bg-header);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--dgs-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 18px;
+  padding: 0 24px;
+}
+
+.dgs-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dgs-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Breadcrumbs */
+.dgs-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--dgs-text-muted);
+}
+
+.dgs-breadcrumbs a {
+  color: var(--dgs-text-secondary);
+  text-decoration: none;
+  transition: color var(--dgs-transition-fast);
+}
+
+.dgs-breadcrumbs a:hover {
+  color: var(--dgs-text-primary);
+}
+
+.dgs-breadcrumbs .separator {
+  color: var(--dgs-text-dim);
+}
+
+.dgs-breadcrumbs .current {
+  color: var(--dgs-text-primary);
+  font-weight: 500;
+}
+
+/* Quick Search Trigger */
+.dgs-command-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--dgs-bg-surface-secondary);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-md);
+  padding: 6px 12px;
+  color: var(--dgs-text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--dgs-transition-fast);
+  min-width: 200px;
+}
+
+.dgs-command-trigger:hover {
+  background-color: var(--dgs-bg-surface-hover);
+  border-color: var(--dgs-border-hover);
+  color: var(--dgs-text-primary);
+}
+
+.dgs-kbd {
+  font-family: var(--dgs-font-mono);
+  font-size: 11px;
+  background-color: var(--dgs-bg-surface);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-xs);
+  padding: 1px 5px;
+  color: var(--dgs-text-dim);
+  margin-left: auto;
+}
+
+/* ========================================================================
+   SIDEBAR (248px EXPANDED / 64px COLLAPSED)
+   ======================================================================== */
+.dgs-saas-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--dgs-sidebar-width);
+  background-color: var(--dgs-bg-sidebar);
+  border-right: 1px solid var(--dgs-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  transition: width var(--dgs-transition-normal);
+  user-select: none;
+}
+
+.dgs-saas-layout.sidebar-collapsed .dgs-saas-sidebar {
+  width: var(--dgs-sidebar-collapsed-width);
+}
+
+.dgs-sidebar-header {
+  height: var(--dgs-header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
   border-bottom: 1px solid var(--dgs-border-subtle);
 }
 
-.dgs-saas-brand-link {
+.dgs-brand-lockup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
-  color: var(--dgs-text-main);
-  overflow: hidden;
+  min-width: 0;
 }
 
-.dgs-saas-logo-icon {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.dgs-saas-logo-icon img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-.dgs-saas-brand-text {
-  display: flex;
-  flex-direction: column;
-  white-space: nowrap;
-}
-
-.dgs-saas-brand-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--dgs-text-main);
-}
-
-.dgs-saas-brand-subtitle {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--dgs-primary);
+.dgs-brand-badge {
+  font-size: 10px;
   font-weight: 600;
-}
-
-.dgs-saas-sidebar-close {
-  background: none;
-  border: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--dgs-text-muted);
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 4px;
+  background-color: var(--dgs-bg-surface-secondary);
+  padding: 2px 6px;
   border-radius: var(--dgs-radius-xs);
-  display: none;
+  border: 1px solid var(--dgs-border-subtle);
 }
 
-/* Navigation List */
-.dgs-saas-nav {
+.dgs-sidebar-scroll {
   flex: 1;
-  padding: 16px 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 10px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
 
-.dgs-saas-nav-header {
-  font-size: 0.68rem;
-  font-weight: 700;
+.dgs-nav-group-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
   color: var(--dgs-text-dim);
-  padding: 4px 12px;
-  white-space: nowrap;
+  padding: 4px 10px;
+  margin-bottom: 4px;
 }
 
-.dgs-saas-nav-divider {
-  height: 1px;
-  background: var(--dgs-border-subtle);
-  margin: 6px 12px;
-}
-
-.dgs-saas-nav-list {
+.dgs-nav-list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.dgs-saas-nav-link {
+.dgs-nav-item {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
+  gap: 10px;
+  padding: 8px 10px;
   border-radius: var(--dgs-radius-sm);
-  color: var(--dgs-text-muted);
+  color: var(--dgs-text-secondary);
   text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 500;
-  position: relative;
-  transition: background 140ms ease, color 140ms ease;
-  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 450;
+  transition: all var(--dgs-transition-fast);
 }
 
-.dgs-saas-nav-link:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--dgs-text-main);
+.dgs-nav-item:hover {
+  background-color: var(--dgs-bg-surface-secondary);
+  color: var(--dgs-text-primary);
 }
 
-[data-theme="light"] .dgs-saas-nav-link:hover {
-  background: rgba(0, 0, 0, 0.04);
+/* Linear-style clean selected state with thin DGS gradient left bar */
+.dgs-nav-item.active {
+  background-color: var(--dgs-bg-surface-secondary);
+  color: var(--dgs-text-primary);
+  font-weight: 550;
 }
 
-.dgs-saas-nav-link.active {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--dgs-text-main);
-  font-weight: 600;
-}
-
-[data-theme="light"] .dgs-saas-nav-link.active {
-  background: rgba(0, 0, 0, 0.06);
-}
-
-/* Thin DGS Accent Indicator on Active Link */
-.dgs-saas-nav-link.active::before {
+.dgs-nav-item.active::before {
   content: "";
   position: absolute;
   left: 0;
   top: 6px;
   bottom: 6px;
   width: 3px;
-  border-radius: 0 3px 3px 0;
-  background: var(--dgs-gradient-brand);
+  border-radius: 0 2px 2px 0;
+  background: var(--dgs-gradient-primary);
 }
 
-.dgs-saas-nav-icon {
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.dgs-nav-icon {
   flex-shrink: 0;
-  color: inherit;
+  color: var(--dgs-text-muted);
+  transition: color var(--dgs-transition-fast);
 }
 
-.dgs-saas-nav-label {
+.dgs-nav-item:hover .dgs-nav-icon,
+.dgs-nav-item.active .dgs-nav-icon {
+  color: var(--dgs-text-primary);
+}
+
+.dgs-nav-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   flex: 1;
 }
 
-.dgs-saas-nav-badge {
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: var(--dgs-radius-pill);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.dgs-saas-nav-badge.primary { background: rgba(115, 103, 240, 0.2); color: #A59BFF; }
-.dgs-saas-nav-badge.success { background: var(--dgs-success-light); color: var(--dgs-success); }
-.dgs-saas-nav-badge.warning { background: var(--dgs-warning-light); color: var(--dgs-warning); }
-.dgs-saas-nav-badge.info { background: var(--dgs-info-light); color: var(--dgs-info); }
-
-/* Sidebar Footer & Collapse Toggle */
-.dgs-saas-sidebar-footer {
-  padding: 12px;
-  border-top: 1px solid var(--dgs-border-subtle);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.dgs-saas-collapse-btn {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 8px 12px;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: var(--dgs-radius-sm);
-  color: var(--dgs-text-muted);
-  cursor: pointer;
-  font-size: 0.82rem;
+.dgs-nav-badge {
+  font-size: 11px;
   font-weight: 500;
-  transition: all 140ms ease;
-}
-
-.dgs-saas-collapse-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--dgs-text-main);
-}
-
-/* ==========================================================================
-   Translucent Glass Header (Height: 64px)
-   ========================================================================== */
-.dgs-saas-header, .dgs-neon-header {
-  height: 64px;
-  position: sticky;
-  top: 0;
-  background: var(--dgs-bg-sidebar);
-  backdrop-filter: var(--dgs-glass-blur);
-  border-bottom: 1px solid var(--dgs-border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 clamp(16px, 2.5vw, 28px);
-  z-index: 40;
-}
-
-.dgs-saas-header-left, .dgs-neon-brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.dgs-saas-toggle-btn, .dgs-icon-btn {
-  background: none;
-  border: none;
-  color: var(--dgs-text-muted);
-  cursor: pointer;
-  padding: 8px;
-  border-radius: var(--dgs-radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 140ms ease;
-}
-
-.dgs-saas-toggle-btn:hover, .dgs-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--dgs-text-main);
-}
-
-.dgs-saas-breadcrumbs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
-}
-
-.dgs-saas-breadcrumb-item {
-  color: var(--dgs-text-muted);
-  text-decoration: none;
-  transition: color 140ms ease;
-}
-
-.dgs-saas-breadcrumb-item:hover {
-  color: var(--dgs-text-main);
-}
-
-.dgs-saas-breadcrumb-separator {
-  color: var(--dgs-text-dim);
-  font-size: 0.75rem;
-}
-
-.dgs-saas-breadcrumb-current {
-  color: var(--dgs-text-main);
-  font-weight: 600;
-}
-
-/* Spotlight Command Palette Trigger */
-.dgs-saas-header-center {
-  flex: 1;
-  max-width: 480px;
-  margin: 0 20px;
-}
-
-.dgs-saas-search-trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--dgs-border);
-  border-radius: var(--dgs-radius-sm);
-  padding: 7px 14px;
-  color: var(--dgs-text-muted);
-  cursor: pointer;
-  font-size: 0.84rem;
-  transition: all 140ms ease;
-}
-
-.dgs-saas-search-trigger:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-  color: var(--dgs-text-main);
-}
-
-.dgs-saas-search-kbd {
-  font-size: 0.72rem;
-  font-family: inherit;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 2px 7px;
-  border-radius: 4px;
-  border: 1px solid var(--dgs-border);
-  color: var(--dgs-text-muted);
-}
-
-/* Header Right Actions */
-.dgs-saas-header-right, .dgs-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.dgs-live-status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
+  padding: 1px 6px;
   border-radius: var(--dgs-radius-pill);
-  background: var(--dgs-success-light);
-  border: 1px solid rgba(52, 199, 89, 0.2);
-  color: var(--dgs-success);
-  font-size: 0.72rem;
-  font-weight: 600;
+  background-color: var(--dgs-bg-surface-active);
+  color: var(--dgs-text-muted);
 }
 
-.dgs-live-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--dgs-success);
-  box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);
+/* Collapsed Sidebar View */
+.dgs-saas-layout.sidebar-collapsed .dgs-brand-badge,
+.dgs-saas-layout.sidebar-collapsed .dgs-nav-group-title,
+.dgs-saas-layout.sidebar-collapsed .dgs-nav-label,
+.dgs-saas-layout.sidebar-collapsed .dgs-nav-badge {
+  display: none;
 }
 
-/* User Menu Dropdown */
-.dgs-saas-user-dropdown-container {
-  position: relative;
-}
-
-.dgs-saas-avatar-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 3px 6px;
-  border-radius: var(--dgs-radius-sm);
-  transition: background 140ms ease;
-}
-
-.dgs-saas-avatar-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.dgs-saas-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--dgs-primary-light);
-  color: var(--dgs-primary);
-  font-weight: 700;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
+.dgs-saas-layout.sidebar-collapsed .dgs-nav-item {
   justify-content: center;
-  border: 1px solid rgba(115, 103, 240, 0.25);
+  padding: 9px 0;
 }
 
-.dgs-saas-profile-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 220px;
-  background: var(--dgs-bg-surface);
-  backdrop-filter: var(--dgs-glass-blur);
-  border: 1px solid var(--dgs-border);
-  border-radius: var(--dgs-radius-md);
-  box-shadow: var(--dgs-shadow-popover);
-  padding: 6px;
-  z-index: 70;
-}
-
-.dgs-saas-dropdown-header {
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--dgs-border-subtle);
-  margin-bottom: 4px;
-}
-
-.dgs-saas-dropdown-header .name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--dgs-text-main);
-}
-
-.dgs-saas-dropdown-header .email {
-  font-size: 0.72rem;
-  color: var(--dgs-text-muted);
-}
-
-.dgs-saas-dropdown-item {
+/* ========================================================================
+   UNIFIED PAGE HEADER SYSTEM
+   ======================================================================== */
+.dgs-page-header {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 8px 12px;
-  border-radius: var(--dgs-radius-xs);
-  color: var(--dgs-text-muted);
-  text-decoration: none;
-  font-size: 0.84rem;
-  font-weight: 500;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  transition: all 140ms ease;
-}
-
-.dgs-saas-dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--dgs-text-main);
-}
-
-.dgs-saas-dropdown-divider {
-  height: 1px;
-  background: var(--dgs-border-subtle);
-  margin: 4px 0;
-}
-
-/* ==========================================================================
-   macOS Widget KPI Cards
-   ========================================================================== */
-.dgs-saas-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 16px;
   margin-bottom: 24px;
 }
 
-.dgs-saas-kpi-card, .dgs-media-metric-card {
-  background: var(--dgs-glass-bg);
-  backdrop-filter: var(--dgs-glass-blur);
-  border: var(--dgs-glass-border);
-  border-radius: var(--dgs-radius-md);
-  box-shadow: var(--dgs-shadow-card);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: border-color 160ms ease, transform 160ms ease;
-}
-
-.dgs-saas-kpi-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.dgs-saas-kpi-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.dgs-saas-kpi-title, .dgs-media-metric-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--dgs-text-muted);
-}
-
-.dgs-saas-kpi-value, .dgs-media-metric-val {
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: var(--dgs-text-main);
+.dgs-page-title-group h1,
+.dgs-page-title-group h2 {
+  font-size: var(--dgs-text-page-title);
+  font-weight: var(--dgs-weight-page-title);
+  color: var(--dgs-text-primary);
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  margin: 0;
+  line-height: 1.25;
 }
 
-.dgs-saas-kpi-bottom {
+.dgs-page-title-group p {
+  font-size: var(--dgs-text-page-sub);
+  color: var(--dgs-text-muted);
+  margin: 4px 0 0;
+}
+
+.dgs-page-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 4px;
-  font-size: 0.74rem;
+  gap: 10px;
 }
 
-.dgs-source-tag {
+/* ========================================================================
+   BUTTONS (ENTERPRISE RESTRAINT)
+   ======================================================================== */
+.dgs-saas-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--dgs-text-dim);
-  background: rgba(255, 255, 255, 0.04);
-  padding: 2px 7px;
-  border-radius: var(--dgs-radius-xs);
-  border: 1px solid var(--dgs-border-subtle);
-}
-
-.dgs-freshness-tag {
-  font-size: 0.7rem;
-  color: var(--dgs-text-dim);
-}
-
-/* ==========================================================================
-   Professional SaaS Tables
-   ========================================================================== */
-.dgs-saas-table-wrapper, .dgs-table-wrapper, .dgs-admin-table-wrap {
-  background: var(--dgs-glass-bg);
-  backdrop-filter: var(--dgs-glass-blur);
-  border: var(--dgs-glass-border);
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--dgs-font-sans);
+  font-size: 13px;
+  font-weight: 550;
   border-radius: var(--dgs-radius-md);
-  box-shadow: var(--dgs-shadow-card);
-  overflow: hidden;
+  padding: 0 14px;
+  height: 36px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--dgs-transition-fast);
+  white-space: nowrap;
+  text-decoration: none;
+  user-select: none;
+}
+
+/* Primary Button: Subtle DGS Gradient (Sole CTA Emphasis) */
+.dgs-saas-btn.primary {
+  background: var(--dgs-gradient-primary);
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.dgs-saas-btn.primary:hover {
+  opacity: 0.94;
+  box-shadow: 0 2px 6px rgba(0, 102, 255, 0.25);
+}
+
+.dgs-saas-btn.primary:active {
+  opacity: 0.88;
+  transform: translateY(1px);
+}
+
+/* Secondary Button: Neutral Surface */
+.dgs-saas-btn.secondary {
+  background-color: var(--dgs-bg-surface);
+  color: var(--dgs-text-primary);
+  border: 1px solid var(--dgs-border);
+  box-shadow: var(--dgs-shadow-sm);
+}
+
+.dgs-saas-btn.secondary:hover {
+  background-color: var(--dgs-bg-surface-hover);
+  border-color: var(--dgs-border-hover);
+}
+
+.dgs-saas-btn.secondary:active {
+  background-color: var(--dgs-bg-surface-active);
+}
+
+/* Danger Button */
+.dgs-saas-btn.danger {
+  background-color: var(--dgs-danger-bg);
+  color: var(--dgs-danger);
+  border: 1px solid var(--dgs-danger-border);
+}
+
+.dgs-saas-btn.danger:hover {
+  background-color: var(--dgs-danger);
+  color: #FFFFFF;
+  border-color: var(--dgs-danger);
+}
+
+/* Button Sizes */
+.dgs-saas-btn.sm {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.dgs-saas-btn.lg {
+  height: 40px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+
+.dgs-saas-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ========================================================================
+   KPI STAT CARDS (COMPACT STRIP)
+   ======================================================================== */
+.dgs-saas-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
   margin-bottom: 24px;
 }
 
-.dgs-saas-table-toolbar {
+.dgs-saas-kpi-card {
+  background-color: var(--dgs-bg-surface);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-md);
+  padding: 16px 18px;
+  box-shadow: var(--dgs-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color var(--dgs-transition-fast);
+}
+
+.dgs-saas-kpi-card:hover {
+  border-color: var(--dgs-border-hover);
+}
+
+.dgs-saas-kpi-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--dgs-text-muted);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--dgs-border-subtle);
+}
+
+.dgs-saas-kpi-value {
+  font-size: 26px;
+  font-weight: 650;
+  color: var(--dgs-text-primary);
+  letter-spacing: -0.02em;
+  margin: 4px 0 2px;
+  line-height: 1.15;
+}
+
+.dgs-saas-kpi-delta {
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dgs-saas-kpi-delta.positive {
+  color: var(--dgs-success);
+}
+
+.dgs-saas-kpi-delta.negative {
+  color: var(--dgs-danger);
+}
+
+.dgs-saas-kpi-delta.neutral {
+  color: var(--dgs-text-muted);
+}
+
+.dgs-saas-kpi-source {
+  font-size: 11px;
+  color: var(--dgs-text-dim);
+  margin-top: 4px;
+  border-top: 1px solid var(--dgs-border-subtle);
+  padding-top: 6px;
+}
+
+/* ========================================================================
+   TABLES (STRIPE / LINEAR STANDARD)
+   ======================================================================== */
+.dgs-table-container {
+  background-color: var(--dgs-bg-surface);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-md);
+  box-shadow: var(--dgs-shadow-sm);
+  overflow: hidden;
+}
+
+.dgs-table-toolbar {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--dgs-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.dgs-saas-table-search-input {
-  background: var(--dgs-bg-input);
+.dgs-table-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--dgs-bg-surface-secondary);
   border: 1px solid var(--dgs-border);
   border-radius: var(--dgs-radius-sm);
-  padding: 8px 14px;
-  color: var(--dgs-text-main);
-  font-size: 0.85rem;
+  padding: 6px 12px;
+  font-size: 13px;
+  min-width: 240px;
+}
+
+.dgs-table-search input {
+  background: none;
+  border: none;
   outline: none;
-  min-width: 260px;
-  transition: border-color 140ms ease;
+  color: var(--dgs-text-primary);
+  font-size: 13px;
+  width: 100%;
 }
 
-.dgs-saas-table-search-input:focus {
-  border-color: var(--dgs-border-focus);
+.dgs-table-search input::placeholder {
+  color: var(--dgs-text-dim);
 }
 
-.dgs-saas-table, .dgs-table, .dgs-admin-table {
+.dgs-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table.dgs-saas-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.88rem;
+  font-size: 13px;
 }
 
-.dgs-saas-table th, .dgs-table th, .dgs-admin-table th {
-  padding: 12px 18px;
-  font-weight: 600;
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+table.dgs-saas-table th {
+  background-color: var(--dgs-bg-surface-secondary);
   color: var(--dgs-text-muted);
+  font-weight: 550;
+  font-size: 12px;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--dgs-border);
-  background: rgba(24, 24, 30, 0.45);
-  position: sticky;
-  top: 0;
   white-space: nowrap;
 }
 
-.dgs-saas-table td, .dgs-table td, .dgs-admin-table td {
-  padding: 14px 18px;
+table.dgs-saas-table td {
+  padding: var(--dgs-table-cell-padding-y) var(--dgs-table-cell-padding-x);
   border-bottom: 1px solid var(--dgs-border-subtle);
-  color: var(--dgs-text-main);
+  color: var(--dgs-text-primary);
+  height: var(--dgs-table-row-height);
   vertical-align: middle;
 }
 
-.dgs-saas-table tr:hover td, .dgs-table tr:hover td {
-  background: rgba(255, 255, 255, 0.025);
+table.dgs-saas-table tr:hover td {
+  background-color: var(--dgs-bg-surface-hover);
 }
 
-/* Pagination Bar */
-.dgs-saas-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 18px;
-  border-top: 1px solid var(--dgs-border-subtle);
-  font-size: 0.82rem;
-  color: var(--dgs-text-muted);
+table.dgs-saas-table tr:last-child td {
+  border-bottom: none;
 }
 
-.dgs-saas-pagination-btns {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* ==========================================================================
-   Apple Settings-Style Forms
-   ========================================================================== */
-.dgs-form-group, .dgs-field-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 18px;
-}
-
-.dgs-form-label, .dgs-form-group label, .dgs-field-group label {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--dgs-text-muted);
-}
-
-.dgs-input, .dgs-select, .dgs-textarea, input[type="text"], input[type="email"], input[type="password"], select, textarea {
-  width: 100%;
-  height: 44px;
-  background: var(--dgs-bg-input);
-  border: 1px solid var(--dgs-border);
-  border-radius: var(--dgs-radius-sm);
-  padding: 0 14px;
-  color: var(--dgs-text-main);
-  font-family: inherit;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 140ms ease, box-shadow 140ms ease;
-}
-
-textarea {
-  height: auto;
-  padding: 10px 14px;
-  resize: vertical;
-}
-
-.dgs-input:focus, .dgs-select:focus, .dgs-textarea:focus, input:focus, select:focus, textarea:focus {
-  border-color: var(--dgs-border-focus);
-  box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.18);
-}
-
-/* ==========================================================================
-   Button System
-   ========================================================================== */
-.dgs-btn, .dgs-btn-primary, .dgs-btn-secondary, .dgs-btn-danger, .dgs-saas-btn {
+/* Compact status chips / badges */
+.dgs-saas-chip {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 42px;
-  padding: 0 18px;
-  border-radius: var(--dgs-radius-sm);
-  font-family: inherit;
-  font-size: 0.86rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  transition: all 140ms ease;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 550;
+  padding: 2px 8px;
+  border-radius: var(--dgs-radius-pill);
+  border: 1px solid transparent;
   white-space: nowrap;
 }
 
-.dgs-btn-primary {
-  background: var(--dgs-gradient-primary);
-  color: #FFFFFF;
-  box-shadow: 0 2px 10px rgba(255, 65, 108, 0.28);
+.dgs-saas-chip.success {
+  background-color: var(--dgs-success-bg);
+  color: var(--dgs-success);
+  border-color: var(--dgs-success-border);
 }
 
-.dgs-btn-primary:hover {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
+.dgs-saas-chip.warning {
+  background-color: var(--dgs-warning-bg);
+  color: var(--dgs-warning);
+  border-color: var(--dgs-warning-border);
 }
 
-.dgs-btn-secondary, .dgs-btn-ghost {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--dgs-border);
-  color: var(--dgs-text-main);
+.dgs-saas-chip.danger {
+  background-color: var(--dgs-danger-bg);
+  color: var(--dgs-danger);
+  border-color: var(--dgs-danger-border);
 }
 
-.dgs-btn-secondary:hover, .dgs-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.15);
+.dgs-saas-chip.info {
+  background-color: var(--dgs-info-bg);
+  color: var(--dgs-info);
+  border-color: var(--dgs-info-border);
 }
 
-.dgs-btn-danger {
-  background: var(--dgs-danger);
-  color: #FFFFFF;
+.dgs-saas-chip.primary {
+  background-color: var(--dgs-gradient-subtle);
+  color: var(--dgs-brand-blue);
+  border-color: rgba(0, 102, 255, 0.2);
 }
 
-.dgs-btn-danger:hover {
-  background: #E0352B;
+.dgs-saas-chip.neutral {
+  background-color: var(--dgs-bg-surface-secondary);
+  color: var(--dgs-text-secondary);
+  border-color: var(--dgs-border);
 }
 
-/* ==========================================================================
-   Modals & Sheets (Apple-Inspired Glass Sheets)
-   ========================================================================== */
-.dgs-modal-backdrop, .dgs-saas-search-overlay {
+/* ========================================================================
+   SLIDE-OUT CONTEXT DRAWER
+   ======================================================================== */
+.dgs-drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(12px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 90;
+  animation: dgsFadeIn 150ms ease;
+}
+
+.dgs-detail-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 520px;
+  max-width: 90vw;
+  background-color: var(--dgs-bg-surface);
+  border-left: 1px solid var(--dgs-border);
+  box-shadow: var(--dgs-shadow-drawer);
   z-index: 100;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  animation: dgsSlideIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.dgs-modal-dialog, .dgs-saas-search-modal {
-  background: var(--dgs-bg-surface);
-  backdrop-filter: var(--dgs-glass-blur);
-  border: 1px solid var(--dgs-border);
-  border-radius: var(--dgs-radius-lg);
-  box-shadow: var(--dgs-shadow-popover);
-  width: 100%;
-  max-width: 680px;
-  overflow: hidden;
-  animation: dgsModalIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes dgsModalIn {
-  from { opacity: 0; transform: scale(0.96) translateY(6px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.dgs-modal-head {
-  padding: 18px 24px;
-  border-bottom: 1px solid var(--dgs-border-subtle);
+.dgs-drawer-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--dgs-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.dgs-modal-head h3 {
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--dgs-text-main);
-}
-
-.dgs-modal-body {
-  padding: 24px;
-  max-height: calc(85vh - 120px);
+.dgs-drawer-body {
+  flex: 1;
   overflow-y: auto;
+  padding: 24px 20px;
 }
 
-.dgs-modal-foot {
-  padding: 16px 24px;
-  border-top: 1px solid var(--dgs-border-subtle);
+.dgs-drawer-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--dgs-border);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* ==========================================================================
-   Right-Side Slide-Out Drawer (On-Demand)
-   ========================================================================== */
-.dgs-drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  z-index: 90;
-}
-
-.dgs-drawer-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: min(520px, 100vw);
-  height: 100vh;
-  background: var(--dgs-bg-surface);
-  border-left: 1px solid var(--dgs-border);
-  box-shadow: var(--dgs-shadow-popover);
-  z-index: 95;
-  display: flex;
-  flex-direction: column;
-  animation: dgsDrawerIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes dgsDrawerIn {
+@keyframes dgsSlideIn {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
 }
 
-/* ==========================================================================
-   Side-by-Side 3-Pane Assessment Workstation (Desktop)
-   ========================================================================== */
-.dgs-assessment-3pane {
-  display: grid;
-  grid-template-columns: 320px 1fr 380px;
-  gap: 16px;
-  height: calc(100vh - 140px);
-  min-height: 600px;
+@keyframes dgsFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.dgs-pane {
-  background: var(--dgs-glass-bg);
-  backdrop-filter: var(--dgs-glass-blur);
-  border: var(--dgs-glass-border);
-  border-radius: var(--dgs-radius-md);
-  box-shadow: var(--dgs-shadow-card);
+/* ========================================================================
+   COMMAND PALETTE MODAL (CMD+K / CTRL+K)
+   ======================================================================== */
+.dgs-saas-search-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 14vh;
+}
+
+.dgs-saas-search-modal {
+  background-color: var(--dgs-bg-surface);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-lg);
+  box-shadow: var(--dgs-shadow-popover);
+  width: 620px;
+  max-width: 92vw;
+  overflow: hidden;
+  animation: dgsModalPop 140ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dgsModalPop {
+  from { opacity: 0; transform: scale(0.97) translateY(-8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ========================================================================
+   FORMS & INPUTS
+   ======================================================================== */
+.dgs-form-field {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  gap: 6px;
+  margin-bottom: 16px;
 }
 
-.dgs-pane-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--dgs-border-subtle);
+.dgs-form-label {
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--dgs-text-primary);
+}
+
+.dgs-form-helper {
+  font-size: 12px;
+  color: var(--dgs-text-muted);
+}
+
+input.dgs-input,
+select.dgs-select,
+textarea.dgs-textarea {
+  background-color: var(--dgs-bg-input);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-sm);
+  color: var(--dgs-text-primary);
+  font-family: var(--dgs-font-sans);
+  font-size: 13px;
+  padding: 0 12px;
+  height: var(--dgs-input-height);
+  width: 100%;
+  transition: all var(--dgs-transition-fast);
+}
+
+textarea.dgs-textarea {
+  height: auto;
+  padding: 10px 12px;
+  min-height: 80px;
+  resize: vertical;
+}
+
+input.dgs-input:focus,
+select.dgs-select:focus,
+textarea.dgs-textarea:focus {
+  outline: none;
+  border-color: var(--dgs-border-focus);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
+}
+
+/* Form Two-Column Grid */
+.dgs-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .dgs-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================================================
+   EMPTY STATES
+   ======================================================================== */
+.dgs-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.dgs-empty-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--dgs-radius-pill);
+  background-color: var(--dgs-bg-surface-secondary);
+  border: 1px solid var(--dgs-border);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  color: var(--dgs-text-muted);
+  margin-bottom: 12px;
+}
+
+.dgs-empty-title {
+  font-size: 15px;
   font-weight: 600;
-  font-size: 0.88rem;
-  color: var(--dgs-text-main);
-  background: rgba(24, 24, 30, 0.45);
+  color: var(--dgs-text-primary);
+  margin: 0 0 4px;
 }
 
-.dgs-pane-content {
-  flex: 1;
-  padding: 18px;
-  overflow-y: auto;
+.dgs-empty-desc {
+  font-size: 13px;
+  color: var(--dgs-text-muted);
+  max-width: 360px;
+  margin: 0 0 16px;
 }
 
-/* Stack 3 panes on tablets and mobiles */
-@media (max-width: 1200px) {
-  .dgs-assessment-3pane {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-  .dgs-pane {
-    min-height: 400px;
-    margin-bottom: 16px;
-  }
-}
-
-/* ==========================================================================
-   Responsive & Accessibility Rules
-   ========================================================================== */
-@media (max-width: 900px) {
+/* ========================================================================
+   RESPONSIVE BREAKPOINTS
+   ======================================================================== */
+@media (max-width: 768px) {
   .dgs-saas-sidebar {
-    position: fixed;
-    left: -280px;
-    width: 270px;
+    transform: translateX(-100%);
+    width: 260px !important;
   }
-  .dgs-saas-sidebar.mobile-open {
-    left: 0;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
-  }
-  .dgs-saas-sidebar-close {
-    display: block;
-  }
-  .dgs-saas-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    z-index: 45;
-  }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .dgs-saas-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .dgs-saas-wrapper {
+    margin-left: 0 !important;
+  }
+
+  .dgs-command-trigger {
+    min-width: 140px;
+  }
+
+  .dgs-neon-workspace,
+  .dgs-saas-content {
+    padding: 16px;
   }
 }

@@ -42,6 +42,13 @@ export function verifyAdminSessionToken(token: string) {
   }
 }
 
+export async function hasLegacyAdminSession() {
+  if (!isAdminAuthConfigured()) return false;
+  const store = await cookies();
+  const token = store.get(COOKIE_NAME)?.value || "";
+  return verifyAdminSessionToken(token);
+}
+
 export async function hasAdminSession() {
   try {
     const { getCurrentCmsUser } = await import("./auth-db");
@@ -51,10 +58,7 @@ export async function hasAdminSession() {
     }
   } catch {}
 
-  if (!isAdminAuthConfigured()) return false;
-  const store = await cookies();
-  const token = store.get(COOKIE_NAME)?.value || "";
-  return verifyAdminSessionToken(token);
+  return hasLegacyAdminSession();
 }
 
 export const adminSessionCookie = {

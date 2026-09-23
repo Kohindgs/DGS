@@ -110,7 +110,7 @@ export default function AdminSearchModal({ isOpen, onClose }: Props) {
   return (
     <div className="dgs-saas-search-overlay" onClick={onClose} role="dialog" aria-modal="true">
       <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="dgs-saas-search-input-wrapper" style={{ display: "flex", alignItems: "center", padding: "14px 18px", borderBottom: "1px solid var(--dgs-border-subtle)", gap: "12px" }}>
+        <div className="dgs-saas-search-input-wrapper" style={{ display: "flex", alignItems: "center", padding: "14px 18px", borderBottom: "1px solid var(--dgs-border)", gap: "12px", backgroundColor: "var(--dgs-bg-surface)" }}>
           <Search size={18} strokeWidth={1.8} style={{ color: "var(--dgs-text-muted)" }} />
           <input
             ref={inputRef}
@@ -119,16 +119,16 @@ export default function AdminSearchModal({ isOpen, onClose }: Props) {
             placeholder="Search DGS CMS modules, tools, or shortcuts..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            style={{ flex: 1, background: "none", border: "none", color: "var(--dgs-text-main)", fontSize: "0.95rem", outline: "none" }}
+            style={{ flex: 1, background: "none", border: "none", color: "var(--dgs-text-primary)", fontSize: "0.95rem", outline: "none" }}
           />
-          <kbd className="dgs-saas-search-kbd" style={{ fontSize: "0.72rem", background: "rgba(255,255,255,0.06)", padding: "2px 6px", borderRadius: "4px", border: "1px solid var(--dgs-border)" }}>
+          <kbd className="dgs-kbd" style={{ fontSize: "11px" }}>
             ESC
           </kbd>
         </div>
 
-        <div className="dgs-saas-search-results" style={{ maxHeight: "380px", overflowY: "auto", padding: "8px" }}>
+        <div className="dgs-saas-search-results" style={{ maxHeight: "380px", overflowY: "auto", padding: "8px", backgroundColor: "var(--dgs-bg-surface)" }}>
           {filtered.length === 0 ? (
-            <div className="dgs-saas-search-empty" style={{ padding: "24px", textAlign: "center", color: "var(--dgs-text-muted)", fontSize: "0.88rem" }}>
+            <div className="dgs-saas-search-empty" style={{ padding: "32px", textAlign: "center", color: "var(--dgs-text-muted)", fontSize: "0.88rem" }}>
               No matches found for &quot;{query}&quot;
             </div>
           ) : (
@@ -146,20 +146,20 @@ export default function AdminSearchModal({ isOpen, onClose }: Props) {
                     alignItems: "center",
                     justifyContent: "space-between",
                     padding: "10px 14px",
-                    borderRadius: "8px",
+                    borderRadius: "6px",
                     textDecoration: "none",
-                    background: isSelected ? "rgba(255,255,255,0.06)" : "transparent",
-                    color: "var(--dgs-text-main)",
+                    background: isSelected ? "var(--dgs-bg-surface-secondary)" : "transparent",
+                    color: "var(--dgs-text-primary)",
                     transition: "background 120ms ease",
                   }}
                   onMouseEnter={() => setSelectedIndex(idx)}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <span style={{ color: isSelected ? "var(--dgs-primary)" : "var(--dgs-text-muted)", display: "flex" }}>
+                    <span style={{ color: isSelected ? "var(--dgs-brand-blue)" : "var(--dgs-text-muted)", display: "flex" }}>
                       <IconComp size={17} strokeWidth={1.8} />
                     </span>
                     <div>
-                      <div style={{ fontSize: "0.88rem", fontWeight: 500 }}>{item.title}</div>
+                      <div style={{ fontSize: "0.88rem", fontWeight: isSelected ? 600 : 500, color: "var(--dgs-text-primary)" }}>{item.title}</div>
                       <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-dim)" }}>{item.category}</div>
                     </div>
                   </div>

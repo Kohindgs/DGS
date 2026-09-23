@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
+import PageHeader from "@/components/admin/PageHeader";
+import { Plus } from "lucide-react";
 import type { CmsUser, CmsRole } from "@/lib/cms/auth-db";
 
 type Props = {
@@ -136,7 +138,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
             {u.display_name?.charAt(0).toUpperCase() || "U"}
           </div>
           <div>
-            <div style={{ fontWeight: 600, color: "#fff" }}>{u.display_name}</div>
+            <div style={{ fontWeight: 600, color: "var(--dgs-text-primary)" }}>{u.display_name}</div>
             <div style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>{u.email}</div>
           </div>
         </div>
@@ -161,7 +163,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
                 style={{
                   background: "var(--dgs-bg-input)",
                   border: "1px solid var(--dgs-border)",
-                  color: "#fff",
+                  color: "var(--dgs-text-primary)",
                   borderRadius: "4px",
                   fontSize: "0.75rem",
                   padding: "2px 6px",
@@ -199,22 +201,21 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
   ];
 
   return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-        <div>
-          <h2 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff", margin: 0 }}>Users &amp; Access Governance</h2>
-          <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-            Database-backed users, RBAC roles (Superadmin, Admin, Manager), and security sessions.
-          </p>
-        </div>
-        <button
-          type="button"
-          className="dgs-saas-btn primary"
-          onClick={() => setShowCreateModal(true)}
-        >
-          + Add User
-        </button>
-      </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <PageHeader
+        title="Users & Access Governance"
+        subtitle="Database-backed users, RBAC roles (Superadmin, Admin, Manager), and security sessions."
+        actions={
+          <button
+            type="button"
+            className="dgs-saas-btn primary sm"
+            onClick={() => setShowCreateModal(true)}
+          >
+            <Plus size={14} />
+            <span>Add User</span>
+          </button>
+        }
+      />
 
       <SaaSTable
         columns={columns}
@@ -256,7 +257,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
         <div className="dgs-saas-search-overlay" onClick={() => setShowCreateModal(false)}>
           <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "480px" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
-              <h3 style={{ margin: 0, color: "#fff" }}>Add New CMS User</h3>
+              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)" }}>Add New CMS User</h3>
             </div>
             <form onSubmit={handleCreateUser} style={{ padding: "24px", display: "grid", gap: "16px" }}>
               {errorMsg && (
@@ -274,7 +275,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "10px 12px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                   }}
                 />
               </label>
@@ -290,7 +291,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "10px 12px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                   }}
                 />
               </label>
@@ -304,7 +305,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "10px 12px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                   }}
                 >
                   <option value="manager">Manager (Read &amp; operations)</option>
@@ -326,7 +327,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "10px 12px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                   }}
                 />
               </label>
@@ -356,7 +357,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
         <div className="dgs-saas-search-overlay" onClick={() => setShowPasswordModal(null)}>
           <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "440px" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
-              <h3 style={{ margin: 0, color: "#fff" }}>Reset Password for {showPasswordModal.email}</h3>
+              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)" }}>Reset Password for {showPasswordModal.email}</h3>
             </div>
             <form onSubmit={handleResetPassword} style={{ padding: "24px", display: "grid", gap: "16px" }}>
               <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
@@ -372,7 +373,7 @@ export default function UsersClientView({ initialUsers, currentRole }: Props) {
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "10px 12px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                   }}
                 />
               </label>

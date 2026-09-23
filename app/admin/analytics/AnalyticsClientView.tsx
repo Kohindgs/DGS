@@ -42,7 +42,7 @@ export default function AnalyticsClientView({ metrics }: Props) {
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <h2 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#fff", margin: 0 }}>
+          <h2 style={{ fontSize: "1.35rem", fontWeight: 700, color: "var(--dgs-text-primary)", margin: 0 }}>
             Google Analytics 4 Overview
           </h2>
           <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
@@ -104,7 +104,7 @@ export default function AnalyticsClientView({ metrics }: Props) {
 
       {/* Landing Pages Table */}
       <div>
-        <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#fff", marginBottom: "12px" }}>
+        <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--dgs-text-primary)", marginBottom: "12px" }}>
           Top Landing Pages
         </h3>
         <SaaSTable<PageMetric>

@@ -335,12 +335,32 @@ export async function getCurrentCmsUser(): Promise<CmsUser | null> {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get(SESSION_COOKIE)?.value;
-    if (!token) return null;
+    if (!token) {
+      if (!isCmsDatabaseConfigured()) {
+        const { hasLegacyAdminSession } = await import("./auth");
+        if (await hasLegacyAdminSession()) {
+          return {
+            id: "env-superadmin",
+            email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
+            display_name: "DGS Superadmin",
+            role: "superadmin",
+            avatar_url: null,
+            is_active: 1,
+            failed_attempts: 0,
+            locked_until: null,
+            last_login_at: null,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          };
+        }
+      }
+      return null;
+    }
 
     if (!isCmsDatabaseConfigured()) {
       // Fallback for single-admin mode if DB is momentarily unreachable
-      const { hasAdminSession } = await import("./auth");
-      if (await hasAdminSession()) {
+      const { hasLegacyAdminSession } = await import("./auth");
+      if (await hasLegacyAdminSession()) {
         return {
           id: "env-superadmin",
           email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",

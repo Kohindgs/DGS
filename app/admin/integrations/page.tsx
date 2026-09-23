@@ -4,6 +4,8 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
 import { getIntegrationStatuses } from "@/lib/integrations/google";
 
+import PageHeader from "@/components/admin/PageHeader";
+
 export const dynamic = "force-dynamic";
 
 export default async function AdminIntegrationsPage() {
@@ -18,17 +20,13 @@ export default async function AdminIntegrationsPage() {
   const integrations = await getIntegrationStatuses();
 
   return (
-    <div>
-      <div style={{ marginBottom: "24px" }}>
-        <h2 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#fff", margin: 0 }}>
-          Google &amp; Service Integrations Hub
-        </h2>
-        <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-          Encrypted OAuth token management, Google Search Console, Google Analytics 4, Gemini AI, and SMTP connectivity.
-        </p>
-      </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <PageHeader
+        title="Google & Service Integrations Hub"
+        subtitle="Encrypted OAuth token management, Google Search Console, Google Analytics 4, Gemini AI, and SMTP connectivity."
+      />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "20px" }}>
         {integrations.map((item) => {
           const isConnected = item.status === "connected";
           const isReady = item.status === "ready_to_connect";
@@ -36,17 +34,17 @@ export default async function AdminIntegrationsPage() {
           const badgeLabel = isConnected ? "CONNECTED" : isReady ? "READY TO CONNECT" : "DISCONNECTED";
 
           return (
-            <div key={item.service} className="dgs-saas-card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-              <div className="dgs-saas-card-header">
-                <h3 className="dgs-saas-card-title">{item.name}</h3>
-                <span className={`dgs-saas-chip ${badgeClass}`}>{badgeLabel}</span>
+            <div key={item.service} className="dgs-saas-card" style={{ display: "flex", flexDirection: "column", height: "100%", padding: "20px", backgroundColor: "var(--dgs-bg-surface)", border: "1px solid var(--dgs-border)", borderRadius: "var(--dgs-radius-md)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                <h3 style={{ margin: 0, fontSize: "15px", fontWeight: 650, color: "var(--dgs-text-primary)" }}>{item.name}</h3>
+                <span className={`dgs-saas-chip sm ${badgeClass}`}>{badgeLabel}</span>
               </div>
-              <div className="dgs-saas-card-body" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <div>
-                  <div style={{ fontSize: "0.82rem", color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>
+                  <div style={{ fontSize: "11px", color: "var(--dgs-text-dim)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.04em" }}>
                     Account / Property
                   </div>
-                  <div style={{ fontSize: "0.95rem", color: "#fff", fontWeight: 600, marginTop: "4px", wordBreak: "break-all" }}>
+                  <div style={{ fontSize: "14px", color: "var(--dgs-text-primary)", fontWeight: 600, marginTop: "4px", wordBreak: "break-all" }}>
                     {item.propertyOrAccount || "Not configured"}
                   </div>
 

@@ -10,14 +10,24 @@ export type Column<T> = {
   width?: string;
 };
 
+export type TableTab = {
+  id: string;
+  label: string;
+  count?: number;
+};
+
 export type SaaSTableProps<T> = {
   columns: Column<T>[];
   data: T[];
   keyExtractor: (item: T) => string;
   searchPlaceholder?: string;
   searchFilter?: (item: T, query: string) => boolean;
+  tabs?: TableTab[];
+  activeTab?: string;
+  onTabChange?: (tabId: string) => void;
   actions?: (item: T) => React.ReactNode;
   bulkActions?: (selectedIds: string[]) => React.ReactNode;
+  toolbarExtra?: React.ReactNode;
   initialPageSize?: number;
   emptyMessage?: string;
 };
@@ -28,8 +38,12 @@ export default function SaaSTable<T>({
   keyExtractor,
   searchPlaceholder = "Search records...",
   searchFilter,
+  tabs,
+  activeTab,
+  onTabChange,
   actions,
   bulkActions,
+  toolbarExtra,
   initialPageSize = 10,
   emptyMessage = "No records found.",
 }: SaaSTableProps<T>) {
@@ -106,17 +120,66 @@ export default function SaaSTable<T>({
   };
 
   return (
-    <div className="dgs-saas-card">
-      {/* Table Controls Header */}
-      <div className="dgs-saas-table-toolbar">
-        <div className="dgs-saas-table-search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <div className="dgs-table-container">
+      {/* Optional Status Tabs Strip */}
+      {tabs && tabs.length > 0 && (
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "6px 14px 0", borderBottom: "1px solid var(--dgs-border)", backgroundColor: "var(--dgs-bg-surface-secondary)", overflowX: "auto" }}>
+          {tabs.map((tab) => {
+            const isActive = tab.id === activeTab;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => onTabChange?.(tab.id)}
+                style={{
+                  padding: "8px 12px",
+                  fontSize: "13px",
+                  fontWeight: isActive ? 600 : 450,
+                  color: isActive ? "var(--dgs-text-primary)" : "var(--dgs-text-muted)",
+                  background: isActive ? "var(--dgs-bg-surface)" : "none",
+                  border: "1px solid",
+                  borderColor: isActive ? "var(--dgs-border)" : "transparent",
+                  borderBottomColor: isActive ? "var(--dgs-bg-surface)" : "transparent",
+                  borderRadius: "6px 6px 0 0",
+                  marginBottom: "-1px",
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "all var(--dgs-transition-fast)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span>{tab.label}</span>
+                {typeof tab.count === "number" && (
+                  <span
+                    style={{
+                      fontSize: "11px",
+                      padding: "1px 6px",
+                      borderRadius: "9999px",
+                      backgroundColor: isActive ? "var(--dgs-bg-surface-secondary)" : "rgba(0,0,0,0.04)",
+                      color: isActive ? "var(--dgs-brand-blue)" : "var(--dgs-text-dim)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {tab.count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Table Controls Toolbar */}
+      <div className="dgs-table-toolbar">
+        <div className="dgs-table-search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
           <input
             type="text"
-            className="dgs-saas-table-search-input"
             placeholder={searchPlaceholder}
             value={search}
             onChange={(e) => {
@@ -126,16 +189,20 @@ export default function SaaSTable<T>({
           />
         </div>
 
-        {bulkActions && selected.size > 0 && (
-          <div className="dgs-saas-bulk-actions">
-            <span>{selected.size} selected</span>
-            {bulkActions(Array.from(selected))}
-          </div>
-        )}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          {toolbarExtra}
+
+          {bulkActions && selected.size > 0 && (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "var(--dgs-text-muted)" }}>
+              <span>{selected.size} selected</span>
+              {bulkActions(Array.from(selected))}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Responsive Table Wrapper */}
-      <div className="dgs-saas-table-responsive">
+      {/* Responsive Table View */}
+      <div className="dgs-table-responsive">
         <table className="dgs-saas-table">
           <thead>
             <tr>
@@ -151,14 +218,16 @@ export default function SaaSTable<T>({
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  style={col.width ? { width: col.width } : undefined}
                   onClick={() => col.sortable && handleSort(col.key)}
-                  className={col.sortable ? "sortable" : undefined}
+                  style={{
+                    width: col.width,
+                    cursor: col.sortable ? "pointer" : "default",
+                  }}
                 >
-                  <div className="dgs-saas-th-content">
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                     <span>{col.header}</span>
                     {col.sortable && (
-                      <span className="dgs-saas-sort-indicator">
+                      <span style={{ fontSize: "10px", color: "var(--dgs-text-dim)" }}>
                         {sortKey === col.key ? (sortOrder === "asc" ? "▲" : "▼") : "↕"}
                       </span>
                     )}
@@ -171,7 +240,7 @@ export default function SaaSTable<T>({
           <tbody>
             {paginatedData.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + (bulkActions ? 1 : 0) + (actions ? 1 : 0)} className="dgs-saas-table-empty">
+                <td colSpan={columns.length + (bulkActions ? 1 : 0) + (actions ? 1 : 0)} style={{ textAlign: "center", padding: "36px 16px", color: "var(--dgs-text-muted)" }}>
                   {emptyMessage}
                 </td>
               </tr>
@@ -180,7 +249,7 @@ export default function SaaSTable<T>({
                 const id = keyExtractor(item);
                 const isChecked = selected.has(id);
                 return (
-                  <tr key={id} className={isChecked ? "selected" : undefined}>
+                  <tr key={id} style={{ backgroundColor: isChecked ? "var(--dgs-bg-surface-active)" : undefined }}>
                     {bulkActions && (
                       <td>
                         <input
@@ -205,22 +274,23 @@ export default function SaaSTable<T>({
       </div>
 
       {/* Pagination Footer */}
-      <div className="dgs-saas-table-pagination">
-        <div className="dgs-saas-pagination-info">
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderTop: "1px solid var(--dgs-border)", fontSize: "12px", color: "var(--dgs-text-muted)", flexWrap: "wrap", gap: "10px" }}>
+        <div>
           Showing {sortedData.length === 0 ? 0 : (page - 1) * pageSize + 1} to{" "}
           {Math.min(page * pageSize, sortedData.length)} of {sortedData.length} entries
         </div>
 
-        <div className="dgs-saas-pagination-controls">
-          <label className="dgs-saas-pagesize-label">
-            Rows:
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <span>Rows:</span>
             <select
               value={pageSize}
               onChange={(e) => {
                 setPageSize(Number(e.target.value));
                 setPage(1);
               }}
-              className="dgs-saas-pagesize-select"
+              className="dgs-select"
+              style={{ height: "28px", padding: "0 8px", fontSize: "12px" }}
             >
               <option value={10}>10</option>
               <option value={25}>25</option>
@@ -231,18 +301,18 @@ export default function SaaSTable<T>({
 
           <button
             type="button"
-            className="dgs-saas-pagination-btn"
+            className="dgs-saas-btn secondary sm"
             disabled={page <= 1}
             onClick={() => setPage(page - 1)}
           >
             Previous
           </button>
-          <span className="dgs-saas-pagination-page">
+          <span style={{ fontWeight: 550, color: "var(--dgs-text-primary)" }}>
             {page} / {totalPages}
           </span>
           <button
             type="button"
-            className="dgs-saas-pagination-btn"
+            className="dgs-saas-btn secondary sm"
             disabled={page >= totalPages}
             onClick={() => setPage(page + 1)}
           >

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import PageHeader from "@/components/admin/PageHeader";
 import MediaPicker, { type SelectedMedia } from "@/components/admin/MediaPicker";
 import type {
   CmsBlogSummary,
@@ -367,6 +368,30 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
         onSelect={handleMediaSelected}
         mediaType="image"
         title={mediaPickerTarget === "featured" ? "Choose Featured Image" : "Insert Inline Image"}
+      />
+
+      {/* Page Header */}
+      <PageHeader
+        title="Blogs & Editorial Content"
+        subtitle="Manage search-authoritative articles, native schema, SEO metadata, and publication pipelines."
+        actions={
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <button
+              type="button"
+              className={`dgs-saas-btn sm ${activeTab === "import" ? "primary" : "secondary"}`}
+              onClick={() => setActiveTab("import")}
+            >
+              Bulk Import (.docx)
+            </button>
+            <button
+              type="button"
+              className={`dgs-saas-btn sm ${activeTab === "new" ? "primary" : "secondary"}`}
+              onClick={() => setActiveTab("new")}
+            >
+              + New Blog Post
+            </button>
+          </div>
+        }
       />
 
       {/* Notice Banner */}

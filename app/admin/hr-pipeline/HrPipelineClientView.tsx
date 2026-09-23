@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
+import PageHeader from "@/components/admin/PageHeader";
 import {
   Users,
   LayoutGrid,
@@ -170,7 +171,7 @@ export default function HrPipelineClientView({
       sortable: true,
       render: (c) => (
         <div>
-          <strong style={{ color: "#fff", fontSize: "0.92rem" }}>{c.candidate_name}</strong>
+          <strong style={{ color: "var(--dgs-text-primary)", fontSize: "0.92rem" }}>{c.candidate_name}</strong>
           <div style={{ fontSize: "0.76rem", color: "var(--dgs-text-muted)" }}>{c.candidate_email}</div>
         </div>
       ),
@@ -190,7 +191,7 @@ export default function HrPipelineClientView({
             style={{
               background: "var(--dgs-bg-input)",
               border: "1px solid var(--dgs-border)",
-              color: "#fff",
+              color: "var(--dgs-text-primary)",
               borderRadius: "6px",
               padding: "4px 8px",
               fontSize: "0.8rem",
@@ -225,38 +226,31 @@ export default function HrPipelineClientView({
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-      {/* Top Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
-        <div>
-          <h2 style={{ fontSize: "1.45rem", fontWeight: 700, color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
-            <Users size={22} style={{ color: "var(--dgs-purple-light)" }} />
-            HR Recruitment Pipeline &amp; Documents
-          </h2>
-          <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-            13-Stage candidate lifecycle tracking from first call to appointment issuance and onboarding.
-          </p>
-        </div>
-
-        {/* View Switcher */}
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          <button
-            type="button"
-            className={`dgs-saas-btn sm ${viewMode === "kanban" ? "primary" : "secondary"}`}
-            onClick={() => setViewMode("kanban")}
-            style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
-          >
-            <LayoutGrid size={14} /> Kanban Board
-          </button>
-          <button
-            type="button"
-            className={`dgs-saas-btn sm ${viewMode === "table" ? "primary" : "secondary"}`}
-            onClick={() => setViewMode("table")}
-            style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
-          >
-            <List size={14} /> Table View
-          </button>
-        </div>
-      </div>
+      {/* Unified Enterprise Page Header */}
+      <PageHeader
+        title="HR Recruitment Pipeline & Documents"
+        subtitle="13-Stage candidate lifecycle tracking from first call to appointment issuance and onboarding."
+        actions={
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <button
+              type="button"
+              className={`dgs-saas-btn sm ${viewMode === "kanban" ? "primary" : "secondary"}`}
+              onClick={() => setViewMode("kanban")}
+              style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
+            >
+              <LayoutGrid size={14} /> Kanban Board
+            </button>
+            <button
+              type="button"
+              className={`dgs-saas-btn sm ${viewMode === "table" ? "primary" : "secondary"}`}
+              onClick={() => setViewMode("table")}
+              style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
+            >
+              <List size={14} /> Table View
+            </button>
+          </div>
+        }
+      />
 
       {/* KPI Overview Strip */}
       <div className="dgs-saas-kpi-grid">
@@ -341,7 +335,7 @@ export default function HrPipelineClientView({
                     alignItems: "center",
                   }}
                 >
-                  <strong style={{ fontSize: "0.85rem", color: "#fff" }}>{col.label}</strong>
+                  <strong style={{ fontSize: "0.85rem", color: "var(--dgs-text-primary)" }}>{col.label}</strong>
                   <span className={`dgs-saas-chip ${col.variant}`} style={{ fontSize: "0.68rem" }}>
                     {inStage.length}
                   </span>
@@ -377,7 +371,7 @@ export default function HrPipelineClientView({
                           transition: "border-color 0.15s ease",
                         }}
                       >
-                        <div style={{ fontWeight: 600, color: "#fff", fontSize: "0.88rem" }}>
+                        <div style={{ fontWeight: 600, color: "var(--dgs-text-primary)", fontSize: "0.88rem" }}>
                           {cand.candidate_name}
                         </div>
                         <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
@@ -432,7 +426,7 @@ export default function HrPipelineClientView({
             {/* Modal Header */}
             <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
-                <h3 style={{ margin: 0, color: "#fff", fontSize: "1.15rem" }}>
+                <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", fontSize: "1.15rem" }}>
                   {selectedCandidate.candidate_name}
                 </h3>
                 <div style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
@@ -450,11 +444,11 @@ export default function HrPipelineClientView({
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", background: "var(--dgs-bg-card)", padding: "14px", borderRadius: "8px", border: "1px solid var(--dgs-border)" }}>
                 <div>
                   <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>Email Address</div>
-                  <div style={{ color: "#fff", fontSize: "0.85rem", marginTop: "2px" }}>{selectedCandidate.candidate_email}</div>
+                  <div style={{ color: "var(--dgs-text-primary)", fontSize: "0.85rem", marginTop: "2px" }}>{selectedCandidate.candidate_email}</div>
                 </div>
                 <div>
                   <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>Phone Number</div>
-                  <div style={{ color: "#fff", fontSize: "0.85rem", marginTop: "2px" }}>{selectedCandidate.candidate_phone || "Not provided"}</div>
+                  <div style={{ color: "var(--dgs-text-primary)", fontSize: "0.85rem", marginTop: "2px" }}>{selectedCandidate.candidate_phone || "Not provided"}</div>
                 </div>
               </div>
 
@@ -469,7 +463,7 @@ export default function HrPipelineClientView({
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "10px 12px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                   }}
                 >
                   {PIPELINE_STAGES.map((s) => (
@@ -493,7 +487,7 @@ export default function HrPipelineClientView({
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "10px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                     fontSize: "0.85rem",
                     resize: "vertical",
                   }}
@@ -512,11 +506,11 @@ export default function HrPipelineClientView({
 
               {/* Document Tracking (REQ-31) */}
               <div style={{ borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>
-                <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#fff", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+                <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--dgs-text-primary)", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
                   <FileText size={15} /> Private HR Documents
                 </div>
                 {candidateDocs.length === 0 ? (
-                  <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-dim)", background: "rgba(255,255,255,0.02)", padding: "10px", borderRadius: "6px" }}>
+                  <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-dim)", background: "var(--dgs-bg-surface-secondary)", padding: "10px", borderRadius: "6px" }}>
                     No private HR documents attached yet. Documents are securely saved in private storage.
                   </div>
                 ) : (
@@ -535,7 +529,7 @@ export default function HrPipelineClientView({
                         }}
                       >
                         <div>
-                          <div style={{ fontSize: "0.82rem", color: "#fff", fontWeight: 500 }}>{doc.filename}</div>
+                          <div style={{ fontSize: "0.82rem", color: "var(--dgs-text-primary)", fontWeight: 500 }}>{doc.filename}</div>
                           <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-dim)" }}>
                             Type: {doc.document_type} · Size: {Math.round(doc.file_size / 1024)} KB
                           </div>
@@ -611,7 +605,7 @@ export default function HrPipelineClientView({
                     border: "1px solid var(--dgs-border)",
                     borderRadius: "6px",
                     padding: "8px 12px",
-                    color: "#fff",
+                    color: "var(--dgs-text-primary)",
                   }}
                 />
               </label>
