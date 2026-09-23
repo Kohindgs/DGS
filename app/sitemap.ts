@@ -8,6 +8,21 @@ import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+function formatW3CDate(rawDate?: string | Date | null): string | undefined {
+  if (!rawDate) return undefined;
+  if (rawDate instanceof Date) {
+    return isNaN(rawDate.getTime()) ? undefined : rawDate.toISOString().slice(0, 10);
+  }
+  const str = String(rawDate).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+  const match = str.match(/^(\d{4}-\d{2}-\d{2})/);
+  if (match) {
+    const d = new Date(match[1]);
+    if (!isNaN(d.getTime())) return match[1];
+  }
+  return undefined;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = await getIndexableRoutes();
 
@@ -21,17 +36,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       const entry: MetadataRoute.Sitemap[number] = { url };
 
-      if (route.modified) {
-        entry.lastModified = route.modified;
+      const formatted = formatW3CDate(route.modified);
+      if (formatted) {
+        entry.lastModified = formatted;
       }
 
       return entry;
     });
 
-  const careerJobs: MetadataRoute.Sitemap = getActiveCareerJobs().map((job) => ({
-    url: `${siteConfig.url}${careerJobPath(job)}`,
-    lastModified: job.datePosted,
-  }));
+  const careerJobs: MetadataRoute.Sitemap = getActiveCareerJobs().map((job) => {
+    const entry: MetadataRoute.Sitemap[number] = {
+      url: `${siteConfig.url}${careerJobPath(job)}`,
+    };
+    const formatted = formatW3CDate(job.datePosted);
+    if (formatted) {
+      entry.lastModified = formatted;
+    }
+    return entry;
+  });
 
   const entries: MetadataRoute.Sitemap = [...migratedRoutes, ...careerJobs];
   if (isCmsDatabaseConfigured()) {
@@ -40,7 +62,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const blog of await listPublishedCmsBlogs()) {
         const url = `${siteConfig.url}/blogs/${blog.slug}/`;
         if (!existing.has(url.replace(/\/$/, ""))) {
-          entries.push({ url, lastModified: blog.updated_at });
+          const entry: MetadataRoute.Sitemap[number] = { url };
+          const formatted = formatW3CDate(blog.updated_at || blog.published_at);
+          if (formatted) {
+            entry.lastModified = formatted;
+          }
+          entries.push(entry);
         }
       }
     } catch {
