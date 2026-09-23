@@ -9,9 +9,17 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+function publicUrl(path: string) {
+  const origin =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://www.dgeniussolutions.com";
+
+  return new URL(path, origin);
+}
+
 export async function POST(request: NextRequest) {
   if (process.env.DGS_ADMIN_ENABLED !== "true" || !isAdminAuthConfigured()) {
-    return NextResponse.redirect(new URL("/admin/login/?error=unavailable", request.url), 303);
+    return NextResponse.redirect(publicUrl("/admin/login/?error=unavailable"), 303);
   }
 
   const form = await request.formData();
@@ -19,10 +27,10 @@ export async function POST(request: NextRequest) {
   const password = String(form.get("password") || "");
 
   if (!validateAdminCredentials(email, password)) {
-    return NextResponse.redirect(new URL("/admin/login/?error=invalid", request.url), 303);
+    return NextResponse.redirect(publicUrl("/admin/login/?error=invalid"), 303);
   }
 
-  const response = NextResponse.redirect(new URL("/admin/", request.url), 303);
+  const response = NextResponse.redirect(publicUrl("/admin/"), 303);
   response.cookies.set(adminSessionCookie.name, createAdminSessionToken(email.trim().toLowerCase()), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
