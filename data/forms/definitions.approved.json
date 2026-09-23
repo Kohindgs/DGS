@@ -358,7 +358,8 @@
         "/services/seo-service-in-banglore/",
         "/services/seo-service-in-gurugram/",
         "/services/seo-service-pune/",
-        "/services/seo-services-in-hyderabad/"
+        "/services/seo-services-in-hyderabad/",
+        "/services/dubai-seo/"
       ],
       "approvalState": "APPROVED_FOR_IMPLEMENTATION",
       "activationEnabled": true,
@@ -1069,7 +1070,8 @@
       "title": "Generative AI",
       "shortcode": "[fluentform id=\"9\"]",
       "sourceRoutes": [
-        "/services/ai-video-production-agency/"
+        "/services/ai-video-production-agency/",
+        "/services/ai-production-dubai-page/"
       ],
       "approvalState": "APPROVED_FOR_IMPLEMENTATION",
       "activationEnabled": true,
@@ -1944,7 +1946,8 @@
       "title": "Free AEO Audit Form",
       "shortcode": "[fluentform id=\"19\"]",
       "sourceRoutes": [
-        "/services/aeo-services-in-mumbai/"
+        "/services/aeo-services-in-mumbai/",
+        "/aeo-dubai/"
       ],
       "approvalState": "APPROVED_FOR_IMPLEMENTATION",
       "activationEnabled": true,
