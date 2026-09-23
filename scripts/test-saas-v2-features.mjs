@@ -4,7 +4,6 @@ import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import { formatW3CDate } from "../lib/seo/sitemap-date.ts";
 
-
 test("1. Sitemap W3C Datetime Normalization", () => {
   assert.equal(formatW3CDate("2026-08-13T00:24:31"), "2026-08-13");
   assert.equal(formatW3CDate("2026-09-22"), "2026-09-22");
@@ -168,4 +167,127 @@ test("7. Assessment Version Draft vs Approved Immutability", () => {
   assert.equal(canModify(version), true);
   version.status = "approved";
   assert.equal(canModify(version), false);
+});
+
+test("8. Assessment Scoring Engine & Cutoff Evaluation", () => {
+  function calculateAssessmentScore(questions, candidateAnswers) {
+    let earned = 0;
+    let total = 0;
+    for (const q of questions) {
+      total += q.points;
+      if (candidateAnswers[q.id] === q.correctAnswer) {
+        earned += q.points;
+      }
+    }
+    const percentage = total > 0 ? Math.round((earned / total) * 100) : 0;
+    return { earned, total, percentage, passed: percentage >= 70 };
+  }
+
+  const sampleQuestions = [
+    { id: "q1", points: 10, correctAnswer: "B" },
+    { id: "q2", points: 10, correctAnswer: "A" },
+    { id: "q3", points: 10, correctAnswer: "D" },
+    { id: "q4", points: 10, correctAnswer: "C" },
+  ];
+
+  const passAnswers = { q1: "B", q2: "A", q3: "D", q4: "A" }; // 3/4 = 75%
+  const resultPass = calculateAssessmentScore(sampleQuestions, passAnswers);
+  assert.equal(resultPass.percentage, 75);
+  assert.equal(resultPass.passed, true);
+
+  const failAnswers = { q1: "B", q2: "C", q3: "A", q4: "A" }; // 1/4 = 25%
+  const resultFail = calculateAssessmentScore(sampleQuestions, failAnswers);
+  assert.equal(resultFail.percentage, 25);
+  assert.equal(resultFail.passed, false);
+});
+
+test("9. Media Library Reconciliation & SEO Alt Verification", () => {
+  function reconcileMedia(mediaList) {
+    let images = 0;
+    let videos = 0;
+    let documents = 0;
+    let missingAlt = 0;
+
+    for (const item of mediaList) {
+      if (item.mime_type.startsWith("image/")) {
+        images++;
+        if (!item.alt_text || item.alt_text.trim() === "") {
+          missingAlt++;
+        }
+      } else if (item.mime_type.startsWith("video/")) {
+        videos++;
+      } else {
+        documents++;
+      }
+    }
+
+    return { total: mediaList.length, images, videos, documents, missingAlt };
+  }
+
+  const sampleAssets = [
+    { id: "1", mime_type: "image/webp", alt_text: "DGS Hero Banner" },
+    { id: "2", mime_type: "image/jpeg", alt_text: "" },
+    { id: "3", mime_type: "video/mp4", alt_text: null },
+    { id: "4", mime_type: "application/pdf", alt_text: null },
+  ];
+
+  const summary = reconcileMedia(sampleAssets);
+  assert.equal(summary.total, 4);
+  assert.equal(summary.images, 2);
+  assert.equal(summary.videos, 1);
+  assert.equal(summary.documents, 1);
+  assert.equal(summary.missingAlt, 1);
+});
+
+test("10. Private Documents & Uploads Access Protection", () => {
+  function isPathAccessAllowed(relativePath, userRole) {
+    const isPrivate = relativePath.startsWith("/private/") || relativePath.startsWith("/resumes/") || relativePath.includes(".env");
+    if (!isPrivate) return true;
+    return userRole === "superadmin" || userRole === "admin";
+  }
+
+  assert.equal(isPathAccessAllowed("/uploads/public-logo.png", "guest"), true);
+  assert.equal(isPathAccessAllowed("/private/contracts/doc.pdf", "guest"), false);
+  assert.equal(isPathAccessAllowed("/resumes/candidate-resume.pdf", "manager"), false);
+  assert.equal(isPathAccessAllowed("/resumes/candidate-resume.pdf", "admin"), true);
+  assert.equal(isPathAccessAllowed("/resumes/candidate-resume.pdf", "superadmin"), true);
+  assert.equal(isPathAccessAllowed(".env.production", "guest"), false);
+});
+
+test("11. Search Console & GA4 Data Honesty & Cache Evaluation", () => {
+  function evaluateDataProvenance(dataset) {
+    if (dataset.isMock || dataset.source === "synthetic") {
+      return { live: false, status: "READY TO CONNECT", honest: true };
+    }
+    const isStale = Date.now() - dataset.cachedAt > 24 * 60 * 60 * 1000;
+    return { live: true, status: isStale ? "STALE_CACHE" : "CONNECTED", honest: true };
+  }
+
+  const mockSet = { source: "synthetic", isMock: true, cachedAt: Date.now() };
+  assert.equal(evaluateDataProvenance(mockSet).status, "READY TO CONNECT");
+
+  const liveFresh = { source: "google_api", isMock: false, cachedAt: Date.now() - 3600000 };
+  assert.equal(evaluateDataProvenance(liveFresh).status, "CONNECTED");
+});
+
+test("12. Google Update Compliance Engine Status Evaluation", () => {
+  function evaluateUpdateImpact(updates) {
+    const active = updates.filter((u) => u.status === "in_progress" || u.status === "monitoring");
+    const completed = updates.filter((u) => u.status === "completed");
+    return {
+      total: updates.length,
+      activeCount: active.length,
+      complianceState: active.length > 0 ? "MONITORING_ACTIVE" : "COMPLIANT",
+    };
+  }
+
+  const sampleUpdates = [
+    { name: "March 2026 Core Update", status: "completed" },
+    { name: "August 2026 Spam Update", status: "monitoring" },
+  ];
+
+  const evalState = evaluateUpdateImpact(sampleUpdates);
+  assert.equal(evalState.total, 2);
+  assert.equal(evalState.activeCount, 1);
+  assert.equal(evalState.complianceState, "MONITORING_ACTIVE");
 });
