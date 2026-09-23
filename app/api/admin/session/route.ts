@@ -7,6 +7,7 @@ import {
 } from "@/lib/cms/auth";
 import {
   getCmsUserByEmail,
+  getCmsUserForAuth,
   verifyPassword,
   createDbSession,
   destroyCurrentSession,
@@ -54,9 +55,9 @@ export async function POST(request: NextRequest) {
   // 1. Try DB-backed authentication if configured
   if (isCmsDatabaseConfigured()) {
     await ensureSuperadminSeeded();
-    const user = await getCmsUserByEmail(rawEmail);
+    const user = await getCmsUserForAuth(rawEmail);
     if (user && (user.is_active === 1 || user.is_active === true)) {
-      if (verifyPassword(rawPassword, (user as any).password_hash)) {
+      if (verifyPassword(rawPassword, user.password_hash)) {
         authenticatedUser = user;
       }
     }

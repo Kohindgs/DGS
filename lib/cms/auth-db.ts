@@ -246,10 +246,28 @@ export async function ensureSuperadminSeeded(): Promise<void> {
         resource_id: id,
         summary: `Initial superadmin user seeded: ${adminEmail}`,
       });
+    } else {
+      const existing = rows[0] as any;
+      if (!existing.password_hash || !existing.password_hash.startsWith("scrypt$32768$") || !verifyPassword(adminPassword, existing.password_hash)) {
+        const newHash = hashPassword(adminPassword);
+        await cmsExecute(
+          `UPDATE cms_users SET password_hash = ?, is_active = 1, failed_attempts = 0, locked_until = NULL WHERE id = ?`,
+          [newHash, existing.id]
+        );
+      }
     }
   } catch (err) {
     console.error("Error ensuring superadmin is seeded:", err);
   }
+}
+
+export async function getCmsUserForAuth(email: string): Promise<(CmsUser & { password_hash: string }) | null> {
+  if (!isCmsDatabaseConfigured()) return null;
+  const { rows } = await cmsQuery<CmsUser & { password_hash: string }>(
+    "SELECT id, email, password_hash, display_name, role, avatar_url, is_active, failed_attempts, locked_until, last_login_at, created_at, updated_at FROM cms_users WHERE email = ? LIMIT 1",
+    [email.trim().toLowerCase()]
+  );
+  return rows[0] || null;
 }
 
 export async function getCmsUserByEmail(email: string): Promise<CmsUser | null> {
@@ -341,17 +359,40 @@ export async function getCurrentCmsUser(): Promise<CmsUser | null> {
     }
 
     const tokenHash = hashToken(token);
-    const { rows } = await cmsQuery<CmsUser & { session_expires: string }>(
-      `SELECT u.id, u.email, u.display_name, u.role, u.avatar_url, u.is_active, u.failed_attempts, u.locked_until, u.last_login_at, u.created_at, u.updated_at, s.expires_at as session_expires
-       FROM cms_sessions s
-       JOIN cms_users u ON s.user_id = u.id
-       WHERE s.session_token_hash = ? AND s.expires_at > NOW() AND u.is_active = 1
-       LIMIT 1`,
+    const { rows: sessionRows } = await cmsQuery<CmsSession>(
+      `SELECT id, user_id, session_token_hash, expires_at FROM cms_sessions WHERE session_token_hash = ? AND expires_at > NOW() LIMIT 1`,
       [tokenHash]
     );
 
-    if (rows && rows.length > 0) {
-      return rows[0];
+    if (sessionRows && sessionRows.length > 0) {
+      const session = sessionRows[0];
+      if (session.user_id === "env-superadmin") {
+        return {
+          id: "env-superadmin",
+          email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
+          display_name: "DGS Superadmin",
+          role: "superadmin",
+          avatar_url: null,
+          is_active: 1,
+          failed_attempts: 0,
+          locked_until: null,
+          last_login_at: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+      }
+
+      const { rows: userRows } = await cmsQuery<CmsUser>(
+        `SELECT id, email, display_name, role, avatar_url, is_active, failed_attempts, locked_until, last_login_at, created_at, updated_at
+         FROM cms_users
+         WHERE id = ? AND is_active = 1
+         LIMIT 1`,
+        [session.user_id]
+      );
+
+      if (userRows && userRows.length > 0) {
+        return userRows[0];
+      }
     }
   } catch (err) {
     console.error("Error retrieving current CMS user:", err);
