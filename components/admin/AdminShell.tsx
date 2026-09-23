@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
 import AdminSearchModal from "./AdminSearchModal";
+import AdminLiveActivityDrawer from "./AdminLiveActivityDrawer";
 import type { CmsUser } from "@/lib/cms/auth-db";
 
 type Props = {
@@ -18,7 +19,15 @@ export default function AdminShell({ children, currentUser }: Props) {
 
   return (
     <div className={`dgs-saas-layout ${collapsed ? "sidebar-collapsed" : ""}`}>
-      {/* Sidebar */}
+      {/* Liquid Ambient Neon Glow Backdrop (Multi-layered blurred orbs) */}
+      <div className="dgs-ambient-backdrop" aria-hidden="true">
+        <div className="dgs-ambient-orb dgs-orb-magenta" />
+        <div className="dgs-ambient-orb dgs-orb-purple" />
+        <div className="dgs-ambient-orb dgs-orb-cyan" />
+        <div className="dgs-ambient-orb dgs-orb-orange" />
+      </div>
+
+      {/* Collapsible / Responsive Sidebar */}
       <AdminSidebar
         collapsed={collapsed}
         mobileOpen={mobileOpen}
@@ -26,8 +35,9 @@ export default function AdminShell({ children, currentUser }: Props) {
         currentUser={currentUser}
       />
 
-      {/* Main Column */}
+      {/* Full-Width Workspace Wrapper */}
       <div className="dgs-saas-wrapper">
+        {/* Sleek Dark Neon Glass Header */}
         <AdminHeader
           collapsed={collapsed}
           onToggleCollapse={() => setCollapsed(!collapsed)}
@@ -36,14 +46,18 @@ export default function AdminShell({ children, currentUser }: Props) {
           currentUser={currentUser}
         />
 
-        <main className="dgs-saas-main" id="admin-main-content">
-          <div className="dgs-saas-content-fluid">
+        {/* Central Workspace + Right Activity Drawer */}
+        <div className="dgs-neon-workspace">
+          <main className="dgs-neon-center-column" id="admin-main-content">
             {children}
-          </div>
-        </main>
+          </main>
+
+          {/* Right Live Intelligence Drawer (Matching Reference Mockup) */}
+          <AdminLiveActivityDrawer onOpenSearch={() => setSearchOpen(true)} />
+        </div>
       </div>
 
-      {/* Global Search Dialog */}
+      {/* Global Cmd+K Search Command Palette */}
       <AdminSearchModal
         isOpen={searchOpen}
         onClose={() => setSearchOpen(false)}
