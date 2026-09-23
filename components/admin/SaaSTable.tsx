@@ -24,7 +24,7 @@ export type SaaSTableProps<T> = {
 
 export default function SaaSTable<T>({
   columns,
-  data,
+  data = [],
   keyExtractor,
   searchPlaceholder = "Search records...",
   searchFilter,
@@ -40,19 +40,21 @@ export default function SaaSTable<T>({
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
+  const safeData = data || [];
+
   // Search filtering
   const filteredData = useMemo(() => {
-    if (!search.trim()) return data;
+    if (!search.trim()) return safeData;
     if (searchFilter) {
-      return data.filter((item) => searchFilter(item, search.toLowerCase()));
+      return safeData.filter((item) => searchFilter(item, search.toLowerCase()));
     }
     // Default search on all string fields
-    return data.filter((item) =>
+    return safeData.filter((item) =>
       Object.values(item as any).some((val) =>
         String(val || "").toLowerCase().includes(search.toLowerCase())
       )
     );
-  }, [data, search, searchFilter]);
+  }, [safeData, search, searchFilter]);
 
   // Sorting
   const sortedData = useMemo(() => {

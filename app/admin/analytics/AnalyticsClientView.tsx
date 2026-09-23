@@ -109,7 +109,7 @@ export default function AnalyticsClientView({ metrics }: Props) {
         </h3>
         <SaaSTable<PageMetric>
           columns={pageColumns}
-          data={metrics.topLandingPages}
+          data={((metrics.topLandingPages || (metrics as any).topPages || []) as PageMetric[])}
           keyExtractor={(p) => p.page_path}
           searchPlaceholder="Search landing pages..."
           emptyMessage="No GA4 analytics cached. Connect Google Analytics in Integrations to view real visitor metrics."
