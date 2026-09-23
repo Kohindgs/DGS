@@ -55,9 +55,7 @@ export async function POST(request:Request) {
 
     return NextResponse.json({
       ok:true,
-      message:"Assessment submitted successfully.",
-      objectiveScore:score,
-      objectiveTotal:total,
+      message:"Assessment submitted successfully. Our team will review your responses and reach out regarding next steps.",
     });
   } catch(error) {
     return NextResponse.json({ok:false,message:error instanceof Error?error.message:"Unable to submit assessment."},{status:500});

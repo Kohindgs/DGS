@@ -1,8 +1,9 @@
 .dgs-admin-shell {
   min-height: 100vh;
-  padding: clamp(32px, 5vw, 72px);
-  background: radial-gradient(circle at top right, rgba(169, 0, 255, 0.18), transparent 32%), #070708;
-  color: #f5f5f7;
+  padding: clamp(24px, 4vw, 48px);
+  background: var(--dgs-bg-app, #161618);
+  color: var(--dgs-text-main, #f5f5f7);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", sans-serif;
 }
 
 .dgs-admin-header {

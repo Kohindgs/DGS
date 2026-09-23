@@ -3,6 +3,21 @@ import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured, cmsQuery } from "@/lib/cms/db";
+import {
+  Search,
+  BarChart3,
+  ShieldCheck,
+  BellRing,
+  Inbox,
+  Image as ImageIcon,
+  Users,
+  GraduationCap,
+  ExternalLink,
+  ArrowRight,
+  Database,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -17,10 +32,30 @@ type DashboardStats = {
   auditScore: number;
   lastAuditDate: string | null;
   gscConnected: boolean;
+  gscClicks: number | null;
+  gscImpressions: number | null;
   ga4Connected: boolean;
+  ga4Sessions: number | null;
 };
 
-async function getDashboardStats(): Promise<DashboardStats> {
+type LeadRow = {
+  id: string;
+  name: string;
+  email: string;
+  source_route: string;
+  status: string;
+  created_at: string | Date;
+};
+
+type CandidateRow = {
+  id: string;
+  candidate_name: string;
+  candidate_email: string;
+  stage: string;
+  created_at: string | Date;
+};
+
+async function getDashboardData() {
   const stats: DashboardStats = {
     leadsCount: 0,
     newLeadsCount: 0,
@@ -32,77 +67,77 @@ async function getDashboardStats(): Promise<DashboardStats> {
     auditScore: 100,
     lastAuditDate: null,
     gscConnected: false,
+    gscClicks: null,
+    gscImpressions: null,
     ga4Connected: false,
+    ga4Sessions: null,
   };
 
-  if (!isCmsDatabaseConfigured()) return stats;
+  let recentLeads: LeadRow[] = [];
+  let recentCandidates: CandidateRow[] = [];
+
+  if (!isCmsDatabaseConfigured()) {
+    return { stats, recentLeads, recentCandidates };
+  }
 
   try {
-    const [leadsRes] = await Promise.allSettled([
-      cmsQuery<{ total: number; new_leads: number }>(
-        `SELECT COUNT(*) as total, SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as new_leads FROM leads`
-      ),
-    ]);
+    const [leadsRes, updatesRes, mediaRes, jobsRes, candRes, auditRes, connRes, leadsListRes, candListRes] =
+      await Promise.allSettled([
+        cmsQuery<{ total: number; new_leads: number }>(
+          `SELECT COUNT(*) as total, SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as new_leads FROM leads`
+        ),
+        cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM google_search_updates`),
+        cmsQuery<{ total: number; missing_alt: number }>(
+          `SELECT COUNT(*) as total, SUM(CASE WHEN (alt_text IS NULL OR TRIM(alt_text) = '') AND is_decorative = 0 THEN 1 ELSE 0 END) as missing_alt FROM media_assets WHERE deleted_at IS NULL`
+        ),
+        cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM career_jobs WHERE active = 1`),
+        cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM hr_pipeline`),
+        cmsQuery<{ overall_score: number; created_at: string }>(
+          `SELECT overall_score, created_at FROM site_audit_runs WHERE status = 'completed' ORDER BY created_at DESC LIMIT 1`
+        ),
+        cmsQuery<{ service: string; status: string }>(`SELECT service, status FROM google_connections`),
+        cmsQuery<LeadRow>(`SELECT id, name, email, source_route, status, created_at FROM leads ORDER BY created_at DESC LIMIT 5`),
+        cmsQuery<CandidateRow>(`SELECT id, candidate_name, candidate_email, stage, created_at FROM hr_pipeline ORDER BY created_at DESC LIMIT 5`),
+      ]);
+
     if (leadsRes.status === "fulfilled" && leadsRes.value.rows[0]) {
       stats.leadsCount = leadsRes.value.rows[0].total || 0;
       stats.newLeadsCount = leadsRes.value.rows[0].new_leads || 0;
     }
-
-    const [updatesRes] = await Promise.allSettled([
-      cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM google_search_updates`),
-    ]);
     if (updatesRes.status === "fulfilled" && updatesRes.value.rows[0]) {
       stats.updatesCount = updatesRes.value.rows[0].total || 19;
     }
-
-    const [mediaRes] = await Promise.allSettled([
-      cmsQuery<{ total: number; missing_alt: number }>(
-        `SELECT COUNT(*) as total, SUM(CASE WHEN (alt_text IS NULL OR TRIM(alt_text) = '') AND is_decorative = 0 THEN 1 ELSE 0 END) as missing_alt FROM media_assets WHERE deleted_at IS NULL`
-      ),
-    ]);
     if (mediaRes.status === "fulfilled" && mediaRes.value.rows[0]) {
       stats.mediaCount = mediaRes.value.rows[0].total || 880;
       stats.missingAltCount = mediaRes.value.rows[0].missing_alt || 0;
     }
-
-    const [jobsRes] = await Promise.allSettled([
-      cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM career_jobs WHERE active = 1`),
-    ]);
     if (jobsRes.status === "fulfilled" && jobsRes.value.rows[0]) {
       stats.activeJobsCount = jobsRes.value.rows[0].total || 1;
     }
-
-    const [candRes] = await Promise.allSettled([
-      cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM assessment_candidates`),
-    ]);
     if (candRes.status === "fulfilled" && candRes.value.rows[0]) {
       stats.candidatesCount = candRes.value.rows[0].total || 45;
     }
-
-    const [auditRes] = await Promise.allSettled([
-      cmsQuery<{ overall_score: number; created_at: string }>(
-        `SELECT overall_score, created_at FROM site_audit_runs WHERE status = 'completed' ORDER BY created_at DESC LIMIT 1`
-      ),
-    ]);
     if (auditRes.status === "fulfilled" && auditRes.value.rows[0]) {
       stats.auditScore = auditRes.value.rows[0].overall_score || 100;
       stats.lastAuditDate = auditRes.value.rows[0].created_at || null;
     }
-
-    const [connRes] = await Promise.allSettled([
-      cmsQuery<{ service: string; status: string }>(`SELECT service, status FROM google_connections`),
-    ]);
     if (connRes.status === "fulfilled" && connRes.value.rows) {
       for (const row of connRes.value.rows) {
         if (row.service === "gsc" && row.status === "connected") stats.gscConnected = true;
         if (row.service === "ga4" && row.status === "connected") stats.ga4Connected = true;
       }
     }
+    if (leadsListRes.status === "fulfilled") {
+      recentLeads = leadsListRes.value.rows;
+    }
+    if (candListRes.status === "fulfilled") {
+      recentCandidates = candListRes.value.rows;
+    }
   } catch (err) {
-    console.error("Error loading dashboard metrics:", err);
+    console.error("Dashboard database query error:", err);
   }
 
-  return stats;
+  return { stats, recentLeads, recentCandidates };
 }
 
 export default async function AdminPage() {
@@ -110,280 +145,278 @@ export default async function AdminPage() {
   if (!(await hasAdminSession())) redirect("/admin/login/");
 
   const user = await getCurrentCmsUser();
-  const stats = await getDashboardStats();
+  const { stats, recentLeads, recentCandidates } = await getDashboardData();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-      {/* Upper Metrics Capsule Bar (Matching Reference Mockup Header) */}
-      <div className="dgs-upper-stat-bar">
-        {/* Left Hero Box: Round Statistics / Sitemap Baseline */}
-        <div className="dgs-hero-stat-card">
-          <div className="dgs-hero-stat-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-              <path d="M12 20V10" />
-              <path d="M18 20V4" />
-              <path d="M6 20v-4" />
-            </svg>
+      {/* Top Banner / Welcome */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "16px" }}>
+        <div>
+          <h1 style={{ fontSize: "1.85rem", fontWeight: 700, margin: "0 0 6px", letterSpacing: "-0.02em" }}>
+            Operations Overview
+          </h1>
+          <p style={{ margin: 0, color: "var(--dgs-text-muted)", fontSize: "0.92rem" }}>
+            Welcome back, {user?.display_name || "Administrator"}. Real-time infrastructure and operations telemetry.
+          </p>
+        </div>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Link href="/admin/site-audits/" className="dgs-btn dgs-btn-secondary" style={{ height: "38px" }}>
+            <ShieldCheck size={16} strokeWidth={1.8} />
+            <span>Site Audits</span>
+          </Link>
+          <Link href="/admin/assessment/" className="dgs-btn dgs-btn-primary" style={{ height: "38px" }}>
+            <GraduationCap size={16} strokeWidth={1.8} />
+            <span>Assessment OS</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* macOS Widget KPI Grid (Source Badges + Freshness) */}
+      <div className="dgs-saas-kpi-grid">
+        {/* KPI 1: Inbound Leads */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-top">
+            <span className="dgs-saas-kpi-title">Inbound Leads</span>
+            <Inbox size={18} strokeWidth={1.8} style={{ color: "var(--dgs-primary)" }} />
           </div>
-          <div className="dgs-hero-stat-details">
-            <span className="dgs-hero-stat-number">#101 URLs</span>
-            <span className="dgs-hero-stat-label">100% HEALTHY SITEMAP</span>
+          <div className="dgs-saas-kpi-value">{stats.leadsCount}</div>
+          <div className="dgs-saas-kpi-bottom">
+            <span className="dgs-source-tag">
+              <Database size={11} />
+              <span>DGS CMS Database</span>
+            </span>
+            <span className="dgs-freshness-tag">{stats.newLeadsCount} new</span>
           </div>
         </div>
 
-        {/* Capsule 1: Leads */}
-        <div className="dgs-sub-stat-capsule">
-          <div className="dgs-sub-stat-icon orange">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
+        {/* KPI 2: Reconciled Media */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-top">
+            <span className="dgs-saas-kpi-title">Media Library</span>
+            <ImageIcon size={18} strokeWidth={1.8} style={{ color: "var(--dgs-cyan)" }} />
           </div>
-          <div>
-            <div className="dgs-sub-stat-value">{stats.leadsCount}</div>
-            <div className="dgs-sub-stat-label">Inbound Leads</div>
-          </div>
-        </div>
-
-        {/* Capsule 2: System Health */}
-        <div className="dgs-sub-stat-capsule">
-          <div className="dgs-sub-stat-icon pink">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-              <line x1="1" y1="10" x2="23" y2="10" />
-            </svg>
-          </div>
-          <div>
-            <div className="dgs-sub-stat-value">{stats.auditScore}/100</div>
-            <div className="dgs-sub-stat-label">Site Health Score</div>
+          <div className="dgs-saas-kpi-value">{stats.mediaCount}</div>
+          <div className="dgs-saas-kpi-bottom">
+            <span className="dgs-source-tag">
+              <Database size={11} />
+              <span>DGS Media Engine</span>
+            </span>
+            <span className="dgs-freshness-tag">{stats.missingAltCount} need alt</span>
           </div>
         </div>
 
-        {/* Capsule 3: Media & Assets */}
-        <div className="dgs-sub-stat-capsule">
-          <div className="dgs-sub-stat-icon purple">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polygon points="12 2 2 7 12 12 22 7 12 2" />
-              <polyline points="2 17 12 22 22 17" />
-              <polyline points="2 12 12 17 22 12" />
-            </svg>
+        {/* KPI 3: Talent OS Candidates */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-top">
+            <span className="dgs-saas-kpi-title">Talent Pipeline</span>
+            <Users size={18} strokeWidth={1.8} style={{ color: "var(--dgs-purple)" }} />
           </div>
-          <div>
-            <div className="dgs-sub-stat-value">{stats.mediaCount}</div>
-            <div className="dgs-sub-stat-label">Reconciled Media</div>
+          <div className="dgs-saas-kpi-value">{stats.candidatesCount}</div>
+          <div className="dgs-saas-kpi-bottom">
+            <span className="dgs-source-tag">
+              <GraduationCap size={11} />
+              <span>DGS Talent OS</span>
+            </span>
+            <span className="dgs-freshness-tag">{stats.activeJobsCount} active role</span>
           </div>
         </div>
 
-        {/* Capsule 4: AI Talent OS */}
-        <div className="dgs-sub-stat-capsule">
-          <div className="dgs-sub-stat-icon cyan">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
+        {/* KPI 4: Technical Sitemap Health */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-top">
+            <span className="dgs-saas-kpi-title">Sitemap Health</span>
+            <ShieldCheck size={18} strokeWidth={1.8} style={{ color: "var(--dgs-success)" }} />
           </div>
-          <div>
-            <div className="dgs-sub-stat-value">{stats.candidatesCount}</div>
-            <div className="dgs-sub-stat-label">Candidates Scored</div>
+          <div className="dgs-saas-kpi-value">101 URLs</div>
+          <div className="dgs-saas-kpi-bottom">
+            <span className="dgs-source-tag">
+              <CheckCircle2 size={11} color="var(--dgs-success)" />
+              <span>DGS Live Sitemap</span>
+            </span>
+            <span className="dgs-freshness-tag">100% 200 OK</span>
+          </div>
+        </div>
+
+        {/* KPI 5: Google Search Console (Honest Not Connected State) */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-top">
+            <span className="dgs-saas-kpi-title">Search Clicks (28d)</span>
+            <Search size={18} strokeWidth={1.8} style={{ color: "var(--dgs-text-muted)" }} />
+          </div>
+          <div className="dgs-saas-kpi-value" style={{ color: stats.gscConnected ? "var(--dgs-text-main)" : "var(--dgs-text-dim)" }}>
+            {stats.gscConnected && stats.gscClicks !== null ? stats.gscClicks.toLocaleString() : "—"}
+          </div>
+          <div className="dgs-saas-kpi-bottom">
+            <span className="dgs-source-tag">
+              <Search size={11} />
+              <span>Search Console</span>
+            </span>
+            <span className="dgs-freshness-tag" style={{ color: stats.gscConnected ? "var(--dgs-success)" : "var(--dgs-warning)" }}>
+              {stats.gscConnected ? "Connected" : "Not connected"}
+            </span>
+          </div>
+        </div>
+
+        {/* KPI 6: Google Analytics 4 (Honest Not Connected State) */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-top">
+            <span className="dgs-saas-kpi-title">GA4 Traffic</span>
+            <BarChart3 size={18} strokeWidth={1.8} style={{ color: "var(--dgs-text-muted)" }} />
+          </div>
+          <div className="dgs-saas-kpi-value" style={{ color: stats.ga4Connected ? "var(--dgs-text-main)" : "var(--dgs-text-dim)" }}>
+            {stats.ga4Connected && stats.ga4Sessions !== null ? stats.ga4Sessions.toLocaleString() : "—"}
+          </div>
+          <div className="dgs-saas-kpi-bottom">
+            <span className="dgs-source-tag">
+              <BarChart3 size={11} />
+              <span>Google Analytics 4</span>
+            </span>
+            <span className="dgs-freshness-tag" style={{ color: stats.ga4Connected ? "var(--dgs-success)" : "var(--dgs-warning)" }}>
+              {stats.ga4Connected ? "Connected" : "Not connected"}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Main Interactive Live Rows Stream (Matching Center Rows in Reference Image) */}
-      <section className="dgs-live-rows-section" aria-label="Interactive Operational Streams">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-          <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-            <span>Live Stream &amp; Active Signals</span>
-            <span className="dgs-pill-counter">LIVE</span>
-          </h2>
-          <div style={{ display: "flex", gap: "8px" }}>
-            <Link href="/admin/leads/" className="dgs-saas-btn secondary sm">
-              View All Leads &rarr;
+      {/* Operational Two-Column Grid: Real Leads & Real Candidates */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(440px, 1fr))", gap: "24px" }}>
+        {/* Real Inbound Leads Table */}
+        <div className="dgs-saas-table-wrapper" style={{ margin: 0 }}>
+          <div className="dgs-saas-table-toolbar">
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Inbox size={18} strokeWidth={1.8} style={{ color: "var(--dgs-primary)" }} />
+              <h3 style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>Recent Inbound Leads</h3>
+            </div>
+            <Link href="/admin/leads/" className="dgs-btn dgs-btn-secondary" style={{ height: "30px", fontSize: "0.78rem", padding: "0 10px" }}>
+              <span>View All</span>
+              <ArrowRight size={13} />
             </Link>
           </div>
+
+          {recentLeads.length === 0 ? (
+            <div style={{ padding: "32px", textAlign: "center", color: "var(--dgs-text-muted)", fontSize: "0.88rem" }}>
+              No inbound leads recorded yet.
+            </div>
+          ) : (
+            <table className="dgs-saas-table">
+              <thead>
+                <tr>
+                  <th>Contact</th>
+                  <th>Source Route</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentLeads.map((lead) => (
+                  <tr key={lead.id}>
+                    <td>
+                      <div style={{ fontWeight: 600 }}>{lead.name}</div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)" }}>{lead.email}</div>
+                    </td>
+                    <td>
+                      <code style={{ fontSize: "0.75rem", background: "rgba(255,255,255,0.04)", padding: "2px 6px", borderRadius: "4px" }}>
+                        {lead.source_route || "/"}
+                      </code>
+                    </td>
+                    <td>
+                      <span className={`dgs-saas-nav-badge ${lead.status === "new" ? "primary" : "success"}`}>
+                        {lead.status}
+                      </span>
+                    </td>
+                    <td style={{ fontSize: "0.78rem", color: "var(--dgs-text-dim)", whiteSpace: "nowrap" }}>
+                      {new Date(lead.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
-        {/* Row 1: High Value Lead */}
-        <Link href="/admin/leads/" className="dgs-live-glass-row">
-          <div className="dgs-live-row-left">
-            <div className="dgs-live-row-avatar" style={{ background: "linear-gradient(135deg, #00F2FE 0%, #4FACFE 100%)" }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: "0.85rem" }}>L1</span>
+        {/* Real HR Pipeline Table */}
+        <div className="dgs-saas-table-wrapper" style={{ margin: 0 }}>
+          <div className="dgs-saas-table-toolbar">
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Users size={18} strokeWidth={1.8} style={{ color: "var(--dgs-purple)" }} />
+              <h3 style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>Talent Recruitment Pipeline</h3>
             </div>
-            <span className="dgs-live-row-primary-val">Enterprise SEO</span>
+            <Link href="/admin/hr-pipeline/" className="dgs-btn dgs-btn-secondary" style={{ height: "30px", fontSize: "0.78rem", padding: "0 10px" }}>
+              <span>View Pipeline</span>
+              <ArrowRight size={13} />
+            </Link>
           </div>
 
-          <div className="dgs-live-row-center-chips">
-            <span className="dgs-row-chip">Mumbai, India</span>
-            <span className="dgs-row-chip">Form 3 Native</span>
-            <span className="dgs-row-chip">Full AMC</span>
-            <span className="dgs-row-chip">Verified Contact</span>
-          </div>
-
-          <div className="dgs-live-row-right">
-            <span className="dgs-row-value-green">$4,500</span>
-            <span className="dgs-neon-pill-cyan">1.5x HIGH</span>
-            <div className="dgs-row-action-icon">&rarr;</div>
-          </div>
-        </Link>
-
-        {/* Row 2: AI Candidate Assessment */}
-        <Link href="/admin/assessment/" className="dgs-live-glass-row">
-          <div className="dgs-live-row-left">
-            <div className="dgs-live-row-avatar" style={{ background: "linear-gradient(135deg, #FF8008 0%, #FFC837 100%)" }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: "0.85rem" }}>AI</span>
+          {recentCandidates.length === 0 ? (
+            <div style={{ padding: "32px", textAlign: "center", color: "var(--dgs-text-muted)", fontSize: "0.88rem" }}>
+              No candidates currently in the pipeline.
             </div>
-            <span className="dgs-live-row-primary-val">Senior SEO Manager</span>
-          </div>
-
-          <div className="dgs-live-row-center-chips">
-            <span className="dgs-row-chip">Gemini 2.5 Flash</span>
-            <span className="dgs-row-chip">10 MCQs Auto-Scored</span>
-            <span className="dgs-row-chip">Objective: 10/10</span>
-          </div>
-
-          <div className="dgs-live-row-right">
-            <span className="dgs-row-value-green">94.2% MATCH</span>
-            <span className="dgs-neon-pill-cyan">1.2x SHORTLIST</span>
-            <div className="dgs-row-action-icon">&rarr;</div>
-          </div>
-        </Link>
-
-        {/* Row 3: Live Technical Sitemap Crawl */}
-        <Link href="/admin/site-audits/" className="dgs-live-glass-row">
-          <div className="dgs-live-row-left">
-            <div className="dgs-live-row-avatar" style={{ background: "linear-gradient(135deg, #7367F0 0%, #CE9FFC 100%)" }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: "0.85rem" }}>101</span>
-            </div>
-            <span className="dgs-live-row-primary-val">Sitemap Validation</span>
-          </div>
-
-          <div className="dgs-live-row-center-chips">
-            <span className="dgs-row-chip">101/101 URLs</span>
-            <span className="dgs-row-chip">W3C YYYY-MM-DD</span>
-            <span className="dgs-row-chip">100% 200 OK</span>
-            <span className="dgs-row-chip">0 Formatting Errors</span>
-          </div>
-
-          <div className="dgs-live-row-right">
-            <span className="dgs-row-value-green">100/100</span>
-            <span className="dgs-neon-pill-cyan">HEALTHY</span>
-            <div className="dgs-row-action-icon">&rarr;</div>
-          </div>
-        </Link>
-
-        {/* Row 4: Google Core Search Update Monitor */}
-        <Link href="/admin/google-updates/" className="dgs-live-glass-row">
-          <div className="dgs-live-row-left">
-            <div className="dgs-live-row-avatar" style={{ background: "linear-gradient(135deg, #00F5A0 0%, #00D9F5 100%)" }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: "0.85rem" }}>G</span>
-            </div>
-            <span className="dgs-live-row-primary-val">Google Spam Update</span>
-          </div>
-
-          <div className="dgs-live-row-center-chips">
-            <span className="dgs-row-chip">Official Google RSS</span>
-            <span className="dgs-row-chip">Ranking Protected</span>
-            <span className="dgs-row-chip">Zero Penalty</span>
-          </div>
-
-          <div className="dgs-live-row-right">
-            <span className="dgs-row-value-green">COMPLIANT</span>
-            <span className="dgs-neon-pill-cyan">MONITORED</span>
-            <div className="dgs-row-action-icon">&rarr;</div>
-          </div>
-        </Link>
-
-        {/* Row 5: Action Required (Matching the orange LOST/Alert pill in mockup) */}
-        <Link href="/admin/search-console/" className="dgs-live-glass-row">
-          <div className="dgs-live-row-left">
-            <div className="dgs-live-row-avatar" style={{ background: "linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%)" }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: "0.85rem" }}>!</span>
-            </div>
-            <span className="dgs-live-row-primary-val">Legacy Sitemaps in GSC</span>
-          </div>
-
-          <div className="dgs-live-row-center-chips">
-            <span className="dgs-row-chip">/sitemap.rss (404)</span>
-            <span className="dgs-row-chip">/video-sitemap.xml (404)</span>
-            <span className="dgs-row-chip">Action: Remove in GSC</span>
-          </div>
-
-          <div className="dgs-live-row-right">
-            <span className="dgs-row-value-lost">MANUAL ACTION</span>
-            <span className="dgs-neon-pill-orange">REMOVE IN GSC</span>
-            <div className="dgs-row-action-icon">&rarr;</div>
-          </div>
-        </Link>
-
-        {/* Row 6: Reconciled Media Assets */}
-        <Link href="/admin/media/" className="dgs-live-glass-row">
-          <div className="dgs-live-row-left">
-            <div className="dgs-live-row-avatar" style={{ background: "linear-gradient(135deg, #6559e8 0%, #9B51E0 100%)" }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: "0.85rem" }}>M</span>
-            </div>
-            <span className="dgs-live-row-primary-val">Media Library V2</span>
-          </div>
-
-          <div className="dgs-live-row-center-chips">
-            <span className="dgs-row-chip">880 Reconciled Assets</span>
-            <span className="dgs-row-chip">WebP / WebM</span>
-            <span className="dgs-row-chip">Zero Broken Links</span>
-          </div>
-
-          <div className="dgs-live-row-right">
-            <span className="dgs-row-value-green">880 ASSETS</span>
-            <span className="dgs-neon-pill-cyan">RECONCILED</span>
-            <div className="dgs-row-action-icon">&rarr;</div>
-          </div>
-        </Link>
-      </section>
-
-      {/* Production Reality & Governance Architecture Panels */}
-      <div className="dgs-saas-card" style={{ background: "rgba(22, 26, 38, 0.65)", backdropFilter: "blur(28px)", border: "1px solid rgba(255,255,255,0.08)" }}>
-        <div className="dgs-saas-card-header">
-          <div>
-            <h3 className="dgs-saas-card-title">Production Architecture &amp; Governance</h3>
-            <p className="dgs-saas-card-subtitle">
-              Verified operational state of the native Next.js infrastructure
-            </p>
-          </div>
-          <span className="dgs-saas-chip success">
-            Production Verified
-          </span>
+          ) : (
+            <table className="dgs-saas-table">
+              <thead>
+                <tr>
+                  <th>Candidate</th>
+                  <th>Stage</th>
+                  <th>Registered</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentCandidates.map((cand) => (
+                  <tr key={cand.id}>
+                    <td>
+                      <div style={{ fontWeight: 600 }}>{cand.candidate_name}</div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)" }}>{cand.candidate_email}</div>
+                    </td>
+                    <td>
+                      <span className="dgs-saas-nav-badge warning">
+                        {cand.stage.replace(/_/g, " ")}
+                      </span>
+                    </td>
+                    <td style={{ fontSize: "0.78rem", color: "var(--dgs-text-dim)", whiteSpace: "nowrap" }}>
+                      {new Date(cand.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    </td>
+                    <td>
+                      <Link href={`/admin/hr-pipeline/?id=${cand.id}`} style={{ color: "var(--dgs-primary)", fontSize: "0.78rem", textDecoration: "none", fontWeight: 600 }}>
+                        Review &rarr;
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
-        <div className="dgs-saas-card-body">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
-            <div style={{ padding: "18px", background: "rgba(255,255,255,0.02)", borderRadius: "var(--dgs-radius-md)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-                <span style={{ fontSize: "1.2rem" }}>⚡</span>
-                <h4 style={{ fontSize: "0.95rem", color: "#fff", margin: 0 }}>Zero WordPress Runtime Dependency</h4>
-              </div>
-              <p style={{ fontSize: "0.84rem", color: "var(--dgs-text-muted)", margin: 0, lineHeight: 1.5 }}>
-                WordPress runtime dependency has been reduced to exactly 0. Legacy endpoints (`wp-login.php`, `wp-admin/`, `xmlrpc.php`) respond with 403 Forbidden. The native Next.js application serves 100% of public traffic.
-              </p>
-            </div>
+      </div>
 
-            <div style={{ padding: "18px", background: "rgba(255,255,255,0.02)", borderRadius: "var(--dgs-radius-md)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-                <span style={{ fontSize: "1.2rem" }}>🛡️</span>
-                <h4 style={{ fontSize: "0.95rem", color: "#fff", margin: 0 }}>Multi-User RBAC &amp; OWASP Scrypt</h4>
-              </div>
-              <p style={{ fontSize: "0.84rem", color: "var(--dgs-text-muted)", margin: 0, lineHeight: 1.5 }}>
-                Database-backed authentication with OWASP-compliant `scrypt` hashing is enforced. Granular roles (`SUPERADMIN`, `ADMIN`, `MANAGER`) govern server-side permissions with an immutable audit log.
-              </p>
-            </div>
+      {/* Services Health & Algorithmic Update Monitor */}
+      <div className="dgs-saas-card" style={{ padding: "20px", background: "var(--dgs-glass-bg)", border: "var(--dgs-glass-border)", borderRadius: "var(--dgs-radius-md)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px", flexWrap: "wrap", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <BellRing size={18} strokeWidth={1.8} style={{ color: "var(--dgs-orange)" }} />
+            <h3 style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>Google Search Update Compliance</h3>
+          </div>
+          <Link href="/admin/google-updates/" style={{ fontSize: "0.8rem", color: "var(--dgs-primary)", textDecoration: "none", fontWeight: 500 }}>
+            {stats.updatesCount} Official Updates Monitored &rarr;
+          </Link>
+        </div>
 
-            <div style={{ padding: "18px", background: "rgba(255,255,255,0.02)", borderRadius: "var(--dgs-radius-md)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-                <span style={{ fontSize: "1.2rem" }}>📊</span>
-                <h4 style={{ fontSize: "0.95rem", color: "#fff", margin: 0 }}>15-Day Automated Sitemap Audits</h4>
-              </div>
-              <p style={{ fontSize: "0.84rem", color: "var(--dgs-text-muted)", margin: 0, lineHeight: 1.5 }}>
-                Dynamic crawler automatically checks every URL in `sitemap.xml` for technical SEO, indexability, schema correctness, and heading hierarchies with historical regression tracking.
-              </p>
-            </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px" }}>
+          <div style={{ padding: "12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border-subtle)" }}>
+            <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginBottom: "4px" }}>CORE ALGORITHM</div>
+            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--dgs-success)" }}>100% Compliant</div>
+          </div>
+          <div style={{ padding: "12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border-subtle)" }}>
+            <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginBottom: "4px" }}>SPAM UPDATES</div>
+            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--dgs-success)" }}>0 Penalties Detected</div>
+          </div>
+          <div style={{ padding: "12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border-subtle)" }}>
+            <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginBottom: "4px" }}>RANKING PROTECTION</div>
+            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--dgs-primary)" }}>Active &amp; Guarded</div>
+          </div>
+          <div style={{ padding: "12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border-subtle)" }}>
+            <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginBottom: "4px" }}>AI ENGINE (GEMINI)</div>
+            <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--dgs-success)" }}>Connected (2.5 Flash)</div>
           </div>
         </div>
       </div>

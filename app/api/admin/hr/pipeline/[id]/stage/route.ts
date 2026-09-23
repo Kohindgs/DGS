@@ -10,6 +10,8 @@ const VALID_STAGES = [
   "interview_scheduled",
   "interview_done",
   "test_created",
+  "test_assigned",
+  "test_submitted",
   "selected",
   "offer_sent",
   "offer_accepted",

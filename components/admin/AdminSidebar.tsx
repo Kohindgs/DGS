@@ -1,16 +1,41 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import type { CmsUser } from "@/lib/cms/auth-db";
+import {
+  LayoutDashboard,
+  Search,
+  BarChart3,
+  ShieldCheck,
+  BellRing,
+  FileText,
+  Image as ImageIcon,
+  Briefcase,
+  Globe,
+  FileCheck2,
+  Inbox,
+  UserCheck,
+  FileUser,
+  GraduationCap,
+  Kanban,
+  Users,
+  History,
+  Cpu,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  X,
+} from "lucide-react";
 
 type NavItem = {
   title: string;
   href: string;
+  icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
   badge?: string;
   badgeVariant?: "primary" | "success" | "warning" | "info";
-  permissionResource?: string;
 };
 
 type NavGroup = {
@@ -22,62 +47,69 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: "DASHBOARD",
     items: [
-      { title: "Overview", href: "/admin/" },
+      { title: "Overview", href: "/admin/", icon: LayoutDashboard },
     ],
   },
   {
     title: "INSIGHTS",
     items: [
-      { title: "Search Console", href: "/admin/search-console/", badge: "GSC", badgeVariant: "primary" },
-      { title: "Analytics", href: "/admin/analytics/", badge: "GA4", badgeVariant: "info" },
-      { title: "Website Audits", href: "/admin/site-audits/", badge: "15d", badgeVariant: "success" },
-      { title: "Google Updates", href: "/admin/google-updates/" },
+      { title: "Search Console", href: "/admin/search-console/", icon: Search, badge: "GSC", badgeVariant: "primary" },
+      { title: "Analytics", href: "/admin/analytics/", icon: BarChart3, badge: "GA4", badgeVariant: "info" },
+      { title: "Website Audits", href: "/admin/site-audits/", icon: ShieldCheck, badge: "15d", badgeVariant: "success" },
+      { title: "Google Updates", href: "/admin/google-updates/", icon: BellRing },
     ],
   },
   {
     title: "CONTENT",
     items: [
-      { title: "Blogs", href: "/admin/blogs/" },
-      { title: "Media Library", href: "/admin/media/" },
-      { title: "Portfolio", href: "/admin/portfolio/" },
+      { title: "Blogs", href: "/admin/blogs/", icon: FileText },
+      { title: "Media Library", href: "/admin/media/", icon: ImageIcon },
+      { title: "Portfolio", href: "/admin/portfolio/", icon: Briefcase },
     ],
   },
   {
     title: "MARKETING",
     items: [
-      { title: "SEO Manager", href: "/admin/seo/" },
-      { title: "Forms", href: "/admin/forms/" },
-      { title: "Leads", href: "/admin/leads/" },
+      { title: "SEO Manager", href: "/admin/seo/", icon: Globe },
+      { title: "Forms", href: "/admin/forms/", icon: FileCheck2 },
+      { title: "Leads", href: "/admin/leads/", icon: Inbox },
     ],
   },
   {
     title: "PEOPLE",
     items: [
-      { title: "Careers", href: "/admin/careers/" },
-      { title: "Applications", href: "/admin/applications/" },
-      { title: "Assessments", href: "/admin/assessment/", badge: "AI", badgeVariant: "warning" },
-      { title: "HR Pipeline", href: "/admin/hr-pipeline/" },
+      { title: "Careers", href: "/admin/careers/", icon: UserCheck },
+      { title: "Applications", href: "/admin/applications/", icon: FileUser },
+      { title: "Assessments", href: "/admin/assessment/", icon: GraduationCap, badge: "OS", badgeVariant: "warning" },
+      { title: "HR Pipeline", href: "/admin/hr-pipeline/", icon: Kanban },
     ],
   },
   {
     title: "SYSTEM",
     items: [
-      { title: "Users & Roles", href: "/admin/users/" },
-      { title: "Activity Log", href: "/admin/activity-log/", badge: "Super", badgeVariant: "primary" },
-      { title: "Integrations", href: "/admin/integrations/" },
-      { title: "Settings", href: "/admin/settings/" },
+      { title: "Users & Roles", href: "/admin/users/", icon: Users },
+      { title: "Activity Log", href: "/admin/activity-log/", icon: History, badge: "Audit", badgeVariant: "primary" },
+      { title: "Integrations", href: "/admin/integrations/", icon: Cpu },
+      { title: "Settings", href: "/admin/settings/", icon: Settings },
     ],
   },
 ];
 
 type Props = {
   collapsed: boolean;
+  onToggleCollapse?: () => void;
   mobileOpen: boolean;
   onCloseMobile: () => void;
   currentUser?: CmsUser | null;
 };
 
-export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, currentUser }: Props) {
+export default function AdminSidebar({
+  collapsed,
+  onToggleCollapse,
+  mobileOpen,
+  onCloseMobile,
+  currentUser,
+}: Props) {
   const pathname = usePathname();
 
   return (
@@ -99,16 +131,19 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, cur
         <div className="dgs-saas-sidebar-brand">
           <Link href="/admin/" className="dgs-saas-brand-link" onClick={onCloseMobile}>
             <div className="dgs-saas-logo-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#7367F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="#7367F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="#7367F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Image
+                src={collapsed ? "/images/brand/dgs-mark.webp" : "/images/brand/dgs-logo.webp"}
+                alt="DGS Brand Logo"
+                width={collapsed ? 28 : 120}
+                height={28}
+                priority
+                style={{ objectFit: "contain", height: "auto" }}
+              />
             </div>
             {!collapsed && (
               <div className="dgs-saas-brand-text">
-                <span className="dgs-saas-brand-title">DGS CMS</span>
-                <span className="dgs-saas-brand-subtitle">Operations OS</span>
+                <span className="dgs-saas-brand-title">DGS Operations</span>
+                <span className="dgs-saas-brand-subtitle">Enterprise OS</span>
               </div>
             )}
           </Link>
@@ -119,7 +154,7 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, cur
               onClick={onCloseMobile}
               aria-label="Close navigation"
             >
-              ✕
+              <X size={18} />
             </button>
           )}
         </div>
@@ -127,7 +162,6 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, cur
         {/* Navigation Items */}
         <nav className="dgs-saas-nav">
           {NAV_GROUPS.map((group) => {
-            // Filter out superadmin only items if current user is not superadmin
             const visibleItems = group.items.filter((item) => {
               if (item.href === "/admin/activity-log/" && currentUser?.role !== "superadmin") {
                 return false;
@@ -150,6 +184,8 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, cur
                       ? pathname === "/admin" || pathname === "/admin/"
                       : pathname.startsWith(item.href);
 
+                    const IconComponent = item.icon;
+
                     return (
                       <li key={item.href} className="dgs-saas-nav-item">
                         <Link
@@ -158,7 +194,9 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, cur
                           onClick={onCloseMobile}
                           title={collapsed ? item.title : undefined}
                         >
-                          <span className="dgs-saas-nav-bullet" aria-hidden="true" />
+                          <span className="dgs-saas-nav-icon">
+                            <IconComponent size={18} strokeWidth={1.8} />
+                          </span>
                           {!collapsed && (
                             <>
                               <span className="dgs-saas-nav-label">{item.title}</span>
@@ -179,20 +217,36 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, cur
           })}
         </nav>
 
-        {/* User Card at Bottom */}
-        {!collapsed && currentUser && (
-          <div className="dgs-saas-sidebar-footer">
-            <div className="dgs-saas-user-mini">
-              <div className="dgs-saas-avatar-mini">
-                {currentUser.display_name.charAt(0).toUpperCase()}
+        {/* Sidebar Footer with Collapse Toggle & Current User */}
+        <div className="dgs-saas-sidebar-footer">
+          {onToggleCollapse && (
+            <button
+              type="button"
+              className="dgs-saas-collapse-btn desktop-only"
+              onClick={onToggleCollapse}
+              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+              {!collapsed && <span>Collapse Sidebar</span>}
+            </button>
+          )}
+
+          {!collapsed && currentUser && (
+            <div className="dgs-saas-user-mini" style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "4px" }}>
+              <div className="dgs-saas-avatar-mini" style={{ width: "28px", height: "28px", borderRadius: "50%", background: "var(--dgs-primary-light)", color: "var(--dgs-primary)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "0.75rem" }}>
+                {currentUser.display_name?.charAt(0).toUpperCase() || "A"}
               </div>
-              <div className="dgs-saas-user-info">
-                <span className="dgs-saas-user-name">{currentUser.display_name}</span>
-                <span className="dgs-saas-user-role">{currentUser.role.toUpperCase()}</span>
+              <div className="dgs-saas-user-info" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
+                <span className="dgs-saas-user-name" style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--dgs-text-main)", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
+                  {currentUser.display_name || currentUser.email}
+                </span>
+                <span className="dgs-saas-user-role" style={{ fontSize: "0.68rem", textTransform: "uppercase", color: "var(--dgs-primary)", fontWeight: 600 }}>
+                  {currentUser.role}
+                </span>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </aside>
     </>
   );

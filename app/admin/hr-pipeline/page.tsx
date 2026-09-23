@@ -30,5 +30,5 @@ export default async function AdminHrPipelinePage() {
     }
   }
 
-  return <HrPipelineClientView candidates={candidates} />;
+  return <HrPipelineClientView candidates={candidates} currentUserRole={currentUser?.role || "viewer"} />;
 }

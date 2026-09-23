@@ -5,6 +5,18 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import AdminNotificationsDropdown from "./AdminNotificationsDropdown";
 import type { CmsUser } from "@/lib/cms/auth-db";
+import {
+  Menu,
+  PanelLeft,
+  Search,
+  User,
+  KeyRound,
+  Shield,
+  Moon,
+  Sun,
+  LogOut,
+  ExternalLink,
+} from "lucide-react";
 
 type Props = {
   collapsed: boolean;
@@ -15,7 +27,7 @@ type Props = {
 };
 
 export default function AdminHeader({
-  collapsed,
+  collapsed: _collapsed,
   onToggleCollapse,
   onOpenMobile,
   onOpenSearch,
@@ -23,327 +35,196 @@ export default function AdminHeader({
 }: Props) {
   const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState(false);
-  const [quickCreateOpen, setQuickCreateOpen] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
 
-  const isActive = (path: string) => {
-    if (path === "/admin/" && (pathname === "/admin" || pathname === "/admin/")) return true;
-    return pathname.startsWith(path);
+  const toggleTheme = () => {
+    const nextTheme = !isLightMode;
+    setIsLightMode(nextTheme);
+    if (typeof document !== "undefined") {
+      if (nextTheme) {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+    }
   };
 
+  // Build clean breadcrumbs from pathname
+  const segments = pathname.replace(/^\/admin\/?/, "").split("/").filter(Boolean);
+  const breadcrumbTitle = segments.length > 0
+    ? segments[0].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+    : "Overview";
+
   return (
-    <header className="dgs-neon-header">
-      {/* Left: Brand + Channel Links */}
-      <div className="dgs-neon-brand">
+    <header className="dgs-saas-header">
+      {/* Left: Sidebar Toggle + Breadcrumb */}
+      <div className="dgs-saas-header-left">
+        {/* Mobile Hamburger */}
+        <button
+          type="button"
+          className="dgs-saas-toggle-btn mobile-only"
+          onClick={onOpenMobile}
+          aria-label="Open Mobile Navigation"
+        >
+          <Menu size={20} strokeWidth={1.8} />
+        </button>
+
+        {/* Desktop Sidebar Collapse Toggle */}
+        <button
+          type="button"
+          className="dgs-saas-toggle-btn desktop-only"
+          onClick={onToggleCollapse}
+          aria-label="Toggle Sidebar"
+          title="Toggle Sidebar (Cmd+B)"
+        >
+          <PanelLeft size={19} strokeWidth={1.8} />
+        </button>
+
+        {/* Breadcrumb Navigation */}
+        <nav className="dgs-saas-breadcrumbs" aria-label="Breadcrumb">
+          <Link href="/admin/" className="dgs-saas-breadcrumb-item">
+            Admin
+          </Link>
+          <span className="dgs-saas-breadcrumb-separator">/</span>
+          <span className="dgs-saas-breadcrumb-current">{breadcrumbTitle}</span>
+        </nav>
+      </div>
+
+      {/* Center: Spotlight Search Trigger */}
+      <div className="dgs-saas-header-center desktop-only">
+        <button
+          type="button"
+          className="dgs-saas-search-trigger"
+          onClick={onOpenSearch}
+          aria-label="Search DGS CMS (Cmd+K)"
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Search size={15} strokeWidth={1.8} />
+            <span>Search DGS CMS...</span>
+          </div>
+          <kbd className="dgs-saas-search-kbd">⌘K</kbd>
+        </button>
+      </div>
+
+      {/* Right: Status Pill, Notifications & User Dropdown */}
+      <div className="dgs-saas-header-right">
+        {/* Real Live Operational Status Pill */}
+        <div className="dgs-live-status-pill desktop-only" title="Native Next.js Production Runtime Active">
+          <span className="dgs-live-dot" />
+          <span>Operational</span>
+        </div>
+
+        {/* Mobile Search Button */}
         <button
           type="button"
           className="dgs-icon-btn mobile-only"
-          onClick={onOpenMobile}
-          aria-label="Open Navigation Menu"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-
-        <Link href="/admin/" className="dgs-neon-logo">
-          <div
-            style={{
-              width: "32px",
-              height: "32px",
-              borderRadius: "10px",
-              background: "var(--dgs-gradient-primary)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#fff",
-              fontWeight: 900,
-              fontSize: "1rem",
-              boxShadow: "0 0 14px rgba(255, 65, 108, 0.45)",
-            }}
-          >
-            D
-          </div>
-          <span style={{ fontSize: "1.15rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
-            D’GENIUS
-          </span>
-        </Link>
-
-        {/* Channels/Live Indicators (Matching social icons in reference) */}
-        <div className="dgs-neon-social-icons desktop-only">
-          <Link
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="dgs-neon-social-icon"
-            title="Open Live Website"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="2" y1="12" x2="22" y2="12" />
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-            </svg>
-          </Link>
-
-          <Link
-            href="/admin/site-audits/"
-            className="dgs-neon-social-icon"
-            title="100% Valid W3C Sitemap"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-          </Link>
-
-          <button
-            type="button"
-            className="dgs-neon-social-icon"
-            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
-            onClick={onOpenSearch}
-            title="Search CMS (Cmd+K)"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Center: Interactive Nav Tabs (Matching center tabs in reference) */}
-      <nav className="dgs-header-nav-tabs desktop-only" aria-label="Quick Switcher">
-        <Link
-          href="/admin/"
-          className={`dgs-header-tab ${isActive("/admin/") ? "active" : ""}`}
-        >
-          <span>⚡</span>
-          <span>Overview</span>
-        </Link>
-
-        <Link
-          href="/admin/search-console/"
-          className={`dgs-header-tab ${isActive("/admin/search-console/") ? "active" : ""}`}
-        >
-          <span>🔥</span>
-          <span>Search Console</span>
-        </Link>
-
-        <Link
-          href="/admin/analytics/"
-          className={`dgs-header-tab ${isActive("/admin/analytics/") ? "active" : ""}`}
-        >
-          <span>📊</span>
-          <span>Analytics</span>
-        </Link>
-
-        <Link
-          href="/admin/site-audits/"
-          className={`dgs-header-tab ${isActive("/admin/site-audits/") ? "active" : ""}`}
-        >
-          <span>🛡️</span>
-          <span>Audits</span>
-        </Link>
-
-        <Link
-          href="/admin/assessment/"
-          className={`dgs-header-tab ${isActive("/admin/assessment/") || isActive("/admin/hr-pipeline/") ? "active" : ""}`}
-        >
-          <span>🤖</span>
-          <span>Talent OS</span>
-        </Link>
-      </nav>
-
-      {/* Right: Actions, User Profile & Quick Plus Button */}
-      <div className="dgs-header-actions">
-        {/* Notifications Dropdown */}
-        <AdminNotificationsDropdown />
-
-        {/* Global Search Button */}
-        <button
-          type="button"
-          className="dgs-icon-btn"
           onClick={onOpenSearch}
-          title="Search CMS (Cmd+K)"
           aria-label="Search"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+          <Search size={18} strokeWidth={1.8} />
         </button>
 
-        {/* User Profile Capsule (Reference Style) */}
-        <div style={{ position: "relative" }}>
-          <div
-            className="dgs-user-profile-capsule"
+        {/* Open Public Site in New Tab */}
+        <Link
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="dgs-saas-toggle-btn desktop-only"
+          title="Open Live Public Website"
+          aria-label="Open Public Site"
+        >
+          <ExternalLink size={18} strokeWidth={1.8} />
+        </Link>
+
+        {/* Real Notifications Dropdown */}
+        <AdminNotificationsDropdown />
+
+        {/* User Profile Dropdown */}
+        <div className="dgs-saas-user-dropdown-container">
+          <button
+            type="button"
+            className="dgs-saas-avatar-btn"
             onClick={() => setProfileOpen(!profileOpen)}
-            style={{ cursor: "pointer" }}
-            role="button"
-            tabIndex={0}
+            aria-expanded={profileOpen}
+            aria-label="User Profile Menu"
           >
-            <div className="dgs-user-avatar-glow">
-              {currentUser?.display_name?.slice(0, 1) || "A"}
+            <div className="dgs-saas-avatar">
+              {currentUser?.display_name?.charAt(0).toUpperCase() || "A"}
             </div>
-            <div className="dgs-user-info-text desktop-only">
-              <span className="dgs-user-name">
-                {currentUser?.display_name || "Superadmin"}
-              </span>
-              <span className="dgs-user-meta">
-                <span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", background: "var(--dgs-neon-emerald)" }} />
-                100% Healthy
-              </span>
-            </div>
-          </div>
+          </button>
 
-          {/* Profile Menu Dropdown */}
           {profileOpen && (
-            <div
-              className="dgs-saas-card"
-              style={{
-                position: "absolute",
-                top: "100%",
-                right: 0,
-                marginTop: "10px",
-                width: "240px",
-                padding: "8px",
-                zIndex: 100,
-                boxShadow: "0 10px 40px rgba(0,0,0,0.7)",
-                backdropFilter: "blur(28px)",
-                borderRadius: "18px",
-              }}
-            >
-              <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--dgs-border-subtle)" }}>
-                <strong style={{ display: "block", color: "#fff", fontSize: "0.9rem" }}>
-                  {currentUser?.display_name || "DGS Superadmin"}
-                </strong>
-                <span style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)" }}>
-                  {currentUser?.email || "admin@dgeniussolutions.com"}
-                </span>
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginTop: "6px",
-                    fontSize: "0.68rem",
-                    padding: "2px 8px",
-                    borderRadius: "999px",
-                    background: "rgba(115, 103, 240, 0.2)",
-                    color: "var(--dgs-primary)",
-                    textTransform: "uppercase",
-                    fontWeight: 700,
-                  }}
-                >
-                  {currentUser?.role || "superadmin"}
-                </span>
-              </div>
+            <>
+              <div
+                className="dgs-saas-dropdown-backdrop"
+                onClick={() => setProfileOpen(false)}
+                aria-hidden="true"
+                style={{ position: "fixed", inset: 0, zIndex: 65 }}
+              />
+              <div className="dgs-saas-profile-dropdown" role="menu">
+                <div className="dgs-saas-dropdown-header">
+                  <div className="name">{currentUser?.display_name || "DGS Administrator"}</div>
+                  <div className="email">{currentUser?.email || "admin@dgeniussolutions.com"}</div>
+                </div>
 
-              <div style={{ padding: "6px 0" }}>
                 <Link
                   href="/admin/users/"
                   className="dgs-saas-dropdown-item"
-                  style={{ padding: "8px 14px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-text-main)", fontSize: "0.85rem", borderRadius: "8px" }}
+                  role="menuitem"
                   onClick={() => setProfileOpen(false)}
                 >
-                  <span>👥</span> Team &amp; Access
+                  <User size={16} strokeWidth={1.8} />
+                  <span>My Profile & Users</span>
                 </Link>
+
+                <Link
+                  href="/admin/settings/"
+                  className="dgs-saas-dropdown-item"
+                  role="menuitem"
+                  onClick={() => setProfileOpen(false)}
+                >
+                  <KeyRound size={16} strokeWidth={1.8} />
+                  <span>Change Password</span>
+                </Link>
+
                 <Link
                   href="/admin/activity-log/"
                   className="dgs-saas-dropdown-item"
-                  style={{ padding: "8px 14px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-text-main)", fontSize: "0.85rem", borderRadius: "8px" }}
+                  role="menuitem"
                   onClick={() => setProfileOpen(false)}
                 >
-                  <span>📋</span> Audit Activity Log
+                  <Shield size={16} strokeWidth={1.8} />
+                  <span>Audit & Sessions</span>
                 </Link>
-                <Link
-                  href="/admin/integrations/"
-                  className="dgs-saas-dropdown-item"
-                  style={{ padding: "8px 14px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-text-main)", fontSize: "0.85rem", borderRadius: "8px" }}
-                  onClick={() => setProfileOpen(false)}
-                >
-                  <span>🔌</span> API &amp; Integrations
-                </Link>
-              </div>
 
-              <div style={{ borderTop: "1px solid var(--dgs-border-subtle)", padding: "6px 0 0" }}>
-                <Link
-                  href="/api/admin/session?logout=1"
-                  className="dgs-saas-dropdown-item danger"
-                  style={{ padding: "8px 14px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-danger)", fontSize: "0.85rem", borderRadius: "8px" }}
+                <button
+                  type="button"
+                  className="dgs-saas-dropdown-item"
+                  role="menuitem"
+                  onClick={() => {
+                    toggleTheme();
+                    setProfileOpen(false);
+                  }}
                 >
-                  <span>🚪</span> Sign Out
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
+                  {isLightMode ? <Moon size={16} strokeWidth={1.8} /> : <Sun size={16} strokeWidth={1.8} />}
+                  <span>{isLightMode ? "Dark Mode" : "Light Mode"}</span>
+                </button>
 
-        {/* DGS Gradient Quick Action Button (+) */}
-        <div style={{ position: "relative" }}>
-          <button
-            type="button"
-            className="dgs-neon-action-plus"
-            onClick={() => setQuickCreateOpen(!quickCreateOpen)}
-            title="Quick Action"
-            aria-label="Quick Action"
-          >
-            +
-          </button>
+                <div className="dgs-saas-dropdown-divider" />
 
-          {/* Quick Action Popover */}
-          {quickCreateOpen && (
-            <div
-              className="dgs-saas-card"
-              style={{
-                position: "absolute",
-                top: "100%",
-                right: 0,
-                marginTop: "12px",
-                width: "220px",
-                padding: "8px",
-                zIndex: 100,
-                boxShadow: "0 10px 40px rgba(0,0,0,0.7)",
-                backdropFilter: "blur(28px)",
-                borderRadius: "18px",
-              }}
-            >
-              <div style={{ padding: "8px 12px", borderBottom: "1px solid var(--dgs-border-subtle)", fontSize: "0.75rem", fontWeight: 700, color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>
-                Quick Create
+                <form action="/api/admin/logout" method="POST">
+                  <button
+                    type="submit"
+                    className="dgs-saas-dropdown-item"
+                    role="menuitem"
+                    style={{ color: "var(--dgs-danger)", width: "100%" }}
+                  >
+                    <LogOut size={16} strokeWidth={1.8} />
+                    <span>Log Out</span>
+                  </button>
+                </form>
               </div>
-              <div style={{ padding: "6px 0" }}>
-                <Link
-                  href="/admin/blogs/"
-                  className="dgs-saas-dropdown-item"
-                  style={{ padding: "8px 12px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-text-main)", fontSize: "0.85rem", borderRadius: "8px" }}
-                  onClick={() => setQuickCreateOpen(false)}
-                >
-                  <span>✍️</span> New Blog Post
-                </Link>
-                <Link
-                  href="/admin/media/"
-                  className="dgs-saas-dropdown-item"
-                  style={{ padding: "8px 12px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-text-main)", fontSize: "0.85rem", borderRadius: "8px" }}
-                  onClick={() => setQuickCreateOpen(false)}
-                >
-                  <span>🖼️</span> Upload Media
-                </Link>
-                <Link
-                  href="/admin/assessment/"
-                  className="dgs-saas-dropdown-item"
-                  style={{ padding: "8px 12px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-text-main)", fontSize: "0.85rem", borderRadius: "8px" }}
-                  onClick={() => setQuickCreateOpen(false)}
-                >
-                  <span>🤖</span> AI Candidate Assessment
-                </Link>
-                <Link
-                  href="/admin/site-audits/"
-                  className="dgs-saas-dropdown-item"
-                  style={{ padding: "8px 12px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "var(--dgs-text-main)", fontSize: "0.85rem", borderRadius: "8px" }}
-                  onClick={() => setQuickCreateOpen(false)}
-                >
-                  <span>🚀</span> Trigger 15d Audit
-                </Link>
-              </div>
-            </div>
+            </>
           )}
         </div>
       </div>

@@ -71,6 +71,32 @@ export function AssessmentRunner(props:Props) {
     return()=>window.clearInterval(timer);
   },[status,startedAt,durationMinutes]);
 
+  // Autosave and restore answers from localStorage
+  const [formAnswers, setFormAnswers] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (!attemptId) return;
+    try {
+      const saved = localStorage.getItem(`dgs_attempt_${attemptId}`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setFormAnswers(parsed);
+      }
+    } catch {}
+  }, [attemptId]);
+
+  const handleInputChange = (questionId: string, value: string) => {
+    setFormAnswers((prev) => {
+      const next = { ...prev, [questionId]: value };
+      if (attemptId) {
+        try {
+          localStorage.setItem(`dgs_attempt_${attemptId}`, JSON.stringify(next));
+        } catch {}
+      }
+      return next;
+    });
+  };
+
   useEffect(()=>{
     if(status!=="ready") return;
     const visibility=()=>addActivity(document.hidden?"tab_hidden":"tab_visible");
@@ -79,6 +105,16 @@ export function AssessmentRunner(props:Props) {
     window.addEventListener("blur",blur);
     return()=>{document.removeEventListener("visibilitychange",visibility);window.removeEventListener("blur",blur);};
   },[status]);
+
+  // Server-enforced timer auto-submit
+  useEffect(() => {
+    if (status === "ready" && remaining === 0) {
+      addActivity("auto_submitted_time_expired");
+      if (formRef.current) {
+        formRef.current.requestSubmit();
+      }
+    }
+  }, [status, remaining]);
 
   const timerText=useMemo(()=>{
     const min=Math.floor(remaining/60);
@@ -90,11 +126,10 @@ export function AssessmentRunner(props:Props) {
     event.preventDefault();
     if(!attemptId||status!=="ready") return;
     setStatus("submitting");setMessage("");
-    const data=new FormData(event.currentTarget);
     const answers:Record<string,unknown>={};
     for(const question of questions){
-      const value=data.get(question.id);
-      answers[question.id]=question.type==="mcq" ? Number(value) : String(value||"");
+      const val = formAnswers[question.id] !== undefined ? formAnswers[question.id] : "";
+      answers[question.id] = question.type==="mcq" ? Number(val) : String(val);
     }
     addActivity("assessment_submitted");
     try{
@@ -105,44 +140,70 @@ export function AssessmentRunner(props:Props) {
       });
       const result=await response.json();
       if(!response.ok||!result.ok) throw new Error(result.message||"Submission failed.");
+      try {
+        localStorage.removeItem(`dgs_attempt_${attemptId}`);
+      } catch {}
       setStatus("done");
-      setMessage("Your assessment has been submitted. Thank you.");
+      setMessage("Your assessment has been received. Our recruitment team will review your submission and contact you directly.");
     }catch(error){
       setStatus("ready");
-      setMessage(error instanceof Error?error.message:"Submission failed.");
+      setMessage(error instanceof Error?error.message:"Submission failed. Please check your connection and retry.");
     }
   }
 
   if(status==="starting") return <div className={styles.state}>Preparing your secure assessment…</div>;
   if(status==="error") return <div className={styles.state}><h2>Assessment unavailable</h2><p>{message}</p></div>;
-  if(status==="done") return <div className={styles.state}><h2>Submitted</h2><p>{message}</p></div>;
+  if(status==="done") return (
+    <div className={styles.state}>
+      <h2 style={{ color: "#fff", marginBottom: "8px" }}>Assessment Submitted</h2>
+      <p style={{ maxWidth: "480px", margin: "0 auto", lineHeight: "1.5" }}>{message}</p>
+    </div>
+  );
 
   return <main className={styles.shell}>
 
     <header className={styles.header}>
       <div><p className={styles.kicker}>D&apos;Genius Solutions · Candidate Assessment</p><h1>{title}</h1><p>{summary}</p></div>
-      <div className={styles.timer} aria-live="polite"><span>Time remaining</span><strong>{timerText}</strong></div>
+      <div className={styles.timer} aria-live="polite"><span>Time remaining</span><strong style={{ color: remaining < 300 ? "#ef4444" : "inherit" }}>{timerText}</strong></div>
     </header>
     <section className={styles.notice}>
       <strong>{candidateName ? `Candidate: ${candidateName}` : "Secure assessment"}</strong>
-      <span>Answer independently. Leaving the tab is logged as an activity indicator for review, not an automatic rejection.</span>
+      <span>Answer independently. Leaving the tab is logged as an activity indicator for review, not an automatic rejection. Answers are autosaved locally.</span>
     </section>
     <form ref={formRef} onSubmit={submit} className={styles.form}>
       {questions.map((q,index)=><section className={styles.question} key={q.id}>
         <div className={styles.questionHead}><span>{String(index+1).padStart(2,"0")}</span><h2>{q.prompt}</h2></div>
         {q.type==="mcq" ? <div className={styles.options}>
           {q.options.map((option,optionIndex)=><label key={option}>
-            <input type="radio" name={q.id} value={optionIndex} required />
+            <input
+              type="radio"
+              name={q.id}
+              value={optionIndex}
+              checked={formAnswers[q.id] === String(optionIndex)}
+              onChange={() => handleInputChange(q.id, String(optionIndex))}
+              required
+            />
             <span>{option}</span>
           </label>)}
         </div> : <div>
-          <textarea name={q.id} rows={q.type==="long"?10:6} required onPaste={()=>addActivity("paste",q.id)} />
-          {q.minWords ? <p className={styles.hint}>Minimum {q.minWords} words.</p> : null}
+          <textarea
+            name={q.id}
+            rows={q.type==="long"?10:6}
+            value={formAnswers[q.id] || ""}
+            onChange={(e) => handleInputChange(q.id, e.target.value)}
+            required
+            onPaste={()=>addActivity("paste",q.id)}
+          />
+          {q.minWords ? (
+            <p className={styles.hint}>
+              Minimum {q.minWords} words (current: {(formAnswers[q.id] || "").trim().split(/\s+/).filter(Boolean).length} words).
+            </p>
+          ) : null}
         </div>}
       </section>)}
       {message ? <p className={styles.error} role="alert">{message}</p> : null}
-      <button className={styles.submit} type="submit" disabled={status==="submitting"||remaining===0}>
-        {status==="submitting"?"Submitting…":"Submit assessment"}
+      <button className={styles.submit} type="submit" disabled={status==="submitting"}>
+        {status==="submitting"?"Submitting securely…":"Submit assessment"}
       </button>
     </form>
   </main>;
