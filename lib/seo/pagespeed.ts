@@ -50,7 +50,6 @@ function getPageSpeedApiKey(): string | null {
   return (
     process.env.PAGESPEED_API_KEY ||
     process.env.GOOGLE_API_KEY ||
-    process.env.GEMINI_API_KEY ||
     null
   );
 }
@@ -58,7 +57,6 @@ function getPageSpeedApiKey(): string | null {
 export function isPageSpeedConfigured(): { configured: boolean; keySource: string | null } {
   if (process.env.PAGESPEED_API_KEY) return { configured: true, keySource: "PAGESPEED_API_KEY" };
   if (process.env.GOOGLE_API_KEY) return { configured: true, keySource: "GOOGLE_API_KEY" };
-  if (process.env.GEMINI_API_KEY) return { configured: true, keySource: "GEMINI_API_KEY" };
   return { configured: false, keySource: null };
 }
 
@@ -143,6 +141,10 @@ export async function runPageSpeedInsights(
   }
 
   const apiKey = getPageSpeedApiKey();
+  if (!apiKey) {
+    throw new Error("PageSpeed API is NOT CONFIGURED. PAGESPEED_API_KEY or GOOGLE_API_KEY must be configured in server environment variables.");
+  }
+
   const endpoint = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
   endpoint.searchParams.set("url", url);
   endpoint.searchParams.set("strategy", strategy);
@@ -150,10 +152,7 @@ export async function runPageSpeedInsights(
   endpoint.searchParams.append("category", "accessibility");
   endpoint.searchParams.append("category", "best-practices");
   endpoint.searchParams.append("category", "seo");
-
-  if (apiKey) {
-    endpoint.searchParams.set("key", apiKey);
-  }
+  endpoint.searchParams.set("key", apiKey);
 
   const res = await fetch(endpoint.toString(), {
     headers: { Accept: "application/json" },

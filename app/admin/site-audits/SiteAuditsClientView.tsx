@@ -349,13 +349,13 @@ export default function SiteAuditsClientView({
     { key: "recommendation", header: "Recommended Action" },
   ];
 
-  const overall = latestAudit?.overall_score ?? 98;
-  const tech = latestAudit?.technical_score ?? 100;
-  const index = latestAudit?.indexability_score ?? 100;
-  const content = latestAudit?.content_score ?? 95;
-  const schema = latestAudit?.schema_score ?? 0;
-  const media = latestAudit?.media_score ?? 100;
-  const perf = latestAudit?.performance_score;
+  const overall = latestAudit?.overall_score != null ? latestAudit.overall_score : null;
+  const tech = latestAudit?.technical_score != null ? latestAudit.technical_score : null;
+  const index = latestAudit?.indexability_score != null ? latestAudit.indexability_score : null;
+  const content = latestAudit?.content_score != null ? latestAudit.content_score : null;
+  const schema = latestAudit?.schema_score != null ? latestAudit.schema_score : null;
+  const media = latestAudit?.media_score != null ? latestAudit.media_score : null;
+  const perf = latestAudit?.performance_score != null ? latestAudit.performance_score : null;
 
   return (
     <div>
@@ -396,28 +396,34 @@ export default function SiteAuditsClientView({
       <div className="dgs-saas-kpi-grid">
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">Overall Health Score</div>
-          <div className="dgs-saas-kpi-value">{overall}/100</div>
+          <div className="dgs-saas-kpi-value">{overall != null ? `${overall}/100` : "NOT MEASURED"}</div>
           <div className="dgs-saas-kpi-delta positive">
-            {pages.length} URLs crawled
+            {pages.length > 0 ? `${pages.length} URLs crawled` : "No crawl data"}
           </div>
         </div>
 
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">Technical Indexability</div>
-          <div className="dgs-saas-kpi-value">{tech}/100</div>
-          <div className="dgs-saas-kpi-delta positive">Index score: {index}/100</div>
+          <div className="dgs-saas-kpi-value">{tech != null ? `${tech}/100` : "NOT MEASURED"}</div>
+          <div className="dgs-saas-kpi-delta positive">
+            {index != null ? `Index score: ${index}/100` : "Index score: NOT MEASURED"}
+          </div>
         </div>
 
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">Structured Data (Schema)</div>
-          <div className="dgs-saas-kpi-value">{schema}/100</div>
-          <div className="dgs-saas-kpi-delta neutral">Measured from page JSON-LD</div>
+          <div className="dgs-saas-kpi-value">{schema != null ? `${schema}/100` : "NOT MEASURED"}</div>
+          <div className="dgs-saas-kpi-delta neutral">
+            {schema != null ? "Measured from page JSON-LD" : "Run audit to inspect"}
+          </div>
         </div>
 
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">Image Media Score</div>
-          <div className="dgs-saas-kpi-value">{media}/100</div>
-          <div className="dgs-saas-kpi-delta neutral">Accessibility alt coverage</div>
+          <div className="dgs-saas-kpi-value">{media != null ? `${media}/100` : "NOT MEASURED"}</div>
+          <div className="dgs-saas-kpi-delta neutral">
+            {media != null ? "Accessibility alt coverage" : "Run audit to inspect"}
+          </div>
         </div>
 
         <div className="dgs-saas-kpi-card">
@@ -430,6 +436,35 @@ export default function SiteAuditsClientView({
           </div>
         </div>
       </div>
+
+      {/* Empty State Banner when no completed audit exists */}
+      {!latestAudit && pages.length === 0 && (
+        <div
+          style={{
+            margin: "24px 0",
+            padding: "36px 24px",
+            background: "rgba(255,255,255,0.02)",
+            border: "1px dashed rgba(255,255,255,0.15)",
+            borderRadius: "var(--dgs-radius)",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontSize: "1.1rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
+            No Site Audit Completed Yet
+          </div>
+          <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", maxWidth: "560px", margin: "0 auto 20px" }}>
+            Audit metrics are strictly calculated from live crawl telemetry. All scores currently display <strong>NOT MEASURED</strong>. Run a complete audit to evaluate technical indexability, schema presence, and missing alt images.
+          </p>
+          <button
+            type="button"
+            className="dgs-saas-btn primary"
+            onClick={handleRunAudit}
+            disabled={running}
+          >
+            {running ? "Crawling Sitemap..." : "Run Audit"}
+          </button>
+        </div>
+      )}
 
       {/* Navigation tabs */}
       <div

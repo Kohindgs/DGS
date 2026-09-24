@@ -100,6 +100,23 @@ try {
     }
   }
 
+  // Column migration for site_audit_missing_alts
+  try {
+    const [samaCols] = await connection.query("DESCRIBE site_audit_missing_alts");
+    const samaExistingCols = new Set(samaCols.map((c) => c.Field));
+    const samaMigrations = [
+      { col: "source_type", sql: "ALTER TABLE site_audit_missing_alts ADD COLUMN source_type VARCHAR(50) NOT NULL DEFAULT 'MIRRORED PAGE HTML'" },
+      { col: "source_identifier", sql: "ALTER TABLE site_audit_missing_alts ADD COLUMN source_identifier VARCHAR(255) NULL" },
+      { col: "source_location", sql: "ALTER TABLE site_audit_missing_alts ADD COLUMN source_location TEXT NULL" },
+    ];
+    for (const m of samaMigrations) {
+      if (!samaExistingCols.has(m.col)) {
+        await connection.query(m.sql);
+        console.log(`Applied column migration: site_audit_missing_alts.${m.col}`);
+      }
+    }
+  } catch {}
+
   const expectedTables = [
     "assessment_assignments",
     "assessment_attempts",

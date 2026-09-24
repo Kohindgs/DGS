@@ -110,8 +110,12 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit, envDiagno
             <span className="dgs-saas-chip info" style={{ fontWeight: 700, letterSpacing: "0.06em" }}>
               UNIFIED GOOGLE ENGINE
             </span>
-            <span className={`dgs-saas-chip ${isConnected ? "success" : "warning"}`}>
-              {isConnected ? "CONNECTED & ENCRYPTED" : "OAUTH PENDING"}
+            <span className={`dgs-saas-chip ${isConnected ? "success" : (!hasClientId || !hasClientSecret) ? "danger" : "warning"}`}>
+              {isConnected
+                ? "CONNECTED & ENCRYPTED"
+                : (!hasClientId || !hasClientSecret)
+                ? "CONFIGURATION REQUIRED"
+                : "WAITING USER AUTHORIZATION"}
             </span>
           </div>
           <h2 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#fff", margin: 0 }}>

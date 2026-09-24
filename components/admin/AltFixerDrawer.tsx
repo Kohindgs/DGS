@@ -18,6 +18,7 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
   const [suggestingId, setSuggestingId] = useState<string | null>(null);
   const [applyingId, setApplyingId] = useState<string | null>(null);
   const [filterResolved, setFilterResolved] = useState<boolean>(false);
+  const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
   const fetchItems = async () => {
     setLoading(true);
@@ -97,6 +98,11 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
       if (data.ok) {
         setItems((prev) => prev.filter((it) => it.id !== item.id));
         setEditingId(null);
+        if (data.beforeCount !== undefined && data.afterCount !== undefined) {
+          setFeedbackMsg(`✓ Alt text applied and verified live. Missing alts on page: Before: ${data.beforeCount} → After: ${data.afterCount}`);
+        } else {
+          setFeedbackMsg(`✓ Alt text applied and verified live (${data.affectedUsages || 1} usage updated).`);
+        }
         if (onUpdated) onUpdated();
       } else {
         alert(data.error || "Failed to apply alt text");
@@ -218,6 +224,22 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
           </span>
         </div>
 
+        {feedbackMsg && (
+          <div
+            style={{
+              padding: "10px 14px",
+              background: "rgba(16, 185, 129, 0.12)",
+              border: "1px solid rgba(16, 185, 129, 0.3)",
+              borderRadius: "var(--dgs-radius-sm)",
+              color: "var(--dgs-success)",
+              fontSize: "0.82rem",
+              marginBottom: "16px",
+            }}
+          >
+            {feedbackMsg}
+          </div>
+        )}
+
         {loading ? (
           <div style={{ padding: "40px 0", textAlign: "center", color: "var(--dgs-text-muted)" }}>
             Loading images for audit...
@@ -300,16 +322,32 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
                         </strong>
                         <span
                           className={`dgs-saas-chip ${
-                            item.altStatus === "MISSING_ALT_ATTRIBUTE" ? "danger" : "warning"
+                            item.altStatus === "ALT_FIXED"
+                              ? "success"
+                              : item.altStatus === "EMPTY_ALT_DECORATIVE"
+                              ? "neutral"
+                              : item.altStatus === "EMPTY_ALT_NEEDS_REVIEW"
+                              ? "warning"
+                              : "danger"
                           }`}
                           style={{ fontSize: "0.68rem" }}
                         >
-                          {item.altStatus === "MISSING_ALT_ATTRIBUTE" ? "Missing Alt Tag" : "Empty Alt"}
+                          {item.altStatus === "ALT_FIXED"
+                            ? "ALT FIXED"
+                            : item.altStatus === "EMPTY_ALT_DECORATIVE"
+                            ? "DECORATIVE (alt=\"\")"
+                            : item.altStatus === "EMPTY_ALT_NEEDS_REVIEW"
+                            ? "EMPTY ALT"
+                            : "MISSING ALT"}
                         </span>
                       </div>
 
                       <div style={{ fontSize: "0.76rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
                         Page: <code>{item.pageUrl}</code>
+                      </div>
+
+                      <div style={{ fontSize: "0.76rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
+                        Source: <strong style={{ color: "#fff" }}>{item.sourceType || "MIRRORED PAGE HTML"}</strong>
                       </div>
 
                       <div style={{ fontSize: "0.76rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
@@ -379,7 +417,7 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
                           }}
                         >
                           <div style={{ fontSize: "0.72rem", color: "var(--dgs-primary)", fontWeight: 700, textTransform: "uppercase" }}>
-                            AI / Contextual Suggestion:
+                            Contextual AI Suggestion (Gemini 2.5 Flash):
                           </div>
                           <div style={{ fontSize: "0.84rem", color: "#fff", marginTop: "3px", fontStyle: "italic" }}>
                             &ldquo;{item.suggestedAlt}&rdquo;

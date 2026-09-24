@@ -1,18 +1,17 @@
 {
-  "checkedAt": "2026-09-24T11:46:25.918Z",
-  "target": "http://127.0.0.1:3000",
+  "checkedAt": "2026-09-24T13:13:20.100Z",
+  "target": "https://www.dgeniussolutions.com",
   "baselineOverallSha256": "25aeaa2f440ee5f34189f0522d88882878909eaad0881e3fdd01c13182f6284e",
   "baselineIntegrity": "pass",
-  "expectStagingNoindex": true,
+  "expectStagingNoindex": false,
   "protectedRouteCount": 4,
   "routes": [
     {
       "path": "/services/ai-video-production-agency/",
       "baselineRouteSha256": "0072eddb298dddeed5891aeddb36e8c4e26ffe53a28b55431583ca3539bce11f",
       "httpStatus": 200,
-      "indexable": false,
-      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
-      "expectStagingNoindex": true,
+      "indexable": true,
+      "expectStagingNoindex": false,
       "title": "AI Video Production Agency in Mumbai | D’Genius Solutions",
       "description": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
       "h1": "AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
@@ -69,11 +68,6 @@
       },
       "findings": [
         {
-          "class": "A",
-          "label": "EXPECTED_STAGING_DIFFERENCE",
-          "detail": "EXPECTED_STAGING_NOINDEX"
-        },
-        {
           "class": "B",
           "label": "APPROVED_TECHNICAL_LINK_TARGET_CORRECTION",
           "detail": "\"Google Ads Services\" WordPress /services/google-ads/ -> required Next /services/performance-marketing/"
@@ -95,9 +89,8 @@
       "path": "/services/aeo-services-in-mumbai/",
       "baselineRouteSha256": "2f5465c259ccc1705192373eedb10b2316aaffc47bff7d9ce3325c8b5ab5cf28",
       "httpStatus": 200,
-      "indexable": false,
-      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
-      "expectStagingNoindex": true,
+      "indexable": true,
+      "expectStagingNoindex": false,
       "title": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
       "description": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
       "h1": "AEO Services in Mumbai from a Mumbai-Based AEO Agency",
@@ -141,56 +134,56 @@
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/SS2.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/ss3.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
             "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-9.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-10.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-11.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-15.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
             "scope": "body"
           },
@@ -206,11 +199,6 @@
       },
       "findings": [
         {
-          "class": "A",
-          "label": "EXPECTED_STAGING_DIFFERENCE",
-          "detail": "EXPECTED_STAGING_NOINDEX"
-        },
-        {
           "class": "B",
           "label": "APPROVED_TECHNICAL_CORRECTION",
           "detail": "Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)"
@@ -222,9 +210,8 @@
       "path": "/services/geo/",
       "baselineRouteSha256": "ad32afe2e6b85bf3e93cc22a779831dea541fa2df549ab1061c469bec1b6ce84",
       "httpStatus": 200,
-      "indexable": false,
-      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
-      "expectStagingNoindex": true,
+      "indexable": true,
+      "expectStagingNoindex": false,
       "title": "GEO Services in Mumbai | D'Genius Solutions",
       "description": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
       "h1": "Generative Engine Optimization (GEO) Services in Mumbai",
@@ -268,78 +255,71 @@
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/SS-1.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-1.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/SS2.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/SS2.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS2.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS2.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/ss3.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/ss3.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/ss3.png.webp",
             "path": "/wp-content/smush-webp/2026/07/ss3.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/SS-4.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "path": "/wp-content/smush-webp/2026/07/SS-4.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-9.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-9.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-9.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-9.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-10.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-10.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-10.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-10.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-11.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-11.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-11.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-11.png.webp",
             "scope": "body"
           },
           {
             "anchor": "",
             "href": "/wp-content/smush-webp/2026/07/image-15.png.webp",
-            "destination": "http://127.0.0.1:3000/wp-content/smush-webp/2026/07/image-15.png.webp",
+            "destination": "https://www.dgeniussolutions.com/wp-content/smush-webp/2026/07/image-15.png.webp",
             "path": "/wp-content/smush-webp/2026/07/image-15.png.webp",
             "scope": "body"
           }
         ],
         "altDiffs": []
       },
-      "findings": [
-        {
-          "class": "A",
-          "label": "EXPECTED_STAGING_DIFFERENCE",
-          "detail": "EXPECTED_STAGING_NOINDEX"
-        }
-      ],
+      "findings": [],
       "blocking": []
     },
     {
       "path": "/services/llm-seo-service/",
       "baselineRouteSha256": "3f52bed0d090203560874c4fdd5e9d3fe3544689615d3d377218c5dffe5af141",
       "httpStatus": 200,
-      "indexable": false,
-      "noindexClassification": "EXPECTED_STAGING_NOINDEX",
-      "expectStagingNoindex": true,
+      "indexable": true,
+      "expectStagingNoindex": false,
       "title": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
       "description": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get a free AI search audit by D'Genius Solutions.",
       "h1": "LLM SEO Services in Mumbai for AI Search Visibility",
@@ -390,13 +370,7 @@
         ],
         "altDiffs": []
       },
-      "findings": [
-        {
-          "class": "A",
-          "label": "EXPECTED_STAGING_DIFFERENCE",
-          "detail": "EXPECTED_STAGING_NOINDEX"
-        }
-      ],
+      "findings": [],
       "blocking": []
     }
   ],
@@ -413,7 +387,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -429,7 +403,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -445,7 +419,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/blogs/optimize-for-ai-overviews/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -461,7 +435,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/performance-marketing/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -477,7 +451,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/website-development-amc/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -493,7 +467,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/blogs/future-of-seo/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -509,7 +483,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -525,7 +499,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -541,7 +515,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -557,7 +531,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -573,7 +547,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -589,7 +563,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -605,7 +579,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -621,7 +595,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -637,7 +611,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -653,7 +627,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -669,7 +643,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -685,7 +659,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -701,7 +675,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -717,7 +691,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -733,7 +707,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -749,7 +723,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -765,7 +739,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -781,7 +755,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/llm-seo-service/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -797,7 +771,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -813,7 +787,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -829,7 +803,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -845,7 +819,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -861,7 +835,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -877,7 +851,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/aeo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -893,7 +867,7 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/geo/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     },
@@ -909,20 +883,16 @@
       "httpStatus": 200,
       "redirectHops": 0,
       "canonicalPath": "/services/seo-services-in-mumbai/",
-      "indexable": false,
+      "indexable": true,
       "issues": [],
       "healthy": true
     }
   ],
   "explainedFindings": [
-    "/services/ai-video-production-agency/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/ai-video-production-agency/: [B] \"Google Ads Services\" WordPress /services/google-ads/ -> required Next /services/performance-marketing/",
     "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" WordPress /services/website-development/ -> required Next /services/website-development-amc/",
     "/services/ai-video-production-agency/: [C] normalized content hash differs without structural heading/FAQ/link loss",
-    "/services/aeo-services-in-mumbai/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/aeo-services-in-mumbai/: [B] Next self-canonical /services/aeo-services-in-mumbai/ (WordPress /services/aeo/ not restored)",
-    "/services/geo/: [A] EXPECTED_STAGING_NOINDEX",
-    "/services/llm-seo-service/: [A] EXPECTED_STAGING_NOINDEX",
     "/services/ai-video-production-agency/: [B] \"Google Ads Services\" approved link-target correction /services/google-ads/ -> /services/performance-marketing/",
     "/services/ai-video-production-agency/: [B] \"Website Development Company In Mumbai\" approved link-target correction /services/website-development/ -> /services/website-development-amc/"
   ],

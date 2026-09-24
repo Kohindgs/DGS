@@ -433,7 +433,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates }: Pro
                     >
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#fff" }}>{chk.name}</span>
-                        <span className={`dgs-saas-chip ${chk.result === "PASS" ? "success" : chk.result === "FAIL" ? "danger" : "info"}`} style={{ fontSize: "0.7rem", padding: "2px 6px" }}>
+                        <span className={`dgs-saas-chip ${chk.result === "PASS" ? "success" : chk.result === "FAIL" ? "danger" : chk.result === "WARN" ? "warning" : "info"}`} style={{ fontSize: "0.7rem", padding: "2px 6px" }}>
                           {chk.result}
                         </span>
                       </div>
