@@ -63,13 +63,22 @@ type Props = {
   jds: JD[];
   versions: Version[];
   candidates: Candidate[];
+  currentUserRole?: string;
 };
 
-export default function AssessmentClientView({ jds: initialJds, versions: initialVersions, candidates: initialCandidates }: Props) {
+export default function AssessmentClientView({
+  jds: initialJds,
+  versions: initialVersions,
+  candidates: initialCandidates,
+  currentUserRole,
+}: Props) {
   const [jds, setJds] = useState<JD[]>(initialJds);
   const [versions, setVersions] = useState<Version[]>(initialVersions);
   const [candidates, setCandidates] = useState<Candidate[]>(initialCandidates);
   const [activeTab, setActiveTab] = useState<"jds" | "versions" | "candidates">("jds");
+  const [candidateToDelete, setCandidateToDelete] = useState<{ id: string; name: string; email: string } | null>(null);
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [isDeletingCandidate, setIsDeletingCandidate] = useState(false);
 
   // Gemini API Health state
   const [apiHealth, setApiHealth] = useState<{ testing: boolean; ok?: boolean; message?: string; latency?: number }>({
@@ -659,14 +668,34 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
             keyExtractor={(c) => c.id}
             searchPlaceholder="Search candidate submissions..."
             actions={(c) => (
-              <button
-                type="button"
-                className="dgs-saas-btn primary sm"
-                onClick={() => handleOpenCandidateWorkstation(c.id)}
-                style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
-              >
-                <Activity size={13} /> 3-Pane Workstation
-              </button>
+              <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                <button
+                  type="button"
+                  className="dgs-saas-btn primary sm"
+                  onClick={() => handleOpenCandidateWorkstation(c.id)}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                >
+                  <Activity size={13} /> 3-Pane Workstation
+                </button>
+                {currentUserRole === "superadmin" && (
+                  <button
+                    type="button"
+                    className="dgs-saas-btn danger sm"
+                    onClick={() => {
+                      setCandidateToDelete({
+                        id: c.id,
+                        name: c.name,
+                        email: c.email,
+                      });
+                      setDeleteConfirmText("");
+                    }}
+                    title="Permanently delete candidate"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                )}
+              </div>
             )}
           />
         </div>
@@ -1133,6 +1162,23 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                 >
                   <UserX size={13} style={{ marginRight: 4 }} /> Reject
                 </button>
+                {currentUserRole === "superadmin" && (
+                  <button
+                    type="button"
+                    className="dgs-saas-btn danger sm"
+                    onClick={() => {
+                      setCandidateToDelete({
+                        id: candidateDetail.id,
+                        name: candidateDetail.candidate_name || candidateDetail.name || "Candidate",
+                        email: candidateDetail.candidate_email || candidateDetail.email || "",
+                      });
+                      setDeleteConfirmText("");
+                    }}
+                    style={{ background: "rgba(239, 68, 68, 0.2)", borderColor: "var(--dgs-danger)" }}
+                  >
+                    <Trash2 size={13} style={{ marginRight: 4 }} /> Delete Candidate
+                  </button>
+                )}
                 <button type="button" className="dgs-saas-btn secondary sm" onClick={() => setSelectedCandidateId(null)}>
                   Close
                 </button>
@@ -1300,6 +1346,89 @@ export default function AssessmentClientView({ jds: initialJds, versions: initia
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: Delete Candidate (Superadmin only, type DELETE to confirm) */}
+      {candidateToDelete && (
+        <div className="dgs-saas-search-overlay" onClick={() => !isDeletingCandidate && setCandidateToDelete(null)}>
+          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "520px", maxWidth: "95vw" }}>
+            <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
+              <h3 style={{ margin: 0, color: "var(--dgs-danger)", display: "flex", alignItems: "center", gap: "8px" }}>
+                <Trash2 size={18} /> Permanently Delete Candidate
+              </h3>
+            </div>
+            <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
+              <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--dgs-text-primary)", lineHeight: 1.5 }}>
+                You are about to permanently delete <strong>{candidateToDelete.name}</strong> ({candidateToDelete.email}).
+              </p>
+              <div style={{ background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.3)", borderRadius: "6px", padding: "12px", fontSize: "0.82rem", color: "#FCA5A5", lineHeight: 1.5 }}>
+                ⚠️ <strong>Warning:</strong> This action cannot be undone. It will purge all assessment attempts, test answers, scores, recruitment pipeline stages, and private HR documents associated with this candidate across the system.
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "0.82rem", color: "var(--dgs-text-muted)", marginBottom: "6px" }}>
+                  Please type <strong style={{ color: "#fff" }}>DELETE</strong> to confirm:
+                </label>
+                <input
+                  type="text"
+                  value={deleteConfirmText}
+                  onChange={(e) => setDeleteConfirmText(e.target.value)}
+                  placeholder="Type DELETE"
+                  className="dgs-input"
+                  style={{
+                    width: "100%",
+                    padding: "8px 12px",
+                    background: "rgba(14, 17, 25, 0.8)",
+                    border: "1px solid var(--dgs-border)",
+                    borderRadius: "6px",
+                    color: "#fff",
+                    fontSize: "0.9rem",
+                    outline: "none",
+                  }}
+                  autoFocus
+                />
+              </div>
+            </div>
+            <div style={{ padding: "16px 24px", borderTop: "1px solid var(--dgs-border)", display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+              <button
+                type="button"
+                className="dgs-saas-btn secondary sm"
+                onClick={() => setCandidateToDelete(null)}
+                disabled={isDeletingCandidate}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="dgs-saas-btn danger sm"
+                disabled={deleteConfirmText !== "DELETE" || isDeletingCandidate}
+                onClick={async () => {
+                  if (deleteConfirmText !== "DELETE" || !candidateToDelete) return;
+                  setIsDeletingCandidate(true);
+                  try {
+                    const res = await fetch(`/api/admin/assessment/candidates/${candidateToDelete.id}`, {
+                      method: "DELETE",
+                    });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error || "Failed to delete candidate");
+                    setCandidates((prev) => prev.filter((c) => c.id !== candidateToDelete.id));
+                    if (selectedCandidateId === candidateToDelete.id) {
+                      setSelectedCandidateId(null);
+                      setCandidateDetail(null);
+                    }
+                    setCandidateToDelete(null);
+                    alert("Candidate record permanently deleted.");
+                  } catch (err: any) {
+                    alert(err.message || "Deletion failed");
+                  } finally {
+                    setIsDeletingCandidate(false);
+                  }
+                }}
+              >
+                {isDeletingCandidate ? "Deleting..." : "Permanently Delete"}
+              </button>
             </div>
           </div>
         </div>

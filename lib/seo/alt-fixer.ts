@@ -406,7 +406,7 @@ export async function verifyRenderedAlt(params: {
       }
     }
 
-    return true; // Verified
+    return false; // Fail closed if not verified in file, blog, or media table
   } catch (err) {
     console.warn("verifyRenderedAlt check warning:", err);
     return false;

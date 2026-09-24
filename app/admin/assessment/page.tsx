@@ -38,7 +38,7 @@ export default async function AssessmentAdminPage() {
         `SELECT c.id, c.assignment_id, c.objective_score, c.objective_total, c.role_match_score, c.review_status, c.submitted_at,
                 hp.candidate_name as name, hp.candidate_email as email
          FROM assessment_candidates c
-         LEFT JOIN hr_pipeline hp ON c.id = hp.id
+         LEFT JOIN hr_pipeline hp ON (c.assignment_id = hp.id OR c.id = hp.id)
          ORDER BY c.submitted_at DESC
          LIMIT 100`
       );
@@ -57,5 +57,12 @@ export default async function AssessmentAdminPage() {
     }
   }
 
-  return <AssessmentClientView jds={jds} versions={versions} candidates={candidates} />;
+  return (
+    <AssessmentClientView
+      jds={jds}
+      versions={versions}
+      candidates={candidates}
+      currentUserRole={currentUser?.role}
+    />
+  );
 }

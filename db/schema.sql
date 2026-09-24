@@ -239,6 +239,7 @@ CREATE TABLE IF NOT EXISTS media_assets (
   optimised_file_size BIGINT NULL,
   alt_text TEXT NULL,
   is_decorative BOOLEAN NOT NULL DEFAULT FALSE,
+  alt_source VARCHAR(50) NOT NULL DEFAULT 'MANUAL',
   title VARCHAR(255) NULL,
   caption TEXT NULL,
   description TEXT NULL,
@@ -392,6 +393,10 @@ CREATE TABLE IF NOT EXISTS site_audit_runs (
   trigger_type VARCHAR(50) NOT NULL DEFAULT 'manual',
   total_pages INT NOT NULL DEFAULT 0,
   crawled_pages INT NOT NULL DEFAULT 0,
+  discovered_url_count INT NOT NULL DEFAULT 0,
+  crawled_url_count INT NOT NULL DEFAULT 0,
+  failed_url_count INT NOT NULL DEFAULT 0,
+  sitemap_error TEXT NULL,
   overall_score INT NOT NULL DEFAULT 0,
   technical_score INT NOT NULL DEFAULT 0,
   indexability_score INT NOT NULL DEFAULT 0,
@@ -451,5 +456,71 @@ CREATE TABLE IF NOT EXISTS site_audit_issues (
   INDEX idx_audit_issues_run (audit_run_id),
   INDEX idx_audit_issues_severity (severity)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS gsc_query_metrics (
+  id VARCHAR(64) PRIMARY KEY,
+  query_text VARCHAR(512) NOT NULL,
+  clicks INT DEFAULT 0,
+  impressions INT DEFAULT 0,
+  ctr DECIMAL(5,4) DEFAULT 0,
+  position DECIMAL(5,2) DEFAULT 0,
+  prev_position DECIMAL(5,2) NULL,
+  prev_clicks INT DEFAULT 0,
+  prev_impressions INT DEFAULT 0,
+  period_type VARCHAR(50) DEFAULT '28d',
+  updated_at DATETIME NOT NULL,
+  INDEX idx_gsc_qm_clicks (clicks DESC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS gsc_page_metrics (
+  id VARCHAR(64) PRIMARY KEY,
+  page_url VARCHAR(512) NOT NULL,
+  clicks INT DEFAULT 0,
+  impressions INT DEFAULT 0,
+  ctr DECIMAL(5,4) DEFAULT 0,
+  position DECIMAL(5,2) DEFAULT 0,
+  prev_position DECIMAL(5,2) NULL,
+  prev_clicks INT DEFAULT 0,
+  prev_impressions INT DEFAULT 0,
+  period_type VARCHAR(50) DEFAULT '28d',
+  updated_at DATETIME NOT NULL,
+  INDEX idx_gsc_pm_clicks (clicks DESC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
+  id VARCHAR(64) PRIMARY KEY,
+  metric_date DATE NOT NULL,
+  period_type VARCHAR(50) DEFAULT '28d',
+  page_url VARCHAR(512) NOT NULL,
+  query_text VARCHAR(512) NOT NULL,
+  clicks INT DEFAULT 0,
+  impressions INT DEFAULT 0,
+  ctr DECIMAL(5,4) DEFAULT 0,
+  position DECIMAL(5,2) DEFAULT 0,
+  prev_position DECIMAL(5,2) NULL,
+  prev_clicks INT DEFAULT 0,
+  prev_impressions INT DEFAULT 0,
+  country VARCHAR(10) NULL,
+  device VARCHAR(50) NULL,
+  updated_at DATETIME NOT NULL,
+  INDEX idx_gsc_pq_page (page_url(255)),
+  INDEX idx_gsc_pq_query (query_text(255)),
+  UNIQUE KEY uq_gsc_pq (metric_date, period_type, page_url(255), query_text(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS gsc_ranking_snapshots (
+  id VARCHAR(64) PRIMARY KEY,
+  snapshot_date DATE NOT NULL,
+  entity_type VARCHAR(32) NOT NULL,
+  identifier VARCHAR(512) NOT NULL,
+  page_url VARCHAR(512) NULL,
+  query_text VARCHAR(512) NULL,
+  period_type VARCHAR(50) DEFAULT '28d',
+  clicks INT DEFAULT 0,
+  impressions INT DEFAULT 0,
+  ctr DECIMAL(5,4) DEFAULT 0,
+  position DECIMAL(5,2) DEFAULT 0,
+  created_at DATETIME NOT NULL,
+  INDEX idx_snap_entity (entity_type, identifier(255)),
+  INDEX idx_snap_date (snapshot_date),
+  INDEX idx_snap_period (period_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

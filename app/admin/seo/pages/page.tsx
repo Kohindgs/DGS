@@ -2,7 +2,8 @@ import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured, cmsQuery } from "@/lib/cms/db";
-import { fetchDynamicSitemapUrls } from "@/lib/audit/audit-runner";
+import { fetchRecursiveSitemapUrls } from "@/lib/audit/audit-runner";
+import { calculateRankingTrend } from "@/lib/seo/keyword-engine";
 import PagesClientView, { type SitePageRankingRow } from "./PagesClientView";
 
 export const dynamic = "force-dynamic";
@@ -50,13 +51,19 @@ function extractPrimaryTopic(url: string, title?: string | null): string {
   if (url.includes("/services/performance-marketing")) return "Performance Marketing";
   if (url.includes("/services/social-media-agency-mumbai")) return "Social Media Marketing";
   if (url.includes("/services/web-development-company-mumbai")) return "Web Development";
+  if (url.includes("/services/geo")) return "Generative Engine Optimization";
+  if (url.includes("/services/llm-seo-service")) return "LLM Search Optimization";
   if (url.includes("/portfolio")) return "Client Showcase";
   if (url.includes("/career")) return "Talent & Careers";
   if (url.includes("/blogs")) return "Editorial & Insights";
-  if (url === "/" || url.endsWith(".com/")) return "Homepage & Brand";
+  if (url === "/" || url.endsWith(".com/") || url.endsWith(".com")) return "Homepage & Brand";
 
   const slug = url.replace(/\/$/, "").split("/").pop() || "";
   return slug ? slug.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) : "Corporate";
+}
+
+function normalizeUrlKey(rawUrl: string): string {
+  return rawUrl.trim().toLowerCase().replace(/\/$/, "");
 }
 
 export default async function AdminSiteWidePages() {
@@ -68,81 +75,187 @@ export default async function AdminSiteWidePages() {
     redirect("/admin/");
   }
 
+  // 1. Fetch full sitemap page universe (all recursive sitemaps)
+  const sitemapUrls = await fetchRecursiveSitemapUrls();
+
   let rankingRows: SitePageRankingRow[] = [];
+  let sitemapUrlsCount = sitemapUrls.length;
+  let crawledCount = 0;
+  let gscPagesCount = 0;
+  let rankedQueriesCount = 0;
 
   if (isCmsDatabaseConfigured()) {
     try {
       // Find latest completed audit
-      const { rows: auditRows } = await cmsQuery<any>(
-        `SELECT id FROM site_audit_runs WHERE status = 'completed' ORDER BY created_at DESC LIMIT 1`
+      const { rows: auditRuns } = await cmsQuery<any>(
+        `SELECT id, crawled_url_count FROM site_audit_runs WHERE status = 'completed' ORDER BY created_at DESC LIMIT 1`
       );
-      const latestAuditId = auditRows[0]?.id;
+      const latestAuditId = auditRuns[0]?.id;
+      crawledCount = auditRuns[0]?.crawled_url_count || 0;
+
+      // Map of audit pages (title, issues)
+      const auditPagesMap = new Map<string, { title: string | null }>();
+      const issuesCountMap = new Map<string, number>();
 
       if (latestAuditId) {
-        const { rows } = await cmsQuery<any>(
-          `SELECT 
-             p.url,
-             p.title,
-             gpm.position as googleAvgPosition,
-             gpm.clicks as gscClicks,
-             gpm.impressions as gscImpressions,
-             gpm.ctr as gscCtr,
-             psi_m.performance_score as mobileSpeed,
-             psi_d.performance_score as desktopSpeed,
-             (SELECT COUNT(*) FROM site_audit_issues i WHERE i.audit_run_id = p.audit_run_id AND i.url = p.url) as issuesCount,
-             (SELECT GROUP_CONCAT(pq.query_text ORDER BY pq.clicks DESC SEPARATOR ', ')
-              FROM (SELECT query_text, clicks FROM gsc_page_query_metrics WHERE page_url = p.url ORDER BY clicks DESC LIMIT 3) pq
-             ) as topKeywords
-           FROM site_audit_pages p
-           LEFT JOIN gsc_page_metrics gpm ON (gpm.page_url = p.url)
-           LEFT JOIN pagespeed_cache psi_m ON (psi_m.url = p.url AND psi_m.strategy = 'mobile')
-           LEFT JOIN pagespeed_cache psi_d ON (psi_d.url = p.url AND psi_d.strategy = 'desktop')
-           WHERE p.audit_run_id = ?
-           ORDER BY gpm.impressions DESC, p.url ASC`,
+        const { rows: auditPages } = await cmsQuery<any>(
+          `SELECT url, title FROM site_audit_pages WHERE audit_run_id = ?`,
           [latestAuditId]
         );
+        for (const ap of auditPages || []) {
+          auditPagesMap.set(normalizeUrlKey(ap.url), { title: ap.title || null });
+        }
+        if (crawledCount === 0) {
+          crawledCount = auditPages.length;
+        }
 
-        rankingRows = (rows || []).map((r: any) => {
-          const pos = r.googleAvgPosition != null ? Number(r.googleAvgPosition) : null;
-          const imp = Number(r.gscImpressions || 0);
-          const clk = Number(r.gscClicks || 0);
-          const ctr = Number(r.gscCtr || 0);
-          const issues = Number(r.issuesCount || 0);
-          const mob = r.mobileSpeed != null ? Number(r.mobileSpeed) : null;
-          const desk = r.desktopSpeed != null ? Number(r.desktopSpeed) : null;
+        const { rows: issueRows } = await cmsQuery<any>(
+          `SELECT url, COUNT(*) as cnt FROM site_audit_issues WHERE audit_run_id = ? GROUP BY url`,
+          [latestAuditId]
+        );
+        for (const ir of issueRows || []) {
+          issuesCountMap.set(normalizeUrlKey(ir.url), Number(ir.cnt || 0));
+        }
+      }
 
-          return {
-            url: String(r.url),
-            title: r.title ? String(r.title) : null,
-            primaryTopic: extractPrimaryTopic(String(r.url), r.title),
-            clicks: clk,
-            impressions: imp,
-            ctr,
-            googleAvgPosition: pos,
-            topKeywords: r.topKeywords ? String(r.topKeywords) : "",
-            mobilePsi: mob,
-            desktopPsi: desk,
-            issuesCount: issues,
-            opportunityScore: computeOpportunityScore({
-              position: pos,
-              impressions: imp,
-              clicks: clk,
-              ctr,
-              issuesCount: issues,
-              mobilePsi: mob,
-            }),
-          };
+      // Map of GSC page metrics
+      const gscPageMap = new Map<
+        string,
+        {
+          clicks: number;
+          impressions: number;
+          ctr: number;
+          position: number | null;
+          prev_position: number | null;
+        }
+      >();
+
+      const { rows: gpmRows } = await cmsQuery<any>(
+        `SELECT page_url, clicks, impressions, ctr, position, prev_position FROM gsc_page_metrics`
+      );
+      for (const gpm of gpmRows || []) {
+        const pos = gpm.position != null && Number(gpm.position) > 0 ? Number(gpm.position) : null;
+        const prevPos = gpm.prev_position != null && Number(gpm.prev_position) > 0 ? Number(gpm.prev_position) : null;
+        gscPageMap.set(normalizeUrlKey(gpm.page_url), {
+          clicks: Number(gpm.clicks || 0),
+          impressions: Number(gpm.impressions || 0),
+          ctr: Number(gpm.ctr || 0),
+          position: pos,
+          prev_position: prevPos,
         });
       }
+      gscPagesCount = gscPageMap.size;
+
+      // PageSpeed cache map
+      const psiMap = new Map<string, { mobile: number | null; desktop: number | null }>();
+      const { rows: psiRows } = await cmsQuery<any>(
+        `SELECT url, strategy, performance_score FROM pagespeed_cache`
+      );
+      for (const pr of psiRows || []) {
+        const key = normalizeUrlKey(pr.url);
+        const existing = psiMap.get(key) || { mobile: null, desktop: null };
+        if (pr.strategy === "mobile") existing.mobile = pr.performance_score != null ? Number(pr.performance_score) : null;
+        if (pr.strategy === "desktop") existing.desktop = pr.performance_score != null ? Number(pr.performance_score) : null;
+        psiMap.set(key, existing);
+      }
+
+      // Top queries per page map
+      const topKeywordsMap = new Map<string, string[]>();
+      const { rows: pqRows } = await cmsQuery<any>(
+        `SELECT page_url, query_text, clicks FROM gsc_page_query_metrics ORDER BY clicks DESC, impressions DESC`
+      );
+      for (const pq of pqRows || []) {
+        const key = normalizeUrlKey(pq.page_url);
+        const list = topKeywordsMap.get(key) || [];
+        if (list.length < 3 && !list.includes(pq.query_text)) {
+          list.push(pq.query_text);
+        }
+        topKeywordsMap.set(key, list);
+      }
+
+      // Total ranked queries count
+      const { rows: qCountRows } = await cmsQuery<any>(
+        `SELECT COUNT(DISTINCT query_text) as totalQueries FROM gsc_query_metrics`
+      );
+      rankedQueriesCount = Number(qCountRows[0]?.totalQueries || 0);
+
+      // Build unified page universe:
+      // Start with all sitemap URLs
+      const seenUrls = new Set<string>();
+      const fullUniverseUrls: string[] = [];
+
+      for (const u of sitemapUrls) {
+        const key = normalizeUrlKey(u);
+        if (!seenUrls.has(key)) {
+          seenUrls.add(key);
+          fullUniverseUrls.push(u);
+        }
+      }
+
+      // Also ensure any GSC page or audited page is included even if not explicitly listed in sitemap
+      for (const gpm of gpmRows || []) {
+        const key = normalizeUrlKey(gpm.page_url);
+        if (!seenUrls.has(key)) {
+          seenUrls.add(key);
+          fullUniverseUrls.push(gpm.page_url);
+        }
+      }
+
+      // Transform into SitePageRankingRow objects
+      rankingRows = fullUniverseUrls.map((url) => {
+        const key = normalizeUrlKey(url);
+        const gpm = gscPageMap.get(key);
+        const ap = auditPagesMap.get(key);
+        const psi = psiMap.get(key);
+        const issues = issuesCountMap.get(key) || 0;
+        const topKwList = topKeywordsMap.get(key) || [];
+
+        const pos = gpm?.position ?? null;
+        const prevPos = gpm?.prev_position ?? null;
+        const imp = gpm?.impressions ?? 0;
+        const clk = gpm?.clicks ?? 0;
+        const ctr = gpm?.ctr ?? 0;
+        const trend = calculateRankingTrend(pos, prevPos);
+
+        return {
+          url,
+          title: ap?.title || null,
+          primaryTopic: extractPrimaryTopic(url, ap?.title),
+          clicks: clk,
+          impressions: imp,
+          ctr,
+          googleAvgPosition: pos,
+          prevPosition: prevPos,
+          rankingTrend: trend,
+          topKeywords: topKwList.join(", "),
+          mobilePsi: psi?.mobile ?? null,
+          desktopPsi: psi?.desktop ?? null,
+          issuesCount: issues,
+          opportunityScore: computeOpportunityScore({
+            position: pos,
+            impressions: imp,
+            clicks: clk,
+            ctr,
+            issuesCount: issues,
+            mobilePsi: psi?.mobile ?? null,
+          }),
+        };
+      });
+
+      // Sort: highest impressions first, then opportunities, then URL
+      rankingRows.sort((a, b) => {
+        if (b.impressions !== a.impressions) return b.impressions - a.impressions;
+        if (b.opportunityScore !== a.opportunityScore) return b.opportunityScore - a.opportunityScore;
+        return a.url.localeCompare(b.url);
+      });
     } catch (err) {
-      console.error("Error loading site-wide pages rankings:", err);
+      console.error("Error loading site-wide pages rankings universe:", err);
     }
   }
 
   // Fallback if DB was empty
   if (rankingRows.length === 0) {
-    const sitemapUrls = await fetchDynamicSitemapUrls();
-    rankingRows = sitemapUrls.map((u) => ({
+    rankingRows = sitemapUrls.map((u: string) => ({
       url: u,
       title: null,
       primaryTopic: extractPrimaryTopic(u),
@@ -150,6 +263,8 @@ export default async function AdminSiteWidePages() {
       impressions: 0,
       ctr: 0,
       googleAvgPosition: null,
+      prevPosition: null,
+      rankingTrend: calculateRankingTrend(null, null),
       topKeywords: "",
       mobilePsi: null,
       desktopPsi: null,
@@ -158,5 +273,13 @@ export default async function AdminSiteWidePages() {
     }));
   }
 
-  return <PagesClientView pages={rankingRows} />;
+  return (
+    <PagesClientView
+      pages={rankingRows}
+      sitemapUrlsCount={sitemapUrlsCount}
+      crawledCount={crawledCount}
+      gscPagesCount={gscPagesCount}
+      rankedQueriesCount={rankedQueriesCount}
+    />
+  );
 }

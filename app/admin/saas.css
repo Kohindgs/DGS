@@ -837,6 +837,91 @@ html, body {
   border-bottom: none;
 }
 
+/* Table Controls Toolbar & Search */
+.dgs-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  gap: 14px;
+  background: rgba(14, 17, 25, 0.5);
+  border-bottom: 1px solid var(--dgs-border);
+  flex-wrap: wrap;
+}
+
+.dgs-table-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 42px;
+  min-width: 280px;
+  max-width: 440px;
+  flex: 1;
+  background: rgba(14, 17, 25, 0.75);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-sm);
+  padding: 0 14px;
+  transition: all var(--dgs-transition-fast);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.dgs-table-search:focus-within {
+  border-color: var(--dgs-brand-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15), inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  background: rgba(18, 22, 34, 0.95);
+}
+
+.dgs-table-search svg {
+  color: var(--dgs-text-secondary);
+  flex-shrink: 0;
+  margin-right: 10px;
+  transition: color var(--dgs-transition-fast);
+}
+
+.dgs-table-search:focus-within svg {
+  color: var(--dgs-brand-cyan);
+}
+
+.dgs-table-search input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--dgs-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.dgs-table-search input::placeholder {
+  color: var(--dgs-text-muted);
+  font-size: 13px;
+}
+
+.dgs-select {
+  background: rgba(14, 17, 25, 0.85);
+  border: 1px solid var(--dgs-border);
+  border-radius: var(--dgs-radius-sm);
+  color: var(--dgs-text-primary);
+  font-family: inherit;
+  font-size: 12.5px;
+  outline: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: all var(--dgs-transition-fast);
+}
+
+.dgs-select:focus {
+  border-color: var(--dgs-brand-cyan);
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2);
+}
+
+.dgs-select option {
+  background: #0E1119;
+  color: #FFFFFF;
+}
+
 /* ==========================================================================
    BUTTONS & CONTROLS
    ========================================================================== */
@@ -984,6 +1069,49 @@ html, body {
   background: var(--dgs-info-bg);
   border: 1px solid var(--dgs-info-border);
   color: var(--dgs-info);
+}
+
+.dgs-saas-chip.primary {
+  background: rgba(0, 102, 255, 0.15);
+  border: 1px solid rgba(0, 102, 255, 0.4);
+  color: #38BDF8;
+}
+
+.dgs-saas-chip.neutral {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--dgs-text-secondary);
+}
+
+/* Interactive Filter Chips & Buttons */
+button.dgs-saas-chip {
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--dgs-text-secondary);
+  transition: all var(--dgs-transition-fast);
+  user-select: none;
+}
+
+button.dgs-saas-chip:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--dgs-text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+button.dgs-saas-chip.primary {
+  background: rgba(0, 240, 255, 0.14);
+  border: 1px solid var(--dgs-brand-cyan);
+  color: #FFFFFF;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
+  font-weight: 700;
+}
+
+button.dgs-saas-chip.primary:hover {
+  background: rgba(0, 240, 255, 0.24);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.5);
 }
 
 /* ==========================================================================

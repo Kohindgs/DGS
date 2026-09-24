@@ -26,6 +26,7 @@ export type MediaAsset = {
   optimised_file_size: number | null;
   alt_text: string | null;
   is_decorative: number | boolean;
+  alt_source?: "MANUAL" | "AI_CONTEXTUAL" | "DECORATIVE" | "EMPTY" | null;
   title: string | null;
   caption: string | null;
   description: string | null;
@@ -221,6 +222,7 @@ export async function createMediaAssetFromProcessed(
   metadata: {
     altText?: string;
     isDecorative?: boolean;
+    altSource?: "MANUAL" | "AI_CONTEXTUAL" | "DECORATIVE" | "EMPTY";
     title?: string;
     caption?: string;
     description?: string;
@@ -235,17 +237,20 @@ export async function createMediaAssetFromProcessed(
   const duration = "durationSeconds" in processed ? processed.durationSeconds : null;
   const isDecorative = Boolean(metadata.isDecorative);
   const altText = isDecorative ? "" : (metadata.altText || null);
+  const altSource = isDecorative
+    ? "DECORATIVE"
+    : metadata.altSource || (altText && altText.trim().length > 0 ? "MANUAL" : "EMPTY");
 
   await cmsExecute(
     `INSERT INTO media_assets (
       id, filename, original_filename, storage_path, public_url,
       mime_type, media_type, extension, width, height, duration_seconds,
       file_size, original_file_size, optimised_file_size,
-      alt_text, is_decorative, title, caption, description,
+      alt_text, is_decorative, alt_source, title, caption, description,
       conversion_status, conversion_error, source, source_id,
       checksum, poster_url, original_storage_path, original_url,
       category, created_by
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
     [
       id,
       processed.filename,
@@ -263,6 +268,7 @@ export async function createMediaAssetFromProcessed(
       processed.optimisedFileSize || null,
       altText,
       isDecorative,
+      altSource,
       metadata.title || null,
       metadata.caption || null,
       metadata.description || null,
@@ -289,6 +295,7 @@ export async function updateMediaAssetMetadata(
   data: {
     altText?: string | null;
     isDecorative?: boolean;
+    altSource?: "MANUAL" | "AI_CONTEXTUAL" | "DECORATIVE" | "EMPTY";
     title?: string | null;
     caption?: string | null;
     description?: string | null;
@@ -300,6 +307,13 @@ export async function updateMediaAssetMetadata(
 
   const isDecorative = data.isDecorative !== undefined ? Boolean(data.isDecorative) : Boolean(existing.is_decorative);
   const altText = isDecorative ? "" : (data.altText !== undefined ? data.altText : existing.alt_text);
+  const altSource = isDecorative
+    ? "DECORATIVE"
+    : data.altSource !== undefined
+    ? data.altSource
+    : data.altText !== undefined
+    ? (altText && altText.trim().length > 0 ? "MANUAL" : "EMPTY")
+    : (existing as any).alt_source || "MANUAL";
   const title = data.title !== undefined ? data.title : existing.title;
   const caption = data.caption !== undefined ? data.caption : existing.caption;
   const description = data.description !== undefined ? data.description : existing.description;
@@ -309,13 +323,14 @@ export async function updateMediaAssetMetadata(
     `UPDATE media_assets SET
       alt_text = ?,
       is_decorative = ?,
+      alt_source = ?,
       title = ?,
       caption = ?,
       description = ?,
       category = ?,
       updated_at = CURRENT_TIMESTAMP
      WHERE id = ?`,
-    [altText, isDecorative, title, caption, description, category, id]
+    [altText, isDecorative, altSource, title, caption, description, category, id]
   );
 
   return getMediaAssetById(id);

@@ -202,9 +202,17 @@ export default function AdminSidebar({
                 <div className="dgs-saas-nav-group-title">{group.title}</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
                   {visibleItems.map((item) => {
-                    const isExact = pathname === item.href || (item.href !== "/admin/" && pathname === item.href.replace(/\/$/, ""));
-                    const isChild = item.href !== "/admin/" && pathname.startsWith(item.href);
-                    const isActive = isExact || isChild;
+                    const normCurrent = pathname.replace(/\/$/, "");
+                    const normItem = item.href.replace(/\/$/, "");
+                    const isExact = normCurrent === normItem;
+                    const isChild = normItem !== "/admin" && normCurrent.startsWith(normItem + "/");
+                    const hasMoreSpecific = isChild && visibleItems.concat(NAV_GROUPS.flatMap((g: NavGroup) => g.items)).some((other: NavItem) => {
+                      const normOther = other.href.replace(/\/$/, "");
+                      return normOther !== normItem &&
+                             normOther.length > normItem.length &&
+                             (normCurrent === normOther || normCurrent.startsWith(normOther + "/"));
+                    });
+                    const isActive = isExact || (isChild && !hasMoreSpecific);
                     const Icon = item.icon;
 
                     return (

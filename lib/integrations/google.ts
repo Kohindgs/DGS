@@ -136,6 +136,26 @@ export async function ensureGoogleTablesExist(): Promise<void> {
     `);
 
     await cmsExecute(`
+      CREATE TABLE IF NOT EXISTS gsc_ranking_snapshots (
+        id VARCHAR(64) PRIMARY KEY,
+        snapshot_date DATE NOT NULL,
+        entity_type VARCHAR(32) NOT NULL,
+        identifier VARCHAR(512) NOT NULL,
+        page_url VARCHAR(512) NULL,
+        query_text VARCHAR(512) NULL,
+        period_type VARCHAR(50) DEFAULT '28d',
+        clicks INT DEFAULT 0,
+        impressions INT DEFAULT 0,
+        ctr DECIMAL(5,4) DEFAULT 0,
+        position DECIMAL(5,2) DEFAULT 0,
+        created_at DATETIME NOT NULL,
+        INDEX idx_snap_entity (entity_type, identifier(255)),
+        INDEX idx_snap_date (snapshot_date),
+        INDEX idx_snap_period (period_type)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
+    await cmsExecute(`
       CREATE TABLE IF NOT EXISTS ga4_sync_runs (
         id VARCHAR(64) PRIMARY KEY,
         status VARCHAR(50) NOT NULL DEFAULT 'completed',
@@ -566,6 +586,83 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
       }
     }
 
+    // Historical comparison window (Previous 28 days)
+    const prevEndDate = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+    const prevStartDate = new Date(Date.now() - 58 * 86400000).toISOString().slice(0, 10);
+    const prevQueryMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
+    const prevPageMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
+    const prevPqMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
+
+    try {
+      const prevQueryRes = await fetch(
+        `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ startDate: prevStartDate, endDate: prevEndDate, dimensions: ["query"], rowLimit: 500 }),
+        }
+      );
+      if (prevQueryRes.ok) {
+        const d = await prevQueryRes.json();
+        for (const r of d.rows || []) {
+          const qText = (r.keys[0] || "").slice(0, 500);
+          prevQueryMap.set(qText, {
+            clicks: Math.round(r.clicks || 0),
+            impressions: Math.round(r.impressions || 0),
+            ctr: Number(r.ctr || 0),
+            position: Number(r.position || 0),
+          });
+        }
+      }
+
+      const prevPageRes = await fetch(
+        `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ startDate: prevStartDate, endDate: prevEndDate, dimensions: ["page"], rowLimit: 500 }),
+        }
+      );
+      if (prevPageRes.ok) {
+        const d = await prevPageRes.json();
+        for (const r of d.rows || []) {
+          const pUrl = (r.keys[0] || "").slice(0, 500);
+          prevPageMap.set(pUrl, {
+            clicks: Math.round(r.clicks || 0),
+            impressions: Math.round(r.impressions || 0),
+            ctr: Number(r.ctr || 0),
+            position: Number(r.position || 0),
+          });
+        }
+      }
+
+      const prevPqRes = await fetch(
+        `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ startDate: prevStartDate, endDate: prevEndDate, dimensions: ["page", "query"], rowLimit: 1000 }),
+        }
+      );
+      if (prevPqRes.ok) {
+        const d = await prevPqRes.json();
+        for (const r of d.rows || []) {
+          const pUrl = (r.keys[0] || "").slice(0, 500);
+          const qText = (r.keys[1] || "").slice(0, 500);
+          prevPqMap.set(`${pUrl}|||${qText}`, {
+            clicks: Math.round(r.clicks || 0),
+            impressions: Math.round(r.impressions || 0),
+            ctr: Number(r.ctr || 0),
+            position: Number(r.position || 0),
+          });
+        }
+      }
+    } catch (prevErr) {
+      console.warn("Could not fetch previous 28d GSC window for comparison:", prevErr);
+    }
+
+    const todayStr = new Date().toISOString().slice(0, 10);
+
     // Top Queries
     const queryRes = await fetch(
       `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
@@ -579,7 +676,7 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
           startDate,
           endDate,
           dimensions: ["query"],
-          rowLimit: 50,
+          rowLimit: 500,
         }),
       }
     );
@@ -593,13 +690,27 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
         const impressions = Math.round(row.impressions || 0);
         const ctr = Number(row.ctr || 0);
         const position = Number(row.position || 0);
+        const prev = prevQueryMap.get(queryText);
+        const prevPosition = prev ? prev.position : null;
+        const prevClicks = prev ? prev.clicks : 0;
+        const prevImpressions = prev ? prev.impressions : 0;
+
         const rowId = createHash("md5").update(`q_${queryText}`).digest("hex");
 
         await cmsExecute(
-          `INSERT INTO gsc_query_metrics (id, query_text, clicks, impressions, ctr, position, period_type, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, '28d', NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), updated_at = NOW()`,
-          [rowId, queryText, clicks, impressions, ctr, position]
+          `INSERT INTO gsc_query_metrics (id, query_text, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '28d', NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+          [rowId, queryText, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
+        );
+
+        // Snapshot record
+        const snapId = createHash("md5").update(`snap_q_${todayStr}_${queryText}`).digest("hex");
+        await cmsExecute(
+          `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, query_text, period_type, clicks, impressions, ctr, position, created_at)
+           VALUES (?, ?, 'query', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
+          [snapId, todayStr, queryText, queryText, clicks, impressions, ctr, position]
         );
       }
     }
@@ -617,7 +728,7 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
           startDate,
           endDate,
           dimensions: ["page"],
-          rowLimit: 50,
+          rowLimit: 500,
         }),
       }
     );
@@ -631,13 +742,27 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
         const impressions = Math.round(row.impressions || 0);
         const ctr = Number(row.ctr || 0);
         const position = Number(row.position || 0);
+        const prev = prevPageMap.get(pageUrl);
+        const prevPosition = prev ? prev.position : null;
+        const prevClicks = prev ? prev.clicks : 0;
+        const prevImpressions = prev ? prev.impressions : 0;
+
         const rowId = createHash("md5").update(`p_${pageUrl}`).digest("hex");
 
         await cmsExecute(
-          `INSERT INTO gsc_page_metrics (id, page_url, clicks, impressions, ctr, position, period_type, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, '28d', NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), updated_at = NOW()`,
-          [rowId, pageUrl, clicks, impressions, ctr, position]
+          `INSERT INTO gsc_page_metrics (id, page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '28d', NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+          [rowId, pageUrl, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
+        );
+
+        // Snapshot record
+        const snapId = createHash("md5").update(`snap_p_${todayStr}_${pageUrl}`).digest("hex");
+        await cmsExecute(
+          `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, period_type, clicks, impressions, ctr, position, created_at)
+           VALUES (?, ?, 'page', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
+          [snapId, todayStr, pageUrl, pageUrl, clicks, impressions, ctr, position]
         );
       }
     }
@@ -655,7 +780,7 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
           startDate,
           endDate,
           dimensions: ["page", "query"],
-          rowLimit: 500,
+          rowLimit: 1000,
         }),
       }
     );
@@ -663,7 +788,6 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
     if (pqRes.ok) {
       const pqData = await pqRes.json();
       const rows = pqData.rows || [];
-      const todayStr = new Date().toISOString().slice(0, 10);
       for (const row of rows) {
         const pageUrl = (row.keys[0] || "").slice(0, 500);
         const queryText = (row.keys[1] || "").slice(0, 500);
@@ -671,13 +795,27 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
         const impressions = Math.round(row.impressions || 0);
         const ctr = Number(row.ctr || 0);
         const position = Number(row.position || 0);
+        const prev = prevPqMap.get(`${pageUrl}|||${queryText}`);
+        const prevPosition = prev ? prev.position : null;
+        const prevClicks = prev ? prev.clicks : 0;
+        const prevImpressions = prev ? prev.impressions : 0;
+
         const rowId = createHash("md5").update(`pq_${todayStr}_${pageUrl}_${queryText}`).digest("hex");
 
         await cmsExecute(
-          `INSERT INTO gsc_page_query_metrics (id, metric_date, period_type, page_url, query_text, clicks, impressions, ctr, position, updated_at)
-           VALUES (?, ?, '28d', ?, ?, ?, ?, ?, ?, NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), updated_at = NOW()`,
-          [rowId, todayStr, pageUrl, queryText, clicks, impressions, ctr, position]
+          `INSERT INTO gsc_page_query_metrics (id, metric_date, period_type, page_url, query_text, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, updated_at)
+           VALUES (?, ?, '28d', ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+          [rowId, todayStr, pageUrl, queryText, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
+        );
+
+        // Snapshot record
+        const snapId = createHash("md5").update(`snap_pq_${todayStr}_${pageUrl}_${queryText}`).digest("hex");
+        await cmsExecute(
+          `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, query_text, period_type, clicks, impressions, ctr, position, created_at)
+           VALUES (?, ?, 'page_query', ?, ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
+          [snapId, todayStr, `${pageUrl}|||${queryText}`, pageUrl, queryText, clicks, impressions, ctr, position]
         );
       }
     }

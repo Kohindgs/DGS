@@ -4,6 +4,7 @@ import { validateUploadedFile } from "@/lib/cms/media-security";
 import { computeFileChecksum } from "@/lib/cms/media-storage";
 import { processUploadedImage, processUploadedVideo } from "@/lib/cms/media-processor";
 import { createMediaAssetFromProcessed, getMediaAssetByChecksum } from "@/lib/cms/media";
+import { generateAltTextSuggestion } from "@/lib/seo/alt-fixer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -74,12 +75,40 @@ export async function POST(request: Request) {
         processed = await processUploadedVideo(buffer, file.name, title);
       }
 
+      let resolvedAlt = altText;
+      let resolvedAltSource: "MANUAL" | "AI_CONTEXTUAL" | "DECORATIVE" | "EMPTY" = "EMPTY";
+
+      if (isDecorative) {
+        resolvedAlt = "";
+        resolvedAltSource = "DECORATIVE";
+      } else if (altText && altText.trim().length > 0) {
+        resolvedAlt = altText.trim();
+        resolvedAltSource = "MANUAL";
+      } else if (validation.mediaType === "image") {
+        try {
+          const suggested = await generateAltTextSuggestion({
+            pageUrl: "/media/",
+            filename: file.name,
+            imageSrc: processed.publicUrl,
+            surroundingContext: title || description || category,
+          });
+          if (suggested && suggested.trim().length > 0) {
+            resolvedAlt = suggested.trim();
+            resolvedAltSource = "AI_CONTEXTUAL";
+          }
+        } catch (err) {
+          console.warn("AI alt text generation warning on upload:", err);
+          resolvedAltSource = "EMPTY";
+        }
+      }
+
       const asset = await createMediaAssetFromProcessed(
         processed,
         validation.mediaType,
         checksum,
         {
-          altText,
+          altText: resolvedAlt,
+          altSource: resolvedAltSource,
           isDecorative,
           title,
           caption,

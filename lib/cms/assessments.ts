@@ -348,17 +348,51 @@ export async function listPipelineCandidates(stage?: string): Promise<CandidateR
 
 export async function getCandidateDetails(id: string): Promise<CandidateRecord | null> {
   if (!isCmsDatabaseConfigured()) return null;
-  const { rows } = await cmsQuery<CandidateRecord>(
+
+  // Search by pipeline ID, assessment ID, or assignment ID
+  let { rows } = await cmsQuery<CandidateRecord>(
     `SELECT p.*, j.role_title,
-            c.id as assessment_id, c.objective_score, c.objective_total, c.role_match_score,
+            c.id as assessment_id, c.assignment_id, c.objective_score, c.objective_total, c.role_match_score,
             c.evaluation_notes, c.answers, c.activity_log, c.review_status, c.reviewer_notes,
             c.submitted_at
      FROM hr_pipeline p
      LEFT JOIN assessment_jds j ON p.position_id = j.id
-     LEFT JOIN assessment_candidates c ON c.assignment_id = p.id
-     WHERE p.id = ? LIMIT 1`,
-    [id]
+     LEFT JOIN assessment_candidates c ON (c.assignment_id = p.id OR c.id = p.id)
+     WHERE p.id = ? OR c.id = ? OR c.assignment_id = ? LIMIT 1`,
+    [id, id, id]
   );
+
+  // Fallback: If candidate exists in assessment_candidates without hr_pipeline
+  if (!rows[0]) {
+    const { rows: directCand } = await cmsQuery<any>(
+      `SELECT c.id as assessment_id, c.assignment_id, c.objective_score, c.objective_total, c.role_match_score,
+              c.evaluation_notes, c.answers, c.activity_log, c.review_status, c.reviewer_notes, c.submitted_at
+       FROM assessment_candidates c
+       WHERE c.id = ? OR c.assignment_id = ? LIMIT 1`,
+      [id, id]
+    );
+    if (directCand[0]) {
+      const dc = directCand[0];
+      rows = [{
+        id: dc.assignment_id || dc.assessment_id,
+        candidate_name: "Candidate",
+        candidate_email: "",
+        assessment_id: dc.assessment_id,
+        assignment_id: dc.assignment_id,
+        stage: "applied",
+        objective_score: dc.objective_score,
+        objective_total: dc.objective_total,
+        role_match_score: dc.role_match_score,
+        evaluation_notes: dc.evaluation_notes,
+        answers: dc.answers,
+        activity_log: dc.activity_log,
+        review_status: dc.review_status,
+        reviewer_notes: dc.reviewer_notes,
+        submitted_at: dc.submitted_at,
+      } as any];
+    }
+  }
+
   if (!rows[0]) return null;
   const r = rows[0];
   return {
@@ -412,10 +446,22 @@ export async function deleteCandidateRecord(id: string, userRole: string, actorE
   const candidate = await getCandidateDetails(id);
   if (!candidate) throw new Error("Candidate not found");
 
-  // Delete associated records
-  await cmsExecute("DELETE FROM assessment_candidates WHERE assignment_id = ?", [id]);
-  await cmsExecute("DELETE FROM hr_documents WHERE pipeline_id = ?", [id]);
-  await cmsExecute("DELETE FROM hr_pipeline WHERE id = ?", [id]);
+  const pipelineId = candidate.id;
+  const assessmentId = candidate.assessment_id;
+  const assignmentId = (candidate as any).assignment_id;
+
+  // Complete relational purge across assessment_candidates, hr_documents, and hr_pipeline
+  const targets = new Set<string>();
+  if (id) targets.add(id);
+  if (pipelineId) targets.add(pipelineId);
+  if (assessmentId) targets.add(assessmentId);
+  if (assignmentId) targets.add(assignmentId);
+
+  for (const tid of targets) {
+    await cmsExecute("DELETE FROM assessment_candidates WHERE id = ? OR assignment_id = ?", [tid, tid]);
+    await cmsExecute("DELETE FROM hr_documents WHERE pipeline_id = ?", [tid]);
+    await cmsExecute("DELETE FROM hr_pipeline WHERE id = ?", [tid]);
+  }
 
   await logAuditEvent({
     actor_email: actorEmail,
@@ -423,7 +469,7 @@ export async function deleteCandidateRecord(id: string, userRole: string, actorE
     action: "hr.candidate.delete",
     resource: "hr_pipeline",
     resource_id: id,
-    summary: `Permanently deleted candidate ${candidate.candidate_name} (${candidate.candidate_email})`,
+    summary: `Permanently deleted candidate ${candidate.candidate_name || "Candidate"} (${candidate.candidate_email || id})`,
     before_state: {
       candidateId: id,
       name: candidate.candidate_name,

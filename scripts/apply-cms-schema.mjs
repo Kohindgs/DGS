@@ -117,6 +117,87 @@ try {
     }
   } catch {}
 
+  // Column migration for media_assets
+  try {
+    const [mediaCols] = await connection.query("DESCRIBE media_assets");
+    const mediaExistingCols = new Set(mediaCols.map((c) => c.Field));
+    if (!mediaExistingCols.has("alt_source")) {
+      await connection.query("ALTER TABLE media_assets ADD COLUMN alt_source VARCHAR(50) NOT NULL DEFAULT 'MANUAL'");
+      console.log("Applied column migration: media_assets.alt_source");
+    }
+  } catch (err) {
+    console.warn("media_assets migration notice:", err.message);
+  }
+
+  // Column migration for site_audit_runs
+  try {
+    const [auditCols] = await connection.query("DESCRIBE site_audit_runs");
+    const auditExistingCols = new Set(auditCols.map((c) => c.Field));
+    const auditMigrations = [
+      { col: "discovered_url_count", sql: "ALTER TABLE site_audit_runs ADD COLUMN discovered_url_count INT NOT NULL DEFAULT 0" },
+      { col: "crawled_url_count", sql: "ALTER TABLE site_audit_runs ADD COLUMN crawled_url_count INT NOT NULL DEFAULT 0" },
+      { col: "failed_url_count", sql: "ALTER TABLE site_audit_runs ADD COLUMN failed_url_count INT NOT NULL DEFAULT 0" },
+      { col: "sitemap_error", sql: "ALTER TABLE site_audit_runs ADD COLUMN sitemap_error TEXT NULL" },
+    ];
+    for (const m of auditMigrations) {
+      if (!auditExistingCols.has(m.col)) {
+        await connection.query(m.sql);
+        console.log(`Applied column migration: site_audit_runs.${m.col}`);
+      }
+    }
+  } catch (err) {
+    console.warn("site_audit_runs migration notice:", err.message);
+  }
+
+  // Column migrations for GSC metrics (historical comparison)
+  try {
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS gsc_ranking_snapshots (
+        id VARCHAR(64) PRIMARY KEY,
+        snapshot_date DATE NOT NULL,
+        entity_type VARCHAR(32) NOT NULL,
+        identifier VARCHAR(512) NOT NULL,
+        page_url VARCHAR(512) NULL,
+        query_text VARCHAR(512) NULL,
+        period_type VARCHAR(50) DEFAULT '28d',
+        clicks INT DEFAULT 0,
+        impressions INT DEFAULT 0,
+        ctr DECIMAL(5,4) DEFAULT 0,
+        position DECIMAL(5,2) DEFAULT 0,
+        created_at DATETIME NOT NULL,
+        INDEX idx_snap_entity (entity_type, identifier(255)),
+        INDEX idx_snap_date (snapshot_date),
+        INDEX idx_snap_period (period_type)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
+    // gsc_query_metrics
+    const [qmCols] = await connection.query("DESCRIBE gsc_query_metrics");
+    const qmExistingCols = new Set(qmCols.map((c) => c.Field));
+    if (!qmExistingCols.has("prev_position")) {
+      await connection.query("ALTER TABLE gsc_query_metrics ADD COLUMN prev_position DECIMAL(5,2) NULL, ADD COLUMN prev_clicks INT DEFAULT 0, ADD COLUMN prev_impressions INT DEFAULT 0");
+      console.log("Applied column migration: gsc_query_metrics.prev_position");
+    }
+
+    // gsc_page_metrics
+    const [pmCols] = await connection.query("DESCRIBE gsc_page_metrics");
+    const pmExistingCols = new Set(pmCols.map((c) => c.Field));
+    if (!pmExistingCols.has("prev_position")) {
+      await connection.query("ALTER TABLE gsc_page_metrics ADD COLUMN prev_position DECIMAL(5,2) NULL, ADD COLUMN prev_clicks INT DEFAULT 0, ADD COLUMN prev_impressions INT DEFAULT 0");
+      console.log("Applied column migration: gsc_page_metrics.prev_position");
+    }
+
+    // gsc_page_query_metrics
+    const [pqCols] = await connection.query("DESCRIBE gsc_page_query_metrics");
+    const pqExistingCols = new Set(pqCols.map((c) => c.Field));
+    if (!pqExistingCols.has("prev_position")) {
+      await connection.query("ALTER TABLE gsc_page_query_metrics ADD COLUMN prev_position DECIMAL(5,2) NULL, ADD COLUMN prev_clicks INT DEFAULT 0, ADD COLUMN prev_impressions INT DEFAULT 0");
+      console.log("Applied column migration: gsc_page_query_metrics.prev_position");
+    }
+  } catch (err) {
+    console.warn("GSC historical comparison migration notice:", err.message);
+  }
+
   const expectedTables = [
     "assessment_assignments",
     "assessment_attempts",

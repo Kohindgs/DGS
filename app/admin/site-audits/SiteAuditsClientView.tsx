@@ -357,6 +357,10 @@ export default function SiteAuditsClientView({
   const media = latestAudit?.media_score != null ? latestAudit.media_score : null;
   const perf = latestAudit?.performance_score != null ? latestAudit.performance_score : null;
 
+  const discoveredCount = latestAudit?.discovered_url_count ?? latestAudit?.total_pages ?? pages.length;
+  const crawledCount = latestAudit?.crawled_url_count ?? latestAudit?.crawled_pages ?? pages.filter((p) => p.statusCode > 0 && p.statusCode < 500).length;
+  const failedCount = latestAudit?.failed_url_count ?? pages.filter((p) => p.statusCode >= 500 || p.statusCode === 0).length;
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "12px" }}>
@@ -397,8 +401,10 @@ export default function SiteAuditsClientView({
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">Overall Health Score</div>
           <div className="dgs-saas-kpi-value">{overall != null ? `${overall}/100` : "NOT MEASURED"}</div>
-          <div className="dgs-saas-kpi-delta positive">
-            {pages.length > 0 ? `${pages.length} URLs crawled` : "No crawl data"}
+          <div style={{ display: "flex", gap: "10px", fontSize: "0.78rem", marginTop: "4px", flexWrap: "wrap" }}>
+            <span style={{ color: "#38BDF8" }}>Discovered: <strong>{discoveredCount}</strong></span>
+            <span style={{ color: "var(--dgs-success)" }}>Crawled: <strong>{crawledCount}</strong></span>
+            <span style={{ color: failedCount > 0 ? "var(--dgs-danger)" : "var(--dgs-text-muted)" }}>Failed: <strong>{failedCount}</strong></span>
           </div>
         </div>
 
@@ -562,6 +568,7 @@ export default function SiteAuditsClientView({
             columns={pageColumns}
             data={filteredPages}
             keyExtractor={(p) => p.url}
+            initialPageSize={50}
             searchPlaceholder="Search audited URL, title, or status..."
           />
         </div>
@@ -572,6 +579,7 @@ export default function SiteAuditsClientView({
           columns={issueColumns}
           data={issues}
           keyExtractor={(iss) => iss.id || `${iss.url}_${iss.issue_code}`}
+          initialPageSize={50}
           searchPlaceholder="Search issues by title, URL, or code..."
         />
       )}

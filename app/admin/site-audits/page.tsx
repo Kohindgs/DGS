@@ -56,8 +56,7 @@ export default async function AdminSiteAuditsPage() {
            LEFT JOIN pagespeed_cache psi_m ON (psi_m.url = p.url AND psi_m.strategy = 'mobile')
            LEFT JOIN pagespeed_cache psi_d ON (psi_d.url = p.url AND psi_d.strategy = 'desktop')
            WHERE p.audit_run_id = ?
-           ORDER BY p.page_score ASC
-           LIMIT 150`,
+           ORDER BY p.page_score ASC`,
           [latestAudit.id]
         );
         pages = pageRows || [];

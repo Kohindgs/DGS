@@ -156,6 +156,63 @@ export default function MediaLibraryView({
     }
   };
 
+  const handleRegenerateAlt = async (asset: MediaAsset) => {
+    try {
+      showToast("Generating AI contextual alt text…");
+      const res = await fetch("/api/admin/seo/alt-fixer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "suggest",
+          filename: asset.filename,
+          pageUrl: "/media/",
+          imageSrc: asset.public_url,
+          surroundingContext: asset.title || asset.description || asset.category,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.suggestion) throw new Error(data.error || "Generation failed");
+
+      const updateRes = await fetch(`/api/admin/media/${asset.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          altText: data.suggestion,
+          altSource: "AI_CONTEXTUAL",
+          isDecorative: false,
+        }),
+      });
+      const updateData = await updateRes.json();
+      if (updateData.ok) {
+        showToast("AI Alt Text applied successfully!");
+        setAssets((prev) => prev.map((a) => (a.id === asset.id ? updateData.asset : a)));
+      }
+    } catch (err: any) {
+      showToast(err.message || "Failed to generate alt text");
+    }
+  };
+
+  const handleMarkDecorative = async (asset: MediaAsset) => {
+    try {
+      const updateRes = await fetch(`/api/admin/media/${asset.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          isDecorative: true,
+          altText: "",
+          altSource: "DECORATIVE",
+        }),
+      });
+      const updateData = await updateRes.json();
+      if (updateData.ok) {
+        showToast("Marked as decorative image");
+        setAssets((prev) => prev.map((a) => (a.id === asset.id ? updateData.asset : a)));
+      }
+    } catch (err: any) {
+      showToast(err.message || "Failed to update asset");
+    }
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       {toastMessage && (
@@ -392,12 +449,29 @@ export default function MediaLibraryView({
                   </p>
 
                   <div className="dgs-media-pill-row">
-                    {hasMissingAlt ? (
-                      <span className="dgs-media-status-pill warn">Missing Alt</span>
-                    ) : asset.is_decorative ? (
+                    {asset.is_decorative ? (
                       <span className="dgs-media-status-pill neutral">Decorative</span>
+                    ) : asset.alt_source === "AI_CONTEXTUAL" ? (
+                      <span
+                        className="dgs-media-status-pill info"
+                        style={{
+                          background: "rgba(0, 240, 255, 0.12)",
+                          color: "var(--dgs-brand-cyan)",
+                          borderColor: "rgba(0, 240, 255, 0.3)",
+                        }}
+                        title={`AI Contextual: ${asset.alt_text}`}
+                      >
+                        AI Contextual
+                      </span>
+                    ) : (asset.alt_text && asset.alt_text.trim().length > 0) ? (
+                      <span
+                        className="dgs-media-status-pill success"
+                        title={`Manual Alt: ${asset.alt_text}`}
+                      >
+                        Manual Alt
+                      </span>
                     ) : (
-                      <span className="dgs-media-status-pill success">Alt Set</span>
+                      <span className="dgs-media-status-pill warn">Missing Alt</span>
                     )}
 
                     <span
@@ -417,6 +491,27 @@ export default function MediaLibraryView({
                   <button type="button" onClick={() => setEditingAsset(asset)} title="Edit Metadata">
                     Edit
                   </button>
+                  {asset.media_type === "image" && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => handleRegenerateAlt(asset)}
+                        title="Generate/Refresh AI Alt Text"
+                        style={{ color: "var(--dgs-brand-cyan)" }}
+                      >
+                        ✨ AI Alt
+                      </button>
+                      {!asset.is_decorative && (
+                        <button
+                          type="button"
+                          onClick={() => handleMarkDecorative(asset)}
+                          title="Mark Decorative (alt='')"
+                        >
+                          Decorative
+                        </button>
+                      )}
+                    </>
+                  )}
                   <button type="button" onClick={() => setReplacingAsset(asset)} title="Replace Asset">
                     Replace
                   </button>
@@ -495,14 +590,18 @@ export default function MediaLibraryView({
                     <td>{formatBytes(asset.file_size)}</td>
                     <td>{savings > 0 ? `-${savings}%` : "—"}</td>
                     <td>
-                      {hasMissingAlt ? (
-                        <span className="dgs-media-status-pill warn">Missing</span>
-                      ) : asset.is_decorative ? (
+                      {asset.is_decorative ? (
                         <span className="dgs-media-status-pill neutral">Decorative</span>
-                      ) : (
-                        <span className="dgs-media-status-pill success" title={asset.alt_text || ""}>
-                          Valid
+                      ) : asset.alt_source === "AI_CONTEXTUAL" ? (
+                        <span className="dgs-media-status-pill info" title={asset.alt_text || ""}>
+                          AI Contextual
                         </span>
+                      ) : (asset.alt_text && asset.alt_text.trim().length > 0) ? (
+                        <span className="dgs-media-status-pill success" title={asset.alt_text || ""}>
+                          Manual Alt
+                        </span>
+                      ) : (
+                        <span className="dgs-media-status-pill warn">Missing</span>
                       )}
                     </td>
                     <td>
@@ -523,6 +622,15 @@ export default function MediaLibraryView({
                         <button type="button" onClick={() => setEditingAsset(asset)}>
                           Edit
                         </button>
+                        {asset.media_type === "image" && (
+                          <button
+                            type="button"
+                            onClick={() => handleRegenerateAlt(asset)}
+                            title="Generate AI Alt Text"
+                          >
+                            AI Alt
+                          </button>
+                        )}
                         <button type="button" onClick={() => setReplacingAsset(asset)}>
                           Replace
                         </button>
@@ -931,6 +1039,10 @@ function EditMetadataModal({
 }) {
   const [altText, setAltText] = useState(asset.alt_text || "");
   const [isDecorative, setIsDecorative] = useState(Boolean(asset.is_decorative));
+  const [altSource, setAltSource] = useState<"MANUAL" | "AI_CONTEXTUAL" | "DECORATIVE" | "EMPTY">(
+    asset.is_decorative ? "DECORATIVE" : (asset.alt_source as any) || "MANUAL"
+  );
+  const [suggestingAlt, setSuggestingAlt] = useState(false);
   const [title, setTitle] = useState(asset.title || "");
   const [caption, setCaption] = useState(asset.caption || "");
   const [description, setDescription] = useState(asset.description || "");
@@ -950,6 +1062,7 @@ function EditMetadataModal({
         body: JSON.stringify({
           altText: isDecorative ? "" : altText.trim(),
           isDecorative,
+          altSource: isDecorative ? "DECORATIVE" : altSource,
           title: title.trim(),
           caption: caption.trim(),
           description: description.trim(),
@@ -969,16 +1082,40 @@ function EditMetadataModal({
     }
   };
 
-  const handleSuggestAlt = () => {
-    if (title.trim()) {
-      setAltText(`${title.trim()} for D'Genius Solutions`);
-    } else {
-      const cleanStem = asset.original_filename
-        .replace(/\.[^.]+$/, "")
-        .replace(/[-_]+/g, " ")
-        .replace(/\b(image|img|pic|photo|\d+)\b/gi, "")
-        .trim();
-      setAltText(cleanStem ? `${cleanStem} visual` : "Creative asset");
+  const handleSuggestAlt = async () => {
+    setSuggestingAlt(true);
+    try {
+      const res = await fetch("/api/admin/seo/alt-fixer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "suggest",
+          filename: asset.filename,
+          pageUrl: "/media/",
+          imageSrc: asset.public_url,
+          surroundingContext: title || description || category,
+        }),
+      });
+      const data = await res.json();
+      if (data.ok && data.suggestion) {
+        setAltText(data.suggestion);
+        setAltSource("AI_CONTEXTUAL");
+      } else {
+        throw new Error(data.error || "Suggestion failed");
+      }
+    } catch {
+      if (title.trim()) {
+        setAltText(`${title.trim()} for D'Genius Solutions`);
+      } else {
+        const cleanStem = asset.original_filename
+          .replace(/\.[^.]+$/, "")
+          .replace(/[-_]+/g, " ")
+          .trim();
+        setAltText(cleanStem ? `${cleanStem} visual` : "Creative asset");
+      }
+      setAltSource("MANUAL");
+    } finally {
+      setSuggestingAlt(false);
     }
   };
 
@@ -1011,9 +1148,9 @@ function EditMetadataModal({
                     type="button"
                     className="dgs-media-btn-text"
                     onClick={handleSuggestAlt}
-                    disabled={isDecorative}
+                    disabled={isDecorative || suggestingAlt}
                   >
-                    ✨ Suggest Alt Text
+                    {suggestingAlt ? "✨ Generating..." : "✨ Suggest Alt Text"}
                   </button>
                 </div>
                 <input

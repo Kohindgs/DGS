@@ -64,6 +64,10 @@ export type FullAuditReport = {
   triggerType: "scheduled" | "manual";
   totalPages: number;
   crawledPages: number;
+  discoveredUrlCount?: number;
+  crawledUrlCount?: number;
+  failedUrlCount?: number;
+  sitemapError?: string | null;
   overallScore: number;
   technicalScore: number;
   indexabilityScore: number;
@@ -86,29 +90,118 @@ function getSiteOrigin(): string {
   return process.env.NEXT_PUBLIC_SITE_URL || "https://www.dgeniussolutions.com";
 }
 
-export async function fetchDynamicSitemapUrls(): Promise<string[]> {
+/**
+ * Recursive sitemap discovery supporting nested <sitemapindex>, urlset,
+ * same-domain validation, deduplication, timeout, and max recursion depth.
+ * Fails closed without synthetic fallback lists.
+ */
+export async function fetchRecursiveSitemapUrls(
+  customRootUrl?: string,
+  maxDepth = 5
+): Promise<string[]> {
   const origin = getSiteOrigin();
-  const sitemapUrl = `${origin}/sitemap.xml`;
+  const rootUrl = customRootUrl || `${origin}/sitemap.xml`;
+  let targetOrigin: string;
   try {
-    const res = await fetch(sitemapUrl, {
-      headers: { Accept: "application/xml,text/xml,*/*" },
-      cache: "no-store",
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const xml = await res.text();
-    const matches = [...xml.matchAll(/<loc>([^<]+)<\/loc>/gi)];
-    const urls = matches.map((m) => m[1].trim()).filter(Boolean);
-    return urls.length > 0 ? urls : [origin + "/"];
-  } catch (err) {
-    console.error("Failed to fetch dynamic sitemap for audit:", err);
-    return [
-      `${origin}/`,
-      `${origin}/services/seo-company-in-mumbai/`,
-      `${origin}/services/ai-video-production-agency/`,
-      `${origin}/portfolio/`,
-      `${origin}/career/`,
-    ];
+    targetOrigin = new URL(rootUrl).origin.toLowerCase();
+  } catch (err: any) {
+    throw new Error(`SITEMAP DISCOVERY FAILED: Invalid root URL ${rootUrl}`);
   }
+
+  const visitedSitemaps = new Set<string>();
+  const discoveredUrls = new Set<string>();
+  const queue: Array<{ url: string; depth: number }> = [{ url: rootUrl, depth: 0 }];
+  const MAX_TOTAL_SITEMAPS = 50;
+
+  while (queue.length > 0) {
+    if (visitedSitemaps.size >= MAX_TOTAL_SITEMAPS) {
+      console.warn(`Sitemap recursion limit reached (${MAX_TOTAL_SITEMAPS} sitemaps processed).`);
+      break;
+    }
+
+    const current = queue.shift()!;
+    if (visitedSitemaps.has(current.url)) continue;
+    visitedSitemaps.add(current.url);
+
+    let xmlText = "";
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+      const res = await fetch(current.url, {
+        headers: { Accept: "application/xml,text/xml,application/xhtml+xml,*/*" },
+        cache: "no-store",
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status} ${res.statusText}`);
+      }
+      xmlText = await res.text();
+    } catch (err: any) {
+      const reason = err?.name === "AbortError" ? "Timeout after 12s" : (err?.message || "Network error");
+      if (current.depth === 0) {
+        throw new Error(`SITEMAP DISCOVERY FAILED: Could not fetch root sitemap (${current.url}): ${reason}`);
+      } else {
+        console.warn(`Sub-sitemap fetch warning (${current.url}):`, reason);
+        continue;
+      }
+    }
+
+    // Check if this XML is a sitemapindex
+    const isSitemapIndex = /<sitemapindex\b/i.test(xmlText);
+    const isUrlSet = /<urlset\b/i.test(xmlText);
+
+    if (isSitemapIndex) {
+      // Recurse child <sitemap><loc>...</loc>
+      const sitemapBlocks = [...xmlText.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/gi)];
+      for (const block of sitemapBlocks) {
+        const locMatch = block[1].match(/<loc>([^<]+)<\/loc>/i);
+        if (locMatch && locMatch[1]) {
+          const subUrl = locMatch[1].trim();
+          try {
+            const subOrigin = new URL(subUrl).origin.toLowerCase();
+            if (subOrigin === targetOrigin) {
+              if (!visitedSitemaps.has(subUrl) && current.depth + 1 <= maxDepth) {
+                queue.push({ url: subUrl, depth: current.depth + 1 });
+              }
+            }
+          } catch {
+            // Ignore malformed URL
+          }
+        }
+      }
+    }
+
+    if (isUrlSet || (!isSitemapIndex && /<loc>/i.test(xmlText))) {
+      // Extract page URLs from <url><loc> or direct <loc>
+      const locMatches = [...xmlText.matchAll(/<loc>([^<]+)<\/loc>/gi)];
+      for (const m of locMatches) {
+        const pageUrl = m[1].trim();
+        try {
+          const parsed = new URL(pageUrl);
+          if (parsed.origin.toLowerCase() === targetOrigin) {
+            parsed.hash = "";
+            discoveredUrls.add(parsed.toString());
+          }
+        } catch {
+          // Ignore invalid URL
+        }
+      }
+    }
+  }
+
+  const result = Array.from(discoveredUrls);
+  if (result.length === 0) {
+    throw new Error(`SITEMAP DISCOVERY FAILED: No valid same-domain URLs found in sitemap at ${rootUrl}`);
+  }
+
+  return result;
+}
+
+export async function fetchDynamicSitemapUrls(): Promise<string[]> {
+  return fetchRecursiveSitemapUrls();
 }
 
 export async function auditSingleUrl(url: string): Promise<PageAuditResult> {
@@ -465,12 +558,20 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
     } catch {}
   }
 
+  const discoveredCount = urls.length;
+  const crawledCount = pages.filter((p) => p.statusCode > 0 && p.statusCode < 500).length;
+  const failedCount = pages.filter((p) => p.statusCode >= 500 || p.statusCode === 0).length;
+
   const report: FullAuditReport = {
     id: auditId,
     status: "completed",
     triggerType,
-    totalPages: urls.length,
-    crawledPages: pages.length,
+    totalPages: discoveredCount,
+    crawledPages: crawledCount,
+    discoveredUrlCount: discoveredCount,
+    crawledUrlCount: crawledCount,
+    failedUrlCount: failedCount,
+    sitemapError: null,
     overallScore,
     technicalScore,
     indexabilityScore,
@@ -495,17 +596,22 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
       await cmsExecute(
         `INSERT INTO site_audit_runs (
           id, status, trigger_type, total_pages, crawled_pages,
+          discovered_url_count, crawled_url_count, failed_url_count, sitemap_error,
           overall_score, technical_score, indexability_score, content_score,
           schema_score, media_score, performance_score, links_score,
           critical_count, high_count, medium_count, low_count, info_count,
           started_at, completed_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           auditId,
           "completed",
           triggerType,
-          urls.length,
-          pages.length,
+          discoveredCount,
+          crawledCount,
+          discoveredCount,
+          crawledCount,
+          failedCount,
+          null,
           overallScore,
           technicalScore,
           indexabilityScore,

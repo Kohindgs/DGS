@@ -5,7 +5,7 @@ import { parseBlogDocx, imageMatchesSlug, type BlogImportImage } from "@/lib/cms
 import { attachImportedBlogPackage, createCmsBlog, deleteCmsDraftBlog } from "@/lib/cms/blogs";
 import { processUploadedImage } from "@/lib/cms/media-processor";
 import { calculateBufferChecksum } from "@/lib/cms/media-storage";
-import { createMediaAssetFromProcessed, getMediaAssetByChecksum, recordMediaUsage, type MediaAsset } from "@/lib/cms/media";
+import { createMediaAssetFromProcessed, getMediaAssetByChecksum, recordMediaUsage, updateMediaAssetMetadata, type MediaAsset } from "@/lib/cms/media";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -147,6 +147,11 @@ export async function POST(request: Request) {
         originalName: string;
       }> = [];
 
+      // Extract H2 headings for contextual image alt descriptions
+      const h2Headings = [...parsed.bodyHtml.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/gi)]
+        .map((m) => m[1].replace(/<[^>]+>/g, "").trim())
+        .filter(Boolean);
+
       for (const [origName, asset] of processedMediaByOriginalName.entries()) {
         if (imageMatchesSlug(origName, parsed.slug)) {
           const isFeatured = /-(featured|hero|cover|banner)\.[^.]+$/i.test(origName);
@@ -157,6 +162,33 @@ export async function POST(request: Request) {
       // If no image is specifically tagged as featured, pick the first matched
       if (matchedImages.length > 0 && !matchedImages.some((m) => m.isFeatured)) {
         matchedImages[0].isFeatured = true;
+      }
+
+      // Generate contextual alt text for all matched blog images
+      let inlineHeadingIdx = 0;
+      for (const item of matchedImages) {
+        let contextualAlt = "";
+        const cleanName = item.originalName
+          .replace(/\.[^.]+$/, "")
+          .replace(/[-_]+/g, " ")
+          .replace(/\b(image|img|pic|photo|\d+)\b/gi, "")
+          .trim();
+
+        if (item.isFeatured) {
+          contextualAlt = `${parsed.title} — Comprehensive overview and analysis`;
+        } else {
+          const nearestH2 = h2Headings[inlineHeadingIdx++] || parsed.title;
+          contextualAlt = `${nearestH2} — ${cleanName || "Detailed visual demonstration"} in ${parsed.title}`;
+        }
+
+        item.asset.alt_text = contextualAlt;
+        // Update database with contextual alt and AI_CONTEXTUAL source tag
+        await updateMediaAssetMetadata(item.asset.id, {
+          altText: contextualAlt,
+          altSource: "AI_CONTEXTUAL",
+          title: cleanName || parsed.title,
+          category: "blog",
+        }).catch((e) => console.warn("Failed to update blog image alt metadata:", e));
       }
 
       const featuredMatch = matchedImages.find((m) => m.isFeatured);
@@ -183,7 +215,8 @@ export async function POST(request: Request) {
         bodyHtml = bodyHtml.replace(/(<\/h2>)/gi, (match) => {
           const item = inlineImages[inlineIdx++];
           if (!item) return match;
-          const figure = `<figure class="dgs-blog-inline-image"><img src="${item.asset.public_url}" alt="${(item.asset.alt_text || parsed.title).replace(/"/g, "&quot;")}" width="${item.asset.width || 1200}" height="${item.asset.height || 675}" loading="lazy" decoding="async" /></figure>`;
+          const altValue = (item.asset.alt_text || parsed.title).replace(/"/g, "&quot;");
+          const figure = `<figure class="dgs-blog-inline-image"><img src="${item.asset.public_url}" alt="${altValue}" width="${item.asset.width || 1200}" height="${item.asset.height || 675}" loading="lazy" decoding="async" /></figure>`;
           return `${match}\n${figure}`;
         });
       }
