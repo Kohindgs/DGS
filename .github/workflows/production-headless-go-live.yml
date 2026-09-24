@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - deploy/headless-go-live-fa4fdb6
+  workflow_dispatch:
 
 permissions:
   contents: read
