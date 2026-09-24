@@ -38,7 +38,7 @@ export default function AdminDetailDrawer({
     <>
       <div className="dgs-drawer-backdrop" onClick={onClose} aria-hidden="true" />
       <aside
-        className="dgs-detail-drawer"
+        className="dgs-detail-drawer open"
         style={{ width }}
         role="dialog"
         aria-modal="true"

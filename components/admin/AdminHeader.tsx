@@ -7,13 +7,12 @@ import AdminNotificationsDropdown from "./AdminNotificationsDropdown";
 import type { CmsUser } from "@/lib/cms/auth-db";
 import {
   Menu,
-  PanelLeft,
+  PanelLeftClose,
+  PanelLeftOpen,
   Search,
   User,
   KeyRound,
   Shield,
-  Moon,
-  Sun,
   LogOut,
   ExternalLink,
   Plus,
@@ -39,12 +38,12 @@ type Props = {
 };
 
 export default function AdminHeader({
-  collapsed: _collapsed,
+  collapsed,
   onToggleCollapse,
   onOpenMobile,
   onOpenSearch,
   currentUser,
-  theme = "light",
+  theme = "dark",
   onToggleTheme,
   density = "comfortable",
   onToggleDensity,
@@ -69,20 +68,20 @@ export default function AdminHeader({
           className="dgs-saas-btn secondary sm mobile-only"
           onClick={onOpenMobile}
           aria-label="Open Mobile Navigation"
+          style={{ width: "34px", padding: 0 }}
         >
           <Menu size={18} strokeWidth={1.8} />
         </button>
 
-        {/* Desktop Sidebar Collapse Toggle */}
+        {/* Desktop Sidebar Accordion Button */}
         <button
           type="button"
-          className="dgs-saas-btn secondary sm desktop-only"
+          className="dgs-sidebar-accordion-btn desktop-only"
           onClick={onToggleCollapse}
-          aria-label="Toggle Sidebar"
-          title="Toggle Sidebar (Cmd+B)"
-          style={{ width: "32px", padding: 0 }}
+          aria-label={collapsed ? "Open Sidebar (Cmd+B)" : "Close Sidebar (Cmd+B)"}
+          title={collapsed ? "Open Sidebar (Cmd+B)" : "Close Sidebar (Cmd+B)"}
         >
-          <PanelLeft size={16} strokeWidth={1.8} />
+          {collapsed ? <PanelLeftOpen size={18} strokeWidth={1.8} /> : <PanelLeftClose size={18} strokeWidth={1.8} />}
         </button>
 
         {/* Breadcrumb Navigation */}
@@ -218,20 +217,6 @@ export default function AdminHeader({
             style={{ width: "32px", padding: 0 }}
           >
             <SlidersHorizontal size={14} strokeWidth={1.8} />
-          </button>
-        )}
-
-        {/* Theme Toggle (Light vs Dark) */}
-        {onToggleTheme && (
-          <button
-            type="button"
-            className="dgs-saas-btn secondary sm desktop-only"
-            onClick={onToggleTheme}
-            title={`Theme: ${theme === "dark" ? "Dark" : "Light"} (Click to switch)`}
-            aria-label="Toggle color theme"
-            style={{ width: "32px", padding: 0 }}
-          >
-            {theme === "dark" ? <Sun size={15} strokeWidth={1.8} /> : <Moon size={15} strokeWidth={1.8} />}
           </button>
         )}
 

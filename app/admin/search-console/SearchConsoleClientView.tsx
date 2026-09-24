@@ -35,6 +35,25 @@ type Props = {
 };
 
 export default function SearchConsoleClientView({ metrics }: Props) {
+  const [syncing, setSyncing] = React.useState(false);
+  const [syncMsg, setSyncMsg] = React.useState<string | null>(null);
+
+  const handleSync = async () => {
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const res = await fetch("/api/admin/integrations/google/sync", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Sync failed");
+      setSyncMsg(`Synced successfully! Clicks: ${data.gsc?.clicks ?? 0}`);
+      setTimeout(() => window.location.reload(), 1500);
+    } catch (err: any) {
+      alert("Search Console sync error: " + err.message);
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   const queryColumns: Column<QueryMetric>[] = [
     { key: "query_text", header: "Top Search Queries", sortable: true },
     { key: "clicks", header: "Clicks", sortable: true, width: "120px" },
@@ -86,15 +105,34 @@ export default function SearchConsoleClientView({ metrics }: Props) {
             Official Read-Only Search Performance &middot; Cached Locally &middot; Sitemap Governance
           </p>
         </div>
-        <div style={{ display: "flex", gap: "10px" }}>
-          <Link href="/admin/integrations/" className="dgs-saas-btn secondary sm">
-            Manage Connection
-          </Link>
-          <button type="button" className="dgs-saas-btn primary sm" disabled={!metrics.connected}>
-            Sync Now
-          </button>
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          {metrics.connected ? (
+            <>
+              <Link href="/admin/integrations/google/setup/" className="dgs-saas-btn secondary sm">
+                Manage Property
+              </Link>
+              <button
+                type="button"
+                className="dgs-saas-btn primary sm"
+                disabled={syncing}
+                onClick={handleSync}
+              >
+                {syncing ? "Syncing..." : "Sync Now"}
+              </button>
+            </>
+          ) : (
+            <Link href="/admin/integrations/google/setup/" className="dgs-saas-btn primary sm">
+              Connect Search Console
+            </Link>
+          )}
         </div>
       </div>
+
+      {syncMsg && (
+        <div style={{ padding: "10px 14px", background: "rgba(40, 199, 111, 0.1)", border: "1px solid rgba(40, 199, 111, 0.3)", borderRadius: "var(--dgs-radius-sm)", color: "var(--dgs-success)", fontSize: "13px" }}>
+          {syncMsg}
+        </div>
+      )}
 
       {/* Distinction Banner: Live Technical Status vs Google Last Read Status */}
       <div className="dgs-saas-card" style={{ borderColor: "rgba(115, 103, 240, 0.4)" }}>

@@ -126,6 +126,18 @@ async function getDashboardData() {
         if (row.service === "gsc" && row.status === "connected") stats.gscConnected = true;
         if (row.service === "ga4" && row.status === "connected") stats.ga4Connected = true;
       }
+      if (stats.gscConnected) {
+        try {
+          const { rows } = await cmsQuery<{ total_clicks: number }>(`SELECT SUM(clicks) as total_clicks FROM gsc_daily_metrics`);
+          stats.gscClicks = rows[0]?.total_clicks ?? 0;
+        } catch {}
+      }
+      if (stats.ga4Connected) {
+        try {
+          const { rows } = await cmsQuery<{ total_sessions: number }>(`SELECT SUM(sessions) as total_sessions FROM ga4_daily_metrics`);
+          stats.ga4Sessions = rows[0]?.total_sessions ?? 0;
+        } catch {}
+      }
     }
     if (leadsListRes.status === "fulfilled") {
       recentLeads = leadsListRes.value.rows;
@@ -231,34 +243,42 @@ export default async function AdminPage() {
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">
             <span>Search Clicks (28d)</span>
-            <Search size={16} strokeWidth={1.8} style={{ color: "var(--dgs-text-muted)" }} />
+            <Search size={16} strokeWidth={1.8} style={{ color: "var(--dgs-brand-cyan)" }} />
           </div>
           <div className="dgs-saas-kpi-value" style={{ color: stats.gscConnected ? "var(--dgs-text-primary)" : "var(--dgs-text-dim)" }}>
             {stats.gscConnected && stats.gscClicks !== null ? stats.gscClicks.toLocaleString() : "—"}
           </div>
           <div className="dgs-saas-kpi-delta neutral">
             <span className={`dgs-saas-chip sm ${stats.gscConnected ? "success" : "neutral"}`}>
-              {stats.gscConnected ? "Connected" : "Service account pending"}
+              {stats.gscConnected ? "Connected" : "OAuth Setup Pending"}
             </span>
           </div>
-          <div className="dgs-saas-kpi-source">Google Search Console API</div>
+          <div className="dgs-saas-kpi-source">
+            <Link href={stats.gscConnected ? "/admin/search-console/" : "/admin/integrations/google/setup/"} style={{ color: "inherit", textDecoration: "none" }}>
+              {stats.gscConnected ? "Google Search Console API &rarr;" : "Connect Google Search &rarr;"}
+            </Link>
+          </div>
         </div>
 
         {/* KPI 6: Google Analytics 4 */}
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">
             <span>GA4 Traffic</span>
-            <BarChart3 size={16} strokeWidth={1.8} style={{ color: "var(--dgs-text-muted)" }} />
+            <BarChart3 size={16} strokeWidth={1.8} style={{ color: "var(--dgs-brand-orange)" }} />
           </div>
           <div className="dgs-saas-kpi-value" style={{ color: stats.ga4Connected ? "var(--dgs-text-primary)" : "var(--dgs-text-dim)" }}>
             {stats.ga4Connected && stats.ga4Sessions !== null ? stats.ga4Sessions.toLocaleString() : "—"}
           </div>
           <div className="dgs-saas-kpi-delta neutral">
             <span className={`dgs-saas-chip sm ${stats.ga4Connected ? "success" : "neutral"}`}>
-              {stats.ga4Connected ? "Connected" : "Property ID configured"}
+              {stats.ga4Connected ? "Connected" : "Property Setup Pending"}
             </span>
           </div>
-          <div className="dgs-saas-kpi-source">Google Analytics 4 Data API</div>
+          <div className="dgs-saas-kpi-source">
+            <Link href={stats.ga4Connected ? "/admin/analytics/" : "/admin/integrations/google/setup/"} style={{ color: "inherit", textDecoration: "none" }}>
+              {stats.ga4Connected ? "Google Analytics 4 Data API &rarr;" : "Connect Google Analytics &rarr;"}
+            </Link>
+          </div>
         </div>
       </div>
 

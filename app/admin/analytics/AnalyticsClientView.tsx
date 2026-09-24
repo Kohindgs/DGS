@@ -25,6 +25,25 @@ type Props = {
 };
 
 export default function AnalyticsClientView({ metrics }: Props) {
+  const [syncing, setSyncing] = React.useState(false);
+  const [syncMsg, setSyncMsg] = React.useState<string | null>(null);
+
+  const handleSync = async () => {
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const res = await fetch("/api/admin/integrations/google/sync", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Sync failed");
+      setSyncMsg(`Synced successfully! Active users: ${data.ga4?.activeUsers ?? 0}, Sessions: ${data.ga4?.sessions ?? 0}`);
+      setTimeout(() => window.location.reload(), 1500);
+    } catch (err: any) {
+      alert("Analytics sync error: " + err.message);
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   const pageColumns: Column<PageMetric>[] = [
     { key: "page_path", header: "Landing Page / Path", sortable: true },
     { key: "views", header: "Views", sortable: true, width: "120px" },
@@ -49,15 +68,34 @@ export default function AnalyticsClientView({ metrics }: Props) {
             Official GA4 Property Reporting &middot; User Engagement &middot; Traffic Acquisition
           </p>
         </div>
-        <div style={{ display: "flex", gap: "10px" }}>
-          <Link href="/admin/integrations/" className="dgs-saas-btn secondary sm">
-            Manage Property Connection
-          </Link>
-          <button type="button" className="dgs-saas-btn primary sm" disabled={!metrics.connected}>
-            Sync Now
-          </button>
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          {metrics.connected ? (
+            <>
+              <Link href="/admin/integrations/google/setup/" className="dgs-saas-btn secondary sm">
+                Manage Property
+              </Link>
+              <button
+                type="button"
+                className="dgs-saas-btn primary sm"
+                disabled={syncing}
+                onClick={handleSync}
+              >
+                {syncing ? "Syncing..." : "Sync Now"}
+              </button>
+            </>
+          ) : (
+            <Link href="/admin/integrations/google/setup/" className="dgs-saas-btn primary sm">
+              Connect Google Analytics 4
+            </Link>
+          )}
         </div>
       </div>
+
+      {syncMsg && (
+        <div style={{ padding: "10px 14px", background: "rgba(40, 199, 111, 0.1)", border: "1px solid rgba(40, 199, 111, 0.3)", borderRadius: "var(--dgs-radius-sm)", color: "var(--dgs-success)", fontSize: "13px" }}>
+          {syncMsg}
+        </div>
+      )}
 
       {/* KPI Cards */}
       <div className="dgs-saas-kpi-grid">

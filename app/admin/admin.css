@@ -1,8 +1,8 @@
 .dgs-admin-shell {
   min-height: 100vh;
   padding: var(--dgs-content-padding, 24px);
-  background: var(--dgs-bg-app, #F7F8FA);
-  color: var(--dgs-text-primary, #111318);
+  background: var(--dgs-bg-app, #07090D);
+  color: var(--dgs-text-primary, #F3F4F6);
   font-family: var(--dgs-font-sans, -apple-system, BlinkMacSystemFont, "Inter", sans-serif);
 }
 
@@ -111,31 +111,49 @@
 }
 
 .dgs-admin-login-shell {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--dgs-bg-app, #07090D);
 }
 
 .dgs-admin-login-card {
+  position: relative;
+  z-index: 1;
   width: min(100%, 460px);
-  padding: 32px;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 24px;
-  background: rgba(255,255,255,.035);
+  padding: 36px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  background: rgba(18, 21, 31, 0.65);
+  backdrop-filter: blur(28px) saturate(145%);
+  -webkit-backdrop-filter: blur(28px) saturate(145%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.dgs-admin-login-card h1 { margin-bottom: 10px; }
+.dgs-admin-login-card h1 {
+  margin: 10px 0 6px 0;
+  font-size: 24px;
+  font-weight: 650;
+  color: var(--dgs-text-primary, #F3F4F6);
+}
+
 .dgs-admin-login-message { margin-top: 16px; color: #f7d757; }
 
 .dgs-admin-login-form {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   margin-top: 28px;
 }
 
 .dgs-admin-login-form label {
   display: grid;
   gap: 8px;
-  color: #d8d8df;
+  color: var(--dgs-text-secondary, #9CA3AF);
+  font-size: 13px;
+  font-weight: 500;
 }
 .dgs-admin-login-form input {
   width: 100%;
