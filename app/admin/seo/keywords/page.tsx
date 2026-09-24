@@ -7,6 +7,12 @@ import KeywordsClientView from "./KeywordsClientView";
 
 export const dynamic = "force-dynamic";
 
+function safeStr(val: unknown): string {
+  if (typeof val === "string") return val.trim();
+  if (val != null) return String(val).trim();
+  return "";
+}
+
 export default async function AdminKeywordsPage() {
   if (process.env.DGS_ADMIN_ENABLED !== "true") notFound();
   if (!(await hasAdminSession())) redirect("/admin/login/");
@@ -22,45 +28,89 @@ export default async function AdminKeywordsPage() {
 
   if (isCmsDatabaseConfigured()) {
     try {
-      await seedInitialTargetKeywords();
-      const targets = await listTargetKeywords();
-      targetsCount = targets.length;
+      await seedInitialTargetKeywords().catch((err) => {
+        console.warn("Notice: seedInitialTargetKeywords failed:", err?.message);
+      });
 
-      const { rows } = await cmsQuery<any>(
-        `SELECT
-           pq.id,
-           pq.query_text,
-           pq.page_url,
-           pq.clicks,
-           pq.impressions,
-           pq.ctr,
-           pq.position,
-           pq.prev_position,
-           pq.prev_clicks,
-           pq.prev_impressions,
-           pq.period_type,
-           tk.keyword_group,
-           psi_m.performance_score as mobile_psi,
-           psi_d.performance_score as desktop_psi
-         FROM gsc_page_query_metrics pq
-         LEFT JOIN target_keywords tk ON (pq.query_text = tk.keyword AND pq.page_url = tk.page_url)
-         LEFT JOIN pagespeed_cache psi_m ON (psi_m.url = pq.page_url AND psi_m.strategy = 'mobile')
-         LEFT JOIN pagespeed_cache psi_d ON (psi_d.url = pq.page_url AND psi_d.strategy = 'desktop')
-         ORDER BY pq.clicks DESC, pq.impressions DESC
-         LIMIT 500`
-      );
-      queries = rows || [];
+      const targets = await listTargetKeywords().catch(() => []);
+      targetsCount = targets?.length || 0;
 
-      // Also ensure target keywords not detected in GSC are included in universe
-      const detectedPairs = new Set(
-        queries.map((q) => `${q.query_text.trim().toLowerCase()}|||${q.page_url.trim().toLowerCase()}`)
-      );
+      // Primary query with historical comparison columns
+      try {
+        const { rows } = await cmsQuery<any>(
+          `SELECT
+             pq.id,
+             pq.query_text,
+             pq.page_url,
+             pq.clicks,
+             pq.impressions,
+             pq.ctr,
+             pq.position,
+             pq.prev_position,
+             pq.prev_clicks,
+             pq.prev_impressions,
+             pq.period_type,
+             tk.keyword_group,
+             psi_m.performance_score as mobile_psi,
+             psi_d.performance_score as desktop_psi
+           FROM gsc_page_query_metrics pq
+           LEFT JOIN target_keywords tk ON (pq.query_text = tk.keyword AND pq.page_url = tk.page_url)
+           LEFT JOIN pagespeed_cache psi_m ON (psi_m.url = pq.page_url AND psi_m.strategy = 'mobile')
+           LEFT JOIN pagespeed_cache psi_d ON (psi_d.url = pq.page_url AND psi_d.strategy = 'desktop')
+           WHERE pq.query_text IS NOT NULL AND pq.query_text != ''
+           ORDER BY pq.clicks DESC, pq.impressions DESC
+           LIMIT 500`
+        );
+        queries = rows || [];
+      } catch (sqlErr: any) {
+        console.warn("Primary GSC query error, falling back to base columns:", sqlErr?.message);
+        // Fallback without prev_* columns if schema not yet updated on this host
+        const { rows } = await cmsQuery<any>(
+          `SELECT
+             pq.id,
+             pq.query_text,
+             pq.page_url,
+             pq.clicks,
+             pq.impressions,
+             pq.ctr,
+             pq.position,
+             NULL as prev_position,
+             0 as prev_clicks,
+             0 as prev_impressions,
+             pq.period_type,
+             tk.keyword_group,
+             psi_m.performance_score as mobile_psi,
+             psi_d.performance_score as desktop_psi
+           FROM gsc_page_query_metrics pq
+           LEFT JOIN target_keywords tk ON (pq.query_text = tk.keyword AND pq.page_url = tk.page_url)
+           LEFT JOIN pagespeed_cache psi_m ON (psi_m.url = pq.page_url AND psi_m.strategy = 'mobile')
+           LEFT JOIN pagespeed_cache psi_d ON (psi_d.url = pq.page_url AND psi_d.strategy = 'desktop')
+           WHERE pq.query_text IS NOT NULL AND pq.query_text != ''
+           ORDER BY pq.clicks DESC, pq.impressions DESC
+           LIMIT 500`
+        ).catch(() => ({ rows: [] }));
+        queries = rows || [];
+      }
 
-      for (const t of targets) {
-        const pairKey = `${t.keyword.trim().toLowerCase()}|||${t.pageUrl.trim().toLowerCase()}`;
+      // Ensure target keywords not detected in GSC are included in universe
+      const detectedPairs = new Set<string>();
+      for (const q of queries) {
+        const qText = safeStr(q?.query_text).toLowerCase();
+        const pUrl = safeStr(q?.page_url).toLowerCase();
+        if (qText && pUrl) {
+          detectedPairs.add(`${qText}|||${pUrl}`);
+        }
+      }
+
+      for (const t of targets || []) {
+        const kw = safeStr(t?.keyword).toLowerCase();
+        const pUrl = safeStr(t?.pageUrl).toLowerCase();
+        if (!kw || !pUrl) continue;
+
+        const pairKey = `${kw}|||${pUrl}`;
         if (!detectedPairs.has(pairKey)) {
           queries.push({
-            id: `target_${t.id}`,
+            id: `target_${t.id || kw}`,
             query_text: t.keyword,
             page_url: t.pageUrl,
             clicks: 0,
@@ -78,7 +128,10 @@ export default async function AdminKeywordsPage() {
         }
       }
 
-      cannibalizationRisks = await detectCannibalization();
+      cannibalizationRisks = await detectCannibalization().catch((cErr) => {
+        console.warn("Cannibalization detection warning:", cErr?.message);
+        return [];
+      });
     } catch (err) {
       console.error("Error loading keywords page data:", err);
     }
@@ -86,9 +139,9 @@ export default async function AdminKeywordsPage() {
 
   return (
     <KeywordsClientView
-      queries={queries}
-      cannibalizationRisks={cannibalizationRisks}
-      targetsCount={targetsCount}
+      queries={queries || []}
+      cannibalizationRisks={cannibalizationRisks || []}
+      targetsCount={targetsCount || 0}
     />
   );
 }

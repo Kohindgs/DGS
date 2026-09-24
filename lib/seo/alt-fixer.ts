@@ -1,9 +1,10 @@
 import "server-only";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { auditSingleUrl } from "@/lib/audit/audit-runner";
 
 export type AltSourceType =
   | "NATIVE MEDIA COMPONENT"
@@ -24,6 +25,7 @@ export type MissingAltRecord = {
   auditRunId?: string | null;
   pageUrl: string;
   imageSrc: string;
+  sourceHash?: string | null;
   mediaAssetId?: string | null;
   filename: string;
   currentAlt: string | null;
@@ -33,6 +35,7 @@ export type MissingAltRecord = {
   suggestedAlt?: string | null;
   fixedAlt?: string | null;
   resolved: boolean;
+  recommendation?: string | null;
   sourceType: AltSourceType;
   sourceIdentifier?: string | null;
   sourceLocation?: string | null;
@@ -101,6 +104,7 @@ export function determineAltSource(pageUrl: string, imageSrc: string): {
  */
 export async function listMissingAlts(options: {
   pageUrl?: string;
+  auditRunId?: string;
   resolved?: boolean;
   limit?: number;
 } = {}): Promise<MissingAltRecord[]> {
@@ -111,8 +115,17 @@ export async function listMissingAlts(options: {
   const params: unknown[] = [];
 
   if (options.pageUrl) {
-    whereClauses.push("page_url = ?");
-    params.push(options.pageUrl);
+    const raw = options.pageUrl;
+    const pathPart = raw.replace(/^https?:\/\/[^/]+/i, "") || "/";
+    const pathWithSlash = pathPart.endsWith("/") ? pathPart : `${pathPart}/`;
+    const pathWithoutSlash = pathPart.replace(/\/+$/, "");
+    whereClauses.push("(page_url = ? OR page_url = ? OR page_url = ? OR page_url LIKE ?)");
+    params.push(raw, pathWithSlash, pathWithoutSlash, `%${pathWithoutSlash}%`);
+  }
+
+  if (options.auditRunId) {
+    whereClauses.push("audit_run_id = ?");
+    params.push(options.auditRunId);
   }
 
   if (options.resolved !== undefined) {
@@ -124,13 +137,78 @@ export async function listMissingAlts(options: {
   params.push(limit);
 
   try {
-    const { rows } = await cmsQuery<Record<string, unknown>>(
+    let { rows } = await cmsQuery<Record<string, unknown>>(
       `SELECT * FROM site_audit_missing_alts${whereSql} ORDER BY created_at DESC LIMIT ?`,
       params
     );
 
+    // Fail-safe Reconciliation (Requirement B & D):
+    // If querying an unresolved page and 0 rows returned, but site_audit_pages reports missing alts:
+    if ((!rows || rows.length === 0) && options.pageUrl && options.resolved !== true) {
+      try {
+        const raw = options.pageUrl;
+        const pathPart = raw.replace(/^https?:\/\/[^/]+/i, "") || "/";
+        const { rows: pRows } = await cmsQuery<any>(
+          `SELECT audit_run_id, missing_alt_count FROM site_audit_pages
+           WHERE url = ? OR url LIKE ? ORDER BY created_at DESC LIMIT 1`,
+          [raw, `%${pathPart}%`]
+        );
+
+        if (pRows && pRows.length > 0 && Number(pRows[0].missing_alt_count || 0) > 0) {
+          const runId = options.auditRunId || pRows[0].audit_run_id || randomUUID();
+          const freshAudit = await auditSingleUrl(raw);
+
+          for (const altItem of freshAudit.missingAltDetails) {
+            if (altItem.altStatus === "EMPTY_ALT_DECORATIVE") continue;
+            const sourceHash = createHash("sha256")
+              .update(`${altItem.pageUrl}|${altItem.imageSrc}`)
+              .digest("hex");
+            const deterministicId = createHash("sha256")
+              .update(`${runId}|${altItem.pageUrl}|${altItem.imageSrc}`)
+              .digest("hex")
+              .slice(0, 36);
+
+            await cmsExecute(
+              `INSERT INTO site_audit_missing_alts (
+                id, audit_run_id, page_url, image_src, source_hash, filename, current_alt, alt_status, is_decorative, recommendation
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+              ON DUPLICATE KEY UPDATE
+                audit_run_id = VALUES(audit_run_id),
+                source_hash = VALUES(source_hash),
+                current_alt = VALUES(current_alt),
+                alt_status = VALUES(alt_status),
+                is_decorative = VALUES(is_decorative),
+                recommendation = VALUES(recommendation),
+                updated_at = CURRENT_TIMESTAMP`,
+              [
+                deterministicId,
+                runId,
+                altItem.pageUrl,
+                altItem.imageSrc,
+                sourceHash,
+                altItem.filename,
+                altItem.currentAlt,
+                altItem.altStatus,
+                altItem.isDecorative ? 1 : 0,
+                altItem.recommendation,
+              ]
+            );
+          }
+
+          // Re-query with fresh records
+          const refetch = await cmsQuery<Record<string, unknown>>(
+            `SELECT * FROM site_audit_missing_alts${whereSql} ORDER BY created_at DESC LIMIT ?`,
+            params
+          );
+          rows = refetch.rows;
+        }
+      } catch (reconErr) {
+        console.warn("Notice: missing alts reconciliation warning:", reconErr);
+      }
+    }
+
     const results: MissingAltRecord[] = [];
-    for (const r of rows) {
+    for (const r of rows || []) {
       let usageCount = 1;
       const mediaAssetId = r.media_asset_id ? String(r.media_asset_id) : null;
 
@@ -153,6 +231,7 @@ export async function listMissingAlts(options: {
         auditRunId: r.audit_run_id ? String(r.audit_run_id) : null,
         pageUrl,
         imageSrc,
+        sourceHash: r.source_hash ? String(r.source_hash) : null,
         mediaAssetId,
         filename: String(r.filename || ""),
         currentAlt: r.current_alt ? String(r.current_alt) : null,
@@ -162,6 +241,7 @@ export async function listMissingAlts(options: {
         suggestedAlt: r.suggested_alt ? String(r.suggested_alt) : null,
         fixedAlt: r.fixed_alt ? String(r.fixed_alt) : null,
         resolved: Boolean(r.resolved),
+        recommendation: r.recommendation ? String(r.recommendation) : null,
         sourceType: (r.source_type as AltSourceType) || fallbackSource.sourceType,
         sourceIdentifier: r.source_identifier ? String(r.source_identifier) : fallbackSource.sourceIdentifier,
         sourceLocation: r.source_location ? String(r.source_location) : fallbackSource.sourceLocation,
@@ -415,28 +495,43 @@ export async function verifyRenderedAlt(params: {
 
 /**
  * Re-audit the missing alt count for an affected page after a fix.
+ * Follows Requirement F: Runs auditSingleUrl, updates page evidence and counts truthful before/after.
  */
 export async function refreshPageMissingAltCount(pageUrl: string): Promise<{ beforeCount: number; afterCount: number }> {
   if (!isCmsDatabaseConfigured()) return { beforeCount: 0, afterCount: 0 };
 
   try {
-    const { rows: unresolvedRows } = await cmsQuery<{ cnt: number }>(
-      `SELECT COUNT(*) as cnt FROM site_audit_missing_alts
-       WHERE page_url = ? AND resolved = 0`,
-      [pageUrl]
-    );
-    const afterCount = Number(unresolvedRows[0]?.cnt || 0);
-
     const { rows: pageRows } = await cmsQuery<any>(
       `SELECT missing_alt_count FROM site_audit_pages WHERE url = ? ORDER BY created_at DESC LIMIT 1`,
       [pageUrl]
     );
-    const beforeCount = Number(pageRows[0]?.missing_alt_count || afterCount + 1);
+    const beforeCount = Number(pageRows[0]?.missing_alt_count || 0);
 
-    await cmsExecute(
-      `UPDATE site_audit_pages SET missing_alt_count = ? WHERE url = ?`,
-      [afterCount, pageUrl]
-    );
+    // Run real live re-audit of the page (Requirement F)
+    let afterCount = beforeCount > 0 ? beforeCount - 1 : 0;
+    try {
+      const freshAudit = await auditSingleUrl(pageUrl);
+      afterCount = freshAudit.missingAltCount;
+
+      await cmsExecute(
+        `UPDATE site_audit_pages
+         SET missing_alt_count = ?, page_score = ?, updated_at = CURRENT_TIMESTAMP
+         WHERE url = ?`,
+        [afterCount, freshAudit.pageScore, pageUrl]
+      );
+    } catch (auditErr) {
+      console.warn("Notice: Live re-audit in refreshPageMissingAltCount warning:", auditErr);
+      const { rows: unresolvedRows } = await cmsQuery<{ cnt: number }>(
+        `SELECT COUNT(*) as cnt FROM site_audit_missing_alts
+         WHERE page_url = ? AND resolved = 0`,
+        [pageUrl]
+      );
+      afterCount = Number(unresolvedRows[0]?.cnt || 0);
+      await cmsExecute(
+        `UPDATE site_audit_pages SET missing_alt_count = ? WHERE url = ?`,
+        [afterCount, pageUrl]
+      );
+    }
 
     return { beforeCount, afterCount };
   } catch (err) {

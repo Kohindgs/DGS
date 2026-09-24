@@ -479,7 +479,45 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
   const concurrency = 5;
   for (let i = 0; i < urls.length; i += concurrency) {
     const chunk = urls.slice(i, i + concurrency);
-    const results = await Promise.all(chunk.map((u) => auditSingleUrl(u)));
+    const results = await Promise.all(
+      chunk.map(async (u) => {
+        try {
+          return await auditSingleUrl(u);
+        } catch (pageErr: any) {
+          console.error(`Failed auditing page ${u}:`, pageErr);
+          return {
+            url: u,
+            statusCode: 599,
+            responseTimeMs: 0,
+            title: null,
+            metaDescription: null,
+            canonicalUrl: null,
+            robotsMeta: null,
+            h1Count: 0,
+            h1Text: null,
+            schemaTypes: [],
+            ogTags: {},
+            imagesCount: 0,
+            missingAltCount: 0,
+            missingAltDetails: [],
+            internalLinksCount: 0,
+            externalLinksCount: 0,
+            isIndexable: false,
+            pageScore: 0,
+            issues: [
+              {
+                severity: "critical",
+                category: "technical",
+                issueCode: "AUDIT_EXCEPTION",
+                title: "Failed auditing page",
+                description: pageErr?.message || "Audit runner caught unhandled page exception",
+                recommendation: "Investigate page accessibility and server response.",
+              },
+            ],
+          } as PageAuditResult;
+        }
+      })
+    );
     pages.push(...results);
   }
 
@@ -632,84 +670,121 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
 
       // Insert pages, issues, and individual missing alt image records
       for (const p of pages) {
-        const pageId = randomUUID();
-        await cmsExecute(
-          `INSERT INTO site_audit_pages (
-            id, audit_run_id, url, status_code, response_time_ms, title,
-            meta_description, canonical_url, robots_meta, h1_count, h1_text,
-            schema_types, og_tags, images_count, missing_alt_count,
-            internal_links_count, external_links_count, is_indexable, page_score
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            pageId,
-            auditId,
-            p.url,
-            p.statusCode,
-            p.responseTimeMs,
-            p.title,
-            p.metaDescription,
-            p.canonicalUrl,
-            p.robotsMeta,
-            p.h1Count,
-            p.h1Text,
-            JSON.stringify(p.schemaTypes),
-            JSON.stringify(p.ogTags),
-            p.imagesCount,
-            p.missingAltCount,
-            p.internalLinksCount,
-            p.externalLinksCount,
-            p.isIndexable ? 1 : 0,
-            p.pageScore,
-          ]
-        );
-
-        for (const iss of p.issues) {
-          const issueId = randomUUID();
+        try {
+          const pageId = randomUUID();
           await cmsExecute(
-            `INSERT INTO site_audit_issues (
-              id, audit_run_id, page_id, url, severity, category, issue_code, title, description, recommendation
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO site_audit_pages (
+              id, audit_run_id, url, status_code, response_time_ms, title,
+              meta_description, canonical_url, robots_meta, h1_count, h1_text,
+              schema_types, og_tags, images_count, missing_alt_count,
+              internal_links_count, external_links_count, is_indexable, page_score
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
-              issueId,
-              auditId,
               pageId,
-              p.url,
-              iss.severity,
-              iss.category,
-              iss.issueCode,
-              iss.title,
-              iss.description,
-              iss.recommendation,
-            ]
-          );
-        }
-
-        // Persist individual missing alt records
-        for (const altItem of p.missingAltDetails) {
-          if (altItem.altStatus === "EMPTY_ALT_DECORATIVE") continue; // Valid decorative images not errors
-          await cmsExecute(
-            `INSERT INTO site_audit_missing_alts (
-              id, audit_run_id, page_url, image_src, filename, current_alt, alt_status, is_decorative, recommendation
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-              audit_run_id = VALUES(audit_run_id),
-              current_alt = VALUES(current_alt),
-              alt_status = VALUES(alt_status),
-              is_decorative = VALUES(is_decorative),
-              updated_at = CURRENT_TIMESTAMP`,
-            [
-              altItem.id,
               auditId,
-              altItem.pageUrl,
-              altItem.imageSrc,
-              altItem.filename,
-              altItem.currentAlt,
-              altItem.altStatus,
-              altItem.isDecorative ? 1 : 0,
-              altItem.recommendation,
+              p.url,
+              p.statusCode,
+              p.responseTimeMs,
+              p.title,
+              p.metaDescription,
+              p.canonicalUrl,
+              p.robotsMeta,
+              p.h1Count,
+              p.h1Text,
+              JSON.stringify(p.schemaTypes),
+              JSON.stringify(p.ogTags),
+              p.imagesCount,
+              p.missingAltCount,
+              p.internalLinksCount,
+              p.externalLinksCount,
+              p.isIndexable ? 1 : 0,
+              p.pageScore,
             ]
           );
+
+          for (const iss of p.issues) {
+            const issueId = randomUUID();
+            await cmsExecute(
+              `INSERT INTO site_audit_issues (
+                id, audit_run_id, page_id, url, severity, category, issue_code, title, description, recommendation
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+              [
+                issueId,
+                auditId,
+                pageId,
+                p.url,
+                iss.severity,
+                iss.category,
+                iss.issueCode,
+                iss.title,
+                iss.description,
+                iss.recommendation,
+              ]
+            );
+          }
+
+          // Persist individual missing alt records with deterministic identity & source_hash
+          for (const altItem of p.missingAltDetails) {
+            if (altItem.altStatus === "EMPTY_ALT_DECORATIVE") continue; // Valid decorative images not errors
+
+            // Deterministic identity (Requirement C)
+            const sourceHash = require("node:crypto")
+              .createHash("sha256")
+              .update(`${altItem.pageUrl}|${altItem.imageSrc}`)
+              .digest("hex");
+            const deterministicId = require("node:crypto")
+              .createHash("sha256")
+              .update(`${auditId}|${altItem.pageUrl}|${altItem.imageSrc}`)
+              .digest("hex")
+              .slice(0, 36);
+
+            await cmsExecute(
+              `INSERT INTO site_audit_missing_alts (
+                id, audit_run_id, page_url, image_src, source_hash, filename, current_alt, alt_status, is_decorative, recommendation
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+              ON DUPLICATE KEY UPDATE
+                audit_run_id = VALUES(audit_run_id),
+                source_hash = VALUES(source_hash),
+                current_alt = VALUES(current_alt),
+                alt_status = VALUES(alt_status),
+                is_decorative = VALUES(is_decorative),
+                recommendation = VALUES(recommendation),
+                updated_at = CURRENT_TIMESTAMP`,
+              [
+                deterministicId,
+                auditId,
+                altItem.pageUrl,
+                altItem.imageSrc,
+                sourceHash,
+                altItem.filename,
+                altItem.currentAlt,
+                altItem.altStatus,
+                altItem.isDecorative ? 1 : 0,
+                altItem.recommendation,
+              ]
+            );
+          }
+        } catch (pageSaveErr) {
+          console.error(`Error saving audit details for page ${p.url}:`, pageSaveErr);
         }
+      }
+
+      // Enqueue mobile + desktop PageSpeed measurement jobs for all crawled indexable pages (Requirement H)
+      try {
+        const indexableUrls = pages.filter((p) => p.statusCode === 200).map((p) => p.url);
+        for (const u of indexableUrls) {
+          for (const strategy of ["mobile", "desktop"] as const) {
+            const jobId = `psj_${require("node:crypto").createHash("sha256").update(`${auditId}|${u}|${strategy}`).digest("hex").slice(0, 32)}`;
+            await cmsExecute(
+              `INSERT INTO pagespeed_jobs (id, audit_run_id, url, strategy, status)
+               VALUES (?, ?, ?, ?, 'QUEUED')
+               ON DUPLICATE KEY UPDATE status = 'QUEUED', attempt_count = 0, last_error = NULL`,
+              [jobId, auditId, u, strategy]
+            ).catch(() => {});
+          }
+        }
+      } catch (queueErr) {
+        console.warn("Notice: Failed to enqueue PageSpeed jobs:", queueErr);
       }
 
       if (criticalCount > 0 || highCount > 0) {

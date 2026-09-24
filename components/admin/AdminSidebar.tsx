@@ -73,6 +73,7 @@ const NAV_GROUPS: NavGroup[] = [
       { title: "SEO Hub", href: "/admin/seo/", icon: Globe },
       { title: "Keywords & Queries", href: "/admin/seo/keywords/", icon: Search },
       { title: "Page Rankings", href: "/admin/seo/pages/", icon: BarChart3 },
+      { title: "SEO Approvals", href: "/admin/seo/approvals/", icon: ShieldCheck, badge: "V8.1", badgeVariant: "warning" },
       { title: "Forms", href: "/admin/forms/", icon: FileCheck2 },
       { title: "Leads", href: "/admin/leads/", icon: Inbox },
     ],

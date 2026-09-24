@@ -369,6 +369,7 @@ CREATE TABLE IF NOT EXISTS site_audit_missing_alts (
   audit_run_id VARCHAR(64) NULL,
   page_url VARCHAR(512) NOT NULL,
   image_src TEXT NOT NULL,
+  source_hash VARCHAR(64) NULL,
   media_asset_id CHAR(36) NULL,
   filename VARCHAR(255) NOT NULL,
   current_alt TEXT NULL,
@@ -378,13 +379,16 @@ CREATE TABLE IF NOT EXISTS site_audit_missing_alts (
   suggested_alt TEXT NULL,
   fixed_alt TEXT NULL,
   resolved BOOLEAN DEFAULT FALSE,
+  recommendation TEXT NULL,
   source_type VARCHAR(50) NOT NULL DEFAULT 'MIRRORED PAGE HTML',
   source_identifier VARCHAR(255) NULL,
   source_location TEXT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_sama_page (page_url(255)),
-  INDEX idx_sama_resolved (resolved)
+  INDEX idx_sama_resolved (resolved),
+  INDEX idx_sama_source_hash (source_hash),
+  INDEX idx_sama_run_page (audit_run_id, page_url(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS site_audit_runs (
@@ -523,4 +527,51 @@ CREATE TABLE IF NOT EXISTS gsc_ranking_snapshots (
   INDEX idx_snap_entity (entity_type, identifier(255)),
   INDEX idx_snap_date (snapshot_date),
   INDEX idx_snap_period (period_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS pagespeed_jobs (
+  id VARCHAR(64) PRIMARY KEY,
+  audit_run_id VARCHAR(64) NULL,
+  url VARCHAR(512) NOT NULL,
+  strategy VARCHAR(20) NOT NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'QUEUED',
+  attempt_count INT NOT NULL DEFAULT 0,
+  last_error TEXT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  started_at DATETIME NULL,
+  completed_at DATETIME NULL,
+  INDEX idx_psj_audit (audit_run_id),
+  INDEX idx_psj_status (status),
+  INDEX idx_psj_url (url(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS seo_change_requests (
+  id VARCHAR(64) PRIMARY KEY,
+  source_type VARCHAR(64) NOT NULL,
+  source_id VARCHAR(64) NULL,
+  page_url VARCHAR(512) NOT NULL,
+  keyword VARCHAR(255) NULL,
+  issue_code VARCHAR(100) NULL,
+  change_type VARCHAR(64) NOT NULL,
+  risk_level VARCHAR(30) NOT NULL,
+  protected_page BOOLEAN NOT NULL DEFAULT FALSE,
+  before_state JSON NULL,
+  proposed_state JSON NOT NULL,
+  diff_json JSON NULL,
+  reason TEXT NOT NULL,
+  evidence JSON NULL,
+  implementation_plan JSON NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'DRAFT',
+  created_by VARCHAR(255) NOT NULL,
+  approved_by VARCHAR(255) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  approved_at DATETIME NULL,
+  applied_at DATETIME NULL,
+  verified_at DATETIME NULL,
+  failed_at DATETIME NULL,
+  rolled_back_at DATETIME NULL,
+  error_message TEXT NULL,
+  INDEX idx_scr_status (status),
+  INDEX idx_scr_page (page_url(255)),
+  INDEX idx_scr_created (created_at DESC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

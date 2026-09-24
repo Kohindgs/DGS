@@ -1,22 +1,34 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { type MissingAltRecord } from "@/lib/seo/alt-fixer";
 
 type Props = {
   pageUrl?: string;
+  auditRunId?: string;
+  reportedCount?: number;
   isOpen: boolean;
   onClose: () => void;
   onUpdated?: () => void;
 };
 
-export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: Props) {
+export default function AltFixerDrawer({
+  pageUrl,
+  auditRunId,
+  reportedCount,
+  isOpen,
+  onClose,
+  onUpdated,
+}: Props) {
   const [items, setItems] = useState<MissingAltRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
   const [suggestingId, setSuggestingId] = useState<string | null>(null);
   const [applyingId, setApplyingId] = useState<string | null>(null);
+  const [draftingId, setDraftingId] = useState<string | null>(null);
+  const [createdDrafts, setCreatedDrafts] = useState<Record<string, string>>({});
   const [filterResolved, setFilterResolved] = useState<boolean>(false);
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
 
@@ -25,6 +37,7 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
     try {
       const q = new URLSearchParams();
       if (pageUrl) q.set("pageUrl", pageUrl);
+      if (auditRunId) q.set("auditRunId", auditRunId);
       q.set("resolved", String(filterResolved));
       const res = await fetch(`/api/admin/seo/alt-fixer?${q.toString()}`);
       const data = await res.json();
@@ -42,7 +55,7 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
     if (isOpen) {
       fetchItems();
     }
-  }, [isOpen, pageUrl, filterResolved]);
+  }, [isOpen, pageUrl, auditRunId, filterResolved]);
 
   const handleSuggest = async (item: MissingAltRecord) => {
     setSuggestingId(item.id);
@@ -99,7 +112,9 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
         setItems((prev) => prev.filter((it) => it.id !== item.id));
         setEditingId(null);
         if (data.beforeCount !== undefined && data.afterCount !== undefined) {
-          setFeedbackMsg(`✓ Alt text applied and verified live. Missing alts on page: Before: ${data.beforeCount} → After: ${data.afterCount}`);
+          setFeedbackMsg(
+            `✓ Alt text applied and verified live via re-audit. Missing alts on page: Before: ${data.beforeCount} → After: ${data.afterCount}`
+          );
         } else {
           setFeedbackMsg(`✓ Alt text applied and verified live (${data.affectedUsages || 1} usage updated).`);
         }
@@ -111,6 +126,51 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
       alert(err.message || "Failed to apply alt text");
     } finally {
       setApplyingId(null);
+    }
+  };
+
+  const handleCreateDraft = async (item: MissingAltRecord, customText?: string) => {
+    const textToApply = customText !== undefined ? customText : item.suggestedAlt || editText;
+    if (!textToApply || !textToApply.trim()) {
+      alert("Please provide or generate alt text before creating a draft.");
+      return;
+    }
+
+    setDraftingId(item.id);
+    try {
+      const res = await fetch("/api/admin/seo/change-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source_type: "ALT_FIXER",
+          source_id: item.id,
+          page_url: item.pageUrl,
+          change_type: "MISSING_ALT",
+          risk_level: "SAFE",
+          reason: `Accessibility & Image SEO: Image "${item.filename}" lacks descriptive alt text on ${item.pageUrl}`,
+          proposed_state: {
+            filename: item.filename,
+            imageSrc: item.imageSrc,
+            newAltText: textToApply.trim(),
+          },
+          implementation_plan: [
+            `Insert descriptive alt text into rendered source for image ${item.filename}`,
+            "Verify rendered alt attribute live",
+            "Re-audit page via auditSingleUrl to confirm resolution",
+          ],
+        }),
+      });
+      const data = await res.json();
+      if (data.ok && data.id) {
+        setCreatedDrafts((prev) => ({ ...prev, [item.id]: data.id }));
+        setFeedbackMsg(`✓ Created SEO Approval Draft #${data.id} for "${item.filename}".`);
+      } else {
+        alert(data.error || "Failed to create draft");
+      }
+    } catch (err: any) {
+      alert(err?.message || "Failed to create draft");
+    } finally {
+      setDraftingId(null);
     }
   };
 
@@ -128,10 +188,13 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
       const data = await res.json();
       if (data.ok) {
         setItems((prev) => prev.filter((it) => it.id !== item.id));
+        setFeedbackMsg(`✓ Image marked as decorative (alt="") and verified.`);
         if (onUpdated) onUpdated();
+      } else {
+        alert(data.error || "Failed to mark as decorative");
       }
-    } catch (err) {
-      console.error("Mark decorative error:", err);
+    } catch (err: any) {
+      alert(err.message || "Failed to mark as decorative");
     } finally {
       setApplyingId(null);
     }
@@ -139,17 +202,21 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
 
   if (!isOpen) return null;
 
+  // Invariant check: table count vs retrieved items count (Requirement D)
+  const hasInconsistency =
+    !filterResolved && reportedCount !== undefined && reportedCount !== items.length;
+
   return (
     <div
       style={{
         position: "fixed",
         top: 0,
-        left: 0,
         right: 0,
         bottom: 0,
-        background: "rgba(0,0,0,0.75)",
+        left: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.75)",
         backdropFilter: "blur(6px)",
-        zIndex: 10000,
+        zIndex: 9999,
         display: "flex",
         justifyContent: "flex-end",
       }}
@@ -158,51 +225,49 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
       <div
         style={{
           width: "100%",
-          maxWidth: "740px",
-          background: "#0c0c14",
-          borderLeft: "1px solid rgba(255,255,255,0.12)",
+          maxWidth: "800px",
           height: "100%",
-          overflowY: "auto",
-          padding: "28px",
+          backgroundColor: "#0d1117",
+          borderLeft: "1px solid rgba(255, 255, 255, 0.12)",
           display: "flex",
           flexDirection: "column",
+          boxShadow: "-12px 0 36px rgba(0,0,0,0.8)",
+          overflowY: "auto",
+          padding: "24px",
           gap: "20px",
-          boxShadow: "-10px 0 30px rgba(0,0,0,0.5)",
         }}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
-            <span className="dgs-saas-chip primary" style={{ marginBottom: "6px", display: "inline-block" }}>
-              ACCESSIBILITY &amp; IMAGE SEO
-            </span>
-            <h3 style={{ fontSize: "1.3rem", color: "#fff", margin: 0, fontWeight: 700 }}>
-              Missing Alt Text Fixer
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+              <span className="dgs-saas-chip danger">Missing Alt Text Fixer</span>
+              {auditRunId && (
+                <span className="dgs-saas-chip neutral" style={{ fontSize: "0.68rem" }}>
+                  Audit: {auditRunId.slice(0, 8)}
+                </span>
+              )}
+            </div>
+            <h3 style={{ margin: "4px 0", color: "#fff", fontSize: "1.25rem", fontWeight: 700 }}>
+              {pageUrl ? `Missing Alts on: ${pageUrl}` : "Site-Wide Missing Alt Fixer"}
             </h3>
-            <p style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-              {pageUrl ? `Auditing page: ${pageUrl}` : "Reviewing missing and unverified image alt tags site-wide."}
+            <p style={{ margin: "4px 0 0", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+              Context-aware AI descriptions written directly to rendered sources, verified live, and re-audited.
             </p>
           </div>
           <button
             type="button"
+            className="dgs-saas-btn secondary sm"
             onClick={onClose}
-            style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "none",
-              color: "#fff",
-              fontSize: "1.2rem",
-              width: "32px",
-              height: "32px",
-              borderRadius: "50%",
-              cursor: "pointer",
-            }}
+            style={{ fontSize: "1rem", lineHeight: 1 }}
           >
             &times;
           </button>
         </div>
 
         {/* Filter bar */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
           <div style={{ display: "flex", gap: "8px" }}>
             <button
               type="button"
@@ -224,6 +289,36 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
           </span>
         </div>
 
+        {/* Invariant Warning Banner (Requirement D) */}
+        {hasInconsistency && (
+          <div
+            style={{
+              padding: "12px 16px",
+              background: "rgba(239, 68, 68, 0.12)",
+              border: "1px solid rgba(239, 68, 68, 0.35)",
+              borderRadius: "var(--dgs-radius-md, 8px)",
+              color: "#f87171",
+              fontSize: "0.82rem",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "12px",
+            }}
+          >
+            <div>
+              <strong>DATA INCONSISTENCY:</strong> Site Audit table reports <strong>{reportedCount} Missing</strong>, but <strong>{items.length} records</strong> are retrieved from this audit.
+            </div>
+            <button
+              type="button"
+              className="dgs-saas-btn sm danger"
+              onClick={fetchItems}
+              style={{ whiteSpace: "nowrap" }}
+            >
+              ↻ Re-sync Evidence
+            </button>
+          </div>
+        )}
+
         {feedbackMsg && (
           <div
             style={{
@@ -233,7 +328,6 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
               borderRadius: "var(--dgs-radius-sm)",
               color: "var(--dgs-success)",
               fontSize: "0.82rem",
-              marginBottom: "16px",
             }}
           >
             {feedbackMsg}
@@ -266,6 +360,8 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
               const isEditing = editingId === item.id;
               const isSuggesting = suggestingId === item.id;
               const isApplying = applyingId === item.id;
+              const isDrafting = draftingId === item.id;
+              const draftId = createdDrafts[item.id];
 
               return (
                 <article
@@ -335,7 +431,7 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
                           {item.altStatus === "ALT_FIXED"
                             ? "ALT FIXED"
                             : item.altStatus === "EMPTY_ALT_DECORATIVE"
-                            ? "DECORATIVE (alt=\"\")"
+                            ? 'DECORATIVE (alt="")'
                             : item.altStatus === "EMPTY_ALT_NEEDS_REVIEW"
                             ? "EMPTY ALT"
                             : "MISSING ALT"}
@@ -350,134 +446,157 @@ export default function AltFixerDrawer({ pageUrl, isOpen, onClose, onUpdated }: 
                         Source: <strong style={{ color: "#fff" }}>{item.sourceType || "MIRRORED PAGE HTML"}</strong>
                       </div>
 
-                      <div style={{ fontSize: "0.76rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
-                        Usage: Used on <strong>{item.usageCount || 1}</strong> location(s)
-                      </div>
+                      {item.recommendation && (
+                        <div style={{ fontSize: "0.76rem", color: "#fcd34d", marginTop: "4px" }}>
+                          💡 {item.recommendation}
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  {/* Alt Text Controls */}
-                  {isEditing ? (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                      <label style={{ fontSize: "0.76rem", color: "var(--dgs-text-muted)" }}>
-                        Enter Custom Alt Description:
-                      </label>
-                      <textarea
-                        value={editText}
-                        onChange={(e) => setEditText(e.target.value)}
-                        rows={2}
-                        className="dgs-saas-input"
-                        placeholder="Accurate, non-keyword-stuffed description of what this image conveys..."
-                        style={{
-                          width: "100%",
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.15)",
-                          color: "#fff",
-                          padding: "8px 10px",
-                          borderRadius: "4px",
-                          fontSize: "0.82rem",
-                        }}
-                      />
-                      <div style={{ display: "flex", gap: "8px" }}>
+                  {/* Suggestion & Editing Box */}
+                  <div
+                    style={{
+                      background: "rgba(0,0,0,0.3)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      borderRadius: "6px",
+                      padding: "12px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: "0.74rem", textTransform: "uppercase", color: "var(--dgs-text-muted)", fontWeight: 600 }}>
+                        {item.suggestedAlt ? "Contextual AI Suggestion" : "Actionable Alt Text"}
+                      </span>
+                      {!isEditing && (
                         <button
                           type="button"
-                          className="dgs-saas-btn primary sm"
-                          disabled={isApplying}
-                          onClick={() => handleApply(item, false, editText)}
-                        >
-                          {isApplying ? "Saving..." : "Save Alt"}
-                        </button>
-                        <button
-                          type="button"
-                          className="dgs-saas-btn secondary sm"
-                          disabled={isApplying}
-                          onClick={() => handleApply(item, true, editText)}
-                        >
-                          Save To All ({item.usageCount || 1})
-                        </button>
-                        <button
-                          type="button"
-                          className="dgs-saas-btn secondary sm"
-                          onClick={() => setEditingId(null)}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      {item.suggestedAlt ? (
-                        <div
-                          style={{
-                            padding: "10px 12px",
-                            background: "rgba(99, 102, 241, 0.08)",
-                            borderRadius: "var(--dgs-radius-sm)",
-                            border: "1px solid rgba(99, 102, 241, 0.2)",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <div style={{ fontSize: "0.72rem", color: "var(--dgs-primary)", fontWeight: 700, textTransform: "uppercase" }}>
-                            Contextual AI Suggestion (Gemini 2.5 Flash):
-                          </div>
-                          <div style={{ fontSize: "0.84rem", color: "#fff", marginTop: "3px", fontStyle: "italic" }}>
-                            &ldquo;{item.suggestedAlt}&rdquo;
-                          </div>
-                        </div>
-                      ) : null}
-
-                      {/* Action buttons */}
-                      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
-                        {item.suggestedAlt ? (
-                          <>
-                            <button
-                              type="button"
-                              className="dgs-saas-btn primary sm"
-                              disabled={isApplying}
-                              onClick={() => handleApply(item, false)}
-                            >
-                              Apply
-                            </button>
-                            <button
-                              type="button"
-                              className="dgs-saas-btn secondary sm"
-                              disabled={isApplying}
-                              onClick={() => handleApply(item, true)}
-                            >
-                              Apply All ({item.usageCount || 1})
-                            </button>
-                          </>
-                        ) : (
-                          <button
-                            type="button"
-                            className="dgs-saas-btn primary sm"
-                            disabled={isSuggesting}
-                            onClick={() => handleSuggest(item)}
-                          >
-                            {isSuggesting ? "Generating..." : "Generate AI Suggestion"}
-                          </button>
-                        )}
-
-                        <button
-                          type="button"
-                          className="dgs-saas-btn secondary sm"
+                          className="dgs-saas-btn sm secondary"
                           onClick={() => {
                             setEditingId(item.id);
                             setEditText(item.suggestedAlt || item.currentAlt || "");
                           }}
+                          style={{ padding: "2px 8px", fontSize: "0.72rem" }}
                         >
-                          Edit Alt
+                          ✎ Custom Edit
                         </button>
+                      )}
+                    </div>
 
+                    {isEditing ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        <textarea
+                          value={editText}
+                          onChange={(e) => setEditText(e.target.value)}
+                          rows={2}
+                          style={{
+                            width: "100%",
+                            background: "#080a0f",
+                            border: "1px solid var(--dgs-primary)",
+                            color: "#fff",
+                            padding: "8px",
+                            borderRadius: "4px",
+                            fontSize: "0.82rem",
+                          }}
+                          placeholder="Enter descriptive alt text..."
+                        />
+                        <div style={{ display: "flex", gap: "8px" }}>
+                          <button
+                            type="button"
+                            className="dgs-saas-btn sm primary"
+                            onClick={() => handleApply(item, false, editText)}
+                            disabled={isApplying}
+                          >
+                            {isApplying ? "Applying..." : "Approve & Apply Live"}
+                          </button>
+                          <button
+                            type="button"
+                            className="dgs-saas-btn sm secondary"
+                            onClick={() => handleCreateDraft(item, editText)}
+                            disabled={isDrafting}
+                          >
+                            {isDrafting ? "Drafting..." : "Create Approval Draft"}
+                          </button>
+                          <button
+                            type="button"
+                            className="dgs-saas-btn sm secondary"
+                            onClick={() => setEditingId(null)}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: "0.85rem", color: item.suggestedAlt ? "#fff" : "var(--dgs-text-muted)" }}>
+                        {item.suggestedAlt ? (
+                          <span>&ldquo;{item.suggestedAlt}&rdquo;</span>
+                        ) : (
+                          <em>No suggestion generated yet. Click &ldquo;Generate AI Suggestion&rdquo; below.</em>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Actions Bar */}
+                  {!isEditing && (
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+                      <div style={{ display: "flex", gap: "8px" }}>
+                        {!item.suggestedAlt && (
+                          <button
+                            type="button"
+                            className="dgs-saas-btn sm secondary"
+                            onClick={() => handleSuggest(item)}
+                            disabled={isSuggesting}
+                          >
+                            {isSuggesting ? "Generating..." : "⚡ Generate AI Suggestion"}
+                          </button>
+                        )}
+                        {item.suggestedAlt && (
+                          <>
+                            <button
+                              type="button"
+                              className="dgs-saas-btn sm primary"
+                              onClick={() => handleApply(item, false)}
+                              disabled={isApplying}
+                            >
+                              {isApplying ? "Verifying..." : "Approve & Apply Live"}
+                            </button>
+                            <button
+                              type="button"
+                              className="dgs-saas-btn sm secondary"
+                              onClick={() => handleCreateDraft(item)}
+                              disabled={isDrafting}
+                            >
+                              {isDrafting ? "Drafting..." : "Create Approval Draft"}
+                            </button>
+                          </>
+                        )}
                         <button
                           type="button"
-                          className="dgs-saas-btn secondary sm"
-                          disabled={isApplying}
+                          className="dgs-saas-btn sm secondary"
                           onClick={() => handleMarkDecorative(item)}
-                          title="Valid WCAG decorative image (alt='')"
+                          disabled={isApplying}
+                          title="Mark image with alt='' for decorative presentation per WCAG"
                         >
-                          Mark Decorative
+                          Mark Decorative (alt=&quot;&quot;)
                         </button>
                       </div>
+
+                      {draftId && (
+                        <Link
+                          href="/admin/seo/approvals/"
+                          style={{
+                            fontSize: "0.75rem",
+                            color: "var(--dgs-primary)",
+                            textDecoration: "none",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ✓ Draft #{draftId} &rarr;
+                        </Link>
+                      )}
                     </div>
                   )}
                 </article>

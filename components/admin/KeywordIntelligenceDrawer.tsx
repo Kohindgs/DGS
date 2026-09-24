@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   type KeywordClassification,
   type KeywordRecommendation,
   type RankingTrend,
+  type KeywordActionOption,
   generateKeywordRecommendation,
   calculateRankingTrend,
 } from "@/lib/seo/keyword-engine";
@@ -48,20 +50,25 @@ export default function KeywordIntelligenceDrawer({
 }: Props) {
   const [savingTarget, setSavingTarget] = useState(false);
   const [targetAdded, setTargetAdded] = useState(false);
-  const [fixDraftCreated, setFixDraftCreated] = useState(false);
+  const [creatingDraft, setCreatingDraft] = useState<string | null>(null);
+  const [createdDraftId, setCreatedDraftId] = useState<string | null>(null);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
 
   if (!isOpen || !data) return null;
 
+  const safeQuery = data.query || "target topic";
+  const safePageUrl = data.pageUrl || "/";
+
   const trend: RankingTrend = calculateRankingTrend(data.position, data.prevPosition);
   const recommendation: KeywordRecommendation = generateKeywordRecommendation({
-    query: data.query,
-    pageUrl: data.pageUrl,
+    query: safeQuery,
+    pageUrl: safePageUrl,
     position: data.position,
     prevPosition: data.prevPosition,
-    clicks: data.clicks,
-    impressions: data.impressions,
-    ctr: data.ctr,
-    isCannibalized: data.isCannibalized,
+    clicks: data.clicks || 0,
+    impressions: data.impressions || 0,
+    ctr: data.ctr || 0,
+    isCannibalized: Boolean(data.isCannibalized),
     competingPages: (data.competingPages || []).map((cp) => cp.pageUrl),
     mobilePsi: data.mobilePsi,
     issuesCount: data.issuesCount,
@@ -89,30 +96,78 @@ export default function KeywordIntelligenceDrawer({
 
   const handleAddAsTarget = async () => {
     setSavingTarget(true);
+    setFeedbackError(null);
     try {
       const res = await fetch("/api/admin/seo/keywords", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "add",
-          pageUrl: data.pageUrl,
-          keyword: data.query,
+          pageUrl: safePageUrl,
+          keyword: safeQuery,
         }),
       });
       const resData = await res.json();
       if (resData.ok) {
         setTargetAdded(true);
         if (onTargetKeywordAdded) onTargetKeywordAdded();
+      } else {
+        setFeedbackError(resData.error || "Failed to add target keyword.");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to add target keyword:", err);
+      setFeedbackError(err?.message || "Failed to add target keyword.");
     } finally {
       setSavingTarget(false);
     }
   };
 
-  const handleCreateFixDraft = () => {
-    setFixDraftCreated(true);
+  const handleCreateDraft = async (action: KeywordActionOption) => {
+    setCreatingDraft(action.id);
+    setFeedbackError(null);
+
+    try {
+      const res = await fetch("/api/admin/seo/change-requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source_type: "KEYWORD_STRATEGY",
+          page_url: safePageUrl,
+          keyword: safeQuery,
+          change_type: action.changeType,
+          risk_level: action.riskLevel,
+          reason: `Strategy: ${recommendation.classification}. ${recommendation.whyThisMatters}`,
+          evidence: {
+            currentPosition: data.position,
+            previousPosition: data.prevPosition,
+            clicks: data.clicks,
+            impressions: data.impressions,
+            ctr: data.ctr,
+            mobilePsi: data.mobilePsi,
+            classification: recommendation.classification,
+          },
+          implementation_plan: recommendation.implementationPlan,
+          proposed_state: {
+            actionLabel: action.label,
+            actionDescription: action.description,
+            suggestedAnchors: recommendation.suggestedAnchors,
+            contentGaps: recommendation.contentGaps,
+          },
+        }),
+      });
+
+      const resData = await res.json();
+      if (resData.ok && resData.id) {
+        setCreatedDraftId(resData.id);
+      } else {
+        setFeedbackError(resData.error || "Failed to persist change request draft.");
+      }
+    } catch (err: any) {
+      console.error("Failed to create change request draft:", err);
+      setFeedbackError(err?.message || "Network error while saving draft.");
+    } finally {
+      setCreatingDraft(null);
+    }
   };
 
   return (
@@ -134,7 +189,7 @@ export default function KeywordIntelligenceDrawer({
       <div
         style={{
           width: "100%",
-          maxWidth: "680px",
+          maxWidth: "700px",
           height: "100%",
           backgroundColor: "#0d1117",
           borderLeft: "1px solid rgba(255, 255, 255, 0.12)",
@@ -172,17 +227,17 @@ export default function KeywordIntelligenceDrawer({
               )}
             </div>
             <h3 style={{ margin: "4px 0", color: "#fff", fontSize: "1.25rem", fontWeight: 700 }}>
-              &ldquo;{data.query}&rdquo;
+              &ldquo;{safeQuery}&rdquo;
             </h3>
             <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
               Ranking URL:{" "}
               <a
-                href={data.pageUrl}
+                href={safePageUrl}
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: "var(--dgs-primary)", textDecoration: "none" }}
               >
-                {data.pageUrl.replace(/^https?:\/\/[^/]+/i, "") || "/"} &nearr;
+                {safePageUrl.replace(/^https?:\/\/[^/]+/i, "") || "/"} &nearr;
               </a>
             </div>
           </div>
@@ -196,6 +251,21 @@ export default function KeywordIntelligenceDrawer({
             ✕ Close
           </button>
         </div>
+
+        {/* Feedback / Error banner */}
+        {feedbackError && (
+          <div
+            style={{
+              padding: "10px 16px",
+              background: "rgba(239, 68, 68, 0.1)",
+              borderBottom: "1px solid rgba(239, 68, 68, 0.3)",
+              color: "#f87171",
+              fontSize: "0.82rem",
+            }}
+          >
+            ⚠ {feedbackError}
+          </div>
+        )}
 
         {/* Drawer Content */}
         <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -219,7 +289,7 @@ export default function KeywordIntelligenceDrawer({
                 GSC Avg. Position
               </div>
               <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fff", margin: "4px 0" }}>
-                {data.position != null && data.position > 0 ? data.position.toFixed(1) : "—"}
+                {data.position != null && data.position > 0 ? Number(data.position).toFixed(1) : "—"}
               </div>
               <div style={{ fontSize: "0.74rem" }}>
                 <span className={`dgs-saas-chip ${trend.badgeClass}`} style={{ fontSize: "0.68rem" }}>
@@ -240,7 +310,7 @@ export default function KeywordIntelligenceDrawer({
                 Impressions
               </div>
               <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fff", margin: "4px 0" }}>
-                {data.impressions.toLocaleString()}
+                {(data.impressions || 0).toLocaleString()}
               </div>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>
                 CTR: {((data.ctr || 0) * 100).toFixed(1)}%
@@ -259,7 +329,7 @@ export default function KeywordIntelligenceDrawer({
                 Organic Clicks
               </div>
               <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fff", margin: "4px 0" }}>
-                {data.clicks.toLocaleString()}
+                {(data.clicks || 0).toLocaleString()}
               </div>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>
                 28-day Search Console
@@ -285,7 +355,7 @@ export default function KeywordIntelligenceDrawer({
                   Risk: {recommendation.riskLevel}
                 </span>
                 <span className="dgs-saas-chip neutral" style={{ fontSize: "0.68rem" }}>
-                  Auto-Apply: NO
+                  Superadmin Gate: {recommendation.riskLevel === "HIGH" || recommendation.riskLevel === "CRITICAL" ? "YES" : "NO"}
                 </span>
               </div>
             </div>
@@ -322,6 +392,108 @@ export default function KeywordIntelligenceDrawer({
             </div>
           </div>
 
+          {/* Action Options Grid (Real SEO Approval Draft Creators) */}
+          <div
+            style={{
+              background: "rgba(255, 255, 255, 0.02)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              borderRadius: "8px",
+              padding: "16px",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>
+                Execute Strategy &rarr; Create Approval Draft
+              </div>
+              <span className="dgs-saas-chip neutral" style={{ fontSize: "0.68rem" }}>
+                DGS CMS Approval Workflow
+              </span>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {recommendation.actionOptions.map((opt) => {
+                const isThisLoading = creatingDraft === opt.id;
+                return (
+                  <div
+                    key={opt.id}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      background: "rgba(255, 255, 255, 0.02)",
+                      padding: "10px 14px",
+                      borderRadius: "6px",
+                      gap: "12px",
+                    }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontSize: "0.84rem", fontWeight: 600, color: "#fff" }}>
+                          {opt.label}
+                        </span>
+                        <span
+                          className={`dgs-saas-chip ${
+                            opt.riskLevel === "SAFE"
+                              ? "success"
+                              : opt.riskLevel === "MODERATE"
+                              ? "primary"
+                              : "warning"
+                          }`}
+                          style={{ fontSize: "0.65rem" }}
+                        >
+                          {opt.riskLevel}
+                        </span>
+                      </div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
+                        {opt.description}
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="dgs-saas-btn primary sm"
+                      onClick={() => handleCreateDraft(opt)}
+                      disabled={Boolean(creatingDraft)}
+                      style={{ fontSize: "0.78rem", whiteSpace: "nowrap" }}
+                    >
+                      {isThisLoading ? "Saving Draft..." : `+ Draft Proposal`}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {createdDraftId && (
+              <div
+                style={{
+                  marginTop: "12px",
+                  padding: "10px 14px",
+                  background: "rgba(16, 185, 129, 0.1)",
+                  border: "1px solid rgba(16, 185, 129, 0.3)",
+                  borderRadius: "6px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ fontSize: "0.82rem", color: "#34d399", fontWeight: 600 }}>
+                  ✓ DRAFT #{createdDraftId} Persisted in CMS
+                </span>
+                <Link
+                  href="/admin/seo/approvals/"
+                  style={{
+                    color: "var(--dgs-primary)",
+                    fontSize: "0.8rem",
+                    textDecoration: "none",
+                    fontWeight: 600,
+                  }}
+                >
+                  Open in SEO Approvals &rarr;
+                </Link>
+              </div>
+            )}
+          </div>
+
           {/* Cannibalization Warning if applicable */}
           {data.competingPages && data.competingPages.length > 1 && (
             <div
@@ -353,7 +525,7 @@ export default function KeywordIntelligenceDrawer({
                   >
                     <span style={{ color: "var(--dgs-primary)" }}>{cp.pageUrl.replace(/^https?:\/\/[^/]+/i, "")}</span>
                     <span style={{ color: "var(--dgs-text-muted)" }}>
-                      Pos: {cp.position?.toFixed(1)} · Clicks: {cp.clicks} · Imp: {cp.impressions.toLocaleString()}
+                      Pos: {cp.position ? Number(cp.position).toFixed(1) : "—"} · Clicks: {cp.clicks} · Imp: {(cp.impressions || 0).toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -361,7 +533,7 @@ export default function KeywordIntelligenceDrawer({
             </div>
           )}
 
-          {/* Internal Links & Content Gaps */}
+          {/* Internal Links & Content Gaps (Attributed: AI Recommendation) */}
           <div
             style={{
               display: "grid",
@@ -377,8 +549,13 @@ export default function KeywordIntelligenceDrawer({
                 padding: "14px",
               }}
             >
-              <div style={{ fontSize: "0.76rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
-                Recommended Anchor Texts
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                <div style={{ fontSize: "0.76rem", fontWeight: 600, color: "#fff" }}>
+                  Recommended Anchor Texts
+                </div>
+                <span className="dgs-saas-chip neutral" style={{ fontSize: "0.62rem" }}>
+                  AI Recommendation
+                </span>
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                 {recommendation.suggestedAnchors.map((anc, idx) => (
@@ -407,8 +584,13 @@ export default function KeywordIntelligenceDrawer({
                 padding: "14px",
               }}
             >
-              <div style={{ fontSize: "0.76rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
-                Target Content Expansions
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                <div style={{ fontSize: "0.76rem", fontWeight: 600, color: "#fff" }}>
+                  Target Content Expansions
+                </div>
+                <span className="dgs-saas-chip neutral" style={{ fontSize: "0.62rem" }}>
+                  AI Recommendation
+                </span>
               </div>
               <ul style={{ margin: 0, paddingLeft: "16px", fontSize: "0.74rem", color: "#94a3b8", lineHeight: 1.5 }}>
                 {recommendation.contentGaps.map((gap, idx) => (
@@ -443,7 +625,7 @@ export default function KeywordIntelligenceDrawer({
                 <button
                   type="button"
                   className="dgs-saas-btn secondary sm"
-                  onClick={() => onOpenPageSeo(data.pageUrl)}
+                  onClick={() => onOpenPageSeo(safePageUrl)}
                   style={{ fontSize: "0.75rem" }}
                 >
                   Open Page SEO &rarr;
@@ -463,7 +645,7 @@ export default function KeywordIntelligenceDrawer({
             }}
           >
             <a
-              href={data.pageUrl}
+              href={safePageUrl}
               target="_blank"
               rel="noreferrer"
               className="dgs-saas-btn secondary sm"
@@ -476,7 +658,7 @@ export default function KeywordIntelligenceDrawer({
               <button
                 type="button"
                 className="dgs-saas-btn secondary sm"
-                onClick={() => onOpenPageSeo(data.pageUrl)}
+                onClick={() => onOpenPageSeo(safePageUrl)}
                 style={{ fontSize: "0.8rem" }}
               >
                 Inspect Page SEO
@@ -498,21 +680,6 @@ export default function KeywordIntelligenceDrawer({
             {targetAdded && (
               <span className="dgs-saas-chip success" style={{ fontSize: "0.75rem" }}>
                 ✓ Added to Target Keywords
-              </span>
-            )}
-
-            {!fixDraftCreated ? (
-              <button
-                type="button"
-                className="dgs-saas-btn secondary sm"
-                onClick={handleCreateFixDraft}
-                style={{ fontSize: "0.8rem" }}
-              >
-                Create Fix Draft
-              </button>
-            ) : (
-              <span className="dgs-saas-chip primary" style={{ fontSize: "0.75rem" }}>
-                ✓ Fix Draft Logged
               </span>
             )}
           </div>

@@ -8,7 +8,6 @@ import KeywordIntelligenceDrawer, { type KeywordDrawerData } from "@/components/
 import {
   calculateRankingTrend,
   classifyKeyword,
-  type KeywordClassification,
 } from "@/lib/seo/keyword-engine";
 
 type KeywordRow = {
@@ -46,12 +45,23 @@ type FilterCategory =
   | "cannibalization"
   | "not_detected";
 
+function safeStr(val: unknown): string {
+  if (typeof val === "string") return val.trim();
+  if (val != null) return String(val).trim();
+  return "";
+}
+
 export default function KeywordsClientView({
-  queries: initialQueries,
-  cannibalizationRisks,
-  targetsCount,
+  queries: initialQueries = [],
+  cannibalizationRisks: initialRisks = [],
+  targetsCount = 0,
 }: Props) {
-  const [queries] = useState<KeywordRow[]>(initialQueries);
+  const [queries] = useState<KeywordRow[]>(Array.isArray(initialQueries) ? initialQueries : []);
+  const cannibalizationRisks = useMemo(
+    () => (Array.isArray(initialRisks) ? initialRisks : []),
+    [initialRisks]
+  );
+
   const [selectedPageUrl, setSelectedPageUrl] = useState<string | null>(null);
   const [selectedKeywordData, setSelectedKeywordData] = useState<KeywordDrawerData | null>(null);
   const [activeTab, setActiveTab] = useState<"all" | "cannibalization">("all");
@@ -59,28 +69,37 @@ export default function KeywordsClientView({
 
   // Map of cannibalized query strings for fast lookup
   const cannibalizedQuerySet = useMemo(() => {
-    return new Set(cannibalizationRisks.map((r) => r.queryText.trim().toLowerCase()));
+    const set = new Set<string>();
+    for (const r of cannibalizationRisks) {
+      const q = safeStr(r?.queryText).toLowerCase();
+      if (q) set.add(q);
+    }
+    return set;
   }, [cannibalizationRisks]);
 
   const cannibalizationRiskMap = useMemo(() => {
     const map = new Map<string, CannibalizationRisk>();
     for (const r of cannibalizationRisks) {
-      map.set(r.queryText.trim().toLowerCase(), r);
+      const q = safeStr(r?.queryText).toLowerCase();
+      if (q) map.set(q, r);
     }
     return map;
   }, [cannibalizationRisks]);
 
   const filteredQueries = useMemo(() => {
     return queries.filter((q) => {
-      const pos = q.position != null && q.position > 0 ? Number(q.position) : null;
-      const isCannibalized = cannibalizedQuerySet.has(q.query_text.trim().toLowerCase());
+      if (!q) return false;
+      const qText = safeStr(q.query_text);
+      const pos = q.position != null && !isNaN(Number(q.position)) && Number(q.position) > 0 ? Number(q.position) : null;
+      const isCannibalized = qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
+
       const classification = classifyKeyword({
-        query: q.query_text,
+        query: qText,
         position: pos,
         prevPosition: q.prev_position,
-        clicks: q.clicks,
-        impressions: q.impressions,
-        ctr: q.ctr,
+        clicks: q.clicks || 0,
+        impressions: q.impressions || 0,
+        ctr: q.ctr || 0,
         isCannibalized,
       });
 
@@ -111,27 +130,31 @@ export default function KeywordsClientView({
   }, [queries, activeFilter, cannibalizedQuerySet]);
 
   const openDrawerForKeyword = (q: KeywordRow) => {
-    const isCannibalized = cannibalizedQuerySet.has(q.query_text.trim().toLowerCase());
-    const risk = cannibalizationRiskMap.get(q.query_text.trim().toLowerCase());
+    if (!q) return;
+    const qText = safeStr(q.query_text);
+    const normQ = qText.toLowerCase();
+    const isCannibalized = normQ ? cannibalizedQuerySet.has(normQ) : false;
+    const risk = normQ ? cannibalizationRiskMap.get(normQ) : undefined;
+
     setSelectedKeywordData({
       id: q.id,
-      query: q.query_text,
-      pageUrl: q.page_url,
-      position: q.position,
-      prevPosition: q.prev_position,
-      clicks: q.clicks,
-      impressions: q.impressions,
-      ctr: q.ctr,
+      query: qText || "Unnamed Query",
+      pageUrl: q.page_url || "/",
+      position: q.position != null ? Number(q.position) : null,
+      prevPosition: q.prev_position != null ? Number(q.prev_position) : null,
+      clicks: Number(q.clicks || 0),
+      impressions: Number(q.impressions || 0),
+      ctr: Number(q.ctr || 0),
       keywordGroup: q.keyword_group,
       isCannibalized,
-      competingPages: risk?.competingPages.map((cp) => ({
-        pageUrl: cp.pageUrl,
-        clicks: cp.clicks,
-        impressions: cp.impressions,
-        position: cp.googleAvgPosition,
+      competingPages: (risk?.competingPages || []).map((cp) => ({
+        pageUrl: cp?.pageUrl || "/",
+        clicks: Number(cp?.clicks || 0),
+        impressions: Number(cp?.impressions || 0),
+        position: Number(cp?.googleAvgPosition || 0),
       })),
-      mobilePsi: q.mobile_psi,
-      desktopPsi: q.desktop_psi,
+      mobilePsi: q.mobile_psi != null ? Number(q.mobile_psi) : null,
+      desktopPsi: q.desktop_psi != null ? Number(q.desktop_psi) : null,
     });
   };
 
@@ -141,7 +164,8 @@ export default function KeywordsClientView({
       header: "Keyword / Query",
       sortable: true,
       render: (q) => {
-        const isCannibalized = cannibalizedQuerySet.has(q.query_text.trim().toLowerCase());
+        const qText = safeStr(q?.query_text) || "Unnamed Query";
+        const isCannibalized = qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
         return (
           <div>
             <button
@@ -159,10 +183,10 @@ export default function KeywordsClientView({
               }}
               title="Click to view full keyword intelligence & recommendations"
             >
-              {q.query_text}
+              {qText}
             </button>
             <div style={{ display: "flex", gap: "6px", marginTop: "4px", flexWrap: "wrap" }}>
-              {q.keyword_group && (
+              {q?.keyword_group && (
                 <span className="dgs-saas-chip primary" style={{ fontSize: "0.68rem" }}>
                   Target: {q.keyword_group}
                 </span>
@@ -181,24 +205,28 @@ export default function KeywordsClientView({
       key: "page_url",
       header: "Ranking Page",
       sortable: true,
-      render: (q) => (
-        <button
-          type="button"
-          onClick={() => setSelectedPageUrl(q.page_url)}
-          style={{
-            background: "transparent",
-            border: "none",
-            color: "var(--dgs-primary)",
-            padding: 0,
-            cursor: "pointer",
-            textAlign: "left",
-            fontSize: "0.82rem",
-          }}
-          title="Click to open page SEO intelligence"
-        >
-          {q.page_url.replace(/^https?:\/\/[^/]+/i, "") || "/"}
-        </button>
-      ),
+      render: (q) => {
+        const pUrl = q?.page_url || "/";
+        const displayPath = pUrl.replace(/^https?:\/\/[^/]+/i, "") || "/";
+        return (
+          <button
+            type="button"
+            onClick={() => setSelectedPageUrl(pUrl)}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "var(--dgs-primary)",
+              padding: 0,
+              cursor: "pointer",
+              textAlign: "left",
+              fontSize: "0.82rem",
+            }}
+            title="Click to open page SEO intelligence"
+          >
+            {displayPath}
+          </button>
+        );
+      },
     },
     {
       key: "position",
@@ -206,7 +234,7 @@ export default function KeywordsClientView({
       sortable: true,
       width: "180px",
       render: (q) => {
-        if (q.position != null && q.position > 0) {
+        if (q?.position != null && !isNaN(Number(q.position)) && Number(q.position) > 0) {
           const pos = Number(q.position);
           const variant = pos <= 3 ? "success" : pos <= 10 ? "primary" : "neutral";
           const trend = calculateRankingTrend(q.position, q.prev_position);
@@ -236,14 +264,15 @@ export default function KeywordsClientView({
       header: "Classification",
       width: "150px",
       render: (q) => {
-        const isCannibalized = cannibalizedQuerySet.has(q.query_text.trim().toLowerCase());
+        const qText = safeStr(q?.query_text);
+        const isCannibalized = qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
         const cls = classifyKeyword({
-          query: q.query_text,
-          position: q.position,
-          prevPosition: q.prev_position,
-          clicks: q.clicks,
-          impressions: q.impressions,
-          ctr: q.ctr,
+          query: qText,
+          position: q?.position,
+          prevPosition: q?.prev_position,
+          clicks: q?.clicks,
+          impressions: q?.impressions,
+          ctr: q?.ctr,
           isCannibalized,
         });
 
@@ -271,21 +300,21 @@ export default function KeywordsClientView({
       header: "Clicks",
       sortable: true,
       width: "80px",
-      render: (q) => q.clicks || 0,
+      render: (q) => q?.clicks || 0,
     },
     {
       key: "impressions",
       header: "Impressions",
       sortable: true,
       width: "110px",
-      render: (q) => (q.impressions ? q.impressions.toLocaleString() : "0"),
+      render: (q) => (q?.impressions ? q.impressions.toLocaleString() : "0"),
     },
     {
       key: "ctr",
       header: "CTR",
       sortable: true,
       width: "80px",
-      render: (q) => `${((q.ctr || 0) * 100).toFixed(1)}%`,
+      render: (q) => `${((q?.ctr || 0) * 100).toFixed(1)}%`,
     },
     {
       key: "actions",
@@ -306,38 +335,97 @@ export default function KeywordsClientView({
 
   const filterButtons: { key: FilterCategory; label: string; count?: number }[] = [
     { key: "all", label: "All Queries", count: queries.length },
-    { key: "top3", label: "Top 3", count: queries.filter((q) => q.position != null && q.position <= 3).length },
-    { key: "top10", label: "Top 10", count: queries.filter((q) => q.position != null && q.position <= 10).length },
-    { key: "top20", label: "Striking Distance (11–20)", count: queries.filter((q) => q.position != null && q.position > 10 && q.position <= 20).length },
+    {
+      key: "top3",
+      label: "Top 3",
+      count: queries.filter((q) => q?.position != null && Number(q.position) > 0 && Number(q.position) <= 3).length,
+    },
+    {
+      key: "top10",
+      label: "Top 10",
+      count: queries.filter((q) => q?.position != null && Number(q.position) > 0 && Number(q.position) <= 10).length,
+    },
+    {
+      key: "top20",
+      label: "Striking Distance (11–20)",
+      count: queries.filter((q) => q?.position != null && Number(q.position) > 10 && Number(q.position) <= 20).length,
+    },
     {
       key: "protect",
       label: "Protect",
-      count: queries.filter((q) => classifyKeyword({ query: q.query_text, position: q.position, prevPosition: q.prev_position, clicks: q.clicks, impressions: q.impressions, ctr: q.ctr, isCannibalized: cannibalizedQuerySet.has(q.query_text.trim().toLowerCase()) }) === "PROTECT").length,
+      count: queries.filter((q) => {
+        const qText = safeStr(q?.query_text);
+        return classifyKeyword({
+          query: qText,
+          position: q?.position,
+          prevPosition: q?.prev_position,
+          clicks: q?.clicks,
+          impressions: q?.impressions,
+          ctr: q?.ctr,
+          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+        }) === "PROTECT";
+      }).length,
     },
     {
       key: "grow",
       label: "Grow",
-      count: queries.filter((q) => classifyKeyword({ query: q.query_text, position: q.position, prevPosition: q.prev_position, clicks: q.clicks, impressions: q.impressions, ctr: q.ctr, isCannibalized: cannibalizedQuerySet.has(q.query_text.trim().toLowerCase()) }) === "GROW").length,
+      count: queries.filter((q) => {
+        const qText = safeStr(q?.query_text);
+        return classifyKeyword({
+          query: qText,
+          position: q?.position,
+          prevPosition: q?.prev_position,
+          clicks: q?.clicks,
+          impressions: q?.impressions,
+          ctr: q?.ctr,
+          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+        }) === "GROW";
+      }).length,
     },
     {
       key: "recover",
       label: "Recover",
-      count: queries.filter((q) => classifyKeyword({ query: q.query_text, position: q.position, prevPosition: q.prev_position, clicks: q.clicks, impressions: q.impressions, ctr: q.ctr, isCannibalized: cannibalizedQuerySet.has(q.query_text.trim().toLowerCase()) }) === "RECOVER").length,
+      count: queries.filter((q) => {
+        const qText = safeStr(q?.query_text);
+        return classifyKeyword({
+          query: qText,
+          position: q?.position,
+          prevPosition: q?.prev_position,
+          clicks: q?.clicks,
+          impressions: q?.impressions,
+          ctr: q?.ctr,
+          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+        }) === "RECOVER";
+      }).length,
     },
     {
       key: "new_opportunity",
       label: "New Opportunity",
-      count: queries.filter((q) => classifyKeyword({ query: q.query_text, position: q.position, prevPosition: q.prev_position, clicks: q.clicks, impressions: q.impressions, ctr: q.ctr, isCannibalized: cannibalizedQuerySet.has(q.query_text.trim().toLowerCase()) }) === "NEW OPPORTUNITY").length,
+      count: queries.filter((q) => {
+        const qText = safeStr(q?.query_text);
+        return classifyKeyword({
+          query: qText,
+          position: q?.position,
+          prevPosition: q?.prev_position,
+          clicks: q?.clicks,
+          impressions: q?.impressions,
+          ctr: q?.ctr,
+          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+        }) === "NEW OPPORTUNITY";
+      }).length,
     },
     {
       key: "cannibalization",
       label: "Cannibalization",
-      count: queries.filter((q) => cannibalizedQuerySet.has(q.query_text.trim().toLowerCase())).length,
+      count: queries.filter((q) => {
+        const qText = safeStr(q?.query_text);
+        return qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
+      }).length,
     },
     {
       key: "not_detected",
       label: "Not Detected",
-      count: queries.filter((q) => q.position == null).length,
+      count: queries.filter((q) => q?.position == null).length,
     },
   ];
 
@@ -379,7 +467,7 @@ export default function KeywordsClientView({
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">Top 10 Rankings</div>
           <div className="dgs-saas-kpi-value">
-            {queries.filter((q) => Number(q.position) > 0 && Number(q.position) <= 10).length}
+            {queries.filter((q) => Number(q?.position) > 0 && Number(q?.position) <= 10).length}
           </div>
           <div className="dgs-saas-kpi-delta positive">Page 1 Google Avg. Position</div>
         </div>
@@ -503,7 +591,7 @@ export default function KeywordsClientView({
           <SaaSTable
             columns={columns}
             data={filteredQueries}
-            keyExtractor={(q) => q.id || `${q.query_text}_${q.page_url}`}
+            keyExtractor={(q) => q?.id || `${q?.query_text}_${q?.page_url}`}
             searchPlaceholder="Search keyword, query, or ranking URL..."
           />
         </div>
@@ -531,15 +619,15 @@ export default function KeywordsClientView({
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <h4 style={{ margin: 0, fontSize: "1rem", color: "#fff" }}>
-                    Query: &ldquo;{risk.queryText}&rdquo;
+                    Query: &ldquo;{risk?.queryText}&rdquo;
                   </h4>
                   <span className="dgs-saas-chip warning">
-                    {risk.competingPages.length} Competing URLs · {risk.totalImpressions.toLocaleString()} Impressions
+                    {(risk?.competingPages || []).length} Competing URLs · {(risk?.totalImpressions || 0).toLocaleString()} Impressions
                   </span>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  {risk.competingPages.map((cp, cIdx) => (
+                  {(risk?.competingPages || []).map((cp, cIdx) => (
                     <div
                       key={cIdx}
                       style={{
@@ -553,7 +641,7 @@ export default function KeywordsClientView({
                     >
                       <button
                         type="button"
-                        onClick={() => setSelectedPageUrl(cp.pageUrl)}
+                        onClick={() => setSelectedPageUrl(cp?.pageUrl)}
                         style={{
                           background: "transparent",
                           border: "none",
@@ -562,19 +650,19 @@ export default function KeywordsClientView({
                           fontSize: "0.82rem",
                         }}
                       >
-                        {cp.pageUrl}
+                        {cp?.pageUrl}
                       </button>
                       <div style={{ display: "flex", gap: "12px", fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>
-                        <span>Clicks: <strong>{cp.clicks}</strong></span>
-                        <span>Impressions: <strong>{cp.impressions.toLocaleString()}</strong></span>
-                        <span>Google Avg. Position: <strong>{cp.googleAvgPosition.toFixed(1)}</strong></span>
+                        <span>Clicks: <strong>{cp?.clicks || 0}</strong></span>
+                        <span>Impressions: <strong>{(cp?.impressions || 0).toLocaleString()}</strong></span>
+                        <span>Google Avg. Position: <strong>{cp?.googleAvgPosition ? Number(cp.googleAvgPosition).toFixed(1) : "—"}</strong></span>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 <div style={{ fontSize: "0.8rem", color: "#fcd34d", background: "rgba(245, 158, 11, 0.08)", padding: "10px 12px", borderRadius: "4px" }}>
-                  <strong>Recommendation:</strong> {risk.recommendation}
+                  <strong>Recommendation:</strong> {risk?.recommendation}
                 </div>
               </div>
             ))

@@ -17,11 +17,12 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const pageUrl = searchParams.get("pageUrl") || undefined;
+  const auditRunId = searchParams.get("auditRunId") || undefined;
   const resolvedParam = searchParams.get("resolved");
   const resolved = resolvedParam === "true" ? true : resolvedParam === "false" ? false : undefined;
   const limit = parseInt(searchParams.get("limit") || "100", 10);
 
-  const items = await listMissingAlts({ pageUrl, resolved, limit });
+  const items = await listMissingAlts({ pageUrl, auditRunId, resolved, limit });
   return NextResponse.json({ ok: true, items });
 }
 
