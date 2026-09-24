@@ -9,6 +9,7 @@ import {
   unwrapMirrorLazyMedia,
 } from "./native-inner-fixes";
 import type { InnerPageMirrorContent } from "./inner-mirror-types";
+import { normalizeBrandName } from "@/lib/brand";
 
 export type PreparedInnerPageMirror = InnerPageMirrorContent & {
   articleHtml: string;
@@ -102,7 +103,7 @@ function applyServiceSearchCorrections(path: string, html: string): string {
 <article class="dgs-card">
 <small>Specialized Service</small>
 <div class="dgs-card-title" style="font-size:1.25rem;font-weight:700;margin:0.5rem 0 0.75rem 0;line-height:1.3;">AI TV Commercials In Mumbai</div>
-<p>D’Genius Solutions delivers high-concept AI TV commercials and broadcast-ready commercial spots in Mumbai combining generative video aesthetics with cinematic storytelling, scripting, voiceover, sound design and precise color grading. We help consumer brands, fintech startups and enterprise clients produce TVC-quality ad films faster and at a fraction of traditional production overhead.</p>
+<p>D'Genius Solutions delivers high-concept AI TV commercials and broadcast-ready commercial spots in Mumbai combining generative video aesthetics with cinematic storytelling, scripting, voiceover, sound design and precise color grading. We help consumer brands, fintech startups and enterprise clients produce TVC-quality ad films faster and at a fraction of traditional production overhead.</p>
 </article>
 <article class="dgs-card">
 <small>Specialized Service</small>
@@ -185,7 +186,7 @@ export function prepareInnerPageMirror(
     )
     .replace(
       /<iframe\b[^>]*\b(?:humanxt\.com)[^>]*><\/iframe>/gi,
-      '<img loading="lazy" class="live-preview-image e-lazyloaded" src="https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp" alt="HumanXT website preview by D’Genius Solutions" width="1600" height="1000" loading="lazy" decoding="async" referrerpolicy="no-referrer" />',
+      '<img loading="lazy" class="live-preview-image e-lazyloaded" src="https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp" alt="HumanXT website preview by D\'Genius Solutions" width="1600" height="1000" loading="lazy" decoding="async" referrerpolicy="no-referrer" />',
     );
   body = applyServiceSearchCorrections(content.path, normalizeSemanticH1(content.path, body));
   body = applyInternationalPageContent(content.path, body);
@@ -203,6 +204,7 @@ export function prepareInnerPageMirror(
     /(<(?:div|span|li)\b[^>]*class=["'][^"']*\b(?:smm-news-strip-logo|dgs-nc|nc|dgs-press-chip)\b[^"']*["'][^>]*>\s*<img\b[^>]*?)\bfetchpriority=["']low["']/gi,
     '$1',
   );
+  body = normalizeBrandName(body);
   const styles = rewriteWpUrls(content.styles || "");
   const fontLinks = content.fontLinks?.map((tag) => rewriteWpUrls(tag));
   const articleHtml = `<article data-migration-content data-wordpress-id="${wordpressId}">${body}</article>`;

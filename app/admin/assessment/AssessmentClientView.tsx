@@ -1076,7 +1076,7 @@ export default function AssessmentClientView({
             <div style={{ flex: 1, overflowY: "auto", padding: "24px", display: "flex", flexDirection: "column", gap: "20px" }}>
               <div style={{ borderBottom: "1px solid var(--dgs-border)", paddingBottom: "16px" }}>
                 <div style={{ fontSize: "0.78rem", color: "var(--dgs-purple-light)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                  D&apos;Genius Solutions · Technical Assessment
+                  {"D'Genius Solutions"} · Technical Assessment
                 </div>
                 <h1 style={{ fontSize: "1.4rem", margin: "6px 0 4px", color: "var(--dgs-text-primary)" }}>
                   {selectedVersion.jd_title || "Technical Candidate Assessment"}

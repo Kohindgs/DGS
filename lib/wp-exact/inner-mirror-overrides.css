@@ -938,3 +938,58 @@ body {
   transform: none !important;
   will-change: auto !important;
 }
+
+/* ==========================================================================
+   DGS Location & Service FAQ Accordion Architecture
+   ========================================================================== */
+.dgs-wp-mirror-inner .dgs-faq-container {
+  max-width: 940px;
+  margin-inline: auto;
+}
+
+.dgs-wp-mirror-inner .dgs-faq-item {
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dgs-wp-mirror-inner .dgs-faq-question {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 16px !important;
+  min-height: 44px !important;
+  cursor: pointer !important;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.dgs-wp-mirror-inner .dgs-faq-question:focus-visible {
+  outline: 2px solid #00D4FF;
+  outline-offset: 2px;
+}
+
+.dgs-wp-mirror-inner .dgs-faq-answer {
+  display: none !important;
+  padding: 0 26px 24px;
+}
+
+.dgs-wp-mirror-inner .dgs-faq-item.active .dgs-faq-answer {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dgs-wp-mirror-inner .dgs-faq-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.dgs-wp-mirror-inner .dgs-faq-item.active .dgs-faq-toggle {
+  transform: rotate(45deg) !important;
+}

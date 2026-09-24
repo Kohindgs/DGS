@@ -117,7 +117,7 @@ export function SiteMenu() {
         </div>
 
         <div className={styles.bottom}>
-          <p>© 2026 D&apos;Genius Solutions. All Rights Reserved.</p>
+          <p>{"© 2026 D'Genius Solutions. All Rights Reserved."}</p>
           <div className={styles.legal}>
             {LEGAL_LINKS.map((item) => (
               <Link key={item.href} href={item.href} onClick={closeMenu}>

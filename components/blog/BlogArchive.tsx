@@ -27,7 +27,7 @@ export function BlogArchive({ posts }: { posts: BlogPostMeta[] }) {
         {/* Hero Section */}
         <header className={styles.hero}>
           <div className={styles.heroBadge}>
-            <span>D&apos;Genius Insights</span>
+            <span>{"D'Genius Insights"}</span>
           </div>
           <h1 className={styles.heroTitle}>
             Strategic Thinking on <span className={styles.heroGradText}>SEO, AI Search &amp; Growth</span>

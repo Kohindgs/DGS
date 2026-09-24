@@ -111,7 +111,7 @@ export function SiteFooter() {
           </div>
 
           <div className={styles.bottom}>
-            <p className={styles.copyright}>© 2026 D&apos;Genius Solutions. All Rights Reserved.</p>
+            <p className={styles.copyright}>{"© 2026 D'Genius Solutions. All Rights Reserved."}</p>
             <div className={styles.legal}>
               {LEGAL_LINKS.map((item) => (
                 <Link key={item.href} href={item.href}>

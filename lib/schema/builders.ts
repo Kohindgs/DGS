@@ -1,4 +1,10 @@
 import { absoluteUrl } from "@/lib/seo/site";
+import { normalizeBrandName, decodeHtmlEntities } from "@/lib/brand";
+
+function cleanSchemaText(text: string | undefined): string {
+  if (!text) return "";
+  return normalizeBrandName(decodeHtmlEntities(text)).trim();
+}
 
 export type BreadcrumbItem = {
   name: string;
@@ -31,7 +37,7 @@ export function organizationSchema(input: {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": id,
-    name: input.name,
+    name: cleanSchemaText(input.name),
     url: input.url,
     ...(input.logoUrl ? { logo: { "@type": "ImageObject", url: input.logoUrl } } : {}),
     ...(input.email ? { email: input.email } : {}),
@@ -40,10 +46,10 @@ export function organizationSchema(input: {
       ? {
           address: {
             "@type": "PostalAddress",
-            streetAddress: input.address.streetAddress,
-            addressLocality: input.address.addressLocality,
+            streetAddress: cleanSchemaText(input.address.streetAddress),
+            addressLocality: cleanSchemaText(input.address.addressLocality),
             postalCode: input.address.postalCode,
-            addressRegion: input.address.addressRegion,
+            addressRegion: cleanSchemaText(input.address.addressRegion),
             addressCountry: input.address.addressCountry,
           },
         }
@@ -63,7 +69,7 @@ export function websiteSchema(input: {
     "@type": "WebSite",
     "@id": input.id,
     url: input.url,
-    name: input.name,
+    name: cleanSchemaText(input.name),
     publisher: { "@id": input.publisherId },
   };
 }
@@ -83,8 +89,8 @@ export function webPageSchema(input: {
     "@type": input.type || "WebPage",
     "@id": `${url}#webpage`,
     url,
-    name: input.name,
-    description: input.description,
+    name: cleanSchemaText(input.name),
+    description: cleanSchemaText(input.description),
     isPartOf: { "@id": websiteId },
     about: { "@id": input.organizationId },
   };
@@ -103,15 +109,15 @@ export function blogArchiveSchema(input: {
     "@type": "CollectionPage",
     "@id": `${url}#collection`,
     url,
-    name: input.name,
-    description: input.description,
+    name: cleanSchemaText(input.name),
+    description: cleanSchemaText(input.description),
     about: { "@id": input.organizationId },
     mainEntity: {
       "@type": "ItemList",
       itemListElement: input.posts.map((p) => ({
         "@type": "ListItem",
         position: p.position,
-        name: p.name,
+        name: cleanSchemaText(p.name),
         url: absoluteUrl(p.path),
       })),
     },
@@ -131,10 +137,10 @@ export function serviceSchema(input: {
     "@type": "Service",
     "@id": `${url}#service`,
     url,
-    name: input.name,
-    description: input.description,
+    name: cleanSchemaText(input.name),
+    description: cleanSchemaText(input.description),
     provider: { "@id": input.providerId },
-    ...(input.serviceType ? { serviceType: input.serviceType } : {}),
+    ...(input.serviceType ? { serviceType: cleanSchemaText(input.serviceType) } : {}),
   };
 }
 
@@ -145,7 +151,7 @@ export function breadcrumbSchema(items: BreadcrumbItem[]) {
     itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      name: item.name,
+      name: cleanSchemaText(item.name),
       item: absoluteUrl(item.path),
     })),
   };
@@ -157,10 +163,10 @@ export function faqSchema(items: FaqItem[]) {
     "@type": "FAQPage",
     mainEntity: items.map((item) => ({
       "@type": "Question",
-      name: item.question,
+      name: cleanSchemaText(item.question),
       acceptedAnswer: {
         "@type": "Answer",
-        text: item.answer,
+        text: cleanSchemaText(item.answer),
       },
     })),
   };
@@ -182,13 +188,13 @@ export function articleSchema(input: {
     "@type": "BlogPosting",
     "@id": `${url}#article`,
     mainEntityOfPage: url,
-    headline: input.headline,
-    description: input.description,
+    headline: cleanSchemaText(input.headline),
+    description: cleanSchemaText(input.description),
     ...(input.datePublished ? { datePublished: input.datePublished } : {}),
     ...(input.dateModified ? { dateModified: input.dateModified } : {}),
     publisher: { "@id": input.publisherId },
     ...(input.authorName
-      ? { author: { "@type": "Person", name: input.authorName } }
+      ? { author: { "@type": "Person", name: cleanSchemaText(input.authorName) } }
       : {}),
     ...(input.imageUrl ? { image: absoluteUrl(input.imageUrl) } : {}),
   };
@@ -205,8 +211,8 @@ export function videoObjectSchema(input: {
   return {
     "@context": "https://schema.org",
     "@type": "VideoObject",
-    name: input.name,
-    description: input.description,
+    name: cleanSchemaText(input.name),
+    description: cleanSchemaText(input.description),
     thumbnailUrl: [absoluteUrl(input.thumbnailUrl)],
     uploadDate: input.uploadDate,
     ...(input.contentUrl ? { contentUrl: absoluteUrl(input.contentUrl) } : {}),

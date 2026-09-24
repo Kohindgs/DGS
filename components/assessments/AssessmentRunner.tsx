@@ -163,7 +163,7 @@ export function AssessmentRunner(props:Props) {
   return <main className={styles.shell}>
 
     <header className={styles.header}>
-      <div><p className={styles.kicker}>D&apos;Genius Solutions · Candidate Assessment</p><h1>{title}</h1><p>{summary}</p></div>
+      <div><p className={styles.kicker}>{"D'Genius Solutions"} · Candidate Assessment</p><h1>{title}</h1><p>{summary}</p></div>
       <div className={styles.timer} aria-live="polite"><span>Time remaining</span><strong style={{ color: remaining < 300 ? "#ef4444" : "inherit" }}>{timerText}</strong></div>
     </header>
     <section className={styles.notice}>

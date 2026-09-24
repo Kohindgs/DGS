@@ -52,7 +52,7 @@ export default async function AdminLoginPage({
         </div>
 
         <p className="dgs-admin-kicker" style={{ margin: "0 0 4px 0", color: "var(--dgs-brand-cyan)", fontWeight: 650 }}>
-          D&apos;Genius Solutions
+          {"D'Genius Solutions"}
         </p>
         <h1 style={{ margin: "0 0 6px 0", fontSize: "22px", fontWeight: 700, letterSpacing: "-0.02em" }}>
           DGS Operations OS

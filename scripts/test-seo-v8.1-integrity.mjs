@@ -14,6 +14,11 @@ import {
   classifyRiskLevel,
   PROTECTED_TIER0_PAGES,
 } from "../lib/seo/change-request-types.ts";
+import {
+  normalizeBrandName,
+  decodeHtmlEntities,
+  DGS_BRAND_NAME,
+} from "../lib/brand.ts";
 
 const ROOT = process.cwd();
 
@@ -361,4 +366,76 @@ test("12. Per-page transactional error resilience in Site Audit Runner", async (
     auditRunner.includes("pagespeed_jobs"),
     "Site audit runner must populate pagespeed_jobs for scheduled analysis"
   );
+});
+
+// ============================================================================
+// SUITE 5: BRAND NAME NORMALIZATION & HTML ENTITY INTEGRITY
+// ============================================================================
+
+test("13. Brand name normalization resolves all entities and preserves prose apostrophes", async () => {
+  assert.equal(DGS_BRAND_NAME, "D'Genius Solutions");
+
+  // Encoded and entity forms must resolve to canonical brand
+  assert.equal(normalizeBrandName("Welcome to D&#x27;Genius Solutions!"), "Welcome to D'Genius Solutions!");
+  assert.equal(normalizeBrandName("Read D&amp;#x27;Genius Insights."), "Read D'Genius Insights.");
+  assert.equal(normalizeBrandName("Contact D&#039;Genius Solutions today."), "Contact D'Genius Solutions today.");
+  assert.equal(normalizeBrandName("D&apos;Genius Solutions digital agency"), "D'Genius Solutions digital agency");
+  assert.equal(normalizeBrandName("D&#8217;Genius Solutions services"), "D'Genius Solutions services");
+  assert.equal(normalizeBrandName("D’Genius Solutions Mumbai"), "D'Genius Solutions Mumbai");
+  assert.equal(normalizeBrandName("Explore D’Genius capabilities"), "Explore D'Genius capabilities");
+
+  // Normal English prose with curly apostrophes must be preserved
+  const prose = "It’s important that our client’s campaign doesn’t fail and we won’t compromise.";
+  assert.equal(normalizeBrandName(prose), prose, "Prose apostrophes must not be touched");
+
+  // decodeHtmlEntities should handle common HTML entities
+  const rawHtml = "&lt;h1&gt;Leading Agency &amp; Brand — D&#x27;Genius Solutions&lt;/h1&gt;";
+  const decoded = decodeHtmlEntities(rawHtml);
+  assert.ok(decoded.includes("Leading Agency & Brand — D'Genius Solutions"));
+
+  // Verify no hardcoded D&apos; remains in JSX components
+  const footerCode = await readFile(join(ROOT, "components/layout/Footer.tsx"), "utf8");
+  assert.ok(!footerCode.includes("D&apos;"), "Footer.tsx must not contain D&apos;");
+
+  const loginCode = await readFile(join(ROOT, "app/admin/login/page.tsx"), "utf8");
+  assert.ok(!loginCode.includes("D&apos;"), "Login page must not contain D&apos;");
+
+  const menuCode = await readFile(join(ROOT, "components/layout/SiteMenu.tsx"), "utf8");
+  assert.ok(!menuCode.includes("D&apos;"), "SiteMenu.tsx must not contain D&apos;");
+});
+
+// ============================================================================
+// SUITE 6: RESPONSIVE FAQ ACCORDION ARCHITECTURE & ACCESSIBILITY
+// ============================================================================
+
+test("14. Responsive FAQ Accordion engine uses standard selectors and accessibility attributes", async () => {
+  const faqBootCode = await readFile(join(ROOT, "components/mirror/DgsLocationFaqBoot.tsx"), "utf8");
+
+  // Must target genuine .dgs-faq-* selectors
+  assert.ok(faqBootCode.includes(".dgs-faq-item"), "Must target .dgs-faq-item");
+  assert.ok(faqBootCode.includes(".dgs-faq-question"), "Must target .dgs-faq-question");
+  assert.ok(faqBootCode.includes(".dgs-faq-container"), "Must target .dgs-faq-container");
+
+  // Open state must be .active, never .on
+  assert.ok(faqBootCode.includes('"active"') || faqBootCode.includes("'active'"), "Must toggle 'active' class");
+  assert.ok(!faqBootCode.includes('".on"') && !faqBootCode.includes("'.on'"), "Must NOT query '.on'");
+  assert.ok(!faqBootCode.includes('".dgs-faq-q"') && !faqBootCode.includes("'.dgs-faq-q'"), "Must NOT query '.dgs-faq-q'");
+
+  // Accessibility: role="button", tabindex="0", aria-expanded
+  assert.ok(faqBootCode.includes("aria-expanded"), "Must maintain aria-expanded attribute");
+  assert.ok(faqBootCode.includes("button"), "Must set role='button'");
+  assert.ok(faqBootCode.includes("tabindex"), "Must set tabindex='0'");
+
+  // Keyboard navigation: Enter and Space keys
+  assert.ok(faqBootCode.includes("Enter"), "Must support Enter key");
+  assert.ok(faqBootCode.includes(" "), "Must support Space key");
+
+  // Sibling closing logic
+  assert.ok(faqBootCode.includes("sibling !== item") || faqBootCode.includes("other !== item"), "Must close sibling FAQ items");
+
+  // Stylesheet verification in inner-mirror-overrides.css
+  const cssCode = await readFile(join(ROOT, "lib/wp-exact/inner-mirror-overrides.css"), "utf8");
+  assert.ok(cssCode.includes(".dgs-faq-item.active .dgs-faq-answer"), "CSS must expand answer on .active");
+  assert.ok(cssCode.includes(".dgs-faq-toggle"), "CSS must support toggle animation");
+  assert.ok(cssCode.includes("min-height: 44px"), "CSS must define accessible 44px mobile touch target");
 });

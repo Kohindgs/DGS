@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { absoluteUrl } from "./site";
 import { isPublicIndexingEnabled } from "./environment";
+import { normalizeBrandName, decodeHtmlEntities, DGS_BRAND_NAME } from "@/lib/brand";
 
 export const DEFAULT_SHARE_IMAGE_PATH = "/images/social/dgs-default-share.png";
 export const DEFAULT_SHARE_IMAGE_URL = absoluteUrl(DEFAULT_SHARE_IMAGE_PATH);
@@ -27,9 +28,11 @@ export function normalizeSitePath(input: string) {
 }
 
 export function buildPageMetadata(input: PageMetadataInput): Metadata {
-  const title = input.title.trim();
-  const description = input.description?.trim();
-  if (!title) throw new Error(`Metadata title is required for ${input.path}`);
+  const rawTitle = input.title?.trim() || "";
+  if (!rawTitle) throw new Error(`Metadata title is required for ${input.path}`);
+  const title = normalizeBrandName(decodeHtmlEntities(rawTitle));
+  const rawDescription = input.description?.trim();
+  const description = rawDescription ? normalizeBrandName(decodeHtmlEntities(rawDescription)) : undefined;
 
   const path = normalizeSitePath(input.path);
   const canonicalPath = normalizeSitePath(input.canonicalPath || path);
@@ -59,7 +62,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
       type: input.type || "website",
       title,
       url: absoluteUrl(path),
-      siteName: "D'Genius Solutions",
+      siteName: DGS_BRAND_NAME,
       locale: "en_IN",
       images: [{ url: image }],
     },

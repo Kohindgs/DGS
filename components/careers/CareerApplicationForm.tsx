@@ -418,8 +418,7 @@ export function CareerApplicationForm({
       <label className={styles.consent}>
         <input name="consent" type="checkbox" value="yes" required />
         <span>
-          I consent to D&apos;Genius Solutions storing my submitted details and files
-          for recruitment evaluation and contacting me about this application.
+          {"I consent to D'Genius Solutions storing my submitted details and files for recruitment evaluation and contacting me about this application."}
         </span>
       </label>
 

@@ -6,6 +6,7 @@ import rawPostsData from "@/data/wordpress/raw/posts.json";
 import rawMediaData from "@/data/wordpress/raw/media.json";
 import { applyApprovedLinkCorrectionsToHtml } from "@/lib/wordpress/apply-mirror-link-corrections";
 import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
+import { normalizeBrandName, decodeHtmlEntities } from "@/lib/brand";
 
 export type BlogPostMeta = {
   path: string;
@@ -144,7 +145,7 @@ export async function getAllBlogPosts(): Promise<BlogPostMeta[]> {
       const media = mediaMap.get(rawPost.featured_media)!;
       featuredImage = {
         src: media.src,
-        alt: media.alt || r.title || "",
+        alt: normalizeBrandName(decodeHtmlEntities(media.alt || r.title || "")),
         width: 1200,
         height: 675,
       };
@@ -171,9 +172,9 @@ export async function getAllBlogPosts(): Promise<BlogPostMeta[]> {
     posts.push({
       path: r.path,
       slug,
-      title: r.title || r.h1 || "Blog Article",
-      h1: BLOG_H1_CORRECTIONS[r.path] || r.h1 || r.title || "Blog Article",
-      description: r.description || "",
+      title: normalizeBrandName(decodeHtmlEntities(r.title || r.h1 || "Blog Article")),
+      h1: normalizeBrandName(decodeHtmlEntities(BLOG_H1_CORRECTIONS[r.path] || r.h1 || r.title || "Blog Article")),
+      description: normalizeBrandName(decodeHtmlEntities(r.description || "")),
       canonical: r.canonical || `https://www.dgeniussolutions.com${r.path}`,
       date,
       modified,
@@ -237,6 +238,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   bodyHtml = applyApprovedLinkCorrectionsToHtml(path, bodyHtml);
   bodyHtml = rewriteWpUrls(bodyHtml);
   bodyHtml = bodyHtml.replace(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi, "<h2$1>$2</h2>");
+  bodyHtml = normalizeBrandName(bodyHtml);
   const anchored = addHeadingAnchors(bodyHtml);
   bodyHtml = anchored.html;
 
@@ -256,7 +258,10 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
       const q = qm[1].replace(/<[^>]+>/g, "").trim();
       const a = qm[2].replace(/<[^>]+>/g, "").trim();
       if (q && a && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post")) {
-        faqs.push({ question: q, answer: a });
+        faqs.push({
+          question: normalizeBrandName(decodeHtmlEntities(q)),
+          answer: normalizeBrandName(decodeHtmlEntities(a)),
+        });
       }
     }
   }
@@ -265,7 +270,10 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
     ...meta,
     bodyHtml,
     faqs,
-    toc: anchored.toc,
+    toc: anchored.toc.map((t) => ({
+      ...t,
+      text: normalizeBrandName(decodeHtmlEntities(t.text)),
+    })),
   };
 }
 

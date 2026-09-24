@@ -75,7 +75,7 @@ export function InnerPageShell({
                   <time dateTime={route.modified || undefined}>Updated {updated}</time>
                 ) : null}
                 <span aria-hidden="true"> · </span>
-                <span>D&apos;Genius Solutions</span>
+                <span>{"D'Genius Solutions"}</span>
               </p>
             ) : null}
           </div>
