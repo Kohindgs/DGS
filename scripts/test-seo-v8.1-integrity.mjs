@@ -416,10 +416,9 @@ test("14. Responsive FAQ Accordion engine uses standard selectors and accessibil
   assert.ok(faqBootCode.includes(".dgs-faq-question"), "Must target .dgs-faq-question");
   assert.ok(faqBootCode.includes(".dgs-faq-container"), "Must target .dgs-faq-container");
 
-  // Open state must be .active, never .on
+  // Open state must support .active and dual variant selector support
   assert.ok(faqBootCode.includes('"active"') || faqBootCode.includes("'active'"), "Must toggle 'active' class");
-  assert.ok(!faqBootCode.includes('".on"') && !faqBootCode.includes("'.on'"), "Must NOT query '.on'");
-  assert.ok(!faqBootCode.includes('".dgs-faq-q"') && !faqBootCode.includes("'.dgs-faq-q'"), "Must NOT query '.dgs-faq-q'");
+  assert.ok(faqBootCode.includes(".dgs-faq-q"), "Must support location pages with .dgs-faq-q");
 
   // Accessibility: role="button", tabindex="0", aria-expanded
   assert.ok(faqBootCode.includes("aria-expanded"), "Must maintain aria-expanded attribute");
