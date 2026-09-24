@@ -290,12 +290,163 @@ CREATE TABLE IF NOT EXISTS google_search_updates (
   recommended_actions JSON NOT NULL,
   affected_dgs_areas JSON NOT NULL,
   status VARCHAR(50) NOT NULL DEFAULT 'new',
+  assessment_status VARCHAR(50) NOT NULL DEFAULT 'NOT ASSESSED',
+  assessment_date DATETIME NULL,
+  evidence TEXT NULL,
+  affected_pages JSON NULL,
+  checks_performed JSON NULL,
+  issues_found JSON NULL,
+  recommendations JSON NULL,
+  assessed_by VARCHAR(255) NULL,
+  assessment_mode VARCHAR(50) DEFAULT 'automated',
+  confidence DECIMAL(5,2) NULL,
   notified_at DATETIME NULL,
   reviewed_at DATETIME NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_gsu_published (published_at),
   INDEX idx_gsu_severity_status (severity, status),
+  INDEX idx_gsu_assessment_status (assessment_status),
   INDEX idx_gsu_source_url (source_url(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS pagespeed_cache (
+  id VARCHAR(64) PRIMARY KEY,
+  url VARCHAR(512) NOT NULL,
+  strategy VARCHAR(20) NOT NULL,
+  performance_score INT NULL,
+  accessibility_score INT NULL,
+  best_practices_score INT NULL,
+  seo_score INT NULL,
+  fcp_ms INT NULL,
+  lcp_ms INT NULL,
+  cls_score DECIMAL(5,3) NULL,
+  tbt_ms INT NULL,
+  speed_index_ms INT NULL,
+  field_inp_ms INT NULL,
+  field_ttfb_ms INT NULL,
+  field_lcp_ms INT NULL,
+  field_cls DECIMAL(5,3) NULL,
+  diagnostics JSON NULL,
+  opportunities JSON NULL,
+  tested_at DATETIME NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_psi_url_strat (url(255), strategy)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
+  id VARCHAR(64) PRIMARY KEY,
+  metric_date DATE NOT NULL,
+  period_type VARCHAR(50) DEFAULT '28d',
+  page_url VARCHAR(512) NOT NULL,
+  query_text VARCHAR(512) NOT NULL,
+  clicks INT DEFAULT 0,
+  impressions INT DEFAULT 0,
+  ctr DECIMAL(5,4) DEFAULT 0,
+  position DECIMAL(5,2) DEFAULT 0,
+  country VARCHAR(10) NULL,
+  device VARCHAR(50) NULL,
+  updated_at DATETIME NOT NULL,
+  INDEX idx_gsc_pq_page (page_url(255)),
+  INDEX idx_gsc_pq_query (query_text(255)),
+  UNIQUE KEY uq_gsc_pq (metric_date, period_type, page_url(255), query_text(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS target_keywords (
+  id VARCHAR(64) PRIMARY KEY,
+  page_url VARCHAR(512) NOT NULL,
+  keyword VARCHAR(512) NOT NULL,
+  keyword_group VARCHAR(100) DEFAULT 'primary',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_target_page_kw (page_url(255), keyword(255)),
+  INDEX idx_tk_page (page_url(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS site_audit_missing_alts (
+  id VARCHAR(64) PRIMARY KEY,
+  audit_run_id VARCHAR(64) NULL,
+  page_url VARCHAR(512) NOT NULL,
+  image_src TEXT NOT NULL,
+  media_asset_id CHAR(36) NULL,
+  filename VARCHAR(255) NOT NULL,
+  current_alt TEXT NULL,
+  surrounding_context TEXT NULL,
+  alt_status VARCHAR(50) NOT NULL DEFAULT 'MISSING_ALT_ATTRIBUTE',
+  is_decorative BOOLEAN DEFAULT FALSE,
+  suggested_alt TEXT NULL,
+  fixed_alt TEXT NULL,
+  resolved BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_sama_page (page_url(255)),
+  INDEX idx_sama_resolved (resolved)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS site_audit_runs (
+  id VARCHAR(64) PRIMARY KEY,
+  status VARCHAR(50) NOT NULL DEFAULT 'completed',
+  trigger_type VARCHAR(50) NOT NULL DEFAULT 'manual',
+  total_pages INT NOT NULL DEFAULT 0,
+  crawled_pages INT NOT NULL DEFAULT 0,
+  overall_score INT NOT NULL DEFAULT 0,
+  technical_score INT NOT NULL DEFAULT 0,
+  indexability_score INT NOT NULL DEFAULT 0,
+  content_score INT NOT NULL DEFAULT 0,
+  schema_score INT NOT NULL DEFAULT 0,
+  media_score INT NOT NULL DEFAULT 0,
+  performance_score INT NULL,
+  links_score INT NOT NULL DEFAULT 0,
+  critical_count INT NOT NULL DEFAULT 0,
+  high_count INT NOT NULL DEFAULT 0,
+  medium_count INT NOT NULL DEFAULT 0,
+  low_count INT NOT NULL DEFAULT 0,
+  info_count INT NOT NULL DEFAULT 0,
+  started_at DATETIME NOT NULL,
+  completed_at DATETIME NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_audit_runs_created (created_at DESC)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS site_audit_pages (
+  id VARCHAR(64) PRIMARY KEY,
+  audit_run_id VARCHAR(64) NOT NULL,
+  url VARCHAR(512) NOT NULL,
+  status_code INT NOT NULL DEFAULT 200,
+  response_time_ms INT NOT NULL DEFAULT 0,
+  title TEXT NULL,
+  meta_description TEXT NULL,
+  canonical_url TEXT NULL,
+  robots_meta VARCHAR(255) NULL,
+  h1_count INT NOT NULL DEFAULT 1,
+  h1_text TEXT NULL,
+  schema_types JSON NULL,
+  og_tags JSON NULL,
+  images_count INT NOT NULL DEFAULT 0,
+  missing_alt_count INT NOT NULL DEFAULT 0,
+  internal_links_count INT NOT NULL DEFAULT 0,
+  external_links_count INT NOT NULL DEFAULT 0,
+  is_indexable TINYINT(1) NOT NULL DEFAULT 1,
+  page_score INT NOT NULL DEFAULT 100,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_audit_pages_run (audit_run_id),
+  INDEX idx_audit_pages_url (url(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS site_audit_issues (
+  id VARCHAR(64) PRIMARY KEY,
+  audit_run_id VARCHAR(64) NOT NULL,
+  page_id VARCHAR(64) NULL,
+  url VARCHAR(512) NOT NULL,
+  severity VARCHAR(50) NOT NULL,
+  category VARCHAR(50) NOT NULL,
+  issue_code VARCHAR(100) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  recommendation TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_audit_issues_run (audit_run_id),
+  INDEX idx_audit_issues_severity (severity)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 

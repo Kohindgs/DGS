@@ -19,6 +19,16 @@ export type GoogleSearchUpdate = {
   recommended_actions: string[];
   affected_dgs_areas: string[];
   status: "new" | "acknowledged" | "monitoring" | "resolved";
+  assessment_status: "NOT APPLICABLE" | "NOT ASSESSED" | "ASSESSING" | "COMPLIANT" | "NEEDS REVIEW" | "NON-COMPLIANT" | "INSUFFICIENT EVIDENCE";
+  assessment_date?: string | null;
+  evidence?: string | null;
+  affected_pages?: string[];
+  checks_performed?: Array<{ name: string; description: string; result: "PASS" | "FAIL" | "WARN" | "INFO"; details?: string }>;
+  issues_found?: string[];
+  recommendations?: string[];
+  assessed_by?: string | null;
+  assessment_mode?: string | null;
+  confidence?: number | null;
   notified_at?: string | null;
   reviewed_at?: string | null;
   created_at?: string;
@@ -29,6 +39,7 @@ export async function listGoogleSearchUpdates(options: {
   limit?: number;
   severity?: string;
   status?: string;
+  assessmentStatus?: string;
 } = {}): Promise<GoogleSearchUpdate[]> {
   if (!isCmsDatabaseConfigured()) return [];
 
@@ -44,6 +55,11 @@ export async function listGoogleSearchUpdates(options: {
   if (options.status && options.status !== "all") {
     whereClauses.push("status = ?");
     params.push(options.status);
+  }
+
+  if (options.assessmentStatus && options.assessmentStatus !== "all") {
+    whereClauses.push("assessment_status = ?");
+    params.push(options.assessmentStatus);
   }
 
   const whereSql = whereClauses.length ? ` WHERE ${whereClauses.join(" AND ")}` : "";
@@ -84,6 +100,9 @@ export async function updateSearchUpdateStatus(
 function mapRowToUpdate(row: Record<string, unknown>): GoogleSearchUpdate {
   let recommendedActions: string[] = [];
   let affectedAreas: string[] = [];
+  let checksPerformed: any[] = [];
+  let issuesFound: string[] = [];
+  let recommendations: string[] = [];
 
   try {
     const parsed = typeof row.recommended_actions === "string"
@@ -103,20 +122,77 @@ function mapRowToUpdate(row: Record<string, unknown>): GoogleSearchUpdate {
     affectedAreas = [];
   }
 
+  try {
+    const parsed = typeof row.checks_performed === "string"
+      ? JSON.parse(row.checks_performed)
+      : row.checks_performed;
+    checksPerformed = Array.isArray(parsed) ? parsed : [];
+  } catch {
+    checksPerformed = [];
+  }
+
+  try {
+    const parsed = typeof row.issues_found === "string"
+      ? JSON.parse(row.issues_found)
+      : row.issues_found;
+    issuesFound = Array.isArray(parsed) ? parsed : [];
+  } catch {
+    issuesFound = [];
+  }
+
+  try {
+    const parsed = typeof row.recommendations === "string"
+      ? JSON.parse(row.recommendations)
+      : row.recommendations;
+    recommendations = Array.isArray(parsed) ? parsed : [];
+  } catch {
+    recommendations = [];
+  }
+
+  // Real assessment status determination: NEVER hardcode COMPLIANT
+  const title = String(row.title || "");
+  const summary = String(row.summary || "");
+  const category = String(row.category || "");
+  const text = `${title} ${category} ${summary}`.toLowerCase();
+  const isInfo = text.includes("search central live") || text.includes("conference") || text.includes("podcast") || text.includes("webinar") || text.includes("event") || text.includes("announcement");
+
+  let rawAssessmentStatus = String(row.assessment_status || "").trim();
+  let assessmentStatus: GoogleSearchUpdate["assessment_status"] = "NOT ASSESSED";
+
+  if (isInfo) {
+    assessmentStatus = "NOT APPLICABLE";
+  } else if (rawAssessmentStatus === "COMPLIANT" && row.evidence) {
+    assessmentStatus = "COMPLIANT";
+  } else if (["NOT APPLICABLE", "NOT ASSESSED", "ASSESSING", "COMPLIANT", "NEEDS REVIEW", "NON-COMPLIANT", "INSUFFICIENT EVIDENCE"].includes(rawAssessmentStatus)) {
+    assessmentStatus = rawAssessmentStatus as GoogleSearchUpdate["assessment_status"];
+  } else {
+    assessmentStatus = "NOT ASSESSED";
+  }
+
   return {
     id: String(row.id),
-    title: String(row.title),
+    title,
     source: String(row.source),
     source_url: String(row.source_url),
     published_at: String(row.published_at),
     detected_at: String(row.detected_at),
-    category: String(row.category),
+    category,
     severity: String(row.severity) as GoogleSearchUpdate["severity"],
-    summary: String(row.summary),
+    summary,
     impact_analysis: String(row.impact_analysis),
     recommended_actions: recommendedActions,
     affected_dgs_areas: affectedAreas,
     status: String(row.status) as GoogleSearchUpdate["status"],
+    assessment_status: assessmentStatus,
+    assessment_date: row.assessment_date ? String(row.assessment_date) : null,
+    evidence: row.evidence ? String(row.evidence) : null,
+    affected_pages: affectedAreas,
+    checks_performed: checksPerformed,
+    issues_found: issuesFound,
+    recommendations: recommendations.length > 0 ? recommendations : recommendedActions,
+    assessed_by: row.assessed_by ? String(row.assessed_by) : null,
+    assessment_mode: row.assessment_mode ? String(row.assessment_mode) : null,
+    confidence: row.confidence != null ? Number(row.confidence) : null,
     notified_at: row.notified_at ? String(row.notified_at) : null,
     reviewed_at: row.reviewed_at ? String(row.reviewed_at) : null,
     created_at: String(row.created_at || ""),

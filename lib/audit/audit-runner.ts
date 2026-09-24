@@ -12,6 +12,20 @@ export type AuditIssue = {
   recommendation: string;
 };
 
+export type DetailedMissingAlt = {
+  id: string;
+  pageUrl: string;
+  imageSrc: string;
+  mediaAssetId?: string | null;
+  filename: string;
+  currentAlt: string | null;
+  surroundingContext?: string | null;
+  altStatus: "MISSING_ALT_ATTRIBUTE" | "EMPTY_ALT_DECORATIVE" | "EMPTY_ALT_NEEDS_REVIEW";
+  isDecorative: boolean;
+  suggestedAlt?: string | null;
+  recommendation: string;
+};
+
 export type PageAuditResult = {
   url: string;
   statusCode: number;
@@ -26,11 +40,22 @@ export type PageAuditResult = {
   ogTags: Record<string, string>;
   imagesCount: number;
   missingAltCount: number;
+  missingAltDetails: DetailedMissingAlt[];
   internalLinksCount: number;
   externalLinksCount: number;
   isIndexable: boolean;
   pageScore: number;
   issues: AuditIssue[];
+  mobileSpeedScore?: number | null;
+  desktopSpeedScore?: number | null;
+  gscAvgPosition?: number | null;
+  gscClicks?: number | null;
+  gscImpressions?: number | null;
+  gscCtr?: number | null;
+  rankingKeywordsCount?: number;
+  targetKeywordsCount?: number;
+  notDetectedCount?: number;
+  opportunityScore?: number;
 };
 
 export type FullAuditReport = {
@@ -46,6 +71,7 @@ export type FullAuditReport = {
   schemaScore: number;
   mediaScore: number;
   linksScore: number;
+  performanceScore: number | null;
   criticalCount: number;
   highCount: number;
   mediumCount: number;
@@ -127,16 +153,18 @@ export async function auditSingleUrl(url: string): Promise<PageAuditResult> {
     });
   }
 
-  // Parse HTML tags with regex (robust, fast in serverless/Node environments)
+  // Parse HTML tags
   const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
   const title = titleMatch ? titleMatch[1].trim() : null;
 
-  const descMatch = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i) ||
-                    html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["']/i);
+  const descMatch =
+    html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i) ||
+    html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["']/i);
   const metaDescription = descMatch ? descMatch[1].trim() : null;
 
-  const canonicalMatch = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["']/i) ||
-                         html.match(/<link[^>]+href=["']([^"']*)["'][^>]+rel=["']canonical["']/i);
+  const canonicalMatch =
+    html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["']/i) ||
+    html.match(/<link[^>]+href=["']([^"']*)["'][^>]+rel=["']canonical["']/i);
   const canonicalUrl = canonicalMatch ? canonicalMatch[1].trim() : null;
 
   const robotsMatch = html.match(/<meta[^>]+name=["']robots["'][^>]+content=["']([^"']*)["']/i);
@@ -169,14 +197,64 @@ export async function auditSingleUrl(url: string): Promise<PageAuditResult> {
     ogTags[m[1]] = m[2];
   }
 
-  // Images and missing alt
+  // Individual image extraction and missing alt categorization
   const imgMatches = [...html.matchAll(/<img[^>]+>/gi)];
   const imagesCount = imgMatches.length;
   let missingAltCount = 0;
+  const missingAltDetails: DetailedMissingAlt[] = [];
+
   for (const img of imgMatches) {
-    const altMatch = img[0].match(/alt=["']([^"']*)["']/i);
-    if (!altMatch || !altMatch[1].trim()) {
+    const rawTag = img[0];
+    const srcMatch = rawTag.match(/src=["']([^"']*)["']/i);
+    const src = srcMatch ? srcMatch[1].trim() : "";
+    if (!src) continue;
+
+    const altMatch = rawTag.match(/alt=["']([^"']*)["']/i);
+    const rawAlt = altMatch ? altMatch[1] : null;
+    const isDecorativeAttr = rawTag.includes('aria-hidden="true"') || rawTag.includes('role="presentation"');
+    const filename = src.split("/").pop()?.split("?")[0] || "image.png";
+
+    if (rawAlt === null) {
       missingAltCount++;
+      missingAltDetails.push({
+        id: randomUUID(),
+        pageUrl: url,
+        imageSrc: src,
+        filename,
+        currentAlt: null,
+        altStatus: "MISSING_ALT_ATTRIBUTE",
+        isDecorative: false,
+        recommendation: "Image lacks alt attribute entirely. Add descriptive alt text or mark decorative.",
+      });
+    } else if (rawAlt.trim() === "") {
+      const looksDecorative =
+        isDecorativeAttr ||
+        /icon|bullet|arrow|decor|divider|separator|bg-|shape/i.test(src);
+
+      if (looksDecorative) {
+        missingAltDetails.push({
+          id: randomUUID(),
+          pageUrl: url,
+          imageSrc: src,
+          filename,
+          currentAlt: "",
+          altStatus: "EMPTY_ALT_DECORATIVE",
+          isDecorative: true,
+          recommendation: "Valid decorative image with empty alt attribute per WCAG.",
+        });
+      } else {
+        missingAltCount++;
+        missingAltDetails.push({
+          id: randomUUID(),
+          pageUrl: url,
+          imageSrc: src,
+          filename,
+          currentAlt: "",
+          altStatus: "EMPTY_ALT_NEEDS_REVIEW",
+          isDecorative: false,
+          recommendation: "Empty alt on meaningful image. Review and provide descriptive alt text.",
+        });
+      }
     }
   }
 
@@ -249,7 +327,7 @@ export async function auditSingleUrl(url: string): Promise<PageAuditResult> {
       issueCode: "MISSING_ALT_TEXT",
       title: `${missingAltCount} Images Missing Alt Text`,
       description: "Images without alt descriptions harm accessibility and image SEO.",
-      recommendation: "Add descriptive alt attributes or mark decorative icons as decorative.",
+      recommendation: "Click to open Alt Fixer and approve descriptive alt text or mark decorative.",
     });
   }
 
@@ -264,7 +342,7 @@ export async function auditSingleUrl(url: string): Promise<PageAuditResult> {
     });
   }
 
-  // Calculate page score
+  // Calculate page score purely from detected issues
   let score = 100;
   for (const iss of issues) {
     if (iss.severity === "critical") score -= 25;
@@ -288,6 +366,7 @@ export async function auditSingleUrl(url: string): Promise<PageAuditResult> {
     ogTags,
     imagesCount,
     missingAltCount,
+    missingAltDetails,
     internalLinksCount: internalLinks.length,
     externalLinksCount: externalLinks.length,
     isIndexable,
@@ -313,13 +392,19 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
 
   const completedAt = new Date().toISOString().slice(0, 19).replace("T", " ");
 
-  // Aggregate issues
+  // Aggregate issues and actual measurements
   let criticalCount = 0;
   let highCount = 0;
   let mediumCount = 0;
   let lowCount = 0;
   let infoCount = 0;
   let totalScore = 0;
+
+  let techScoreSum = 0;
+  let schemaPagesCount = 0;
+  let totalImagesCount = 0;
+  let totalMissingAltCount = 0;
+  let goodInternalLinksPages = 0;
 
   for (const p of pages) {
     totalScore += p.pageScore;
@@ -330,15 +415,55 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
       else if (iss.severity === "low") lowCount++;
       else infoCount++;
     }
+
+    // Technical points: HTTP 200 (25), isIndexable (25), canonical (25), single H1 (25)
+    let pageTech = 0;
+    if (p.statusCode === 200) pageTech += 25;
+    if (p.isIndexable) pageTech += 25;
+    if (p.canonicalUrl) pageTech += 25;
+    if (p.h1Count === 1) pageTech += 25;
+    else if (p.h1Count > 1) pageTech += 15;
+    techScoreSum += pageTech;
+
+    if (p.schemaTypes && p.schemaTypes.length > 0) {
+      schemaPagesCount++;
+    }
+
+    totalImagesCount += p.imagesCount;
+    totalMissingAltCount += p.missingAltCount;
+
+    if (p.internalLinksCount >= 3) {
+      goodInternalLinksPages++;
+    }
   }
 
   const overallScore = pages.length > 0 ? Math.round(totalScore / pages.length) : 100;
-  const technicalScore = criticalCount === 0 ? 100 : Math.max(50, 100 - criticalCount * 10);
-  const indexabilityScore = pages.every((p) => p.isIndexable) ? 100 : 85;
-  const contentScore = highCount === 0 ? 100 : Math.max(60, 100 - highCount * 5);
-  const schemaScore = 95;
-  const mediaScore = mediumCount === 0 ? 100 : Math.max(70, 100 - mediumCount * 2);
-  const linksScore = 98;
+  const technicalScore = pages.length > 0 ? Math.round(techScoreSum / pages.length) : 100;
+  const indexabilityScore = pages.length > 0
+    ? Math.round((pages.filter((p) => p.isIndexable).length / pages.length) * 100)
+    : 100;
+  const contentScore = highCount === 0 ? 100 : Math.max(0, 100 - highCount * 5);
+  // Real Schema Score: % of crawled pages with valid JSON-LD schema (0 hardcoding)
+  const schemaScore = pages.length > 0 ? Math.round((schemaPagesCount / pages.length) * 100) : 0;
+  // Real Media Score: % of images with valid alt text (0 hardcoding)
+  const mediaScore = totalImagesCount > 0
+    ? Math.max(0, Math.round(((totalImagesCount - totalMissingAltCount) / totalImagesCount) * 100))
+    : 100;
+  // Real Links Score: % of crawled pages with internal links >= 3 (0 hardcoding)
+  const linksScore = pages.length > 0 ? Math.round((goodInternalLinksPages / pages.length) * 100) : 0;
+
+  // Real Performance Score: check pagespeed_cache for actual measurements
+  let performanceScore: number | null = null;
+  if (isCmsDatabaseConfigured()) {
+    try {
+      const { rows } = await cmsQuery<{ avg_perf: number }>(
+        `SELECT AVG(performance_score) as avg_perf FROM pagespeed_cache WHERE tested_at >= DATE_SUB(NOW(), INTERVAL 15 DAY) AND performance_score IS NOT NULL`
+      );
+      if (rows && rows[0]?.avg_perf != null) {
+        performanceScore = Math.round(Number(rows[0].avg_perf));
+      }
+    } catch {}
+  }
 
   const report: FullAuditReport = {
     id: auditId,
@@ -353,6 +478,7 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
     schemaScore,
     mediaScore,
     linksScore,
+    performanceScore,
     criticalCount,
     highCount,
     mediumCount,
@@ -386,7 +512,7 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
           contentScore,
           schemaScore,
           mediaScore,
-          95, // performance score
+          performanceScore, // NULL if not measured yet
           linksScore,
           criticalCount,
           highCount,
@@ -398,7 +524,7 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
         ]
       );
 
-      // Insert pages and issues
+      // Insert pages, issues, and individual missing alt image records
       for (const p of pages) {
         const pageId = randomUUID();
         await cmsExecute(
@@ -448,6 +574,33 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
               iss.title,
               iss.description,
               iss.recommendation,
+            ]
+          );
+        }
+
+        // Persist individual missing alt records
+        for (const altItem of p.missingAltDetails) {
+          if (altItem.altStatus === "EMPTY_ALT_DECORATIVE") continue; // Valid decorative images not errors
+          await cmsExecute(
+            `INSERT INTO site_audit_missing_alts (
+              id, audit_run_id, page_url, image_src, filename, current_alt, alt_status, is_decorative, recommendation
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+              audit_run_id = VALUES(audit_run_id),
+              current_alt = VALUES(current_alt),
+              alt_status = VALUES(alt_status),
+              is_decorative = VALUES(is_decorative),
+              updated_at = CURRENT_TIMESTAMP`,
+            [
+              altItem.id,
+              auditId,
+              altItem.pageUrl,
+              altItem.imageSrc,
+              altItem.filename,
+              altItem.currentAlt,
+              altItem.altStatus,
+              altItem.isDecorative ? 1 : 0,
+              altItem.recommendation,
             ]
           );
         }

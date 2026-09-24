@@ -116,6 +116,26 @@ export async function ensureGoogleTablesExist(): Promise<void> {
     `);
 
     await cmsExecute(`
+      CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
+        id VARCHAR(64) PRIMARY KEY,
+        metric_date DATE NOT NULL,
+        period_type VARCHAR(50) DEFAULT '28d',
+        page_url VARCHAR(512) NOT NULL,
+        query_text VARCHAR(512) NOT NULL,
+        clicks INT DEFAULT 0,
+        impressions INT DEFAULT 0,
+        ctr DECIMAL(5,4) DEFAULT 0,
+        position DECIMAL(5,2) DEFAULT 0,
+        country VARCHAR(10) NULL,
+        device VARCHAR(50) NULL,
+        updated_at DATETIME NOT NULL,
+        INDEX idx_gsc_pq_page (page_url(255)),
+        INDEX idx_gsc_pq_query (query_text(255)),
+        UNIQUE KEY uq_gsc_pq (metric_date, period_type, page_url(255), query_text(255))
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
+    await cmsExecute(`
       CREATE TABLE IF NOT EXISTS ga4_sync_runs (
         id VARCHAR(64) PRIMARY KEY,
         status VARCHAR(50) NOT NULL DEFAULT 'completed',
@@ -618,6 +638,46 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
            VALUES (?, ?, ?, ?, ?, ?, '28d', NOW())
            ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), updated_at = NOW()`,
           [rowId, pageUrl, clicks, impressions, ctr, position]
+        );
+      }
+    }
+
+    // Page + Query Matrix (Which query ranks for which page)
+    const pqRes = await fetch(
+      `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          startDate,
+          endDate,
+          dimensions: ["page", "query"],
+          rowLimit: 500,
+        }),
+      }
+    );
+
+    if (pqRes.ok) {
+      const pqData = await pqRes.json();
+      const rows = pqData.rows || [];
+      const todayStr = new Date().toISOString().slice(0, 10);
+      for (const row of rows) {
+        const pageUrl = (row.keys[0] || "").slice(0, 500);
+        const queryText = (row.keys[1] || "").slice(0, 500);
+        const clicks = Math.round(row.clicks || 0);
+        const impressions = Math.round(row.impressions || 0);
+        const ctr = Number(row.ctr || 0);
+        const position = Number(row.position || 0);
+        const rowId = createHash("md5").update(`pq_${todayStr}_${pageUrl}_${queryText}`).digest("hex");
+
+        await cmsExecute(
+          `INSERT INTO gsc_page_query_metrics (id, metric_date, period_type, page_url, query_text, clicks, impressions, ctr, position, updated_at)
+           VALUES (?, ?, '28d', ?, ?, ?, ?, ?, ?, NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), updated_at = NOW()`,
+          [rowId, todayStr, pageUrl, queryText, clicks, impressions, ctr, position]
         );
       }
     }

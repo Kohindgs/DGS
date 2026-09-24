@@ -334,11 +334,7 @@ export default function MediaLibraryView({
                 : 0;
 
             const isImage = asset.media_type === "image";
-            const previewUrl =
-              asset.poster_url ||
-              (isImage
-                ? `/cms-media/thumbnails/${encodeURIComponent(asset.filename.replace(/\.[^.]+$/, ".webp"))}`
-                : "");
+            const imageSrc = asset.public_url || asset.poster_url || "";
 
             const hasMissingAlt =
               isImage && (!asset.alt_text || !asset.alt_text.trim()) && !asset.is_decorative;
@@ -348,14 +344,28 @@ export default function MediaLibraryView({
                 <div className="dgs-media-card-preview">
                   {isImage ? (
                     <img
-                      src={previewUrl || asset.public_url}
+                      src={imageSrc}
                       alt={asset.alt_text || asset.title || asset.filename}
                       loading="lazy"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (asset.poster_url && target.src !== asset.poster_url) {
+                          target.src = asset.poster_url;
+                        } else {
+                          target.style.display = "none";
+                        }
+                      }}
                     />
                   ) : (
                     <div className="dgs-media-video-thumb">
                       {asset.poster_url ? (
-                        <img src={asset.poster_url} alt={asset.title || asset.filename} />
+                        <img
+                          src={asset.poster_url}
+                          alt={asset.title || asset.filename}
+                          onError={(e) => {
+                            (e.currentTarget as HTMLElement).style.display = "none";
+                          }}
+                        />
                       ) : (
                         <div className="dgs-media-video-icon">▶</div>
                       )}

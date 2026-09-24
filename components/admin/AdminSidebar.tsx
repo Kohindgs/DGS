@@ -70,7 +70,9 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: "GROWTH",
     items: [
-      { title: "SEO", href: "/admin/seo/", icon: Globe },
+      { title: "SEO Hub", href: "/admin/seo/", icon: Globe },
+      { title: "Keywords & Queries", href: "/admin/seo/keywords/", icon: Search },
+      { title: "Page Rankings", href: "/admin/seo/pages/", icon: BarChart3 },
       { title: "Forms", href: "/admin/forms/", icon: FileCheck2 },
       { title: "Leads", href: "/admin/leads/", icon: Inbox },
     ],

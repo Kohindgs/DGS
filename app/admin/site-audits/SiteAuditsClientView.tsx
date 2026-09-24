@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
+import SeoIntelligenceDrawer from "@/components/admin/SeoIntelligenceDrawer";
+import AltFixerDrawer from "@/components/admin/AltFixerDrawer";
 
 type PageRow = {
   url: string;
@@ -11,7 +13,17 @@ type PageRow = {
   h1Count: number;
   pageScore: number;
   missingAltCount: number;
-  isIndexable: boolean;
+  isIndexable: boolean | number;
+  schemaTypes?: string | string[];
+  internalLinksCount?: number;
+  googleAvgPosition?: number | null;
+  gscClicks?: number | null;
+  gscImpressions?: number | null;
+  gscCtr?: number | null;
+  mobileSpeed?: number | null;
+  desktopSpeed?: number | null;
+  issuesCount?: number;
+  keywordsCount?: number;
 };
 
 type Props = {
@@ -22,10 +34,24 @@ type Props = {
   isDue: boolean;
 };
 
-export default function SiteAuditsClientView({ latestAudit, auditHistory, pages: initialPages, issues, isDue }: Props) {
+export default function SiteAuditsClientView({
+  latestAudit,
+  auditHistory,
+  pages: initialPages,
+  issues,
+  isDue,
+}: Props) {
   const [running, setRunning] = useState(false);
   const [pages, setPages] = useState<PageRow[]>(initialPages);
   const [activeTab, setActiveTab] = useState<"pages" | "issues" | "history">("pages");
+
+  // Selected drawers
+  const [selectedUrlForDrawer, setSelectedUrlForDrawer] = useState<string | null>(null);
+  const [selectedUrlForAltFixer, setSelectedUrlForAltFixer] = useState<string | null>(null);
+  const [altFixerOpen, setAltFixerOpen] = useState(false);
+
+  // Filter bar state
+  const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   const handleRunAudit = async () => {
     if (running) return;
@@ -34,7 +60,9 @@ export default function SiteAuditsClientView({ latestAudit, auditHistory, pages:
       const res = await fetch("/api/admin/site-audits/run", { method: "POST" });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Audit failed");
-      alert(`Audit completed! Crawled ${data.report.crawledPages} pages with overall score: ${data.report.overallScore}/100.`);
+      alert(
+        `Audit completed! Crawled ${data.report.crawledPages} pages with overall score: ${data.report.overallScore}/100.`
+      );
       window.location.reload();
     } catch (err: any) {
       alert(err.message);
@@ -43,13 +71,86 @@ export default function SiteAuditsClientView({ latestAudit, auditHistory, pages:
     }
   };
 
+  const handleOpenAltFixer = (url?: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setSelectedUrlForAltFixer(url || null);
+    setAltFixerOpen(true);
+  };
+
+  // Filter logic
+  const filteredPages = pages.filter((p) => {
+    const pos = p.googleAvgPosition != null ? Number(p.googleAvgPosition) : 0;
+    const hasSchema = Boolean(
+      p.schemaTypes && (Array.isArray(p.schemaTypes) ? p.schemaTypes.length > 0 : p.schemaTypes !== "[]")
+    );
+    const intLinks = Number(p.internalLinksCount || 0);
+    const mobSpeed = p.mobileSpeed != null ? Number(p.mobileSpeed) : null;
+
+    switch (selectedFilter) {
+      case "top10":
+        return pos > 0 && pos <= 10;
+      case "top20":
+        return pos > 10 && pos <= 20;
+      case "top50":
+        return pos > 20 && pos <= 50;
+      case "not_detected":
+        return !p.googleAvgPosition || p.googleAvgPosition === 0;
+      case "slow_mobile":
+        return mobSpeed != null && mobSpeed < 70;
+      case "missing_alt":
+        return Number(p.missingAltCount) > 0;
+      case "technical_issues":
+        return Number(p.issuesCount || 0) > 0 || p.statusCode !== 200 || !Boolean(p.isIndexable);
+      case "no_schema":
+        return !hasSchema;
+      case "no_internal_links":
+        return intLinks < 3;
+      case "all":
+      default:
+        return true;
+    }
+  });
+
+  // Redesigned Page Audit Columns
   const pageColumns: Column<PageRow>[] = [
-    { key: "url", header: "Audited URL", sortable: true },
+    {
+      key: "url",
+      header: "Page",
+      sortable: true,
+      render: (p) => (
+        <div style={{ maxWidth: "260px" }}>
+          <div
+            style={{
+              fontWeight: 600,
+              color: "#fff",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+            title={p.title || p.url}
+          >
+            {p.title || p.url}
+          </div>
+          <div
+            style={{
+              fontSize: "0.75rem",
+              color: "var(--dgs-text-muted)",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+            title={p.url}
+          >
+            {p.url.replace(/^https?:\/\/[^/]+/i, "")}
+          </div>
+        </div>
+      ),
+    },
     {
       key: "statusCode",
       header: "HTTP",
       sortable: true,
-      width: "90px",
+      width: "80px",
       render: (p) => (
         <span className={`dgs-saas-chip ${p.statusCode === 200 ? "success" : "danger"}`}>
           {p.statusCode}
@@ -57,29 +158,149 @@ export default function SiteAuditsClientView({ latestAudit, auditHistory, pages:
       ),
     },
     {
-      key: "responseTimeMs",
-      header: "Speed",
+      key: "isIndexable",
+      header: "Index",
       sortable: true,
-      width: "110px",
-      render: (p) => `${p.responseTimeMs}ms`,
+      width: "90px",
+      render: (p) => (
+        <span className={`dgs-saas-chip ${Boolean(p.isIndexable) ? "success" : "warning"}`}>
+          {Boolean(p.isIndexable) ? "Index" : "Noindex"}
+        </span>
+      ),
     },
     {
-      key: "pageScore",
-      header: "Score",
+      key: "googleAvgPosition",
+      header: "Google Avg. Position",
       sortable: true,
-      width: "100px",
-      render: (p) => (
-        <strong style={{ color: p.pageScore >= 90 ? "var(--dgs-success)" : p.pageScore >= 70 ? "var(--dgs-warning)" : "var(--dgs-danger)" }}>
-          {p.pageScore}/100
-        </strong>
-      ),
+      width: "140px",
+      render: (p) => {
+        const pos = p.googleAvgPosition != null ? Number(p.googleAvgPosition) : 0;
+        if (pos > 0) {
+          const variant = pos <= 3 ? "success" : pos <= 10 ? "primary" : "neutral";
+          return <span className={`dgs-saas-chip ${variant}`}>{pos.toFixed(1)}</span>;
+        }
+        return <span style={{ color: "var(--dgs-text-muted)", fontSize: "0.78rem" }}>—</span>;
+      },
+    },
+    {
+      key: "gscClicks",
+      header: "Clicks",
+      sortable: true,
+      width: "80px",
+      render: (p) => p.gscClicks || 0,
+    },
+    {
+      key: "gscImpressions",
+      header: "Impressions",
+      sortable: true,
+      width: "110px",
+      render: (p) => (p.gscImpressions ? p.gscImpressions.toLocaleString() : "0"),
+    },
+    {
+      key: "keywordsCount",
+      header: "Keywords",
+      sortable: true,
+      width: "90px",
+      render: (p) => (p.keywordsCount ? `${p.keywordsCount}` : "0"),
+    },
+    {
+      key: "mobileSpeed",
+      header: "Mobile Speed",
+      sortable: true,
+      width: "110px",
+      render: (p) => {
+        if (p.mobileSpeed != null) {
+          const s = Number(p.mobileSpeed);
+          const color = s >= 90 ? "var(--dgs-success)" : s >= 60 ? "var(--dgs-warning)" : "var(--dgs-danger)";
+          return <strong style={{ color }}>{s}/100</strong>;
+        }
+        return <span style={{ color: "var(--dgs-text-muted)", fontSize: "0.75rem" }}>Not Measured</span>;
+      },
+    },
+    {
+      key: "desktopSpeed",
+      header: "Desktop Speed",
+      sortable: true,
+      width: "110px",
+      render: (p) => {
+        if (p.desktopSpeed != null) {
+          const s = Number(p.desktopSpeed);
+          const color = s >= 90 ? "var(--dgs-success)" : s >= 60 ? "var(--dgs-warning)" : "var(--dgs-danger)";
+          return <strong style={{ color }}>{s}/100</strong>;
+        }
+        return <span style={{ color: "var(--dgs-text-muted)", fontSize: "0.75rem" }}>Not Measured</span>;
+      },
     },
     {
       key: "missingAltCount",
       header: "Missing Alt",
       sortable: true,
-      width: "120px",
-      render: (p) => (p.missingAltCount > 0 ? `${p.missingAltCount} missing` : "0"),
+      width: "110px",
+      render: (p) => {
+        const count = Number(p.missingAltCount || 0);
+        if (count > 0) {
+          return (
+            <button
+              type="button"
+              onClick={(e) => handleOpenAltFixer(p.url, e)}
+              className="dgs-saas-chip danger"
+              style={{ cursor: "pointer", border: "none" }}
+              title="Click to open Missing Alt Fixer drawer"
+            >
+              {count} Missing &rarr;
+            </button>
+          );
+        }
+        return <span className="dgs-saas-chip success">0</span>;
+      },
+    },
+    {
+      key: "pageScore",
+      header: "SEO Score",
+      sortable: true,
+      width: "95px",
+      render: (p) => (
+        <strong
+          style={{
+            color:
+              p.pageScore >= 90
+                ? "var(--dgs-success)"
+                : p.pageScore >= 70
+                ? "var(--dgs-warning)"
+                : "var(--dgs-danger)",
+          }}
+        >
+          {p.pageScore}/100
+        </strong>
+      ),
+    },
+    {
+      key: "issuesCount",
+      header: "Issues",
+      sortable: true,
+      width: "85px",
+      render: (p) => {
+        const cnt = Number(p.issuesCount || 0);
+        if (cnt > 0) {
+          return <span className="dgs-saas-chip warning">{cnt}</span>;
+        }
+        return <span className="dgs-saas-chip neutral">0</span>;
+      },
+    },
+    {
+      key: "actions",
+      header: "Actions",
+      width: "100px",
+      render: (p) => (
+        <button
+          type="button"
+          className="dgs-saas-btn secondary sm"
+          onClick={() => setSelectedUrlForDrawer(p.url)}
+          style={{ fontSize: "0.75rem", whiteSpace: "nowrap" }}
+        >
+          Analyze &rarr;
+        </button>
+      ),
     },
   ];
 
@@ -90,13 +311,41 @@ export default function SiteAuditsClientView({ latestAudit, auditHistory, pages:
       sortable: true,
       width: "120px",
       render: (iss) => {
-        const variant = iss.severity === "critical" ? "danger" : iss.severity === "high" ? "warning" : iss.severity === "medium" ? "primary" : "info";
+        const variant =
+          iss.severity === "critical"
+            ? "danger"
+            : iss.severity === "high"
+            ? "warning"
+            : iss.severity === "medium"
+            ? "primary"
+            : "info";
         return <span className={`dgs-saas-chip ${variant}`}>{iss.severity.toUpperCase()}</span>;
       },
     },
     { key: "category", header: "Category", sortable: true, width: "130px" },
     { key: "title", header: "Issue Title", sortable: true },
-    { key: "url", header: "Affected URL", sortable: true },
+    {
+      key: "url",
+      header: "Affected URL",
+      sortable: true,
+      render: (iss) => (
+        <button
+          type="button"
+          onClick={() => setSelectedUrlForDrawer(iss.url)}
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "var(--dgs-primary)",
+            padding: 0,
+            cursor: "pointer",
+            textAlign: "left",
+            fontSize: "0.82rem",
+          }}
+        >
+          {iss.url}
+        </button>
+      ),
+    },
     { key: "recommendation", header: "Recommended Action" },
   ];
 
@@ -104,163 +353,250 @@ export default function SiteAuditsClientView({ latestAudit, auditHistory, pages:
   const tech = latestAudit?.technical_score ?? 100;
   const index = latestAudit?.indexability_score ?? 100;
   const content = latestAudit?.content_score ?? 95;
-  const schema = latestAudit?.schema_score ?? 95;
+  const schema = latestAudit?.schema_score ?? 0;
+  const media = latestAudit?.media_score ?? 100;
+  const perf = latestAudit?.performance_score;
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "12px" }}>
         <div>
           <h2 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#fff", margin: 0 }}>
-            15-Day Automated Website Health Audit
+            Site Health &amp; SEO Intelligence
           </h2>
           <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-            Dynamic sitemap crawler verifying 100% of discovered URLs for technical SEO, schema, OpenGraph, and heading hierarchies.
+            Real-time crawler telemetry integrating Technical SEO, Search Console rankings, PageSpeed lab metrics, and WCAG accessibility.
           </p>
         </div>
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          {isDue && <span className="dgs-saas-chip warning">15d Audit Due</span>}
+          {isDue && (
+            <span className="dgs-saas-chip warning" style={{ animation: "pulse 2s infinite" }}>
+              Audit Due (15 Days)
+            </span>
+          )}
           <button
             type="button"
-            className="dgs-saas-btn primary"
+            className="dgs-saas-btn secondary sm"
+            onClick={() => handleOpenAltFixer(undefined)}
+          >
+            Missing Alt Fixer
+          </button>
+          <button
+            type="button"
+            className="dgs-saas-btn primary sm"
             onClick={handleRunAudit}
             disabled={running}
           >
-            {running ? "Crawling Sitemap..." : "Run Full Audit Now"}
+            {running ? "Crawling Sitemap..." : "Run Complete Audit"}
           </button>
         </div>
       </div>
 
-      {/* Audit Score Summary Cards */}
+      {/* KPI Cards — Zero Fabricated Scores */}
       <div className="dgs-saas-kpi-grid">
         <div className="dgs-saas-kpi-card">
           <div className="dgs-saas-kpi-title">Overall Health Score</div>
-          <div className="dgs-saas-kpi-value" style={{ color: "var(--dgs-success)" }}>
-            {overall}/100
-          </div>
+          <div className="dgs-saas-kpi-value">{overall}/100</div>
           <div className="dgs-saas-kpi-delta positive">
-            &bull; Deterministic Metric Standard
+            {pages.length} URLs crawled
           </div>
         </div>
 
         <div className="dgs-saas-kpi-card">
-          <div className="dgs-saas-kpi-title">Technical SEO Score</div>
-          <div className="dgs-saas-kpi-value" style={{ color: tech >= 95 ? "var(--dgs-success)" : "var(--dgs-warning)" }}>
-            {tech}/100
-          </div>
-          <div className="dgs-saas-kpi-delta positive">
-            0 Critical 4xx/5xx Errors
-          </div>
+          <div className="dgs-saas-kpi-title">Technical Indexability</div>
+          <div className="dgs-saas-kpi-value">{tech}/100</div>
+          <div className="dgs-saas-kpi-delta positive">Index score: {index}/100</div>
         </div>
 
         <div className="dgs-saas-kpi-card">
-          <div className="dgs-saas-kpi-title">Indexability Score</div>
-          <div className="dgs-saas-kpi-value" style={{ color: "var(--dgs-success)" }}>
-            {index}/100
-          </div>
-          <div className="dgs-saas-kpi-delta positive">
-            100% Self-Canonical Validated
-          </div>
+          <div className="dgs-saas-kpi-title">Structured Data (Schema)</div>
+          <div className="dgs-saas-kpi-value">{schema}/100</div>
+          <div className="dgs-saas-kpi-delta neutral">Measured from page JSON-LD</div>
         </div>
 
         <div className="dgs-saas-kpi-card">
-          <div className="dgs-saas-kpi-title">Schema &amp; Rich Results</div>
-          <div className="dgs-saas-kpi-value" style={{ color: "var(--dgs-success)" }}>
-            {schema}/100
+          <div className="dgs-saas-kpi-title">Image Media Score</div>
+          <div className="dgs-saas-kpi-value">{media}/100</div>
+          <div className="dgs-saas-kpi-delta neutral">Accessibility alt coverage</div>
+        </div>
+
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-title">PageSpeed Performance</div>
+          <div className="dgs-saas-kpi-value">
+            {perf != null ? `${perf}/100` : "NOT MEASURED"}
           </div>
           <div className="dgs-saas-kpi-delta neutral">
-            FAQ, Article, VideoObject
+            {perf != null ? "Lighthouse average" : "Run PSI to measure"}
           </div>
         </div>
       </div>
 
-      {/* Tab Switcher */}
-      <div style={{ display: "flex", gap: "8px", marginBottom: "16px", borderBottom: "1px solid var(--dgs-border)", paddingBottom: "10px" }}>
+      {/* Navigation tabs */}
+      <div
+        style={{
+          display: "flex",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          margin: "24px 0 16px",
+          gap: "8px",
+        }}
+      >
         <button
           type="button"
-          className={`dgs-saas-btn sm ${activeTab === "pages" ? "primary" : "secondary"}`}
           onClick={() => setActiveTab("pages")}
+          style={{
+            background: "transparent",
+            border: "none",
+            borderBottom: activeTab === "pages" ? "2px solid var(--dgs-primary)" : "2px solid transparent",
+            padding: "8px 16px",
+            color: activeTab === "pages" ? "#fff" : "var(--dgs-text-muted)",
+            fontWeight: activeTab === "pages" ? 700 : 500,
+            cursor: "pointer",
+            fontSize: "0.88rem",
+          }}
         >
-          Discovered Sitemap URLs ({pages.length > 0 ? pages.length : 101})
+          Audited Pages ({filteredPages.length})
         </button>
+
         <button
           type="button"
-          className={`dgs-saas-btn sm ${activeTab === "issues" ? "primary" : "secondary"}`}
           onClick={() => setActiveTab("issues")}
+          style={{
+            background: "transparent",
+            border: "none",
+            borderBottom: activeTab === "issues" ? "2px solid var(--dgs-primary)" : "2px solid transparent",
+            padding: "8px 16px",
+            color: activeTab === "issues" ? "#fff" : "var(--dgs-text-muted)",
+            fontWeight: activeTab === "issues" ? 700 : 500,
+            cursor: "pointer",
+            fontSize: "0.88rem",
+          }}
         >
-          Audited Issues ({issues.length})
+          Detected Issues ({issues.length})
         </button>
+
         <button
           type="button"
-          className={`dgs-saas-btn sm ${activeTab === "history" ? "primary" : "secondary"}`}
           onClick={() => setActiveTab("history")}
+          style={{
+            background: "transparent",
+            border: "none",
+            borderBottom: activeTab === "history" ? "2px solid var(--dgs-primary)" : "2px solid transparent",
+            padding: "8px 16px",
+            color: activeTab === "history" ? "#fff" : "var(--dgs-text-muted)",
+            fontWeight: activeTab === "history" ? 700 : 500,
+            cursor: "pointer",
+            fontSize: "0.88rem",
+          }}
         >
-          Audit History ({auditHistory.length})
+          15-Day History ({auditHistory.length})
         </button>
       </div>
 
-      {/* Pages View */}
       {activeTab === "pages" && (
-        <SaaSTable
-          columns={pageColumns}
-          data={pages}
-          keyExtractor={(p) => p.url}
-          searchPlaceholder="Filter crawled URLs..."
-          emptyMessage="No pages cached for this audit run. Click 'Run Full Audit Now' to crawl all dynamic sitemap URLs."
-        />
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          {/* Filter Bar */}
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)", marginRight: "4px" }}>
+              Filter:
+            </span>
+            {[
+              { id: "all", label: "All Pages" },
+              { id: "top10", label: "Top 10 Rankings" },
+              { id: "top20", label: "Ranking 11–20" },
+              { id: "top50", label: "Ranking 21–50" },
+              { id: "not_detected", label: "Not Detected" },
+              { id: "slow_mobile", label: "Slow Mobile (<70)" },
+              { id: "missing_alt", label: "Missing Alt" },
+              { id: "technical_issues", label: "Technical Issues" },
+              { id: "no_schema", label: "No Schema" },
+              { id: "no_internal_links", label: "Low Links (<3)" },
+            ].map((flt) => (
+              <button
+                key={flt.id}
+                type="button"
+                onClick={() => setSelectedFilter(flt.id)}
+                className={`dgs-saas-chip ${selectedFilter === flt.id ? "primary" : "neutral"}`}
+                style={{ cursor: "pointer", fontSize: "0.75rem", padding: "4px 10px" }}
+              >
+                {flt.label}
+              </button>
+            ))}
+          </div>
+
+          <SaaSTable
+            columns={pageColumns}
+            data={filteredPages}
+            keyExtractor={(p) => p.url}
+            searchPlaceholder="Search audited URL, title, or status..."
+          />
+        </div>
       )}
 
-      {/* Issues View */}
       {activeTab === "issues" && (
         <SaaSTable
           columns={issueColumns}
           data={issues}
-          keyExtractor={(iss) => iss.id || iss.issue_code + iss.url}
-          searchPlaceholder="Search audit issues by category, severity, or title..."
-          emptyMessage="No open critical or high severity issues detected."
+          keyExtractor={(iss) => iss.id || `${iss.url}_${iss.issue_code}`}
+          searchPlaceholder="Search issues by title, URL, or code..."
         />
       )}
 
-      {/* History View */}
       {activeTab === "history" && (
-        <div className="dgs-saas-card">
-          <div className="dgs-saas-card-header">
-            <h3 className="dgs-saas-card-title">15-Day Audit Execution History</h3>
-          </div>
-          <div className="dgs-saas-card-body">
-            {auditHistory.length === 0 ? (
-              <p style={{ color: "var(--dgs-text-muted)" }}>No previous audit runs recorded in database.</p>
-            ) : (
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "12px" }}>
-                {auditHistory.map((run) => (
-                  <li
-                    key={run.id}
-                    style={{
-                      padding: "14px 18px",
-                      background: "rgba(255,255,255,0.02)",
-                      borderRadius: "var(--dgs-radius-sm)",
-                      border: "1px solid var(--dgs-border-subtle)",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div>
-                      <strong style={{ color: "#fff" }}>Audit Run #{run.id.slice(0, 8)}</strong>
-                      <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
-                        {new Date(run.created_at).toLocaleString()} &middot; Trigger: {run.trigger_type} &middot; Crawled: {run.crawled_pages || 101} pages
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                      <span className="dgs-saas-chip success">Score: {run.overall_score}/100</span>
-                      <span className="dgs-saas-chip info">{run.critical_count} Critical</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+        <div className="dgs-admin-table-wrap">
+          <table className="dgs-admin-table">
+            <thead>
+              <tr>
+                <th>Audit ID</th>
+                <th>Trigger</th>
+                <th>Crawled</th>
+                <th>Overall</th>
+                <th>Technical</th>
+                <th>Schema</th>
+                <th>Media</th>
+                <th>Performance</th>
+                <th>Completed At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {auditHistory.map((h) => (
+                <tr key={h.id}>
+                  <td><code>{h.id.slice(0, 8)}</code></td>
+                  <td>{h.trigger_type}</td>
+                  <td>{h.crawled_pages} / {h.total_pages}</td>
+                  <td><strong>{h.overall_score}/100</strong></td>
+                  <td>{h.technical_score}/100</td>
+                  <td>{h.schema_score}/100</td>
+                  <td>{h.media_score}/100</td>
+                  <td>{h.performance_score != null ? `${h.performance_score}/100` : "Not Measured"}</td>
+                  <td>{new Date(h.completed_at || h.started_at).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
+
+      {/* SEO Intelligence Drawer */}
+      {selectedUrlForDrawer && (
+        <SeoIntelligenceDrawer
+          url={selectedUrlForDrawer}
+          isOpen={Boolean(selectedUrlForDrawer)}
+          onClose={() => setSelectedUrlForDrawer(null)}
+          onRefresh={() => {
+            window.location.reload();
+          }}
+        />
+      )}
+
+      {/* Missing Alt Fixer Drawer */}
+      <AltFixerDrawer
+        pageUrl={selectedUrlForAltFixer || undefined}
+        isOpen={altFixerOpen}
+        onClose={() => setAltFixerOpen(false)}
+        onUpdated={() => {
+          window.location.reload();
+        }}
+      />
     </div>
   );
 }

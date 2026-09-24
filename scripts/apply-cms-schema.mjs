@@ -77,6 +77,29 @@ try {
     console.log("Applied column migration: career_jobs.creative_requirements");
   }
 
+  // Column migration for google_search_updates
+  const [gsuCols] = await connection.query("DESCRIBE google_search_updates");
+  const gsuExistingCols = new Set(gsuCols.map((c) => c.Field));
+  const gsuMigrations = [
+    { col: "assessment_status", sql: "ALTER TABLE google_search_updates ADD COLUMN assessment_status VARCHAR(50) NOT NULL DEFAULT 'NOT ASSESSED'" },
+    { col: "assessment_date", sql: "ALTER TABLE google_search_updates ADD COLUMN assessment_date DATETIME NULL" },
+    { col: "evidence", sql: "ALTER TABLE google_search_updates ADD COLUMN evidence TEXT NULL" },
+    { col: "affected_pages", sql: "ALTER TABLE google_search_updates ADD COLUMN affected_pages JSON NULL" },
+    { col: "checks_performed", sql: "ALTER TABLE google_search_updates ADD COLUMN checks_performed JSON NULL" },
+    { col: "issues_found", sql: "ALTER TABLE google_search_updates ADD COLUMN issues_found JSON NULL" },
+    { col: "recommendations", sql: "ALTER TABLE google_search_updates ADD COLUMN recommendations JSON NULL" },
+    { col: "assessed_by", sql: "ALTER TABLE google_search_updates ADD COLUMN assessed_by VARCHAR(255) NULL" },
+    { col: "assessment_mode", sql: "ALTER TABLE google_search_updates ADD COLUMN assessment_mode VARCHAR(50) DEFAULT 'automated'" },
+    { col: "confidence", sql: "ALTER TABLE google_search_updates ADD COLUMN confidence DECIMAL(5,2) NULL" },
+  ];
+
+  for (const m of gsuMigrations) {
+    if (!gsuExistingCols.has(m.col)) {
+      await connection.query(m.sql);
+      console.log(`Applied column migration: google_search_updates.${m.col}`);
+    }
+  }
+
   const expectedTables = [
     "assessment_assignments",
     "assessment_attempts",
@@ -89,12 +112,19 @@ try {
     "categories",
     "form_submissions",
     "google_search_updates",
+    "gsc_page_query_metrics",
     "leads",
     "media_assets",
     "media_usage",
+    "pagespeed_cache",
     "portfolio_items",
     "seo_metadata",
-    "tags"
+    "site_audit_issues",
+    "site_audit_missing_alts",
+    "site_audit_pages",
+    "site_audit_runs",
+    "tags",
+    "target_keywords"
   ];
 
   const [rows]=await connection.query(
