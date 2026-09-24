@@ -116,6 +116,150 @@ jobs:
             exit 1
           fi
 
+      - name: Synchronize production secrets
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+          DGS_ENCRYPTION_KEY: ${{ secrets.DGS_ENCRYPTION_KEY }}
+        run: |
+          set +x
+          # 1. Verify all 5 GitHub secret variables are non-empty
+          missing=0
+          for var in GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET GOOGLE_REDIRECT_URI PAGESPEED_API_KEY DGS_ENCRYPTION_KEY; do
+            val="${!var:-}"
+            if [ -n "$val" ]; then
+              echo "$var=CONFIGURED"
+            else
+              echo "ERROR: $var is missing or empty"
+              missing=$((missing + 1))
+            fi
+          done
+
+          if [ "$missing" -gt 0 ]; then
+            echo "Refusing to proceed: $missing secret(s) missing"
+            exit 1
+          fi
+
+          # 2. Create secure temporary env payload
+          TMP_PAYLOAD="$(mktemp /tmp/dgs-secrets-XXXXXX.env)"
+          chmod 600 "$TMP_PAYLOAD"
+          trap 'rm -f "$TMP_PAYLOAD" /tmp/remote-merge-secrets.sh' EXIT
+
+          printf 'GOOGLE_CLIENT_ID=%s\n' "$GOOGLE_CLIENT_ID" >> "$TMP_PAYLOAD"
+          printf 'GOOGLE_CLIENT_SECRET=%s\n' "$GOOGLE_CLIENT_SECRET" >> "$TMP_PAYLOAD"
+          printf 'GOOGLE_REDIRECT_URI=%s\n' "$GOOGLE_REDIRECT_URI" >> "$TMP_PAYLOAD"
+          printf 'PAGESPEED_API_KEY=%s\n' "$PAGESPEED_API_KEY" >> "$TMP_PAYLOAD"
+          printf 'DGS_ENCRYPTION_KEY=%s\n' "$DGS_ENCRYPTION_KEY" >> "$TMP_PAYLOAD"
+
+          # 3. SCP it to Hostinger
+          REMOTE_PAYLOAD="$PROD_ROOT/shared/.secrets-incoming-$$.env"
+          scp_uploaded=false
+          for attempt in 1 2 3; do
+            echo "Uploading secrets payload to production (attempt $attempt/3)..."
+            if [ "$AUTH_MODE" = key ]; then
+              if scp -P "$PROD_PORT" -o BatchMode=yes -o ConnectTimeout=15 "$TMP_PAYLOAD" "$PROD_USER@$PROD_HOST:$REMOTE_PAYLOAD"; then
+                scp_uploaded=true
+                break
+              fi
+            else
+              if sshpass -p "$HOSTINGER_PASS" scp -P "$PROD_PORT" -o ConnectTimeout=15 "$TMP_PAYLOAD" "$PROD_USER@$PROD_HOST:$REMOTE_PAYLOAD"; then
+                scp_uploaded=true
+                break
+              fi
+            fi
+            echo "SCP upload attempt $attempt failed; retrying in 5s..."
+            sleep 5
+          done
+          if [ "$scp_uploaded" != "true" ]; then
+            echo "ERROR: Failed to upload secrets payload after 3 attempts."
+            exit 1
+          fi
+
+          # 4. Merge into shared/.env.production
+          cat > /tmp/remote-merge-secrets.sh << 'REMOTE'
+          set -euo pipefail
+          ROOT=/home/u188101251/production-app
+          SHARED_ENV="$ROOT/shared/.env.production"
+          INCOMING="$1"
+
+          cleanup() {
+            rm -f "$INCOMING" "${MERGED_TMP:-}"
+          }
+          trap cleanup EXIT
+
+          if [ ! -f "$SHARED_ENV" ]; then
+            echo "Missing production env: $SHARED_ENV"
+            exit 78
+          fi
+
+          if [ ! -f "$INCOMING" ]; then
+            echo "Missing incoming secrets payload: $INCOMING"
+            exit 78
+          fi
+
+          # Create a timestamped backup of shared/.env.production
+          BACKUP="$ROOT/shared/.env.production.backup-$(date -u +%Y%m%d%H%M%S)"
+          cp -p "$SHARED_ENV" "$BACKUP"
+          chmod 600 "$BACKUP"
+          echo "Created backup: $BACKUP"
+
+          # Working copy for atomic update
+          MERGED_TMP="$(mktemp "$ROOT/shared/.env.tmp.XXXXXX")"
+          chmod 600 "$MERGED_TMP"
+          cp "$SHARED_ENV" "$MERGED_TMP"
+
+          # Update each variable idempotently:
+          # - remove old line if present
+          # - add current value once
+          # - no duplicate env keys
+          keys=(
+            GOOGLE_CLIENT_ID
+            GOOGLE_CLIENT_SECRET
+            GOOGLE_REDIRECT_URI
+            PAGESPEED_API_KEY
+            DGS_ENCRYPTION_KEY
+          )
+
+          for k in "${keys[@]}"; do
+            line="$(grep "^${k}=" "$INCOMING" | head -n 1 || true)"
+            if [ -n "$line" ]; then
+              grep -v "^${k}=" "$MERGED_TMP" > "${MERGED_TMP}.clean" || true
+              mv "${MERGED_TMP}.clean" "$MERGED_TMP"
+              printf '%s\n' "$line" >> "$MERGED_TMP"
+            fi
+          done
+
+          # Verify all 5 keys are present in merged file without exposing values
+          all_ok=true
+          for k in "${keys[@]}"; do
+            if ! grep -q "^${k}=." "$MERGED_TMP"; then
+              echo "Verification failed for $k in merged env"
+              all_ok=false
+            fi
+          done
+
+          if [ "$all_ok" != "true" ]; then
+            echo "Failed to verify synchronized secrets in merged env. Aborting."
+            exit 1
+          fi
+
+          # Atomically replace shared/.env.production and set chmod 600
+          mv "$MERGED_TMP" "$SHARED_ENV"
+          chmod 600 "$SHARED_ENV"
+          echo "Production shared environment secrets synchronized successfully (chmod 600)."
+          REMOTE
+
+          if [ "$AUTH_MODE" = key ]; then
+            ssh -p "$PROD_PORT" -o BatchMode=yes -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" "bash -s -- '$REMOTE_PAYLOAD'" < /tmp/remote-merge-secrets.sh
+          else
+            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" "bash -s -- '$REMOTE_PAYLOAD'" < /tmp/remote-merge-secrets.sh
+          fi
+
+          # 5. Remove temporary secret payload locally and remotely
+          rm -f "$TMP_PAYLOAD" /tmp/remote-merge-secrets.sh
+
       - name: Package validated release
         run: |
           BUILD_ID="$(cat .next/BUILD_ID)"
@@ -202,6 +346,11 @@ jobs:
             DGS_SMTP_HOST
             DGS_SMTP_USER
             DGS_SMTP_PASSWORD
+            GOOGLE_CLIENT_ID
+            GOOGLE_CLIENT_SECRET
+            GOOGLE_REDIRECT_URI
+            PAGESPEED_API_KEY
+            DGS_ENCRYPTION_KEY
           )
           for key in "${required_keys[@]}"; do
             if ! grep -q "^${key}=." "$RELEASE/.env.production"; then
@@ -350,6 +499,44 @@ jobs:
           live_home="$(curl -sS 'https://www.dgeniussolutions.com/')"
           echo "$live_home" | grep -F '<meta name="robots" content="index, follow"/>'
           echo "$live_home" | grep -F '<meta name="googlebot" content="index, follow'
+
+          # 7. Google & PageSpeed Integration State Verification
+          echo "Verifying Google & PageSpeed integration state on production..."
+          cat > /tmp/remote-verify-integrations.sh << 'REMOTE'
+          set -euo pipefail
+          node -e "
+          const fs = require('fs');
+          const content = fs.readFileSync('/home/u188101251/production-app/current/.env.production', 'utf8');
+          const env = {};
+          for (const line of content.split(/\r?\n/)) {
+            const m = line.match(/^([A-Za-z0-9_]+)=(.*)$/);
+            if (m) env[m[1]] = m[2];
+          }
+          const hasId = Boolean(env.GOOGLE_CLIENT_ID);
+          const hasSec = Boolean(env.GOOGLE_CLIENT_SECRET);
+          const hasUri = Boolean(env.GOOGLE_REDIRECT_URI);
+          const hasPsi = Boolean(env.PAGESPEED_API_KEY);
+          const hasEnc = Boolean(env.DGS_ENCRYPTION_KEY);
+
+          console.log('GOOGLE_CLIENT_ID=' + (hasId ? 'CONFIGURED' : 'MISSING'));
+          console.log('GOOGLE_CLIENT_SECRET=' + (hasSec ? 'CONFIGURED' : 'MISSING'));
+          console.log('GOOGLE_REDIRECT_URI=' + (hasUri ? 'CONFIGURED' : 'MISSING'));
+          console.log('PAGESPEED_API_KEY=' + (hasPsi ? 'CONFIGURED' : 'MISSING'));
+          console.log('DGS_ENCRYPTION_KEY=' + (hasEnc ? 'CONFIGURED' : 'MISSING'));
+          console.log('Google CMS state: ' + (hasId && hasSec ? 'WAITING USER AUTHORIZATION' : 'CONFIGURATION REQUIRED'));
+          console.log('PageSpeed: ' + (hasPsi ? 'CONFIGURED' : 'FAIL'));
+
+          if (!hasId || !hasSec || !hasUri || !hasPsi || !hasEnc) process.exit(1);
+          "
+          REMOTE
+
+          if [ "$AUTH_MODE" = key ]; then
+            ssh -p "$PROD_PORT" -o BatchMode=yes -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/remote-verify-integrations.sh
+          else
+            sshpass -p "$HOSTINGER_PASS" ssh -p "$PROD_PORT" -o ConnectTimeout=15 "$PROD_USER@$PROD_HOST" 'bash -s' < /tmp/remote-verify-integrations.sh
+          fi
+          rm -f /tmp/remote-verify-integrations.sh
+
           echo "ALL LIVE VERIFICATION CHECKS PASSED!"
 
       - name: Roll back on verification failure
