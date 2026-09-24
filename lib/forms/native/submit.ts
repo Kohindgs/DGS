@@ -2,6 +2,7 @@ import "server-only";
 import type { FormDefinition, FormSubmissionResult } from "@/lib/forms/types";
 import { createCmsLead, createCmsSubmission } from "@/lib/cms/leads";
 import { sendNativeFormNotification } from "@/lib/notifications/form-email";
+import { publishNotificationEvent } from "@/lib/notifications/engine";
 
 function nativeIds() {
   return new Set(
@@ -101,6 +102,18 @@ export async function submitNativeLeadForm(options: {
       submissionId,
     });
   }
+
+  const senderDisplayName = leadName(sanitizedFields) || sanitizedFields.email || "Inbound Lead";
+  await publishNotificationEvent({
+    type: "new_lead",
+    severity: "info",
+    title: `New Inbound Lead: ${senderDisplayName}`,
+    message: `Submitted via ${definition.title || definition.key} from ${route}`,
+    resource_type: "lead",
+    resource_id: leadId,
+    resource_url: `/admin/leads/?leadId=${leadId}`,
+    recipient_role: "marketing",
+  }).catch((err) => console.error("Failed to publish lead notification event", err));
 
   return {
     ok: true,

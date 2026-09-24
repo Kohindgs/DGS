@@ -1,9 +1,9 @@
 import { chromium } from "playwright";
-import { createHmac } from "node:crypto";
+import crypto, { createHmac } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const SESSION_SECRET = process.env.DGS_ADMIN_SESSION_SECRET || "dgs-secret-qa-test-key-2026";
+const SESSION_SECRET = process.env.DGS_ADMIN_SESSION_SECRET || crypto.randomBytes(32).toString("hex");
 const ADMIN_EMAIL = process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com";
 const BASE_URL = process.env.QA_BASE_URL || "http://127.0.0.1:3000";
 

@@ -1,10 +1,11 @@
 import { spawn } from "node:child_process";
 import http from "node:http";
 import path from "node:path";
+import crypto from "node:crypto";
 
-const SESSION_SECRET = "dgs-secret-qa-test-key-2026";
-const ADMIN_EMAIL = "admin@dgeniussolutions.com";
-const ADMIN_PASSWORD = "adminPassword123!";
+const SESSION_SECRET = process.env.DGS_ADMIN_SESSION_SECRET || crypto.randomBytes(32).toString("hex");
+const ADMIN_EMAIL = process.env.DGS_QA_ADMIN_EMAIL || `qa-${crypto.randomBytes(4).toString("hex")}@dgeniussolutions.internal`;
+const ADMIN_PASSWORD = process.env.DGS_QA_ADMIN_PASSWORD || `Qa_${crypto.randomBytes(12).toString("hex")}!9`;
 const PORT = "3000";
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 

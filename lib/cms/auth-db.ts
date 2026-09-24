@@ -336,23 +336,21 @@ export async function getCurrentCmsUser(): Promise<CmsUser | null> {
     const cookieStore = await cookies();
     const token = cookieStore.get(SESSION_COOKIE)?.value;
     if (!token) {
-      if (!isCmsDatabaseConfigured()) {
-        const { hasLegacyAdminSession } = await import("./auth");
-        if (await hasLegacyAdminSession()) {
-          return {
-            id: "env-superadmin",
-            email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
-            display_name: "DGS Superadmin",
-            role: "superadmin",
-            avatar_url: null,
-            is_active: 1,
-            failed_attempts: 0,
-            locked_until: null,
-            last_login_at: null,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-          };
-        }
+      const { hasLegacyAdminSession } = await import("./auth");
+      if (await hasLegacyAdminSession()) {
+        return {
+          id: "env-superadmin",
+          email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
+          display_name: "DGS Superadmin",
+          role: "superadmin",
+          avatar_url: null,
+          is_active: 1,
+          failed_attempts: 0,
+          locked_until: null,
+          last_login_at: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
       }
       return null;
     }
@@ -413,6 +411,22 @@ export async function getCurrentCmsUser(): Promise<CmsUser | null> {
       if (userRows && userRows.length > 0) {
         return userRows[0];
       }
+    }
+    const { hasLegacyAdminSession } = await import("./auth");
+    if (await hasLegacyAdminSession()) {
+      return {
+        id: "env-superadmin",
+        email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
+        display_name: "DGS Superadmin",
+        role: "superadmin",
+        avatar_url: null,
+        is_active: 1,
+        failed_attempts: 0,
+        locked_until: null,
+        last_login_at: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
     }
   } catch (err) {
     console.error("Error retrieving current CMS user:", err);

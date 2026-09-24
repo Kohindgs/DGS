@@ -85,33 +85,33 @@ function applyServiceSearchCorrections(path: string, html: string): string {
 <div class="dgs-wrap">
 <div class="dgs-narrow dgs-center" style="margin-bottom:52px">
 <p class="dgs-eyebrow">Specialized AI Video Services In Mumbai</p>
-<h2 class="dgs-title-small">AI Video Production In Mumbai For <span class="dgs-grad-text">Avatars, Festivals, TV Commercials & OTT</span></h2>
+<div class="dgs-title-small" style="font-size:clamp(1.5rem, 3vw, 2.25rem);font-weight:700;line-height:1.25;margin-bottom:0.5rem;">AI Video Production In Mumbai For <span class="dgs-grad-text">Avatars, Festivals, TV Commercials & OTT</span></div>
 <p class="dgs-copy" style="margin-top:18px">Expand your brand reach with specialized AI video production formats designed for modern digital campaigns, broadcast channels and streaming audiences across Mumbai and India. Our Mumbai studio combines human creative direction with advanced generative AI tools to produce broadcast-grade video assets at scale.</p>
 </div>
 <div class="dgs-grid dgs-services-grid">
 <article class="dgs-card">
 <small>Specialized Service</small>
-<h3>AI Avatar Videos In Mumbai</h3>
+<div class="dgs-card-title" style="font-size:1.25rem;font-weight:700;margin:0.5rem 0 0.75rem 0;line-height:1.3;">AI Avatar Videos In Mumbai</div>
 <p>We create photorealistic AI avatar videos and digital spokesperson content for Mumbai businesses, corporate explainers, brand messaging, multilingual communication and digital training. AI avatars enable rapid production of consistent, studio-quality presenter videos without the logistical friction of studio shoots or recurring talent scheduling.</p>
 </article>
 <article class="dgs-card">
 <small>Specialized Service</small>
-<h3>AI Festival Videos In Mumbai</h3>
+<div class="dgs-card-title" style="font-size:1.25rem;font-weight:700;margin:0.5rem 0 0.75rem 0;line-height:1.3;">AI Festival Videos In Mumbai</div>
 <p>Our AI festival videos help Mumbai and India-wide brands celebrate cultural milestones with high-impact visual storytelling. From Diwali, Navratri and Eid to New Year and Independence Day campaigns, we produce timely, topical AI video greetings, product teasers and emotional narrative films tailored for social media engagement and festive promotions.</p>
 </article>
 <article class="dgs-card">
 <small>Specialized Service</small>
-<h3>AI TV Commercials In Mumbai</h3>
+<div class="dgs-card-title" style="font-size:1.25rem;font-weight:700;margin:0.5rem 0 0.75rem 0;line-height:1.3;">AI TV Commercials In Mumbai</div>
 <p>D’Genius Solutions delivers high-concept AI TV commercials and broadcast-ready commercial spots in Mumbai combining generative video aesthetics with cinematic storytelling, scripting, voiceover, sound design and precise color grading. We help consumer brands, fintech startups and enterprise clients produce TVC-quality ad films faster and at a fraction of traditional production overhead.</p>
 </article>
 <article class="dgs-card">
 <small>Specialized Service</small>
-<h3>AI OTT Video Series In Mumbai</h3>
+<div class="dgs-card-title" style="font-size:1.25rem;font-weight:700;margin:0.5rem 0 0.75rem 0;line-height:1.3;">AI OTT Video Series In Mumbai</div>
 <p>We produce episodic AI OTT video series, branded web episodes, narrative shorts and fictionalized digital stories for streaming platforms, YouTube and digital channels. Our Mumbai creative team blends human narrative development, character consistency, dynamic world-building and AI-assisted animation to bring episodic IP and entertainment concepts to life.</p>
 </article>
 <article class="dgs-card">
 <small>Specialized Service</small>
-<h3>AI OTT Video Ads In Mumbai</h3>
+<div class="dgs-card-title" style="font-size:1.25rem;font-weight:700;margin:0.5rem 0 0.75rem 0;line-height:1.3;">AI OTT Video Ads In Mumbai</div>
 <p>Drive measurable performance with high-retention AI OTT video ads crafted for streaming platforms, connected TV (CTV) and video-on-demand apps. We design attention-grabbing video creatives, interactive ad hooks and high-impact visual storytelling engineered to maximize viewer completion rates, brand recall and downstream conversions across Mumbai and national audiences.</p>
 </article>
 </div>

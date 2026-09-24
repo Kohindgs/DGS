@@ -129,6 +129,18 @@ html, body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Visibility Control Utilities */
+.mobile-only {
+  display: none !important;
+}
+
+.desktop-only {
+  display: inherit;
 }
 
 /* ==========================================================================
@@ -182,6 +194,9 @@ html, body {
   min-height: 100vh;
   display: flex;
   background-color: var(--dgs-bg-app);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Center Workspace Wrapper (Expands Immediately when sidebar closes) */
@@ -193,21 +208,41 @@ html, body {
   min-height: 100vh;
   margin-left: calc(var(--dgs-sidebar-expanded-width) + (var(--dgs-sidebar-margin) * 2));
   width: calc(100% - var(--dgs-sidebar-expanded-width) - (var(--dgs-sidebar-margin) * 2));
+  max-width: calc(100% - var(--dgs-sidebar-expanded-width) - (var(--dgs-sidebar-margin) * 2));
   padding-right: var(--dgs-sidebar-margin);
-  transition: margin-left var(--dgs-transition-normal), width var(--dgs-transition-normal);
+  min-width: 0;
+  transition: margin-left var(--dgs-transition-normal), width var(--dgs-transition-normal), max-width var(--dgs-transition-normal);
 }
 
 .dgs-saas-layout.sidebar-collapsed .dgs-saas-wrapper {
   margin-left: calc(var(--dgs-sidebar-collapsed-width) + (var(--dgs-sidebar-margin) * 2));
   width: calc(100% - var(--dgs-sidebar-collapsed-width) - (var(--dgs-sidebar-margin) * 2));
+  max-width: calc(100% - var(--dgs-sidebar-collapsed-width) - (var(--dgs-sidebar-margin) * 2));
+}
+
+/* Focus Workspace Mode (0px Sidebar, Centered Canvas) */
+.dgs-saas-layout.focus-mode .dgs-saas-wrapper {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+  max-width: 1600px !important;
+  padding: 0 24px !important;
+}
+
+.dgs-saas-layout.focus-mode .dgs-saas-sidebar {
+  transform: translateX(-120%) !important;
+  width: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Edge-to-Edge Main Canvas */
 .dgs-saas-main {
   flex: 1;
   width: 100%;
-  max-width: none;
+  max-width: 100%;
+  min-width: 0;
   padding: 0 0 36px 0;
+  overflow-x: hidden;
 }
 
 @media (min-width: 2560px) {
@@ -754,10 +789,22 @@ html, body {
   border-radius: var(--dgs-radius-lg);
   box-shadow: var(--dgs-shadow-card), var(--dgs-inner-highlight);
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dgs-table-responsive,
+.dgs-admin-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: block;
 }
 
 .dgs-saas-table {
   width: 100%;
+  min-width: 580px;
   border-collapse: collapse;
   text-align: left;
   font-size: 13.5px;
@@ -945,21 +992,67 @@ html, body {
 
 @media (max-width: 1024px) {
   .dgs-saas-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    height: 100vh !important;
+    width: 280px !important;
+    margin: 0 !important;
+    border-radius: 0 var(--dgs-radius-xl) var(--dgs-radius-xl) 0 !important;
     transform: translateX(-110%);
-    width: 260px;
     z-index: 100;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .dgs-saas-sidebar.mobile-open {
     transform: translateX(0);
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.9), 0 0 0 100vmax rgba(0, 0, 0, 0.65);
   }
 
   .dgs-saas-wrapper {
-    margin-left: var(--dgs-sidebar-margin) !important;
-    width: calc(100% - (var(--dgs-sidebar-margin) * 2)) !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .dgs-saas-header {
+    margin: 12px 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 12px !important;
+  }
+
+  .mobile-only {
+    display: inline-flex !important;
   }
 
   .desktop-only {
     display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .dgs-saas-wrapper {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .dgs-saas-header {
+    margin: 8px 0 !important;
+    padding: 0 8px !important;
+  }
+
+  .dgs-page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .dgs-page-header-actions {
+    width: 100% !important;
+    flex-wrap: wrap !important;
   }
 }

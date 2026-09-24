@@ -1,6 +1,7 @@
 import "server-only";
 import { createCipheriv, createDecipheriv, randomBytes, createHash } from "node:crypto";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { publishNotificationEvent } from "@/lib/notifications/engine";
 
 const ALGORITHM = "aes-256-gcm";
 
@@ -332,7 +333,18 @@ export async function getFreshAccessToken(service: "gsc" | "ga4" = "gsc"): Promi
     });
 
     if (!res.ok) {
-      console.error("Failed to refresh Google access token:", await res.text());
+      const errText = await res.text();
+      console.error("Failed to refresh Google access token:", errText);
+      await publishNotificationEvent({
+        type: "google_oauth_expired",
+        severity: "danger",
+        title: "Google OAuth Session Expired",
+        message: "Google Search Console and Analytics tokens could not be refreshed. Please re-authorize in Integrations.",
+        resource_type: "integration",
+        resource_id: "google_oauth",
+        resource_url: "/admin/integrations/google/setup/",
+        recipient_role: "admin",
+      }).catch(() => {});
       return tokens.access_token || null;
     }
 
@@ -632,6 +644,16 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
       `UPDATE google_connections SET last_error = ?, last_sync_at = NOW() WHERE service = 'gsc'`,
       [err?.message || "Sync error"]
     );
+    await publishNotificationEvent({
+      type: "google_sync_failed",
+      severity: "warning",
+      title: "Google Search Console Sync Warning",
+      message: `Failed to sync GSC metrics: ${err?.message || "Unknown API error"}`,
+      resource_type: "integration",
+      resource_id: "google_gsc",
+      resource_url: "/admin/search-console/",
+      recipient_role: "admin",
+    }).catch(() => {});
   }
 
   // 2. Fetch & Store Google Analytics 4 Data
@@ -775,6 +797,16 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
       `UPDATE google_connections SET last_error = ?, last_sync_at = NOW() WHERE service = 'ga4'`,
       [err?.message || "Sync error"]
     );
+    await publishNotificationEvent({
+      type: "google_sync_failed",
+      severity: "warning",
+      title: "Google Analytics 4 Sync Warning",
+      message: `Failed to sync GA4 metrics: ${err?.message || "Unknown API error"}`,
+      resource_type: "integration",
+      resource_id: "google_ga4",
+      resource_url: "/admin/analytics/",
+      recipient_role: "admin",
+    }).catch(() => {});
   }
 
   return {
@@ -800,6 +832,24 @@ export type IntegrationStatus = {
   requiredScopes?: string[];
   missingConfig?: string[];
 };
+
+export type GoogleEnvDiagnostics = {
+  hasClientId: boolean;
+  hasClientSecret: boolean;
+  hasEncryptionKey: boolean;
+  isRedirectUriExplicit: boolean;
+  redirectUri: string;
+};
+
+export function getGoogleEnvDiagnostics(): GoogleEnvDiagnostics {
+  return {
+    hasClientId: Boolean(process.env.GOOGLE_CLIENT_ID),
+    hasClientSecret: Boolean(process.env.GOOGLE_CLIENT_SECRET),
+    hasEncryptionKey: Boolean(process.env.DGS_ENCRYPTION_KEY || process.env.DGS_ADMIN_SESSION_SECRET),
+    isRedirectUriExplicit: Boolean(process.env.GOOGLE_REDIRECT_URI),
+    redirectUri: getGoogleOAuthRedirectUri(),
+  };
+}
 
 export async function getIntegrationStatuses(): Promise<IntegrationStatus[]> {
   await ensureGoogleTablesExist();

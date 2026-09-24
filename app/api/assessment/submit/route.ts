@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAssessmentByKey } from "@/lib/assessments/definitions";
 import { getAttempt, submitAssessmentAttempt } from "@/lib/cms/assessments";
+import { publishNotificationEvent } from "@/lib/notifications/engine";
 
 export const runtime="nodejs";
 export const dynamic="force-dynamic";
@@ -52,6 +53,18 @@ export async function POST(request:Request) {
       score,
       total,
     });
+
+    const candidateLabel = attempt.candidate_name || attempt.candidate_email || "Candidate";
+    await publishNotificationEvent({
+      type: "assessment_submitted",
+      severity: score / Math.max(1, total) < 0.5 ? "warning" : "info",
+      title: `Assessment Submitted: ${definition.title}`,
+      message: `${candidateLabel} scored ${score}/${total}. Review responses in Assessment OS.`,
+      resource_type: "assessment_attempt",
+      resource_id: attempt.id,
+      resource_url: `/admin/assessment/?attemptId=${attempt.id}`,
+      recipient_role: "hr",
+    }).catch((err) => console.error("Failed to publish assessment notification event", err));
 
     return NextResponse.json({
       ok:true,

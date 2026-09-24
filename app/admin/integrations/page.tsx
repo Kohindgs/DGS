@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
-import { getIntegrationStatuses } from "@/lib/integrations/google";
+import { getIntegrationStatuses, getGoogleEnvDiagnostics } from "@/lib/integrations/google";
 
 import PageHeader from "@/components/admin/PageHeader";
 import GoogleIntegrationCard from "@/components/admin/GoogleIntegrationCard";
@@ -24,6 +24,7 @@ export default async function AdminIntegrationsPage({
 
   const userCanEdit = hasPermission(currentUser.role, "integrations", "edit");
   const integrations = await getIntegrationStatuses();
+  const envDiagnostics = getGoogleEnvDiagnostics();
 
   const gsc = integrations.find((i) => i.service === "gsc")!;
   const ga4 = integrations.find((i) => i.service === "ga4")!;
@@ -59,6 +60,7 @@ export default async function AdminIntegrationsPage({
         gsc={gsc}
         ga4={ga4}
         userCanEdit={userCanEdit}
+        envDiagnostics={envDiagnostics}
       />
 
       {/* Other Service Cards */}

@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { createCmsLead, createCmsSubmission } from "@/lib/cms/leads";
 import { sendCareerApplicationEmail } from "@/lib/notifications/career-email";
 import { loadActiveCareerJobs } from "@/lib/careers/jobs";
+import { publishNotificationEvent } from "@/lib/notifications/engine";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -259,6 +260,17 @@ export async function POST(request: Request) {
       console.error("Failed to send career application email notification:", err);
       return { sent: false, reason: "send-failed" };
     });
+
+    await publishNotificationEvent({
+      type: "new_application",
+      severity: "info",
+      title: `New Candidate: ${name} (${position})`,
+      message: `Experience: ${experience || "Not specified"}. Location: ${location || "Not specified"}.`,
+      resource_type: "career_application",
+      resource_id: leadId,
+      resource_url: `/admin/hr-pipeline/?candidate=${encodeURIComponent(email)}`,
+      recipient_role: "hr",
+    }).catch((err) => console.error("Failed to publish career application notification event", err));
 
     return NextResponse.json({
       ok: true,

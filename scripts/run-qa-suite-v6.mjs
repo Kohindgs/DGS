@@ -9,7 +9,7 @@ const ADMIN_PASSWORD = process.env.DGS_QA_ADMIN_PASSWORD || `Qa_${crypto.randomB
 const PORT = "3000";
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 
-function waitForServer(url, timeoutMs = 30000) {
+function waitForServer(url, timeoutMs = 45000) {
   const startTime = Date.now();
   return new Promise((resolve, reject) => {
     function ping() {
@@ -29,7 +29,7 @@ function waitForServer(url, timeoutMs = 30000) {
 }
 
 async function main() {
-  console.log("Starting Next.js server for QA...");
+  console.log("Starting Next.js production server for V6 Comprehensive Geometry & Clipping QA...");
   const server = spawn("cmd.exe", ["/c", "npx", "next", "start", "-p", PORT], {
     cwd: process.cwd(),
     env: {
@@ -47,10 +47,10 @@ async function main() {
   try {
     console.log(`Waiting for server to be ready at ${BASE_URL}...`);
     await waitForServer(BASE_URL);
-    console.log("Server is ready! Running Playwright screenshot QA...");
+    console.log("Server is ready! Running Playwright V6 Geometry & Clipping Audit...");
 
     const { execSync } = await import("node:child_process");
-    execSync(`node scripts/qa-v4-screenshots.mjs`, {
+    execSync(`node scripts/qa-v6-clipping-audit.mjs`, {
       cwd: process.cwd(),
       env: {
         ...process.env,
@@ -61,10 +61,9 @@ async function main() {
       stdio: "inherit",
     });
 
-    console.log("Screenshot QA completed successfully!");
+    console.log("V6 Comprehensive Geometry & Clipping QA completed successfully!");
   } finally {
     console.log("Shutting down Next.js server...");
-    // Kill the process tree on Windows
     try {
       const { execSync } = await import("node:child_process");
       execSync(`taskkill /F /T /PID ${server.pid}`, { stdio: "ignore" });
@@ -73,6 +72,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error("QA suite failed:", err);
+  console.error("V6 QA Runner failed:", err);
   process.exit(1);
 });

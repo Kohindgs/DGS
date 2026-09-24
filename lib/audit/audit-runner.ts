@@ -1,6 +1,7 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { publishNotificationEvent } from "@/lib/notifications/engine";
 
 export type AuditIssue = {
   severity: "critical" | "high" | "medium" | "low" | "info";
@@ -450,6 +451,19 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
             ]
           );
         }
+      }
+
+      if (criticalCount > 0 || highCount > 0) {
+        await publishNotificationEvent({
+          type: "site_audit_issues",
+          severity: criticalCount > 0 ? "danger" : "warning",
+          title: `Site Health Audit: ${criticalCount} Critical, ${highCount} High Issues`,
+          message: `Health Score: ${overallScore}/100 across ${pages.length} URLs crawled. Review recommendations.`,
+          resource_type: "site_audit",
+          resource_id: auditId,
+          resource_url: `/admin/site-audits/`,
+          recipient_role: "all",
+        }).catch((e) => console.error("Failed to publish audit notification", e));
       }
     } catch (err) {
       console.error("Error saving audit run to database:", err);

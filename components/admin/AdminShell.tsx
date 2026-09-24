@@ -34,6 +34,21 @@ export default function AdminShell({ children, currentUser }: Props) {
       } else {
         document.documentElement.setAttribute("data-density", "comfortable");
       }
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "b") {
+          e.preventDefault();
+          setCollapsed((prev) => {
+            const next = !prev;
+            try {
+              localStorage.setItem("dgs_sidebar_collapsed", String(next));
+            } catch {}
+            return next;
+          });
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
     } catch {
       // Ignore localStorage errors
     }

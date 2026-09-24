@@ -14,16 +14,19 @@ import {
   Info,
   Copy,
   Check,
+  ShieldCheck,
+  Key,
 } from "lucide-react";
-import type { IntegrationStatus } from "@/lib/integrations/google";
+import type { IntegrationStatus, GoogleEnvDiagnostics } from "@/lib/integrations/google";
 
 type Props = {
   gsc: IntegrationStatus;
   ga4: IntegrationStatus;
   userCanEdit: boolean;
+  envDiagnostics?: GoogleEnvDiagnostics;
 };
 
-export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) {
+export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit, envDiagnostics }: Props) {
   const [syncing, setSyncing] = useState(false);
   const [disconnecting, setDisconnecting] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
@@ -33,7 +36,7 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
 
   const isConnected = gsc.status === "connected" || ga4.status === "connected";
   const accountEmail = gsc.accountEmail || ga4.accountEmail;
-  const redirectUri = "https://www.dgeniussolutions.com/api/admin/integrations/google/callback";
+  const redirectUri = envDiagnostics?.redirectUri || "https://www.dgeniussolutions.com/api/admin/integrations/google/callback";
 
   const handleCopyUri = () => {
     navigator.clipboard.writeText(redirectUri);
@@ -83,14 +86,22 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
     }
   };
 
+  // Determine env config badges
+  const hasClientId = envDiagnostics ? envDiagnostics.hasClientId : (gsc.missingConfig ? !gsc.missingConfig.includes("GOOGLE_CLIENT_ID") : false);
+  const hasClientSecret = envDiagnostics ? envDiagnostics.hasClientSecret : (gsc.missingConfig ? !gsc.missingConfig.includes("GOOGLE_CLIENT_SECRET") : false);
+  const hasEncryptionKey = envDiagnostics ? envDiagnostics.hasEncryptionKey : true;
+  const isRedirectExplicit = envDiagnostics ? envDiagnostics.isRedirectUriExplicit : false;
+
   return (
     <div
       className="dgs-saas-card"
       style={{
         gridColumn: "1 / -1",
-        background: "linear-gradient(135deg, rgba(20, 24, 38, 0.7) 0%, rgba(11, 14, 23, 0.8) 100%)",
-        borderColor: isConnected ? "rgba(40, 199, 111, 0.3)" : "rgba(99, 102, 241, 0.3)",
+        background: "linear-gradient(135deg, rgba(20, 24, 38, 0.72) 0%, rgba(11, 14, 23, 0.85) 100%)",
+        borderColor: isConnected ? "rgba(16, 185, 129, 0.3)" : "rgba(0, 102, 255, 0.25)",
         padding: "24px 28px",
+        boxShadow: "0 16px 40px rgba(0, 0, 0, 0.35)",
+        borderRadius: "var(--dgs-radius-lg)",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px" }}>
@@ -99,7 +110,7 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
             <span className="dgs-saas-chip info" style={{ fontWeight: 700, letterSpacing: "0.06em" }}>
               UNIFIED GOOGLE ENGINE
             </span>
-            <span className={`dgs-saas-chip ${isConnected ? "success" : "neutral"}`}>
+            <span className={`dgs-saas-chip ${isConnected ? "success" : "warning"}`}>
               {isConnected ? "CONNECTED & ENCRYPTED" : "OAUTH PENDING"}
             </span>
           </div>
@@ -119,7 +130,7 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
             style={{ display: "flex", alignItems: "center", gap: "6px" }}
           >
             <Info size={14} />
-            <span>Superadmin Setup Docs</span>
+            <span>Setup Instructions</span>
           </button>
 
           {isConnected ? (
@@ -177,8 +188,8 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
           style={{
             marginTop: "16px",
             padding: "10px 14px",
-            background: "rgba(40, 199, 111, 0.1)",
-            border: "1px solid rgba(40, 199, 111, 0.3)",
+            background: "rgba(16, 185, 129, 0.12)",
+            border: "1px solid rgba(16, 185, 129, 0.3)",
             borderRadius: "var(--dgs-radius-sm)",
             color: "var(--dgs-success)",
             fontSize: "13px",
@@ -197,8 +208,8 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
           style={{
             marginTop: "16px",
             padding: "10px 14px",
-            background: "rgba(234, 84, 85, 0.1)",
-            border: "1px solid rgba(234, 84, 85, 0.3)",
+            background: "rgba(239, 68, 68, 0.12)",
+            border: "1px solid rgba(239, 68, 68, 0.3)",
             borderRadius: "var(--dgs-radius-sm)",
             color: "var(--dgs-danger)",
             fontSize: "13px",
@@ -212,14 +223,84 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
         </div>
       )}
 
+      {/* Environment Variable Badges & Redirect URI Banner */}
+      <div
+        style={{
+          marginTop: "18px",
+          padding: "14px 16px",
+          background: "rgba(255, 255, 255, 0.025)",
+          borderRadius: "var(--dgs-radius-md)",
+          border: "1px solid var(--dgs-border-subtle)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "12px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Key size={14} style={{ color: "var(--dgs-brand-cyan)" }} />
+            <span style={{ fontSize: "12px", fontWeight: 650, color: "var(--dgs-text-primary)", letterSpacing: "0.02em" }}>
+              SERVER ENVIRONMENT CREDENTIAL STATUS
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+            <span style={{ fontSize: "12px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <code style={{ fontSize: "11px", color: "var(--dgs-text-secondary)" }}>GOOGLE_CLIENT_ID:</code>
+              <span className={`dgs-saas-chip sm ${hasClientId ? "success" : "danger"}`}>
+                {hasClientId ? "CONFIGURED" : "MISSING"}
+              </span>
+            </span>
+            <span style={{ fontSize: "12px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <code style={{ fontSize: "11px", color: "var(--dgs-text-secondary)" }}>GOOGLE_CLIENT_SECRET:</code>
+              <span className={`dgs-saas-chip sm ${hasClientSecret ? "success" : "danger"}`}>
+                {hasClientSecret ? "CONFIGURED" : "MISSING"}
+              </span>
+            </span>
+            <span style={{ fontSize: "12px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <code style={{ fontSize: "11px", color: "var(--dgs-text-secondary)" }}>DGS_ENCRYPTION_KEY:</code>
+              <span className={`dgs-saas-chip sm ${hasEncryptionKey ? "success" : "warning"}`}>
+                {hasEncryptionKey ? "CONFIGURED" : "FALLBACK"}
+              </span>
+            </span>
+            <span style={{ fontSize: "12px", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <code style={{ fontSize: "11px", color: "var(--dgs-text-secondary)" }}>GOOGLE_REDIRECT_URI:</code>
+              <span className="dgs-saas-chip sm info">
+                {isRedirectExplicit ? "CONFIGURED" : "DERIVED"}
+              </span>
+            </span>
+          </div>
+        </div>
+
+        {/* Copyable Redirect URI Box */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px", background: "rgba(0, 0, 0, 0.25)", padding: "8px 12px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border-subtle)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: 1 }}>
+            <span style={{ fontSize: "11px", color: "var(--dgs-text-dim)", textTransform: "uppercase", fontWeight: 650, flexShrink: 0 }}>
+              Authorized Redirect URI:
+            </span>
+            <code style={{ fontSize: "12px", color: "var(--dgs-brand-cyan)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {redirectUri}
+            </code>
+          </div>
+          <button
+            type="button"
+            onClick={handleCopyUri}
+            className="dgs-saas-btn secondary sm"
+            style={{ height: "26px", fontSize: "11px", padding: "0 10px", display: "inline-flex", alignItems: "center", gap: "4px", flexShrink: 0 }}
+          >
+            {copiedUri ? <Check size={12} style={{ color: "var(--dgs-success)" }} /> : <Copy size={12} />}
+            <span>{copiedUri ? "Copied" : "Copy Redirect URI"}</span>
+          </button>
+        </div>
+      </div>
+
       {/* Property Details Grid */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: "16px",
-          marginTop: "20px",
-          paddingTop: "20px",
+          marginTop: "18px",
+          paddingTop: "18px",
           borderTop: "1px solid var(--dgs-border-subtle)",
         }}
       >
@@ -232,7 +313,7 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
             {accountEmail || "None connected"}
           </div>
           <div style={{ fontSize: "12px", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
-            {isConnected ? "Tokens stored in AES-256-GCM cipher" : "Click 'Connect Google' to authorize"}
+            {isConnected ? "Tokens encrypted with AES-256-GCM cipher" : "Click 'Connect Google' to authorize"}
           </div>
         </div>
 
@@ -289,7 +370,7 @@ export default function GoogleIntegrationCard({ gsc, ga4, userCanEdit }: Props) 
           <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#fff", margin: "0 0 10px 0" }}>
             Google Cloud Console OAuth 2.0 Credentials Setup
           </h4>
-          <ol style={{ margin: 0, paddingLeft: "20px", color: "var(--dgs-text-main)", fontSize: "13px", display: "grid", gap: "8px" }}>
+          <ol style={{ margin: 0, paddingLeft: "20px", color: "var(--dgs-text-primary)", fontSize: "13px", display: "grid", gap: "8px" }}>
             <li>
               Go to <strong>Google Cloud Console</strong> &rarr; <strong>APIs &amp; Services</strong> &rarr; <strong>Credentials</strong>.
             </li>

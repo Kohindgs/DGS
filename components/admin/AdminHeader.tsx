@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import AdminNotificationsDropdown from "./AdminNotificationsDropdown";
@@ -72,6 +73,29 @@ export default function AdminHeader({
         >
           <Menu size={18} strokeWidth={1.8} />
         </button>
+
+        {/* Mobile Brand Mark */}
+        <Link
+          href="/admin/"
+          className="mobile-only dgs-saas-header-brand"
+          style={{
+            alignItems: "center",
+            gap: "6px",
+            textDecoration: "none",
+            marginLeft: "6px",
+            marginRight: "6px",
+          }}
+          aria-label="DGS Dashboard"
+        >
+          <Image
+            src="/images/brand/dgs-mark-compact.png"
+            alt="DGS"
+            width={26}
+            height={26}
+            className="dgs-saas-header-mark-img"
+            priority
+          />
+        </Link>
 
         {/* Desktop Sidebar Accordion Button */}
         <button

@@ -14,10 +14,12 @@ import {
   CheckCircle2,
   RefreshCw,
   ExternalLink,
+  Bell,
 } from "lucide-react";
 
 type SectionId =
   | "general"
+  | "notifications"
   | "seo"
   | "email"
   | "ai"
@@ -34,6 +36,7 @@ type NavItem = {
 
 const SECTIONS: NavItem[] = [
   { id: "general", label: "General", icon: Settings, description: "System name, public URLs, timezone and company info" },
+  { id: "notifications", label: "Notifications", icon: Bell, description: "In-app and email alert preferences for leads, jobs, audits, and Google" },
   { id: "seo", label: "SEO Defaults", icon: Globe, description: "Global title templates, canonicals, robots and sitemap rules" },
   { id: "email", label: "Email & SMTP", icon: Mail, description: "Outbound transactional email routing and notification addresses" },
   { id: "ai", label: "AI Engine", icon: Cpu, description: "Google Gemini models, temperature, and assessment prompt parameters" },
@@ -66,6 +69,20 @@ export default function SettingsClientView() {
   const [geminiModel, setGeminiModel] = useState("gemini-2.5-flash");
   const [temperature, setTemperature] = useState("0.2");
   const [maxTokens, setMaxTokens] = useState("4096");
+
+  // Notification Preferences
+  const [notifyLeadsInApp, setNotifyLeadsInApp] = useState(true);
+  const [notifyLeadsEmail, setNotifyLeadsEmail] = useState(true);
+  const [notifyJobsInApp, setNotifyJobsInApp] = useState(true);
+  const [notifyJobsEmail, setNotifyJobsEmail] = useState(true);
+  const [notifyAssessmentsInApp, setNotifyAssessmentsInApp] = useState(true);
+  const [notifyAssessmentsEmail, setNotifyAssessmentsEmail] = useState(true);
+  const [notifyAuditsInApp, setNotifyAuditsInApp] = useState(true);
+  const [notifyAuditsEmail, setNotifyAuditsEmail] = useState(true);
+  const [notifyGoogleInApp, setNotifyGoogleInApp] = useState(true);
+  const [notifyGoogleEmail, setNotifyGoogleEmail] = useState(false);
+  const [notifySecurityInApp, setNotifySecurityInApp] = useState(true);
+  const [notifySecurityEmail, setNotifySecurityEmail] = useState(true);
 
   const handleSave = () => {
     setSaving(true);
@@ -210,6 +227,122 @@ export default function SettingsClientView() {
                     <option value="UTC">UTC (+00:00)</option>
                   </select>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {activeSection === "notifications" && (
+            <div>
+              <div style={{ borderBottom: "1px solid var(--dgs-border)", paddingBottom: "14px", marginBottom: "20px" }}>
+                <h3 style={{ margin: "0 0 4px", fontSize: "16px", fontWeight: 650, color: "var(--dgs-text-primary)" }}>
+                  Notification &amp; Alert Routing Preferences
+                </h3>
+                <p style={{ margin: 0, fontSize: "13px", color: "var(--dgs-text-muted)" }}>
+                  Configure real-time in-app bell notifications and outbound transactional emails across system event channels.
+                </p>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                {[
+                  {
+                    id: "leads",
+                    title: "Inbound Leads & Contact Inquiries",
+                    desc: "Triggered whenever a potential client submits a contact or service inquiry form.",
+                    inApp: notifyLeadsInApp,
+                    setInApp: setNotifyLeadsInApp,
+                    email: notifyLeadsEmail,
+                    setEmail: setNotifyLeadsEmail,
+                  },
+                  {
+                    id: "jobs",
+                    title: "Job Applications & Candidate Resumes",
+                    desc: "Triggered when candidates apply for active job openings with CVs and portfolios.",
+                    inApp: notifyJobsInApp,
+                    setInApp: setNotifyJobsInApp,
+                    email: notifyJobsEmail,
+                    setEmail: setNotifyJobsEmail,
+                  },
+                  {
+                    id: "assessments",
+                    title: "Candidate Assessment Submissions",
+                    desc: "Triggered upon completion of technical candidate skill evaluations.",
+                    inApp: notifyAssessmentsInApp,
+                    setInApp: setNotifyAssessmentsInApp,
+                    email: notifyAssessmentsEmail,
+                    setEmail: setNotifyAssessmentsEmail,
+                  },
+                  {
+                    id: "audits",
+                    title: "Automated Site Health & SEO Audits",
+                    desc: "Triggered when technical crawler discovers critical issues or penalties across dynamic sitemaps.",
+                    inApp: notifyAuditsInApp,
+                    setInApp: setNotifyAuditsInApp,
+                    email: notifyAuditsEmail,
+                    setEmail: setNotifyAuditsEmail,
+                  },
+                  {
+                    id: "google",
+                    title: "Google Cloud OAuth & Data Sync",
+                    desc: "Notifies administrators if Google tokens expire or Search Console/GA4 sync fails.",
+                    inApp: notifyGoogleInApp,
+                    setInApp: setNotifyGoogleInApp,
+                    email: notifyGoogleEmail,
+                    setEmail: setNotifyGoogleEmail,
+                  },
+                  {
+                    id: "security",
+                    title: "Security & Administrative Audits",
+                    desc: "High-priority alerts for failed logins, role privilege modifications, and password resets.",
+                    inApp: notifySecurityInApp,
+                    setInApp: setNotifySecurityInApp,
+                    email: notifySecurityEmail,
+                    setEmail: setNotifySecurityEmail,
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.id}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      padding: "16px 20px",
+                      background: "rgba(255, 255, 255, 0.02)",
+                      borderRadius: "var(--dgs-radius-md)",
+                      border: "1px solid var(--dgs-border-subtle)",
+                      flexWrap: "wrap",
+                      gap: "16px",
+                    }}
+                  >
+                    <div style={{ maxWidth: "480px" }}>
+                      <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--dgs-text-primary)" }}>
+                        {item.title}
+                      </div>
+                      <div style={{ fontSize: "12px", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
+                        {item.desc}
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                      <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", cursor: "pointer", color: "var(--dgs-text-primary)" }}>
+                        <input
+                          type="checkbox"
+                          checked={item.inApp}
+                          onChange={(e) => item.setInApp(e.target.checked)}
+                        />
+                        <span>In-App Bell</span>
+                      </label>
+
+                      <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", cursor: "pointer", color: "var(--dgs-text-primary)" }}>
+                        <input
+                          type="checkbox"
+                          checked={item.email}
+                          onChange={(e) => item.setEmail(e.target.checked)}
+                        />
+                        <span>Email Alert</span>
+                      </label>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
