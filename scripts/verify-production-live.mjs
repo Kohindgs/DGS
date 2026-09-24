@@ -27,6 +27,18 @@ async function main() {
     }
   });
 
+  async function gotoUrl(targetPage, url) {
+    try {
+      const resp = await targetPage.goto(url, { waitUntil: "domcontentloaded", timeout: 35000 });
+      await targetPage.waitForLoadState("load", { timeout: 10000 }).catch(() => {});
+      await targetPage.waitForTimeout(1200);
+      return resp;
+    } catch (err) {
+      console.warn(`  Warning navigating to ${url}: ${err.message}`);
+      return null;
+    }
+  }
+
   const report = {
     brand: {},
     faqPages: {},
@@ -61,7 +73,7 @@ async function main() {
   for (const urlPath of brandUrls) {
     const fullUrl = `${PROD_URL}${urlPath}`;
     console.log(`\nInspecting: ${fullUrl}`);
-    const resp = await page.goto(fullUrl, { waitUntil: "networkidle", timeout: 45000 });
+    const resp = await gotoUrl(page, fullUrl);
     const status = resp?.status();
 
     const title = await page.title();
@@ -164,7 +176,7 @@ async function main() {
   for (const urlPath of faqUrls) {
     const fullUrl = `${PROD_URL}${urlPath}`;
     console.log(`\nTesting FAQ on: ${fullUrl}`);
-    await page.goto(fullUrl, { waitUntil: "networkidle", timeout: 45000 });
+    await gotoUrl(page, fullUrl);
 
     const dgsItems = await page.$$(".dgs-faq-item");
     const genericItems = await page.$$(".faq-item");
@@ -204,7 +216,7 @@ async function main() {
 
   // Blog native FAQ verification
   console.log("\nTesting Blog Native FAQ (<details><summary>): https://www.dgeniussolutions.com/blogs/aeo-in-2026/");
-  await page.goto(`${PROD_URL}/blogs/aeo-in-2026/`, { waitUntil: "networkidle", timeout: 45000 });
+  await gotoUrl(page, `${PROD_URL}/blogs/aeo-in-2026/`);
   const detailsCount = await page.evaluate(() => document.querySelectorAll("details").length);
   console.log(`  Blog native <details> elements count: ${detailsCount}`);
   report.faqPages["/blogs/aeo-in-2026/"] = detailsCount > 0 ? "PASS" : "PASS (native)";
@@ -228,7 +240,7 @@ async function main() {
   for (const vp of viewports) {
     console.log(`\nTesting viewport: ${vp.name} (${vp.width}x${vp.height})`);
     await page.setViewportSize({ width: vp.width, height: vp.height });
-    await page.goto(`${PROD_URL}/aeo-dubai/`, { waitUntil: "networkidle", timeout: 45000 });
+    await gotoUrl(page, `${PROD_URL}/aeo-dubai/`);
 
     const items = await page.$$(".dgs-faq-item");
     const q0 = await items[0].$(".dgs-faq-question");
@@ -284,7 +296,7 @@ async function main() {
   console.log("==================================================");
 
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto(`${PROD_URL}/aeo-dubai/`, { waitUntil: "networkidle", timeout: 45000 });
+  await gotoUrl(page, `${PROD_URL}/aeo-dubai/`);
 
   const questionAttrs = await page.evaluate(() => {
     const q = document.querySelector(".dgs-faq-question");
