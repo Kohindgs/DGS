@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
-import { type CannibalizationRisk } from "@/lib/seo/keywords";
+import { type CannibalizationRisk, type QueryCannibalizationDiagnostic } from "@/lib/seo/keywords";
+import { canonicalPageKey, normalizeSearchQuery } from "@/lib/seo/search-normalization";
 import SeoIntelligenceDrawer from "@/components/admin/SeoIntelligenceDrawer";
 import KeywordIntelligenceDrawer, { type KeywordDrawerData } from "@/components/admin/KeywordIntelligenceDrawer";
 import {
@@ -10,10 +11,22 @@ import {
   classifyKeyword,
 } from "@/lib/seo/keyword-engine";
 
+export type DataHealthInfo = {
+  currentRowsCount: number;
+  snapshotsCount: number;
+  duplicatePairsCount: number;
+  windowStart?: string | null;
+  windowEnd?: string | null;
+  lastSyncAt?: string | null;
+  isHealthy: boolean;
+};
+
 type KeywordRow = {
   id: string;
   query_text: string;
   page_url: string;
+  canonical_page_key?: string;
+  query_text_normalized?: string;
   clicks: number;
   impressions: number;
   ctr: number;
@@ -23,6 +36,8 @@ type KeywordRow = {
   prev_impressions?: number;
   period_type: string;
   keyword_group?: string | null;
+  is_target?: boolean;
+  source?: "GSC" | "TARGET" | "GSC + TARGET";
   mobile_psi?: number | null;
   desktop_psi?: number | null;
 };
@@ -30,7 +45,9 @@ type KeywordRow = {
 type Props = {
   queries: KeywordRow[];
   cannibalizationRisks: CannibalizationRisk[];
+  cannibalizationDiagnostics?: QueryCannibalizationDiagnostic[];
   targetsCount: number;
+  dataHealth?: DataHealthInfo;
 };
 
 type FilterCategory =
@@ -54,44 +71,76 @@ function safeStr(val: unknown): string {
 export default function KeywordsClientView({
   queries: initialQueries = [],
   cannibalizationRisks: initialRisks = [],
+  cannibalizationDiagnostics: initialDiagnostics = [],
   targetsCount = 0,
+  dataHealth,
 }: Props) {
-  const [queries] = useState<KeywordRow[]>(Array.isArray(initialQueries) ? initialQueries : []);
+  // Defensive deduplication guard keyed on canonicalPageKey + normalizeSearchQuery
+  const queries = useMemo(() => {
+    const seen = new Set<string>();
+    const clean: KeywordRow[] = [];
+    for (const q of (Array.isArray(initialQueries) ? initialQueries : [])) {
+      if (!q) continue;
+      const canon = canonicalPageKey(q.page_url);
+      const norm = normalizeSearchQuery(q.query_text);
+      const key = `${canon}|||${norm}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        clean.push(q);
+      }
+    }
+    return clean;
+  }, [initialQueries]);
+
   const cannibalizationRisks = useMemo(
     () => (Array.isArray(initialRisks) ? initialRisks : []),
     [initialRisks]
   );
+
+  const cannibalizationDiagnostics = useMemo(
+    () => (Array.isArray(initialDiagnostics) ? initialDiagnostics : []),
+    [initialDiagnostics]
+  );
+
+  // Map diagnostics by normalized query string
+  const diagnosticMap = useMemo(() => {
+    const map = new Map<string, QueryCannibalizationDiagnostic>();
+    for (const d of cannibalizationDiagnostics) {
+      map.set(normalizeSearchQuery(d.queryText), d);
+    }
+    return map;
+  }, [cannibalizationDiagnostics]);
 
   const [selectedPageUrl, setSelectedPageUrl] = useState<string | null>(null);
   const [selectedKeywordData, setSelectedKeywordData] = useState<KeywordDrawerData | null>(null);
   const [activeTab, setActiveTab] = useState<"all" | "cannibalization">("all");
   const [activeFilter, setActiveFilter] = useState<FilterCategory>("all");
 
-  // Map of cannibalized query strings for fast lookup
-  const cannibalizedQuerySet = useMemo(() => {
+  // Set of queries with genuine cannibalization risks (excluding brand multi-url)
+  const genuineCannibalizedSet = useMemo(() => {
     const set = new Set<string>();
-    for (const r of cannibalizationRisks) {
-      const q = safeStr(r?.queryText).toLowerCase();
-      if (q) set.add(q);
+    for (const d of cannibalizationDiagnostics) {
+      if (d.classification === "CONFIRMED CANNIBALIZATION" || d.classification === "POTENTIAL CANNIBALIZATION") {
+        set.add(normalizeSearchQuery(d.queryText));
+      }
+    }
+    // Fallback to risks if diagnostics empty
+    if (set.size === 0) {
+      for (const r of cannibalizationRisks) {
+        const q = normalizeSearchQuery(r?.queryText);
+        if (q) set.add(q);
+      }
     }
     return set;
-  }, [cannibalizationRisks]);
-
-  const cannibalizationRiskMap = useMemo(() => {
-    const map = new Map<string, CannibalizationRisk>();
-    for (const r of cannibalizationRisks) {
-      const q = safeStr(r?.queryText).toLowerCase();
-      if (q) map.set(q, r);
-    }
-    return map;
-  }, [cannibalizationRisks]);
+  }, [cannibalizationDiagnostics, cannibalizationRisks]);
 
   const filteredQueries = useMemo(() => {
     return queries.filter((q) => {
       if (!q) return false;
       const qText = safeStr(q.query_text);
+      const normQ = normalizeSearchQuery(qText);
       const pos = q.position != null && !isNaN(Number(q.position)) && Number(q.position) > 0 ? Number(q.position) : null;
-      const isCannibalized = qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
+      const isCannibalized = genuineCannibalizedSet.has(normQ);
 
       const classification = classifyKeyword({
         query: qText,
@@ -127,14 +176,25 @@ export default function KeywordsClientView({
           return true;
       }
     });
-  }, [queries, activeFilter, cannibalizedQuerySet]);
+  }, [queries, activeFilter, genuineCannibalizedSet]);
 
   const openDrawerForKeyword = (q: KeywordRow) => {
     if (!q) return;
     const qText = safeStr(q.query_text);
-    const normQ = qText.toLowerCase();
-    const isCannibalized = normQ ? cannibalizedQuerySet.has(normQ) : false;
-    const risk = normQ ? cannibalizationRiskMap.get(normQ) : undefined;
+    const normQ = normalizeSearchQuery(qText);
+    const diag = diagnosticMap.get(normQ);
+    const isCannibalized = diag
+      ? (diag.classification === "CONFIRMED CANNIBALIZATION" || diag.classification === "POTENTIAL CANNIBALIZATION")
+      : genuineCannibalizedSet.has(normQ);
+
+    const competingPages = diag
+      ? (diag.competingPages || []).map((cp) => ({
+          pageUrl: cp.pageUrl || "/",
+          clicks: Number(cp.clicks || 0),
+          impressions: Number(cp.impressions || 0),
+          position: Number(cp.googleAvgPosition || 0),
+        }))
+      : [];
 
     setSelectedKeywordData({
       id: q.id,
@@ -147,12 +207,7 @@ export default function KeywordsClientView({
       ctr: Number(q.ctr || 0),
       keywordGroup: q.keyword_group,
       isCannibalized,
-      competingPages: (risk?.competingPages || []).map((cp) => ({
-        pageUrl: cp?.pageUrl || "/",
-        clicks: Number(cp?.clicks || 0),
-        impressions: Number(cp?.impressions || 0),
-        position: Number(cp?.googleAvgPosition || 0),
-      })),
+      competingPages,
       mobilePsi: q.mobile_psi != null ? Number(q.mobile_psi) : null,
       desktopPsi: q.desktop_psi != null ? Number(q.desktop_psi) : null,
     });
@@ -165,7 +220,11 @@ export default function KeywordsClientView({
       sortable: true,
       render: (q) => {
         const qText = safeStr(q?.query_text) || "Unnamed Query";
-        const isCannibalized = qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
+        const normQ = normalizeSearchQuery(qText);
+        const diag = diagnosticMap.get(normQ);
+        const isCannibalized = genuineCannibalizedSet.has(normQ);
+        const isBrandSitelinks = diag?.classification === "BRAND MULTI-URL";
+
         return (
           <div>
             <button
@@ -185,10 +244,20 @@ export default function KeywordsClientView({
             >
               {qText}
             </button>
-            <div style={{ display: "flex", gap: "6px", marginTop: "4px", flexWrap: "wrap" }}>
-              {q?.keyword_group && (
+            <div style={{ display: "flex", gap: "6px", marginTop: "4px", flexWrap: "wrap", alignItems: "center" }}>
+              {q?.source && (
+                <span className={`dgs-saas-chip ${q.source.includes("TARGET") ? "primary" : "neutral"}`} style={{ fontSize: "0.68rem" }}>
+                  {q.source}
+                </span>
+              )}
+              {q?.keyword_group && q.source !== "GSC + TARGET" && (
                 <span className="dgs-saas-chip primary" style={{ fontSize: "0.68rem" }}>
                   Target: {q.keyword_group}
+                </span>
+              )}
+              {isBrandSitelinks && (
+                <span className="dgs-saas-chip primary" style={{ fontSize: "0.68rem" }} title="Google displays multi-page sitelinks for official brand query">
+                  Brand Multi-URL
                 </span>
               )}
               {isCannibalized && (
@@ -262,10 +331,23 @@ export default function KeywordsClientView({
     {
       key: "classification",
       header: "Classification",
-      width: "150px",
+      width: "160px",
       render: (q) => {
         const qText = safeStr(q?.query_text);
-        const isCannibalized = qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
+        const normQ = normalizeSearchQuery(qText);
+        const diag = diagnosticMap.get(normQ);
+        const isCannibalized = genuineCannibalizedSet.has(normQ);
+
+        if (diag?.classification === "BRAND MULTI-URL") {
+          return <span className="dgs-saas-chip primary" title="Google displays multi-page sitelinks for official brand query">BRAND MULTI-URL</span>;
+        }
+        if (diag?.classification === "MULTI-INTENT VISIBILITY") {
+          return <span className="dgs-saas-chip neutral" title="Multi-intent visibility across commercial and blog content">MULTI-INTENT</span>;
+        }
+        if (diag?.classification === "PROTECT — BRAND") {
+          return <span className="dgs-saas-chip success" title="Official brand term ranking #1">PROTECT (BRAND)</span>;
+        }
+
         const cls = classifyKeyword({
           query: qText,
           position: q?.position,
@@ -355,6 +437,9 @@ export default function KeywordsClientView({
       label: "Protect",
       count: queries.filter((q) => {
         const qText = safeStr(q?.query_text);
+        const normQ = normalizeSearchQuery(qText);
+        const diag = diagnosticMap.get(normQ);
+        if (diag?.classification === "PROTECT — BRAND") return true;
         return classifyKeyword({
           query: qText,
           position: q?.position,
@@ -362,7 +447,7 @@ export default function KeywordsClientView({
           clicks: q?.clicks,
           impressions: q?.impressions,
           ctr: q?.ctr,
-          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+          isCannibalized: genuineCannibalizedSet.has(normQ),
         }) === "PROTECT";
       }).length,
     },
@@ -371,6 +456,7 @@ export default function KeywordsClientView({
       label: "Grow",
       count: queries.filter((q) => {
         const qText = safeStr(q?.query_text);
+        const normQ = normalizeSearchQuery(qText);
         return classifyKeyword({
           query: qText,
           position: q?.position,
@@ -378,7 +464,7 @@ export default function KeywordsClientView({
           clicks: q?.clicks,
           impressions: q?.impressions,
           ctr: q?.ctr,
-          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+          isCannibalized: genuineCannibalizedSet.has(normQ),
         }) === "GROW";
       }).length,
     },
@@ -387,6 +473,7 @@ export default function KeywordsClientView({
       label: "Recover",
       count: queries.filter((q) => {
         const qText = safeStr(q?.query_text);
+        const normQ = normalizeSearchQuery(qText);
         return classifyKeyword({
           query: qText,
           position: q?.position,
@@ -394,7 +481,7 @@ export default function KeywordsClientView({
           clicks: q?.clicks,
           impressions: q?.impressions,
           ctr: q?.ctr,
-          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+          isCannibalized: genuineCannibalizedSet.has(normQ),
         }) === "RECOVER";
       }).length,
     },
@@ -403,6 +490,7 @@ export default function KeywordsClientView({
       label: "New Opportunity",
       count: queries.filter((q) => {
         const qText = safeStr(q?.query_text);
+        const normQ = normalizeSearchQuery(qText);
         return classifyKeyword({
           query: qText,
           position: q?.position,
@@ -410,7 +498,7 @@ export default function KeywordsClientView({
           clicks: q?.clicks,
           impressions: q?.impressions,
           ctr: q?.ctr,
-          isCannibalized: qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false,
+          isCannibalized: genuineCannibalizedSet.has(normQ),
         }) === "NEW OPPORTUNITY";
       }).length,
     },
@@ -419,7 +507,7 @@ export default function KeywordsClientView({
       label: "Cannibalization",
       count: queries.filter((q) => {
         const qText = safeStr(q?.query_text);
-        return qText ? cannibalizedQuerySet.has(qText.toLowerCase()) : false;
+        return genuineCannibalizedSet.has(normalizeSearchQuery(qText));
       }).length,
     },
     {
@@ -441,6 +529,51 @@ export default function KeywordsClientView({
           </p>
         </div>
       </div>
+
+      {/* SEO Data Health Panel */}
+      {dataHealth && (
+        <div
+          style={{
+            background: "rgba(255, 255, 255, 0.02)",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+            borderRadius: "var(--dgs-radius-md)",
+            padding: "14px 18px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "12px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+            <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fff" }}>
+              SEO Data State:
+            </span>
+            <span
+              className={`dgs-saas-chip ${dataHealth.duplicatePairsCount === 0 ? "success" : "danger"}`}
+              style={{ fontSize: "0.72rem", fontWeight: 700 }}
+            >
+              {dataHealth.duplicatePairsCount === 0
+                ? "✓ 0 Duplicate Pairs (Clean)"
+                : `⚠ ${dataHealth.duplicatePairsCount} Duplicate Pairs`}
+            </span>
+            <span className="dgs-saas-chip neutral" style={{ fontSize: "0.72rem" }}>
+              Current State: {dataHealth.currentRowsCount} Active Rows
+            </span>
+            <span className="dgs-saas-chip neutral" style={{ fontSize: "0.72rem" }}>
+              Snapshots: {dataHealth.snapshotsCount} Historical Points
+            </span>
+          </div>
+          <div style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>
+            {dataHealth.windowStart && dataHealth.windowEnd ? (
+              <span>28-Day Window: <strong>{dataHealth.windowStart} → {dataHealth.windowEnd}</strong> (Exact, Non-overlapping)</span>
+            ) : null}
+            {dataHealth.lastSyncAt ? (
+              <span style={{ marginLeft: "12px" }}>Synced: {new Date(dataHealth.lastSyncAt).toLocaleDateString()}</span>
+            ) : null}
+          </div>
+        </div>
+      )}
 
       {/* KPI Cards */}
       <div className="dgs-saas-kpi-grid">
@@ -599,9 +732,12 @@ export default function KeywordsClientView({
 
       {activeTab === "cannibalization" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          {cannibalizationRisks.length === 0 ? (
-            <div style={{ padding: "40px", textAlign: "center", color: "var(--dgs-success)" }}>
-              ✓ No cannibalization detected. Each high-intent search query maps cleanly to an authoritative page.
+          {genuineCannibalizedSet.size === 0 && cannibalizationRisks.length === 0 ? (
+            <div style={{ padding: "40px", textAlign: "center", color: "var(--dgs-success)", background: "rgba(16, 185, 129, 0.05)", borderRadius: "var(--dgs-radius-md)", border: "1px solid rgba(16, 185, 129, 0.2)" }}>
+              <div style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "6px" }}>✓ Zero Keyword Cannibalization Conflicts</div>
+              <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: 0 }}>
+                Every high-intent search query maps cleanly to an authoritative DGS page. Multi-page brand queries are properly protected and classified as Brand Sitelinks.
+              </p>
             </div>
           ) : (
             cannibalizationRisks.map((risk, idx) => (

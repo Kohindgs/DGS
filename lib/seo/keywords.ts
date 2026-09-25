@@ -1,6 +1,24 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
+import {
+  canonicalPageKey,
+  normalizeSearchQuery,
+  normalizeSitePageUrl,
+} from "./search-normalization";
+import {
+  buildSiteCannibalizationIndex,
+  type QueryCannibalizationDiagnostic,
+  type TargetKeywordMapping,
+  type CannibalizationClassification,
+  type PageDiagnostic,
+} from "./cannibalization";
+
+export type {
+  QueryCannibalizationDiagnostic,
+  CannibalizationClassification,
+  PageDiagnostic,
+};
 
 export type KeywordRankingStatus =
   | "TOP 3"
@@ -240,16 +258,16 @@ export async function getKeywordsForPage(
 ): Promise<PageQueryMetric[]> {
   if (!isCmsDatabaseConfigured()) return [];
 
-  // Match relative or absolute page URL
+  const canonKey = canonicalPageKey(pageUrl);
   const pathPart = pageUrl.replace(/^https?:\/\/[^/]+/i, "") || "/";
 
   try {
     const { rows } = await cmsQuery<Record<string, unknown>>(
       `SELECT * FROM gsc_page_query_metrics
-       WHERE (page_url = ? OR page_url LIKE ?) AND period_type = ?
+       WHERE (canonical_page_key = ? OR page_url = ? OR page_url LIKE ?) AND period_type = ?
        ORDER BY clicks DESC, impressions DESC
        LIMIT 100`,
-      [pageUrl, `%${pathPart}`, period]
+      [canonKey, pageUrl, `%${pathPart}`, period]
     );
 
     return rows.map((r) => {
@@ -291,7 +309,7 @@ export async function getPageKeywordGap(
 
   const rankingByText = new Map<string, PageQueryMetric>();
   for (const rk of rankingKeywords) {
-    rankingByText.set(rk.queryText.toLowerCase().trim(), rk);
+    rankingByText.set(normalizeSearchQuery(rk.queryText), rk);
   }
 
   let rankingCount = 0;
@@ -302,7 +320,7 @@ export async function getPageKeywordGap(
   let top20Count = 0;
 
   const enrichedTargets: TargetKeywordRecord[] = targetKeywords.map((tk) => {
-    const match = rankingByText.get(tk.keyword.toLowerCase().trim());
+    const match = rankingByText.get(normalizeSearchQuery(tk.keyword));
 
     if (match && match.impressions > 0) {
       rankingCount++;
@@ -344,52 +362,66 @@ export async function getPageKeywordGap(
 }
 
 /**
- * Detect keyword cannibalization across the entire DGS site.
- * Flags queries where 2 or more distinct pages compete with significant impressions.
+ * Retrieve comprehensive cannibalization diagnostics across all current search queries.
  */
-export async function detectCannibalization(): Promise<CannibalizationRisk[]> {
+export async function getCannibalizationDiagnostics(
+  period: string = "28d"
+): Promise<QueryCannibalizationDiagnostic[]> {
   if (!isCmsDatabaseConfigured()) return [];
 
   try {
-    const { rows } = await cmsQuery<Record<string, unknown>>(
-      `SELECT query_text, COUNT(DISTINCT page_url) as page_count, SUM(impressions) as total_imp
+    const { rows: pqRows } = await cmsQuery<any>(
+      `SELECT query_text, page_url, clicks, impressions, ctr, position, period_type
        FROM gsc_page_query_metrics
-       GROUP BY query_text
-       HAVING page_count > 1 AND total_imp > 50
-       ORDER BY total_imp DESC
-       LIMIT 50`
+       WHERE period_type = ?
+       ORDER BY impressions DESC`,
+      [period]
     );
 
-    const risks: CannibalizationRisk[] = [];
+    const { rows: tkRows } = await cmsQuery<any>(
+      `SELECT keyword, page_url, keyword_group FROM target_keywords`
+    );
 
-    for (const r of rows) {
-      const queryText = String(r.query_text);
-      const { rows: pageRows } = await cmsQuery<Record<string, unknown>>(
-        `SELECT page_url, clicks, impressions, position
-         FROM gsc_page_query_metrics
-         WHERE query_text = ?
-         ORDER BY impressions DESC`,
-        [queryText]
-      );
+    const targetMappings: TargetKeywordMapping[] = (tkRows || []).map((t: any) => ({
+      keyword: String(t.keyword || ""),
+      pageUrl: String(t.page_url || ""),
+      keywordGroup: t.keyword_group ? String(t.keyword_group) : null,
+    }));
 
-      risks.push({
-        queryText,
-        totalImpressions: Number(r.total_imp || 0),
-        competingPages: pageRows.map((pr) => ({
-          pageUrl: String(pr.page_url),
-          clicks: Number(pr.clicks || 0),
-          impressions: Number(pr.impressions || 0),
-          googleAvgPosition: Number(pr.position || 0),
-        })),
-        recommendation: `Multiple DGS URLs receive search impressions for "${queryText}". Conduct editorial review to differentiate topic intent and strengthen internal links to the primary authoritative target page. (Do NOT automatically canonicalize or delete).`,
-      });
-    }
-
-    return risks;
+    const index = buildSiteCannibalizationIndex(pqRows || [], targetMappings);
+    return Array.from(index.values());
   } catch (err) {
-    console.error("detectCannibalization error:", err);
+    console.error("getCannibalizationDiagnostics error:", err);
     return [];
   }
+}
+
+/**
+ * Detect keyword cannibalization across the entire DGS site.
+ * Employs evidence-based thresholds, protects brand queries, and differentiates intent.
+ */
+export async function detectCannibalization(): Promise<CannibalizationRisk[]> {
+  const diagnostics = await getCannibalizationDiagnostics("28d");
+  const risks: CannibalizationRisk[] = [];
+
+  for (const d of diagnostics) {
+    // Only flag genuine cannibalization risks
+    if (d.classification === "CONFIRMED CANNIBALIZATION" || d.classification === "POTENTIAL CANNIBALIZATION") {
+      risks.push({
+        queryText: d.queryText,
+        totalImpressions: d.totalImpressions,
+        competingPages: d.competingPages.map((cp) => ({
+          pageUrl: cp.pageUrl,
+          clicks: cp.clicks,
+          impressions: cp.impressions,
+          googleAvgPosition: cp.googleAvgPosition,
+        })),
+        recommendation: d.recommendation,
+      });
+    }
+  }
+
+  return risks;
 }
 
 /**

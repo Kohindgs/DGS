@@ -100,7 +100,8 @@
     "test:recaptcha-v2": "node --test scripts/test-recaptcha-v2-integration.mjs",
     "test:seo-v7-integrity": "node --test scripts/test-seo-v7-integrity.mjs",
     "test:seo-v8-integrity": "node --experimental-strip-types scripts/test-seo-v8-integrity.mjs",
-    "test:seo-v8.1-integrity": "node --experimental-strip-types scripts/test-seo-v8.1-integrity.mjs"
+    "test:seo-v8.1-integrity": "node --experimental-strip-types scripts/test-seo-v8.1-integrity.mjs",
+    "test:google-data-v8.3-integrity": "node --experimental-strip-types scripts/test-google-data-v8.3-integrity.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

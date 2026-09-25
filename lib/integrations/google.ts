@@ -2,6 +2,14 @@ import "server-only";
 import { createCipheriv, createDecipheriv, randomBytes, createHash } from "node:crypto";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { publishNotificationEvent } from "@/lib/notifications/engine";
+import {
+  canonicalPageKey,
+  normalizeSearchQuery,
+  normalizeSitePageUrl,
+  getNonOverlapping28DayWindows,
+} from "@/lib/seo/search-normalization";
+export { getNonOverlapping28DayWindows };
+
 
 const ALGORITHM = "aes-256-gcm";
 
@@ -69,6 +77,11 @@ export async function ensureGoogleTablesExist(): Promise<void> {
         impressions INT DEFAULT 0,
         ctr DECIMAL(5,4) DEFAULT 0,
         position DECIMAL(5,2) DEFAULT 0,
+        window_start DATE NULL,
+        window_end DATE NULL,
+        rows_fetched INT DEFAULT 0,
+        rows_stored INT DEFAULT 0,
+        is_truncated BOOLEAN DEFAULT FALSE,
         started_at DATETIME NOT NULL,
         completed_at DATETIME NULL,
         error_message TEXT NULL
@@ -122,6 +135,8 @@ export async function ensureGoogleTablesExist(): Promise<void> {
         period_type VARCHAR(50) DEFAULT '28d',
         page_url VARCHAR(512) NOT NULL,
         query_text VARCHAR(512) NOT NULL,
+        canonical_page_key VARCHAR(512) NULL,
+        query_text_normalized VARCHAR(512) NULL,
         clicks INT DEFAULT 0,
         impressions INT DEFAULT 0,
         ctr DECIMAL(5,4) DEFAULT 0,
@@ -131,7 +146,9 @@ export async function ensureGoogleTablesExist(): Promise<void> {
         updated_at DATETIME NOT NULL,
         INDEX idx_gsc_pq_page (page_url(255)),
         INDEX idx_gsc_pq_query (query_text(255)),
-        UNIQUE KEY uq_gsc_pq (metric_date, period_type, page_url(255), query_text(255))
+        INDEX idx_gsc_pq_canon (canonical_page_key(255)),
+        INDEX idx_gsc_pq_norm (query_text_normalized(255)),
+        UNIQUE KEY uq_gsc_pq_current (period_type, canonical_page_key(255), query_text_normalized(255))
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
@@ -159,6 +176,14 @@ export async function ensureGoogleTablesExist(): Promise<void> {
       CREATE TABLE IF NOT EXISTS ga4_sync_runs (
         id VARCHAR(64) PRIMARY KEY,
         status VARCHAR(50) NOT NULL DEFAULT 'completed',
+        active_users INT DEFAULT 0,
+        sessions INT DEFAULT 0,
+        engaged_sessions INT DEFAULT 0,
+        engagement_rate DECIMAL(5,4) DEFAULT 0,
+        views INT DEFAULT 0,
+        key_events INT DEFAULT 0,
+        window_start DATE NULL,
+        window_end DATE NULL,
         started_at DATETIME NOT NULL,
         completed_at DATETIME NULL,
         error_message TEXT NULL
@@ -183,12 +208,14 @@ export async function ensureGoogleTablesExist(): Promise<void> {
       CREATE TABLE IF NOT EXISTS ga4_page_metrics (
         id VARCHAR(64) PRIMARY KEY,
         page_path VARCHAR(512) NOT NULL,
+        canonical_page_key VARCHAR(512) NULL,
         views INT DEFAULT 0,
         sessions INT DEFAULT 0,
         engagement_rate DECIMAL(5,4) DEFAULT 0,
         period_type VARCHAR(50) DEFAULT '28d',
         updated_at DATETIME NOT NULL,
-        INDEX idx_ga4_pm_views (views DESC)
+        INDEX idx_ga4_pm_views (views DESC),
+        INDEX idx_ga4_pm_canon (canonical_page_key(255))
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
@@ -326,12 +353,23 @@ export async function getFreshAccessToken(service: "gsc" | "ga4" = "gsc"): Promi
   if (!isCmsDatabaseConfigured()) return null;
   await ensureGoogleTablesExist();
 
-  const { rows } = await cmsQuery<{ encrypted_tokens: string; account_email: string }>(
+  // Deterministic service matching: query exact service first
+  let { rows } = await cmsQuery<{ encrypted_tokens: string; account_email: string }>(
     `SELECT encrypted_tokens, account_email FROM google_connections
-     WHERE (service = ? OR service = 'gsc' OR service = 'ga4') AND encrypted_tokens IS NOT NULL
+     WHERE service = ? AND encrypted_tokens IS NOT NULL
      ORDER BY updated_at DESC LIMIT 1`,
     [service]
   );
+
+  // Fallback to any active connection only if specific service row not found
+  if (!rows || rows.length === 0 || !rows[0].encrypted_tokens) {
+    const fallback = await cmsQuery<{ encrypted_tokens: string; account_email: string }>(
+      `SELECT encrypted_tokens, account_email FROM google_connections
+       WHERE encrypted_tokens IS NOT NULL
+       ORDER BY updated_at DESC LIMIT 1`
+    );
+    rows = fallback.rows;
+  }
 
   if (!rows || rows.length === 0 || !rows[0].encrypted_tokens) return null;
 
@@ -509,10 +547,77 @@ export async function disconnectGoogle(): Promise<boolean> {
 }
 
 // ---------------------------------------------------------------------------
+// Non-overlapping 28-day Windows & Pagination Helpers
+// ---------------------------------------------------------------------------
+
+
+async function fetchGscSearchAnalyticsPaginated(
+  siteUrl: string,
+  accessToken: string,
+  body: {
+    startDate: string;
+    endDate: string;
+    dimensions: string[];
+    dimensionFilterGroups?: any[];
+  },
+  maxRows: number = 5000
+): Promise<{ rows: any[]; isTruncated: boolean; rowsFetched: number }> {
+  const rows: any[] = [];
+  let startRow = 0;
+  const rowLimit = 1000;
+  let isTruncated = false;
+
+  while (startRow < maxRows) {
+    const res = await fetch(
+      `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...body,
+          startRow,
+          rowLimit,
+        }),
+      }
+    );
+
+    if (!res.ok) {
+      const errText = await res.text().catch(() => "");
+      console.warn(`GSC pagination fetch error at startRow ${startRow}:`, res.status, errText);
+      break;
+    }
+
+    const data = await res.json();
+    const batch = data.rows || [];
+    rows.push(...batch);
+
+    if (batch.length < rowLimit) {
+      break;
+    }
+    startRow += batch.length;
+    if (startRow >= maxRows) {
+      isTruncated = true;
+      break;
+    }
+  }
+
+  return { rows, isTruncated, rowsFetched: rows.length };
+}
+
+// ---------------------------------------------------------------------------
 // Live Data Synchronization (ZERO FAKE DATA)
 // ---------------------------------------------------------------------------
 
-export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; ga4?: any; error?: string }> {
+export async function syncGoogleData(): Promise<{
+  success: boolean;
+  partial?: boolean;
+  gsc?: any;
+  ga4?: any;
+  error?: string;
+}> {
   if (!isCmsDatabaseConfigured()) {
     return { success: false, error: "Database not configured" };
   }
@@ -523,21 +628,60 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
     return { success: false, error: "No valid Google OAuth token available. Please reconnect Google." };
   }
 
-  let gscResult: any = null;
-  let ga4Result: any = null;
+  const windows = getNonOverlapping28DayWindows();
   const syncStartTime = new Date();
+  const todayStr = syncStartTime.toISOString().slice(0, 10);
+
+  let gscResult: any = null;
+  let gscError: string | null = null;
+  let ga4Result: any = null;
+  let ga4Error: string | null = null;
 
   // 1. Fetch & Store Google Search Console Data
   try {
     const { rows: gscRows } = await cmsQuery<{ property_id: string }>(
       `SELECT property_id FROM google_connections WHERE service = 'gsc' LIMIT 1`
     );
-    const siteUrl = gscRows[0]?.property_id || "https://www.dgeniussolutions.com/";
+    const rawSiteUrl = gscRows[0]?.property_id || "https://www.dgeniussolutions.com/";
+    const siteUrl = rawSiteUrl.trim();
 
-    const endDate = new Date(Date.now() - 2 * 86400000).toISOString().slice(0, 10); // GSC has ~2-3 days data latency
-    const startDate = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+    // 1a. True summary aggregate metrics (dimensionless searchAnalytics query)
+    let aggregateClicks = 0;
+    let aggregateImpressions = 0;
+    let aggregateCtr = 0;
+    let aggregatePos = 0;
 
-    // Daily metrics
+    try {
+      const summaryRes = await fetch(
+        `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            startDate: windows.currentStart,
+            endDate: windows.currentEnd,
+            dimensions: [],
+          }),
+        }
+      );
+      if (summaryRes.ok) {
+        const sumData = await summaryRes.json();
+        const r = sumData.rows?.[0];
+        if (r) {
+          aggregateClicks = Math.round(r.clicks || 0);
+          aggregateImpressions = Math.round(r.impressions || 0);
+          aggregateCtr = Number(r.ctr || 0);
+          aggregatePos = Number(r.position || 0);
+        }
+      }
+    } catch (sumErr) {
+      console.warn("GSC dimensionless summary query warning:", sumErr);
+    }
+
+    // 1b. Daily metrics for trend charts
     const dailyRes = await fetch(
       `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
       {
@@ -547,19 +691,16 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          startDate,
-          endDate,
+          startDate: windows.currentStart,
+          endDate: windows.currentEnd,
           dimensions: ["date"],
           rowLimit: 35,
         }),
       }
     );
 
-    let totalClicks = 0;
-    let totalImpressions = 0;
-    let sumCtr = 0;
-    let sumPos = 0;
-    let rowCount = 0;
+    let sumDailyClicks = 0;
+    let sumDailyImpressions = 0;
 
     if (dailyRes.ok) {
       const dailyData = await dailyRes.json();
@@ -571,11 +712,8 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
         const ctr = Number(row.ctr || 0);
         const position = Number(row.position || 0);
 
-        totalClicks += clicks;
-        totalImpressions += impressions;
-        sumCtr += ctr;
-        sumPos += position;
-        rowCount++;
+        sumDailyClicks += clicks;
+        sumDailyImpressions += impressions;
 
         await cmsExecute(
           `INSERT INTO gsc_daily_metrics (id, metric_date, clicks, impressions, ctr, position)
@@ -586,247 +724,260 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
       }
     }
 
-    // Historical comparison window (Previous 28 days)
-    const prevEndDate = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
-    const prevStartDate = new Date(Date.now() - 58 * 86400000).toISOString().slice(0, 10);
+    // Fallback if dimensionless returned 0 but daily had data
+    if (aggregateClicks === 0 && sumDailyClicks > 0) {
+      aggregateClicks = sumDailyClicks;
+      aggregateImpressions = sumDailyImpressions;
+      if (aggregateImpressions > 0) {
+        aggregateCtr = aggregateClicks / aggregateImpressions;
+      }
+    }
+
+    // 1c. Historical comparison window (Previous 28 days, non-overlapping)
     const prevQueryMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
     const prevPageMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
     const prevPqMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
 
     try {
-      const prevQueryRes = await fetch(
-        `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+      const prevQueryData = await fetchGscSearchAnalyticsPaginated(
+        siteUrl,
+        accessToken,
         {
-          method: "POST",
-          headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-          body: JSON.stringify({ startDate: prevStartDate, endDate: prevEndDate, dimensions: ["query"], rowLimit: 500 }),
-        }
+          startDate: windows.previousStart,
+          endDate: windows.previousEnd,
+          dimensions: ["query"],
+        },
+        1000
       );
-      if (prevQueryRes.ok) {
-        const d = await prevQueryRes.json();
-        for (const r of d.rows || []) {
-          const qText = (r.keys[0] || "").slice(0, 500);
-          prevQueryMap.set(qText, {
-            clicks: Math.round(r.clicks || 0),
-            impressions: Math.round(r.impressions || 0),
-            ctr: Number(r.ctr || 0),
-            position: Number(r.position || 0),
-          });
-        }
+      for (const r of prevQueryData.rows) {
+        const qText = (r.keys[0] || "").slice(0, 500);
+        prevQueryMap.set(normalizeSearchQuery(qText), {
+          clicks: Math.round(r.clicks || 0),
+          impressions: Math.round(r.impressions || 0),
+          ctr: Number(r.ctr || 0),
+          position: Number(r.position || 0),
+        });
       }
 
-      const prevPageRes = await fetch(
-        `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+      const prevPageData = await fetchGscSearchAnalyticsPaginated(
+        siteUrl,
+        accessToken,
         {
-          method: "POST",
-          headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-          body: JSON.stringify({ startDate: prevStartDate, endDate: prevEndDate, dimensions: ["page"], rowLimit: 500 }),
-        }
+          startDate: windows.previousStart,
+          endDate: windows.previousEnd,
+          dimensions: ["page"],
+        },
+        1000
       );
-      if (prevPageRes.ok) {
-        const d = await prevPageRes.json();
-        for (const r of d.rows || []) {
-          const pUrl = (r.keys[0] || "").slice(0, 500);
-          prevPageMap.set(pUrl, {
-            clicks: Math.round(r.clicks || 0),
-            impressions: Math.round(r.impressions || 0),
-            ctr: Number(r.ctr || 0),
-            position: Number(r.position || 0),
-          });
-        }
+      for (const r of prevPageData.rows) {
+        const pUrl = (r.keys[0] || "").slice(0, 500);
+        prevPageMap.set(canonicalPageKey(pUrl), {
+          clicks: Math.round(r.clicks || 0),
+          impressions: Math.round(r.impressions || 0),
+          ctr: Number(r.ctr || 0),
+          position: Number(r.position || 0),
+        });
       }
 
-      const prevPqRes = await fetch(
-        `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+      const prevPqData = await fetchGscSearchAnalyticsPaginated(
+        siteUrl,
+        accessToken,
         {
-          method: "POST",
-          headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-          body: JSON.stringify({ startDate: prevStartDate, endDate: prevEndDate, dimensions: ["page", "query"], rowLimit: 1000 }),
-        }
+          startDate: windows.previousStart,
+          endDate: windows.previousEnd,
+          dimensions: ["page", "query"],
+        },
+        2000
       );
-      if (prevPqRes.ok) {
-        const d = await prevPqRes.json();
-        for (const r of d.rows || []) {
-          const pUrl = (r.keys[0] || "").slice(0, 500);
-          const qText = (r.keys[1] || "").slice(0, 500);
-          prevPqMap.set(`${pUrl}|||${qText}`, {
-            clicks: Math.round(r.clicks || 0),
-            impressions: Math.round(r.impressions || 0),
-            ctr: Number(r.ctr || 0),
-            position: Number(r.position || 0),
-          });
-        }
+      for (const r of prevPqData.rows) {
+        const pUrl = (r.keys[0] || "").slice(0, 500);
+        const qText = (r.keys[1] || "").slice(0, 500);
+        prevPqMap.set(`${canonicalPageKey(pUrl)}|||${normalizeSearchQuery(qText)}`, {
+          clicks: Math.round(r.clicks || 0),
+          impressions: Math.round(r.impressions || 0),
+          ctr: Number(r.ctr || 0),
+          position: Number(r.position || 0),
+        });
       }
     } catch (prevErr) {
       console.warn("Could not fetch previous 28d GSC window for comparison:", prevErr);
     }
 
-    const todayStr = new Date().toISOString().slice(0, 10);
-
-    // Top Queries
-    const queryRes = await fetch(
-      `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+    // 1d. Top Queries (Current 28d)
+    const currentQueryData = await fetchGscSearchAnalyticsPaginated(
+      siteUrl,
+      accessToken,
       {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          startDate,
-          endDate,
-          dimensions: ["query"],
-          rowLimit: 500,
-        }),
-      }
+        startDate: windows.currentStart,
+        endDate: windows.currentEnd,
+        dimensions: ["query"],
+      },
+      1000
     );
 
-    if (queryRes.ok) {
-      const queryData = await queryRes.json();
-      const rows = queryData.rows || [];
-      for (const row of rows) {
-        const queryText = (row.keys[0] || "").slice(0, 500);
-        const clicks = Math.round(row.clicks || 0);
-        const impressions = Math.round(row.impressions || 0);
-        const ctr = Number(row.ctr || 0);
-        const position = Number(row.position || 0);
-        const prev = prevQueryMap.get(queryText);
-        const prevPosition = prev ? prev.position : null;
-        const prevClicks = prev ? prev.clicks : 0;
-        const prevImpressions = prev ? prev.impressions : 0;
+    for (const row of currentQueryData.rows) {
+      const queryText = (row.keys[0] || "").slice(0, 500);
+      const normQ = normalizeSearchQuery(queryText);
+      const clicks = Math.round(row.clicks || 0);
+      const impressions = Math.round(row.impressions || 0);
+      const ctr = Number(row.ctr || 0);
+      const position = Number(row.position || 0);
+      const prev = prevQueryMap.get(normQ);
+      const prevPosition = prev ? prev.position : null;
+      const prevClicks = prev ? prev.clicks : 0;
+      const prevImpressions = prev ? prev.impressions : 0;
 
-        const rowId = createHash("md5").update(`q_${queryText}`).digest("hex");
+      const rowId = createHash("md5").update(`q_${normQ}`).digest("hex");
 
-        await cmsExecute(
-          `INSERT INTO gsc_query_metrics (id, query_text, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '28d', NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
-          [rowId, queryText, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
-        );
+      await cmsExecute(
+        `INSERT INTO gsc_query_metrics (id, query_text, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '28d', NOW())
+         ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+        [rowId, queryText, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
+      );
 
-        // Snapshot record
-        const snapId = createHash("md5").update(`snap_q_${todayStr}_${queryText}`).digest("hex");
-        await cmsExecute(
-          `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, query_text, period_type, clicks, impressions, ctr, position, created_at)
-           VALUES (?, ?, 'query', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
-          [snapId, todayStr, queryText, queryText, clicks, impressions, ctr, position]
-        );
-      }
+      // Snapshot record
+      const snapId = createHash("md5").update(`snap_q_${todayStr}_${normQ}`).digest("hex");
+      await cmsExecute(
+        `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, query_text, period_type, clicks, impressions, ctr, position, created_at)
+         VALUES (?, ?, 'query', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
+         ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
+        [snapId, todayStr, queryText, queryText, clicks, impressions, ctr, position]
+      );
     }
 
-    // Top Pages
-    const pageRes = await fetch(
-      `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+    // 1e. Top Pages (Current 28d)
+    const currentPageData = await fetchGscSearchAnalyticsPaginated(
+      siteUrl,
+      accessToken,
       {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          startDate,
-          endDate,
-          dimensions: ["page"],
-          rowLimit: 500,
-        }),
-      }
+        startDate: windows.currentStart,
+        endDate: windows.currentEnd,
+        dimensions: ["page"],
+      },
+      1000
     );
 
-    if (pageRes.ok) {
-      const pageData = await pageRes.json();
-      const rows = pageData.rows || [];
-      for (const row of rows) {
-        const pageUrl = (row.keys[0] || "").slice(0, 500);
-        const clicks = Math.round(row.clicks || 0);
-        const impressions = Math.round(row.impressions || 0);
-        const ctr = Number(row.ctr || 0);
-        const position = Number(row.position || 0);
-        const prev = prevPageMap.get(pageUrl);
-        const prevPosition = prev ? prev.position : null;
-        const prevClicks = prev ? prev.clicks : 0;
-        const prevImpressions = prev ? prev.impressions : 0;
+    for (const row of currentPageData.rows) {
+      const pageUrl = (row.keys[0] || "").slice(0, 500);
+      const canonKey = canonicalPageKey(pageUrl);
+      const clicks = Math.round(row.clicks || 0);
+      const impressions = Math.round(row.impressions || 0);
+      const ctr = Number(row.ctr || 0);
+      const position = Number(row.position || 0);
+      const prev = prevPageMap.get(canonKey);
+      const prevPosition = prev ? prev.position : null;
+      const prevClicks = prev ? prev.clicks : 0;
+      const prevImpressions = prev ? prev.impressions : 0;
 
-        const rowId = createHash("md5").update(`p_${pageUrl}`).digest("hex");
+      const rowId = createHash("md5").update(`p_${canonKey}`).digest("hex");
 
-        await cmsExecute(
-          `INSERT INTO gsc_page_metrics (id, page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '28d', NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
-          [rowId, pageUrl, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
-        );
+      await cmsExecute(
+        `INSERT INTO gsc_page_metrics (id, page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '28d', NOW())
+         ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+        [rowId, pageUrl, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
+      );
 
-        // Snapshot record
-        const snapId = createHash("md5").update(`snap_p_${todayStr}_${pageUrl}`).digest("hex");
-        await cmsExecute(
-          `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, period_type, clicks, impressions, ctr, position, created_at)
-           VALUES (?, ?, 'page', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
-          [snapId, todayStr, pageUrl, pageUrl, clicks, impressions, ctr, position]
-        );
-      }
+      // Snapshot record
+      const snapId = createHash("md5").update(`snap_p_${todayStr}_${canonKey}`).digest("hex");
+      await cmsExecute(
+        `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, period_type, clicks, impressions, ctr, position, created_at)
+         VALUES (?, ?, 'page', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
+         ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
+        [snapId, todayStr, pageUrl, pageUrl, clicks, impressions, ctr, position]
+      );
     }
 
-    // Page + Query Matrix (Which query ranks for which page)
-    const pqRes = await fetch(
-      `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+    // 1f. Page + Query Matrix (Current 28d, paginated up to 5000 rows)
+    const currentPqData = await fetchGscSearchAnalyticsPaginated(
+      siteUrl,
+      accessToken,
       {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          startDate,
-          endDate,
-          dimensions: ["page", "query"],
-          rowLimit: 1000,
-        }),
-      }
+        startDate: windows.currentStart,
+        endDate: windows.currentEnd,
+        dimensions: ["page", "query"],
+      },
+      5000
     );
 
-    if (pqRes.ok) {
-      const pqData = await pqRes.json();
-      const rows = pqData.rows || [];
-      for (const row of rows) {
-        const pageUrl = (row.keys[0] || "").slice(0, 500);
-        const queryText = (row.keys[1] || "").slice(0, 500);
-        const clicks = Math.round(row.clicks || 0);
-        const impressions = Math.round(row.impressions || 0);
-        const ctr = Number(row.ctr || 0);
-        const position = Number(row.position || 0);
-        const prev = prevPqMap.get(`${pageUrl}|||${queryText}`);
-        const prevPosition = prev ? prev.position : null;
-        const prevClicks = prev ? prev.clicks : 0;
-        const prevImpressions = prev ? prev.impressions : 0;
+    let pqStored = 0;
+    for (const row of currentPqData.rows) {
+      const pageUrl = (row.keys[0] || "").slice(0, 500);
+      const queryText = (row.keys[1] || "").slice(0, 500);
+      const canonKey = canonicalPageKey(pageUrl);
+      const normQ = normalizeSearchQuery(queryText);
+      const clicks = Math.round(row.clicks || 0);
+      const impressions = Math.round(row.impressions || 0);
+      const ctr = Number(row.ctr || 0);
+      const position = Number(row.position || 0);
+      const prev = prevPqMap.get(`${canonKey}|||${normQ}`);
+      const prevPosition = prev ? prev.position : null;
+      const prevClicks = prev ? prev.clicks : 0;
+      const prevImpressions = prev ? prev.impressions : 0;
 
-        const rowId = createHash("md5").update(`pq_${todayStr}_${pageUrl}_${queryText}`).digest("hex");
+      // Deterministic current identity: one row per canonical page and normalized query
+      const rowId = createHash("md5").update(`pq_current|28d|${canonKey}|${normQ}`).digest("hex");
 
-        await cmsExecute(
-          `INSERT INTO gsc_page_query_metrics (id, metric_date, period_type, page_url, query_text, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, updated_at)
-           VALUES (?, ?, '28d', ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
-          [rowId, todayStr, pageUrl, queryText, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
-        );
+      await cmsExecute(
+        `INSERT INTO gsc_page_query_metrics (
+           id, metric_date, period_type, page_url, query_text,
+           canonical_page_key, query_text_normalized,
+           clicks, impressions, ctr, position,
+           prev_position, prev_clicks, prev_impressions, updated_at
+         )
+         VALUES (?, ?, '28d', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+         ON DUPLICATE KEY UPDATE
+           page_url = VALUES(page_url),
+           query_text = VALUES(query_text),
+           canonical_page_key = VALUES(canonical_page_key),
+           query_text_normalized = VALUES(query_text_normalized),
+           clicks = VALUES(clicks),
+           impressions = VALUES(impressions),
+           ctr = VALUES(ctr),
+           position = VALUES(position),
+           prev_position = VALUES(prev_position),
+           prev_clicks = VALUES(prev_clicks),
+           prev_impressions = VALUES(prev_impressions),
+           metric_date = VALUES(metric_date),
+           updated_at = NOW()`,
+        [rowId, todayStr, pageUrl, queryText, canonKey, normQ, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
+      );
+      pqStored++;
 
-        // Snapshot record
-        const snapId = createHash("md5").update(`snap_pq_${todayStr}_${pageUrl}_${queryText}`).digest("hex");
-        await cmsExecute(
-          `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, query_text, period_type, clicks, impressions, ctr, position, created_at)
-           VALUES (?, ?, 'page_query', ?, ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
-           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
-          [snapId, todayStr, `${pageUrl}|||${queryText}`, pageUrl, queryText, clicks, impressions, ctr, position]
-        );
-      }
+      // Daily snapshot record in gsc_ranking_snapshots for historical tracking
+      const snapId = createHash("md5").update(`snap_pq_${todayStr}_${canonKey}_${normQ}`).digest("hex");
+      await cmsExecute(
+        `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, query_text, period_type, clicks, impressions, ctr, position, created_at)
+         VALUES (?, ?, 'page_query', ?, ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
+         ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
+        [snapId, todayStr, `${pageUrl}|||${queryText}`, pageUrl, queryText, clicks, impressions, ctr, position]
+      );
     }
 
-    const avgCtr = rowCount > 0 ? sumCtr / rowCount : 0;
-    const avgPos = rowCount > 0 ? sumPos / rowCount : 0;
-
+    // 1g. Prune stale current rows that were not updated in this sync run
     await cmsExecute(
-      `INSERT INTO gsc_sync_runs (id, status, clicks, impressions, ctr, position, started_at, completed_at)
-       VALUES (?, 'completed', ?, ?, ?, ?, ?, NOW())`,
-      [`run_${Date.now()}`, totalClicks, totalImpressions, avgCtr, avgPos, syncStartTime]
+      `DELETE FROM gsc_page_query_metrics WHERE period_type = '28d' AND updated_at < ?`,
+      [syncStartTime]
+    );
+
+    // 1h. Record sync run with true aggregate metrics
+    await cmsExecute(
+      `INSERT INTO gsc_sync_runs (id, status, clicks, impressions, ctr, position, window_start, window_end, rows_fetched, rows_stored, is_truncated, started_at, completed_at)
+       VALUES (?, 'completed', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
+      [
+        `run_${Date.now()}`,
+        aggregateClicks,
+        aggregateImpressions,
+        aggregateCtr,
+        aggregatePos,
+        windows.currentStart,
+        windows.currentEnd,
+        currentPqData.rowsFetched,
+        pqStored,
+        currentPqData.isTruncated,
+        syncStartTime,
+      ]
     );
 
     await cmsExecute(
@@ -835,18 +986,30 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
        WHERE service = 'gsc'`
     );
 
-    gscResult = { clicks: totalClicks, impressions: totalImpressions, avgCtr, avgPos };
+    gscResult = {
+      success: true,
+      clicks: aggregateClicks,
+      impressions: aggregateImpressions,
+      avgCtr: aggregateCtr,
+      avgPos: aggregatePos,
+      rowsFetched: currentPqData.rowsFetched,
+      rowsStored: pqStored,
+      isTruncated: currentPqData.isTruncated,
+      windowStart: windows.currentStart,
+      windowEnd: windows.currentEnd,
+    };
   } catch (err: any) {
+    gscError = err?.message || "GSC Sync Error";
     console.error("GSC sync error:", err);
     await cmsExecute(
       `UPDATE google_connections SET last_error = ?, last_sync_at = NOW() WHERE service = 'gsc'`,
-      [err?.message || "Sync error"]
+      [gscError]
     );
     await publishNotificationEvent({
       type: "google_sync_failed",
       severity: "warning",
       title: "Google Search Console Sync Warning",
-      message: `Failed to sync GSC metrics: ${err?.message || "Unknown API error"}`,
+      message: `Failed to sync GSC metrics: ${gscError}`,
       resource_type: "integration",
       resource_id: "google_gsc",
       resource_url: "/admin/search-console/",
@@ -865,7 +1028,63 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
     }
 
     if (propId) {
-      // Daily report
+      // 2a. Dimensionless aggregate runReport for true 28-day KPI metrics
+      let aggActiveUsers = 0;
+      let aggSessions = 0;
+      let aggEngagedSessions = 0;
+      let aggEngagementRate = 0;
+      let aggViews = 0;
+      let aggKeyEvents = 0;
+
+      try {
+        const aggRes = await fetch(
+          `https://analyticsdata.googleapis.com/v1beta/${propId}:runReport`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              dateRanges: [{ startDate: "28daysAgo", endDate: "yesterday" }],
+              dimensionFilter: {
+                filter: {
+                  fieldName: "hostName",
+                  stringFilter: {
+                    matchType: "CONTAINS",
+                    value: "dgeniussolutions.com",
+                  },
+                },
+              },
+              metrics: [
+                { name: "activeUsers" },
+                { name: "sessions" },
+                { name: "engagedSessions" },
+                { name: "engagementRate" },
+                { name: "screenPageViews" },
+                { name: "keyEvents" },
+              ],
+            }),
+          }
+        );
+
+        if (aggRes.ok) {
+          const aggData = await aggRes.json();
+          const r = aggData.rows?.[0];
+          if (r) {
+            aggActiveUsers = Number(r.metricValues?.[0]?.value || 0);
+            aggSessions = Number(r.metricValues?.[1]?.value || 0);
+            aggEngagedSessions = Number(r.metricValues?.[2]?.value || 0);
+            aggEngagementRate = Number(r.metricValues?.[3]?.value || 0);
+            aggViews = Number(r.metricValues?.[4]?.value || 0);
+            aggKeyEvents = Number(r.metricValues?.[5]?.value || 0);
+          }
+        }
+      } catch (aggErr) {
+        console.warn("GA4 aggregate KPI runReport warning:", aggErr);
+      }
+
+      // 2b. Daily report for trend charts
       const dailyGa4Res = await fetch(
         `https://analyticsdata.googleapis.com/v1beta/${propId}:runReport`,
         {
@@ -889,11 +1108,6 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
         }
       );
 
-      let totalActive = 0;
-      let totalSess = 0;
-      let totalEngaged = 0;
-      let totalViews = 0;
-
       if (dailyGa4Res.ok) {
         const ga4Data = await dailyGa4Res.json();
         const rows = ga4Data.rows || [];
@@ -910,11 +1124,6 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
           const views = Number(row.metricValues?.[4]?.value || 0);
           const keyEvents = Number(row.metricValues?.[5]?.value || 0);
 
-          totalActive += activeUsers;
-          totalSess += sessions;
-          totalEngaged += engagedSessions;
-          totalViews += views;
-
           await cmsExecute(
             `INSERT INTO ga4_daily_metrics (id, metric_date, active_users, sessions, engaged_sessions, engagement_rate, views, key_events)
              VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -930,7 +1139,7 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
         }
       }
 
-      // Top pages report
+      // 2c. Top pages report (filtered to dgeniussolutions.com)
       const pageGa4Res = await fetch(
         `https://analyticsdata.googleapis.com/v1beta/${propId}:runReport`,
         {
@@ -941,44 +1150,76 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
           },
           body: JSON.stringify({
             dateRanges: [{ startDate: "28daysAgo", endDate: "yesterday" }],
+            dimensionFilter: {
+              filter: {
+                fieldName: "hostName",
+                stringFilter: {
+                  matchType: "CONTAINS",
+                  value: "dgeniussolutions.com",
+                },
+              },
+            },
             dimensions: [{ name: "pagePath" }],
             metrics: [
               { name: "screenPageViews" },
               { name: "sessions" },
               { name: "engagementRate" },
             ],
-            limit: 50,
+            limit: 100,
           }),
         }
       );
 
+      let ga4PagesStored = 0;
       if (pageGa4Res.ok) {
         const pageData = await pageGa4Res.json();
         const rows = pageData.rows || [];
         for (const row of rows) {
           const pagePath = (row.dimensionValues?.[0]?.value || "").slice(0, 500);
+          const canonKey = canonicalPageKey(pagePath);
           const views = Number(row.metricValues?.[0]?.value || 0);
           const sessions = Number(row.metricValues?.[1]?.value || 0);
           const engagementRate = Number(row.metricValues?.[2]?.value || 0);
-          const rowId = createHash("md5").update(`ga4_${pagePath}`).digest("hex");
+          const rowId = createHash("md5").update(`ga4_${canonKey}`).digest("hex");
 
           await cmsExecute(
-            `INSERT INTO ga4_page_metrics (id, page_path, views, sessions, engagement_rate, period_type, updated_at)
-             VALUES (?, ?, ?, ?, ?, '28d', NOW())
+            `INSERT INTO ga4_page_metrics (id, page_path, canonical_page_key, views, sessions, engagement_rate, period_type, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?, '28d', NOW())
              ON DUPLICATE KEY UPDATE
+               page_path = VALUES(page_path),
+               canonical_page_key = VALUES(canonical_page_key),
                views = VALUES(views),
                sessions = VALUES(sessions),
                engagement_rate = VALUES(engagement_rate),
                updated_at = NOW()`,
-            [rowId, pagePath, views, sessions, engagementRate]
+            [rowId, pagePath, canonKey, views, sessions, engagementRate]
           );
+          ga4PagesStored++;
         }
       }
 
+      // 2d. Prune stale GA4 page metrics
       await cmsExecute(
-        `INSERT INTO ga4_sync_runs (id, status, started_at, completed_at)
-         VALUES (?, 'completed', ?, NOW())`,
-        [`ga4_run_${Date.now()}`, syncStartTime]
+        `DELETE FROM ga4_page_metrics WHERE period_type = '28d' AND updated_at < ?`,
+        [syncStartTime]
+      );
+
+      // 2e. Record GA4 sync run with true aggregate KPIs
+      await cmsExecute(
+        `INSERT INTO ga4_sync_runs (id, status, active_users, sessions, engaged_sessions, engagement_rate, views, key_events, window_start, window_end, started_at, completed_at)
+         VALUES (?, 'completed', ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
+        [
+          `ga4_run_${Date.now()}`,
+          aggActiveUsers,
+          aggSessions,
+          aggEngagedSessions,
+          aggEngagementRate,
+          aggViews,
+          aggKeyEvents,
+          windows.currentStart,
+          windows.currentEnd,
+          syncStartTime,
+        ]
       );
 
       await cmsExecute(
@@ -987,19 +1228,31 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
          WHERE service = 'ga4'`
       );
 
-      ga4Result = { activeUsers: totalActive, sessions: totalSess, engagedSessions: totalEngaged, views: totalViews };
+      ga4Result = {
+        success: true,
+        activeUsers: aggActiveUsers,
+        sessions: aggSessions,
+        engagedSessions: aggEngagedSessions,
+        engagementRate: aggEngagementRate,
+        views: aggViews,
+        keyEvents: aggKeyEvents,
+        pagesStored: ga4PagesStored,
+        windowStart: windows.currentStart,
+        windowEnd: windows.currentEnd,
+      };
     }
   } catch (err: any) {
+    ga4Error = err?.message || "GA4 Sync Error";
     console.error("GA4 sync error:", err);
     await cmsExecute(
       `UPDATE google_connections SET last_error = ?, last_sync_at = NOW() WHERE service = 'ga4'`,
-      [err?.message || "Sync error"]
+      [ga4Error]
     );
     await publishNotificationEvent({
       type: "google_sync_failed",
       severity: "warning",
       title: "Google Analytics 4 Sync Warning",
-      message: `Failed to sync GA4 metrics: ${err?.message || "Unknown API error"}`,
+      message: `Failed to sync GA4 metrics: ${ga4Error}`,
       resource_type: "integration",
       resource_id: "google_ga4",
       resource_url: "/admin/analytics/",
@@ -1007,10 +1260,16 @@ export async function syncGoogleData(): Promise<{ success: boolean; gsc?: any; g
     }).catch(() => {});
   }
 
+  const hasGsc = Boolean(gscResult && gscResult.success);
+  const hasGa4 = Boolean(ga4Result && ga4Result.success);
+  const partial = (hasGsc && Boolean(ga4Error)) || (hasGa4 && Boolean(gscError));
+
   return {
-    success: true,
-    gsc: gscResult,
-    ga4: ga4Result,
+    success: hasGsc || hasGa4,
+    partial,
+    gsc: gscResult || (gscError ? { success: false, error: gscError } : undefined),
+    ga4: ga4Result || (ga4Error ? { success: false, error: ga4Error } : undefined),
+    error: gscError && ga4Error ? `GSC: ${gscError} | GA4: ${ga4Error}` : (gscError || ga4Error || undefined),
   };
 }
 
@@ -1183,26 +1442,42 @@ export async function getGscDashboardMetrics(days: number = 28) {
        LIMIT 25`
     );
 
+    // Prefer true Google aggregate metrics from latest successful sync run
+    const { rows: syncRuns } = await cmsQuery<any>(
+      `SELECT clicks, impressions, ctr, position
+       FROM gsc_sync_runs
+       WHERE status = 'completed' AND impressions > 0
+       ORDER BY completed_at DESC LIMIT 1`
+    );
+
     let totalClicks = 0;
     let totalImpressions = 0;
-    let sumPos = 0;
+    let avgCtr = 0;
+    let avgPos = 0;
 
-    for (const d of daily as any[]) {
-      totalClicks += Number(d.clicks || 0);
-      totalImpressions += Number(d.impressions || 0);
-      sumPos += Number(d.position || 0);
+    if (syncRuns && syncRuns.length > 0) {
+      totalClicks = Number(syncRuns[0].clicks || 0);
+      totalImpressions = Number(syncRuns[0].impressions || 0);
+      avgCtr = Number((Number(syncRuns[0].ctr || 0) * 100).toFixed(2));
+      avgPos = Number(Number(syncRuns[0].position || 0).toFixed(1));
+    } else {
+      let sumPos = 0;
+      for (const d of daily as any[]) {
+        totalClicks += Number(d.clicks || 0);
+        totalImpressions += Number(d.impressions || 0);
+        sumPos += Number(d.position || 0);
+      }
+      avgPos = daily.length > 0 ? Number((sumPos / daily.length).toFixed(1)) : 0;
+      avgCtr = totalImpressions > 0 ? Number(((totalClicks / totalImpressions) * 100).toFixed(2)) : 0;
     }
 
-    const avgPos = daily.length > 0 ? (sumPos / daily.length).toFixed(1) : 0;
-    const avgCtr = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100).toFixed(2) : 0;
-
     return {
-      connected: daily.length > 0,
+      connected: (daily && daily.length > 0) || (syncRuns && syncRuns.length > 0),
       summary: {
         clicks: totalClicks,
         impressions: totalImpressions,
-        ctr: Number(avgCtr),
-        position: Number(avgPos),
+        ctr: avgCtr,
+        position: avgPos,
       },
       daily: (daily as any[]).reverse(),
       topQueries,
@@ -1251,29 +1526,45 @@ export async function getGa4DashboardMetrics(days: number = 28) {
        LIMIT 25`
     );
 
+    // Prefer true GA4 aggregate KPI metrics from sync run (never sum daily active users)
+    const { rows: syncRuns } = await cmsQuery<any>(
+      `SELECT active_users, sessions, engaged_sessions, engagement_rate, views
+       FROM ga4_sync_runs
+       WHERE status = 'completed' AND (active_users > 0 OR sessions > 0)
+       ORDER BY completed_at DESC LIMIT 1`
+    );
+
     let totalActiveUsers = 0;
     let totalSessions = 0;
     let totalEngagedSessions = 0;
+    let avgEngRate = 0;
     let totalViews = 0;
-    let sumEngRate = 0;
 
-    for (const d of daily as any[]) {
-      totalActiveUsers += Number(d.active_users || 0);
-      totalSessions += Number(d.sessions || 0);
-      totalEngagedSessions += Number(d.engaged_sessions || 0);
-      totalViews += Number(d.views || 0);
-      sumEngRate += Number(d.engagement_rate || 0);
+    if (syncRuns && syncRuns.length > 0) {
+      totalActiveUsers = Number(syncRuns[0].active_users || 0);
+      totalSessions = Number(syncRuns[0].sessions || 0);
+      totalEngagedSessions = Number(syncRuns[0].engaged_sessions || 0);
+      avgEngRate = Number((Number(syncRuns[0].engagement_rate || 0) * 100).toFixed(1));
+      totalViews = Number(syncRuns[0].views || 0);
+    } else {
+      let sumEngRate = 0;
+      for (const d of daily as any[]) {
+        totalActiveUsers += Number(d.active_users || 0);
+        totalSessions += Number(d.sessions || 0);
+        totalEngagedSessions += Number(d.engaged_sessions || 0);
+        totalViews += Number(d.views || 0);
+        sumEngRate += Number(d.engagement_rate || 0);
+      }
+      avgEngRate = daily.length > 0 ? Number(((sumEngRate / daily.length) * 100).toFixed(1)) : 0;
     }
 
-    const avgEngRate = daily.length > 0 ? ((sumEngRate / daily.length) * 100).toFixed(1) : 0;
-
     return {
-      connected: daily.length > 0,
+      connected: (daily && daily.length > 0) || (syncRuns && syncRuns.length > 0),
       summary: {
         activeUsers: totalActiveUsers,
         sessions: totalSessions,
         engagedSessions: totalEngagedSessions,
-        engagementRate: Number(avgEngRate),
+        engagementRate: avgEngRate,
         views: totalViews,
       },
       daily: (daily as any[]).reverse(),

@@ -203,6 +203,38 @@ try {
       await connection.query("ALTER TABLE gsc_page_query_metrics ADD COLUMN prev_position DECIMAL(5,2) NULL, ADD COLUMN prev_clicks INT DEFAULT 0, ADD COLUMN prev_impressions INT DEFAULT 0");
       console.log("Applied column migration: gsc_page_query_metrics.prev_position");
     }
+    if (!pqExistingCols.has("canonical_page_key")) {
+      await connection.query("ALTER TABLE gsc_page_query_metrics ADD COLUMN canonical_page_key VARCHAR(512) NULL, ADD INDEX idx_gsc_pq_canon (canonical_page_key(255))");
+      console.log("Applied column migration: gsc_page_query_metrics.canonical_page_key");
+    }
+    if (!pqExistingCols.has("query_text_normalized")) {
+      await connection.query("ALTER TABLE gsc_page_query_metrics ADD COLUMN query_text_normalized VARCHAR(512) NULL, ADD INDEX idx_gsc_pq_norm (query_text_normalized(255))");
+      console.log("Applied column migration: gsc_page_query_metrics.query_text_normalized");
+    }
+
+    // gsc_sync_runs columns
+    const [srCols] = await connection.query("DESCRIBE gsc_sync_runs");
+    const srExistingCols = new Set(srCols.map((c) => c.Field));
+    if (!srExistingCols.has("window_start")) {
+      await connection.query("ALTER TABLE gsc_sync_runs ADD COLUMN window_start DATE NULL, ADD COLUMN window_end DATE NULL, ADD COLUMN rows_fetched INT DEFAULT 0, ADD COLUMN rows_stored INT DEFAULT 0, ADD COLUMN is_truncated BOOLEAN DEFAULT FALSE");
+      console.log("Applied column migration: gsc_sync_runs.window_start & pagination");
+    }
+
+    // ga4_sync_runs columns
+    const [gaSrCols] = await connection.query("DESCRIBE ga4_sync_runs");
+    const gaSrExistingCols = new Set(gaSrCols.map((c) => c.Field));
+    if (!gaSrExistingCols.has("active_users")) {
+      await connection.query("ALTER TABLE ga4_sync_runs ADD COLUMN active_users INT DEFAULT 0, ADD COLUMN sessions INT DEFAULT 0, ADD COLUMN engaged_sessions INT DEFAULT 0, ADD COLUMN engagement_rate DECIMAL(5,4) DEFAULT 0, ADD COLUMN views INT DEFAULT 0, ADD COLUMN key_events INT DEFAULT 0, ADD COLUMN window_start DATE NULL, ADD COLUMN window_end DATE NULL");
+      console.log("Applied column migration: ga4_sync_runs.active_users & window");
+    }
+
+    // ga4_page_metrics columns
+    const [gaPmCols] = await connection.query("DESCRIBE ga4_page_metrics");
+    const gaPmExistingCols = new Set(gaPmCols.map((c) => c.Field));
+    if (!gaPmExistingCols.has("canonical_page_key")) {
+      await connection.query("ALTER TABLE ga4_page_metrics ADD COLUMN canonical_page_key VARCHAR(512) NULL, ADD INDEX idx_ga4_pm_canon (canonical_page_key(255))");
+      console.log("Applied column migration: ga4_page_metrics.canonical_page_key");
+    }
   } catch (err) {
     console.warn("GSC historical comparison migration notice:", err.message);
   }

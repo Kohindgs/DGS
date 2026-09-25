@@ -159,18 +159,23 @@ export default async function AdminSiteWidePages() {
         psiMap.set(key, existing);
       }
 
-      // Top queries per page map
+      // Top queries per page map (Current 28d window only)
       const topKeywordsMap = new Map<string, string[]>();
       const { rows: pqRows } = await cmsQuery<any>(
-        `SELECT page_url, query_text, clicks FROM gsc_page_query_metrics ORDER BY clicks DESC, impressions DESC`
+        `SELECT page_url, canonical_page_key, query_text, clicks FROM gsc_page_query_metrics WHERE period_type = '28d' ORDER BY clicks DESC, impressions DESC`
       );
       for (const pq of pqRows || []) {
-        const key = normalizeUrlKey(pq.page_url);
+        const key = normalizeUrlKey(pq.canonical_page_key || pq.page_url);
         const list = topKeywordsMap.get(key) || [];
         if (list.length < 3 && !list.includes(pq.query_text)) {
           list.push(pq.query_text);
         }
         topKeywordsMap.set(key, list);
+        // Also map raw URL key
+        const rawKey = normalizeUrlKey(pq.page_url);
+        if (rawKey !== key) {
+          topKeywordsMap.set(rawKey, list);
+        }
       }
 
       // Total ranked queries count

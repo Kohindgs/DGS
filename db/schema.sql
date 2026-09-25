@@ -341,6 +341,8 @@ CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
   period_type VARCHAR(50) DEFAULT '28d',
   page_url VARCHAR(512) NOT NULL,
   query_text VARCHAR(512) NOT NULL,
+  canonical_page_key VARCHAR(512) NULL,
+  query_text_normalized VARCHAR(512) NULL,
   clicks INT DEFAULT 0,
   impressions INT DEFAULT 0,
   ctr DECIMAL(5,4) DEFAULT 0,
@@ -350,7 +352,9 @@ CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
   updated_at DATETIME NOT NULL,
   INDEX idx_gsc_pq_page (page_url(255)),
   INDEX idx_gsc_pq_query (query_text(255)),
-  UNIQUE KEY uq_gsc_pq (metric_date, period_type, page_url(255), query_text(255))
+  INDEX idx_gsc_pq_canon (canonical_page_key(255)),
+  INDEX idx_gsc_pq_norm (query_text_normalized(255)),
+  UNIQUE KEY uq_gsc_pq_current (period_type, canonical_page_key(255), query_text_normalized(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS target_keywords (
@@ -496,6 +500,8 @@ CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
   period_type VARCHAR(50) DEFAULT '28d',
   page_url VARCHAR(512) NOT NULL,
   query_text VARCHAR(512) NOT NULL,
+  canonical_page_key VARCHAR(512) NULL,
+  query_text_normalized VARCHAR(512) NULL,
   clicks INT DEFAULT 0,
   impressions INT DEFAULT 0,
   ctr DECIMAL(5,4) DEFAULT 0,
@@ -508,7 +514,9 @@ CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
   updated_at DATETIME NOT NULL,
   INDEX idx_gsc_pq_page (page_url(255)),
   INDEX idx_gsc_pq_query (query_text(255)),
-  UNIQUE KEY uq_gsc_pq (metric_date, period_type, page_url(255), query_text(255))
+  INDEX idx_gsc_pq_canon (canonical_page_key(255)),
+  INDEX idx_gsc_pq_norm (query_text_normalized(255)),
+  UNIQUE KEY uq_gsc_pq_current (period_type, canonical_page_key(255), query_text_normalized(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS gsc_ranking_snapshots (
