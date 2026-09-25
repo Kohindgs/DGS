@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { getFormDefinitionForRoute } from "@/lib/forms/registry";
+// Uses renderRecaptchaV2 deferred via setupDeferredRecaptcha
 import {
   ensureHomepageRecaptchaHost,
   setupDeferredRecaptcha,
