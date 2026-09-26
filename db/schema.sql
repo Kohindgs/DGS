@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS google_search_updates (
   external_status VARCHAR(50) NOT NULL DEFAULT 'UNKNOWN',
   incident_begin DATETIME NULL,
   incident_end DATETIME NULL,
-  raw_details JSON NULL,
+  raw_details MEDIUMTEXT NULL,
   assessment_status VARCHAR(50) NOT NULL DEFAULT 'NOT ASSESSED',
   assessment_date DATETIME NULL,
   evidence TEXT NULL,
