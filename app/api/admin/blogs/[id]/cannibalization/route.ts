@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { getCmsBlogById } from "@/lib/cms/blogs";
-import { checkBlogCannibalizationRisk } from "@/lib/seo/cannibalization";
+import { checkBlogCannibalizationRisk, checkCanonicalCollision } from "@/lib/seo/cannibalization";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -28,13 +28,20 @@ export async function GET(
   if (!blog) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
 
   const seo = blog.content?.optimization?.seo;
+  const canonicalPath = seo?.canonicalPath || `/blogs/${blog.slug}/`;
   const report = checkBlogCannibalizationRisk({
     slug: blog.slug,
     title: blog.title,
     focusKeyword: blog.focus_keyword || seo?.focusKeyword || null,
     secondaryKeywords: seo?.secondaryKeywords || null,
-    canonicalPath: seo?.canonicalPath || `/blogs/${blog.slug}/`,
+    canonicalPath,
   });
 
-  return NextResponse.json({ ok: true, blogId: id, report });
+  const canonicalCollision = await checkCanonicalCollision({
+    targetCanonical: `https://www.dgeniussolutions.com${canonicalPath}`,
+    currentEntityId: blog.id,
+    currentEntityType: "blog_post",
+  });
+
+  return NextResponse.json({ ok: true, blogId: id, report, canonicalCollision });
 }

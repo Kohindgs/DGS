@@ -1,8 +1,13 @@
 import { randomUUID } from "node:crypto";
-import { cmsExecute, cmsQuery } from "@/lib/cms/db";
-import type { BlogOptimizationPackage } from "@/lib/cms/blog-import";
-import { recordMediaUsage } from "@/lib/cms/media";
-import { checkBlogCannibalizationRisk, type BlogCannibalizationReport } from "@/lib/seo/cannibalization";
+import { cmsExecute, cmsQuery } from "./db.ts";
+import type { BlogOptimizationPackage } from "./blog-import.ts";
+import { recordMediaUsage } from "./media.ts";
+import {
+  checkBlogCannibalizationRisk,
+  type BlogCannibalizationReport,
+  checkCanonicalCollision,
+  type CanonicalCollisionResult,
+} from "../seo/cannibalization.ts";
 
 export type StoredBlogImage = {
   filename: string;
@@ -377,6 +382,7 @@ export type UpdateCmsBlogInput = {
   slug?: string;
   excerpt?: string;
   bodyHtml?: string;
+  images?: StoredBlogImage[];
   featured_image_url?: string | null;
   status?: "draft" | "review" | "scheduled" | "published";
   scheduled_for?: string | null;
@@ -408,6 +414,9 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
   const content = { ...existing.content };
   if (input.bodyHtml !== undefined) {
     content.bodyHtml = input.bodyHtml;
+  }
+  if (input.images !== undefined) {
+    content.images = input.images;
   }
   if (input.optimization) {
     content.optimization = {
@@ -576,6 +585,7 @@ export async function validateCmsBlogForPublish(id: string): Promise<{
   warnings: string[];
   blog: CmsBlogDetail | null;
   cannibalization?: BlogCannibalizationReport;
+  canonicalCollision?: CanonicalCollisionResult;
 }> {
   const blog = await getCmsBlogById(id);
   const errors: string[] = [];
@@ -617,6 +627,18 @@ export async function validateCmsBlogForPublish(id: string): Promise<{
   const canonicalPath = seo?.canonicalPath || `/blogs/${blog.slug}/`;
   if (canonicalPath !== `/blogs/${blog.slug}/`) {
     errors.push(`Canonical path (/blogs/${blog.slug}/) does not match SEO canonical (${canonicalPath}).`);
+  }
+
+  // Real Canonical Collision Check against SEO metadata, protected pages, and other entities
+  const targetCanonical = `https://www.dgeniussolutions.com${canonicalPath}`;
+  const canonicalCollision = await checkCanonicalCollision({
+    targetCanonical,
+    currentEntityId: blog.id,
+    currentEntityType: "blog_post",
+  });
+
+  if (canonicalCollision.collided) {
+    errors.push(`Canonical collision: this canonical URL is already assigned to ${canonicalCollision.owner}.`);
   }
 
   const aeo = blog.content?.optimization?.aeo;
@@ -673,6 +695,7 @@ export async function validateCmsBlogForPublish(id: string): Promise<{
     warnings,
     blog,
     cannibalization,
+    canonicalCollision,
   };
 }
 
@@ -1047,7 +1070,7 @@ export async function restoreBlogRevision(
     );
   }
 
-  const { logAuditEvent } = await import("@/lib/cms/auth-db");
+  const { logAuditEvent } = await import("./auth-db.ts");
   await logAuditEvent({
     user_id: userId || null,
     actor_email: "admin@dgeniussolutions.com",
@@ -1065,4 +1088,133 @@ export async function restoreBlogRevision(
   if (!restored) throw new Error("Failed to load restored blog");
   return restored;
 }
+
+// 16. Blog Revision Comparison Engine
+export type RevisionFieldDiff = {
+  field: string;
+  label: string;
+  currentValue: string | null;
+  revisionValue: string | null;
+  status: "ADDED" | "REMOVED" | "CHANGED" | "UNCHANGED";
+};
+
+export type RevisionComparison = {
+  blogPostId: string;
+  revisionId: string;
+  fields: RevisionFieldDiff[];
+  summary: {
+    totalFields: number;
+    changedCount: number;
+    unchangedCount: number;
+    addedCount: number;
+    removedCount: number;
+  };
+};
+
+export function compareBlogRevision(
+  current: CmsBlogDetail,
+  revisionSnapshot: Partial<CmsBlogDetail>
+): RevisionComparison {
+  const currentSnap = current;
+  const revSnap = revisionSnapshot;
+
+  const currentOpt = currentSnap.content?.optimization;
+  const revOpt = revSnap.content?.optimization;
+
+  const currentSeo = currentOpt?.seo;
+  const revSeo = revOpt?.seo;
+
+  const checkField = (
+    field: string,
+    label: string,
+    curr: unknown,
+    rev: unknown
+  ): RevisionFieldDiff => {
+    const cStr = curr == null || curr === "" ? null : String(curr).trim();
+    const rStr = rev == null || rev === "" ? null : String(rev).trim();
+
+    let status: "ADDED" | "REMOVED" | "CHANGED" | "UNCHANGED";
+    if (rStr === null && cStr !== null) {
+      status = "ADDED";
+    } else if (rStr !== null && cStr === null) {
+      status = "REMOVED";
+    } else if (rStr === cStr) {
+      status = "UNCHANGED";
+    } else {
+      status = "CHANGED";
+    }
+
+    return {
+      field,
+      label,
+      currentValue: cStr,
+      revisionValue: rStr,
+      status,
+    };
+  };
+
+  // Compare schemas summary (count and types)
+  const currentSchemas = (currentOpt?.schemas || [])
+    .map((s: any) => s?.["@type"])
+    .filter(Boolean)
+    .sort()
+    .join(", ");
+  const revSchemas = (revOpt?.schemas || [])
+    .map((s: any) => s?.["@type"])
+    .filter(Boolean)
+    .sort()
+    .join(", ");
+
+  const fields: RevisionFieldDiff[] = [
+    checkField("title", "Title", currentSnap.title, revSnap.title),
+    checkField("slug", "URL Slug", currentSnap.slug, revSnap.slug),
+    checkField("status", "Publication Status", currentSnap.status, revSnap.status),
+    checkField("excerpt", "Excerpt", currentSnap.excerpt, revSnap.excerpt),
+    checkField("featured_image_url", "Featured Image URL", currentSnap.featured_image_url, revSnap.featured_image_url),
+    checkField("seo_title", "SEO Title", currentSnap.seo_title || currentSeo?.title, revSnap.seo_title || revSeo?.title),
+    checkField("seo_description", "Meta Description", currentSnap.seo_description || currentSeo?.description, revSnap.seo_description || revSeo?.description),
+    checkField("focus_keyword", "Focus Keyword", currentSnap.focus_keyword || currentSeo?.focusKeyword, revSnap.focus_keyword || revSeo?.focusKeyword),
+    checkField(
+      "canonical",
+      "Canonical URL",
+      currentSeo?.canonicalPath || `/blogs/${currentSnap.slug}/`,
+      revSeo?.canonicalPath || (revSnap.slug ? `/blogs/${revSnap.slug}/` : null)
+    ),
+    checkField("word_count", "Word Count", currentSnap.word_count, revSnap.word_count),
+    checkField("reading_time_minutes", "Reading Time (min)", currentSnap.reading_time_minutes, revSnap.reading_time_minutes),
+    checkField("schemas", "Structured Schemas", currentSchemas, revSchemas),
+    checkField(
+      "bodyHtml",
+      "Content Body (HTML)",
+      currentSnap.content?.bodyHtml ? `Length: ${currentSnap.content.bodyHtml.length} chars` : null,
+      revSnap.content?.bodyHtml ? `Length: ${revSnap.content.bodyHtml.length} chars` : null
+    ),
+  ];
+
+  let changedCount = 0;
+  let unchangedCount = 0;
+  let addedCount = 0;
+  let removedCount = 0;
+
+  for (const f of fields) {
+    if (f.status === "CHANGED") changedCount++;
+    else if (f.status === "UNCHANGED") unchangedCount++;
+    else if (f.status === "ADDED") addedCount++;
+    else if (f.status === "REMOVED") removedCount++;
+  }
+
+  return {
+    blogPostId: currentSnap.id,
+    revisionId: (revSnap as any).id || "selected-revision",
+    fields,
+    summary: {
+      totalFields: fields.length,
+      changedCount,
+      unchangedCount,
+      addedCount,
+      removedCount,
+    },
+  };
+}
+
 

@@ -152,6 +152,7 @@ export async function POST(request: Request) {
       }> = [];
 
       const lowConfidenceImages: Array<{
+        assetId: string;
         filename: string;
         url: string;
         confidence: "LOW";
@@ -160,6 +161,7 @@ export async function POST(request: Request) {
       }> = [];
 
       const unmatchedImages: Array<{
+        assetId: string;
         filename: string;
         url: string;
         confidence: "UNMATCHED";
@@ -187,6 +189,7 @@ export async function POST(request: Request) {
           });
         } else if (evalResult.confidence === "LOW") {
           lowConfidenceImages.push({
+            assetId: asset.id,
             filename: origName,
             url: asset.public_url,
             confidence: "LOW",
@@ -195,6 +198,7 @@ export async function POST(request: Request) {
           });
         } else {
           unmatchedImages.push({
+            assetId: asset.id,
             filename: origName,
             url: asset.public_url,
             confidence: "UNMATCHED",

@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { rm } from "node:fs/promises";
-import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "./db";
+import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "./db.ts";
 import {
   processUploadedImage,
   processUploadedVideo,

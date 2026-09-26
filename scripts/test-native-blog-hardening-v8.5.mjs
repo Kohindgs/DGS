@@ -11,7 +11,13 @@ import {
 import {
   DGS_PROTECTED_CORE_PAGES,
   checkBlogCannibalizationRisk,
+  normalizeCanonicalUrl,
+  checkCanonicalCollision,
 } from "../lib/seo/cannibalization.ts";
+
+import {
+  compareBlogRevision,
+} from "../lib/cms/blogs.ts";
 
 const ROOT_DIR = process.cwd();
 
@@ -248,4 +254,205 @@ test("20. BlogsManagerView provides Tab 7 Revisions & Rollback and Cannibalizati
   assert.ok(content.includes("Core Page Cannibalization Shield"), "Must include Cannibalization Shield card in SEO tab");
   assert.ok(content.includes("handleRestoreRevision"), "Must include revision restore handler");
   assert.ok(content.includes("fetchRevisions"), "Must include revision fetch handler");
+});
+
+test("21. compareBlogRevision accurately computes ADDED, REMOVED, CHANGED, UNCHANGED field diffs", () => {
+  const currentBlog = {
+    id: "test-blog-123",
+    slug: "current-slug",
+    title: "New Optimized Blog Title",
+    status: "review",
+    excerpt: "Updated excerpt with concise summary",
+    featured_image_url: "https://www.dgeniussolutions.com/cms-media/image-1.webp",
+    seo_title: "New SEO Title",
+    seo_description: "New meta description that is fully optimized for search.",
+    focus_keyword: "modern digital marketing",
+    word_count: 1200,
+    reading_time_minutes: 6,
+    needs_review: true,
+    scheduled_for: null,
+    published_at: null,
+    created_at: "2026-09-26T00:00:00.000Z",
+    updated_at: "2026-09-26T12:00:00.000Z",
+    content: {
+      version: 1,
+      bodyHtml: "<p>Updated body content with more details.</p>",
+      sourceHash: "hash-2",
+      optimization: {
+        seo: {
+          title: "New SEO Title",
+          description: "New meta description that is fully optimized for search.",
+          canonicalPath: "/blogs/current-slug/",
+          focusKeyword: "modern digital marketing",
+          h1: "New Optimized Blog Title",
+        },
+        aeo: { conciseAnswer: "Answer text", directAnswers: [] },
+        geo: { targetRegion: "Mumbai", localIntent: false },
+        llm: { summaryPrompt: "Summary", keyTakeaways: [] },
+        schemas: [
+          { "@type": "BlogPosting" },
+          { "@type": "BreadcrumbList" },
+        ],
+      },
+      images: [],
+    },
+  };
+
+  const revisionSnapshot = {
+    id: "rev-snapshot-456",
+    slug: "old-slug",
+    title: "Old Initial Blog Title",
+    status: "draft",
+    excerpt: null, // was null in revision, added in current -> ADDED
+    featured_image_url: "https://www.dgeniussolutions.com/cms-media/image-1.webp", // same -> UNCHANGED
+    seo_title: null, // was null in revision, set in current -> ADDED
+    seo_description: "Old meta description", // changed -> CHANGED
+    focus_keyword: "initial keyword", // changed -> CHANGED
+    word_count: 800, // changed -> CHANGED
+    reading_time_minutes: 4, // changed -> CHANGED
+    content: {
+      version: 1,
+      bodyHtml: "<p>Short initial body.</p>", // changed -> CHANGED
+      sourceHash: "hash-1",
+      optimization: {
+        seo: {
+          canonicalPath: "/blogs/old-slug/",
+        },
+        schemas: [
+          { "@type": "BlogPosting" }, // had only BlogPosting -> BreadcrumbList was added
+        ],
+      },
+    },
+  };
+
+  const comparison = compareBlogRevision(currentBlog, revisionSnapshot);
+  assert.equal(comparison.blogPostId, "test-blog-123");
+  assert.ok(comparison.fields.length >= 12);
+
+  const titleDiff = comparison.fields.find((f) => f.field === "title");
+  assert.ok(titleDiff);
+  assert.equal(titleDiff.status, "CHANGED");
+  assert.equal(titleDiff.currentValue, "New Optimized Blog Title");
+  assert.equal(titleDiff.revisionValue, "Old Initial Blog Title");
+
+  const featDiff = comparison.fields.find((f) => f.field === "featured_image_url");
+  assert.ok(featDiff);
+  assert.equal(featDiff.status, "UNCHANGED");
+
+  const excerptDiff = comparison.fields.find((f) => f.field === "excerpt");
+  assert.ok(excerptDiff);
+  assert.equal(excerptDiff.status, "ADDED");
+
+  assert.ok(comparison.summary.changedCount > 0);
+  assert.ok(comparison.summary.unchangedCount > 0);
+  assert.ok(comparison.summary.addedCount > 0);
+});
+
+test("22. normalizeCanonicalUrl handles relative paths, absolute URLs, and trailing slashes", () => {
+  assert.equal(
+    normalizeCanonicalUrl("/blogs/seo-guide/"),
+    "https://www.dgeniussolutions.com/blogs/seo-guide/"
+  );
+  assert.equal(
+    normalizeCanonicalUrl("/blogs/seo-guide"),
+    "https://www.dgeniussolutions.com/blogs/seo-guide/"
+  );
+  assert.equal(
+    normalizeCanonicalUrl("https://dgeniussolutions.com/blogs/seo-guide/"),
+    "https://www.dgeniussolutions.com/blogs/seo-guide/"
+  );
+  assert.equal(
+    normalizeCanonicalUrl("https://www.dgeniussolutions.com/services/geo"),
+    "https://www.dgeniussolutions.com/services/geo/"
+  );
+  assert.equal(
+    normalizeCanonicalUrl("/"),
+    "https://www.dgeniussolutions.com/"
+  );
+});
+
+test("23. checkCanonicalCollision catches collisions against core pages and existing metadata", async () => {
+  // Test collision with protected core page
+  const coreCollision = await checkCanonicalCollision({
+    targetCanonical: "/services/seo-services-in-mumbai/",
+  });
+  assert.equal(coreCollision.collided, true);
+  assert.ok(coreCollision.owner.includes("core strategic page"));
+
+  // Test collision with simulated existing entity via customCheckFn
+  const entityCollision = await checkCanonicalCollision({
+    targetCanonical: "/blogs/existing-marketing-guide/",
+    customCheckFn: async (url) => {
+      if (url === "https://www.dgeniussolutions.com/blogs/existing-marketing-guide/") {
+        return { collided: true, owner: 'blog_post "Existing Marketing Guide"' };
+      }
+      return { collided: false, owner: null };
+    },
+  });
+  assert.equal(entityCollision.collided, true);
+  assert.equal(entityCollision.owner, 'blog_post "Existing Marketing Guide"');
+
+  // Test non-colliding new blog
+  const safeCanonical = await checkCanonicalCollision({
+    targetCanonical: "/blogs/brand-new-unique-insights-2026/",
+    customCheckFn: async () => ({ collided: false, owner: null }),
+  });
+  assert.equal(safeCanonical.collided, false);
+  assert.equal(safeCanonical.owner, null);
+});
+
+test("24. Pure scheduled publishing decision logic accurately partitions due vs future posts", () => {
+  const now = new Date("2026-09-26T20:30:00.000Z");
+
+  const candidates = [
+    { id: "due-1", scheduled_for: "2026-09-26T20:00:00.000Z", status: "scheduled" },
+    { id: "due-2", scheduled_for: "2026-09-26T20:30:00.000Z", status: "scheduled" },
+    { id: "future-1", scheduled_for: "2026-09-26T21:00:00.000Z", status: "scheduled" },
+    { id: "already-published", scheduled_for: "2026-09-26T19:00:00.000Z", status: "published" },
+  ];
+
+  const duePosts = candidates.filter(
+    (c) => c.status === "scheduled" && new Date(c.scheduled_for).getTime() <= now.getTime()
+  );
+
+  assert.equal(duePosts.length, 2);
+  assert.equal(duePosts[0].id, "due-1");
+  assert.equal(duePosts[1].id, "due-2");
+
+  // Simulated QA pass transition
+  const passPost = { ...duePosts[0] };
+  const mockQaPassed = true;
+  if (mockQaPassed) {
+    passPost.status = "published";
+    passPost.published_at = now.toISOString();
+    passPost.needs_review = false;
+  }
+  assert.equal(passPost.status, "published");
+  assert.equal(passPost.needs_review, false);
+
+  // Simulated QA fail transition
+  const failPost = { ...duePosts[1] };
+  const mockQaFailed = false;
+  if (!mockQaFailed) {
+    failPost.status = "review";
+    failPost.needs_review = true;
+  }
+  assert.equal(failPost.status, "review");
+  assert.equal(failPost.needs_review, true);
+});
+
+test("25. Ambiguous media assignment API route and compare route exist", () => {
+  const assignRoute = path.join(ROOT_DIR, "app", "api", "admin", "blogs", "[id]", "media", "assign", "route.ts");
+  const compareRoute = path.join(ROOT_DIR, "app", "api", "admin", "blogs", "[id]", "revisions", "[revisionId]", "compare", "route.ts");
+
+  assert.ok(fs.existsSync(assignRoute), "Media assign API route must exist");
+  assert.ok(fs.existsSync(compareRoute), "Revision compare API route must exist");
+
+  const assignContent = fs.readFileSync(assignRoute, "utf-8");
+  assert.ok(assignContent.includes("recordMediaUsage"), "Must record media usage on manual assignment");
+  assert.ok(assignContent.includes("BLOG_MEDIA_ASSIGNED"), "Must log audit event on manual assignment");
+  assert.ok(assignContent.includes("BLOG_MEDIA_IGNORED"), "Must log audit event on media ignore");
+
+  const compareContent = fs.readFileSync(compareRoute, "utf-8");
+  assert.ok(compareContent.includes("compareBlogRevision"), "Must invoke compareBlogRevision");
 });

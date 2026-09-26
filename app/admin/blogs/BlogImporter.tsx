@@ -21,6 +21,7 @@ type ImportedBlog = {
     isFeatured: boolean;
   }>;
   lowConfidenceImages?: Array<{
+    assetId?: string;
     filename: string;
     url: string;
     confidence: "LOW";
@@ -28,6 +29,7 @@ type ImportedBlog = {
     reason: string;
   }>;
   unmatchedImages?: Array<{
+    assetId?: string;
     filename: string;
     url: string;
     confidence: "UNMATCHED";
@@ -55,6 +57,37 @@ export function BlogImporter() {
   const [message, setMessage] = useState("");
   const [results, setResults] = useState<ImportedBlog[]>([]);
   const [failures, setFailures] = useState<FailedImport[]>([]);
+  const [assignedMedia, setAssignedMedia] = useState<Record<string, { action: string; message: string }>>({});
+  const [assigningId, setAssigningId] = useState<string | null>(null);
+
+  const handleAssignMedia = async (
+    blogId: string,
+    assetId: string,
+    action: "featured" | "inline" | "ignore",
+    filename: string
+  ) => {
+    setAssigningId(assetId);
+    try {
+      const res = await fetch(`/api/admin/blogs/${blogId}/media/assign`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ assetId, action }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setAssignedMedia((prev) => ({
+          ...prev,
+          [assetId]: { action, message: data.message || `Media ${action} assigned.` },
+        }));
+      } else {
+        alert(data.message || "Failed to assign media");
+      }
+    } catch {
+      alert("Network error assigning media");
+    } finally {
+      setAssigningId(null);
+    }
+  };
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -239,16 +272,140 @@ export function BlogImporter() {
             {result.lowConfidenceImages?.length ? (
               <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)" }}>
                 <h4 style={{ color: "#f59e0b", margin: "0 0 8px 0" }}>⚠️ Low Confidence Media (Not Attached)</h4>
-                <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13 }}>
-                  {result.lowConfidenceImages.map((img) => (
-                    <li key={img.filename}>
-                      <strong>{img.filename}</strong>: {img.reason} (Score: {img.score}%)
-                    </li>
-                  ))}
-                </ul>
-                <p style={{ margin: "6px 0 0 0", fontSize: 12, color: "#9ca3af" }}>
-                  These images were not automatically attached to prevent incorrect media assignment. You can manually assign them in the blog editor.
-                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {result.lowConfidenceImages.map((img) => {
+                    const assigned = img.assetId ? assignedMedia[img.assetId] : null;
+                    return (
+                      <div key={img.filename} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.2)", padding: 8, borderRadius: 6 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          {img.url ? <img src={img.url} alt={img.filename} style={{ width: 44, height: 44, objectFit: "cover", borderRadius: 4 }} /> : null}
+                          <div>
+                            <strong>{img.filename}</strong>
+                            <div style={{ fontSize: 12, color: "#9ca3af" }}>
+                              LOW MATCH ({img.score}%) — {img.reason}
+                            </div>
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          {assigned ? (
+                            <span className="dgs-admin-badge" style={{ background: "#22c55e", color: "#000", fontWeight: 700 }}>
+                              ✓ {assigned.action.toUpperCase()}
+                            </span>
+                          ) : img.assetId ? (
+                            <>
+                              <button
+                                type="button"
+                                className="dgs-btn-small"
+                                disabled={assigningId === img.assetId}
+                                onClick={() => handleAssignMedia(result.blog.id, img.assetId!, "featured", img.filename)}
+                                style={{ fontSize: 11, padding: "4px 8px", background: "#f59e0b", color: "#000", fontWeight: 600 }}
+                              >
+                                ★ Set Featured
+                              </button>
+                              <button
+                                type="button"
+                                className="dgs-btn-small"
+                                disabled={assigningId === img.assetId}
+                                onClick={() => handleAssignMedia(result.blog.id, img.assetId!, "inline", img.filename)}
+                                style={{ fontSize: 11, padding: "4px 8px", background: "#3b82f6", color: "#fff", fontWeight: 600 }}
+                              >
+                                ➕ Add Inline
+                              </button>
+                              <a
+                                href={`/admin/media/?search=${encodeURIComponent(img.filename)}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="dgs-btn-small"
+                                style={{ fontSize: 11, padding: "4px 8px", background: "rgba(255,255,255,0.1)", color: "#e5e7eb", textDecoration: "none" }}
+                              >
+                                👁 Media Library
+                              </a>
+                              <button
+                                type="button"
+                                className="dgs-btn-small"
+                                disabled={assigningId === img.assetId}
+                                onClick={() => handleAssignMedia(result.blog.id, img.assetId!, "ignore", img.filename)}
+                                style={{ fontSize: 11, padding: "4px 8px", background: "transparent", color: "#9ca3af", border: "1px solid #4b5563" }}
+                              >
+                                ✕ Ignore
+                              </button>
+                            </>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : null}
+
+            {result.unmatchedImages?.length ? (
+              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.3)" }}>
+                <h4 style={{ color: "#ef4444", margin: "0 0 8px 0" }}>🚫 Unmatched Media (Not Attached)</h4>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {result.unmatchedImages.map((img) => {
+                    const assigned = img.assetId ? assignedMedia[img.assetId] : null;
+                    return (
+                      <div key={img.filename} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.2)", padding: 8, borderRadius: 6 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          {img.url ? <img src={img.url} alt={img.filename} style={{ width: 44, height: 44, objectFit: "cover", borderRadius: 4 }} /> : null}
+                          <div>
+                            <strong>{img.filename}</strong>
+                            <div style={{ fontSize: 12, color: "#9ca3af" }}>
+                              UNMATCHED (0%) — {img.reason}
+                            </div>
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          {assigned ? (
+                            <span className="dgs-admin-badge" style={{ background: "#22c55e", color: "#000", fontWeight: 700 }}>
+                              ✓ {assigned.action.toUpperCase()}
+                            </span>
+                          ) : img.assetId ? (
+                            <>
+                              <button
+                                type="button"
+                                className="dgs-btn-small"
+                                disabled={assigningId === img.assetId}
+                                onClick={() => handleAssignMedia(result.blog.id, img.assetId!, "featured", img.filename)}
+                                style={{ fontSize: 11, padding: "4px 8px", background: "#f59e0b", color: "#000", fontWeight: 600 }}
+                              >
+                                ★ Set Featured
+                              </button>
+                              <button
+                                type="button"
+                                className="dgs-btn-small"
+                                disabled={assigningId === img.assetId}
+                                onClick={() => handleAssignMedia(result.blog.id, img.assetId!, "inline", img.filename)}
+                                style={{ fontSize: 11, padding: "4px 8px", background: "#3b82f6", color: "#fff", fontWeight: 600 }}
+                              >
+                                ➕ Add Inline
+                              </button>
+                              <a
+                                href={`/admin/media/?search=${encodeURIComponent(img.filename)}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="dgs-btn-small"
+                                style={{ fontSize: 11, padding: "4px 8px", background: "rgba(255,255,255,0.1)", color: "#e5e7eb", textDecoration: "none" }}
+                              >
+                                👁 Media Library
+                              </a>
+                              <button
+                                type="button"
+                                className="dgs-btn-small"
+                                disabled={assigningId === img.assetId}
+                                onClick={() => handleAssignMedia(result.blog.id, img.assetId!, "ignore", img.filename)}
+                                style={{ fontSize: 11, padding: "4px 8px", background: "transparent", color: "#9ca3af", border: "1px solid #4b5563" }}
+                              >
+                                ✕ Ignore
+                              </button>
+                            </>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             ) : null}
           </article>

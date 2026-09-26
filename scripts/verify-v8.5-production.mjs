@@ -68,13 +68,24 @@ async function main() {
       "google_update_monitor_runs",
       "google_update_source_cursors",
       "gsc_page_query_metrics",
-      "audit_logs"
+      "cms_audit_log"
     ];
     for (const req of requiredTables) {
       if (tableNames.includes(req)) {
         console.log(`  ✓ Table '${req}' exists`);
       } else {
         console.log(`  ⚠ Table '${req}' not found (or optional)`);
+      }
+    }
+
+    // Check cms_audit_log entries
+    const [auditLogCount] = await conn.query("SELECT COUNT(*) as count FROM cms_audit_log");
+    console.log(`✓ cms_audit_log total records: ${auditLogCount[0]?.count || 0}`);
+    const [recentAudits] = await conn.query("SELECT action, resource, summary, created_at FROM cms_audit_log ORDER BY created_at DESC LIMIT 5");
+    if (recentAudits.length > 0) {
+      console.log("✓ Recent audit events:");
+      for (const a of recentAudits) {
+        console.log(`  - [${a.created_at}] ${a.action} on ${a.resource}: ${a.summary || "n/a"}`);
       }
     }
 
@@ -209,7 +220,7 @@ async function main() {
   }
 
   console.log("\n==================================================");
-  console.log("DGS V8.5 NATIVE BLOG CMS HARDENING: PASS");
+  console.log("DGS V8.5 NATIVE BLOG CMS HARDENING: FULLY CLOSED");
   console.log("==================================================");
 }
 

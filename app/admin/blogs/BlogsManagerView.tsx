@@ -57,6 +57,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
   const [loadingRevisions, setLoadingRevisions] = useState(false);
   const [selectedRevision, setSelectedRevision] = useState<any | null>(null);
   const [restoringRevisionId, setRestoringRevisionId] = useState<string | null>(null);
+  const [revisionViewMode, setRevisionViewMode] = useState<"preview" | "compare">("compare");
 
   // Delete modal state
   const [deleteTarget, setDeleteTarget] = useState<CmsBlogSummary | null>(null);
@@ -1789,7 +1790,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                           <div>
                             <h4 style={{ margin: 0, fontSize: 16 }}>{selectedRevision.snapshot?.title}</h4>
                             <p style={{ margin: "2px 0 0 0", fontSize: 12, color: "#9ca3af" }}>
-                              Snapshot created on {new Date(selectedRevision.created_at).toLocaleString()}
+                              Snapshot created on {new Date(selectedRevision.created_at).toLocaleString()} · Author: {selectedRevision.created_by ? "User" : "System / Auto"}
                             </p>
                           </div>
                           <button
@@ -1803,38 +1804,220 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                           </button>
                         </div>
 
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12, fontSize: 13 }}>
-                          <div><strong>Slug:</strong> <code>{selectedRevision.snapshot?.slug}</code></div>
-                          <div><strong>Status at snapshot:</strong> <span className="dgs-admin-badge">{selectedRevision.snapshot?.status}</span></div>
-                          <div><strong>Word count:</strong> {selectedRevision.snapshot?.word_count}</div>
-                          <div><strong>Reading time:</strong> {selectedRevision.snapshot?.reading_time_minutes} min</div>
-                          <div><strong>SEO Title:</strong> {selectedRevision.snapshot?.seo_title || "None"}</div>
-                          <div><strong>Focus Keyword:</strong> {selectedRevision.snapshot?.focus_keyword || "None"}</div>
-                        </div>
-
-                        <div style={{ marginBottom: 12 }}>
-                          <strong style={{ fontSize: 13 }}>Excerpt:</strong>
-                          <p style={{ margin: "4px 0 0 0", fontSize: 13, color: "#d1d5db", fontStyle: "italic" }}>
-                            {selectedRevision.snapshot?.excerpt || "No excerpt recorded"}
-                          </p>
-                        </div>
-
-                        <div>
-                          <strong style={{ fontSize: 13 }}>Body Preview:</strong>
-                          <div
+                        {/* Mode Toggle: Compare vs Snapshot Preview */}
+                        <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+                          <button
+                            type="button"
+                            onClick={() => setRevisionViewMode("compare")}
                             style={{
-                              marginTop: 6,
-                              padding: 12,
+                              padding: "6px 14px",
                               borderRadius: 6,
-                              background: "rgba(0,0,0,0.3)",
-                              maxHeight: "220px",
-                              overflowY: "auto",
                               fontSize: 12,
-                              lineHeight: 1.5,
+                              fontWeight: 600,
+                              cursor: "pointer",
+                              background: revisionViewMode === "compare" ? "#3b82f6" : "rgba(255, 255, 255, 0.05)",
+                              color: revisionViewMode === "compare" ? "#fff" : "#9ca3af",
+                              border: `1px solid ${revisionViewMode === "compare" ? "#3b82f6" : "#374151"}`,
                             }}
-                            dangerouslySetInnerHTML={{ __html: selectedRevision.snapshot?.content?.bodyHtml || "<em>Empty body</em>" }}
-                          />
+                          >
+                            ⇄ Compare vs Current Version
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setRevisionViewMode("preview")}
+                            style={{
+                              padding: "6px 14px",
+                              borderRadius: 6,
+                              fontSize: 12,
+                              fontWeight: 600,
+                              cursor: "pointer",
+                              background: revisionViewMode === "preview" ? "#3b82f6" : "rgba(255, 255, 255, 0.05)",
+                              color: revisionViewMode === "preview" ? "#fff" : "#9ca3af",
+                              border: `1px solid ${revisionViewMode === "preview" ? "#3b82f6" : "#374151"}`,
+                            }}
+                          >
+                            👁 Snapshot Details
+                          </button>
                         </div>
+
+                        {revisionViewMode === "compare" ? (
+                          (() => {
+                            const cur = editingBlog;
+                            const rev = selectedRevision.snapshot || {};
+                            const curOpt = cur.content?.optimization;
+                            const revOpt = rev.content?.optimization;
+                            const curSeo = curOpt?.seo;
+                            const revSeo = revOpt?.seo;
+
+                            const getDiff = (label: string, cVal: any, rVal: any) => {
+                              const c = cVal == null || cVal === "" ? null : String(cVal).trim();
+                              const r = rVal == null || rVal === "" ? null : String(rVal).trim();
+                              let status: "ADDED" | "REMOVED" | "CHANGED" | "UNCHANGED";
+                              if (r === null && c !== null) status = "ADDED";
+                              else if (r !== null && c === null) status = "REMOVED";
+                              else if (r === c) status = "UNCHANGED";
+                              else status = "CHANGED";
+                              return { label, current: c, revision: r, status };
+                            };
+
+                            const curSchemas = (curOpt?.schemas || []).map((s: any) => s?.["@type"]).filter(Boolean).sort().join(", ");
+                            const revSchemas = (revOpt?.schemas || []).map((s: any) => s?.["@type"]).filter(Boolean).sort().join(", ");
+
+                            const diffs = [
+                              getDiff("Title", cur.title, rev.title),
+                              getDiff("URL Slug", cur.slug, rev.slug),
+                              getDiff("Status", cur.status, rev.status),
+                              getDiff("Excerpt", cur.excerpt, rev.excerpt),
+                              getDiff("Featured Image", cur.featured_image_url, rev.featured_image_url),
+                              getDiff("SEO Title", cur.seo_title || curSeo?.title, rev.seo_title || revSeo?.title),
+                              getDiff("Meta Description", cur.seo_description || curSeo?.description, rev.seo_description || revSeo?.description),
+                              getDiff("Focus Keyword", cur.focus_keyword || curSeo?.focusKeyword, rev.focus_keyword || revSeo?.focusKeyword),
+                              getDiff("Canonical Path", curSeo?.canonicalPath || `/blogs/${cur.slug}/`, revSeo?.canonicalPath || (rev.slug ? `/blogs/${rev.slug}/` : null)),
+                              getDiff("Word Count", cur.word_count, rev.word_count),
+                              getDiff("Reading Time (min)", cur.reading_time_minutes, rev.reading_time_minutes),
+                              getDiff("Structured Schemas", curSchemas || null, revSchemas || null),
+                              getDiff("Body Content Length", `${cur.content?.bodyHtml?.length || 0} chars`, `${rev.content?.bodyHtml?.length || 0} chars`),
+                            ];
+
+                            const changedCount = diffs.filter((d) => d.status === "CHANGED").length;
+                            const addedCount = diffs.filter((d) => d.status === "ADDED").length;
+                            const removedCount = diffs.filter((d) => d.status === "REMOVED").length;
+                            const unchangedCount = diffs.filter((d) => d.status === "UNCHANGED").length;
+
+                            return (
+                              <div>
+                                {/* Summary Badge Chips */}
+                                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4, background: "rgba(245, 158, 11, 0.15)", color: "#f59e0b" }}>
+                                    {changedCount} CHANGED
+                                  </span>
+                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4, background: "rgba(34, 197, 94, 0.15)", color: "#22c55e" }}>
+                                    {addedCount} ADDED
+                                  </span>
+                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4, background: "rgba(239, 68, 68, 0.15)", color: "#ef4444" }}>
+                                    {removedCount} REMOVED
+                                  </span>
+                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4, background: "rgba(156, 163, 175, 0.1)", color: "#9ca3af" }}>
+                                    {unchangedCount} UNCHANGED
+                                  </span>
+                                </div>
+
+                                {/* Comparison Table */}
+                                <div style={{ overflowX: "auto", marginBottom: 16 }}>
+                                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                                    <thead>
+                                      <tr style={{ borderBottom: "1px solid #374151", color: "#9ca3af", textAlign: "left" }}>
+                                        <th style={{ padding: "6px 8px" }}>Field</th>
+                                        <th style={{ padding: "6px 8px" }}>Status</th>
+                                        <th style={{ padding: "6px 8px" }}>Current Version</th>
+                                        <th style={{ padding: "6px 8px" }}>Revision Snapshot</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {diffs.map((d) => (
+                                        <tr key={d.label} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                                          <td style={{ padding: "6px 8px", fontWeight: 600 }}>{d.label}</td>
+                                          <td style={{ padding: "6px 8px" }}>
+                                            <span style={{
+                                              display: "inline-block",
+                                              padding: "1px 6px",
+                                              borderRadius: 4,
+                                              fontSize: 10,
+                                              fontWeight: 700,
+                                              background: d.status === "CHANGED" ? "rgba(245, 158, 11, 0.15)" : d.status === "ADDED" ? "rgba(34, 197, 94, 0.15)" : d.status === "REMOVED" ? "rgba(239, 68, 68, 0.15)" : "rgba(156, 163, 175, 0.1)",
+                                              color: d.status === "CHANGED" ? "#f59e0b" : d.status === "ADDED" ? "#22c55e" : d.status === "REMOVED" ? "#ef4444" : "#9ca3af",
+                                            }}>
+                                              {d.status}
+                                            </span>
+                                          </td>
+                                          <td style={{ padding: "6px 8px", color: d.status === "CHANGED" ? "#60a5fa" : "#e5e7eb", maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis" }}>
+                                            {d.current || <em style={{ color: "#6b7280" }}>Empty</em>}
+                                          </td>
+                                          <td style={{ padding: "6px 8px", color: d.status === "CHANGED" ? "#f59e0b" : "#9ca3af", maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis" }}>
+                                            {d.revision || <em style={{ color: "#6b7280" }}>Empty</em>}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+
+                                {/* Side-by-side Body Preview */}
+                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                                  <div>
+                                    <strong style={{ fontSize: 12, color: "#60a5fa" }}>Current Version Body:</strong>
+                                    <div
+                                      style={{
+                                        marginTop: 4,
+                                        padding: 10,
+                                        borderRadius: 6,
+                                        background: "rgba(0,0,0,0.3)",
+                                        maxHeight: "200px",
+                                        overflowY: "auto",
+                                        fontSize: 11,
+                                        lineHeight: 1.4,
+                                        border: "1px solid rgba(59, 130, 246, 0.2)",
+                                      }}
+                                      dangerouslySetInnerHTML={{ __html: cur.content?.bodyHtml || "<em>Empty body</em>" }}
+                                    />
+                                  </div>
+                                  <div>
+                                    <strong style={{ fontSize: 12, color: "#f59e0b" }}>Revision Snapshot Body:</strong>
+                                    <div
+                                      style={{
+                                        marginTop: 4,
+                                        padding: 10,
+                                        borderRadius: 6,
+                                        background: "rgba(0,0,0,0.3)",
+                                        maxHeight: "200px",
+                                        overflowY: "auto",
+                                        fontSize: 11,
+                                        lineHeight: 1.4,
+                                        border: "1px solid rgba(245, 158, 11, 0.2)",
+                                      }}
+                                      dangerouslySetInnerHTML={{ __html: rev.content?.bodyHtml || "<em>Empty body</em>" }}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })()
+                        ) : (
+                          <div>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12, fontSize: 13 }}>
+                              <div><strong>Slug:</strong> <code>{selectedRevision.snapshot?.slug}</code></div>
+                              <div><strong>Status at snapshot:</strong> <span className="dgs-admin-badge">{selectedRevision.snapshot?.status}</span></div>
+                              <div><strong>Word count:</strong> {selectedRevision.snapshot?.word_count}</div>
+                              <div><strong>Reading time:</strong> {selectedRevision.snapshot?.reading_time_minutes} min</div>
+                              <div><strong>SEO Title:</strong> {selectedRevision.snapshot?.seo_title || "None"}</div>
+                              <div><strong>Focus Keyword:</strong> {selectedRevision.snapshot?.focus_keyword || "None"}</div>
+                            </div>
+
+                            <div style={{ marginBottom: 12 }}>
+                              <strong style={{ fontSize: 13 }}>Excerpt:</strong>
+                              <p style={{ margin: "4px 0 0 0", fontSize: 13, color: "#d1d5db", fontStyle: "italic" }}>
+                                {selectedRevision.snapshot?.excerpt || "No excerpt recorded"}
+                              </p>
+                            </div>
+
+                            <div>
+                              <strong style={{ fontSize: 13 }}>Body Preview:</strong>
+                              <div
+                                style={{
+                                  marginTop: 6,
+                                  padding: 12,
+                                  borderRadius: 6,
+                                  background: "rgba(0,0,0,0.3)",
+                                  maxHeight: "220px",
+                                  overflowY: "auto",
+                                  fontSize: 12,
+                                  lineHeight: 1.5,
+                                }}
+                                dangerouslySetInnerHTML={{ __html: selectedRevision.snapshot?.content?.bodyHtml || "<em>Empty body</em>" }}
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <p className="dgs-meta-text">Select a revision from the list to preview details and restore.</p>

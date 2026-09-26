@@ -577,3 +577,121 @@ export function checkBlogCannibalizationRisk(params: {
   };
 }
 
+export type CanonicalCollisionResult = {
+  collided: boolean;
+  owner: string | null;
+  conflictingUrl: string | null;
+  normalizedCanonical: string;
+};
+
+/**
+ * Normalizes any canonical input into full canonical URL format
+ * e.g. "/blogs/my-post/" -> "https://www.dgeniussolutions.com/blogs/my-post/"
+ */
+export function normalizeCanonicalUrl(input: unknown): string {
+  return normalizeSitePageUrl(input);
+}
+
+/**
+ * Checks if target canonical URL is already claimed by a protected core page,
+ * an existing SEO metadata record, or another blog post.
+ */
+export async function checkCanonicalCollision(params: {
+  targetCanonical: string;
+  currentEntityId?: string | null;
+  currentEntityType?: string;
+  customCheckFn?: (url: string) => Promise<{ collided: boolean; owner: string | null }>;
+}): Promise<CanonicalCollisionResult> {
+  const normTarget = normalizeCanonicalUrl(params.targetCanonical);
+  const targetKey = canonicalPageKey(params.targetCanonical);
+
+  // 1. Check against DGS protected core pages
+  for (const core of DGS_PROTECTED_CORE_PAGES) {
+    const coreNorm = normalizeSitePageUrl(core.pageUrl);
+    if (coreNorm === normTarget || canonicalPageKey(core.pageUrl) === targetKey) {
+      return {
+        collided: true,
+        owner: `core strategic page (${core.pageTitle} at ${core.pageUrl})`,
+        conflictingUrl: normTarget,
+        normalizedCanonical: normTarget,
+      };
+    }
+  }
+
+  // 2. Custom check function (used for unit testing with mocks without DB)
+  if (params.customCheckFn) {
+    const customRes = await params.customCheckFn(normTarget);
+    if (customRes.collided) {
+      return {
+        collided: true,
+        owner: customRes.owner,
+        conflictingUrl: normTarget,
+        normalizedCanonical: normTarget,
+      };
+    }
+  }
+
+  // 3. Database check against seo_metadata and blog_posts if CMS DB is available
+  try {
+    const { isCmsDatabaseConfigured, cmsQuery } = await import("../cms/db.ts");
+    if (isCmsDatabaseConfigured()) {
+      const entityType = params.currentEntityType || "blog_post";
+      const entityId = params.currentEntityId || "";
+
+      // Check seo_metadata
+      const seoRows = await cmsQuery<{
+        entity_type: string;
+        entity_id: string;
+        title: string | null;
+        canonical_url: string;
+      }>(
+        `SELECT entity_type, entity_id, title, canonical_url
+         FROM seo_metadata
+         WHERE canonical_url IS NOT NULL AND canonical_url != ''`
+      );
+
+      for (const row of seoRows.rows) {
+        if (row.entity_type === entityType && row.entity_id === entityId) {
+          continue; // Ignore blog's own SEO metadata record
+        }
+        if (normalizeSitePageUrl(row.canonical_url) === normTarget) {
+          const ownerDesc = `${row.entity_type} "${row.title || row.entity_id}"`;
+          return {
+            collided: true,
+            owner: ownerDesc,
+            conflictingUrl: normTarget,
+            normalizedCanonical: normTarget,
+          };
+        }
+      }
+
+      // Check blog_posts for published / review blogs with same slug
+      const blogRows = await cmsQuery<{ id: string; title: string; slug: string }>(
+        `SELECT id, title, slug FROM blog_posts WHERE id != ?`,
+        [entityId]
+      );
+      for (const row of blogRows.rows) {
+        const blogCanon = normalizeSitePageUrl(`/blogs/${row.slug}/`);
+        if (blogCanon === normTarget) {
+          return {
+            collided: true,
+            owner: `blog post "${row.title}" (/blogs/${row.slug}/)`,
+            conflictingUrl: normTarget,
+            normalizedCanonical: normTarget,
+          };
+        }
+      }
+    }
+  } catch {
+    // If DB check fails or in non-DB environment, continue
+  }
+
+  return {
+    collided: false,
+    owner: null,
+    conflictingUrl: null,
+    normalizedCanonical: normTarget,
+  };
+}
+
+
