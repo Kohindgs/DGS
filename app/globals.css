@@ -36,11 +36,12 @@
   --container-max: 1440px;
   --container-narrow: 960px;
 
-  --page-gutter: clamp(16px, 3vw, 64px);
+  --page-gutter: clamp(16px, 3vw, 48px);
   --content-max: 1440px;
   --wide-max: 1760px;
   --text-max: 75ch;
   --section-y: clamp(64px, 7vw, 144px);
+  --dgs-site-header-height: 104px;
 
   --glass-surface: rgba(10, 10, 14, 0.75);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -150,6 +151,19 @@ button {
     --text-max: 72ch;
   }
 }
+
+@media (max-width: 1024px) {
+  :root {
+    --dgs-site-header-height: 96px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --dgs-site-header-height: 84px;
+  }
+}
+
 
 .container {
   width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));

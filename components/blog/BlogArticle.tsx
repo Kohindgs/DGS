@@ -33,7 +33,7 @@ export function BlogArticle({
           <span className={styles.breadcrumbDivider}>/</span>
           <Link href="/blogs/">Blogs</Link>
           <span className={styles.breadcrumbDivider}>/</span>
-          <span aria-current="page" style={{ color: "#fff" }}>
+          <span aria-current="page" className={styles.breadcrumbCurrent}>
             {article.title}
           </span>
         </nav>
@@ -65,24 +65,39 @@ export function BlogArticle({
           ) : null}
         </header>
 
-        {/* Hero Featured Image */}
+        {/* Hero Featured Image — Natural aspect ratio, zero crop */}
         {article.featuredImage?.src ? (
           <div className={styles.heroImageWrap}>
             <Image
               src={article.featuredImage.src}
               alt={article.featuredImage.alt || article.title}
-              fill
+              width={1600}
+              height={900}
               priority
               unoptimized
-              sizes="(max-width: 1400px) 100vw, 1400px"
-              className={styles.featuredImg}
+              sizes="(max-width: 1760px) 100vw, 1600px"
+              className={styles.heroImgNatural}
             />
           </div>
         ) : null}
 
         {article.toc.length > 1 ? (
-          <nav aria-label="In this article" className={styles.toc}>
-            <div className={styles.tocLabel}>In this article</div>
+          <details className={styles.toc} open>
+            <summary className={styles.tocSummary}>
+              <span className={styles.tocLabel}>In this article</span>
+              <svg
+                className={styles.tocChevron}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
             <ol className={styles.tocList}>
               {article.toc.map((item) => (
                 <li key={item.id} className={item.level === 3 ? styles.tocSubItem : undefined}>
@@ -90,8 +105,9 @@ export function BlogArticle({
                 </li>
               ))}
             </ol>
-          </nav>
+          </details>
         ) : null}
+
 
         {/* Full Semantic Article Body (contains the original single FAQ section if present) */}
         <div

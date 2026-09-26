@@ -91,6 +91,10 @@ try {
     { col: "assessed_by", sql: "ALTER TABLE google_search_updates ADD COLUMN assessed_by VARCHAR(255) NULL" },
     { col: "assessment_mode", sql: "ALTER TABLE google_search_updates ADD COLUMN assessment_mode VARCHAR(50) DEFAULT 'automated'" },
     { col: "confidence", sql: "ALTER TABLE google_search_updates ADD COLUMN confidence DECIMAL(5,2) NULL" },
+    { col: "external_status", sql: "ALTER TABLE google_search_updates ADD COLUMN external_status VARCHAR(50) NOT NULL DEFAULT 'UNKNOWN'" },
+    { col: "incident_begin", sql: "ALTER TABLE google_search_updates ADD COLUMN incident_begin DATETIME NULL" },
+    { col: "incident_end", sql: "ALTER TABLE google_search_updates ADD COLUMN incident_end DATETIME NULL" },
+    { col: "raw_details", sql: "ALTER TABLE google_search_updates ADD COLUMN raw_details JSON NULL" },
   ];
 
   for (const m of gsuMigrations) {
@@ -99,6 +103,11 @@ try {
       console.log(`Applied column migration: google_search_updates.${m.col}`);
     }
   }
+
+  try {
+    await connection.query("ALTER TABLE google_search_updates ADD INDEX idx_gsu_external_status (external_status)");
+  } catch {}
+
 
   // Column migration for site_audit_missing_alts
   try {
@@ -304,6 +313,7 @@ try {
     "categories",
     "form_submissions",
     "google_search_updates",
+    "google_update_monitor_runs",
     "gsc_page_query_metrics",
     "leads",
     "media_assets",

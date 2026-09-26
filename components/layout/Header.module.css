@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 99999;
-  height: 92px;
+  height: var(--dgs-site-header-height, 104px);
   pointer-events: none;
   transition: transform 0.35s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
 }
@@ -52,10 +52,12 @@
 }
 
 .logoLink img {
-  width: 96px;
-  height: 96px;
+  width: clamp(76px, 8vw, 108px);
+  height: auto;
+  max-height: 64px;
   object-fit: contain;
 }
+
 
 .actions {
   display: flex;
@@ -152,25 +154,27 @@
 
 @media (max-width: 768px) {
   .header {
-    height: 72px;
+    height: var(--dgs-site-header-height, 84px);
   }
   .bar {
-    height: 60px;
+    height: 56px;
     width: calc(100% - 20px);
     margin-top: 8px;
-    padding: 0 14px 0 18px;
+    padding: 0 14px 0 16px;
     border-radius: 18px;
   }
   .logoLink {
-    height: 60px;
+    height: 56px;
   }
   .logoLink img {
-    width: 76px;
-    height: 76px;
+    width: clamp(64px, 12vw, 76px);
+    height: auto;
+    max-height: 44px;
   }
   .letsTalkBtn {
     display: none;
   }
+
   .menuBtn {
     min-height: 40px;
     padding: 8px 14px;

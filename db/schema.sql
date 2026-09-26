@@ -291,6 +291,10 @@ CREATE TABLE IF NOT EXISTS google_search_updates (
   recommended_actions JSON NOT NULL,
   affected_dgs_areas JSON NOT NULL,
   status VARCHAR(50) NOT NULL DEFAULT 'new',
+  external_status VARCHAR(50) NOT NULL DEFAULT 'UNKNOWN',
+  incident_begin DATETIME NULL,
+  incident_end DATETIME NULL,
+  raw_details JSON NULL,
   assessment_status VARCHAR(50) NOT NULL DEFAULT 'NOT ASSESSED',
   assessment_date DATETIME NULL,
   evidence TEXT NULL,
@@ -307,9 +311,33 @@ CREATE TABLE IF NOT EXISTS google_search_updates (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_gsu_published (published_at),
   INDEX idx_gsu_severity_status (severity, status),
+  INDEX idx_gsu_external_status (external_status),
   INDEX idx_gsu_assessment_status (assessment_status),
   INDEX idx_gsu_source_url (source_url(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS google_update_monitor_runs (
+  id VARCHAR(64) PRIMARY KEY,
+  run_type VARCHAR(32) NOT NULL DEFAULT 'cron',
+  started_at DATETIME NOT NULL,
+  completed_at DATETIME NULL,
+  status VARCHAR(32) NOT NULL DEFAULT 'RUNNING',
+  status_dashboard_ok TINYINT(1) NOT NULL DEFAULT 1,
+  search_central_blog_ok TINYINT(1) NOT NULL DEFAULT 1,
+  docs_updates_ok TINYINT(1) NOT NULL DEFAULT 1,
+  sources_checked JSON NULL,
+  updates_detected INT NOT NULL DEFAULT 0,
+  new_updates_count INT NOT NULL DEFAULT 0,
+  updated_items_count INT NOT NULL DEFAULT 0,
+  active_rollouts_count INT NOT NULL DEFAULT 0,
+  notified_count INT NOT NULL DEFAULT 0,
+  errors JSON NULL,
+  last_error TEXT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_gumr_started (started_at DESC),
+  INDEX idx_gumr_completed (completed_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE IF NOT EXISTS pagespeed_cache (
   id VARCHAR(64) PRIMARY KEY,

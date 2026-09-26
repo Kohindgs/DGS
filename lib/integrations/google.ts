@@ -8,6 +8,7 @@ import {
   normalizeSitePageUrl,
   getNonOverlapping28DayWindows,
 } from "@/lib/seo/search-normalization";
+import { getLatestMonitorRun } from "@/lib/google-updates/monitor";
 export { getNonOverlapping28DayWindows };
 
 
@@ -1389,14 +1390,26 @@ export async function getIntegrationStatuses(): Promise<IntegrationStatus[]> {
     missingConfig: !smtpHost ? ["DGS_SMTP_HOST", "DGS_SMTP_USER", "DGS_SMTP_PASS"] : [],
   });
 
-  // 5. Google Update Monitor
-  results.push({
-    service: "search_monitor",
-    name: "Google Search Update Monitor",
-    status: "connected",
-    propertyOrAccount: "Daily Cron + Status Dashboard",
-    lastSyncAt: new Date().toISOString(),
-  });
+  // 5. Google Update Monitor (Real monitor run telemetry)
+  const latestMonitorRun = await getLatestMonitorRun().catch(() => null);
+  if (latestMonitorRun) {
+    const isOk = latestMonitorRun.status === "SUCCESS" || latestMonitorRun.status === "PARTIAL";
+    const status = isOk ? "connected" : latestMonitorRun.status === "RUNNING" ? "connected" : "error";
+    results.push({
+      service: "search_monitor",
+      name: "Google Search Update Monitor",
+      status,
+      propertyOrAccount: `3-Hour Automated Monitor (${latestMonitorRun.updates_detected} updates tracked, ${latestMonitorRun.active_rollouts_count} active rollouts)`,
+      lastSyncAt: latestMonitorRun.completed_at || latestMonitorRun.started_at,
+    });
+  } else {
+    results.push({
+      service: "search_monitor",
+      name: "Google Search Update Monitor",
+      status: "ready_to_connect",
+      propertyOrAccount: "3-Hour Automated Monitor (Awaiting initial run)",
+    });
+  }
 
   return results;
 }

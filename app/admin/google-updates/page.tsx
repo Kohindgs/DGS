@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
-import { listGoogleSearchUpdates } from "@/lib/google-updates/monitor";
+import { listGoogleSearchUpdates, getLatestMonitorRun } from "@/lib/google-updates/monitor";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import GoogleUpdatesClientView from "./GoogleUpdatesClientView";
 
@@ -18,6 +18,7 @@ export default async function AdminGoogleUpdatesPage() {
 
   const ready = isCmsDatabaseConfigured();
   const updates = ready ? await listGoogleSearchUpdates({ limit: 100 }) : [];
+  const latestRun = ready ? await getLatestMonitorRun() : null;
 
-  return <GoogleUpdatesClientView updates={updates as any} />;
+  return <GoogleUpdatesClientView updates={updates as any} latestRun={latestRun} />;
 }
