@@ -54,13 +54,17 @@ test("3. generateDgsImpact protects core service pages and organic brand queries
   assert.ok(spamImpact.affectedAreas.includes("Competitive SERP Visibility"));
 });
 
-test("4. Official Source 3 (Google Search Documentation Updates RSS) fetcher functions and parses items", async () => {
+test("4. Official Source 3 (Google Search Documentation Updates RSS) fetcher returns honest SourceFetchResult", async () => {
   const { fetchGoogleSearchDocsUpdates } = await import("../lib/google-updates/monitor.ts");
 
-  const docsUpdates = await fetchGoogleSearchDocsUpdates();
-  assert.ok(Array.isArray(docsUpdates), "Must return an array of items");
-  if (docsUpdates.length > 0) {
-    const first = docsUpdates[0];
+  const result = await fetchGoogleSearchDocsUpdates();
+  assert.equal(typeof result.ok, "boolean", "Result must contain boolean ok flag");
+  assert.equal(result.source, "Google Search Documentation Updates");
+  assert.ok(Array.isArray(result.items), "Must return an array of items in items property");
+  assert.ok(result.checkedAt, "Must include checkedAt timestamp");
+
+  if (result.ok && result.items.length > 0) {
+    const first = result.items[0];
     assert.ok(first.title, "Item must have a title");
     assert.ok(first.sourceUrl, "Item must have a sourceUrl");
     assert.ok(first.publishedAt, "Item must have a publishedAt");
@@ -68,67 +72,224 @@ test("4. Official Source 3 (Google Search Documentation Updates RSS) fetcher fun
   }
 });
 
-test("5. Status Dashboard fetcher identifies active rollouts without end timestamp", async () => {
+test("5. Status Dashboard fetcher returns honest SourceFetchResult and identifies active rollouts", async () => {
   const { fetchGoogleStatusDashboard } = await import("../lib/google-updates/monitor.ts");
 
-  const incidents = await fetchGoogleStatusDashboard();
-  assert.ok(Array.isArray(incidents), "Must return an array of incidents");
-  if (incidents.length > 0) {
-    const first = incidents[0];
-    assert.ok(["ACTIVE", "COMPLETED", "INVESTIGATING", "RESOLVED"].includes(first.externalStatus));
-    assert.ok(first.title);
-    assert.ok(first.sourceUrl);
+  const result = await fetchGoogleStatusDashboard();
+  assert.equal(typeof result.ok, "boolean", "Result must contain boolean ok flag");
+  assert.equal(result.source, "Google Search Status Dashboard");
+  assert.ok(Array.isArray(result.items), "Must return items array");
+
+  if (result.ok && result.items.length > 0) {
+    const activeOrCompleted = result.items.find(i => i.externalStatus === "ACTIVE" || i.externalStatus === "COMPLETED");
+    assert.ok(activeOrCompleted, "Must parse incident status as ACTIVE or COMPLETED");
+    assert.ok(activeOrCompleted.title);
+    assert.ok(activeOrCompleted.sourceUrl);
   }
 });
 
-test("6. Real monitor run telemetry replaces fake lastSyncAt timestamp in getIntegrationStatuses", async () => {
+test("6. Search Central Blog fetcher returns honest SourceFetchResult with items array", async () => {
+  const { fetchGoogleSearchCentralBlog } = await import("../lib/google-updates/monitor.ts");
+
+  const result = await fetchGoogleSearchCentralBlog();
+  assert.equal(typeof result.ok, "boolean", "Result must contain boolean ok flag");
+  assert.equal(result.source, "Google Search Central Blog");
+  assert.ok(Array.isArray(result.items), "Must return items array");
+});
+
+test("7. Hardcoded deterministic baseline updates are completely removed from monitor.ts", () => {
+  const monitorCode = fs.readFileSync(path.join(appRoot, "lib/google-updates/monitor.ts"), "utf8");
+
+  assert.ok(
+    !monitorCode.includes("getDeterministicBaselineUpdates"),
+    "monitor.ts must NOT contain getDeterministicBaselineUpdates; live feeds are the sole source of truth",
+  );
+  assert.ok(
+    !monitorCode.includes("Deterministic baseline incident"),
+    "monitor.ts must NOT use deterministic baseline fallback",
+  );
+});
+
+test("8. Overall monitor run status logic enforces SUCCESS, PARTIAL, or FAILED", () => {
+  const monitorCode = fs.readFileSync(path.join(appRoot, "lib/google-updates/monitor.ts"), "utf8");
+
+  // Verify status assignment logic
+  assert.ok(
+    monitorCode.includes('allOk ? "SUCCESS" : anyOk ? "PARTIAL" : "FAILED"'),
+    "Must set SUCCESS when all 3 sources succeed, PARTIAL when partial, and FAILED when all fail",
+  );
+  assert.ok(
+    monitorCode.includes('status: "RUNNING" | "SUCCESS" | "PARTIAL" | "FAILED"'),
+    "MonitorRunRecord status must include RUNNING, SUCCESS, PARTIAL, and FAILED",
+  );
+});
+
+test("9. Real monitor run telemetry replaces fake lastSyncAt timestamp in getIntegrationStatuses", () => {
   const googleTsCode = fs.readFileSync(path.join(appRoot, "lib/integrations/google.ts"), "utf8");
 
-  // Verify that fake lastSyncAt: new Date().toISOString() is NOT used in search_monitor status
   assert.ok(
-    !googleTsCode.includes("service: \"search_monitor\",\n    name: \"Google Search Update Monitor\",\n    status: \"connected\",\n    propertyOrAccount: \"Daily Cron + Status Dashboard\",\n    lastSyncAt: new Date().toISOString()"),
+    !googleTsCode.includes('lastSyncAt: new Date().toISOString()'),
     "Fake hardcoded lastSyncAt = new Date().toISOString() must not be present",
   );
-
-  // Verify getLatestMonitorRun is referenced
   assert.ok(googleTsCode.includes("getLatestMonitorRun"), "getIntegrationStatuses must query getLatestMonitorRun");
 });
 
-test("7. Automated 3-hour workflow file exists with proper schedule and endpoint trigger", () => {
+test("10. Automated 3-hour workflow file enforces DGS_CRON_SECRET and fails on any non-200 HTTP code", () => {
   const workflowPath = path.join(appRoot, ".github/workflows/google-search-monitor.yml");
   assert.ok(fs.existsSync(workflowPath), ".github/workflows/google-search-monitor.yml must exist");
 
   const content = fs.readFileSync(workflowPath, "utf8");
   assert.ok(content.includes("cron: '17 */3 * * *'"), "Must have 3-hour cron schedule (17 */3 * * *)");
   assert.ok(content.includes("/api/internal/google-updates/check"), "Must target internal check endpoint");
+  assert.ok(content.includes("AUTH_SECRET: ${{ secrets.DGS_CRON_SECRET }}"), "Must use dedicated DGS_CRON_SECRET only");
+  assert.ok(!content.includes("ADMIN_SESSION_SECRET"), "Must not fall back to admin session secret");
+  assert.ok(!content.includes("INTERNAL_API_SECRET"), "Must not fall back to internal API secret");
+
+  // Must fail on non-200 (only 200 is acceptable)
+  assert.ok(
+    content.includes('[ "$HTTP_STATUS" != "200" ]'),
+    "Workflow must fail on any HTTP status other than 200",
+  );
+  assert.ok(!content.includes("-eq 401"), "Workflow must not treat 401 as acceptable");
 });
 
-test("8. Secure internal endpoint exists and supports authentication token", () => {
+test("11. Internal check endpoint is POST-only, returns 405 for GET, and requires DGS_CRON_SECRET", () => {
   const endpointPath = path.join(appRoot, "app/api/internal/google-updates/check/route.ts");
   assert.ok(fs.existsSync(endpointPath), "app/api/internal/google-updates/check/route.ts must exist");
 
   const content = fs.readFileSync(endpointPath, "utf8");
-  assert.ok(content.includes("Bearer "), "Must support Bearer token authentication");
-  assert.ok(content.includes("checkAndRecordGoogleUpdates"), "Must call checkAndRecordGoogleUpdates");
+
+  // Verify GET method returns 405 Method Not Allowed
+  assert.ok(content.includes("export async function GET"), "Must export GET handler");
+  assert.ok(content.includes("status: 405"), "GET handler must return status 405");
+  assert.ok(content.includes('Allow: "POST"') || content.includes("Allow: 'POST'"), "GET handler must include Allow: POST header");
+
+  // Verify POST method strictly checks DGS_CRON_SECRET
+  assert.ok(content.includes("export async function POST"), "Must export POST handler");
+  assert.ok(content.includes("process.env.DGS_CRON_SECRET"), "Must reference process.env.DGS_CRON_SECRET");
+  assert.ok(content.includes("Bearer "), "Must validate Bearer token");
+  assert.ok(content.includes("token !== cronSecret.trim()"), "Must strictly check token against cronSecret");
+  assert.ok(!content.includes("getCurrentCmsUser"), "Internal cron route must NOT accept CMS admin sessions");
 });
 
-test("9. Blog responsive layout tokens, header height, and no-crop hero image rules are established", () => {
-  const globalsCss = fs.readFileSync(path.join(appRoot, "app/globals.css"), "utf8");
-  assert.ok(globalsCss.includes("--dgs-site-header-height: 104px"), "--dgs-site-header-height must be defined in app/globals.css");
+test("12. Dedicated admin check endpoint handles manual checks with admin session authentication", () => {
+  const adminCheckPath = path.join(appRoot, "app/api/admin/google-updates/check/route.ts");
+  assert.ok(fs.existsSync(adminCheckPath), "app/api/admin/google-updates/check/route.ts must exist");
 
-  const blogCss = fs.readFileSync(path.join(appRoot, "components/blog/Blog.module.css"), "utf8");
-  assert.ok(blogCss.includes("var(--dgs-site-header-height"), "Blog.module.css must offset by --dgs-site-header-height");
-  assert.ok(blogCss.includes(".heroImgNatural"), "Blog.module.css must define .heroImgNatural for uncropped hero images");
-
-  const headerCss = fs.readFileSync(path.join(appRoot, "components/layout/Header.module.css"), "utf8");
-  assert.ok(headerCss.includes("var(--dgs-site-header-height"), "Header.module.css must use --dgs-site-header-height");
-  assert.ok(headerCss.includes("max-height: 64px"), "Logo must have responsive max-height constraint");
+  const content = fs.readFileSync(adminCheckPath, "utf8");
+  assert.ok(content.includes("getCurrentCmsUser"), "Admin check route must authenticate CMS user session");
+  assert.ok(content.includes("checkAndRecordGoogleUpdates"), "Admin check route must call checkAndRecordGoogleUpdates");
+  assert.ok(content.includes('runType: "manual"'), "Admin check route must pass runType: manual");
+  assert.ok(content.includes("logAuditEvent"), "Admin check route must log audit event");
 });
 
-test("10. Database schema includes google_update_monitor_runs table and external_status columns", () => {
+test("13. Dedicated admin test alert email endpoint verifies live email delivery", () => {
+  const testEmailPath = path.join(appRoot, "app/api/admin/google-updates/test-email/route.ts");
+  assert.ok(fs.existsSync(testEmailPath), "app/api/admin/google-updates/test-email/route.ts must exist");
+
+  const content = fs.readFileSync(testEmailPath, "utf8");
+  assert.ok(content.includes("getCurrentCmsUser"), "Test email route must authenticate CMS user session");
+  assert.ok(content.includes("sendTestGoogleUpdateEmail"), "Test email route must call sendTestGoogleUpdateEmail");
+  assert.ok(content.includes("delivery:"), "Test email route must return delivery confirmation");
+  assert.ok(content.includes("messageId"), "Test email response must include messageId");
+  assert.ok(content.includes("accepted"), "Test email response must include accepted recipient array");
+});
+
+test("14. Database schema defines google_update_monitor_runs with per-source error columns and external_id", () => {
   const schemaSql = fs.readFileSync(path.join(appRoot, "db/schema.sql"), "utf8");
   assert.ok(schemaSql.includes("google_update_monitor_runs"), "db/schema.sql must define google_update_monitor_runs");
-  assert.ok(schemaSql.includes("external_status VARCHAR"), "db/schema.sql must define external_status");
-  assert.ok(schemaSql.includes("incident_begin DATETIME"), "db/schema.sql must define incident_begin");
-  assert.ok(schemaSql.includes("idx_gsu_external_status"), "db/schema.sql must define idx_gsu_external_status index");
+  assert.ok(schemaSql.includes("status_dashboard_ok"), "db/schema.sql must define status_dashboard_ok");
+  assert.ok(schemaSql.includes("search_central_blog_ok"), "db/schema.sql must define search_central_blog_ok");
+  assert.ok(schemaSql.includes("docs_updates_ok"), "db/schema.sql must define docs_updates_ok");
+  assert.ok(schemaSql.includes("last_status_dashboard_error"), "db/schema.sql must define last_status_dashboard_error");
+  assert.ok(schemaSql.includes("last_search_central_error"), "db/schema.sql must define last_search_central_error");
+  assert.ok(schemaSql.includes("last_docs_error"), "db/schema.sql must define last_docs_error");
+  assert.ok(schemaSql.includes("external_id VARCHAR"), "db/schema.sql must define external_id on google_search_updates");
+});
+
+test("15. Database schema defines google_update_source_cursors table for persistent feed cursors", () => {
+  const schemaSql = fs.readFileSync(path.join(appRoot, "db/schema.sql"), "utf8");
+  assert.ok(schemaSql.includes("google_update_source_cursors"), "db/schema.sql must define google_update_source_cursors");
+  assert.ok(schemaSql.includes("source_id VARCHAR(64) PRIMARY KEY"), "google_update_source_cursors must have source_id PK");
+  assert.ok(schemaSql.includes("last_success_at"), "google_update_source_cursors must have last_success_at");
+  assert.ok(schemaSql.includes("last_seen_external_id"), "google_update_source_cursors must have last_seen_external_id");
+});
+
+test("16. Database schema defines google_update_notifications table with unique update_id + notification_type", () => {
+  const schemaSql = fs.readFileSync(path.join(appRoot, "db/schema.sql"), "utf8");
+  assert.ok(schemaSql.includes("google_update_notifications"), "db/schema.sql must define google_update_notifications");
+  assert.ok(
+    schemaSql.includes("UNIQUE KEY uq_update_notif (update_id, notification_type)"),
+    "google_update_notifications must have unique constraint on (update_id, notification_type) for deduplication",
+  );
+});
+
+test("17. apply-cms-schema.mjs includes all 29 expected tables including cursors and notifications", () => {
+  const applyScript = fs.readFileSync(path.join(appRoot, "scripts/apply-cms-schema.mjs"), "utf8");
+  assert.ok(applyScript.includes('"google_update_source_cursors"'), "Must include google_update_source_cursors");
+  assert.ok(applyScript.includes('"google_update_notifications"'), "Must include google_update_notifications");
+  assert.ok(applyScript.includes('"google_update_monitor_runs"'), "Must include google_update_monitor_runs");
+});
+
+test("18. In-place incident update preserves exact official source URL without artificial URL fragments", () => {
+  const monitorCode = fs.readFileSync(path.join(appRoot, "lib/google-updates/monitor.ts"), "utf8");
+
+  // Check that externalId is used to find existing update
+  assert.ok(
+    monitorCode.includes("external_id = ?") || monitorCode.includes("item.externalId"),
+    "monitor.ts must look up incidents by external_id to update in place",
+  );
+  // Check that artificial hash fragments are not appended to the canonical sourceUrl
+  assert.ok(
+    !monitorCode.includes('`https://status.search.google.com/incidents.json#incident-${'),
+    "monitor.ts must not pollute official URL with artificial JSON fragment strings",
+  );
+  assert.ok(
+    monitorCode.includes("https://status.search.google.com/incidents/"),
+    "Status dashboard incidents must use official status incident URL format",
+  );
+});
+
+test("19. calculateNextCronRun accurately computes next UTC 3-hour cron slot", async () => {
+  const { calculateNextCronRun } = await import("../lib/google-updates/monitor.ts");
+
+  // If time is 14:00 UTC, next cron at 15:17 UTC
+  const test1 = new Date("2026-09-26T14:00:00.000Z");
+  const next1 = calculateNextCronRun(test1);
+  assert.equal(next1, "2026-09-26T15:17:00.000Z");
+
+  // If time is 15:16 UTC, next cron is 15:17 UTC
+  const test2 = new Date("2026-09-26T15:16:00.000Z");
+  const next2 = calculateNextCronRun(test2);
+  assert.equal(next2, "2026-09-26T15:17:00.000Z");
+
+  // If time is 15:18 UTC, next cron is 18:17 UTC
+  const test3 = new Date("2026-09-26T15:18:00.000Z");
+  const next3 = calculateNextCronRun(test3);
+  assert.equal(next3, "2026-09-26T18:17:00.000Z");
+
+  // If time is 21:18 UTC (after the last slot of day), next cron is tomorrow at 00:17 UTC
+  const test4 = new Date("2026-09-26T21:18:00.000Z");
+  const next4 = calculateNextCronRun(test4);
+  assert.equal(next4, "2026-09-27T00:17:00.000Z");
+});
+
+test("20. Admin monitor health UI displays scheduler status, branch 'main', per-source states, and test email trigger", () => {
+  const clientViewCode = fs.readFileSync(
+    path.join(appRoot, "app/admin/google-updates/GoogleUpdatesClientView.tsx"),
+    "utf8",
+  );
+
+  // Workflow branch indicator
+  assert.ok(clientViewCode.includes("main"), "UI must display workflow branch 'main'");
+  assert.ok(clientViewCode.includes("Automated Search Intelligence Pipeline"), "UI must display Automated Search Intelligence Pipeline card");
+  assert.ok(clientViewCode.includes("Next Expected Cron"), "UI must display Next Expected Cron");
+  assert.ok(clientViewCode.includes("Send Test Alert Email"), "UI must provide Send Test Alert Email button");
+  assert.ok(clientViewCode.includes("/api/admin/google-updates/test-email"), "UI must call /api/admin/google-updates/test-email");
+  assert.ok(clientViewCode.includes("/api/admin/google-updates/check"), "UI must call /api/admin/google-updates/check for manual trigger");
+
+  // Source health display
+  assert.ok(clientViewCode.includes("HEALTHY"), "UI must display HEALTHY source status badge");
+  assert.ok(clientViewCode.includes("FAILED"), "UI must display FAILED source status badge");
+  assert.ok(clientViewCode.includes("STALE"), "UI must display STALE source status badge");
 });

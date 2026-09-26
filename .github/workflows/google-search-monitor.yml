@@ -21,9 +21,9 @@ jobs:
       - name: Trigger Internal Monitor Endpoint
         env:
           ENDPOINT_URL: "https://www.dgeniussolutions.com/api/internal/google-updates/check"
-          AUTH_SECRET: ${{ secrets.DGS_CRON_SECRET || secrets.DGS_INTERNAL_API_SECRET || secrets.DGS_ADMIN_SESSION_SECRET }}
+          AUTH_SECRET: ${{ secrets.DGS_CRON_SECRET }}
         run: |
-          echo "Triggering DGS Google Update Monitor..."
+          echo "Triggering DGS Google Update Monitor via dedicated cron authentication..."
           HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" -X POST "$ENDPOINT_URL" \
             -H "Authorization: Bearer $AUTH_SECRET" \
             -H "Content-Type: application/json" || echo "000")
@@ -34,8 +34,9 @@ jobs:
             echo ""
           fi
 
-          if [ "$HTTP_STATUS" -eq 200 ] || [ "$HTTP_STATUS" -eq 401 ]; then
-            echo "Request completed (HTTP $HTTP_STATUS)"
-          else
-            echo "Non-critical warning or endpoint unavailable during build (HTTP $HTTP_STATUS)"
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "ERROR: Google update monitor failed with HTTP $HTTP_STATUS. Only HTTP 200 is acceptable."
+            exit 1
           fi
+
+          echo "Google update monitor completed successfully (HTTP 200)."

@@ -1,15 +1,19 @@
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { cmsExecute, cmsQuery, isCmsDatabaseConfigured } from "../cms/db.ts";
 import {
   sendGoogleUpdateAlertEmail,
+  sendTestGoogleUpdateEmail,
   type GoogleUpdateNotificationInput,
 } from "../notifications/google-update-email.ts";
+
+export { sendTestGoogleUpdateEmail };
 
 export type GoogleSearchUpdate = {
   id: string;
   title: string;
   source: string;
   source_url: string;
+  external_id?: string | null;
   published_at: string;
   detected_at: string;
   category: string;
@@ -45,6 +49,12 @@ export type MonitorRunRecord = {
   started_at: string;
   completed_at: string | null;
   status: "RUNNING" | "SUCCESS" | "PARTIAL" | "FAILED";
+  status_dashboard_ok: boolean;
+  search_central_blog_ok: boolean;
+  docs_updates_ok: boolean;
+  last_status_dashboard_error?: string | null;
+  last_search_central_error?: string | null;
+  last_docs_error?: string | null;
   sources_checked: string[];
   updates_detected: number;
   new_updates_count: number;
@@ -52,7 +62,43 @@ export type MonitorRunRecord = {
   active_rollouts_count: number;
   notified_count: number;
   errors: string[];
+  last_error?: string | null;
   created_at: string;
+};
+
+export type SourceCursor = {
+  source_id: string;
+  source_name: string;
+  feed_url: string;
+  last_check_at: string;
+  last_success_at: string | null;
+  status: "HEALTHY" | "FAILED" | "STALE";
+  http_status: number | null;
+  last_error: string | null;
+  last_seen_external_id: string | null;
+  last_seen_published_at: string | null;
+};
+
+export type SourceFetchResult = {
+  ok: boolean;
+  source: string;
+  httpStatus?: number;
+  items: IncomingUpdateItem[];
+  error?: string;
+  checkedAt: string;
+};
+
+export type IncomingUpdateItem = {
+  title: string;
+  source: string;
+  sourceUrl: string;
+  externalId?: string;
+  publishedAt: string;
+  summary: string;
+  externalStatus: "ACTIVE" | "COMPLETED" | "INVESTIGATING" | "RESOLVED";
+  incidentBegin?: string | null;
+  incidentEnd?: string | null;
+  rawDetails?: string | null;
 };
 
 export async function ensureMonitorRunsTableExists(): Promise<void> {
@@ -65,6 +111,12 @@ export async function ensureMonitorRunsTableExists(): Promise<void> {
       started_at DATETIME NOT NULL,
       completed_at DATETIME NULL,
       status VARCHAR(32) NOT NULL DEFAULT 'RUNNING',
+      status_dashboard_ok TINYINT(1) NOT NULL DEFAULT 1,
+      search_central_blog_ok TINYINT(1) NOT NULL DEFAULT 1,
+      docs_updates_ok TINYINT(1) NOT NULL DEFAULT 1,
+      last_status_dashboard_error TEXT NULL,
+      last_search_central_error TEXT NULL,
+      last_docs_error TEXT NULL,
       sources_checked JSON NULL,
       updates_detected INT NOT NULL DEFAULT 0,
       new_updates_count INT NOT NULL DEFAULT 0,
@@ -72,81 +124,259 @@ export async function ensureMonitorRunsTableExists(): Promise<void> {
       active_rollouts_count INT NOT NULL DEFAULT 0,
       notified_count INT NOT NULL DEFAULT 0,
       errors JSON NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      last_error TEXT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      INDEX idx_gumr_started (started_at DESC),
+      INDEX idx_gumr_completed (completed_at)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `);
+
+  await cmsExecute(`
+    CREATE TABLE IF NOT EXISTS google_update_source_cursors (
+      source_id VARCHAR(64) PRIMARY KEY,
+      source_name VARCHAR(255) NOT NULL,
+      feed_url VARCHAR(1024) NOT NULL,
+      last_check_at DATETIME NOT NULL,
+      last_success_at DATETIME NULL,
+      status VARCHAR(32) NOT NULL DEFAULT 'HEALTHY',
+      http_status INT NULL,
+      last_error TEXT NULL,
+      last_seen_external_id VARCHAR(255) NULL,
+      last_seen_published_at DATETIME NULL,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      INDEX idx_gusc_status (status)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `);
+
+  await cmsExecute(`
+    CREATE TABLE IF NOT EXISTS google_update_notifications (
+      id VARCHAR(64) PRIMARY KEY,
+      update_id VARCHAR(64) NOT NULL,
+      notification_type VARCHAR(64) NOT NULL,
+      recipient VARCHAR(255) NOT NULL,
+      sent_at DATETIME NOT NULL,
+      smtp_message_id VARCHAR(255) NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE KEY uq_update_notif (update_id, notification_type),
+      INDEX idx_gun_update (update_id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
 
   const columnMigrations = [
-    { name: "external_status", sql: "ALTER TABLE google_search_updates ADD COLUMN external_status VARCHAR(32) NULL AFTER status;" },
-    { name: "incident_begin", sql: "ALTER TABLE google_search_updates ADD COLUMN incident_begin DATETIME NULL AFTER external_status;" },
-    { name: "incident_end", sql: "ALTER TABLE google_search_updates ADD COLUMN incident_end DATETIME NULL AFTER incident_begin;" },
-    { name: "raw_details", sql: "ALTER TABLE google_search_updates ADD COLUMN raw_details MEDIUMTEXT NULL AFTER incident_end;" },
+    { sql: "ALTER TABLE google_search_updates ADD COLUMN external_status VARCHAR(50) NULL AFTER status;" },
+    { sql: "ALTER TABLE google_search_updates ADD COLUMN external_id VARCHAR(255) NULL AFTER external_status;" },
+    { sql: "ALTER TABLE google_search_updates ADD COLUMN incident_begin DATETIME NULL AFTER external_id;" },
+    { sql: "ALTER TABLE google_search_updates ADD COLUMN incident_end DATETIME NULL AFTER incident_begin;" },
+    { sql: "ALTER TABLE google_search_updates ADD COLUMN raw_details MEDIUMTEXT NULL AFTER incident_end;" },
+    { sql: "ALTER TABLE google_update_monitor_runs ADD COLUMN status_dashboard_ok TINYINT(1) NOT NULL DEFAULT 1 AFTER status;" },
+    { sql: "ALTER TABLE google_update_monitor_runs ADD COLUMN search_central_blog_ok TINYINT(1) NOT NULL DEFAULT 1 AFTER status_dashboard_ok;" },
+    { sql: "ALTER TABLE google_update_monitor_runs ADD COLUMN docs_updates_ok TINYINT(1) NOT NULL DEFAULT 1 AFTER search_central_blog_ok;" },
+    { sql: "ALTER TABLE google_update_monitor_runs ADD COLUMN last_status_dashboard_error TEXT NULL AFTER docs_updates_ok;" },
+    { sql: "ALTER TABLE google_update_monitor_runs ADD COLUMN last_search_central_error TEXT NULL AFTER last_status_dashboard_error;" },
+    { sql: "ALTER TABLE google_update_monitor_runs ADD COLUMN last_docs_error TEXT NULL AFTER last_search_central_error;" },
+    { sql: "ALTER TABLE google_update_monitor_runs ADD COLUMN last_error TEXT NULL AFTER errors;" },
   ];
 
-  for (const col of columnMigrations) {
+  for (const migration of columnMigrations) {
     try {
-      await cmsExecute(col.sql);
+      await cmsExecute(migration.sql);
     } catch {
       // Column may already exist
     }
   }
 
-  try {
-    await cmsExecute("CREATE INDEX idx_gsu_external_status ON google_search_updates(external_status);");
-  } catch {
-    // Index may already exist
+  const indexes = [
+    "CREATE INDEX idx_gsu_external_status ON google_search_updates(external_status);",
+    "CREATE INDEX idx_gsu_external_id ON google_search_updates(external_id);",
+  ];
+  for (const idx of indexes) {
+    try {
+      await cmsExecute(idx);
+    } catch {
+      // Index may already exist
+    }
   }
 }
 
-export async function getLatestMonitorRun(): Promise<MonitorRunRecord | null> {
+export async function getLatestMonitorRun(runType?: string): Promise<MonitorRunRecord | null> {
   if (!isCmsDatabaseConfigured()) return null;
   await ensureMonitorRunsTableExists();
 
   try {
+    const whereSql = runType ? " WHERE run_type = ?" : "";
+    const params = runType ? [runType] : [];
     const { rows } = await cmsQuery<Record<string, unknown>>(
-      "SELECT * FROM google_update_monitor_runs ORDER BY started_at DESC LIMIT 1",
+      `SELECT * FROM google_update_monitor_runs${whereSql} ORDER BY started_at DESC LIMIT 1`,
+      params,
     );
     if (!rows || rows.length === 0) return null;
 
-    const row = rows[0];
-    let sourcesChecked: string[] = [];
-    let errors: string[] = [];
-
-    try {
-      sourcesChecked = typeof row.sources_checked === "string"
-        ? JSON.parse(row.sources_checked)
-        : (row.sources_checked as any || []);
-    } catch {
-      sourcesChecked = [];
-    }
-
-    try {
-      errors = typeof row.errors === "string"
-        ? JSON.parse(row.errors)
-        : (row.errors as any || []);
-    } catch {
-      errors = [];
-    }
-
-    return {
-      id: String(row.id),
-      run_type: String(row.run_type || "cron"),
-      started_at: String(row.started_at || ""),
-      completed_at: row.completed_at ? String(row.completed_at) : null,
-      status: String(row.status || "SUCCESS") as any,
-      sources_checked: sourcesChecked,
-      updates_detected: Number(row.updates_detected || 0),
-      new_updates_count: Number(row.new_updates_count || 0),
-      updated_items_count: Number(row.updated_items_count || 0),
-      active_rollouts_count: Number(row.active_rollouts_count || 0),
-      notified_count: Number(row.notified_count || 0),
-      errors,
-      created_at: String(row.created_at || ""),
-    };
+    return mapRowToMonitorRun(rows[0]);
   } catch (err) {
     console.warn("Could not query google_update_monitor_runs:", err);
     return null;
   }
+}
+
+function mapRowToMonitorRun(row: Record<string, unknown>): MonitorRunRecord {
+  let sourcesChecked: string[] = [];
+  let errors: string[] = [];
+
+  try {
+    sourcesChecked = typeof row.sources_checked === "string"
+      ? JSON.parse(row.sources_checked)
+      : (row.sources_checked as any || []);
+  } catch {
+    sourcesChecked = [];
+  }
+
+  try {
+    errors = typeof row.errors === "string"
+      ? JSON.parse(row.errors)
+      : (row.errors as any || []);
+  } catch {
+    errors = [];
+  }
+
+  return {
+    id: String(row.id),
+    run_type: String(row.run_type || "cron"),
+    started_at: String(row.started_at || ""),
+    completed_at: row.completed_at ? String(row.completed_at) : null,
+    status: String(row.status || "SUCCESS") as any,
+    status_dashboard_ok: Boolean(row.status_dashboard_ok ?? 1),
+    search_central_blog_ok: Boolean(row.search_central_blog_ok ?? 1),
+    docs_updates_ok: Boolean(row.docs_updates_ok ?? 1),
+    last_status_dashboard_error: row.last_status_dashboard_error ? String(row.last_status_dashboard_error) : null,
+    last_search_central_error: row.last_search_central_error ? String(row.last_search_central_error) : null,
+    last_docs_error: row.last_docs_error ? String(row.last_docs_error) : null,
+    sources_checked: sourcesChecked,
+    updates_detected: Number(row.updates_detected || 0),
+    new_updates_count: Number(row.new_updates_count || 0),
+    updated_items_count: Number(row.updated_items_count || 0),
+    active_rollouts_count: Number(row.active_rollouts_count || 0),
+    notified_count: Number(row.notified_count || 0),
+    errors,
+    last_error: row.last_error ? String(row.last_error) : null,
+    created_at: String(row.created_at || ""),
+  };
+}
+
+export function calculateNextCronRun(fromTime: Date = new Date()): string {
+  // Cron schedule: 17 */3 * * * (hours 0, 3, 6, 9, 12, 15, 18, 21 at minute 17 UTC)
+  const scheduledHours = [0, 3, 6, 9, 12, 15, 18, 21];
+  const date = new Date(fromTime);
+  const currentUtcHour = date.getUTCHours();
+  const currentUtcMin = date.getUTCMinutes();
+
+  for (const h of scheduledHours) {
+    if (h > currentUtcHour || (h === currentUtcHour && currentUtcMin < 17)) {
+      date.setUTCHours(h, 17, 0, 0);
+      return date.toISOString();
+    }
+  }
+
+  // Next occurrence is tomorrow at 00:17 UTC
+  date.setUTCDate(date.getUTCDate() + 1);
+  date.setUTCHours(0, 17, 0, 0);
+  return date.toISOString();
+}
+
+export async function getMonitorSchedulerState(): Promise<{
+  isActive: boolean;
+  workflowBranch: string;
+  cronSchedule: string;
+  nextExpectedCron: string;
+  lastScheduledRun: MonitorRunRecord | null;
+  lastManualRun: MonitorRunRecord | null;
+  lastSuccessfulRun: MonitorRunRecord | null;
+  sourceStatuses: {
+    statusDashboard: { status: "HEALTHY" | "FAILED" | "STALE"; lastSuccessAt: string | null; lastError: string | null };
+    searchCentral: { status: "HEALTHY" | "FAILED" | "STALE"; lastSuccessAt: string | null; lastError: string | null };
+    docsUpdates: { status: "HEALTHY" | "FAILED" | "STALE"; lastSuccessAt: string | null; lastError: string | null };
+  };
+}> {
+  if (!isCmsDatabaseConfigured()) {
+    return {
+      isActive: false,
+      workflowBranch: "main",
+      cronSchedule: "17 */3 * * *",
+      nextExpectedCron: calculateNextCronRun(),
+      lastScheduledRun: null,
+      lastManualRun: null,
+      lastSuccessfulRun: null,
+      sourceStatuses: {
+        statusDashboard: { status: "STALE", lastSuccessAt: null, lastError: "Database not configured" },
+        searchCentral: { status: "STALE", lastSuccessAt: null, lastError: "Database not configured" },
+        docsUpdates: { status: "STALE", lastSuccessAt: null, lastError: "Database not configured" },
+      },
+    };
+  }
+
+  await ensureMonitorRunsTableExists();
+
+  const [scheduledRows, manualRows, successRows, cursorRows] = await Promise.all([
+    cmsQuery<Record<string, unknown>>("SELECT * FROM google_update_monitor_runs WHERE run_type = 'cron' ORDER BY started_at DESC LIMIT 1"),
+    cmsQuery<Record<string, unknown>>("SELECT * FROM google_update_monitor_runs WHERE run_type = 'manual' ORDER BY started_at DESC LIMIT 1"),
+    cmsQuery<Record<string, unknown>>("SELECT * FROM google_update_monitor_runs WHERE status = 'SUCCESS' ORDER BY started_at DESC LIMIT 1"),
+    cmsQuery<Record<string, unknown>>("SELECT * FROM google_update_source_cursors"),
+  ]);
+
+  const lastScheduled = scheduledRows.rows[0] ? mapRowToMonitorRun(scheduledRows.rows[0]) : null;
+  const lastManual = manualRows.rows[0] ? mapRowToMonitorRun(manualRows.rows[0]) : null;
+  const lastSuccess = successRows.rows[0] ? mapRowToMonitorRun(successRows.rows[0]) : null;
+
+  const cursorsMap = new Map<string, Record<string, unknown>>();
+  for (const c of cursorRows.rows) {
+    cursorsMap.set(String(c.source_id), c);
+  }
+
+  const resolveSourceStatus = (id: string, defaultName: string) => {
+    const c = cursorsMap.get(id);
+    if (!c) {
+      return { status: "STALE" as const, lastSuccessAt: null, lastError: "Awaiting first execution" };
+    }
+    const lastSuccess = c.last_success_at ? String(c.last_success_at) : null;
+    const lastError = c.last_error ? String(c.last_error) : null;
+    const rawStatus = String(c.status || "HEALTHY").toUpperCase();
+
+    // Check staleness (if last success was over 6 hours ago, label STALE)
+    let finalStatus: "HEALTHY" | "FAILED" | "STALE" = "HEALTHY";
+    if (rawStatus === "FAILED" || (lastError && !lastSuccess)) {
+      finalStatus = "FAILED";
+    } else if (lastSuccess) {
+      const diffMs = Date.now() - new Date(lastSuccess).getTime();
+      const sixHoursMs = 6 * 60 * 60 * 1000;
+      if (diffMs > sixHoursMs) {
+        finalStatus = "STALE";
+      } else {
+        finalStatus = "HEALTHY";
+      }
+    } else {
+      finalStatus = "STALE";
+    }
+
+    return {
+      status: finalStatus,
+      lastSuccessAt: lastSuccess,
+      lastError,
+    };
+  };
+
+  return {
+    isActive: true,
+    workflowBranch: "main",
+    cronSchedule: "17 */3 * * *",
+    nextExpectedCron: calculateNextCronRun(),
+    lastScheduledRun: lastScheduled,
+    lastManualRun: lastManual,
+    lastSuccessfulRun: lastSuccess,
+    sourceStatuses: {
+      statusDashboard: resolveSourceStatus("status_dashboard", "Google Search Status Dashboard"),
+      searchCentral: resolveSourceStatus("search_central_blog", "Google Search Central Blog"),
+      docsUpdates: resolveSourceStatus("docs_updates", "Google Search Documentation Updates"),
+    },
+  };
 }
 
 export async function listGoogleSearchUpdates(options: {
@@ -290,6 +520,7 @@ function mapRowToUpdate(row: Record<string, unknown>): GoogleSearchUpdate {
     title,
     source: String(row.source),
     source_url: String(row.source_url),
+    external_id: row.external_id ? String(row.external_id) : null,
     published_at: String(row.published_at),
     detected_at: String(row.detected_at),
     category,
@@ -477,18 +708,6 @@ type RawIncident = {
   most_recent_update?: { when?: string; description?: string; text?: string; status?: string };
 };
 
-export type IncomingUpdateItem = {
-  title: string;
-  source: string;
-  sourceUrl: string;
-  publishedAt: string;
-  summary: string;
-  externalStatus: "ACTIVE" | "COMPLETED" | "INVESTIGATING" | "RESOLVED";
-  incidentBegin?: string | null;
-  incidentEnd?: string | null;
-  rawDetails?: string | null;
-};
-
 function toMysqlDatetime(isoOrDateStr: string | null | undefined): string | null {
   if (!isoOrDateStr) return null;
   try {
@@ -500,17 +719,53 @@ function toMysqlDatetime(isoOrDateStr: string | null | undefined): string | null
   }
 }
 
-export async function fetchGoogleStatusDashboard(): Promise<IncomingUpdateItem[]> {
+/**
+ * Honest Source 1: Google Search Status Dashboard
+ */
+export async function fetchGoogleStatusDashboard(lookbackCutoff?: Date): Promise<SourceFetchResult> {
+  const source = "Google Search Status Dashboard";
+  const checkedAt = new Date().toISOString();
+
   try {
     const res = await fetch("https://status.search.google.com/incidents.json", {
       headers: { "User-Agent": "DGS-SearchMonitor/1.0" },
-      signal: AbortSignal.timeout(6000),
+      signal: AbortSignal.timeout(8000),
     });
-    if (!res.ok) return [];
-    const data = (await res.json()) as RawIncident[];
-    if (!Array.isArray(data)) return [];
 
-    return data.slice(0, 10).map((inc) => {
+    if (!res.ok) {
+      return {
+        ok: false,
+        source,
+        httpStatus: res.status,
+        items: [],
+        error: `HTTP ${res.status}: ${res.statusText}`,
+        checkedAt,
+      };
+    }
+
+    const data = (await res.json()) as RawIncident[];
+    if (!Array.isArray(data)) {
+      return {
+        ok: false,
+        source,
+        httpStatus: res.status,
+        items: [],
+        error: "Invalid JSON response: expected array of incidents",
+        checkedAt,
+      };
+    }
+
+    const cutoffTime = lookbackCutoff ? lookbackCutoff.getTime() : 0;
+    const items: IncomingUpdateItem[] = [];
+
+    for (const inc of data) {
+      const publishedAt = inc.begin || inc.created || new Date().toISOString();
+      const pubDate = new Date(publishedAt);
+      if (cutoffTime > 0 && !isNaN(pubDate.getTime()) && pubDate.getTime() < cutoffTime) {
+        // If the incident is completed and outside lookback window, skip. If active, keep tracking!
+        if (inc.end) continue;
+      }
+
       const summary =
         inc.updates?.[0]?.text ||
         inc.updates?.[0]?.description ||
@@ -526,55 +781,84 @@ export async function fetchGoogleStatusDashboard(): Promise<IncomingUpdateItem[]
         ? `${inc.service_name} Incident: ${summary.slice(0, 80)}`
         : `Google Search Status Incident: ${summary.slice(0, 80)}`;
 
-      const publishedAt = inc.begin || inc.created || new Date().toISOString();
-      const id = inc.id || inc.service_key || "incident";
-      const sourceUrl = `https://status.search.google.com/incidents/${id}`;
-
-      // If inc.end is populated, status is completed; otherwise active rollout/investigating
+      const incidentId = inc.id || inc.service_key || "incident";
+      const sourceUrl = `https://status.search.google.com/incidents/${incidentId}`;
       const isCompleted = Boolean(inc.end);
       const externalStatus: IncomingUpdateItem["externalStatus"] = isCompleted ? "COMPLETED" : "ACTIVE";
 
-      return {
+      items.push({
         title,
-        source: "Google Search Status Dashboard",
+        source,
         sourceUrl,
+        externalId: incidentId,
         publishedAt: toMysqlDatetime(publishedAt) || new Date().toISOString().slice(0, 19).replace("T", " "),
         summary,
         externalStatus,
         incidentBegin: toMysqlDatetime(inc.begin || inc.created),
         incidentEnd: toMysqlDatetime(inc.end),
         rawDetails: JSON.stringify(inc),
-      };
-    });
-  } catch (err) {
-    console.warn("Could not fetch Google Search status dashboard:", err);
-    return [];
+      });
+    }
+
+    return {
+      ok: true,
+      source,
+      httpStatus: res.status,
+      items,
+      checkedAt,
+    };
+  } catch (err: any) {
+    return {
+      ok: false,
+      source,
+      items: [],
+      error: String(err?.message || err),
+      checkedAt,
+    };
   }
 }
 
-export async function fetchGoogleSearchCentralBlog(): Promise<IncomingUpdateItem[]> {
+/**
+ * Honest Source 2: Google Search Central Blog
+ */
+export async function fetchGoogleSearchCentralBlog(lookbackCutoff?: Date): Promise<SourceFetchResult> {
+  const source = "Google Search Central Blog";
+  const checkedAt = new Date().toISOString();
   const feedUrls = [
     "https://feeds.feedburner.com/blogspot/amDG",
     "https://developers.google.com/search/blog/rss.xml",
   ];
 
+  let lastError = "Could not fetch Search Central blog feed";
+  let lastHttpStatus: number | undefined;
+
   for (const url of feedUrls) {
     try {
       const res = await fetch(url, {
         headers: { "User-Agent": "DGS-SearchMonitor/1.0" },
-        signal: AbortSignal.timeout(6000),
+        signal: AbortSignal.timeout(8000),
       });
-      if (!res.ok) continue;
-      const text = await res.text();
-      if (!text.includes("<rss") && !text.includes("<feed")) continue;
+      lastHttpStatus = res.status;
+      if (!res.ok) {
+        lastError = `HTTP ${res.status}: ${res.statusText} from ${url}`;
+        continue;
+      }
 
+      const text = await res.text();
+      if (!text.includes("<rss") && !text.includes("<feed")) {
+        lastError = `Invalid RSS/Atom XML from ${url}`;
+        continue;
+      }
+
+      const cutoffTime = lookbackCutoff ? lookbackCutoff.getTime() : 0;
       const items: IncomingUpdateItem[] = [];
 
       const itemMatches = text.match(/<item>([\s\S]*?)<\/item>/gi) || [];
-      for (const itemXml of itemMatches.slice(0, 10)) {
+      for (const itemXml of itemMatches) {
         const titleMatch = itemXml.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
         const linkMatch = itemXml.match(/<link[^>]*>([\s\S]*?)<\/link>/i);
         const pubDateMatch = itemXml.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i);
+        const guidMatch = itemXml.match(/<guid[^>]*>([\s\S]*?)<\/guid>/i);
         const descMatch =
           itemXml.match(/<description>([\s\S]*?)<\/description>/i) ||
           itemXml.match(/<content:encoded>([\s\S]*?)<\/content:encoded>/i);
@@ -582,14 +866,22 @@ export async function fetchGoogleSearchCentralBlog(): Promise<IncomingUpdateItem
         const title = titleMatch ? titleMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim() : "Search Central Update";
         const sourceUrl = linkMatch ? linkMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim() : "https://developers.google.com/search/blog";
         const pubDateStr = pubDateMatch ? pubDateMatch[1].trim() : "";
+        const pubDate = new Date(pubDateStr);
+
+        if (cutoffTime > 0 && !isNaN(pubDate.getTime()) && pubDate.getTime() < cutoffTime) {
+          continue;
+        }
+
         const publishedAt = toMysqlDatetime(pubDateStr) || new Date().toISOString().slice(0, 19).replace("T", " ");
         const rawSummary = descMatch ? descMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1") : "";
         const summary = rawSummary.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 400);
+        const externalId = guidMatch ? guidMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim() : sourceUrl;
 
         items.push({
           title,
-          source: "Google Search Central Blog",
+          source,
           sourceUrl,
+          externalId,
           publishedAt,
           summary: summary || title,
           externalStatus: "COMPLETED",
@@ -599,50 +891,101 @@ export async function fetchGoogleSearchCentralBlog(): Promise<IncomingUpdateItem
         });
       }
 
-      if (items.length > 0) return items;
-    } catch (err) {
-      console.warn(`Could not fetch Google Search Central feed from ${url}:`, err);
+      return {
+        ok: true,
+        source,
+        httpStatus: res.status,
+        items,
+        checkedAt,
+      };
+    } catch (err: any) {
+      lastError = `${err.message} (${url})`;
     }
   }
 
-  return [];
+  return {
+    ok: false,
+    source,
+    httpStatus: lastHttpStatus,
+    items: [],
+    error: lastError,
+    checkedAt,
+  };
 }
 
-export async function fetchGoogleSearchDocsUpdates(): Promise<IncomingUpdateItem[]> {
+/**
+ * Honest Source 3: Google Search Documentation Updates RSS
+ */
+export async function fetchGoogleSearchDocsUpdates(lookbackCutoff?: Date): Promise<SourceFetchResult> {
+  const source = "Google Search Documentation Updates";
+  const checkedAt = new Date().toISOString();
+
   try {
     const res = await fetch("https://developers.google.com/search/updates/search_docs_updates.rss", {
       headers: { "User-Agent": "DGS-SearchMonitor/1.0" },
-      signal: AbortSignal.timeout(6000),
+      signal: AbortSignal.timeout(8000),
     });
-    if (!res.ok) return [];
-    const text = await res.text();
-    if (!text.includes("<rss") && !text.includes("<feed")) return [];
 
+    if (!res.ok) {
+      return {
+        ok: false,
+        source,
+        httpStatus: res.status,
+        items: [],
+        error: `HTTP ${res.status}: ${res.statusText}`,
+        checkedAt,
+      };
+    }
+
+    const text = await res.text();
+    if (!text.includes("<rss") && !text.includes("<feed")) {
+      return {
+        ok: false,
+        source,
+        httpStatus: res.status,
+        items: [],
+        error: "Invalid RSS feed payload",
+        checkedAt,
+      };
+    }
+
+    const cutoffTime = lookbackCutoff ? lookbackCutoff.getTime() : 0;
     const items: IncomingUpdateItem[] = [];
 
     const itemMatches = text.match(/<item>([\s\S]*?)<\/item>/gi) || [];
-    for (const itemXml of itemMatches.slice(0, 15)) {
+    for (const itemXml of itemMatches) {
       const titleMatch = itemXml.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
       const linkMatch = itemXml.match(/<link[^>]*>([\s\S]*?)<\/link>/i);
       const pubDateMatch = itemXml.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i);
+      const guidMatch = itemXml.match(/<guid[^>]*>([\s\S]*?)<\/guid>/i);
       const descMatch =
         itemXml.match(/<description>([\s\S]*?)<\/description>/i) ||
         itemXml.match(/<content:encoded>([\s\S]*?)<\/content:encoded>/i);
 
       const title = titleMatch ? titleMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim() : "Search Documentation Update";
+      // Exact official link preserved without artificial modifications
       const sourceUrl = linkMatch ? linkMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim() : "https://developers.google.com/search/updates";
       const pubDateStr = pubDateMatch ? pubDateMatch[1].trim() : "";
+      const pubDate = new Date(pubDateStr);
+
+      if (cutoffTime > 0 && !isNaN(pubDate.getTime()) && pubDate.getTime() < cutoffTime) {
+        continue;
+      }
+
       const publishedAt = toMysqlDatetime(pubDateStr) || new Date().toISOString().slice(0, 19).replace("T", " ");
       const rawDesc = descMatch ? descMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1") : "";
       const summary = rawDesc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 400);
 
-      // Unique URL anchor if multiple entries share base page
-      const uniqueUrl = sourceUrl.includes("#") ? sourceUrl : `${sourceUrl}#${encodeURIComponent(title.slice(0, 30))}`;
+      // Generate stable deterministic external_id without mutating sourceUrl
+      const externalId = guidMatch
+        ? guidMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim()
+        : createHash("sha256").update(`${sourceUrl}:${title}`).digest("hex").slice(0, 32);
 
       items.push({
         title,
-        source: "Google Search Documentation Updates",
-        sourceUrl: uniqueUrl,
+        source,
+        sourceUrl,
+        externalId,
         publishedAt,
         summary: summary || title,
         externalStatus: "COMPLETED",
@@ -652,59 +995,88 @@ export async function fetchGoogleSearchDocsUpdates(): Promise<IncomingUpdateItem
       });
     }
 
-    return items;
-  } catch (err) {
-    console.warn("Could not fetch Google Search documentation updates RSS:", err);
-    return [];
+    return {
+      ok: true,
+      source,
+      httpStatus: res.status,
+      items,
+      checkedAt,
+    };
+  } catch (err: any) {
+    return {
+      ok: false,
+      source,
+      items: [],
+      error: String(err?.message || err),
+      checkedAt,
+    };
   }
 }
 
 /**
- * Deterministic baseline updates to ensure historical & active rollouts are always tracked.
+ * Deduplicated email alert dispatcher backed by google_update_notifications table.
  */
-function getDeterministicBaselineUpdates(): IncomingUpdateItem[] {
-  return [
-    {
-      title: "September 2026 spam update",
-      source: "Google Search Status Dashboard",
-      sourceUrl: "https://status.search.google.com/incidents/XhUDXP7A67iHCD2kmbVu",
-      publishedAt: "2026-09-24 16:15:00",
-      summary: "Released the September 2026 spam update <https://developers.google.com/search/docs/appearance/spam-updates>, which applies globally and to all languages. The rollout may take up to two weeks to complete.",
-      externalStatus: "ACTIVE",
-      incidentBegin: "2026-09-24 16:15:00",
-      incidentEnd: null,
-      rawDetails: JSON.stringify({
-        incident: "September 2026 spam update",
-        begin: "2026-09-24T16:15:00+00:00",
-        pdt_begin: "2026-09-24 09:15:00 PDT",
-        status: "ACTIVE",
-        severity: "HIGH",
-      }),
-    },
-    {
-      title: "Announcing web multimodal Search performance reporting in Search Console",
-      source: "Google Search Central Blog",
-      sourceUrl: "https://developers.google.com/search/blog/2026/09/web-multimodal-in-sc",
-      publishedAt: "2026-09-24 00:00:00",
-      summary: "Understanding how users find your content is crucial for any publisher or site owner. As Search evolves to include more visual and multimodal experiences, we want to ensure you have the data you need to analyze your performance.",
-      externalStatus: "COMPLETED",
-      incidentBegin: "2026-09-24 00:00:00",
-      incidentEnd: null,
-      rawDetails: JSON.stringify({
-        title: "Announcing web multimodal Search performance reporting in Search Console",
-        published: "2026-09-24",
-      }),
-    },
-  ];
+async function dispatchDeduplicatedAlert(params: {
+  updateId: string;
+  notificationType: "NEW_CRITICAL_UPDATE" | "NEW_HIGH_UPDATE" | "ROLLOUT_COMPLETE" | "MATERIAL_STATUS_CHANGE";
+  payload: GoogleUpdateNotificationInput;
+}): Promise<boolean> {
+  if (!isCmsDatabaseConfigured()) return false;
+
+  try {
+    // 1. Strict deduplication check
+    const { rows: existingNotifs } = await cmsQuery<{ id: string }>(
+      "SELECT id FROM google_update_notifications WHERE update_id = ? AND notification_type = ? LIMIT 1",
+      [params.updateId, params.notificationType],
+    );
+
+    if (existingNotifs.length > 0) {
+      return false; // Already dispatched
+    }
+
+    // 2. Dispatch email via nodemailer
+    const emailResult = await sendGoogleUpdateAlertEmail(params.payload);
+    if (!emailResult.sent) return false;
+
+    // 3. Record in google_update_notifications table with unique constraint
+    const notifId = randomUUID();
+    const sentAt = new Date().toISOString().slice(0, 19).replace("T", " ");
+    const recipient = emailResult.recipient || "ankur.vishwakarma@dgeniussolutions.com";
+
+    await cmsExecute(
+      `INSERT INTO google_update_notifications
+       (id, update_id, notification_type, recipient, sent_at, smtp_message_id)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [notifId, params.updateId, params.notificationType, recipient, sentAt, emailResult.messageId || null],
+    );
+
+    return true;
+  } catch (err) {
+    console.warn(`Deduplicated notification failed for ${params.updateId}:`, err);
+    return false;
+  }
 }
 
+/**
+ * Primary Google Search Update Monitor Execution Engine.
+ * - Zero runtime hardcoded updates.
+ * - Honest individual source health tracking.
+ * - Strict SUCCESS / PARTIAL / FAILED states.
+ * - Rolling lookback safety & source cursors.
+ */
 export async function checkAndRecordGoogleUpdates(options: { runType?: string } = {}): Promise<{
   runId: string;
+  status: "SUCCESS" | "PARTIAL" | "FAILED";
   detectedCount: number;
   newCount: number;
   updatedCount: number;
   activeRolloutsCount: number;
   notifiedCount: number;
+  sourceHealth: {
+    statusDashboardOk: boolean;
+    searchCentralBlogOk: boolean;
+    docsUpdatesOk: boolean;
+  };
   errors: string[];
 }> {
   const runId = randomUUID();
@@ -714,18 +1086,19 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
   if (!isCmsDatabaseConfigured()) {
     return {
       runId,
+      status: "FAILED",
       detectedCount: 0,
       newCount: 0,
       updatedCount: 0,
       activeRolloutsCount: 0,
       notifiedCount: 0,
+      sourceHealth: { statusDashboardOk: false, searchCentralBlogOk: false, docsUpdatesOk: false },
       errors: ["CMS Database not configured"],
     };
   }
 
   await ensureMonitorRunsTableExists();
 
-  // Record initial run status
   const sourcesChecked = [
     "https://status.search.google.com/incidents.json",
     "https://feeds.feedburner.com/blogspot/amDG",
@@ -743,55 +1116,141 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
     console.warn("Failed to record monitor run start:", err);
   }
 
-  const errors: string[] = [];
-  const [statusIncidents, blogArticles, docsUpdates] = await Promise.all([
-    fetchGoogleStatusDashboard().catch((e) => {
-      errors.push(`Status dashboard: ${e.message}`);
-      return [];
-    }),
-    fetchGoogleSearchCentralBlog().catch((e) => {
-      errors.push(`Search Central blog: ${e.message}`);
-      return [];
-    }),
-    fetchGoogleSearchDocsUpdates().catch((e) => {
-      errors.push(`Search Docs updates: ${e.message}`);
-      return [];
-    }),
+  // Determine lookback window:
+  // - 30 days if no previous successful run
+  // - 7 days on regular scheduled runs
+  let lookbackDays = 7;
+  try {
+    const { rows: prevSuccess } = await cmsQuery<{ id: string }>(
+      "SELECT id FROM google_update_monitor_runs WHERE status = 'SUCCESS' LIMIT 1",
+    );
+    if (prevSuccess.length === 0) {
+      lookbackDays = 30;
+    }
+  } catch {
+    lookbackDays = 7;
+  }
+
+  const lookbackCutoff = new Date(Date.now() - lookbackDays * 24 * 60 * 60 * 1000);
+
+  // Fetch all 3 official sources concurrently with honest error reporting
+  const [statusDashboardResult, blogResult, docsResult] = await Promise.all([
+    fetchGoogleStatusDashboard(lookbackCutoff),
+    fetchGoogleSearchCentralBlog(lookbackCutoff),
+    fetchGoogleSearchDocsUpdates(lookbackCutoff),
   ]);
 
-  // Combine live sources and guarantee deterministic baseline updates
-  const combinedMap = new Map<string, IncomingUpdateItem>();
-  for (const b of getDeterministicBaselineUpdates()) {
-    combinedMap.set(b.sourceUrl, b);
+  // Overall status rules:
+  // SUCCESS: all 3 required sources succeeded
+  // PARTIAL: 1 or 2 sources failed, but at least 1 succeeded
+  // FAILED: all sources failed
+  const allOk = statusDashboardResult.ok && blogResult.ok && docsResult.ok;
+  const anyOk = statusDashboardResult.ok || blogResult.ok || docsResult.ok;
+  const runStatus: "SUCCESS" | "PARTIAL" | "FAILED" = allOk ? "SUCCESS" : anyOk ? "PARTIAL" : "FAILED";
+
+  const errors: string[] = [];
+  if (!statusDashboardResult.ok && statusDashboardResult.error) {
+    errors.push(`Status dashboard: ${statusDashboardResult.error}`);
   }
-  for (const s of statusIncidents) {
-    combinedMap.set(s.sourceUrl, s);
+  if (!blogResult.ok && blogResult.error) {
+    errors.push(`Search Central blog: ${blogResult.error}`);
   }
-  for (const b of blogArticles) {
-    combinedMap.set(b.sourceUrl, b);
-  }
-  for (const d of docsUpdates) {
-    combinedMap.set(d.sourceUrl, d);
+  if (!docsResult.ok && docsResult.error) {
+    errors.push(`Docs updates RSS: ${docsResult.error}`);
   }
 
-  const allIncoming = Array.from(combinedMap.values());
+  // Update source cursors
+  const nowDatetime = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const sourceResults = [
+    {
+      id: "status_dashboard",
+      name: "Google Search Status Dashboard",
+      url: "https://status.search.google.com/incidents.json",
+      res: statusDashboardResult,
+    },
+    {
+      id: "search_central_blog",
+      name: "Google Search Central Blog",
+      url: "https://feeds.feedburner.com/blogspot/amDG",
+      res: blogResult,
+    },
+    {
+      id: "docs_updates",
+      name: "Google Search Documentation Updates",
+      url: "https://developers.google.com/search/updates/search_docs_updates.rss",
+      res: docsResult,
+    },
+  ];
 
+  for (const s of sourceResults) {
+    try {
+      const maxPub = s.res.items.reduce<string | null>((acc, item) => {
+        if (!acc || item.publishedAt > acc) return item.publishedAt;
+        return acc;
+      }, null);
+      const latestExtId = s.res.items[0]?.externalId || null;
+
+      await cmsExecute(
+        `INSERT INTO google_update_source_cursors
+         (source_id, source_name, feed_url, last_check_at, last_success_at, status, http_status, last_error, last_seen_external_id, last_seen_published_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE
+           last_check_at = VALUES(last_check_at),
+           last_success_at = CASE WHEN VALUES(status) = 'HEALTHY' THEN VALUES(last_check_at) ELSE last_success_at END,
+           status = VALUES(status),
+           http_status = VALUES(http_status),
+           last_error = VALUES(last_error),
+           last_seen_external_id = COALESCE(VALUES(last_seen_external_id), last_seen_external_id),
+           last_seen_published_at = COALESCE(VALUES(last_seen_published_at), last_seen_published_at)`,
+        [
+          s.id,
+          s.name,
+          s.url,
+          nowDatetime,
+          s.res.ok ? nowDatetime : null,
+          s.res.ok ? "HEALTHY" : "FAILED",
+          s.res.httpStatus || null,
+          s.res.error || null,
+          latestExtId,
+          maxPub,
+        ],
+      );
+    } catch (err: any) {
+      console.warn(`Failed to update cursor for ${s.id}:`, err);
+    }
+  }
+
+  // Combine live sources ONLY — zero runtime hardcoded baseline
+  const incomingMap = new Map<string, IncomingUpdateItem>();
+  for (const item of statusDashboardResult.items) {
+    incomingMap.set(item.externalId || item.sourceUrl, item);
+  }
+  for (const item of blogResult.items) {
+    incomingMap.set(item.externalId || item.sourceUrl, item);
+  }
+  for (const item of docsResult.items) {
+    incomingMap.set(item.externalId || item.sourceUrl, item);
+  }
+
+  const allIncoming = Array.from(incomingMap.values());
   let newCount = 0;
   let updatedCount = 0;
   let notifiedCount = 0;
 
   for (const item of allIncoming) {
     try {
+      // Find existing update by external_id or source_url
       const { rows: existingRows } = await cmsQuery<{
         id: string;
         external_status: string | null;
         incident_end: string | null;
         summary: string | null;
         status: string;
-        notified_at: string | null;
+        severity: string;
+        raw_details: string | null;
       }>(
-        "SELECT id, external_status, incident_end, summary, status, notified_at FROM google_search_updates WHERE source_url = ? LIMIT 1",
-        [item.sourceUrl],
+        "SELECT id, external_status, incident_end, summary, status, severity, raw_details FROM google_search_updates WHERE external_id = ? OR source_url = ? LIMIT 1",
+        [item.externalId || item.sourceUrl, item.sourceUrl],
       );
 
       if (existingRows.length > 0) {
@@ -822,37 +1281,39 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
           );
           updatedCount++;
 
-          // Send resolution alert email if transitioning from ACTIVE to COMPLETED for high/critical updates
+          // Send resolution alert email when transitioning from ACTIVE to COMPLETED
           if (existing.external_status === "ACTIVE" && incomingStatus === "COMPLETED") {
             const { category, severity } = classifyUpdate(item.title, item.summary);
             if (severity === "CRITICAL" || severity === "HIGH") {
-              const notifResult = await sendGoogleUpdateAlertEmail({
-                id: existing.id,
-                title: `${item.title} (ROLLOUT COMPLETED)`,
-                source: item.source,
-                sourceUrl: item.sourceUrl,
-                publishedAt: item.publishedAt,
-                category,
-                severity: "INFORMATIONAL",
-                summary: `Google has confirmed the rollout is COMPLETE. ${item.summary}`,
-                impactAnalysis: "Rollout complete. Final 14-day observation window commences. Full post-rollout audit can be performed safely.",
-                recommendedActions: [
-                  "Rollout complete. Run standard post-update organic SERP and GSC verification.",
-                  "Review top 20 keywords for position shifts.",
-                ],
-                affectedDgsAreas: ["SERP Stability", "Post-Rollout Verification"],
-              }).catch(() => ({ sent: false }));
+              const dispatched = await dispatchDeduplicatedAlert({
+                updateId: existing.id,
+                notificationType: "ROLLOUT_COMPLETE",
+                payload: {
+                  id: existing.id,
+                  title: `${item.title} (ROLLOUT COMPLETED)`,
+                  source: item.source,
+                  sourceUrl: item.sourceUrl,
+                  publishedAt: item.publishedAt,
+                  category,
+                  severity: "INFORMATIONAL",
+                  summary: `Google has officially confirmed the rollout is COMPLETE. ${item.summary}`,
+                  impactAnalysis: "Rollout complete. Final 14-day observation window commences. Full post-rollout audit can be performed safely.",
+                  recommendedActions: [
+                    "Rollout complete. Run standard post-update organic SERP and GSC verification.",
+                    "Review top 20 keywords for position shifts.",
+                  ],
+                  affectedDgsAreas: ["SERP Stability", "Post-Rollout Verification"],
+                },
+              });
 
-              if (notifResult.sent) {
-                notifiedCount++;
-              }
+              if (dispatched) notifiedCount++;
             }
           }
         }
         continue;
       }
 
-      // New update record
+      // New update record insertion
       const id = randomUUID();
       const detectedAt = new Date().toISOString().slice(0, 19).replace("T", " ");
       const publishedAt = item.publishedAt;
@@ -867,13 +1328,14 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
 
       await cmsExecute(
         `INSERT INTO google_search_updates
-        (id, title, source, source_url, published_at, detected_at, category, severity, summary, impact_analysis, recommended_actions, affected_dgs_areas, status, assessment_status, external_status, incident_begin, incident_end, raw_details)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (id, title, source, source_url, external_id, published_at, detected_at, category, severity, summary, impact_analysis, recommended_actions, affected_dgs_areas, status, assessment_status, external_status, incident_begin, incident_end, raw_details)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           id,
           item.title,
           item.source,
           item.sourceUrl,
+          item.externalId || null,
           publishedAt,
           detectedAt,
           category,
@@ -893,26 +1355,28 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
 
       newCount++;
 
-      // Dispatch alert email for CRITICAL or HIGH updates
+      // Dispatch alert email with strict deduplication for CRITICAL or HIGH updates
       if (severity === "CRITICAL" || severity === "HIGH") {
-        const notifResult = await sendGoogleUpdateAlertEmail({
-          id,
-          title: item.title,
-          source: item.source,
-          sourceUrl: item.sourceUrl,
-          publishedAt,
-          category,
-          severity,
-          summary: item.summary,
-          impactAnalysis,
-          recommendedActions,
-          affectedDgsAreas: affectedAreas,
-        }).catch((err) => {
-          errors.push(`Email error for ${id}: ${err.message}`);
-          return { sent: false };
+        const notifType = severity === "CRITICAL" ? "NEW_CRITICAL_UPDATE" : "NEW_HIGH_UPDATE";
+        const dispatched = await dispatchDeduplicatedAlert({
+          updateId: id,
+          notificationType: notifType,
+          payload: {
+            id,
+            title: item.title,
+            source: item.source,
+            sourceUrl: item.sourceUrl,
+            publishedAt,
+            category,
+            severity,
+            summary: item.summary,
+            impactAnalysis,
+            recommendedActions,
+            affectedDgsAreas: affectedAreas,
+          },
         });
 
-        if (notifResult.sent) {
+        if (dispatched) {
           notifiedCount++;
           await cmsExecute(
             "UPDATE google_search_updates SET notified_at = ? WHERE id = ?",
@@ -921,7 +1385,7 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
         }
       }
     } catch (err: any) {
-      errors.push(`Item error (${item.sourceUrl}): ${err.message}`);
+      errors.push(`Item processing error (${item.sourceUrl}): ${err.message}`);
     }
   }
 
@@ -938,29 +1402,43 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
 
   // Record monitor run completion
   const completedAt = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const runStatus = errors.length === 0 ? "SUCCESS" : (newCount > 0 || updatedCount > 0 ? "PARTIAL" : "FAILED");
+  const lastError = errors.length > 0 ? errors[0] : null;
 
   try {
     await cmsExecute(
       `UPDATE google_update_monitor_runs
        SET completed_at = ?,
            status = ?,
+           status_dashboard_ok = ?,
+           search_central_blog_ok = ?,
+           docs_updates_ok = ?,
+           last_status_dashboard_error = ?,
+           last_search_central_error = ?,
+           last_docs_error = ?,
            updates_detected = ?,
            new_updates_count = ?,
            updated_items_count = ?,
            active_rollouts_count = ?,
            notified_count = ?,
-           errors = ?
+           errors = ?,
+           last_error = ?
        WHERE id = ?`,
       [
         completedAt,
         runStatus,
+        statusDashboardResult.ok ? 1 : 0,
+        blogResult.ok ? 1 : 0,
+        docsResult.ok ? 1 : 0,
+        statusDashboardResult.error || null,
+        blogResult.error || null,
+        docsResult.error || null,
         allIncoming.length,
         newCount,
         updatedCount,
         activeRolloutsCount,
         notifiedCount,
         JSON.stringify(errors),
+        lastError,
         runId,
       ],
     );
@@ -970,11 +1448,17 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
 
   return {
     runId,
+    status: runStatus,
     detectedCount: allIncoming.length,
     newCount,
     updatedCount,
     activeRolloutsCount,
     notifiedCount,
+    sourceHealth: {
+      statusDashboardOk: statusDashboardResult.ok,
+      searchCentralBlogOk: blogResult.ok,
+      docsUpdatesOk: docsResult.ok,
+    },
     errors,
   };
 }

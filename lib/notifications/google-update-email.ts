@@ -146,7 +146,7 @@ export async function sendGoogleUpdateAlertEmail(
     `DGS CMS Search Updates Dashboard: ${cmsDashboardUrl}`,
   ].join("\n");
 
-  await transporter.sendMail({
+  const info = await transporter.sendMail({
     from,
     to: recipient,
     subject,
@@ -154,5 +154,93 @@ export async function sendGoogleUpdateAlertEmail(
     html,
   });
 
-  return { sent: true };
+  return {
+    sent: true,
+    recipient,
+    messageId: info.messageId,
+    accepted: Array.isArray(info.accepted) ? info.accepted.map(String) : [recipient],
+  };
+}
+
+export async function sendTestGoogleUpdateEmail(actorEmail?: string): Promise<{
+  sent: boolean;
+  recipient?: string;
+  timestamp?: string;
+  accepted?: string[];
+  messageId?: string;
+  error?: string;
+}> {
+  if (!smtpConfigured()) {
+    return {
+      sent: false,
+      error: "SMTP is not configured on server (missing DGS_SMTP_HOST, DGS_SMTP_USER, or DGS_SMTP_PASSWORD)",
+    };
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: process.env.DGS_SMTP_HOST,
+    port: Number(process.env.DGS_SMTP_PORT || 587),
+    secure: process.env.DGS_SMTP_SECURE === "true",
+    auth: {
+      user: process.env.DGS_SMTP_USER,
+      pass: process.env.DGS_SMTP_PASSWORD,
+    },
+  });
+
+  const recipient =
+    process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO ||
+    actorEmail ||
+    "ankur.vishwakarma@dgeniussolutions.com";
+  const from = process.env.DGS_SMTP_FROM || process.env.DGS_SMTP_USER!;
+  const timestamp = new Date().toISOString();
+
+  const html = renderDgsEmailHtml({
+    kicker: "TEST NOTIFICATION — GOOGLE UPDATE MONITOR",
+    title: "[DGS TEST ALERT] Google Search Update Monitor Operational Verification",
+    subtitle: `Dispatched by ${actorEmail || "Administrator"} · ${timestamp}`,
+    statusBadge: {
+      text: "TEST VERIFIED",
+      color: "#ffffff",
+      bg: "#059669",
+    },
+    sections: [
+      {
+        title: "Test Alert Overview",
+        fields: [
+          { label: "Notification Type", value: "TEST_ALERT", isBadge: true, badgeColor: "#059669" },
+          { label: "Channel", value: "Transactional SMTP Delivery" },
+          { label: "Sender", value: from },
+          { label: "Recipient", value: recipient },
+          { label: "Timestamp", value: timestamp },
+        ],
+      },
+      {
+        title: "Scheduler & Telemetry Pipeline",
+        fields: [
+          { label: "Scheduler Cadence", value: "Every 3 hours (17 */3 * * *)" },
+          { label: "Scheduler Branch", value: "main" },
+          { label: "Official Sources", value: "Google Search Status Dashboard, Search Central Blog, Documentation Updates RSS" },
+        ],
+      },
+    ],
+    ctaText: "Open Search Updates in CMS",
+    ctaUrl: "https://www.dgeniussolutions.com/admin/google-updates/",
+    note: "This is a verified test email sent on behalf of the DGS Admin team to confirm operational SMTP readiness. No real update record was created.",
+  });
+
+  const info = await transporter.sendMail({
+    from,
+    to: recipient,
+    subject: `[DGS TEST ALERT] Google Update Monitor Live Delivery Verification`,
+    text: `DGS Google Update Monitor Test Alert\nTimestamp: ${timestamp}\nRecipient: ${recipient}\nStatus: Verified operational.`,
+    html,
+  });
+
+  return {
+    sent: true,
+    recipient,
+    timestamp,
+    accepted: Array.isArray(info.accepted) ? info.accepted.map(String) : [recipient],
+    messageId: info.messageId,
+  };
 }

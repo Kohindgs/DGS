@@ -314,6 +314,8 @@ try {
     "form_submissions",
     "google_search_updates",
     "google_update_monitor_runs",
+    "google_update_notifications",
+    "google_update_source_cursors",
     "gsc_page_query_metrics",
     "leads",
     "media_assets",

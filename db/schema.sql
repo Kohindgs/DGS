@@ -292,6 +292,7 @@ CREATE TABLE IF NOT EXISTS google_search_updates (
   affected_dgs_areas JSON NOT NULL,
   status VARCHAR(50) NOT NULL DEFAULT 'new',
   external_status VARCHAR(50) NOT NULL DEFAULT 'UNKNOWN',
+  external_id VARCHAR(255) NULL,
   incident_begin DATETIME NULL,
   incident_end DATETIME NULL,
   raw_details MEDIUMTEXT NULL,
@@ -312,6 +313,7 @@ CREATE TABLE IF NOT EXISTS google_search_updates (
   INDEX idx_gsu_published (published_at),
   INDEX idx_gsu_severity_status (severity, status),
   INDEX idx_gsu_external_status (external_status),
+  INDEX idx_gsu_external_id (external_id),
   INDEX idx_gsu_assessment_status (assessment_status),
   INDEX idx_gsu_source_url (source_url(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -325,6 +327,9 @@ CREATE TABLE IF NOT EXISTS google_update_monitor_runs (
   status_dashboard_ok TINYINT(1) NOT NULL DEFAULT 1,
   search_central_blog_ok TINYINT(1) NOT NULL DEFAULT 1,
   docs_updates_ok TINYINT(1) NOT NULL DEFAULT 1,
+  last_status_dashboard_error TEXT NULL,
+  last_search_central_error TEXT NULL,
+  last_docs_error TEXT NULL,
   sources_checked JSON NULL,
   updates_detected INT NOT NULL DEFAULT 0,
   new_updates_count INT NOT NULL DEFAULT 0,
@@ -336,6 +341,33 @@ CREATE TABLE IF NOT EXISTS google_update_monitor_runs (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_gumr_started (started_at DESC),
   INDEX idx_gumr_completed (completed_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS google_update_source_cursors (
+  source_id VARCHAR(64) PRIMARY KEY,
+  source_name VARCHAR(255) NOT NULL,
+  feed_url VARCHAR(1024) NOT NULL,
+  last_check_at DATETIME NOT NULL,
+  last_success_at DATETIME NULL,
+  status VARCHAR(32) NOT NULL DEFAULT 'HEALTHY',
+  http_status INT NULL,
+  last_error TEXT NULL,
+  last_seen_external_id VARCHAR(255) NULL,
+  last_seen_published_at DATETIME NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_gusc_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS google_update_notifications (
+  id VARCHAR(64) PRIMARY KEY,
+  update_id VARCHAR(64) NOT NULL,
+  notification_type VARCHAR(64) NOT NULL,
+  recipient VARCHAR(255) NOT NULL,
+  sent_at DATETIME NOT NULL,
+  smtp_message_id VARCHAR(255) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_update_notif (update_id, notification_type),
+  INDEX idx_gun_update (update_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
