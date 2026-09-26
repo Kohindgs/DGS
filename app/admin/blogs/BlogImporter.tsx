@@ -11,15 +11,38 @@ type ImportedBlog = {
     llm: Record<string, unknown>;
     schemas: Record<string, unknown>[];
   };
-  images: Array<{
+  matchedImagesCount?: number;
+  matchedImages?: Array<{
+    filename: string;
+    url: string;
+    confidence: "EXACT" | "HIGH" | "MEDIUM";
+    score: number;
+    reason: string;
+    isFeatured: boolean;
+  }>;
+  lowConfidenceImages?: Array<{
+    filename: string;
+    url: string;
+    confidence: "LOW";
+    score: number;
+    reason: string;
+  }>;
+  unmatchedImages?: Array<{
+    filename: string;
+    url: string;
+    confidence: "UNMATCHED";
+    score: number;
+    reason: string;
+  }>;
+  images?: Array<{
     filename: string;
     url: string;
     altText: string;
     featured: boolean;
     bytes: number;
   }>;
-  videos: Array<{ filename: string; url: string; bytes: number }>;
-  originalsRetained: boolean;
+  videos?: Array<{ filename: string; url: string; bytes: number }>;
+  originalsRetained?: boolean;
 };
 
 type FailedImport = {
@@ -127,7 +150,7 @@ export function BlogImporter() {
           Match media to the Word filename/title. Example: <code>ai-search-seo.docx</code>,
           <code>ai-search-seo-featured.jpg</code>, <code>ai-search-seo-01.jpg</code>,
           <code>ai-search-seo-01.mp4</code>. Images become high-quality WebP and MP4 becomes
-          VP9 WebM. Originals are discarded after successful conversion.
+          VP9 WebM. Originals and optimized WebP/WebM variants are preserved in persistent CMS media storage.
         </p>
         <button type="submit" disabled={busy}>
           {busy ? "Working..." : "Create optimized drafts"}
@@ -180,8 +203,29 @@ export function BlogImporter() {
           </article>
 
           <article className="dgs-admin-import-panel">
-            <h3>Images</h3>
-            {result.images.length ? (
+            <h3>Matched Images</h3>
+            {result.matchedImages?.length ? (
+              <ul>
+                {result.matchedImages.map((m) => (
+                  <li key={m.url}>
+                    <span style={{
+                      display: "inline-block",
+                      padding: "2px 6px",
+                      borderRadius: 4,
+                      fontSize: 11,
+                      fontWeight: 600,
+                      marginRight: 6,
+                      background: m.confidence === "EXACT" ? "rgba(34, 197, 94, 0.15)" : m.confidence === "HIGH" ? "rgba(59, 130, 246, 0.15)" : "rgba(234, 179, 8, 0.15)",
+                      color: m.confidence === "EXACT" ? "#22c55e" : m.confidence === "HIGH" ? "#3b82f6" : "#eab308",
+                    }}>
+                      {m.confidence} MATCH ({m.score}%)
+                    </span>
+                    <strong>{m.isFeatured ? "Featured" : "Inline"}</strong> · {m.filename}
+                    {" · "}<span style={{ color: "#9ca3af" }}>{m.reason}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : result.images?.length ? (
               <ul>
                 {result.images.map((image) => (
                   <li key={image.url}>
@@ -191,6 +235,22 @@ export function BlogImporter() {
                 ))}
               </ul>
             ) : <p>No matching images were uploaded.</p>}
+
+            {result.lowConfidenceImages?.length ? (
+              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)" }}>
+                <h4 style={{ color: "#f59e0b", margin: "0 0 8px 0" }}>⚠️ Low Confidence Media (Not Attached)</h4>
+                <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13 }}>
+                  {result.lowConfidenceImages.map((img) => (
+                    <li key={img.filename}>
+                      <strong>{img.filename}</strong>: {img.reason} (Score: {img.score}%)
+                    </li>
+                  ))}
+                </ul>
+                <p style={{ margin: "6px 0 0 0", fontSize: 12, color: "#9ca3af" }}>
+                  These images were not automatically attached to prevent incorrect media assignment. You can manually assign them in the blog editor.
+                </p>
+              </div>
+            ) : null}
           </article>
 
           <article className="dgs-admin-import-panel">
@@ -210,3 +270,4 @@ export function BlogImporter() {
     </div>
   );
 }
+

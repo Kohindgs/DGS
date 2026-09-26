@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { publishCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
 
@@ -34,6 +35,22 @@ export async function POST(
     const blog = await publishCmsBlog(id);
     if (!blog) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
 
+    await logAuditEvent({
+      actor_email: "admin@dgeniussolutions.com",
+      role: "admin",
+      action: "BLOG_PUBLISHED",
+      resource: "blog_post",
+      resource_id: id,
+      summary: `Published blog "${blog.title}" (/blogs/${blog.slug}/)`,
+      after_state: {
+        title: blog.title,
+        slug: blog.slug,
+        status: "published",
+        published_at: blog.published_at,
+      },
+      status: "success",
+    });
+
     revalidatePath("/blogs/");
     revalidatePath(`/blogs/${blog.slug}/`);
     revalidatePath("/sitemap.xml");
@@ -51,3 +68,4 @@ export async function POST(
     );
   }
 }
+

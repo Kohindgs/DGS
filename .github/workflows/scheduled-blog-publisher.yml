@@ -1,0 +1,42 @@
+name: DGS Scheduled Blog Automated Publisher
+
+on:
+  schedule:
+    # Run every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish-scheduled-blogs:
+    name: Check and Publish Due Scheduled Blogs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trigger Internal Scheduled Blog Publisher Endpoint
+        env:
+          ENDPOINT_URL: "https://www.dgeniussolutions.com/api/internal/blogs/publish-scheduled"
+          AUTH_SECRET: ${{ secrets.DGS_CRON_SECRET }}
+        run: |
+          echo "Triggering DGS Scheduled Blog Publisher via dedicated cron authentication..."
+          HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" -X POST "$ENDPOINT_URL" \
+            -H "Authorization: Bearer $AUTH_SECRET" \
+            -H "Content-Type: application/json" || echo "000")
+          
+          echo "HTTP Response Code: $HTTP_STATUS"
+          if [ -f response.json ]; then
+            cat response.json
+            echo ""
+          fi
+
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "ERROR: Scheduled blog publisher failed with HTTP $HTTP_STATUS. Only HTTP 200 is acceptable."
+            exit 1
+          fi
+
+          echo "Scheduled blog publisher completed successfully (HTTP 200)."

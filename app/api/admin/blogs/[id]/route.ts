@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { deleteCmsDraftBlog, getCmsBlogById, updateCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
 
@@ -47,6 +48,22 @@ export async function PATCH(
     const updated = await updateCmsBlog(id, body);
     if (!updated) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
 
+    await logAuditEvent({
+      actor_email: "admin@dgeniussolutions.com",
+      role: "admin",
+      action: "BLOG_UPDATED",
+      resource: "blog_post",
+      resource_id: id,
+      summary: `Updated blog "${updated.title}" (${id})`,
+      after_state: {
+        title: updated.title,
+        slug: updated.slug,
+        status: updated.status,
+        needs_review: updated.needs_review,
+      },
+      status: "success",
+    });
+
     const qa = await validateCmsBlogForPublish(id);
     return NextResponse.json({ ok: true, blog: updated, qa });
   } catch (error) {
@@ -77,9 +94,26 @@ export async function DELETE(
 
   try {
     await deleteCmsDraftBlog(id);
+
+    await logAuditEvent({
+      actor_email: "admin@dgeniussolutions.com",
+      role: "admin",
+      action: "BLOG_DELETED",
+      resource: "blog_post",
+      resource_id: id,
+      summary: `Deleted blog "${blog.title}" (${id})`,
+      before_state: {
+        title: blog.title,
+        slug: blog.slug,
+        status: blog.status,
+      },
+      status: "success",
+    });
+
     return NextResponse.json({ ok: true, message: "Blog deleted successfully" });
   } catch (error) {
     console.error("Failed to delete CMS blog", error);
     return NextResponse.json({ ok: false, message: "Failed to delete blog" }, { status: 500 });
   }
 }
+

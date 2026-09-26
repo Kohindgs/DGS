@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import type { BlogOptimizationPackage } from "@/lib/cms/blog-import";
 import { recordMediaUsage } from "@/lib/cms/media";
+import { checkBlogCannibalizationRisk, type BlogCannibalizationReport } from "@/lib/seo/cannibalization";
 
 export type StoredBlogImage = {
   filename: string;
@@ -381,11 +382,19 @@ export type UpdateCmsBlogInput = {
   scheduled_for?: string | null;
   needs_review?: boolean;
   optimization?: Partial<BlogOptimizationPackage>;
+  updatedBy?: string | null;
 };
 
 export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Promise<CmsBlogDetail | null> {
   const existing = await getCmsBlogById(id);
   if (!existing) return null;
+
+  // Snapshot current state to blog_revisions prior to update
+  try {
+    await createBlogRevision(id, existing, input.updatedBy || null);
+  } catch (revErr) {
+    console.warn("Failed to create blog revision before update:", revErr);
+  }
 
   const title = input.title !== undefined ? input.title.trim() : existing.title;
   const slug = input.slug !== undefined ? input.slug.trim().toLowerCase() : existing.slug;
@@ -561,7 +570,13 @@ export async function deleteCmsDraftBlog(id: string) {
 }
 
 // 8. Pre-flight QA Validation before Publishing
-export async function validateCmsBlogForPublish(id: string) {
+export async function validateCmsBlogForPublish(id: string): Promise<{
+  ok: boolean;
+  errors: string[];
+  warnings: string[];
+  blog: CmsBlogDetail | null;
+  cannibalization?: BlogCannibalizationReport;
+}> {
   const blog = await getCmsBlogById(id);
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -570,12 +585,21 @@ export async function validateCmsBlogForPublish(id: string) {
     return { ok: false, errors: ["Blog not found"], warnings, blog: null };
   }
 
-  const plainText = stripHtmlText(blog.content.bodyHtml || "");
+  // Slug collision check against other blogs
+  const duplicateRows = await cmsQuery<{ id: string; title: string }>(
+    `SELECT id, title FROM blog_posts WHERE slug = ? AND id != ? LIMIT 1`,
+    [blog.slug.toLowerCase(), blog.id]
+  );
+  if (duplicateRows.rows.length > 0) {
+    errors.push(`Slug collision: The slug "${blog.slug}" is already in use by blog "${duplicateRows.rows[0].title}".`);
+  }
+
+  const plainText = stripHtmlText(blog.content?.bodyHtml || "");
   if (plainText.length < 200) {
     errors.push("Blog content body is too short (minimum 200 characters required).");
   }
 
-  const seo = blog.content.optimization?.seo;
+  const seo = blog.content?.optimization?.seo;
   if (!seo?.title?.trim()) {
     errors.push("SEO title is missing.");
   } else if (seo.title.length > 70) {
@@ -590,17 +614,18 @@ export async function validateCmsBlogForPublish(id: string) {
     warnings.push(`Meta description is long (${seo.description.length} chars; recommended <= 155).`);
   }
 
-  if (seo?.canonicalPath !== `/blogs/${blog.slug}/`) {
-    errors.push(`Canonical path (/blogs/${blog.slug}/) does not match SEO canonical (${seo?.canonicalPath}).`);
+  const canonicalPath = seo?.canonicalPath || `/blogs/${blog.slug}/`;
+  if (canonicalPath !== `/blogs/${blog.slug}/`) {
+    errors.push(`Canonical path (/blogs/${blog.slug}/) does not match SEO canonical (${canonicalPath}).`);
   }
 
-  const aeo = blog.content.optimization?.aeo;
+  const aeo = blog.content?.optimization?.aeo;
   if (!aeo?.conciseAnswer?.trim()) {
     errors.push("AEO concise answer is missing (required for AI search optimization).");
   }
 
   const schemaTypes = new Set(
-    (blog.content.optimization?.schemas || []).map((s) => String(s?.["@type"] || ""))
+    (blog.content?.optimization?.schemas || []).map((s) => String(s?.["@type"] || ""))
   );
   if (!schemaTypes.has("BlogPosting")) {
     errors.push("Schema.org BlogPosting structured data is missing.");
@@ -609,8 +634,33 @@ export async function validateCmsBlogForPublish(id: string) {
     errors.push("Schema.org BreadcrumbList structured data is missing.");
   }
 
-  if (!blog.featured_image_url && (!blog.content.images || blog.content.images.length === 0)) {
+  if (!blog.featured_image_url && (!blog.content?.images || blog.content.images.length === 0)) {
     warnings.push("No featured image is set for this blog.");
+  }
+
+  // Image alt text checks
+  const images = blog.content?.images || [];
+  for (const img of images) {
+    if (!img.altText || !img.altText.trim() || img.altText.length < 5) {
+      warnings.push(`Image "${img.filename}" is missing descriptive alt text.`);
+    }
+  }
+
+  // Cannibalization risk evaluation against protected core pages
+  const cannibalization = checkBlogCannibalizationRisk({
+    slug: blog.slug,
+    title: blog.title,
+    focusKeyword: blog.focus_keyword || seo?.focusKeyword || null,
+    secondaryKeywords: seo?.secondaryKeywords || null,
+    canonicalPath,
+  });
+
+  if (cannibalization.score >= 100) {
+    errors.push(`Critical routing collision: ${cannibalization.reason}`);
+  } else if (cannibalization.risk === "HIGH_OVERLAP") {
+    warnings.push(`[Cannibalization Risk] Blog strongly competes with core service page: ${cannibalization.reason}`);
+  } else if (cannibalization.risk === "REVIEW") {
+    warnings.push(`[Cannibalization Advisory] Topical overlap detected: ${cannibalization.reason}`);
   }
 
   if (blog.needs_review) {
@@ -622,6 +672,7 @@ export async function validateCmsBlogForPublish(id: string) {
     errors,
     warnings,
     blog,
+    cannibalization,
   };
 }
 
@@ -683,11 +734,44 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
   );
 
   const publishedIds: string[] = [];
+  const { logAuditEvent } = await import("@/lib/cms/auth-db");
+
   for (const row of dueRows.rows) {
     try {
+      const qa = await validateCmsBlogForPublish(row.id);
+      if (!qa.ok) {
+        console.warn(`Scheduled blog QA failed for "${row.title}" (${row.id}):`, qa.errors);
+        await cmsExecute(
+          `UPDATE blog_posts SET status = 'review', needs_review = 1, updated_at = NOW() WHERE id = ?`,
+          [row.id]
+        );
+        await logAuditEvent({
+          actor_email: "scheduler@dgeniussolutions.com",
+          role: "system",
+          action: "BLOG_SCHEDULE_QA_FAILED",
+          resource: "blog_post",
+          resource_id: row.id,
+          summary: `Scheduled publish aborted for "${row.title}". QA failed: ${qa.errors.join("; ")}`,
+          after_state: { qaErrors: qa.errors, status: "review", needs_review: true },
+          status: "failure",
+        });
+        continue;
+      }
+
       await publishCmsBlog(row.id);
       publishedIds.push(row.id);
       console.log(`Auto-published scheduled blog: "${row.title}" (${row.id})`);
+
+      await logAuditEvent({
+        actor_email: "scheduler@dgeniussolutions.com",
+        role: "system",
+        action: "BLOG_PUBLISHED",
+        resource: "blog_post",
+        resource_id: row.id,
+        summary: `Auto-published scheduled blog "${row.title}"`,
+        after_state: { status: "published" },
+        status: "success",
+      });
     } catch (err) {
       console.error(`Failed to auto-publish scheduled blog ${row.id}:`, err);
     }
@@ -790,3 +874,195 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
     toc,
   };
 }
+
+// 15. Blog Revisions Management & Rollback
+export type BlogRevision = {
+  id: string;
+  blog_post_id: string;
+  snapshot: CmsBlogDetail;
+  created_by: string | null;
+  created_at: string;
+};
+
+export async function createBlogRevision(
+  blogPostId: string,
+  snapshot: unknown,
+  createdBy?: string | null
+): Promise<string> {
+  const revisionId = randomUUID();
+  await cmsExecute(
+    `INSERT INTO blog_revisions (id, blog_post_id, snapshot, created_by, created_at)
+     VALUES (?, ?, ?, ?, NOW())`,
+    [
+      revisionId,
+      blogPostId,
+      typeof snapshot === "string" ? snapshot : JSON.stringify(snapshot),
+      createdBy || null,
+    ]
+  );
+  return revisionId;
+}
+
+export async function listBlogRevisions(blogPostId: string): Promise<BlogRevision[]> {
+  const result = await cmsQuery<{
+    id: string;
+    blog_post_id: string;
+    snapshot: unknown;
+    created_by: string | null;
+    created_at: string;
+  }>(
+    `SELECT id, blog_post_id, snapshot, created_by, created_at
+     FROM blog_revisions
+     WHERE blog_post_id = ?
+     ORDER BY created_at DESC
+     LIMIT 50`,
+    [blogPostId]
+  );
+
+  return result.rows.map((r) => {
+    let parsedSnapshot: CmsBlogDetail;
+    try {
+      parsedSnapshot = typeof r.snapshot === "string" ? JSON.parse(r.snapshot) : (r.snapshot as CmsBlogDetail);
+    } catch {
+      parsedSnapshot = r.snapshot as CmsBlogDetail;
+    }
+    return {
+      id: r.id,
+      blog_post_id: r.blog_post_id,
+      snapshot: parsedSnapshot,
+      created_by: r.created_by,
+      created_at: r.created_at,
+    };
+  });
+}
+
+export async function getBlogRevisionById(revisionId: string): Promise<BlogRevision | null> {
+  const result = await cmsQuery<{
+    id: string;
+    blog_post_id: string;
+    snapshot: unknown;
+    created_by: string | null;
+    created_at: string;
+  }>(
+    `SELECT id, blog_post_id, snapshot, created_by, created_at
+     FROM blog_revisions
+     WHERE id = ?
+     LIMIT 1`,
+    [revisionId]
+  );
+
+  const row = result.rows[0];
+  if (!row) return null;
+
+  let parsedSnapshot: CmsBlogDetail;
+  try {
+    parsedSnapshot = typeof row.snapshot === "string" ? JSON.parse(row.snapshot) : (row.snapshot as CmsBlogDetail);
+  } catch {
+    parsedSnapshot = row.snapshot as CmsBlogDetail;
+  }
+
+  return {
+    id: row.id,
+    blog_post_id: row.blog_post_id,
+    snapshot: parsedSnapshot,
+    created_by: row.created_by,
+    created_at: row.created_at,
+  };
+}
+
+export async function restoreBlogRevision(
+  blogPostId: string,
+  revisionId: string,
+  userId?: string | null
+): Promise<CmsBlogDetail> {
+  const current = await getCmsBlogById(blogPostId);
+  if (!current) throw new Error("Blog not found");
+
+  const targetRevision = await getBlogRevisionById(revisionId);
+  if (!targetRevision || targetRevision.blog_post_id !== blogPostId) {
+    throw new Error("Revision not found or does not belong to this blog");
+  }
+
+  // 1. Safety pre-restore snapshot of current state
+  await createBlogRevision(blogPostId, current, userId);
+
+  // 2. Restore state from snapshot
+  const snap = targetRevision.snapshot;
+  const content = snap.content;
+  const seo = content?.optimization?.seo;
+
+  await cmsExecute(
+    `UPDATE blog_posts SET
+      title = ?,
+      slug = ?,
+      excerpt = ?,
+      content = ?,
+      featured_image_url = ?,
+      seo_title = ?,
+      seo_description = ?,
+      focus_keyword = ?,
+      word_count = ?,
+      reading_time_minutes = ?,
+      status = 'review',
+      needs_review = 1,
+      updated_at = NOW()
+     WHERE id = ?`,
+    [
+      snap.title,
+      snap.slug,
+      snap.excerpt || null,
+      JSON.stringify([content]),
+      snap.featured_image_url || null,
+      snap.seo_title || seo?.title || snap.title,
+      snap.seo_description || seo?.description || null,
+      snap.focus_keyword || seo?.focusKeyword || null,
+      snap.word_count || 0,
+      snap.reading_time_minutes || 1,
+      blogPostId,
+    ]
+  );
+
+  // Sync SEO metadata
+  if (seo) {
+    const canonicalUrl = `https://www.dgeniussolutions.com${seo.canonicalPath || `/blogs/${snap.slug}/`}`;
+    await cmsExecute(
+      `INSERT INTO seo_metadata (id, entity_type, entity_id, title, description, canonical_url, robots_index, robots_follow, schema_json, updated_at)
+       VALUES (?, 'blog_post', ?, ?, ?, ?, 0, 1, ?, NOW())
+       ON DUPLICATE KEY UPDATE
+         title = VALUES(title),
+         description = VALUES(description),
+         canonical_url = VALUES(canonical_url),
+         robots_index = VALUES(robots_index),
+         robots_follow = VALUES(robots_follow),
+         schema_json = VALUES(schema_json),
+         updated_at = NOW()`,
+      [
+        randomUUID(),
+        blogPostId,
+        snap.seo_title || seo.title || snap.title,
+        snap.seo_description || seo.description || "",
+        canonicalUrl,
+        JSON.stringify(content?.optimization?.schemas || []),
+      ]
+    );
+  }
+
+  const { logAuditEvent } = await import("@/lib/cms/auth-db");
+  await logAuditEvent({
+    user_id: userId || null,
+    actor_email: "admin@dgeniussolutions.com",
+    role: "admin",
+    action: "BLOG_REVISION_RESTORED",
+    resource: "blog_post",
+    resource_id: blogPostId,
+    summary: `Restored blog "${snap.title}" from revision ${revisionId}`,
+    before_state: { title: current.title, slug: current.slug, status: current.status },
+    after_state: { title: snap.title, slug: snap.slug, status: "review", restoredRevisionId: revisionId },
+    status: "success",
+  });
+
+  const restored = await getCmsBlogById(blogPostId);
+  if (!restored) throw new Error("Failed to load restored blog");
+  return restored;
+}
+

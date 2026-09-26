@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { scheduleCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
 
@@ -46,6 +47,24 @@ export async function POST(
 
   try {
     const blog = await scheduleCmsBlog(id, scheduledFor);
+    if (!blog) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
+
+    await logAuditEvent({
+      actor_email: "admin@dgeniussolutions.com",
+      role: "admin",
+      action: "BLOG_SCHEDULED",
+      resource: "blog_post",
+      resource_id: id,
+      summary: `Scheduled blog "${blog.title}" for publication at ${scheduledFor}`,
+      after_state: {
+        title: blog.title,
+        slug: blog.slug,
+        status: "scheduled",
+        scheduled_for: scheduledFor,
+      },
+      status: "success",
+    });
+
     return NextResponse.json({ ok: true, blog, qa });
   } catch (error) {
     console.error("Failed to schedule blog", error);
@@ -55,3 +74,4 @@ export async function POST(
     );
   }
 }
+

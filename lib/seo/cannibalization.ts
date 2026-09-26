@@ -387,3 +387,193 @@ export function buildSiteCannibalizationIndex(
 
   return index;
 }
+
+// ---------------------------------------------------------------------------
+// Blog CMS Cannibalization Risk & Core Service Page Protection
+// ---------------------------------------------------------------------------
+
+export const DGS_PROTECTED_CORE_PAGES = [
+  {
+    pageUrl: "/",
+    pageTitle: "Home — D'Genius Solutions",
+    intent: "Brand & Core Digital Agency Hub",
+    primaryKeywords: ["dgenius solutions", "digital marketing agency in mumbai", "best digital agency mumbai"],
+  },
+  {
+    pageUrl: "/services/seo-services-in-mumbai/",
+    pageTitle: "SEO Services in Mumbai",
+    intent: "Commercial SEO Service Hub",
+    primaryKeywords: ["seo services in mumbai", "seo company in mumbai", "seo agency in mumbai", "search engine optimization services in mumbai"],
+  },
+  {
+    pageUrl: "/services/ai-video-production-agency/",
+    pageTitle: "AI Video Production Agency in Mumbai",
+    intent: "Commercial AI Video Production Service",
+    primaryKeywords: ["ai video production agency", "ai video production company", "ai brand films", "generative ai video agency"],
+  },
+  {
+    pageUrl: "/services/performance-marketing/",
+    pageTitle: "Performance Marketing Agency in Mumbai",
+    intent: "Commercial Performance Marketing Service",
+    primaryKeywords: ["performance marketing agency", "performance marketing services", "google ads agency", "meta ads agency"],
+  },
+  {
+    pageUrl: "/services/aeo-services-in-mumbai/",
+    pageTitle: "AEO Services in Mumbai",
+    intent: "Commercial Answer Engine Optimization Service",
+    primaryKeywords: ["aeo services in mumbai", "answer engine optimization services", "aeo agency in mumbai"],
+  },
+  {
+    pageUrl: "/services/geo/",
+    pageTitle: "GEO Services in Mumbai",
+    intent: "Commercial Generative Engine Optimization Service",
+    primaryKeywords: ["geo services", "generative engine optimization agency", "geo agency in mumbai"],
+  },
+  {
+    pageUrl: "/services/llm-seo-service/",
+    pageTitle: "LLM SEO Services in Mumbai",
+    intent: "Commercial LLM SEO Service",
+    primaryKeywords: ["llm seo services", "llm search optimization", "chatgpt search optimization agency"],
+  },
+  {
+    pageUrl: "/aeo-dubai",
+    pageTitle: "AEO Services in Dubai",
+    intent: "Commercial Regional AEO Service",
+    primaryKeywords: ["aeo dubai", "answer engine optimization dubai", "ai search optimization dubai"],
+  },
+];
+
+export type BlogCannibalizationRisk = "SAFE" | "REVIEW" | "HIGH_OVERLAP";
+
+export type BlogCannibalizationConflictingPage = {
+  pageUrl: string;
+  pageTitle: string;
+  matchedTerms: string[];
+  reason: string;
+};
+
+export type BlogCannibalizationReport = {
+  risk: BlogCannibalizationRisk;
+  score: number; // 0..100
+  reason: string;
+  conflictingPages: BlogCannibalizationConflictingPage[];
+  recommendations: string[];
+};
+
+export function checkBlogCannibalizationRisk(params: {
+  slug: string;
+  title: string;
+  focusKeyword?: string | null;
+  secondaryKeywords?: string[] | null;
+  canonicalPath?: string | null;
+}): BlogCannibalizationReport {
+  const normSlug = normalizeSearchQuery(params.slug.replace(/[-_]+/g, " "));
+  const normTitle = normalizeSearchQuery(params.title);
+  const normFocus = normalizeSearchQuery(params.focusKeyword || "");
+  const normCanon = canonicalPageKey(params.canonicalPath || `/blogs/${params.slug}/`);
+  const secKeywords = (params.secondaryKeywords || []).map((k) => normalizeSearchQuery(k)).filter(Boolean);
+
+  const conflictingPages: BlogCannibalizationConflictingPage[] = [];
+  const recommendations: string[] = [];
+  let maxScore = 0;
+
+  for (const core of DGS_PROTECTED_CORE_PAGES) {
+    const coreKey = canonicalPageKey(core.pageUrl);
+
+    // 1. Direct path collision check
+    if (normCanon === coreKey) {
+      conflictingPages.push({
+        pageUrl: core.pageUrl,
+        pageTitle: core.pageTitle,
+        matchedTerms: [normCanon],
+        reason: `Direct canonical path collision with protected core service page ${core.pageUrl}`,
+      });
+      maxScore = Math.max(maxScore, 100);
+      continue;
+    }
+
+    // 2. Keyword exact / near match against core page primary commercial keywords
+    const matchedTerms: string[] = [];
+    let isDirectCommercialCollision = false;
+
+    for (const kw of core.primaryKeywords) {
+      const normKw = normalizeSearchQuery(kw);
+      if (!normKw) continue;
+
+      // Exact match on focus keyword
+      if (normFocus === normKw) {
+        matchedTerms.push(`Focus Keyword: "${params.focusKeyword}" matches core target "${kw}"`);
+        isDirectCommercialCollision = true;
+      } else if (normFocus && (normFocus.includes(normKw) || normKw.includes(normFocus)) && normFocus.length >= 8) {
+        matchedTerms.push(`Focus Keyword: "${params.focusKeyword}" overlaps with "${kw}"`);
+      }
+
+      // Title exact commercial phrase match
+      if (normTitle === normKw || normSlug === normKw.replace(/\s+/g, "-")) {
+        matchedTerms.push(`Title/Slug directly targets commercial phrase "${kw}"`);
+        isDirectCommercialCollision = true;
+      } else if (normTitle.includes(normKw)) {
+        matchedTerms.push(`Title contains commercial phrase "${kw}"`);
+      }
+
+      // Secondary keywords match
+      for (const sk of secKeywords) {
+        if (sk === normKw) {
+          matchedTerms.push(`Secondary keyword matches "${kw}"`);
+        }
+      }
+    }
+
+    if (matchedTerms.length > 0) {
+      if (isDirectCommercialCollision) {
+        maxScore = Math.max(maxScore, 85);
+        conflictingPages.push({
+          pageUrl: core.pageUrl,
+          pageTitle: core.pageTitle,
+          matchedTerms,
+          reason: `High risk: Blog post appears to target the exact commercial intent of protected core service page ${core.pageUrl}.`,
+        });
+      } else {
+        maxScore = Math.max(maxScore, 50);
+        conflictingPages.push({
+          pageUrl: core.pageUrl,
+          pageTitle: core.pageTitle,
+          matchedTerms,
+          reason: `Topical overlap with protected core service page ${core.pageUrl}. Informational coverage is acceptable if commercial intent is not duplicated.`,
+        });
+      }
+    }
+  }
+
+  let risk: BlogCannibalizationRisk = "SAFE";
+  let reason = "Blog targets informational topics with no core service page cannibalization risk.";
+
+  if (maxScore >= 75) {
+    risk = "HIGH_OVERLAP";
+    reason = `Critical overlap detected: Blog strongly competes with ${conflictingPages.length} protected core service page(s).`;
+    recommendations.push(
+      "Differentiate blog title and focus keyword towards educational, informational, or case-study queries.",
+      "Add contextual internal links pointing directly from this blog to the protected service page.",
+      "Do NOT target exact commercial/agency search queries on informational blog posts."
+    );
+  } else if (maxScore >= 40) {
+    risk = "REVIEW";
+    reason = `Topical overlap detected with ${conflictingPages.length} protected core service page(s). Ensure informational intent.`;
+    recommendations.push(
+      "Ensure headings and answers focus on informational questions (how-to, frameworks, analysis).",
+      "Verify internal link points to the authoritative core service page to pass equity."
+    );
+  } else {
+    risk = "SAFE";
+    recommendations.push("Proceed with publishing. Internal link suggestions should be reviewed for optimal topical depth.");
+  }
+
+  return {
+    risk,
+    score: maxScore,
+    reason,
+    conflictingPages,
+    recommendations,
+  };
+}
+

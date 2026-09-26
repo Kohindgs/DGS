@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { parseBlogDocx, imageMatchesSlug, type BlogImportImage } from "@/lib/cms/blog-import";
+import { parseBlogDocx, evaluateMediaMatch, type MediaMatchConfidence, type BlogImportImage } from "@/lib/cms/blog-import";
 import { attachImportedBlogPackage, createCmsBlog, deleteCmsDraftBlog } from "@/lib/cms/blogs";
 import { processUploadedImage } from "@/lib/cms/media-processor";
 import { calculateBufferChecksum } from "@/lib/cms/media-storage";
@@ -140,11 +141,30 @@ export async function POST(request: Request) {
       });
       blogId = blog.id;
 
-      // Find matching images for this blog
+      // Find matching images for this blog using confidence scoring
       const matchedImages: Array<{
         asset: MediaAsset;
         isFeatured: boolean;
         originalName: string;
+        confidence: MediaMatchConfidence;
+        score: number;
+        reason: string;
+      }> = [];
+
+      const lowConfidenceImages: Array<{
+        filename: string;
+        url: string;
+        confidence: "LOW";
+        score: number;
+        reason: string;
+      }> = [];
+
+      const unmatchedImages: Array<{
+        filename: string;
+        url: string;
+        confidence: "UNMATCHED";
+        score: number;
+        reason: string;
       }> = [];
 
       // Extract H2 headings for contextual image alt descriptions
@@ -153,9 +173,34 @@ export async function POST(request: Request) {
         .filter(Boolean);
 
       for (const [origName, asset] of processedMediaByOriginalName.entries()) {
-        if (imageMatchesSlug(origName, parsed.slug)) {
-          const isFeatured = /-(featured|hero|cover|banner)\.[^.]+$/i.test(origName);
-          matchedImages.push({ asset, isFeatured, originalName: origName });
+        const evalResult = evaluateMediaMatch(origName, parsed.slug, parsed.title);
+        if (evalResult.matched) {
+          // EXACT, HIGH, MEDIUM
+          const isFeatured = evalResult.isFeaturedCandidate || /-(featured|hero|cover|banner)\.[^.]+$/i.test(origName);
+          matchedImages.push({
+            asset,
+            isFeatured,
+            originalName: origName,
+            confidence: evalResult.confidence,
+            score: evalResult.score,
+            reason: evalResult.reason,
+          });
+        } else if (evalResult.confidence === "LOW") {
+          lowConfidenceImages.push({
+            filename: origName,
+            url: asset.public_url,
+            confidence: "LOW",
+            score: evalResult.score,
+            reason: evalResult.reason,
+          });
+        } else {
+          unmatchedImages.push({
+            filename: origName,
+            url: asset.public_url,
+            confidence: "UNMATCHED",
+            score: evalResult.score,
+            reason: evalResult.reason,
+          });
         }
       }
 
@@ -252,6 +297,25 @@ export async function POST(request: Request) {
         }
       }
 
+      // Audit log entry for imported blog
+      await logAuditEvent({
+        actor_email: "admin@dgeniussolutions.com",
+        role: "admin",
+        action: "BLOG_IMPORTED",
+        resource: "blog_post",
+        resource_id: blog.id,
+        summary: `Imported blog "${parsed.title}" (/blogs/${parsed.slug}/) from Word document "${document.name}" with ${matchedImages.length} matched images`,
+        after_state: {
+          slug: parsed.slug,
+          title: parsed.title,
+          wordCount: parsed.wordCount,
+          matchedImages: matchedImages.length,
+          lowConfidenceImages: lowConfidenceImages.length,
+          unmatchedImages: unmatchedImages.length,
+        },
+        status: "success",
+      });
+
       results.push({
         blog: {
           id: blog.id,
@@ -265,6 +329,16 @@ export async function POST(request: Request) {
         },
         optimization: parsed.optimization,
         matchedImagesCount: matchedImages.length,
+        matchedImages: matchedImages.map((m) => ({
+          filename: m.originalName,
+          url: m.asset.public_url,
+          confidence: m.confidence,
+          score: m.score,
+          reason: m.reason,
+          isFeatured: m.isFeatured,
+        })),
+        lowConfidenceImages,
+        unmatchedImages,
         featuredImage: featuredImageUrl,
         needsReview: true,
         message: "Draft created in Review status. Requires editor sign-off before publishing.",

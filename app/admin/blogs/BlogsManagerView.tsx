@@ -48,9 +48,15 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
 
   // Edit & Detail state
   const [editingBlog, setEditingBlog] = useState<CmsBlogDetail | null>(null);
-  const [editQa, setEditQa] = useState<{ ok: boolean; errors: string[]; warnings: string[] } | null>(null);
-  const [editTab, setEditTab] = useState<"content" | "seo" | "aeo" | "geo" | "schema" | "links">("content");
+  const [editQa, setEditQa] = useState<{ ok: boolean; errors: string[]; warnings: string[]; cannibalization?: any } | null>(null);
+  const [editTab, setEditTab] = useState<"content" | "seo" | "aeo" | "geo" | "schema" | "links" | "revisions">("content");
   const [saving, setSaving] = useState(false);
+
+  // Revisions & Rollback state
+  const [revisions, setRevisions] = useState<any[]>([]);
+  const [loadingRevisions, setLoadingRevisions] = useState(false);
+  const [selectedRevision, setSelectedRevision] = useState<any | null>(null);
+  const [restoringRevisionId, setRestoringRevisionId] = useState<string | null>(null);
 
   // Delete modal state
   const [deleteTarget, setDeleteTarget] = useState<CmsBlogSummary | null>(null);
@@ -128,6 +134,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
         setEditQa(data.qa || null);
         setActiveTab("edit");
         setEditTab("content");
+        fetchRevisions(blogId);
       } else {
         setNotice({ type: "error", message: data.message || "Failed to load blog" });
       }
@@ -136,6 +143,54 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       setNotice({ type: "error", message: "Failed to load blog detail" });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRevisions = async (blogId: string) => {
+    setLoadingRevisions(true);
+    try {
+      const res = await fetch(`/api/admin/blogs/${blogId}/revisions`);
+      const data = await res.json();
+      if (data.ok && Array.isArray(data.revisions)) {
+        setRevisions(data.revisions);
+        if (data.revisions.length > 0) {
+          setSelectedRevision(data.revisions[0]);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to fetch blog revisions:", err);
+    } finally {
+      setLoadingRevisions(false);
+    }
+  };
+
+  const handleRestoreRevision = async (blogId: string, revisionId: string) => {
+    if (!window.confirm("Restore this revision? The current blog content will be backed up into a new revision first, and the blog will be placed into Review status for verification.")) {
+      return;
+    }
+    setRestoringRevisionId(revisionId);
+    try {
+      const res = await fetch(`/api/admin/blogs/${blogId}/revisions/${revisionId}/restore`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (data.ok && data.blog) {
+        setEditingBlog(data.blog);
+        setNotice({ type: "success", message: data.message || "Revision restored successfully!" });
+        await fetchRevisions(blogId);
+        const checkRes = await fetch(`/api/admin/blogs/${blogId}`);
+        const checkData = await checkRes.json();
+        if (checkData.ok) {
+          setEditQa(checkData.qa || null);
+        }
+      } else {
+        setNotice({ type: "error", message: data.message || "Failed to restore revision" });
+      }
+    } catch (err) {
+      console.error("Failed to restore revision:", err);
+      setNotice({ type: "error", message: "Failed to restore revision" });
+    } finally {
+      setRestoringRevisionId(null);
     }
   };
 
@@ -1171,7 +1226,18 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
             >
               6. Internal Links
             </button>
+            <button
+              type="button"
+              className={`dgs-section-tab ${editTab === "revisions" ? "active" : ""}`}
+              onClick={() => {
+                setEditTab("revisions");
+                if (editingBlog?.id) fetchRevisions(editingBlog.id);
+              }}
+            >
+              7. Revisions & Rollback ({revisions.length})
+            </button>
           </div>
+
 
           {/* TAB 1: CONTENT & MEDIA */}
           {editTab === "content" && (
@@ -1307,6 +1373,73 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                   </div>
                 </div>
               </div>
+
+              {/* Core Page Cannibalization Shield */}
+              <div style={{
+                marginBottom: 20,
+                padding: 16,
+                borderRadius: 8,
+                background: editQa?.cannibalization?.risk === "HIGH_OVERLAP"
+                  ? "rgba(239, 68, 68, 0.08)"
+                  : editQa?.cannibalization?.risk === "REVIEW"
+                  ? "rgba(245, 158, 11, 0.08)"
+                  : "rgba(34, 197, 94, 0.08)",
+                border: `1px solid ${
+                  editQa?.cannibalization?.risk === "HIGH_OVERLAP"
+                    ? "rgba(239, 68, 68, 0.3)"
+                    : editQa?.cannibalization?.risk === "REVIEW"
+                    ? "rgba(245, 158, 11, 0.3)"
+                    : "rgba(34, 197, 94, 0.3)"
+                }`,
+              }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                  <h4 style={{ margin: 0, fontSize: 15, display: "flex", alignItems: "center", gap: 8 }}>
+                    🛡️ Core Page Cannibalization Shield
+                  </h4>
+                  <span style={{
+                    padding: "3px 8px",
+                    borderRadius: 4,
+                    fontSize: 12,
+                    fontWeight: 700,
+                    background: editQa?.cannibalization?.risk === "HIGH_OVERLAP" ? "#ef4444" : editQa?.cannibalization?.risk === "REVIEW" ? "#f59e0b" : "#22c55e",
+                    color: "#fff",
+                  }}>
+                    {editQa?.cannibalization?.risk || "SAFE"} ({editQa?.cannibalization?.score || 0}% RISK)
+                  </span>
+                </div>
+                <p style={{ margin: "0 0 10px 0", fontSize: 13 }}>
+                  {editQa?.cannibalization?.reason || "No commercial keyword cannibalization detected with protected core service pages."}
+                </p>
+
+                {editQa?.cannibalization?.conflictingPages && editQa.cannibalization.conflictingPages.length > 0 && (
+                  <div style={{ marginBottom: 10, background: "rgba(0,0,0,0.2)", padding: 10, borderRadius: 6 }}>
+                    <strong style={{ fontSize: 12, textTransform: "uppercase", color: "#9ca3af" }}>Protected Core Page Overlaps:</strong>
+                    <ul style={{ margin: "6px 0 0 0", paddingLeft: 18, fontSize: 13 }}>
+                      {editQa.cannibalization.conflictingPages.map((cp: any, idx: number) => (
+                        <li key={idx} style={{ marginBottom: 4 }}>
+                          <strong>{cp.pageTitle}</strong> (<code>{cp.pageUrl}</code>)
+                          <div style={{ fontSize: 12, color: "#d1d5db" }}>{cp.reason}</div>
+                          {cp.matchedTerms?.length > 0 && (
+                            <div style={{ fontSize: 11, color: "#9ca3af" }}>Matches: {cp.matchedTerms.join(", ")}</div>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {editQa?.cannibalization?.recommendations && editQa.cannibalization.recommendations.length > 0 && (
+                  <div style={{ fontSize: 12 }}>
+                    <strong style={{ color: "#9ca3af" }}>Guidance:</strong>
+                    <ul style={{ margin: "4px 0 0 0", paddingLeft: 18 }}>
+                      {editQa.cannibalization.recommendations.map((rec: string, idx: number) => (
+                        <li key={idx}>{rec}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
 
               <div className="dgs-form-row">
                 <label>
@@ -1588,6 +1721,130 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
               </div>
             </div>
           )}
+
+          {/* TAB 7: REVISIONS & ROLLBACK */}
+          {editTab === "revisions" && (
+            <div className="dgs-tab-panel">
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <div>
+                  <h3 style={{ margin: 0 }}>Version History & Rollback</h3>
+                  <p style={{ margin: "4px 0 0 0", fontSize: 13, color: "#9ca3af" }}>
+                    Automated snapshots are captured before every edit and publish action. You can inspect previous versions and restore at any time.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="dgs-btn-secondary dgs-btn-small"
+                  onClick={() => fetchRevisions(editingBlog.id)}
+                  disabled={loadingRevisions}
+                >
+                  {loadingRevisions ? "Refreshing..." : "↻ Refresh History"}
+                </button>
+              </div>
+
+              {loadingRevisions ? (
+                <p>Loading version history...</p>
+              ) : revisions.length === 0 ? (
+                <p className="dgs-meta-text">No prior revisions recorded for this blog yet. Edits will generate automatic snapshots.</p>
+              ) : (
+                <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 16 }}>
+                  {/* Revisions list */}
+                  <div style={{ borderRight: "1px solid #374151", paddingRight: 16 }}>
+                    <h4 style={{ margin: "0 0 10px 0", fontSize: 13, textTransform: "uppercase", color: "#9ca3af" }}>
+                      Snapshots ({revisions.length})
+                    </h4>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 8, maxHeight: "500px", overflowY: "auto" }}>
+                      {revisions.map((rev) => (
+                        <div
+                          key={rev.id}
+                          onClick={() => setSelectedRevision(rev)}
+                          style={{
+                            padding: 10,
+                            borderRadius: 6,
+                            cursor: "pointer",
+                            background: selectedRevision?.id === rev.id ? "rgba(59, 130, 246, 0.15)" : "rgba(255, 255, 255, 0.03)",
+                            border: `1px solid ${selectedRevision?.id === rev.id ? "#3b82f6" : "#374151"}`,
+                          }}
+                        >
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <strong style={{ fontSize: 13 }}>{new Date(rev.created_at).toLocaleString()}</strong>
+                            <span className="dgs-admin-badge" style={{ fontSize: 10 }}>{rev.snapshot?.status || "draft"}</span>
+                          </div>
+                          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}>
+                            Title: {rev.snapshot?.title?.slice(0, 32)}...
+                          </div>
+                          <div style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>
+                            Words: {rev.snapshot?.word_count || 0} · Author: {rev.created_by ? "User" : "System / Auto"}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Selected Revision Inspector */}
+                  <div>
+                    {selectedRevision ? (
+                      <div style={{ background: "rgba(255, 255, 255, 0.02)", padding: 16, borderRadius: 8, border: "1px solid #374151" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                          <div>
+                            <h4 style={{ margin: 0, fontSize: 16 }}>{selectedRevision.snapshot?.title}</h4>
+                            <p style={{ margin: "2px 0 0 0", fontSize: 12, color: "#9ca3af" }}>
+                              Snapshot created on {new Date(selectedRevision.created_at).toLocaleString()}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            className="dgs-btn-primary dgs-btn-small"
+                            onClick={() => handleRestoreRevision(editingBlog.id, selectedRevision.id)}
+                            disabled={restoringRevisionId === selectedRevision.id}
+                            style={{ background: "#f59e0b", color: "#000", fontWeight: 700 }}
+                          >
+                            {restoringRevisionId === selectedRevision.id ? "Restoring..." : "↺ Restore this Revision"}
+                          </button>
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12, fontSize: 13 }}>
+                          <div><strong>Slug:</strong> <code>{selectedRevision.snapshot?.slug}</code></div>
+                          <div><strong>Status at snapshot:</strong> <span className="dgs-admin-badge">{selectedRevision.snapshot?.status}</span></div>
+                          <div><strong>Word count:</strong> {selectedRevision.snapshot?.word_count}</div>
+                          <div><strong>Reading time:</strong> {selectedRevision.snapshot?.reading_time_minutes} min</div>
+                          <div><strong>SEO Title:</strong> {selectedRevision.snapshot?.seo_title || "None"}</div>
+                          <div><strong>Focus Keyword:</strong> {selectedRevision.snapshot?.focus_keyword || "None"}</div>
+                        </div>
+
+                        <div style={{ marginBottom: 12 }}>
+                          <strong style={{ fontSize: 13 }}>Excerpt:</strong>
+                          <p style={{ margin: "4px 0 0 0", fontSize: 13, color: "#d1d5db", fontStyle: "italic" }}>
+                            {selectedRevision.snapshot?.excerpt || "No excerpt recorded"}
+                          </p>
+                        </div>
+
+                        <div>
+                          <strong style={{ fontSize: 13 }}>Body Preview:</strong>
+                          <div
+                            style={{
+                              marginTop: 6,
+                              padding: 12,
+                              borderRadius: 6,
+                              background: "rgba(0,0,0,0.3)",
+                              maxHeight: "220px",
+                              overflowY: "auto",
+                              fontSize: 12,
+                              lineHeight: 1.5,
+                            }}
+                            dangerouslySetInnerHTML={{ __html: selectedRevision.snapshot?.content?.bodyHtml || "<em>Empty body</em>" }}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="dgs-meta-text">Select a revision from the list to preview details and restore.</p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
 
           {/* Bottom Action Footer with Schedule & Publish */}
           <div className="dgs-edit-footer">
