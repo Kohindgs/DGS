@@ -763,6 +763,99 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
               </div>
             </div>
 
+            {/* What Changed */}
+            <div>
+              <h4 style={{ fontSize: "0.95rem", color: "#fff", marginBottom: "8px" }}>What Changed (Official Summary)</h4>
+              <div
+                style={{
+                  padding: "14px",
+                  background: "rgba(255,255,255,0.02)",
+                  borderRadius: "var(--dgs-radius-sm)",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  fontSize: "0.85rem",
+                  color: "var(--dgs-text-main)",
+                  lineHeight: "1.5",
+                }}
+              >
+                {selectedUpdate.summary || "Official Google summary not available."}
+              </div>
+            </div>
+
+            {/* DGS Impact Assessment */}
+            <div>
+              <h4 style={{ fontSize: "0.95rem", color: "#fff", marginBottom: "8px" }}>DGS Impact Assessment</h4>
+              <div
+                style={{
+                  padding: "14px",
+                  background: "rgba(99, 102, 241, 0.05)",
+                  borderRadius: "var(--dgs-radius-sm)",
+                  border: "1px solid rgba(99, 102, 241, 0.15)",
+                  fontSize: "0.85rem",
+                  color: "#e2e8f0",
+                  lineHeight: "1.5",
+                }}
+              >
+                {selectedUpdate.impact_analysis || "Impact not yet confirmed — monitor."}
+              </div>
+            </div>
+
+            {/* Areas to Monitor */}
+            <div>
+              <h4 style={{ fontSize: "0.95rem", color: "#fff", marginBottom: "8px" }}>Areas &amp; Pages to Monitor</h4>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                {(selectedUpdate.affected_dgs_areas && selectedUpdate.affected_dgs_areas.length > 0
+                  ? selectedUpdate.affected_dgs_areas
+                  : ["/", "/services/seo-services-in-mumbai/", "/services/ai-video-production-agency/", "/services/performance-marketing/", "/aeo-dubai", "/blogs/", "Brand queries (dgenius solutions)"]
+                ).map((area, idx) => (
+                  <span
+                    key={idx}
+                    className="dgs-saas-chip neutral"
+                    style={{ fontSize: "0.78rem", padding: "4px 10px" }}
+                  >
+                    {area}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* What NOT to Change (Rollout Safeguards) */}
+            <div
+              style={{
+                padding: "16px",
+                background: "rgba(239, 68, 68, 0.08)",
+                borderRadius: "var(--dgs-radius-md)",
+                border: "1px solid rgba(239, 68, 68, 0.25)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                <span
+                  style={{
+                    display: "inline-block",
+                    padding: "2px 8px",
+                    borderRadius: "4px",
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    background: "#dc2626",
+                    color: "#ffffff",
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  STRICT POLICY
+                </span>
+                <h4 style={{ fontSize: "0.92rem", color: "#f87171", margin: 0, fontWeight: 700 }}>
+                  What DGS Should NOT Change
+                </h4>
+              </div>
+              <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.82rem", color: "#fca5a5", lineHeight: "1.6" }}>
+                <li>Do NOT automatically rewrite or alter ranked page copy, hero headlines, or H1s.</li>
+                <li>Do NOT modify, swap, or delete canonical tags across service or blog pages.</li>
+                <li>Do NOT change URLs, slug paths, or restructure redirects during an active rollout.</li>
+                <li>Do NOT submit panic-driven disavow files or prune existing organic backlinks.</li>
+                <li>Do NOT dismantle structured data schemas based on temporary SERP turbulence.</li>
+              </ul>
+            </div>
+
             {/* Evidence Findings */}
             <div>
               <h4 style={{ fontSize: "0.95rem", color: "#fff", marginBottom: "8px" }}>Verifiable Evidence Summary</h4>

@@ -3,10 +3,18 @@ import { cmsExecute, cmsQuery, isCmsDatabaseConfigured } from "../cms/db.ts";
 import {
   sendGoogleUpdateAlertEmail,
   sendTestGoogleUpdateEmail,
+  DEFAULT_GOOGLE_UPDATE_RECIPIENTS,
+  DGS_ROLLOUT_SAFEGUARDS,
+  getGoogleUpdateRecipients,
   type GoogleUpdateNotificationInput,
 } from "../notifications/google-update-email.ts";
 
-export { sendTestGoogleUpdateEmail };
+export {
+  sendTestGoogleUpdateEmail,
+  DEFAULT_GOOGLE_UPDATE_RECIPIENTS,
+  DGS_ROLLOUT_SAFEGUARDS,
+  getGoogleUpdateRecipients,
+};
 
 export type GoogleSearchUpdate = {
   id: string;
@@ -595,68 +603,323 @@ export function classifyUpdate(
   return { category: "General Search Announcement", severity: "INFORMATIONAL" };
 }
 
+export type DgsImpactResult = {
+  whatChanged: string;
+  impactAnalysis: string;
+  actionRequired: string;
+  recommendedActions: string[];
+  doNotChange: string[];
+  affectedAreas: string[];
+  monitoringWindow: string;
+  sourceEvidence: string;
+};
+
 export function generateDgsImpact(
   title: string,
   category: string,
   severity: string,
-): { impactAnalysis: string; affectedAreas: string[] } {
-  if (severity === "CRITICAL" || category === "Core Update") {
+): DgsImpactResult {
+  const text = `${title} ${category}`.toLowerCase();
+
+  // 1. Broad Core Update
+  if (severity === "CRITICAL" || category === "Core Update" || text.includes("core update") || text.includes("broad core")) {
     return {
+      whatChanged:
+        "Broad core algorithm updates re-evaluate all indexed content against holistic quality, search intent, E-E-A-T, and domain authority across all query spaces.",
       impactAnalysis:
         "Broad core algorithm updates re-evaluate all indexed content against holistic quality and search intent. DGS flagship service pages (/services/seo-services-in-mumbai/, /services/ai-video-production-agency/) and core blog articles may experience standard volatility during the 10-14 day rollout window. Brand queries and local Mumbai service signals remain fortified.",
+      actionRequired:
+        "Establish 14-day pre-rollout baseline in GSC; observe daily impressions, clicks, CTR, and position without modifying live page copy or structure.",
+      recommendedActions: generateSafeRecommendations(severity, "Core Update"),
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
       affectedAreas: [
+        "/",
         "/services/seo-services-in-mumbai/",
         "/services/ai-video-production-agency/",
         "/services/performance-marketing/",
+        "/aeo-dubai",
         "/blogs/",
         "Organic Brand Queries",
+        "Location & Service Landing Pages",
       ],
+      monitoringWindow:
+        "14-day pre-rollout baseline + rollout duration (10-14 days) + 14-day post-rollout stabilization.",
+      sourceEvidence:
+        "Official Google Search ranking algorithm core update announcement.",
     };
   }
 
-  if (category === "Spam Update") {
+  // 2. Spam Update
+  if (
+    category === "Spam Update" ||
+    text.includes("spam") ||
+    text.includes("site reputation") ||
+    text.includes("expired domain") ||
+    text.includes("scaled content")
+  ) {
     return {
+      whatChanged:
+        "Algorithmic spam enforcement targeting low-effort scaled content, expired domain abuse, site reputation abuse, and manipulative backlink schemes.",
       impactAnalysis:
         "Google is cracking down on low-effort scaled content, site reputation abuse, and expired domains. DGS adheres strictly to original editorial standards and white-hat organic practices. Competitors employing manipulative strategies may lose rankings, creating organic capture opportunities for DGS.",
+      actionRequired:
+        "Audit incoming backlink referrers for unnatural patterns; verify that all published blog articles carry verified author credentials and editorial review.",
+      recommendedActions: generateSafeRecommendations(severity, "Spam Update"),
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
       affectedAreas: [
         "Competitive SERP Visibility",
         "Backlink Quality Profiling",
         "Blog Editorial Integrity",
+        "/blogs/",
+        "Brand queries (dgenius solutions)",
       ],
+      monitoringWindow:
+        "Active rollout duration (~14-21 days) + 14-day post-rollout audit.",
+      sourceEvidence:
+        "Official Google Search automated spam system update release.",
     };
   }
 
-  if (category === "Search System Incident") {
+  // 3. Helpful Content & Review Systems
+  if (
+    category.includes("Content & Review") ||
+    text.includes("helpful content") ||
+    text.includes("review system") ||
+    text.includes("reviews update")
+  ) {
     return {
+      whatChanged:
+        "Evaluation systems assessing whether content provides original analysis and first-hand expertise rather than search-engine-first synthetic material.",
+      impactAnalysis:
+        "Sitewide helpfulness signals assess whether visitor experience matches search intent. DGS in-depth guides and case studies are structured to demonstrate first-hand domain expertise.",
+      actionRequired:
+        "Audit key content guides and service pages for unique expert perspectives, customer evidence, and clear value proposition.",
+      recommendedActions: [
+        "Verify all published articles feature original insights, real case studies, and verified authorship.",
+        "Monitor user dwell time, engagement metrics, and organic search impressions.",
+        "Do NOT engage in bulk content rewrites or programmatic AI text generation.",
+      ],
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
+      affectedAreas: [
+        "/blogs/",
+        "/services/seo-services-in-mumbai/",
+        "/services/performance-marketing/",
+        "Resource Guides & Insights",
+        "Service Case Studies",
+      ],
+      monitoringWindow: "14-day rolling evaluation window.",
+      sourceEvidence: "Google Search Central content quality system documentation.",
+    };
+  }
+
+  // 4. Crawling / Indexing Outage / Serving Disruption (Search System Incident)
+  if (
+    category === "Search System Incident" ||
+    text.includes("outage") ||
+    text.includes("incident") ||
+    text.includes("serving") ||
+    text.includes("indexing issue") ||
+    text.includes("crawling incident")
+  ) {
+    return {
+      whatChanged:
+        "Official Google Search infrastructure incident affecting crawling, URL inspection, indexation pipelines, or search serving.",
       impactAnalysis:
         "Official Google Search infrastructure incident affecting crawling, indexing, or ranking serving. New blog posts or updated service schemas may take longer to reflect in Google index until the incident status returns to normal.",
+      actionRequired:
+        "Hold manual URL indexing submissions; avoid repeated sitemap resubmissions; verify server response stability.",
+      recommendedActions: generateSafeRecommendations(severity, "Search System Incident"),
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
       affectedAreas: [
         "New Blog Post Indexation",
         "Search Console Real-Time Reporting",
         "Server Crawl Efficiency",
+        "XML Sitemap Fetching",
       ],
+      monitoringWindow: "Duration of outage incident + 48 hours post-resolution.",
+      sourceEvidence: "Google Search Status Dashboard official incident record.",
     };
   }
 
-  if (category === "Search Features & Schema") {
+  // 5. AI Overviews / AI Search / AEO / GEO
+  if (
+    text.includes("ai overview") ||
+    text.includes("sge") ||
+    text.includes("generative search") ||
+    text.includes("ai search") ||
+    text.includes("answer engine") ||
+    text.includes("aeo") ||
+    text.includes("geo") ||
+    text.includes("gemini")
+  ) {
     return {
+      whatChanged:
+        "Expansion or algorithm refinements to Google AI Overviews, generative answer synthesis, entity grounding, or direct citations.",
+      impactAnalysis:
+        "Google AI Overviews and generative search features updated. DGS specialized AEO/GEO Dubai landing page (/aeo-dubai) and structured service pages are positioned for direct entity citations and conversational query discovery.",
+      actionRequired:
+        "Track brand and service mentions in generative search engines (Google AI Overviews, Perplexity, ChatGPT Search); optimize direct answer blocks with concise definitions and structured data.",
+      recommendedActions: [
+        "Monitor AI Overview citations for key terms like 'SEO agency in Mumbai' and 'AEO agency in Dubai'.",
+        "Ensure clear, authoritative definitions and FAQ structures exist on all target landing pages.",
+        "Do NOT over-optimize or keyword-stuff content for AI search engines.",
+      ],
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
+      affectedAreas: [
+        "/aeo-dubai",
+        "/services/ai-video-production-agency/",
+        "/services/seo-services-in-mumbai/",
+        "AI Overview Citations",
+        "Knowledge Graph Entity Association",
+        "Conversational Query Visibility",
+      ],
+      monitoringWindow: "Ongoing 30-day generative SERP & citation tracking.",
+      sourceEvidence: "Google Search Central updates on generative AI search features.",
+    };
+  }
+
+  // 6. Structured Data & Schema
+  if (
+    text.includes("structured data") ||
+    text.includes("schema") ||
+    text.includes("rich result") ||
+    text.includes("json-ld")
+  ) {
+    return {
+      whatChanged:
+        "Google Search structured data specifications, rich result guidelines, or JSON-LD validation criteria updated.",
+      impactAnalysis:
+        "Google Search structured data requirements updated. DGS Organization, LocalBusiness, Service, BreadcrumbList, and FAQPage schemas should be validated against current schema.org and Google Search specifications.",
+      actionRequired:
+        "Test key landing pages with Google Rich Results Test; verify zero errors or deprecated schema properties.",
+      recommendedActions: [
+        "Validate Schema.org markup across all service landing pages and blog articles.",
+        "Verify that BreadcrumbList, LocalBusiness, and FAQPage schemas render clean JSON-LD.",
+        "Do NOT remove or swap schemas without running Google Rich Results validation first.",
+      ],
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
+      affectedAreas: [
+        "Rich Results Eligibility",
+        "FAQPage Schema Markup",
+        "LocalBusiness & Organization Schema",
+        "Breadcrumb Structured Data",
+      ],
+      monitoringWindow: "Immediate technical verification + 14-day appearance tracking.",
+      sourceEvidence: "Google Search Documentation updates RSS for structured data.",
+    };
+  }
+
+  // 7. Core Web Vitals & Page Experience
+  if (
+    text.includes("web vitals") ||
+    text.includes("cwv") ||
+    text.includes("page experience") ||
+    text.includes("interaction to next paint") ||
+    text.includes("inp") ||
+    text.includes("lcp") ||
+    text.includes("cls")
+  ) {
+    return {
+      whatChanged:
+        "Revisions to Core Web Vitals thresholds (INP, LCP, CLS), mobile viewport evaluation, or page experience metrics.",
+      impactAnalysis:
+        "Core Web Vitals and page experience evaluation updated. DGS sub-second server response, SSR pipeline, and optimized asset delivery maintain excellent CWV baseline.",
+      actionRequired:
+        "Audit real-user field data (CrUX) and PageSpeed Insights across mobile and desktop views; verify blog responsive layout integrity.",
+      recommendedActions: [
+        "Inspect PageSpeed Insights and Chrome User Experience Report (CrUX) field scores.",
+        "Verify responsive layout viewports on mobile (320px to 414px) and desktop.",
+        "Ensure zero layout shift on hero banners, navigation headers, and blog typography.",
+      ],
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
+      affectedAreas: [
+        "Core Web Vitals (INP / LCP / CLS)",
+        "Mobile Responsive Viewports",
+        "Asset Loading & Font Display",
+        "Blog Article Layouts",
+      ],
+      monitoringWindow: "28-day rolling CrUX data collection cycle.",
+      sourceEvidence: "Google Search Central Page Experience documentation.",
+    };
+  }
+
+  // 8. Search Console Reporting & Systems
+  if (
+    text.includes("search console") ||
+    text.includes("performance report") ||
+    text.includes("multimodal search") ||
+    text.includes("crawl stats")
+  ) {
+    return {
+      whatChanged:
+        "Search Console reporting enhancement, performance metrics logging update, or API schema revision.",
       impactAnalysis:
         "Google Search reporting or feature enhancement. Review Search Console performance reports and schema markup to leverage new reporting surfaces without modifying core page copy.",
+      actionRequired:
+        "Annotate reporting date in internal analytics; evaluate newly available search appearance dimensions without modifying page content.",
+      recommendedActions: [
+        "Inspect Google Search Console performance views for any new search appearance or multimodal dimensions.",
+        "Verify API and telemetry pipelines against updated Google Search Console parameters.",
+        "Do NOT treat reporting interface changes as algorithm ranking drops.",
+      ],
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
       affectedAreas: [
         "Google Search Console Reporting",
         "Rich Results & Schema Validation",
         "Multimodal Query Tracking",
+        "Crawl Stats Monitoring",
       ],
+      monitoringWindow: "7 days post-announcement.",
+      sourceEvidence: "Google Search Central documentation on Search Console features.",
     };
   }
 
+  // 9. Search Guidelines & Essentials
+  if (
+    category.includes("Guidelines") ||
+    text.includes("guidance") ||
+    text.includes("essentials") ||
+    text.includes("best practice") ||
+    text.includes("documentation")
+  ) {
+    return {
+      whatChanged:
+        "Official updates to Google Search Essentials, webmaster documentation, ranking documentation, or quality rater guidelines.",
+      impactAnalysis:
+        "General search platform update or guideline documentation. Low risk to active ranking positions. Useful for maintaining technical alignment with Google Search Essentials.",
+      actionRequired:
+        "Review updated guidance against current editorial and technical workflows; archive documentation notes.",
+      recommendedActions: [
+        "Review technical SEO guidance against current codebase conventions.",
+        "Maintain ongoing editorial compliance with Google Search Essentials.",
+      ],
+      doNotChange: DGS_ROLLOUT_SAFEGUARDS,
+      affectedAreas: [
+        "Technical SEO Guidelines",
+        "Content Strategy Alignment",
+        "Editorial Compliance",
+      ],
+      monitoringWindow: "7 days observation window.",
+      sourceEvidence: "Google Search Central Documentation updates.",
+    };
+  }
+
+  // 10. Low-Evidence Fallback
   return {
+    whatChanged:
+      "General search platform announcement or minor notice without confirmed algorithm ranking changes.",
     impactAnalysis:
-      "General search platform update or guideline documentation. Low risk to active ranking positions. Useful for maintaining technical alignment with Google Search Essentials.",
+      "Impact not yet confirmed — monitor. No immediate ranking disruption expected. Continue regular Search Console performance monitoring.",
+    actionRequired:
+      "Maintain standard search telemetry; observe whether future updates or documentation corroborate the notice.",
+    recommendedActions: generateSafeRecommendations("INFORMATIONAL", "General Search Announcement"),
+    doNotChange: DGS_ROLLOUT_SAFEGUARDS,
     affectedAreas: [
-      "Technical SEO Guidelines",
-      "Content Strategy Alignment",
+      "All Organic Properties",
+      "Search Console Monitoring",
     ],
+    monitoringWindow: "14-day observation window.",
+    sourceEvidence: "Low-evidence or informal announcement. Impact not yet confirmed — monitor.",
   };
 }
 
@@ -1243,13 +1506,14 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
       const { rows: existingRows } = await cmsQuery<{
         id: string;
         external_status: string | null;
+        incident_begin: string | null;
         incident_end: string | null;
         summary: string | null;
         status: string;
         severity: string;
         raw_details: string | null;
       }>(
-        "SELECT id, external_status, incident_end, summary, status, severity, raw_details FROM google_search_updates WHERE external_id = ? OR source_url = ? LIMIT 1",
+        "SELECT id, external_status, incident_begin, incident_end, summary, status, severity, raw_details FROM google_search_updates WHERE external_id = ? OR source_url = ? LIMIT 1",
         [item.externalId || item.sourceUrl, item.sourceUrl],
       );
 
@@ -1302,7 +1566,15 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
                     "Rollout complete. Run standard post-update organic SERP and GSC verification.",
                     "Review top 20 keywords for position shifts.",
                   ],
-                  affectedDgsAreas: ["SERP Stability", "Post-Rollout Verification"],
+                  affectedDgsAreas: ["SERP Stability", "Post-Rollout Verification", "Organic Brand Queries"],
+                  externalStatus: "COMPLETED",
+                  incidentBegin: existing.incident_begin,
+                  incidentEnd: incomingEnd,
+                  whatChanged: `Rollout officially concluded by Google Search team. Incident end: ${incomingEnd || "Recorded"}.`,
+                  doNotChange: DGS_ROLLOUT_SAFEGUARDS,
+                  actionRequired: "Execute 14-day post-rollout performance analysis in Google Search Console.",
+                  monitoringWindow: "14-day post-rollout verification window.",
+                  sourceEvidence: item.sourceUrl,
                 },
               });
 
@@ -1319,7 +1591,7 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
       const publishedAt = item.publishedAt;
 
       const { category, severity } = classifyUpdate(item.title, item.summary);
-      const { impactAnalysis, affectedAreas } = generateDgsImpact(item.title, category, severity);
+      const impactResult = generateDgsImpact(item.title, category, severity);
       const recommendedActions = generateSafeRecommendations(severity, category);
 
       const text = `${item.title} ${category} ${item.summary}`.toLowerCase();
@@ -1341,9 +1613,9 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
           category,
           severity,
           item.summary,
-          impactAnalysis,
+          impactResult.impactAnalysis,
           JSON.stringify(recommendedActions),
-          JSON.stringify(affectedAreas),
+          JSON.stringify(impactResult.affectedAreas),
           "new",
           initialAssessmentStatus,
           item.externalStatus,
@@ -1370,9 +1642,17 @@ export async function checkAndRecordGoogleUpdates(options: { runType?: string } 
             category,
             severity,
             summary: item.summary,
-            impactAnalysis,
+            impactAnalysis: impactResult.impactAnalysis,
             recommendedActions,
-            affectedDgsAreas: affectedAreas,
+            affectedDgsAreas: impactResult.affectedAreas,
+            externalStatus: item.externalStatus,
+            incidentBegin: item.incidentBegin,
+            incidentEnd: item.incidentEnd,
+            whatChanged: impactResult.whatChanged,
+            doNotChange: impactResult.doNotChange,
+            actionRequired: impactResult.actionRequired,
+            monitoringWindow: impactResult.monitoringWindow,
+            sourceEvidence: impactResult.sourceEvidence,
           },
         });
 

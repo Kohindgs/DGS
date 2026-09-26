@@ -293,3 +293,116 @@ test("20. Admin monitor health UI displays scheduler status, branch 'main', per-
   assert.ok(clientViewCode.includes("FAILED"), "UI must display FAILED source status badge");
   assert.ok(clientViewCode.includes("STALE"), "UI must display STALE source status badge");
 });
+
+test("21. Dual alert recipients are configured for kohin and ankur.vishwakarma with reliable resolution", async () => {
+  const { DEFAULT_GOOGLE_UPDATE_RECIPIENTS, getGoogleUpdateRecipients } = await import(
+    "../lib/notifications/google-update-email.ts"
+  );
+
+  assert.ok(Array.isArray(DEFAULT_GOOGLE_UPDATE_RECIPIENTS), "Must export DEFAULT_GOOGLE_UPDATE_RECIPIENTS array");
+  assert.equal(DEFAULT_GOOGLE_UPDATE_RECIPIENTS.length, 2, "Default recipient list must have exactly 2 emails");
+  assert.ok(
+    DEFAULT_GOOGLE_UPDATE_RECIPIENTS.includes("kohin@dgeniussolutions.com"),
+    "Default recipients must include kohin@dgeniussolutions.com",
+  );
+  assert.ok(
+    DEFAULT_GOOGLE_UPDATE_RECIPIENTS.includes("ankur.vishwakarma@dgeniussolutions.com"),
+    "Default recipients must include ankur.vishwakarma@dgeniussolutions.com",
+  );
+
+  // Test resolver with empty env
+  const origEnv = process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO;
+  delete process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO;
+  const resolvedDefault = getGoogleUpdateRecipients();
+  assert.deepEqual(resolvedDefault, DEFAULT_GOOGLE_UPDATE_RECIPIENTS);
+
+  // Test resolver with custom comma-separated env
+  process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO = "alerts@dgeniussolutions.com, team@dgeniussolutions.com";
+  const resolvedCustom = getGoogleUpdateRecipients();
+  assert.deepEqual(resolvedCustom, ["alerts@dgeniussolutions.com", "team@dgeniussolutions.com"]);
+
+  // Restore env
+  if (origEnv !== undefined) {
+    process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO = origEnv;
+  } else {
+    delete process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO;
+  }
+});
+
+test("22. DGS Impact Analysis Engine differentiates 9+ update types with structured schema and low-evidence fallback", async () => {
+  const { generateDgsImpact } = await import("../lib/google-updates/monitor.ts");
+
+  const testCases = [
+    { title: "March 2026 Core Update", category: "Core Update", severity: "CRITICAL", expectedKey: "Core" },
+    { title: "September 2026 spam update", category: "Spam Update", severity: "HIGH", expectedKey: "Spam" },
+    { title: "Helpful Content & Reviews Update", category: "Helpful Content & Review Systems", severity: "HIGH", expectedKey: "Helpful Content" },
+    { title: "Google Search Serving Outage", category: "Search System Incident", severity: "HIGH", expectedKey: "Outage" },
+    { title: "AI Overviews expansion in search results", category: "AI Overviews / AI Search / AEO / GEO", severity: "HIGH", expectedKey: "AI Overviews" },
+    { title: "Structured Data FAQPage schema guidance update", category: "Structured Data", severity: "MEDIUM", expectedKey: "Structured Data" },
+    { title: "Core Web Vitals INP threshold guidance", category: "CWV", severity: "MEDIUM", expectedKey: "CWV" },
+    { title: "Search Console performance report update", category: "Search Console", severity: "MEDIUM", expectedKey: "Search Console" },
+    { title: "Google Search Essentials documentation update", category: "Guidelines", severity: "INFORMATIONAL", expectedKey: "Guidelines" },
+  ];
+
+  for (const tc of testCases) {
+    const impact = generateDgsImpact(tc.title, tc.category, tc.severity);
+    assert.ok(impact.whatChanged, `${tc.expectedKey} must return whatChanged`);
+    assert.ok(impact.impactAnalysis, `${tc.expectedKey} must return impactAnalysis`);
+    assert.ok(impact.actionRequired, `${tc.expectedKey} must return actionRequired`);
+    assert.ok(Array.isArray(impact.recommendedActions), `${tc.expectedKey} must return recommendedActions array`);
+    assert.ok(Array.isArray(impact.doNotChange), `${tc.expectedKey} must return doNotChange array`);
+    assert.ok(Array.isArray(impact.affectedAreas), `${tc.expectedKey} must return affectedAreas array`);
+    assert.ok(impact.monitoringWindow, `${tc.expectedKey} must return monitoringWindow`);
+    assert.ok(impact.sourceEvidence, `${tc.expectedKey} must return sourceEvidence`);
+  }
+
+  // Low-evidence fallback
+  const fallback = generateDgsImpact("Informational conference podcast notes", "General Search Announcement", "INFORMATIONAL");
+  assert.ok(
+    fallback.impactAnalysis.includes("Impact not yet confirmed — monitor"),
+    "Low-evidence fallback must state 'Impact not yet confirmed — monitor'",
+  );
+  assert.ok(fallback.sourceEvidence.includes("Impact not yet confirmed — monitor"));
+});
+
+test("23. DGS Rollout Safeguards prohibit rewriting ranked copy, canonical changes, URL modifications, and link disavowals", async () => {
+  const { DGS_ROLLOUT_SAFEGUARDS } = await import("../lib/notifications/google-update-email.ts");
+
+  assert.ok(Array.isArray(DGS_ROLLOUT_SAFEGUARDS), "Must export DGS_ROLLOUT_SAFEGUARDS array");
+  assert.ok(DGS_ROLLOUT_SAFEGUARDS.length >= 4, "Must define at least 4 explicit safeguards");
+
+  const rulesText = DGS_ROLLOUT_SAFEGUARDS.join(" ").toLowerCase();
+  assert.ok(rulesText.includes("rewrite") || rulesText.includes("alter"), "Must prohibit rewriting ranked pages");
+  assert.ok(rulesText.includes("canonical"), "Must prohibit modifying canonical tags");
+  assert.ok(rulesText.includes("url") || rulesText.includes("redirect"), "Must prohibit changing URLs or redirects");
+  assert.ok(rulesText.includes("disavow"), "Must prohibit panic-driven backlink disavows");
+});
+
+test("24. Admin drawer displays What Changed, DGS Impact, Areas to Monitor, and What NOT to Change; email CTA links to /admin/google-updates/", () => {
+  const clientViewCode = fs.readFileSync(
+    path.join(appRoot, "app/admin/google-updates/GoogleUpdatesClientView.tsx"),
+    "utf8",
+  );
+
+  // Drawer sections
+  assert.ok(clientViewCode.includes("What Changed (Official Summary)"), "Drawer must display What Changed section");
+  assert.ok(clientViewCode.includes("DGS Impact Assessment"), "Drawer must display DGS Impact Assessment section");
+  assert.ok(clientViewCode.includes("Areas &amp; Pages to Monitor") || clientViewCode.includes("Areas & Pages to Monitor"), "Drawer must display Areas to Monitor section");
+  assert.ok(clientViewCode.includes("What DGS Should NOT Change"), "Drawer must display What DGS Should NOT Change section");
+  assert.ok(clientViewCode.includes("Safe Action Recommendations"), "Drawer must display Safe Action Recommendations section");
+
+  // Email template link verification
+  const emailCode = fs.readFileSync(
+    path.join(appRoot, "lib/notifications/google-update-email.ts"),
+    "utf8",
+  );
+  assert.ok(
+    emailCode.includes("/admin/google-updates/"),
+    "Email template CTA must link directly to /admin/google-updates/",
+  );
+  assert.ok(
+    !emailCode.includes("/admin/search-updates/"),
+    "Email template must NOT link to obsolete /admin/search-updates/",
+  );
+});
+
