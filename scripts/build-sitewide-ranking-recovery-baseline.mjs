@@ -1101,6 +1101,47 @@ async function main() {
         ]
       );
       console.log(`✓ Persisted fresh site audit run (${freshAuditId}) to site_audit_runs table!`);
+
+      // Persist individual page crawl results into site_audit_pages for compliance engine integration
+      let insertedPages = 0;
+      for (const p of crawlResults.values()) {
+        try {
+          const pageId = crypto.randomUUID();
+          await pool.execute(
+            `INSERT INTO site_audit_pages (
+              id, audit_run_id, url, status_code, response_time_ms, title,
+              meta_description, canonical_url, robots_meta, h1_count, h1_text,
+              schema_types, og_tags, images_count, missing_alt_count,
+              internal_links_count, external_links_count, is_indexable, page_score
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              pageId,
+              freshAuditId,
+              p.url,
+              p.statusCode,
+              p.responseTimeMs || 0,
+              p.title || "",
+              p.description || "",
+              p.canonical || "",
+              p.robots || "index, follow",
+              p.h1Count || 0,
+              p.h1Text || "",
+              JSON.stringify(p.schemaTypes || []),
+              JSON.stringify({}),
+              p.imagesCount || 0,
+              p.missingAltCount || 0,
+              p.internalLinksCount || 0,
+              p.externalLinksCount || 0,
+              p.isIndexable ? 1 : 0,
+              p.isIndexable ? 95 : 60,
+            ]
+          );
+          insertedPages++;
+        } catch (pageErr) {
+          // Continue on page error
+        }
+      }
+      console.log(`✓ Persisted ${insertedPages} audit pages to site_audit_pages table!`);
     } catch (err) {
       console.warn("Could not persist fresh audit run to MySQL:", err.message);
     }
