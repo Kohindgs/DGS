@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { forwardToFluentForms, validateClientSubmitPayload } from "@/lib/forms/submit";
-import { isNativeFormEnabled, submitNativeLeadForm } from "@/lib/forms/native/submit";
+import { validateClientSubmitPayload } from "@/lib/forms/submit";
+import { submitNativeLeadForm } from "@/lib/forms/native/submit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,22 +32,22 @@ export async function POST(request: Request) {
       sanitizedFields: validated.sanitizedFields,
       captchaToken: validated.captchaToken,
     };
-    const native = isNativeFormEnabled(validated.definition.fluentFormId);
-    const result = native
-      ? await submitNativeLeadForm(options)
-      : await forwardToFluentForms(options);
+
+    const result = await submitNativeLeadForm(options);
 
     return NextResponse.json(
-      { ...result, provider: native ? "native" : "wordpress" },
+      { ...result, provider: "native" },
       { status: result.ok ? 200 : 422 },
     );
-  } catch {
+  } catch (error) {
+    console.error("Live lead form submission failed:", error);
     return NextResponse.json(
       {
         ok: false,
-        message: "Network error while submitting the form. Please try again.",
+        message:
+          "We couldn't submit your enquiry right now. Please call +91 99879 22901 or email business@dgeniussolutions.com.",
       },
-      { status: 502 },
+      { status: 500 },
     );
   }
 }

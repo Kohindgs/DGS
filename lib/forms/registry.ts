@@ -1,5 +1,5 @@
-import definitions from "@/data/forms/definitions.approved.json";
-import type { FormDefinition } from "./types";
+import definitions from "../../data/forms/definitions.approved.json" with { type: "json" };
+import type { FormDefinition } from "./types.ts";
 
 const forms = ((definitions as { forms?: unknown }).forms || []) as unknown as FormDefinition[];
 const byKey = new Map(forms.map((form) => [form.key, form]));

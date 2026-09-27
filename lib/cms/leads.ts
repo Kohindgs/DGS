@@ -1,6 +1,5 @@
-import "server-only";
 import { randomUUID } from "node:crypto";
-import { cmsExecute, cmsQuery, isCmsDatabaseConfigured } from "./db";
+import { cmsExecute, cmsQuery, isCmsDatabaseConfigured } from "./db.ts";
 
 export type CmsLead = {
   id: string; source_form_key: string | null; source_route: string | null;
@@ -30,6 +29,10 @@ export async function createCmsLead(input: {
   phone?: string; company?: string; payload: Record<string, unknown>;
 }) {
   const id = randomUUID();
+  if (!isCmsDatabaseConfigured()) {
+    console.warn("createCmsLead: DGS CMS database is not configured; skipping lead insertion");
+    return id;
+  }
   await cmsExecute(
     "INSERT INTO leads (id,source_form_key,source_route,name,email,phone,company,payload,status) VALUES (?,?,?,?,?,?,?,?,?)",
     [id,input.formKey,input.route,input.name||null,input.email||null,input.phone||null,input.company||null,JSON.stringify(input.payload),"new"],
@@ -42,6 +45,10 @@ export async function createCmsSubmission(input: {
   leadId?: string; provider?: string; providerSubmissionId?: string | null;
 }) {
   const id = randomUUID();
+  if (!isCmsDatabaseConfigured()) {
+    console.warn("createCmsSubmission: DGS CMS database is not configured; skipping submission insertion");
+    return id;
+  }
   await cmsExecute(
     "INSERT INTO form_submissions (id,form_key,source_route,payload,lead_id,provider,provider_submission_id) VALUES (?,?,?,?,?,?,?)",
     [id,input.formKey,input.route,JSON.stringify(input.payload),input.leadId||null,input.provider||"native",input.providerSubmissionId||null],

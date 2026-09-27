@@ -490,7 +490,8 @@ test("activation, provenance, and data-submission enabled wiring", () => {
 
   const routeApi = readFileSync(path.join(ROOT, "app/api/forms/submit/route.ts"), "utf8");
   assert.match(routeApi, /validateClientSubmitPayload/);
-  assert.match(routeApi, /forwardToFluentForms/);
+  assert.match(routeApi, /submitNativeLeadForm/);
+  assert.doesNotMatch(routeApi, /forwardToFluentForms/);
   assert.doesNotMatch(routeApi, /Authorization|application_password|FLUENTFORM_.*SECRET/i);
 
   const submitAdapter = readFileSync(path.join(ROOT, "lib/forms/submit.ts"), "utf8");

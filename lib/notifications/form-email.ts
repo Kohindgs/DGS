@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
-import type { FormDefinition } from "@/lib/forms/types";
+import type { FormDefinition } from "../forms/types.ts";
 import { renderDgsEmailHtml, type EmailSection } from "./email-template.ts";
+import { extractLeadContactFields, type NormalizedContact } from "../forms/contact-fields.ts";
 
 function configured() {
   return Boolean(
@@ -15,6 +16,7 @@ export async function sendNativeFormNotification(input: {
   route: string;
   fields: Record<string, string>;
   leadId?: string;
+  contact?: NormalizedContact;
 }) {
   if (!configured()) return { sent: false, reason: "smtp-not-configured" };
 
@@ -34,24 +36,14 @@ export async function sendNativeFormNotification(input: {
     process.env.DGS_SMTP_USER!;
 
   const from = process.env.DGS_SMTP_FROM || process.env.DGS_SMTP_USER!;
-  const replyTo = input.fields.email || undefined;
 
-  // Extract contact fields
-  const submitterName =
-    input.fields.name ||
-    input.fields.full_name ||
-    input.fields.your_name ||
-    input.fields.first_name
-      ? `${input.fields.first_name || ""} ${input.fields.last_name || ""}`.trim()
-      : "New Lead";
-  const submitterEmail = input.fields.email || "";
-  const submitterPhone = input.fields.phone || input.fields.mobile || "";
-  const submitterCompany =
-    input.fields.company ||
-    input.fields.organization ||
-    input.fields.company_name ||
-    input.fields.website ||
-    "";
+  // Extract contact fields using unified extractor
+  const contact = input.contact || extractLeadContactFields(input.definition, input.fields);
+  const submitterName = contact.name || "New Lead";
+  const submitterEmail = contact.email || "";
+  const submitterPhone = contact.phone || "";
+  const submitterCompany = contact.company || "";
+  const replyTo = submitterEmail || undefined;
 
   // Dynamic Subject: [DGS Lead] SEO Audit — Rahul Mehta — ABC Pvt Ltd
   const companySnippet = submitterCompany ? ` — ${submitterCompany}` : "";

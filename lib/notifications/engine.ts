@@ -1,6 +1,5 @@
-import "server-only";
 import { randomUUID } from "node:crypto";
-import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "../cms/db.ts";
 
 export type NotificationSeverity = "info" | "success" | "warning" | "danger";
 

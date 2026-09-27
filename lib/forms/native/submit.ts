@@ -1,8 +1,9 @@
-import "server-only";
-import type { FormDefinition, FormSubmissionResult } from "@/lib/forms/types";
-import { createCmsLead, createCmsSubmission } from "@/lib/cms/leads";
-import { sendNativeFormNotification } from "@/lib/notifications/form-email";
-import { publishNotificationEvent } from "@/lib/notifications/engine";
+import type { FormDefinition, FormSubmissionResult } from "../types.ts";
+import { isApprovedFormId } from "../registry.ts";
+import { createCmsLead, createCmsSubmission } from "../../cms/leads.ts";
+import { sendNativeFormNotification } from "../../notifications/form-email.ts";
+import { publishNotificationEvent } from "../../notifications/engine.ts";
+import { extractLeadContactFields } from "../contact-fields.ts";
 
 function nativeIds() {
   return new Set(
@@ -14,6 +15,9 @@ function nativeIds() {
 }
 
 export function isNativeFormEnabled(fluentFormId?: number) {
+  if (fluentFormId && isApprovedFormId(fluentFormId)) {
+    return true;
+  }
   const ids = nativeIds();
   if (ids.size === 0 || ids.has("*")) {
     return true;
@@ -33,17 +37,10 @@ async function verifyRecaptcha(token?: string) {
     body,
     cache: "no-store",
   });
-  const result = await response.json() as { success?: boolean };
+  const result = (await response.json()) as { success?: boolean };
   return result.success
     ? { ok: true as const }
     : { ok: false as const, message: "CAPTCHA verification failed. Please try again." };
-}
-
-function leadName(fields: Record<string, string>) {
-  return [fields["names[first_name]"], fields["names[last_name]"]]
-    .filter(Boolean)
-    .join(" ")
-    .trim();
 }
 
 export async function submitNativeLeadForm(options: {
@@ -69,13 +66,15 @@ export async function submitNativeLeadForm(options: {
     fields: sanitizedFields,
   };
 
+  const contact = extractLeadContactFields(definition, sanitizedFields);
+
   const leadId = await createCmsLead({
     formKey: definition.key,
     route,
-    name: leadName(sanitizedFields),
-    email: sanitizedFields.email,
-    phone: sanitizedFields.phone,
-    company: sanitizedFields.input_text,
+    name: contact.name,
+    email: contact.email,
+    phone: contact.phone,
+    company: contact.company,
     payload,
   });
 
@@ -91,6 +90,8 @@ export async function submitNativeLeadForm(options: {
     definition,
     route,
     fields: sanitizedFields,
+    leadId,
+    contact,
   }).catch((error) => {
     console.error("Native form notification failed", error);
     return { sent: false };
@@ -103,7 +104,7 @@ export async function submitNativeLeadForm(options: {
     });
   }
 
-  const senderDisplayName = leadName(sanitizedFields) || sanitizedFields.email || "Inbound Lead";
+  const senderDisplayName = contact.name || contact.email || "Inbound Lead";
   await publishNotificationEvent({
     type: "new_lead",
     severity: "info",
