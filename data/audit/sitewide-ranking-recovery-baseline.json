@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-27T08:45:49.178Z",
+  "generatedAt": "2026-09-27T08:50:59.784Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "summary": {
     "totalIndexablePages": 100,
     "protectedTier0PagesCount": 11,
-    "pagesWithGscData": 0,
+    "pagesWithGscData": 65,
     "classifications": {
       "criticalDeclines": 1,
-      "declining": 0,
-      "stable": 10,
-      "growing": 0,
-      "insufficientData": 89
+      "declining": 4,
+      "stable": 12,
+      "growing": 3,
+      "insufficientData": 80
     },
-    "cannibalizationCandidateCount": 0,
-    "aiVideoSharedQueriesCount": 0,
+    "cannibalizationCandidateCount": 53,
+    "aiVideoSharedQueriesCount": 4,
     "machineLabelsDetected": [
       {
         "file": "aeo-dubai.json",
@@ -774,8 +774,442 @@
       "currentOwnerStatus": "DOMINANT_BRAND_#1"
     }
   ],
-  "aiVideoCannibalizationReport": [],
-  "topCannibalizationInstances": [],
+  "aiVideoCannibalizationReport": [
+    {
+      "query": "ai video production agency in mumbai",
+      "primaryUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 3,
+        "impressions": 48,
+        "position": 2.25
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 29,
+        "position": 2.45
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    },
+    {
+      "query": "ai video agency mumbai",
+      "primaryUrl": "/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 1,
+        "impressions": 8,
+        "position": 1.38
+      },
+      "competingMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 2,
+        "impressions": 5,
+        "position": 4.8
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    },
+    {
+      "query": "ai video production agency",
+      "primaryUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 1,
+        "impressions": 19,
+        "position": 16.47
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 6.67
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    },
+    {
+      "query": "ai video marketing agency",
+      "primaryUrl": "/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 6
+      },
+      "competingMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 5
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    }
+  ],
+  "topCannibalizationInstances": [
+    {
+      "query": "ai commercial production",
+      "primaryUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/services/ai-video-production-agency/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 25.5
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-video-production-for-business/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 63
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "how to rank for ai overviews",
+      "primaryUrl": "/blogs/ai-overview-ranking/",
+      "competingUrl": "/blogs/ai-overview-ranking/",
+      "primaryMetrics": {
+        "page": "/blogs/ai-overview-ranking/",
+        "clicks": 0,
+        "impressions": 50,
+        "position": 22.48
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-overview-seo/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 19.5
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "dgs solutions",
+      "primaryUrl": "/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 8,
+        "impressions": 17,
+        "position": 2.88
+      },
+      "competingMetrics": {
+        "page": "/portfolio/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 60
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "d genius",
+      "primaryUrl": "/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 6,
+        "impressions": 29,
+        "position": 1.59
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 0,
+        "impressions": 12,
+        "position": 10.92
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "ai video production agency in mumbai",
+      "primaryUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 3,
+        "impressions": 48,
+        "position": 2.25
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 29,
+        "position": 2.45
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    },
+    {
+      "query": "d genius solutions",
+      "primaryUrl": "/",
+      "competingUrl": "/contact-us/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 11,
+        "impressions": 41,
+        "position": 1
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 0,
+        "impressions": 36,
+        "position": 5.39
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "ai ad film production agency",
+      "primaryUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/services/ai-video-production-agency/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 5,
+        "position": 19.8
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 5.5
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "geo agency india",
+      "primaryUrl": "/services/geo/",
+      "competingUrl": "/services/geo/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 4,
+        "position": 73.5
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 4
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "d'genius solutions",
+      "primaryUrl": "/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 9,
+        "impressions": 52,
+        "position": 1.04
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 0,
+        "impressions": 41,
+        "position": 5.63
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "dgenius solutions",
+      "primaryUrl": "/",
+      "competingUrl": "/contact-us/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 43,
+        "impressions": 99,
+        "position": 1.04
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 9,
+        "impressions": 87,
+        "position": 7.92
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "best llm seo agency in mumbai",
+      "primaryUrl": "/services/llm-seo-service/",
+      "competingUrl": "/services/llm-seo-service/",
+      "primaryMetrics": {
+        "page": "/services/llm-seo-service/",
+        "clicks": 0,
+        "impressions": 15,
+        "position": 10.87
+      },
+      "competingMetrics": {
+        "page": "/services/seo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    },
+    {
+      "query": "insta kohin",
+      "primaryUrl": "/about-us/",
+      "competingUrl": "/about-us/",
+      "primaryMetrics": {
+        "page": "/about-us/",
+        "clicks": 0,
+        "impressions": 22,
+        "position": 8.77
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "digital marketing agency in bandra",
+      "primaryUrl": "/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 26
+      },
+      "competingMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 21
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "ai citation optimization services in mumbai",
+      "primaryUrl": "/services/geo/",
+      "competingUrl": "/services/geo/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 2
+      },
+      "competingMetrics": {
+        "page": "/services/llm-seo-service/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 29
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "aeo agency near me",
+      "primaryUrl": "/services/aeo-services-in-mumbai/",
+      "competingUrl": "/services/aeo-services-in-mumbai/",
+      "primaryMetrics": {
+        "page": "/services/aeo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 7,
+        "position": 3.14
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 1
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    },
+    {
+      "query": "generative engine optimization services in mumbai",
+      "primaryUrl": "/services/geo/",
+      "competingUrl": "/services/geo/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 4,
+        "position": 4
+      },
+      "competingMetrics": {
+        "page": "/services/llm-seo-service/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 87
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "geo services in mumbai",
+      "primaryUrl": "/services/geo/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 14,
+        "position": 5.36
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 1
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "aeo agency in mumbai",
+      "primaryUrl": "/services/aeo-services-in-mumbai/",
+      "competingUrl": "/services/aeo-services-in-mumbai/",
+      "primaryMetrics": {
+        "page": "/services/aeo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 11,
+        "position": 2.55
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 1
+      },
+      "classification": "COMMERCIAL_INTENT_COLLISION"
+    },
+    {
+      "query": "genius advertising",
+      "primaryUrl": "/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 7,
+        "position": 2.86
+      },
+      "competingMetrics": {
+        "page": "/services/branding/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 91
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    },
+    {
+      "query": "compare how traditional and ai-first video platforms process live content",
+      "primaryUrl": "/blogs/ai-video-vs-traditional-video/",
+      "competingUrl": "/blogs/ai-video-vs-traditional-video/",
+      "primaryMetrics": {
+        "page": "/blogs/ai-video-vs-traditional-video/",
+        "clicks": 8,
+        "impressions": 395,
+        "position": 3.32
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-the-v-traditional-video/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1
+      },
+      "classification": "INCIDENTAL_KEYWORD_OVERLAP"
+    }
+  ],
   "inventory": [
     {
       "url": "https://www.dgeniussolutions.com/",
@@ -791,10 +1225,10 @@
       "lastModified": "2026-08-13T00:24:31",
       "primaryQueryFamily": "Full Service Digital Marketing (Brand / Agency)",
       "isProtectedTier0": true,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
+      "clicks": 82,
+      "impressions": 581,
+      "ctr": 14.11,
+      "avgPosition": 9.89,
       "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -827,9 +1261,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 50,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 9.28,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -851,11 +1285,11 @@
       "lastModified": "2026-06-08T15:34:39",
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "clicks": 2,
+      "impressions": 36,
+      "ctr": 5.56,
+      "avgPosition": 20.05,
+      "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -877,9 +1311,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 8,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 28.25,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -927,9 +1361,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 5,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 14.2,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -951,11 +1385,11 @@
       "lastModified": "2026-06-23T16:25:23",
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "clicks": 1,
+      "impressions": 62,
+      "ctr": 1.61,
+      "avgPosition": 11.31,
+      "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -1051,11 +1485,11 @@
       "lastModified": "2026-07-02T11:55:35",
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "clicks": 1,
+      "impressions": 272,
+      "ctr": 0.37,
+      "avgPosition": 36.05,
+      "classification": "DECLINING",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -1077,9 +1511,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 26,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 48.5,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1102,10 +1536,10 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 1408,
       "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "avgPosition": 26.79,
+      "classification": "DECLINING",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -1127,9 +1561,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 10,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 18.6,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1177,9 +1611,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 35,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 36.63,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1202,9 +1636,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 2,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 29.5,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1252,10 +1686,10 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 474,
       "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "avgPosition": 31.37,
+      "classification": "DECLINING",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -1277,9 +1711,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 36,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 6.44,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1302,9 +1736,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 49,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 25.19,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1326,11 +1760,11 @@
       "lastModified": "2026-08-17T13:35:55",
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "clicks": 8,
+      "impressions": 402,
+      "ctr": 1.99,
+      "avgPosition": 3.81,
+      "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -1352,9 +1786,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 20,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 26.95,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1377,9 +1811,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 17,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 12.12,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1402,9 +1836,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 115,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 19.2,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1427,9 +1861,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 66,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 36.36,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1452,9 +1886,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 100,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 15.26,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1477,9 +1911,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 75,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 41.27,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1552,9 +1986,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 13,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 26.08,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1602,10 +2036,10 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 886,
       "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "avgPosition": 23.98,
+      "classification": "DECLINING",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -1652,9 +2086,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 28,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 21.68,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1677,9 +2111,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 2,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 4.5,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1702,9 +2136,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 9,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 11.22,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1727,9 +2161,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 24,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 33.33,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1752,9 +2186,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 8,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 9.5,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1827,9 +2261,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 5,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 70,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1852,9 +2286,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 1,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 34,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1877,9 +2311,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 4,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 11.5,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1902,9 +2336,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 3,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 8,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -1977,9 +2411,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 12,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 13.92,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2002,9 +2436,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 1,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 9,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2027,9 +2461,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 1,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 1,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2051,11 +2485,11 @@
       "lastModified": "2026-05-19T11:10:15",
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "clicks": 3,
+      "impressions": 63,
+      "ctr": 4.76,
+      "avgPosition": 15.84,
+      "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2077,9 +2511,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 5,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 11,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2152,9 +2586,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 12,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 63,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2177,9 +2611,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 2,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 6.5,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2227,9 +2661,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 28,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 31.43,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2252,9 +2686,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 3,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 36,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2302,9 +2736,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 3,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 13,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2327,9 +2761,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 13,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 26,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2352,9 +2786,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 1,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 8,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2427,9 +2861,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 3,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 18.67,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2502,9 +2936,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 38,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 17.36,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2527,9 +2961,9 @@
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 58,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 25.1,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2577,9 +3011,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 2,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 6,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2602,9 +3036,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 1,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 1,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2626,11 +3060,11 @@
       "lastModified": "2026-04-13T13:00:15",
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
-      "classification": "INSUFFICIENT_DATA",
+      "clicks": 9,
+      "impressions": 181,
+      "ctr": 4.97,
+      "avgPosition": 7.09,
+      "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2677,9 +3111,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 71,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 4.85,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2702,9 +3136,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 8,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 20.5,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2801,10 +3235,10 @@
       "primaryQueryFamily": "AEO (Answer Engine Optimisation)",
       "isProtectedTier0": true,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 146,
       "ctr": 0,
-      "avgPosition": 0,
-      "classification": "STABLE",
+      "avgPosition": 19.64,
+      "classification": "GROWING",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -2836,9 +3270,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 18,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 23.89,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2860,10 +3294,10 @@
       "lastModified": "2026-08-04T10:34:24",
       "primaryQueryFamily": "AI Video Production",
       "isProtectedTier0": true,
-      "clicks": 0,
-      "impressions": 0,
-      "ctr": 0,
-      "avgPosition": 0,
+      "clicks": 10,
+      "impressions": 293,
+      "ctr": 3.41,
+      "avgPosition": 16.04,
       "classification": "CRITICAL_DECLINE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2896,9 +3330,9 @@
       "primaryQueryFamily": "Branding Agency",
       "isProtectedTier0": true,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 9,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 63.67,
       "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -2991,10 +3425,10 @@
       "primaryQueryFamily": "GEO (Generative Engine Optimisation)",
       "isProtectedTier0": true,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 278,
       "ctr": 0,
-      "avgPosition": 0,
-      "classification": "STABLE",
+      "avgPosition": 30.77,
+      "classification": "GROWING",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -3026,10 +3460,10 @@
       "primaryQueryFamily": "LLM SEO / Optimization",
       "isProtectedTier0": true,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 122,
       "ctr": 0,
-      "avgPosition": 0,
-      "classification": "STABLE",
+      "avgPosition": 33.88,
+      "classification": "GROWING",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -3096,9 +3530,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 23,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 61.35,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -3121,9 +3555,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 3,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 48.67,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -3171,9 +3605,9 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 12,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 56.83,
       "classification": "INSUFFICIENT_DATA",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -3196,9 +3630,9 @@
       "primaryQueryFamily": "SEO Services Mumbai",
       "isProtectedTier0": true,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 46,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 20.02,
       "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -3256,9 +3690,9 @@
       "primaryQueryFamily": "Social Media Marketing",
       "isProtectedTier0": true,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 24,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 56.12,
       "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
@@ -3291,9 +3725,9 @@
       "primaryQueryFamily": "Website Development & AMC",
       "isProtectedTier0": true,
       "clicks": 0,
-      "impressions": 0,
+      "impressions": 1,
       "ctr": 0,
-      "avgPosition": 0,
+      "avgPosition": 2,
       "classification": "STABLE",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",

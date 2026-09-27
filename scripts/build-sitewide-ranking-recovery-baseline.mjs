@@ -8,6 +8,25 @@ const ROOT = process.cwd();
 async function main() {
   console.log("=== BUILDING DGS SITE-WIDE RANKING & AI RECOVERY BASELINE ===");
 
+  // Load environment variables if available
+  const envCandidates = [
+    path.join(ROOT, ".env.production"),
+    "/home/u188101251/production-app/.env.production",
+    path.join(ROOT, ".env.local"),
+    path.join(ROOT, ".env"),
+  ];
+  for (const envFile of envCandidates) {
+    if (fs.existsSync(envFile)) {
+      const content = fs.readFileSync(envFile, "utf8");
+      for (const line of content.split(/\r?\n/)) {
+        const m = line.match(/^([A-Za-z0-9_]+)=(.*)$/);
+        if (m && !process.env[m[1]]) {
+          process.env[m[1]] = m[2].trim().replace(/^['"](.*)['"]$/, "$1");
+        }
+      }
+    }
+  }
+
   // 1. Connect to Database if configured
   const uri = process.env.DGS_DATABASE_URL || process.env.DATABASE_URL;
   let pool = null;
