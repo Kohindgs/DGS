@@ -470,8 +470,6 @@ jobs:
             'https://www.dgeniussolutions.com/career/'
             'https://www.dgeniussolutions.com/career/generative-ai-artist/'
             'https://www.dgeniussolutions.com/portfolio/'
-            'https://www.dgeniussolutions.com/seo-executive-assessment/'
-            'https://www.dgeniussolutions.com/seo-manager-assessment/'
             'https://www.dgeniussolutions.com/admin/login/'
             'https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/'
             'https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/'
@@ -483,7 +481,23 @@ jobs:
             check_status "$u" 200
           done
 
-          # 4. 301 Permanent Redirect Route
+          # 4. Retired Routes Verification (HTTP 410 Gone)
+          echo "Verifying retired routes return HTTP 410 Gone..."
+          retired_410=(
+            'https://www.dgeniussolutions.com/wp-file-download-search/'
+            'https://www.dgeniussolutions.com/seo-pricing/'
+            'https://www.dgeniussolutions.com/seo-executive-assessment/'
+            'https://www.dgeniussolutions.com/seo-manager-assessment/'
+            'https://www.dgeniussolutions.com/ai-motion-graphic-designer/'
+            'https://www.dgeniussolutions.com/social-media-executive/'
+            'https://www.dgeniussolutions.com/indriya-test/'
+            'https://www.dgeniussolutions.com/motion-graphics/'
+          )
+          for u in "${retired_410[@]}"; do
+            check_status "$u" 410
+          done
+
+          # 5. Permanent Redirects
           echo "Verifying permanent redirects..."
           check_redirect 'https://www.dgeniussolutions.com/career/junior-hr-generalist/' 'https://www.dgeniussolutions.com/career/'
 
