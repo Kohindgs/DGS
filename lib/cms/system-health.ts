@@ -453,7 +453,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
         total: number;
         latest_title: string | null;
         last_checked: string | null;
-      }>(`SELECT COUNT(*) as total, MAX(title) as latest_title, MAX(last_checked_at) as last_checked FROM google_search_updates`);
+      }>(`SELECT COUNT(*) as total, MAX(title) as latest_title, MAX(updated_at) as last_checked FROM google_search_updates`);
 
       const updateCount = Number(updateRows?.[0]?.total || 0);
       const latestUpdateTitle = updateRows?.[0]?.latest_title || null;
@@ -846,7 +846,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
       let storageWritable = false;
       const fs = await import("node:fs/promises");
       const path = await import("node:path");
-      const uploadDir = path.resolve(process.env.DGS_UPLOADS_DIR || "public/uploads");
+      const uploadDir = path.resolve(process.env.DGS_UPLOADS_DIR || process.env.DGS_CMS_MEDIA_DIR || "public/uploads");
       try {
         await fs.access(uploadDir);
         storageWritable = true;
