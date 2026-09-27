@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   adminSessionCookie,
-  createAdminSessionToken,
   isAdminAuthConfigured,
   validateAdminCredentials,
 } from "@/lib/cms/auth";
@@ -170,7 +169,7 @@ export async function POST(request: NextRequest) {
 
   const response = NextResponse.redirect(publicUrl("/admin/"), 303);
 
-  // Set database-backed session token
+  // Set database-backed authoritative session token
   const dbToken = await createDbSession(authenticatedUser, ip, userAgent);
   response.cookies.set(cmsSessionCookieConfig.name, dbToken, {
     httpOnly: cmsSessionCookieConfig.httpOnly,
@@ -178,15 +177,6 @@ export async function POST(request: NextRequest) {
     sameSite: cmsSessionCookieConfig.sameSite,
     path: cmsSessionCookieConfig.path,
     maxAge: cmsSessionCookieConfig.maxAge,
-  });
-
-  // Set legacy token for backwards compatibility
-  response.cookies.set(adminSessionCookie.name, createAdminSessionToken(rawEmail), {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: adminSessionCookie.maxAge,
   });
 
   return response;

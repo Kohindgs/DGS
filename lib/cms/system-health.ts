@@ -1,4 +1,5 @@
 import { isCmsDatabaseConfigured, cmsQuery } from "./db";
+import { listApprovedForms } from "../forms/registry";
 
 export type SubsystemStatus =
   | "HEALTHY"
@@ -41,7 +42,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
   const now = new Date().toISOString();
   const subsystems: Record<string, SubsystemHealth> = {};
 
-  // 1. DATABASE (MySQL / MariaDB)
+  // 1. DATABASE (MySQL / MariaDB) - Critical Core
   const dbConfigured = isCmsDatabaseConfigured();
   let dbAvailable = false;
 
@@ -264,7 +265,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     }
   }
 
-  // 4. SMTP / TRANSACTIONAL EMAIL
+  // 4. SMTP / TRANSACTIONAL EMAIL (with freshness evaluation)
   const smtpHost = (process.env.DGS_SMTP_HOST || process.env.SMTP_HOST)?.trim();
   const smtpUser = (process.env.DGS_SMTP_USER || process.env.SMTP_USER)?.trim();
   const smtpConfigured = Boolean(smtpHost && smtpUser);
@@ -280,6 +281,8 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     };
   } else {
     let recentEmailSentAt: string | null = null;
+    let recentFailure: string | null = null;
+
     if (dbAvailable) {
       try {
         const { rows: notifRows } = await cmsQuery<{ sent_at: string }>(
@@ -288,33 +291,61 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
         if (notifRows && notifRows[0]?.sent_at) {
           recentEmailSentAt = notifRows[0].sent_at;
         }
+
+        const { rows: failRows } = await cmsQuery<{ created_at: string; summary: string }>(
+          `SELECT created_at, summary FROM cms_audit_log WHERE (action LIKE '%EMAIL_FAIL%' OR (action LIKE '%NOTIF%' AND status = 'failure')) AND created_at > DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY created_at DESC LIMIT 1`
+        );
+        if (failRows && failRows[0]) {
+          recentFailure = failRows[0].summary;
+        }
       } catch (err: any) {
         console.warn("[system-health] Note on email telemetry inspection:", err?.message);
       }
     }
 
-    if (recentEmailSentAt) {
+    if (recentFailure) {
       subsystems.smtp = {
         id: "smtp",
         name: "SMTP Mail Dispatcher",
-        status: "HEALTHY",
-        details: `Active mail dispatcher (Host: ${smtpHost}, Last delivery: ${recentEmailSentAt})`,
+        status: "FAILED",
+        details: `Recent SMTP dispatch error within 24h: ${recentFailure}`,
         lastCheckedAt: now,
-        metrics: { configured: true, host: smtpHost, lastDelivery: recentEmailSentAt },
+        metrics: { configured: true, host: smtpHost, error: recentFailure },
       };
+    } else if (recentEmailSentAt) {
+      const daysSinceDelivery = (Date.now() - new Date(recentEmailSentAt).getTime()) / (1000 * 60 * 60 * 24);
+      if (daysSinceDelivery > 30) {
+        subsystems.smtp = {
+          id: "smtp",
+          name: "SMTP Mail Dispatcher",
+          status: "STALE",
+          details: `Configured with host ${smtpHost}, but last verified delivery was ${Math.floor(daysSinceDelivery)}d ago (> 30 days)`,
+          lastCheckedAt: now,
+          metrics: { configured: true, host: smtpHost, lastDelivery: recentEmailSentAt, daysSinceDelivery: Math.floor(daysSinceDelivery) },
+        };
+      } else {
+        subsystems.smtp = {
+          id: "smtp",
+          name: "SMTP Mail Dispatcher",
+          status: "HEALTHY",
+          details: `Active mail dispatcher (Host: ${smtpHost}, Last verified delivery: ${recentEmailSentAt})`,
+          lastCheckedAt: now,
+          metrics: { configured: true, host: smtpHost, lastDelivery: recentEmailSentAt, daysSinceDelivery: Math.floor(daysSinceDelivery) },
+        };
+      }
     } else {
       subsystems.smtp = {
         id: "smtp",
         name: "SMTP Mail Dispatcher",
         status: "CONFIGURED",
-        details: `Configured with host ${smtpHost} (Ready for dispatch; no recent deliveries recorded)`,
+        details: `Configured with host ${smtpHost} (Ready for dispatch; no delivery telemetry recorded yet)`,
         lastCheckedAt: now,
         metrics: { configured: true, host: smtpHost, lastDelivery: null },
       };
     }
   }
 
-  // 5. GEMINI AI ENGINE
+  // 5. GEMINI AI ENGINE (with verified operation freshness & quality)
   const geminiKey = (process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY)?.trim();
   const geminiConfigured = Boolean(geminiKey);
 
@@ -329,34 +360,78 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     };
   } else {
     let recentAiActivity: string | null = null;
+    let recentAiFailure: string | null = null;
+
     if (dbAvailable) {
       try {
-        const { rows: auditRows } = await cmsQuery<{ created_at: string }>(
-          `SELECT created_at FROM cms_audit_log WHERE resource IN ('assessment', 'gemini', 'seo_generation') OR action LIKE '%gemini%' OR action LIKE '%generate%' ORDER BY created_at DESC LIMIT 1`
+        const { rows: auditRows } = await cmsQuery<{ created_at: string; status: string; summary: string }>(
+          `SELECT created_at, status, summary FROM cms_audit_log
+           WHERE action IN ('assessment.generate', 'assessment.regenerate_question', 'gemini.test_connection', 'gemini.generate')
+              OR (resource = 'assessment' AND action LIKE '%.generate%')
+           ORDER BY created_at DESC LIMIT 5`
         );
-        if (auditRows && auditRows[0]?.created_at) {
-          recentAiActivity = auditRows[0].created_at;
+
+        const successItem = auditRows?.find((r) => r.status === "success" || !r.status);
+        const failItem = auditRows?.find((r) => r.status === "failure");
+
+        if (successItem) {
+          recentAiActivity = successItem.created_at;
+        }
+
+        // Also check assessment_versions table for generated assessments
+        if (!recentAiActivity) {
+          const { rows: verRows } = await cmsQuery<{ created_at: string }>(
+            `SELECT created_at FROM assessment_versions ORDER BY created_at DESC LIMIT 1`
+          );
+          if (verRows && verRows[0]?.created_at) {
+            recentAiActivity = verRows[0].created_at;
+          }
+        }
+
+        if (failItem && (!recentAiActivity || new Date(failItem.created_at) > new Date(recentAiActivity))) {
+          recentAiFailure = failItem.summary;
         }
       } catch (err: any) {
         console.warn("[system-health] Note on AI activity telemetry inspection:", err?.message);
       }
     }
 
-    if (recentAiActivity) {
+    if (recentAiFailure) {
       subsystems.gemini = {
         id: "gemini",
         name: "AI Engine (Gemini 2.5)",
-        status: "HEALTHY",
-        details: `Provisioned & active (Model: gemini-2.5-flash, Last activity: ${recentAiActivity})`,
+        status: "FAILED",
+        details: `Recent Gemini generation error: ${recentAiFailure}`,
         lastCheckedAt: now,
-        metrics: { configured: true, model: "gemini-2.5-flash", lastActivity: recentAiActivity },
+        metrics: { configured: true, model: "gemini-2.5-flash", error: recentAiFailure },
       };
+    } else if (recentAiActivity) {
+      const daysSinceAi = (Date.now() - new Date(recentAiActivity).getTime()) / (1000 * 60 * 60 * 24);
+      if (daysSinceAi > 30) {
+        subsystems.gemini = {
+          id: "gemini",
+          name: "AI Engine (Gemini 2.5)",
+          status: "STALE",
+          details: `Configured with gemini-2.5-flash, but last verified operation was ${Math.floor(daysSinceAi)}d ago (> 30 days)`,
+          lastCheckedAt: now,
+          metrics: { configured: true, model: "gemini-2.5-flash", lastActivity: recentAiActivity, daysSinceActivity: Math.floor(daysSinceAi) },
+        };
+      } else {
+        subsystems.gemini = {
+          id: "gemini",
+          name: "AI Engine (Gemini 2.5)",
+          status: "HEALTHY",
+          details: `Provisioned & verified (Model: gemini-2.5-flash, Last verified: ${recentAiActivity})`,
+          lastCheckedAt: now,
+          metrics: { configured: true, model: "gemini-2.5-flash", lastActivity: recentAiActivity, daysSinceActivity: Math.floor(daysSinceAi) },
+        };
+      }
     } else {
       subsystems.gemini = {
         id: "gemini",
         name: "AI Engine (Gemini 2.5)",
         status: "CONFIGURED",
-        details: "API key provisioned for automated SEO & content intelligence (Model: gemini-2.5-flash)",
+        details: "API key provisioned for automated SEO & content intelligence (Model: gemini-2.5-flash; no runtime execution logged yet)",
         lastCheckedAt: now,
         metrics: { configured: true, model: "gemini-2.5-flash", lastActivity: null },
       };
@@ -416,7 +491,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     }
   }
 
-  // 7. BLOG SCHEDULER
+  // 7. BLOG SCHEDULER (with mandatory heartbeat evidence verification)
   if (!dbAvailable) {
     subsystems.blog_scheduler = {
       id: "blog_scheduler",
@@ -430,30 +505,71 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
       const [{ rows: schedRows }, { rows: overdueRows }, { rows: heartbeatRows }] = await Promise.all([
         cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM blog_posts WHERE status = 'scheduled'`),
         cmsQuery<{ overdue: number }>(`SELECT COUNT(*) as overdue FROM blog_posts WHERE status = 'scheduled' AND scheduled_for IS NOT NULL AND scheduled_for < NOW()`),
-        cmsQuery<{ last_run: string }>(`SELECT created_at as last_run FROM cms_audit_log WHERE action LIKE 'BLOG_SCHEDULE%' OR actor_email = 'scheduler@dgeniussolutions.com' ORDER BY created_at DESC LIMIT 1`).catch(() => ({ rows: [] })),
+        cmsQuery<{ created_at: string; status: string; summary: string }>(
+          `SELECT created_at, status, summary FROM cms_audit_log
+           WHERE action LIKE 'BLOG_SCHEDULE%' OR actor_email = 'scheduler@dgeniussolutions.com'
+           ORDER BY created_at DESC LIMIT 5`
+        ).catch(() => ({ rows: [] })),
       ]);
 
-      const scheduledBlogCount = Number(schedRows?.[0]?.total || 0);
-      const overdueBlogCount = Number(overdueRows?.[0]?.overdue || 0);
-      const lastSchedulerRun = heartbeatRows?.[0]?.last_run || null;
+      const scheduledPosts = Number(schedRows?.[0]?.total || 0);
+      const overduePosts = Number(overdueRows?.[0]?.overdue || 0);
+      const overdueBlogCount = overduePosts;
 
-      if (overdueBlogCount > 0) {
+      const latestHeartbeat = heartbeatRows?.[0] || null;
+      const latestSuccessful = heartbeatRows?.find((r) => r.status === "success") || null;
+
+      const lastSchedulerRun = latestHeartbeat?.created_at || null;
+      const lastSuccessfulSchedulerRun = latestSuccessful?.created_at || null;
+
+      const schedulerAgeHours = lastSchedulerRun
+        ? (Date.now() - new Date(lastSchedulerRun).getTime()) / (1000 * 60 * 60)
+        : null;
+
+      if (!lastSchedulerRun) {
+        subsystems.blog_scheduler = {
+          id: "blog_scheduler",
+          name: "Editorial Scheduler",
+          status: "UNKNOWN",
+          details: "No scheduler execution evidence recorded in telemetry",
+          lastCheckedAt: now,
+          metrics: { scheduledPosts, overduePosts, overdueBlogCount, lastSchedulerRun: null, schedulerAgeHours: null },
+        };
+      } else if (overduePosts > 0 || overdueBlogCount > 0) {
         subsystems.blog_scheduler = {
           id: "blog_scheduler",
           name: "Editorial Scheduler",
           status: "DEGRADED",
-          details: `${overdueBlogCount} overdue scheduled post(s) pending publish (${scheduledBlogCount} scheduled total)`,
+          details: `${overduePosts} overdue scheduled post(s) pending publish (${scheduledPosts} scheduled total)`,
           lastCheckedAt: now,
-          metrics: { scheduledBlogCount, overdueBlogCount, lastSchedulerRun },
+          metrics: { scheduledPosts, overduePosts, overdueBlogCount, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
+        };
+      } else if (latestHeartbeat && latestHeartbeat.status === "failure") {
+        subsystems.blog_scheduler = {
+          id: "blog_scheduler",
+          name: "Editorial Scheduler",
+          status: "DEGRADED",
+          details: `Latest scheduler run failed: ${latestHeartbeat.summary}`,
+          lastCheckedAt: now,
+          metrics: { scheduledPosts, overduePosts, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
+        };
+      } else if (schedulerAgeHours != null && schedulerAgeHours > 2) {
+        subsystems.blog_scheduler = {
+          id: "blog_scheduler",
+          name: "Editorial Scheduler",
+          status: "STALE",
+          details: `Scheduler heartbeat is stale (${schedulerAgeHours.toFixed(1)}h ago; expected <= 2h)`,
+          lastCheckedAt: now,
+          metrics: { scheduledPosts, overduePosts, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
         };
       } else {
         subsystems.blog_scheduler = {
           id: "blog_scheduler",
           name: "Editorial Scheduler",
           status: "HEALTHY",
-          details: `Active scheduler worker (${scheduledBlogCount} posts scheduled${lastSchedulerRun ? `, Last run: ${lastSchedulerRun}` : ""})`,
+          details: `Active scheduler worker (${scheduledPosts} scheduled posts, Last heartbeat: ${schedulerAgeHours ? schedulerAgeHours.toFixed(1) + "h ago" : "recent"})`,
           lastCheckedAt: now,
-          metrics: { scheduledBlogCount, overdueBlogCount: 0, lastSchedulerRun },
+          metrics: { scheduledPosts, overduePosts: 0, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
         };
       }
     } catch (err: any) {
@@ -469,7 +585,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     }
   }
 
-  // 8. SITE AUDIT WORKER
+  // 8. SITE AUDIT WORKER (Strict: latestCompleted is authoritative, latestRun is status banner)
   if (!dbAvailable) {
     subsystems.site_audit_worker = {
       id: "site_audit_worker",
@@ -538,7 +654,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
           id: "site_audit_worker",
           name: "Technical Site Auditor",
           status: latestRun?.status === "running" ? "DEGRADED" : "FAILED",
-          details: `Latest audit run status: ${latestRun?.status || "unknown"}`,
+          details: `Latest audit run status: ${latestRun?.status || "unknown"} (no completed audit on record)`,
           lastCheckedAt: now,
           metrics: { lastAuditId: latestRun?.id, status: latestRun?.status },
         };
@@ -620,45 +736,80 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     }
   }
 
-  // 10. NATIVE FORMS & LEADS (Authoritative `leads` table)
+  // 10. NATIVE FORMS & LEADS (Dynamic registry inspection & authoritative storage verification)
   if (!dbAvailable) {
     subsystems.native_forms = {
       id: "native_forms",
       name: "Native Forms & Lead Capture",
-      status: "UNKNOWN",
-      details: "Cannot query leads: database unavailable",
+      status: "FAILED",
+      details: "Submission storage unavailable: database connection offline",
       lastCheckedAt: now,
     };
   } else {
     try {
-      const { rows: leadRows } = await cmsQuery<{ cnt: number; new_cnt: number }>(
-        `SELECT COUNT(*) as cnt, SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as new_cnt FROM leads`
-      );
+      // Dynamic loading from authoritative registry
+      const approvedForms = listApprovedForms();
+      const approvedFormIds = approvedForms.map((f) => Number(f.fluentFormId));
+
+      const [{ rows: leadRows }, { rows: subRows }] = await Promise.all([
+        cmsQuery<{ cnt: number; new_cnt: number; last_lead: string | null }>(
+          `SELECT COUNT(*) as cnt, SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as new_cnt, MAX(created_at) as last_lead FROM leads`
+        ),
+        cmsQuery<{ cnt: number; last_sub: string | null }>(
+          `SELECT COUNT(*) as cnt, MAX(created_at) as last_sub FROM form_submissions`
+        ),
+      ]);
+
       const totalLeads = Number(leadRows?.[0]?.cnt || 0);
       const newLeads = Number(leadRows?.[0]?.new_cnt || 0);
-      const approvedForms = [1, 3, 4, 6, 9, 10, 11, 19, 20, 21, 26];
+      const lastLead = leadRows?.[0]?.last_lead || null;
+      const totalSubmissions = Number(subRows?.[0]?.cnt || 0);
+      const lastSubmission = subRows?.[0]?.last_sub || null;
 
-      subsystems.native_forms = {
-        id: "native_forms",
-        name: "Native Forms & Lead Capture",
-        status: "HEALTHY",
-        details: `${approvedForms.length} approved native forms active (Form 18 is LEGACY / UNMIGRATED) · ${totalLeads} leads captured (${newLeads} new)`,
-        lastCheckedAt: now,
-        metrics: {
-          approvedFormCount: approvedForms.length,
-          approvedFormIds: approvedForms,
-          legacyForms: ["Form 18 (/seo-pricing/) is LEGACY / UNMIGRATED"],
-          totalLeads,
-          newLeads,
-        },
-      };
+      if (approvedForms.length === 0) {
+        subsystems.native_forms = {
+          id: "native_forms",
+          name: "Native Forms & Lead Capture",
+          status: "FAILED",
+          details: "Form registry contains 0 approved forms; forms core unconfigured",
+          lastCheckedAt: now,
+          metrics: { approvedFormCount: 0 },
+        };
+      } else if (totalLeads > 0 || totalSubmissions > 0) {
+        subsystems.native_forms = {
+          id: "native_forms",
+          name: "Native Forms & Lead Capture",
+          status: "HEALTHY",
+          details: `${approvedForms.length} approved native forms active (Form 18 on /seo-pricing/ is LEGACY / UNMIGRATED) · ${totalLeads} leads, ${totalSubmissions} raw submissions captured`,
+          lastCheckedAt: now,
+          metrics: {
+            approvedFormCount: approvedForms.length,
+            approvedFormIds,
+            legacyForms: ["Form 18 (/seo-pricing/) is LEGACY / UNMIGRATED"],
+            totalLeads,
+            newLeads,
+            lastLead,
+            totalSubmissions,
+            lastSubmission,
+          },
+        };
+      } else {
+        subsystems.native_forms = {
+          id: "native_forms",
+          name: "Native Forms & Lead Capture",
+          status: "CONFIGURED",
+          details: `${approvedForms.length} approved forms provisioned (Storage tables ready; no submission records yet)`,
+          lastCheckedAt: now,
+          metrics: { approvedFormCount: approvedForms.length, approvedFormIds, totalLeads: 0, totalSubmissions: 0 },
+        };
+      }
     } catch (err: any) {
       console.error("[system-health] Native forms lead count query failed:", err?.message || err);
       subsystems.native_forms = {
         id: "native_forms",
         name: "Native Forms & Lead Capture",
-        status: "UNKNOWN",
-        details: `Query failed: ${err?.message || "DB error"}`,
+        status: "FAILED",
+        details: `Forms storage verification failed: ${err?.message || "DB query error"}`,
         lastCheckedAt: now,
         error: err?.message,
       };
@@ -740,7 +891,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     }
   }
 
-  // Aggregate health status
+  // Aggregate health status (Strict Truthful Aggregation)
   const statuses = Object.values(subsystems).map((s) => s.status);
   const healthyCount = statuses.filter((s) => s === "HEALTHY").length;
   const configuredCount = statuses.filter((s) => s === "CONFIGURED").length;
@@ -751,10 +902,15 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
   const unknownCount = statuses.filter((s) => s === "UNKNOWN").length;
 
   let overallStatus: "HEALTHY" | "DEGRADED" | "CRITICAL" = "HEALTHY";
-  if (subsystems.database.status === "FAILED" || subsystems.database.status === "NOT_CONFIGURED") {
+
+  // Critical failures: database down or native forms storage failed
+  if (subsystems.database.status === "FAILED" || subsystems.database.status === "NOT_CONFIGURED" || subsystems.native_forms.status === "FAILED") {
     overallStatus = "CRITICAL";
-  } else if (failedCount > 0 || degradedCount > 0) {
+  } else if (failedCount > 0 || degradedCount > 0 || staleCount > 0 || unknownCount > 0) {
+    // If ANY subsystem is FAILED, DEGRADED, STALE, or UNKNOWN, overall health CANNOT be HEALTHY!
     overallStatus = "DEGRADED";
+  } else {
+    overallStatus = "HEALTHY";
   }
 
   return {

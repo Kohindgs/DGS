@@ -44,10 +44,11 @@ export default async function AdminSiteAuditsPage() {
       );
       auditHistory = history || [];
 
-      // Use latestCompleted for data inspection, falling back to latestRun if none completed yet
-      latestAudit = latestCompleted || latestRun || null;
+      // Authoritative audit data MUST come from latestCompleted ONLY.
+      // latestRun is strictly for status banner display.
+      latestAudit = latestCompleted || null;
 
-      if (latestAudit) {
+      if (latestCompleted) {
         const { rows: pageRows } = await cmsQuery(
           `SELECT 
              p.url, 

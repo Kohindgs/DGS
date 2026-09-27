@@ -673,6 +673,27 @@ export default function SiteAuditsClientView({
         </div>
       )}
 
+      {!latestAudit && (
+        <div
+          style={{
+            marginBottom: "20px",
+            padding: "18px 24px",
+            background: "rgba(255, 255, 255, 0.03)",
+            border: "1px dashed rgba(255, 255, 255, 0.2)",
+            borderRadius: "8px",
+            textAlign: "center",
+            color: "var(--dgs-text-muted)",
+          }}
+        >
+          <div style={{ fontWeight: 600, color: "#fff", marginBottom: "4px", fontSize: "0.95rem" }}>
+            No completed site audit is available yet.
+          </div>
+          <div style={{ fontSize: "0.85rem" }}>
+            {latestRun ? `Latest run #${latestRun.id} status is ${latestRun.status.toUpperCase()}.` : "No site audit has completed yet."} Click &quot;Run Complete Audit&quot; to execute your first crawl.
+          </div>
+        </div>
+      )}
+
       {/* KPI Cards — Zero Fabricated Scores */}
       <div className="dgs-saas-kpi-grid">
         <div className="dgs-saas-kpi-card">

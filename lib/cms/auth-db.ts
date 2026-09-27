@@ -341,71 +341,27 @@ export async function getCurrentCmsUser(): Promise<CmsUser | null> {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get(SESSION_COOKIE)?.value;
-    if (!token) {
-      const { hasLegacyAdminSession } = await import("./auth");
-      if (await hasLegacyAdminSession()) {
-        return {
-          id: "env-superadmin",
-          email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
-          display_name: "DGS Superadmin",
-          role: "superadmin",
-          avatar_url: null,
-          is_active: 1,
-          failed_attempts: 0,
-          locked_until: null,
-          last_login_at: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        };
+
+    // When CMS database is configured, DB session is strictly authoritative
+    if (isCmsDatabaseConfigured()) {
+      if (!token) return null;
+
+      const tokenHash = hashToken(token);
+      const { rows: sessionRows } = await cmsQuery<CmsSession>(
+        `SELECT id, user_id, session_token_hash, expires_at FROM cms_sessions WHERE session_token_hash = ? AND expires_at > NOW() LIMIT 1`,
+        [tokenHash]
+      );
+
+      if (!sessionRows || sessionRows.length === 0) {
+        return null;
       }
-      return null;
-    }
 
-    if (!isCmsDatabaseConfigured()) {
-      // Fallback for single-admin mode if DB is momentarily unreachable
-      const { hasLegacyAdminSession } = await import("./auth");
-      if (await hasLegacyAdminSession()) {
-        return {
-          id: "env-superadmin",
-          email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
-          display_name: "DGS Superadmin",
-          role: "superadmin",
-          avatar_url: null,
-          is_active: 1,
-          failed_attempts: 0,
-          locked_until: null,
-          last_login_at: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        };
-      }
-      return null;
-    }
-
-    const tokenHash = hashToken(token);
-    const { rows: sessionRows } = await cmsQuery<CmsSession>(
-      `SELECT id, user_id, session_token_hash, expires_at FROM cms_sessions WHERE session_token_hash = ? AND expires_at > NOW() LIMIT 1`,
-      [tokenHash]
-    );
-
-    if (sessionRows && sessionRows.length > 0) {
       const session = sessionRows[0];
       if (session.user_id === "env-superadmin") {
-        return {
-          id: "env-superadmin",
-          email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
-          display_name: "DGS Superadmin",
-          role: "superadmin",
-          avatar_url: null,
-          is_active: 1,
-          failed_attempts: 0,
-          locked_until: null,
-          last_login_at: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        };
+        return null; // Disallow env-superadmin in production DB session
       }
 
+      // Check current active state in DB on EVERY request
       const { rows: userRows } = await cmsQuery<CmsUser>(
         `SELECT id, email, display_name, role, avatar_url, is_active, failed_attempts, locked_until, last_login_at, created_at, updated_at
          FROM cms_users
@@ -417,22 +373,29 @@ export async function getCurrentCmsUser(): Promise<CmsUser | null> {
       if (userRows && userRows.length > 0) {
         return userRows[0];
       }
+
+      // User deactivated or deleted: session immediately revoked
+      return null;
     }
-    const { hasLegacyAdminSession } = await import("./auth");
-    if (await hasLegacyAdminSession()) {
-      return {
-        id: "env-superadmin",
-        email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
-        display_name: "DGS Superadmin",
-        role: "superadmin",
-        avatar_url: null,
-        is_active: 1,
-        failed_attempts: 0,
-        locked_until: null,
-        last_login_at: null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      };
+
+    // Fallback ONLY when database is not configured in environment
+    if (!isCmsDatabaseConfigured()) {
+      const { hasLegacyAdminSession } = await import("./auth");
+      if (await hasLegacyAdminSession()) {
+        return {
+          id: "env-superadmin",
+          email: process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com",
+          display_name: "DGS Superadmin",
+          role: "superadmin",
+          avatar_url: null,
+          is_active: 1,
+          failed_attempts: 0,
+          locked_until: null,
+          last_login_at: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+      }
     }
   } catch (err) {
     console.error("Error retrieving current CMS user:", err);

@@ -757,6 +757,7 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
   );
 
   const publishedIds: string[] = [];
+  const errors: string[] = [];
   const { logAuditEvent } = await import("@/lib/cms/auth-db");
 
   for (const row of dueRows.rows) {
@@ -778,6 +779,7 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
           after_state: { qaErrors: qa.errors, status: "review", needs_review: true },
           status: "failure",
         });
+        errors.push(`QA failed for "${row.title}": ${qa.errors.join("; ")}`);
         continue;
       }
 
@@ -795,10 +797,28 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
         after_state: { status: "published" },
         status: "success",
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error(`Failed to auto-publish scheduled blog ${row.id}:`, err);
+      errors.push(`Error publishing "${row.title}": ${err?.message || "Unknown error"}`);
     }
   }
+
+  // Record persistent lightweight scheduler heartbeat in cms_audit_log
+  await logAuditEvent({
+    actor_email: "scheduler@dgeniussolutions.com",
+    role: "system",
+    action: "BLOG_SCHEDULE_HEARTBEAT",
+    resource: "blog_scheduler",
+    summary: `Scheduler run complete: checked ${dueRows.rows.length} due posts, published ${publishedIds.length}, errors ${errors.length}`,
+    after_state: {
+      timestamp: new Date().toISOString(),
+      checkedCount: dueRows.rows.length,
+      publishedCount: publishedIds.length,
+      errorsCount: errors.length,
+      errors: errors.slice(0, 3),
+    },
+    status: errors.length === 0 ? "success" : "failure",
+  }).catch((err) => console.warn("[scheduler] Heartbeat logging notice:", err?.message));
 
   return publishedIds;
 }

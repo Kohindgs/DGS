@@ -49,16 +49,25 @@ export async function hasLegacyAdminSession() {
   return verifyAdminSessionToken(token);
 }
 
-export async function hasAdminSession() {
+export async function hasAdminSession(): Promise<boolean> {
   try {
     const { getCurrentCmsUser } = await import("./auth-db");
     const dbUser = await getCurrentCmsUser();
     if (dbUser && (dbUser.is_active === 1 || dbUser.is_active === true)) {
       return true;
     }
-  } catch {}
+  } catch (err) {
+    console.error("[auth] Error checking DB session:", err);
+  }
 
-  return hasLegacyAdminSession();
+  // Fallback to legacy cookie is strictly disallowed when CMS database is configured.
+  // When DB is configured, DB-backed session is strictly authoritative.
+  const { isCmsDatabaseConfigured } = await import("./db");
+  if (!isCmsDatabaseConfigured()) {
+    return hasLegacyAdminSession();
+  }
+
+  return false;
 }
 
 export const adminSessionCookie = {

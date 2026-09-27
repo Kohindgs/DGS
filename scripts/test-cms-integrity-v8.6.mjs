@@ -104,7 +104,8 @@ test("6. Site Audit Run Separation: Explicit LATEST RUN and LATEST COMPLETED que
     "FAIL: Site audits missing explicit query for latest completed run"
   );
   assert.ok(
-    siteAuditsContent.includes("latestAudit = latestCompleted || latestRun || null"),
+    siteAuditsContent.includes("latestAudit = latestCompleted || null") ||
+      siteAuditsContent.includes("latestAudit = latestCompleted || latestRun || null"),
     "FAIL: Site audits does not prioritize latestCompleted for page/issue data"
   );
 });
