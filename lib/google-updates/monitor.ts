@@ -49,6 +49,9 @@ export type GoogleSearchUpdate = {
   incident_begin?: string | null;
   incident_end?: string | null;
   raw_details?: string | null;
+  audit_telemetry?: any;
+  affected_pages_impact?: any[];
+  sitewide_spam_impact?: any;
 };
 
 export type MonitorRunRecord = {

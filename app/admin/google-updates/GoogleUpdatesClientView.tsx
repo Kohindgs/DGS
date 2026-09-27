@@ -136,6 +136,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
             rollout_impact: ass.rolloutImpact,
             audit_telemetry: ass.auditTelemetry,
             affected_pages_impact: ass.affectedPagesImpact,
+            sitewide_spam_impact: ass.sitewideSpamImpact,
           };
         }
         return u;
@@ -984,6 +985,184 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Site-Wide Spam Impact Section (Part 11) */}
+            {selectedUpdate.sitewide_spam_impact && (
+              <div
+                style={{
+                  padding: "16px",
+                  background: "rgba(255,255,255,0.02)",
+                  borderRadius: "var(--dgs-radius-md)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                  <span className="dgs-saas-chip warning" style={{ fontSize: "0.7rem", padding: "2px 6px" }}>ROLLOUT RECOVERY</span>
+                  <h4 style={{ fontSize: "0.95rem", color: "#fff", margin: 0, fontWeight: 700 }}>
+                    Site-Wide Spam Impact Assessment
+                  </h4>
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "#fbbf24",
+                    marginBottom: "12px",
+                    background: "rgba(245, 158, 11, 0.08)",
+                    padding: "8px 12px",
+                    borderRadius: "var(--dgs-radius-sm)",
+                    border: "1px solid rgba(245, 158, 11, 0.2)",
+                  }}
+                >
+                  ⚠️ {selectedUpdate.sitewide_spam_impact.causationDisclaimer}
+                </div>
+
+                {/* Telemetry Metric Tiles */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+                    gap: "8px",
+                    marginBottom: "14px",
+                  }}
+                >
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                    <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Fresh Audit</div>
+                    <div style={{ fontSize: "0.82rem", color: "#fff", fontWeight: 600 }}>{selectedUpdate.sitewide_spam_impact.freshAuditDate ? new Date(selectedUpdate.sitewide_spam_impact.freshAuditDate).toLocaleDateString() : "Live"}</div>
+                  </div>
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                    <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>URLs Assessed</div>
+                    <div style={{ fontSize: "0.82rem", color: "#fff", fontWeight: 600 }}>{selectedUpdate.sitewide_spam_impact.urlsAssessed}</div>
+                  </div>
+                  <div style={{ background: "rgba(239, 68, 68, 0.1)", padding: "8px 10px", borderRadius: "4px", border: "1px solid rgba(239, 68, 68, 0.2)" }}>
+                    <div style={{ fontSize: "0.68rem", color: "#f87171" }}>High Risk</div>
+                    <div style={{ fontSize: "0.82rem", color: "#f87171", fontWeight: 700 }}>{selectedUpdate.sitewide_spam_impact.highRiskPages}</div>
+                  </div>
+                  <div style={{ background: "rgba(245, 158, 11, 0.1)", padding: "8px 10px", borderRadius: "4px", border: "1px solid rgba(245, 158, 11, 0.2)" }}>
+                    <div style={{ fontSize: "0.68rem", color: "#fbbf24" }}>Medium Risk</div>
+                    <div style={{ fontSize: "0.82rem", color: "#fbbf24", fontWeight: 700 }}>{selectedUpdate.sitewide_spam_impact.mediumRiskPages}</div>
+                  </div>
+                  <div style={{ background: "rgba(16, 185, 129, 0.1)", padding: "8px 10px", borderRadius: "4px", border: "1px solid rgba(16, 185, 129, 0.2)" }}>
+                    <div style={{ fontSize: "0.68rem", color: "#34d399" }}>Low Risk</div>
+                    <div style={{ fontSize: "0.82rem", color: "#34d399", fontWeight: 700 }}>{selectedUpdate.sitewide_spam_impact.lowRiskPages}</div>
+                  </div>
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                    <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Critical Drops</div>
+                    <div style={{ fontSize: "0.82rem", color: selectedUpdate.sitewide_spam_impact.criticalRankingLosses > 0 ? "#f87171" : "#10b981", fontWeight: 700 }}>
+                      {selectedUpdate.sitewide_spam_impact.criticalRankingLosses}
+                    </div>
+                  </div>
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                    <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Cannibalization</div>
+                    <div style={{ fontSize: "0.82rem", color: "#a5b4fc", fontWeight: 600 }}>{selectedUpdate.sitewide_spam_impact.trueCannibalizationCases} cases</div>
+                  </div>
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                    <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Public Labels</div>
+                    <div style={{ fontSize: "0.82rem", color: selectedUpdate.sitewide_spam_impact.publicMachineLabels > 0 ? "#f87171" : "#34d399", fontWeight: 600 }}>
+                      {selectedUpdate.sitewide_spam_impact.publicMachineLabels}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Top Lost & Gained Queries */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "16px" }}>
+                  {/* Top Lost Queries */}
+                  <div style={{ background: "rgba(239, 68, 68, 0.04)", padding: "10px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(239, 68, 68, 0.15)" }}>
+                    <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#f87171", marginBottom: "6px" }}>Top Lost Queries (Period-over-Period)</div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      {(selectedUpdate.sitewide_spam_impact.topLostQueries || []).slice(0, 5).map((q: any, qIdx: number) => (
+                        <div key={qIdx} style={{ fontSize: "0.74rem", borderBottom: "1px solid rgba(255,255,255,0.04)", paddingBottom: "4px" }}>
+                          <div style={{ color: "#fff", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={q.query}>
+                            {q.query}
+                          </div>
+                          <div style={{ color: "var(--dgs-text-muted)", fontSize: "0.68rem", display: "flex", justifyContent: "space-between" }}>
+                            <span>{q.primaryPage}</span>
+                            <span style={{ color: "#f87171" }}>
+                              {q.impressionDelta < 0 ? `${q.impressionDelta} imp` : ""}{q.positionDelta != null && q.positionDelta > 0 ? ` (+${q.positionDelta} pos)` : ""}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Top Gained Queries */}
+                  <div style={{ background: "rgba(16, 185, 129, 0.04)", padding: "10px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(16, 185, 129, 0.15)" }}>
+                    <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#34d399", marginBottom: "6px" }}>Top Gained Queries (Period-over-Period)</div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      {(selectedUpdate.sitewide_spam_impact.topGainedQueries || []).slice(0, 5).map((q: any, qIdx: number) => (
+                        <div key={qIdx} style={{ fontSize: "0.74rem", borderBottom: "1px solid rgba(255,255,255,0.04)", paddingBottom: "4px" }}>
+                          <div style={{ color: "#fff", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={q.query}>
+                            {q.query}
+                          </div>
+                          <div style={{ color: "var(--dgs-text-muted)", fontSize: "0.68rem", display: "flex", justifyContent: "space-between" }}>
+                            <span>{q.primaryPage}</span>
+                            <span style={{ color: "#34d399" }}>
+                              +{q.impressionDelta} imp{q.clickDelta > 0 ? ` (+${q.clickDelta} clk)` : ""}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 11.1 Page Impact Table */}
+                {selectedUpdate.sitewide_spam_impact.pageImpactTable && selectedUpdate.sitewide_spam_impact.pageImpactTable.length > 0 && (
+                  <div>
+                    <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
+                      Key Pages Period-Over-Period Telemetry
+                    </div>
+                    <div style={{ overflowX: "auto" }}>
+                      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.72rem" }}>
+                        <thead>
+                          <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", textAlign: "left", color: "var(--dgs-text-muted)" }}>
+                            <th style={{ padding: "6px 8px" }}>Page</th>
+                            <th style={{ padding: "6px 8px" }}>Clicks</th>
+                            <th style={{ padding: "6px 8px" }}>Impressions</th>
+                            <th style={{ padding: "6px 8px" }}>Avg Pos</th>
+                            <th style={{ padding: "6px 8px" }}>Trend</th>
+                            <th style={{ padding: "6px 8px" }}>Spam Risk</th>
+                            <th style={{ padding: "6px 8px" }}>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {selectedUpdate.sitewide_spam_impact.pageImpactTable.map((row: any, rIdx: number) => (
+                            <tr key={rIdx} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                              <td style={{ padding: "6px 8px", color: "#fff", fontWeight: 500, maxWidth: "160px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={row.page}>
+                                {row.page}
+                              </td>
+                              <td style={{ padding: "6px 8px" }}>
+                                {row.currentClicks} <span style={{ color: "rgba(255,255,255,0.3)" }}>({row.previousClicks})</span>
+                              </td>
+                              <td style={{ padding: "6px 8px" }}>
+                                {row.currentImpressions} <span style={{ color: "rgba(255,255,255,0.3)" }}>({row.previousImpressions})</span>
+                              </td>
+                              <td style={{ padding: "6px 8px" }}>
+                                {row.currentPosition != null ? row.currentPosition : "-"} <span style={{ color: "rgba(255,255,255,0.3)" }}>({row.previousPosition != null ? row.previousPosition : "-"})</span>
+                              </td>
+                              <td style={{ padding: "6px 8px" }}>
+                                <span className={`dgs-saas-chip ${row.trend === "GROWING" ? "success" : row.trend === "CRITICAL_DECLINE" ? "danger" : row.trend === "DECLINING" ? "warning" : "neutral"}`} style={{ fontSize: "0.65rem", padding: "1px 5px" }}>
+                                  {row.trend}
+                                </span>
+                              </td>
+                              <td style={{ padding: "6px 8px" }}>
+                                <span className={`dgs-saas-chip ${row.spamRisk === "HIGH" ? "danger" : row.spamRisk === "MEDIUM" ? "warning" : row.spamRisk === "LOW" ? "success" : "muted"}`} style={{ fontSize: "0.65rem", padding: "1px 5px" }}>
+                                  {row.spamRisk}
+                                </span>
+                              </td>
+                              <td style={{ padding: "6px 8px", color: "var(--dgs-text-muted)" }}>
+                                {row.action}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 

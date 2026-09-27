@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "../cms/db.ts";
 import { type GoogleSearchUpdate } from "./monitor.ts";
 import { formatAuditDate, formatDateOnly, getDaysAgo } from "../utils/date.ts";
@@ -55,6 +57,50 @@ export type AuditTelemetry = {
   isStale: boolean;
 };
 
+export type QueryImpactRow = {
+  query: string;
+  primaryPage: string;
+  currentClicks: number;
+  previousClicks: number;
+  currentImpressions: number;
+  previousImpressions: number;
+  currentPosition: number | null;
+  previousPosition: number | null;
+  clickDelta: number;
+  impressionDelta: number;
+  positionDelta: number | null;
+};
+
+export type PageImpactRow = {
+  page: string;
+  currentClicks: number;
+  previousClicks: number;
+  currentImpressions: number;
+  previousImpressions: number;
+  currentPosition: number | null;
+  previousPosition: number | null;
+  trend: string;
+  spamRisk: string;
+  action: string;
+};
+
+export type SitewideSpamImpact = {
+  freshAuditDate: string;
+  urlsAssessed: number;
+  highRiskPages: number;
+  mediumRiskPages: number;
+  lowRiskPages: number;
+  insufficientEvidencePages: number;
+  criticalRankingLosses: number;
+  topLostQueries: QueryImpactRow[];
+  topGainedQueries: QueryImpactRow[];
+  trueCannibalizationCases: number;
+  publicMachineLabels: number;
+  duplicateScaledCandidates: number;
+  causationDisclaimer: string;
+  pageImpactTable: PageImpactRow[];
+};
+
 export type FullAssessmentResult = {
   updateId: string;
   assessmentStatus: GoogleComplianceStatus;
@@ -70,6 +116,7 @@ export type FullAssessmentResult = {
   rolloutImpact?: RolloutImpactCorrelation;
   auditTelemetry?: AuditTelemetry;
   affectedPagesImpact?: PageRolloutImpact[];
+  sitewideSpamImpact?: SitewideSpamImpact;
 };
 
 /**
@@ -533,6 +580,46 @@ export async function runGoogleUpdateAssessment(
     }
   }
 
+  let sitewideSpamImpact: SitewideSpamImpact | undefined = undefined;
+  const baselinePath = path.join(process.cwd(), "data/audit/sitewide-ranking-recovery-baseline.json");
+  if (fs.existsSync(baselinePath)) {
+    try {
+      const bData = JSON.parse(fs.readFileSync(baselinePath, "utf8"));
+      sitewideSpamImpact = {
+        freshAuditDate: bData.auditTimestamp || formatAuditDate(latestAuditRow?.completed_at, "recent"),
+        urlsAssessed: bData.summary?.totalIndexablePages || auditedPagesCount,
+        highRiskPages: bData.summary?.spamRiskDistribution?.HIGH || 0,
+        mediumRiskPages: bData.summary?.spamRiskDistribution?.MEDIUM || 0,
+        lowRiskPages: bData.summary?.spamRiskDistribution?.LOW || 0,
+        insufficientEvidencePages: bData.summary?.spamRiskDistribution?.INSUFFICIENT_EVIDENCE || 0,
+        criticalRankingLosses: bData.summary?.classifications?.CRITICAL_DECLINE || 0,
+        topLostQueries: (bData.topLostQueries || []).slice(0, 10),
+        topGainedQueries: (bData.topGainedQueries || []).slice(0, 10),
+        trueCannibalizationCases: (bData.cannibalizationCandidates || []).filter((c: any) => c.classification === "TRUE_CANNIBALIZATION").length,
+        publicMachineLabels: bData.summary?.publiclyRenderedMachineLabels || 0,
+        duplicateScaledCandidates: (bData.locationSimilarityReport || []).filter((l: any) => l.risk === "HIGH_DOORWAY_RISK").length,
+        causationDisclaimer: "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
+        pageImpactTable: (bData.inventory || [])
+          .filter((i: any) => (i.metrics?.currentImpressions || 0) > 0 || (i.metrics?.previousImpressions || 0) > 0)
+          .slice(0, 15)
+          .map((i: any) => ({
+            page: i.path,
+            currentClicks: i.metrics?.currentClicks || 0,
+            previousClicks: i.metrics?.previousClicks || 0,
+            currentImpressions: i.metrics?.currentImpressions || 0,
+            previousImpressions: i.metrics?.previousImpressions || 0,
+            currentPosition: i.metrics?.currentWeightedPosition,
+            previousPosition: i.metrics?.previousWeightedPosition,
+            trend: i.classification,
+            spamRisk: i.spamRisk,
+            action: i.safeAction,
+          })),
+      };
+    } catch (err) {
+      console.warn("Could not load sitewide spam impact baseline:", err);
+    }
+  }
+
   const result: FullAssessmentResult = {
     updateId: update.id,
     assessmentStatus: finalStatus,
@@ -553,6 +640,7 @@ export async function runGoogleUpdateAssessment(
       isStale: auditAgeDays != null ? auditAgeDays > 15 : true,
     },
     affectedPagesImpact,
+    sitewideSpamImpact,
   };
 
   await persistAssessment(result);
