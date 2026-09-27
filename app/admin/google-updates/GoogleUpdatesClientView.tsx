@@ -938,7 +938,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                 {selectedUpdate.evidence || "No evidence recorded yet. Click 'Run Compliance Verification' to evaluate against live site architecture."}
               </div>
 
-              {/* AI Search Visibility Status */}
+              {/* AI Search Telemetry */}
               <div
                 style={{
                   marginTop: "10px",
@@ -950,9 +950,26 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                   color: "var(--dgs-text-muted)",
                 }}
               >
-                <div style={{ fontWeight: 600, color: "#fff", marginBottom: "4px" }}>AI Search Visibility Telemetry</div>
-                <div>AI Data Source: <span style={{ color: "#94a3b8" }}>UNAVAILABLE VIA CURRENT SEARCH CONSOLE API</span></div>
-                <div style={{ marginTop: "2px", fontSize: "0.76rem" }}>Observational telemetry: Local Mumbai ranking defended; AI Overview appearance monitoring active.</div>
+                <div style={{ fontWeight: 600, color: "#fff", marginBottom: "6px", letterSpacing: "0.03em" }}>
+                  AI SEARCH TELEMETRY
+                </div>
+                <div style={{ display: "grid", gap: "4px", fontSize: "0.78rem" }}>
+                  <div>
+                    <span style={{ color: "var(--dgs-text-secondary)", fontWeight: 500 }}>Google Search Console: </span>
+                    <span style={{ color: "#38bdf8" }}>Available in dedicated Generative AI report</span>
+                  </div>
+                  <div>
+                    <span style={{ color: "var(--dgs-text-secondary)", fontWeight: 500 }}>DGS CMS ingestion: </span>
+                    <span style={{ color: "#f59e0b" }}>Not connected / Not yet ingested</span>
+                  </div>
+                  <div>
+                    <span style={{ color: "var(--dgs-text-secondary)", fontWeight: 500 }}>Current CMS metrics: </span>
+                    <span style={{ color: "#94a3b8" }}>Standard Search GSC only</span>
+                  </div>
+                </div>
+                <div style={{ marginTop: "6px", fontSize: "0.74rem", color: "var(--dgs-text-muted)" }}>
+                  Observational telemetry: Local Mumbai ranking defended; AI Overviews monitoring active via standard search telemetry until dedicated API connector is active.
+                </div>
               </div>
             </div>
 
