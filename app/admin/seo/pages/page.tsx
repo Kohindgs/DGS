@@ -131,8 +131,8 @@ export default async function AdminSiteWidePages() {
       >();
 
       const { rows: gpmRows } = await cmsQuery<any>(
-        `SELECT page_url, clicks, impressions, ctr, position, prev_position FROM gsc_page_metrics`
-      );
+        `SELECT page_url, clicks, impressions, ctr, position, prev_position FROM gsc_page_metrics WHERE period_type = '28d'`
+      ).catch(() => ({ rows: [] }));
       for (const gpm of gpmRows || []) {
         const pos = gpm.position != null && Number(gpm.position) > 0 ? Number(gpm.position) : null;
         const prevPos = gpm.prev_position != null && Number(gpm.prev_position) > 0 ? Number(gpm.prev_position) : null;

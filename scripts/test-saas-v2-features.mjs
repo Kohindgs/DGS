@@ -44,7 +44,7 @@ test("2. OWASP-Compliant scrypt Password Hashing & Verification", () => {
     return crypto.timingSafeEqual(derivedBuf, targetBuf);
   }
 
-  const password = "DGS#Admin!27Kx9Qp4Mv8Ls";
+  const password = "Sample#TestPassword2026";
   const hash = hashPassword(password);
   assert.ok(hash.startsWith("scrypt$32768$8$1$"));
   assert.equal(verifyPassword(password, hash), true);

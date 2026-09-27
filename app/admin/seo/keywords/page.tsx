@@ -110,7 +110,7 @@ export default async function AdminKeywordsPage() {
            FROM gsc_page_query_metrics pq
            LEFT JOIN pagespeed_cache psi_m ON (psi_m.url = pq.page_url AND psi_m.strategy = 'mobile')
            LEFT JOIN pagespeed_cache psi_d ON (psi_d.url = pq.page_url AND psi_d.strategy = 'desktop')
-           WHERE pq.query_text IS NOT NULL AND pq.query_text != ''
+           WHERE pq.period_type = '28d' AND pq.query_text IS NOT NULL AND pq.query_text != ''
            ORDER BY pq.clicks DESC, pq.impressions DESC
            LIMIT 1000`
         ).catch(() => ({ rows: [] }));

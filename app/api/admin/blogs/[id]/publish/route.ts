@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
-import { logAuditEvent } from "@/lib/cms/auth-db";
+import { logAuditEvent, getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { publishCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
 
@@ -14,7 +14,10 @@ export async function POST(
 ) {
   if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
   if (!(await hasAdminSession())) return NextResponse.json({ ok: false }, { status: 401 });
-  if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false }, { status: 503 });
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "blogs", "publish")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
+  }
 
   const { id } = await params;
   if (!id) return NextResponse.json({ ok: false, message: "Blog ID required" }, { status: 400 });
@@ -36,8 +39,9 @@ export async function POST(
     if (!blog) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
 
     await logAuditEvent({
-      actor_email: "admin@dgeniussolutions.com",
-      role: "admin",
+      user_id: currentUser.id,
+      actor_email: currentUser.email,
+      role: currentUser.role,
       action: "BLOG_PUBLISHED",
       resource: "blog_post",
       resource_id: id,

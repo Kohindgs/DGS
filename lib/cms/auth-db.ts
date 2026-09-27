@@ -169,7 +169,7 @@ export const ROLE_PERMISSIONS: Record<CmsRole, Record<string, string[]>> = {
     dashboard: ["view"],
     search_console: ["view"],
     analytics: ["view"],
-    audits: ["view"],
+    audits: ["view", "run"],
     google_updates: ["view", "review"],
     blogs: ["view", "create", "edit", "publish"],
     media: ["view", "create", "edit"],
@@ -178,7 +178,7 @@ export const ROLE_PERMISSIONS: Record<CmsRole, Record<string, string[]>> = {
     applications: ["view", "export"],
     assessments: ["view", "create", "edit", "approve", "assign"],
     hr: ["view", "create", "edit"],
-    leads: ["view", "export"],
+    leads: ["view", "export", "manage"],
     forms: ["view"],
     seo: ["view", "edit"],
     users: ["view"],
@@ -223,7 +223,13 @@ export function hasPermission(role: CmsRole, resource: string, action: string): 
 export async function ensureSuperadminSeeded(): Promise<void> {
   if (!isCmsDatabaseConfigured()) return;
   const adminEmail = (process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com").trim().toLowerCase();
-  const adminPassword = process.env.DGS_ADMIN_PASSWORD || "DGS#Admin!27Kx9Qp4Mv8Ls";
+  const adminPassword = process.env.DGS_ADMIN_PASSWORD?.trim();
+
+  // Production must FAIL CLOSED if credentials are not explicitly configured.
+  // Never seed a superadmin with a known source-code password.
+  if (!adminPassword) {
+    return;
+  }
 
   try {
     const { rows } = await cmsQuery<CmsUser>("SELECT id, password_hash, is_active FROM cms_users WHERE email = ? LIMIT 1", [

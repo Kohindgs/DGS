@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { getCurrentCmsUser } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { getCmsSystemHealth } from "@/lib/cms/system-health";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,20 +15,14 @@ export async function GET() {
     return NextResponse.json({ enabled: true, authenticated: false }, { status: 401 });
   }
 
+  const currentUser = await getCurrentCmsUser();
+  const systemHealth = await getCmsSystemHealth();
+
   return NextResponse.json({
     enabled: true,
+    authenticated: true,
+    userRole: currentUser?.role || null,
     databaseConfigured: isCmsDatabaseConfigured(),
-    wordpressBridgeOrigin: process.env.DGS_WORDPRESS_BACKEND_ORIGIN || "https://wp-origin.dgeniussolutions.com",
-    nativeModules: {
-      blogs: "implemented",
-      careers: "implemented",
-      leads: "implemented",
-      portfolio: "implemented",
-      assessments: "implemented",
-      media: "partial",
-      forms: "hybrid",
-      seo: "foundation",
-      users: "foundation",
-    },
+    systemHealth,
   });
 }

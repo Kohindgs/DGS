@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
 import {
   getMediaAssetById,
   updateMediaAssetMetadata,
@@ -14,8 +15,14 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
   if (!(await hasAdminSession())) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "media", "view")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
   }
 
   const { id } = await params;
@@ -32,8 +39,14 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
   if (!(await hasAdminSession())) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "media", "edit")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
   }
 
   const { id } = await params;
@@ -64,8 +77,14 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
   if (!(await hasAdminSession())) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "media", "delete")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
   }
 
   const { id } = await params;

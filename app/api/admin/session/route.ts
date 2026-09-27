@@ -16,7 +16,7 @@ import {
   logAuditEvent,
   type CmsUser,
 } from "@/lib/cms/auth-db";
-import { isCmsDatabaseConfigured } from "@/lib/cms/db";
+import { isCmsDatabaseConfigured, cmsExecute } from "@/lib/cms/db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,9 +56,70 @@ export async function POST(request: NextRequest) {
   if (isCmsDatabaseConfigured()) {
     await ensureSuperadminSeeded();
     const user = await getCmsUserForAuth(rawEmail);
-    if (user && (user.is_active === 1 || user.is_active === true)) {
+    if (user) {
+      if (user.is_active !== 1 && user.is_active !== true) {
+        await logAuditEvent({
+          user_id: user.id,
+          actor_email: rawEmail,
+          role: user.role,
+          action: "auth.inactive_account_rejected",
+          resource: "auth",
+          summary: `Login attempt rejected for deactivated account: ${rawEmail}`,
+          ip_address: ip,
+          user_agent: userAgent,
+          status: "failure",
+        });
+        return NextResponse.redirect(publicUrl("/admin/login/?error=inactive"), 303);
+      }
+
+      // Check account lockout
+      if (user.locked_until && new Date(user.locked_until).getTime() > Date.now()) {
+        await logAuditEvent({
+          user_id: user.id,
+          actor_email: rawEmail,
+          role: user.role,
+          action: "auth.account_locked",
+          resource: "auth",
+          summary: `Login attempt on locked account for ${rawEmail}`,
+          ip_address: ip,
+          user_agent: userAgent,
+          status: "failure",
+        });
+        return NextResponse.redirect(publicUrl("/admin/login/?error=locked"), 303);
+      }
+
       if (verifyPassword(rawPassword, user.password_hash)) {
         authenticatedUser = user;
+      } else {
+        // Record failed attempt and apply lockout if consecutive failures >= 5
+        const nextAttempts = (Number(user.failed_attempts) || 0) + 1;
+        const isLocked = nextAttempts >= 5;
+        const lockUntil = isLocked
+          ? new Date(Date.now() + 15 * 60 * 1000).toISOString().slice(0, 19).replace("T", " ")
+          : null;
+
+        await cmsExecute(
+          `UPDATE cms_users SET failed_attempts = ?, locked_until = ? WHERE id = ?`,
+          [nextAttempts, lockUntil, user.id]
+        );
+
+        await logAuditEvent({
+          user_id: user.id,
+          actor_email: rawEmail,
+          role: user.role,
+          action: isLocked ? "auth.account_locked" : "auth.failed_login",
+          resource: "auth",
+          summary: isLocked
+            ? `Account locked for 15 minutes due to 5 consecutive failed attempts (${rawEmail})`
+            : `Failed password attempt (${nextAttempts}/5) for ${rawEmail}`,
+          ip_address: ip,
+          user_agent: userAgent,
+          status: "failure",
+        });
+
+        if (isLocked) {
+          return NextResponse.redirect(publicUrl("/admin/login/?error=locked"), 303);
+        }
       }
     }
   }

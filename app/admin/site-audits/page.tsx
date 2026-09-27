@@ -29,7 +29,8 @@ export default async function AdminSiteAuditsPage() {
         `SELECT * FROM site_audit_runs ORDER BY created_at DESC LIMIT 10`
       );
       auditHistory = history || [];
-      latestAudit = auditHistory[0] || null;
+      const latestCompleted = auditHistory.find((h: any) => h.status === "completed") || auditHistory[0] || null;
+      latestAudit = latestCompleted || auditHistory[0] || null;
 
       if (latestAudit) {
         const { rows: pageRows } = await cmsQuery(
@@ -71,9 +72,9 @@ export default async function AdminSiteAuditsPage() {
              psi_d.tbt_ms as desktopTbt,
              psi_d.speed_index_ms as desktopSpeedIndex,
              (SELECT COUNT(*) FROM site_audit_issues i WHERE i.audit_run_id = p.audit_run_id AND i.url = p.url) as issuesCount,
-             (SELECT COUNT(*) FROM gsc_page_query_metrics pq WHERE pq.page_url = p.url) as keywordsCount
+             (SELECT COUNT(*) FROM gsc_page_query_metrics pq WHERE pq.page_url = p.url AND pq.period_type = '28d') as keywordsCount
            FROM site_audit_pages p
-           LEFT JOIN gsc_page_metrics gpm ON (gpm.page_url = p.url)
+           LEFT JOIN gsc_page_metrics gpm ON (gpm.page_url = p.url AND gpm.period_type = '28d')
            LEFT JOIN pagespeed_cache psi_m ON (psi_m.url = p.url AND psi_m.strategy = 'mobile')
            LEFT JOIN pagespeed_cache psi_d ON (psi_d.url = p.url AND psi_d.strategy = 'desktop')
            WHERE p.audit_run_id = ?
@@ -109,7 +110,7 @@ export default async function AdminSiteAuditsPage() {
             [latestAudit.id]
           ).catch(() => ({ rows: [{ total_missing: 0 }] })),
           cmsQuery<{ total: number; last_sync: string }>(
-            `SELECT COUNT(*) as total, MAX(updated_at) as last_sync FROM gsc_page_query_metrics`
+            `SELECT COUNT(*) as total, MAX(updated_at) as last_sync FROM gsc_page_query_metrics WHERE period_type = '28d'`
           ).catch(() => ({ rows: [{ total: 0, last_sync: "" }] })),
           cmsQuery<{ measured: number }>(
             `SELECT COUNT(DISTINCT url) as measured FROM pagespeed_cache`
@@ -132,7 +133,7 @@ export default async function AdminSiteAuditsPage() {
           persistedPageRows: pages.length,
           aggAltCount,
           detailAltCount,
-          isAltConsistent: aggAltCount === detailAltCount || detailAltCount > 0,
+          isAltConsistent: aggAltCount === detailAltCount,
           gscTotalRows: Number(gscRows[0]?.total || 0),
           gscLastSync: gscRows[0]?.last_sync || "Not Synced",
           pageSpeedMeasured: Number(psCacheRows[0]?.measured || 0),

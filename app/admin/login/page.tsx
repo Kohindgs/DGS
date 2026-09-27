@@ -18,9 +18,13 @@ export default async function AdminLoginPage({
     ? "Admin authentication is not configured."
     : error === "invalid"
       ? "Invalid email or password."
-      : error === "unavailable"
-        ? "Admin login is unavailable."
-        : "";
+      : error === "locked"
+        ? "Account temporarily locked due to consecutive failed attempts. Please try again in 15 minutes."
+        : error === "inactive"
+          ? "This account has been deactivated. Please contact your system administrator."
+          : error === "unavailable"
+            ? "Admin login is unavailable."
+            : "";
 
   return (
     <main className="dgs-admin-shell dgs-admin-login-shell">

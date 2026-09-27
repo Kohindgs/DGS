@@ -335,7 +335,7 @@ export default function AdminHeader({
                     {currentUser?.display_name || "DGS Administrator"}
                   </div>
                   <div style={{ fontSize: "11px", color: "var(--dgs-text-muted)", marginTop: "2px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {currentUser?.email || "admin@dgeniussolutions.com"}
+                    {currentUser?.email || "Active Session"}
                   </div>
                 </div>
 

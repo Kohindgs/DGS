@@ -43,7 +43,7 @@ const INITIAL_ACTIVITIES: ActivityItem[] = [
   },
   {
     id: "act-5",
-    user: "admin@dgeniussolutions.com",
+    user: "System Operations",
     time: "Active now",
     message: "System operational: 0 WordPress runtime dependencies, native Next.js active.",
     avatarGradient: "linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%)",
@@ -53,7 +53,7 @@ const INITIAL_ACTIVITIES: ActivityItem[] = [
     id: "act-6",
     user: "Media Studio",
     time: "1h ago",
-    message: "880 media assets reconciled into native MySQL library.",
+    message: "Media library assets reconciled into native MySQL library.",
     avatarGradient: "linear-gradient(135deg, #7367F0 0%, #CE9FFC 100%)",
   },
 ];

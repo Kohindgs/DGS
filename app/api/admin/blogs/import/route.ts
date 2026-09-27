@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
-import { logAuditEvent } from "@/lib/cms/auth-db";
+import { logAuditEvent, getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { parseBlogDocx, evaluateMediaMatch, type MediaMatchConfidence, type BlogImportImage } from "@/lib/cms/blog-import";
 import { attachImportedBlogPackage, createCmsBlog, deleteCmsDraftBlog } from "@/lib/cms/blogs";
@@ -13,13 +13,6 @@ export const dynamic = "force-dynamic";
 
 const MAX_DOCX_BYTES = 15 * 1024 * 1024;
 const MAX_DOCUMENTS = 30;
-
-async function authorize() {
-  if (process.env.DGS_ADMIN_ENABLED !== "true") return 404;
-  if (!(await hasAdminSession())) return 401;
-  if (!isCmsDatabaseConfigured()) return 503;
-  return 200;
-}
 
 function isDocxFile(file: File) {
   const name = file.name.toLowerCase();
@@ -50,8 +43,14 @@ function errorMessage(error: unknown) {
 }
 
 export async function POST(request: Request) {
-  const status = await authorize();
-  if (status !== 200) return NextResponse.json({ ok: false }, { status });
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
+  if (!(await hasAdminSession())) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false, error: "Database not configured" }, { status: 503 });
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "blogs", "create")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
+  }
 
   const form = await request.formData();
   const documents = form
@@ -303,8 +302,9 @@ export async function POST(request: Request) {
 
       // Audit log entry for imported blog
       await logAuditEvent({
-        actor_email: "admin@dgeniussolutions.com",
-        role: "admin",
+        user_id: currentUser.id,
+        actor_email: currentUser.email,
+        role: currentUser.role,
         action: "BLOG_IMPORTED",
         resource: "blog_post",
         resource_id: blog.id,

@@ -1,21 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-db";
 import { createCmsBlog, listCmsBlogsDetailed, type BlogFilterView } from "@/lib/cms/blogs";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-async function authorize() {
-  if (process.env.DGS_ADMIN_ENABLED !== "true") return 404;
-  if (!(await hasAdminSession())) return 401;
-  if (!isCmsDatabaseConfigured()) return 503;
-  return 200;
-}
-
 export async function GET(request: NextRequest) {
-  const status = await authorize();
-  if (status !== 200) return NextResponse.json({ ok: false }, { status });
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
+  if (!(await hasAdminSession())) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false, error: "Database not configured" }, { status: 503 });
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "blogs", "view")) {
+    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
+  }
 
   const { searchParams } = new URL(request.url);
   const view = (searchParams.get("view") || "all") as BlogFilterView;
@@ -33,8 +33,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const status = await authorize();
-  if (status !== 200) return NextResponse.json({ ok: false }, { status });
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
+  if (!(await hasAdminSession())) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false, error: "Database not configured" }, { status: 503 });
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "blogs", "create")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
+  }
 
   const body = await request.json();
   const title = String(body?.title || "").trim();
@@ -65,6 +71,23 @@ export async function POST(request: NextRequest) {
       focus_keyword: focusKeyword,
       status: "draft",
     });
+
+    await logAuditEvent({
+      user_id: currentUser.id,
+      actor_email: currentUser.email,
+      role: currentUser.role,
+      action: "BLOG_CREATED",
+      resource: "blog_post",
+      resource_id: blog.id,
+      summary: `Created blog draft "${blog.title}" (${blog.id})`,
+      after_state: {
+        title: blog.title,
+        slug: blog.slug,
+        status: blog.status,
+      },
+      status: "success",
+    });
+
     return NextResponse.json({ ok: true, blog }, { status: 201 });
   } catch (error) {
     const err = error as { code?: string; errno?: number };

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { hasAdminSession } from "@/lib/cms/auth";
+import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
 import { getCmsLead } from "@/lib/cms/leads";
 
 export const runtime = "nodejs";
@@ -14,7 +15,14 @@ function parsePayload(value: string | Record<string, unknown>) {
 }
 
 export async function GET(_request: Request,{ params }:{ params:Promise<{id:string}> }) {
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
   if (!(await hasAdminSession())) return NextResponse.json({ ok:false },{ status:401 });
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "leads", "view")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
+  }
+
   const { id } = await params;
   const lead = await getCmsLead(id);
   if (!lead) return NextResponse.json({ ok:false, message:"Lead not found" },{ status:404 });

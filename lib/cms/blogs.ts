@@ -996,7 +996,9 @@ export async function getBlogRevisionById(revisionId: string): Promise<BlogRevis
 export async function restoreBlogRevision(
   blogPostId: string,
   revisionId: string,
-  userId?: string | null
+  userId?: string | null,
+  actorEmail?: string | null,
+  actorRole?: string | null
 ): Promise<CmsBlogDetail> {
   const current = await getCmsBlogById(blogPostId);
   if (!current) throw new Error("Blog not found");
@@ -1073,8 +1075,8 @@ export async function restoreBlogRevision(
   const { logAuditEvent } = await import("./auth-db.ts");
   await logAuditEvent({
     user_id: userId || null,
-    actor_email: "admin@dgeniussolutions.com",
-    role: "admin",
+    actor_email: actorEmail || "system",
+    role: (actorRole as any) || "admin",
     action: "BLOG_REVISION_RESTORED",
     resource: "blog_post",
     resource_id: blogPostId,

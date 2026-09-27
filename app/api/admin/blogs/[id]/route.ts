@@ -1,25 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
-import { logAuditEvent } from "@/lib/cms/auth-db";
+import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { deleteCmsDraftBlog, getCmsBlogById, updateCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-async function authorize() {
-  if (process.env.DGS_ADMIN_ENABLED !== "true") return 404;
-  if (!(await hasAdminSession())) return 401;
-  if (!isCmsDatabaseConfigured()) return 503;
-  return 200;
-}
-
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const status = await authorize();
-  if (status !== 200) return NextResponse.json({ ok: false }, { status });
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
+  if (!(await hasAdminSession())) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false, error: "Database not configured" }, { status: 503 });
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "blogs", "view")) {
+    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
+  }
 
   const { id } = await params;
   if (!id) return NextResponse.json({ ok: false, message: "Blog ID required" }, { status: 400 });
@@ -36,8 +35,14 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const status = await authorize();
-  if (status !== 200) return NextResponse.json({ ok: false }, { status });
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
+  if (!(await hasAdminSession())) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false, error: "Database not configured" }, { status: 503 });
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "blogs", "edit")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
+  }
 
   const { id } = await params;
   if (!id) return NextResponse.json({ ok: false, message: "Blog ID required" }, { status: 400 });
@@ -49,8 +54,9 @@ export async function PATCH(
     if (!updated) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
 
     await logAuditEvent({
-      actor_email: "admin@dgeniussolutions.com",
-      role: "admin",
+      user_id: currentUser.id,
+      actor_email: currentUser.email,
+      role: currentUser.role,
       action: "BLOG_UPDATED",
       resource: "blog_post",
       resource_id: id,
@@ -76,8 +82,14 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const status = await authorize();
-  if (status !== 200) return NextResponse.json({ ok: false }, { status });
+  if (process.env.DGS_ADMIN_ENABLED !== "true") return NextResponse.json({ ok: false }, { status: 404 });
+  if (!(await hasAdminSession())) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false, error: "Database not configured" }, { status: 503 });
+
+  const currentUser = await getCurrentCmsUser();
+  if (!currentUser || !hasPermission(currentUser.role, "blogs", "delete")) {
+    return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
+  }
 
   const { id } = await params;
   if (!id) return NextResponse.json({ ok: false, message: "Blog ID required" }, { status: 400 });
@@ -96,8 +108,9 @@ export async function DELETE(
     await deleteCmsDraftBlog(id);
 
     await logAuditEvent({
-      actor_email: "admin@dgeniussolutions.com",
-      role: "admin",
+      user_id: currentUser.id,
+      actor_email: currentUser.email,
+      role: currentUser.role,
       action: "BLOG_DELETED",
       resource: "blog_post",
       resource_id: id,

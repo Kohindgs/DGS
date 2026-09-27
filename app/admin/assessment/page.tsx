@@ -44,13 +44,13 @@ export default async function AssessmentAdminPage() {
       );
       candidates = candRows.map((r: any) => ({
         id: r.id,
-        name: r.name || "Candidate",
-        email: r.email || "candidate@example.com",
+        name: r.name || "Unknown candidate",
+        email: r.email || "Missing HR linkage",
         objective_score: r.objective_score || 0,
         objective_total: r.objective_total || 0,
         role_match_score: r.role_match_score || 0,
         review_status: r.review_status || "pending",
-        submitted_at: r.submitted_at || new Date().toISOString(),
+        submitted_at: r.submitted_at || null,
       }));
     } catch (err) {
       console.error("Error loading assessment data:", err);
