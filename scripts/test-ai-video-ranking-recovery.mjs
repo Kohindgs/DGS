@@ -61,6 +61,7 @@ test("REQ-RECOVERY-04: Valid Title and Meta Description in SEO Overrides", () =>
 // 5. Zero Visible Machine / Editorial SEO Labels
 test("REQ-RECOVERY-05: Absolute prohibition of visible editorial/machine labels", () => {
   const body = mirrorData.body;
+  const rawContent = fs.readFileSync(mirrorPath, "utf8");
   const banned = [
     "Target Keyword",
     "AI Overview Answer",
@@ -77,6 +78,11 @@ test("REQ-RECOVERY-05: Absolute prohibition of visible editorial/machine labels"
       regex.test(body),
       false,
       `Banned machine label "${label}" must NOT exist in mirror body`
+    );
+    assert.equal(
+      regex.test(rawContent),
+      false,
+      `Banned machine label "${label}" must NOT exist anywhere in mirror JSON file`
     );
   }
 });
