@@ -1,0 +1,203 @@
+[
+  {
+    "url": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+    "status": 200,
+    "ttfb": "174ms",
+    "title": "AI Video Production Agency in Mumbai | D&#x27;Genius Solutions",
+    "titleLen": 62,
+    "description": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and A...",
+    "descLen": 159,
+    "canonical": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+    "canonicalMatch": true,
+    "robots": "index, follow",
+    "og": {
+      "hasTitle": true,
+      "hasDesc": true,
+      "hasImage": true,
+      "hasUrl": true
+    },
+    "h1Count": 1,
+    "h1s": [
+      "AI Video Production House In Mumbai\nFor AI Ads, Brand Films & Product Videos"
+    ],
+    "h2Count": 21,
+    "h3Count": 68,
+    "schemas": [
+      "Organization",
+      "WebSite",
+      "WebPage",
+      "Service",
+      "BreadcrumbList"
+    ],
+    "totalImages": 56,
+    "missingAlts": 0
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/dubai-seo/",
+    "status": 200,
+    "ttfb": "34ms",
+    "title": "SEO Agency in Dubai | SEO Services for UAE Growth | DGS",
+    "titleLen": 55,
+    "description": "SEO services for businesses targeting Dubai and the UAE, covering technical SEO, local search, conte...",
+    "descLen": 155,
+    "canonical": "https://www.dgeniussolutions.com/services/dubai-seo/",
+    "canonicalMatch": true,
+    "robots": "index, follow",
+    "og": {
+      "hasTitle": true,
+      "hasDesc": true,
+      "hasImage": true,
+      "hasUrl": true
+    },
+    "h1Count": 1,
+    "h1s": [
+      "SEO Agency in Dubai for Rankings, Leads & Local Growth"
+    ],
+    "h2Count": 16,
+    "h3Count": 36,
+    "schemas": [
+      "Organization",
+      "WebSite",
+      "WebPage",
+      "Service",
+      "BreadcrumbList"
+    ],
+    "totalImages": 61,
+    "missingAlts": 0
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/aeo-dubai/",
+    "status": 200,
+    "ttfb": "36ms",
+    "title": "AEO Agency in Dubai | AI Search &amp; Google AI Overviews | DGS",
+    "titleLen": 63,
+    "description": "AEO services for Dubai-focused brands seeking visibility across Google AI Overviews, ChatGPT, Gemini...",
+    "descLen": 152,
+    "canonical": "https://www.dgeniussolutions.com/aeo-dubai/",
+    "canonicalMatch": true,
+    "robots": "index, follow",
+    "og": {
+      "hasTitle": true,
+      "hasDesc": true,
+      "hasImage": true,
+      "hasUrl": true
+    },
+    "h1Count": 1,
+    "h1s": [
+      "AEO Agency in Dubai for AI Search Visibility, Google AI Overviews & Qualified Leads"
+    ],
+    "h2Count": 18,
+    "h3Count": 58,
+    "schemas": [
+      "Organization",
+      "WebSite",
+      "WebPage",
+      "BreadcrumbList",
+      "FAQPage"
+    ],
+    "totalImages": 39,
+    "missingAlts": 0
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "status": 200,
+    "ttfb": "34ms",
+    "title": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
+    "titleLen": 56,
+    "description": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured sn...",
+    "descLen": 186,
+    "canonical": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "canonicalMatch": true,
+    "robots": "index, follow",
+    "og": {
+      "hasTitle": true,
+      "hasDesc": true,
+      "hasImage": true,
+      "hasUrl": true
+    },
+    "h1Count": 1,
+    "h1s": [
+      "AEO Services in Mumbai from a Mumbai-Based AEO Agency"
+    ],
+    "h2Count": 15,
+    "h3Count": 37,
+    "schemas": [
+      "Organization",
+      "WebSite",
+      "WebPage",
+      "Service",
+      "BreadcrumbList",
+      "FAQPage"
+    ],
+    "totalImages": 88,
+    "missingAlts": 0
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/geo/",
+    "status": 200,
+    "ttfb": "27ms",
+    "title": "GEO Services in Mumbai | D&#x27;Genius Solutions",
+    "titleLen": 48,
+    "description": "Boost AI search visibility with GEO services in Mumbai by D&#x27;Genius Solutions. Get featured in A...",
+    "descLen": 152,
+    "canonical": "https://www.dgeniussolutions.com/services/geo/",
+    "canonicalMatch": true,
+    "robots": "index, follow",
+    "og": {
+      "hasTitle": true,
+      "hasDesc": true,
+      "hasImage": true,
+      "hasUrl": true
+    },
+    "h1Count": 1,
+    "h1s": [
+      "Generative Engine Optimization (GEO) Services in Mumbai"
+    ],
+    "h2Count": 15,
+    "h3Count": 47,
+    "schemas": [
+      "Organization",
+      "WebSite",
+      "WebPage",
+      "Service",
+      "BreadcrumbList",
+      "FAQPage"
+    ],
+    "totalImages": 29,
+    "missingAlts": 0
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "status": 200,
+    "ttfb": "26ms",
+    "title": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
+    "titleLen": 58,
+    "description": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get ...",
+    "descLen": 150,
+    "canonical": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "canonicalMatch": true,
+    "robots": "index, follow",
+    "og": {
+      "hasTitle": true,
+      "hasDesc": true,
+      "hasImage": true,
+      "hasUrl": true
+    },
+    "h1Count": 1,
+    "h1s": [
+      "LLM SEO Services in Mumbai for AI Search Visibility"
+    ],
+    "h2Count": 12,
+    "h3Count": 22,
+    "schemas": [
+      "Organization",
+      "WebSite",
+      "WebPage",
+      "Service",
+      "BreadcrumbList",
+      "FAQPage"
+    ],
+    "totalImages": 60,
+    "missingAlts": 0
+  }
+]
