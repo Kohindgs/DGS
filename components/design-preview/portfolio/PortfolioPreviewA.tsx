@@ -245,7 +245,12 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
                             />
                             <img
                               src={item.variants.fallback}
-                              alt={item.alt || ""}
+                              alt={
+                                item.alt?.trim() ||
+                                (hasHumanReadableTitle(item.title)
+                                  ? `${item.title} - D'Genius Solutions Creative Project`
+                                  : `D'Genius Solutions Creative Portfolio Project ${pad(itemIndex + 1)}`)
+                              }
                               width={item.sourceWidth}
                               height={item.sourceHeight}
                               loading={isAboveFold ? "eager" : "lazy"}

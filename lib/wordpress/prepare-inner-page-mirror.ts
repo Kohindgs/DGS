@@ -151,6 +151,66 @@ function stripReviewStructuredData(html: string): string {
   return output;
 }
 
+function remediateMirrorImageAlts(path: string, html: string): string {
+  let output = html;
+
+  // 1. Decorative data:image/svg+xml with empty or missing alt -> ensure aria-hidden="true" and alt=""
+  output = output.replace(/<img\b([^>]*src=["']data:image\/svg\+xml[^"']*["'][^>]*)>/gi, (match) => {
+    let tag = match;
+    if (!tag.includes('aria-hidden="true"')) {
+      tag = tag.replace(/<img\b/i, '<img aria-hidden="true"');
+    }
+    if (!/alt=["']/i.test(tag)) {
+      tag = tag.replace(/<img\b/i, '<img alt=""');
+    }
+    return tag;
+  });
+
+  // 2. Services cards: Replace 71-service-projects-placeholder.webp alt="" with card title
+  if (path === "/services/" || path === "/our-services/") {
+    output = output.replace(/<article\b[\s\S]*?<\/article>/gi, (card) => {
+      if (!card.includes("71-service-projects-placeholder.webp")) return card;
+      const titleMatch =
+        card.match(/<(?:h\d|a)\b[^>]*class=["'][^"']*(?:entry-title|cmsmasters-blog__post-title)[^"']*["'][^>]*>([\s\S]*?)<\/(?:h\d|a)>/i) ||
+        card.match(/<(?:h\d|a)\b[^>]*>([\s\S]*?)<\/(?:h\d|a)>/i);
+      const rawTitle = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, "").trim() : "Service";
+      const cleanTitle = rawTitle.replace(/\s+/g, " ");
+      return card.replace(
+        /(<img\b[^>]*src=["'][^"']*71-service-projects-placeholder\.webp["'][^>]*\balt=)["'][^"']*["']/gi,
+        `$1"${cleanTitle} - D'Genius Solutions"`
+      );
+    });
+  }
+
+  // 3. Envira gallery images with empty alt -> extract data-title or title
+  output = output.replace(/<img\b([^>]*class=["'][^"']*envira-gallery-image[^"']*["'][^>]*)>/gi, (tag) => {
+    const altMatch = tag.match(/alt=["']([^"']*)["']/i);
+    if (altMatch && altMatch[1].trim() !== "") return tag;
+
+    const titleMatch = tag.match(/(?:data-title|title)=["']([^"']+)["']/i);
+    let title = titleMatch ? titleMatch[1].replace(/[_\-]+/g, " ").replace(/\s*\(\d+\)/g, "").replace(/\.[a-z0-9]+$/i, "").trim() : "";
+    if (!title || /^SS\s*\d+/i.test(title)) {
+      title = "Creative Portfolio Showcase";
+    }
+    const cleanAlt = `${title} - D'Genius Solutions Creative Showcase`;
+
+    if (altMatch) {
+      return tag.replace(/alt=["'][^"']*["']/i, `alt="${cleanAlt}"`);
+    } else {
+      return tag.replace(/<img\b/i, `<img alt="${cleanAlt}"`);
+    }
+  });
+
+  // 4. Client partner logos on /seo-pricing/ (img65.jpg etc.)
+  if (path === "/seo-pricing/") {
+    output = output.replace(/<img\b([^>]*src=["'][^"']*img\d+\.(?:jpg|png|webp)["'][^>]*\balt=)["'][^"']*["']/gi, (tag, prefix) => {
+      return `${prefix}"Client Partner Brand - D'Genius Solutions"`;
+    });
+  }
+
+  return output;
+}
+
 export function prepareInnerPageMirror(
   content: InnerPageMirrorContent,
   wordpressId: number,
@@ -188,9 +248,12 @@ export function prepareInnerPageMirror(
   body = applyServiceSearchCorrections(content.path, normalizeSemanticH1(content.path, body));
   body = applyInternationalPageContent(content.path, body);
   body = applyLocationSeoContent(content.path, body);
-  body = applyApprovedLinkCorrectionsToHtml(
+  body = remediateMirrorImageAlts(
     content.path,
-    lazyBelowFold(rewriteWpUrls(body)),
+    applyApprovedLinkCorrectionsToHtml(
+      content.path,
+      lazyBelowFold(rewriteWpUrls(body)),
+    ),
   );
   // DGS Quick Win 6, 8 & 9: Ensure continuous marquee ticker logos are loaded eagerly so CSS transform animations do not block them
   body = body.replace(
