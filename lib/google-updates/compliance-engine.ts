@@ -656,6 +656,8 @@ export async function runGoogleUpdateAssessment(
   const result: FullAssessmentResult = {
     updateId: update.id,
     assessmentStatus: finalStatus,
+    sitePolicyCompliance,
+    rankingImpactStatus,
     assessmentDate: new Date().toISOString().slice(0, 19).replace("T", " "),
     evidence: evidenceSummary,
     affectedPages,
