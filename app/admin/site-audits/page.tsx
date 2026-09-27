@@ -17,6 +17,7 @@ export default async function AdminSiteAuditsPage() {
   }
 
   let latestAudit: any = null;
+  let latestRun: any = null;
   let auditHistory: any[] = [];
   let pages: any[] = [];
   let issues: any[] = [];
@@ -25,12 +26,26 @@ export default async function AdminSiteAuditsPage() {
 
   if (isCmsDatabaseConfigured()) {
     try {
+      // 1. LATEST RUN (Status banner)
+      const { rows: latestRunRows } = await cmsQuery(
+        `SELECT * FROM site_audit_runs ORDER BY created_at DESC LIMIT 1`
+      );
+      latestRun = latestRunRows?.[0] || null;
+
+      // 2. LATEST COMPLETED (Authoritative page/issue data)
+      const { rows: latestCompletedRows } = await cmsQuery(
+        `SELECT * FROM site_audit_runs WHERE status = 'completed' ORDER BY completed_at DESC LIMIT 1`
+      );
+      const latestCompleted = latestCompletedRows?.[0] || null;
+
+      // 3. AUDIT HISTORY (History tab)
       const { rows: history } = await cmsQuery(
         `SELECT * FROM site_audit_runs ORDER BY created_at DESC LIMIT 10`
       );
       auditHistory = history || [];
-      const latestCompleted = auditHistory.find((h: any) => h.status === "completed") || auditHistory[0] || null;
-      latestAudit = latestCompleted || auditHistory[0] || null;
+
+      // Use latestCompleted for data inspection, falling back to latestRun if none completed yet
+      latestAudit = latestCompleted || latestRun || null;
 
       if (latestAudit) {
         const { rows: pageRows } = await cmsQuery(
@@ -149,6 +164,7 @@ export default async function AdminSiteAuditsPage() {
   return (
     <SiteAuditsClientView
       latestAudit={latestAudit}
+      latestRun={latestRun}
       auditHistory={auditHistory}
       pages={pages}
       issues={issues}

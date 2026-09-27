@@ -51,12 +51,15 @@ export async function POST(request: NextRequest) {
   }
 
   let authenticatedUser: CmsUser | null = null;
+  let dbUserFound = false;
 
   // 1. Try DB-backed authentication if configured
   if (isCmsDatabaseConfigured()) {
     await ensureSuperadminSeeded();
     const user = await getCmsUserForAuth(rawEmail);
     if (user) {
+      dbUserFound = true;
+
       if (user.is_active !== 1 && user.is_active !== true) {
         await logAuditEvent({
           user_id: user.id,
@@ -90,6 +93,11 @@ export async function POST(request: NextRequest) {
 
       if (verifyPassword(rawPassword, user.password_hash)) {
         authenticatedUser = user;
+        // Successful login resets failed attempts and lockout
+        await cmsExecute(
+          `UPDATE cms_users SET failed_attempts = 0, locked_until = NULL, last_login_at = NOW() WHERE id = ?`,
+          [user.id]
+        );
       } else {
         // Record failed attempt and apply lockout if consecutive failures >= 5
         const nextAttempts = (Number(user.failed_attempts) || 0) + 1;
@@ -120,12 +128,15 @@ export async function POST(request: NextRequest) {
         if (isLocked) {
           return NextResponse.redirect(publicUrl("/admin/login/?error=locked"), 303);
         }
+
+        // DB user found with invalid password: do not allow env credential fallback
+        return NextResponse.redirect(publicUrl("/admin/login/?error=invalid"), 303);
       }
     }
   }
 
-  // 2. Fallback to env-based admin credentials
-  if (!authenticatedUser && isAdminAuthConfigured()) {
+  // 2. Fallback to env-based admin credentials (strictly disallowed if DB user found or DB is configured and active)
+  if (!authenticatedUser && !dbUserFound && !isCmsDatabaseConfigured() && isAdminAuthConfigured()) {
     if (validateAdminCredentials(rawEmail, rawPassword)) {
       authenticatedUser = {
         id: "env-superadmin",

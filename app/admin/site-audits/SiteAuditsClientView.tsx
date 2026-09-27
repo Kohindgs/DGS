@@ -49,6 +49,7 @@ type PageRow = {
 
 type Props = {
   latestAudit: any;
+  latestRun?: any;
   auditHistory: any[];
   pages: PageRow[];
   issues: any[];
@@ -58,6 +59,7 @@ type Props = {
 
 export default function SiteAuditsClientView({
   latestAudit,
+  latestRun,
   auditHistory,
   pages: initialPages,
   issues,
@@ -632,6 +634,44 @@ export default function SiteAuditsClientView({
           </button>
         </div>
       </div>
+
+      {/* Latest Run Status Banner */}
+      {latestRun && latestRun.status === "running" && (
+        <div
+          style={{
+            marginBottom: "18px",
+            padding: "12px 18px",
+            background: "rgba(56, 189, 248, 0.1)",
+            border: "1px solid rgba(56, 189, 248, 0.3)",
+            borderRadius: "8px",
+            color: "#38bdf8",
+            fontSize: "0.86rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <span>🔄 Audit run <strong>#{latestRun.id}</strong> is currently executing in background...</span>
+        </div>
+      )}
+      {latestRun && latestRun.status === "failed" && (!latestAudit || latestRun.id !== latestAudit.id) && (
+        <div
+          style={{
+            marginBottom: "18px",
+            padding: "12px 18px",
+            background: "rgba(239, 68, 68, 0.1)",
+            border: "1px solid rgba(239, 68, 68, 0.3)",
+            borderRadius: "8px",
+            color: "#ef4444",
+            fontSize: "0.86rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <span>⚠️ Most recent audit run (#{latestRun.id}) failed. Displaying metrics from latest completed audit ({latestAudit?.id || "N/A"}).</span>
+        </div>
+      )}
 
       {/* KPI Cards — Zero Fabricated Scores */}
       <div className="dgs-saas-kpi-grid">

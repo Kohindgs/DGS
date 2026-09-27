@@ -7,7 +7,11 @@ export const dynamic = "force-dynamic";
 
 export async function POST() {
   const currentUser = await getCurrentCmsUser();
-  if (!currentUser || !hasPermission(currentUser.role, "google_updates", "view")) {
+  if (
+    !currentUser ||
+    (!hasPermission(currentUser.role, "google_updates", "review") &&
+      !hasPermission(currentUser.role, "google_updates", "manage"))
+  ) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 403 });
   }
 
