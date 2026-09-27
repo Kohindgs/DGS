@@ -127,6 +127,10 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
           return {
             ...u,
             assessment_status: ass.assessmentStatus,
+            site_policy_compliance: ass.sitePolicyCompliance || data.sitePolicyCompliance || ass.site_policy_compliance,
+            ranking_impact_status: ass.rankingImpactStatus || data.rankingImpactStatus || ass.ranking_impact_status,
+            sitePolicyCompliance: ass.sitePolicyCompliance || data.sitePolicyCompliance,
+            rankingImpactStatus: ass.rankingImpactStatus || data.rankingImpactStatus,
             assessment_date: ass.assessmentDate,
             evidence: ass.evidence,
             checks_performed: ass.checksPerformed,
@@ -189,6 +193,22 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
       case "NOT ASSESSED":
       default:
         return <span className="dgs-saas-chip muted">NOT ASSESSED</span>;
+    }
+  };
+
+  const getImpactBadge = (status?: string | null) => {
+    switch (status) {
+      case "RECOVERING":
+        return <span className="dgs-saas-chip success" style={{ fontWeight: 700 }}>RECOVERING</span>;
+      case "STABLE":
+        return <span className="dgs-saas-chip info" style={{ fontWeight: 700 }}>STABLE</span>;
+      case "DECLINING":
+        return <span className="dgs-saas-chip danger" style={{ fontWeight: 700 }}>DECLINING</span>;
+      case "ACTIVE — PARTIAL DATA":
+        return <span className="dgs-saas-chip warning" style={{ fontWeight: 700 }}>ACTIVE — PARTIAL DATA</span>;
+      case "PENDING POST-ROLLOUT":
+      default:
+        return <span className="dgs-saas-chip warning" style={{ fontWeight: 700 }}>PENDING POST-ROLLOUT</span>;
     }
   };
 
@@ -781,11 +801,11 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
               </div>
             )}
 
-            {/* Status & Assessment Overview */}
+            {/* Status & Assessment Overview — Distinct Policy vs Ranking Impact Cards */}
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
                 gap: "12px",
                 padding: "16px",
                 background: "rgba(255,255,255,0.03)",
@@ -794,34 +814,42 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
               }}
             >
               <div>
-                <div style={{ fontSize: "0.74rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>
-                  Compliance Status
+                <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                  SITE POLICY COMPLIANCE
                 </div>
-                <div style={{ marginTop: "4px" }}>
-                  {getStatusBadge(selectedUpdate.assessment_status)}
+                <div style={{ marginTop: "6px" }}>
+                  {getStatusBadge(selectedUpdate.site_policy_compliance || selectedUpdate.sitePolicyCompliance || selectedUpdate.assessment_status)}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "0.74rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>
-                  Confidence Score
+                <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                  GOOGLE UPDATE IMPACT
                 </div>
-                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                <div style={{ marginTop: "6px" }}>
+                  {getImpactBadge(selectedUpdate.ranking_impact_status || selectedUpdate.rankingImpactStatus)}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                  EVIDENCE CONFIDENCE
+                </div>
+                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", marginTop: "4px" }}>
                   {selectedUpdate.confidence != null ? `${selectedUpdate.confidence}%` : "Not Assessed"}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "0.74rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>
-                  Assessed By
+                <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                  ASSESSED BY
                 </div>
-                <div style={{ fontSize: "0.82rem", color: "#fff", marginTop: "2px" }}>
+                <div style={{ fontSize: "0.82rem", color: "#fff", marginTop: "6px" }}>
                   {selectedUpdate.assessed_by || "Automated Monitor"}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "0.74rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>
-                  Rollout Window
+                <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                  ROLLOUT WINDOW
                 </div>
-                <div style={{ fontSize: "0.82rem", color: "#fff", marginTop: "2px" }}>
+                <div style={{ fontSize: "0.82rem", color: "#fff", marginTop: "6px" }}>
                   {selectedUpdate.incident_begin
                     ? `${new Date(selectedUpdate.incident_begin).toLocaleDateString()} — ${selectedUpdate.incident_end ? new Date(selectedUpdate.incident_end).toLocaleDateString() : "Active"}`
                     : new Date(selectedUpdate.published_at).toLocaleDateString()}

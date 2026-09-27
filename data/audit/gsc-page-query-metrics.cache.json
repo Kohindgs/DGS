@@ -3528,17 +3528,17 @@
         "previousClicks": 0,
         "clickDelta": 0,
         "clickDeltaPct": 0,
-        "currentImpressions": 0,
-        "previousImpressions": 0,
+        "currentImpressions": 4,
+        "previousImpressions": 4,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "currentWeightedPosition": 8.25,
+        "previousWeightedPosition": 2,
+        "positionDelta": 6.25,
         "currentCtr": 0,
         "previousCtr": 0
       },
-      "classification": "INSUFFICIENT_DATA"
+      "classification": "DECLINING"
     },
     {
       "path": "/services/geo/",
@@ -3805,6 +3805,74 @@
         "previousCtr": 0
       },
       "classification": "INSUFFICIENT_DATA"
+    }
+  ],
+  "commercialQueries": [
+    {
+      "query": "ai video production agency in mumbai",
+      "path": "/services/ai-video-production-agency/",
+      "currentClicks": 2,
+      "previousClicks": 2,
+      "currentImpressions": 53,
+      "previousImpressions": 53,
+      "currentPosition": 2.1,
+      "previousPosition": 2.8,
+      "positionDelta": -0.7
+    },
+    {
+      "query": "aeo services in mumbai",
+      "path": "/services/aeo-services-in-mumbai/",
+      "currentClicks": 1,
+      "previousClicks": 1,
+      "currentImpressions": 11,
+      "previousImpressions": 11,
+      "currentPosition": 1.2,
+      "previousPosition": 1,
+      "positionDelta": 0.2
+    },
+    {
+      "query": "aeo services in dubai",
+      "path": "/aeo-dubai/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 19,
+      "previousImpressions": 19,
+      "currentPosition": 7,
+      "previousPosition": 17.9,
+      "positionDelta": -10.9
+    },
+    {
+      "query": "geo services in mumbai",
+      "path": "/services/geo/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 25,
+      "previousImpressions": 25,
+      "currentPosition": 5.2,
+      "previousPosition": 4,
+      "positionDelta": 1.2
+    },
+    {
+      "query": "best llm seo agency in mumbai",
+      "path": "/services/llm-seo-service/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 18,
+      "previousImpressions": 18,
+      "currentPosition": 10.8,
+      "previousPosition": 8,
+      "positionDelta": 2.8
+    },
+    {
+      "query": "seo agency in dubai",
+      "path": "/services/dubai-seo/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 4,
+      "previousImpressions": 4,
+      "currentPosition": 8.25,
+      "previousPosition": 2,
+      "positionDelta": 6.25
     }
   ]
 }

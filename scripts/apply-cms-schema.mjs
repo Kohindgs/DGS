@@ -95,6 +95,11 @@ try {
     { col: "incident_begin", sql: "ALTER TABLE google_search_updates ADD COLUMN incident_begin DATETIME NULL" },
     { col: "incident_end", sql: "ALTER TABLE google_search_updates ADD COLUMN incident_end DATETIME NULL" },
     { col: "raw_details", sql: "ALTER TABLE google_search_updates ADD COLUMN raw_details JSON NULL" },
+    { col: "site_policy_compliance", sql: "ALTER TABLE google_search_updates ADD COLUMN site_policy_compliance VARCHAR(50) NULL" },
+    { col: "ranking_impact_status", sql: "ALTER TABLE google_search_updates ADD COLUMN ranking_impact_status VARCHAR(50) NULL" },
+    { col: "reputation_verified_by", sql: "ALTER TABLE google_search_updates ADD COLUMN reputation_verified_by VARCHAR(255) NULL" },
+    { col: "reputation_verified_at", sql: "ALTER TABLE google_search_updates ADD COLUMN reputation_verified_at DATETIME NULL" },
+    { col: "reputation_notes", sql: "ALTER TABLE google_search_updates ADD COLUMN reputation_notes TEXT NULL" },
   ];
 
   for (const m of gsuMigrations) {

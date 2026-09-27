@@ -29,6 +29,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ok: true,
       assessment: result,
+      sitePolicyCompliance: result.sitePolicyCompliance,
+      rankingImpactStatus: result.rankingImpactStatus,
+      assessmentStatus: result.assessmentStatus,
     });
   } catch (err: any) {
     console.error("Google update assessment error:", err);

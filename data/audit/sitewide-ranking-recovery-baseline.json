@@ -1,33 +1,126 @@
 {
-  "generatedAt": "2026-09-27T14:58:34.193Z",
-  "auditTimestamp": "2026-09-27T14:58:26.425Z",
+  "generatedAt": "2026-09-27T17:26:19.578Z",
+  "auditTimestamp": "2026-09-27T17:26:15.828Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
   "summary": {
-    "totalIndexablePages": 98,
+    "totalIndexablePages": 101,
     "protectedTier0PagesCount": 11,
     "pagesWithGscData": 100,
     "classifications": {
-      "CRITICAL_DECLINE": 4,
-      "DECLINING": 9,
-      "VOLATILE": 1,
-      "STABLE": 2,
-      "GROWING": 19,
-      "INSUFFICIENT_DATA": 63
+      "CRITICAL_DECLINE": 2,
+      "DECLINING": 7,
+      "VOLATILE": 2,
+      "STABLE": 5,
+      "GROWING": 18,
+      "INSUFFICIENT_DATA": 67
     },
     "spamRiskDistribution": {
-      "LOW": 35,
+      "LOW": 34,
       "MEDIUM": 0,
       "HIGH": 0,
-      "INSUFFICIENT_EVIDENCE": 63
+      "INSUFFICIENT_EVIDENCE": 67
     },
     "recoveryTiers": {
-      "AT_HISTORICAL_PEAK": 33,
+      "AT_HISTORICAL_PEAK": 2,
       "NEAR_HISTORICAL_PEAK": 1,
-      "PARTIAL_RECOVERY": 1,
-      "SIGNIFICANT_LOSS": 10,
-      "CRITICAL_LOSS": 53,
-      "INSUFFICIENT_HISTORICAL_DATA": 0
+      "PARTIAL_RECOVERY": 0,
+      "SIGNIFICANT_LOSS": 6,
+      "CRITICAL_LOSS": 33,
+      "INSUFFICIENT_CURRENT_DATA": 0,
+      "INSUFFICIENT_HISTORICAL_DATA": 59
+    },
+    "strategicRecoverySummary": {
+      "totalEvaluated": 6,
+      "counts": {
+        "AT_HISTORICAL_PEAK": 1,
+        "NEAR_HISTORICAL_PEAK": 1,
+        "PARTIAL_RECOVERY": 0,
+        "SIGNIFICANT_LOSS": 3,
+        "CRITICAL_LOSS": 1,
+        "INSUFFICIENT_CURRENT_DATA": 0,
+        "INSUFFICIENT_HISTORICAL_DATA": 0
+      },
+      "records": [
+        {
+          "path": "/aeo-dubai/",
+          "primaryCommercialQuery": "aeo services in dubai",
+          "historicalPeakPosition": 1,
+          "currentCommercialQueryPosition": 7,
+          "currentCommercialQueryImpressions": 19,
+          "currentCommercialQueryClicks": 0,
+          "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+          "positionLoss": 6,
+          "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+          "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+          "pageWideAveragePositionSupplemental": 7
+        },
+        {
+          "path": "/services/aeo-services-in-mumbai/",
+          "primaryCommercialQuery": "aeo services in mumbai",
+          "historicalPeakPosition": 1,
+          "currentCommercialQueryPosition": 1.2,
+          "currentCommercialQueryImpressions": 11,
+          "currentCommercialQueryClicks": 1,
+          "historicalRecoveryTier": "AT_HISTORICAL_PEAK",
+          "positionLoss": 0.2,
+          "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+          "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+          "pageWideAveragePositionSupplemental": 1.2
+        },
+        {
+          "path": "/services/ai-video-production-agency/",
+          "primaryCommercialQuery": "ai video production agency in mumbai",
+          "historicalPeakPosition": 1,
+          "currentCommercialQueryPosition": 2.1,
+          "currentCommercialQueryImpressions": 53,
+          "currentCommercialQueryClicks": 2,
+          "historicalRecoveryTier": "NEAR_HISTORICAL_PEAK",
+          "positionLoss": 1.1,
+          "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+          "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+          "pageWideAveragePositionSupplemental": 2.1
+        },
+        {
+          "path": "/services/dubai-seo/",
+          "primaryCommercialQuery": "seo agency in dubai",
+          "historicalPeakPosition": 1,
+          "currentCommercialQueryPosition": 8.25,
+          "currentCommercialQueryImpressions": 4,
+          "currentCommercialQueryClicks": 0,
+          "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+          "positionLoss": 7.25,
+          "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+          "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+          "pageWideAveragePositionSupplemental": 8.25
+        },
+        {
+          "path": "/services/geo/",
+          "primaryCommercialQuery": "geo services in mumbai",
+          "historicalPeakPosition": 1,
+          "currentCommercialQueryPosition": 5.2,
+          "currentCommercialQueryImpressions": 25,
+          "currentCommercialQueryClicks": 0,
+          "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+          "positionLoss": 4.2,
+          "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+          "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+          "pageWideAveragePositionSupplemental": 5.2
+        },
+        {
+          "path": "/services/llm-seo-service/",
+          "primaryCommercialQuery": "best llm seo agency in mumbai",
+          "historicalPeakPosition": 1,
+          "currentCommercialQueryPosition": 10.8,
+          "currentCommercialQueryImpressions": 18,
+          "currentCommercialQueryClicks": 0,
+          "historicalRecoveryTier": "CRITICAL_LOSS",
+          "positionLoss": 9.8,
+          "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+          "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+          "pageWideAveragePositionSupplemental": 10.8
+        }
+      ]
     },
     "twoBaselineModel": {
       "historicalPeakBaselineDefined": true,
@@ -55,8 +148,8 @@
     },
     {
       "path": "/aeo-dubai/",
-      "oldClassification": "STABLE",
-      "newClassification": "GROWING",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "VOLATILE",
       "reason": "Period comparison reclassified based on true delta"
     },
     {
@@ -200,14 +293,14 @@
     {
       "path": "/services/aeo-services-in-mumbai/",
       "oldClassification": "STABLE",
-      "newClassification": "DECLINING",
+      "newClassification": "INSUFFICIENT_DATA",
       "reason": "Period comparison reclassified based on true delta"
     },
     {
       "path": "/services/ai-video-production-agency/",
       "oldClassification": "CRITICAL_DECLINE",
-      "newClassification": "DECLINING",
-      "reason": "Recalibrated: Evidence shows moderate 28d drop (-11%), not total wipeout"
+      "newClassification": "STABLE",
+      "reason": "Period comparison reclassified based on true delta"
     },
     {
       "path": "/services/branding/",
@@ -219,18 +312,6 @@
       "path": "/services/content-creation/",
       "oldClassification": "STABLE",
       "newClassification": "INSUFFICIENT_DATA",
-      "reason": "Period comparison reclassified based on true delta"
-    },
-    {
-      "path": "/services/geo/",
-      "oldClassification": "STABLE",
-      "newClassification": "CRITICAL_DECLINE",
-      "reason": "Period comparison reclassified based on true delta"
-    },
-    {
-      "path": "/services/llm-seo-service/",
-      "oldClassification": "STABLE",
-      "newClassification": "CRITICAL_DECLINE",
       "reason": "Period comparison reclassified based on true delta"
     },
     {
@@ -2494,7 +2575,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1917,
@@ -2540,8 +2620,8 @@
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": 1,
-          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
         },
         "currentPerformanceBaseline": {
           "weightedPosition": 10.14,
@@ -2551,9 +2631,11 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -2566,7 +2648,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/about-us/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1198,
@@ -2621,9 +2702,11 @@
         },
         "recoveryTier": "SIGNIFICANT_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -2636,7 +2719,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/aeo-dubai/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4022,
@@ -2660,22 +2742,22 @@
       "primaryQueryFamily": "General Service",
       "isProtectedTier0": false,
       "metrics": {
-        "currentClicks": 2,
+        "currentClicks": 0,
         "previousClicks": 0,
-        "clickDelta": 2,
-        "clickDeltaPct": 100,
-        "currentImpressions": 61,
-        "previousImpressions": 61,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 19,
+        "previousImpressions": 19,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 18.23,
-        "previousWeightedPosition": 18.64,
-        "positionDelta": -0.41,
-        "currentCtr": 3.28,
+        "currentWeightedPosition": 7,
+        "previousWeightedPosition": 17.9,
+        "positionDelta": -10.9,
+        "currentCtr": 0,
         "previousCtr": 0
       },
-      "classification": "GROWING",
-      "oldClassification": "STABLE",
+      "classification": "VOLATILE",
+      "oldClassification": "INSUFFICIENT_DATA",
       "spamRisk": "LOW",
       "riskReasons": [],
       "blogClassification": null,
@@ -2683,20 +2765,33 @@
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": null,
-          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 18.23,
-          "clicks": 2,
-          "impressions": 61,
-          "ctr": 3.28
+          "weightedPosition": 7,
+          "clicks": 0,
+          "impressions": 19,
+          "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
+      "historicalRecovery": {
+        "primaryCommercialQuery": "aeo services in dubai",
+        "historicalPeakPosition": 1,
+        "currentCommercialQueryPosition": 7,
+        "currentCommercialQueryImpressions": 19,
+        "currentCommercialQueryClicks": 0,
+        "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+        "positionLoss": 6,
+        "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+        "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+        "pageWideAveragePositionSupplemental": 7
       },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -2709,7 +2804,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/australia-page/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2194,
@@ -2742,8 +2836,8 @@
         "impressionDelta": 9,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 28.89,
-        "previousWeightedPosition": 0,
-        "positionDelta": 28.89,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -2765,11 +2859,13 @@
           "impressions": 9,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -2782,7 +2878,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/better-ceasons-case-study/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2101,
@@ -2811,8 +2906,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -2830,29 +2925,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/",
       "path": "/blogs/",
-      "pageType": "page",
+      "pageType": "blog",
       "title": "Digital Marketing Blogs D&#x27;Genius Solutions in Mumbai",
       "metaDescription": "Explore expert digital marketing blogs from D&#x27;Genius Solutions in Mumbai covering SEO, AI marketing, branding, and performance strategies.",
       "h1": "Strategic Thinking on SEO, AI Search &amp; Growth",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3433,
@@ -2909,22 +3005,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
       "path": "/blogs/3-3-3-rule-in-marketing/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster - D&#x27;Genius Solutions",
       "metaDescription": "3-3-3 rule in marketing is a practical way to simplify how a business communicates, promotes, and converts customers. It helps brands focus on three clear",
       "h1": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3182,
@@ -2983,22 +3080,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/aeo-business/",
       "path": "/blogs/aeo-business/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization - D&#x27;Genius Solutions",
       "metaDescription": "AEO stands for Answer Engine Optimization. It is the process of improving website content so search engines, AI platforms, voice assistants, and answer",
       "h1": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/aeo-business/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3107,
@@ -3032,8 +3130,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 47,
-        "previousWeightedPosition": 0,
-        "positionDelta": 47,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3055,24 +3153,25 @@
           "impressions": 1,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
       "path": "/blogs/aeo-in-2026/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AEO in 2026 How to Rank on ChatGPT and Perplexity",
       "metaDescription": "AEO in 2026 is becoming an important part of search marketing as people increasingly use ChatGPT, Perplexity and other AI-powered platforms to research companies, compare services and find direct answers. Traditional Google rankings still matter, but visibility is no longer limited to ten blue links. Businesses now nee",
       "h1": "AEO in 2026 How to Rank on ChatGPT and Perplexity",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2521,
@@ -3105,8 +3204,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3124,29 +3223,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
       "path": "/blogs/ai-content-optimization/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Content Optimization: 7 Proven Ways to Boost Results",
       "metaDescription": "Learn how AI content optimization helps brands plan smarter posts, improve engagement, track performance, and scale content without losing creativity.",
       "h1": "AI Content Optimization: 7 Proven Ways to Boost Results",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1751,
@@ -3179,8 +3279,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3198,29 +3298,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
       "path": "/blogs/ai-generated-summaries-in-search-ads/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI-Generated Summaries in Search Ads: What This Means for Advertisers - D&#x27;Genius Solutions",
       "metaDescription": "Learn how AI-generated summaries in search ads can affect Google Ads, PPC strategy, landing pages, CTR, SEO, brand control, and AI search visibility.",
       "h1": "AI-Generated Summaries in Search Ads: What This Means for Advertisers",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2401,
@@ -3279,22 +3380,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
       "path": "/blogs/ai-marketing-strategies-2026/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "How AI Is Reshaping Digital Marketing Strategies in 2026",
       "metaDescription": "AI marketing strategies are helping brands plan smarter campaigns, understand customers better, and improve digital performance in 2026.",
       "h1": "How AI Is Reshaping Digital Marketing Strategies in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2120,
@@ -3353,22 +3455,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
       "path": "/blogs/ai-overview-ranking/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Overview: 7 Powerful Ways to Boost Search Visibility",
       "metaDescription": "AI Overview optimization helps businesses improve search visibility, build trust, answer user queries, and rank better in AI search.",
       "h1": "How to Rank in Google AI Overviews in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2034,
@@ -3427,22 +3530,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
       "path": "/blogs/ai-overview-seo/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews - D&#x27;Genius Solutions",
       "metaDescription": "AI Overview SEO helps websites rank in Google AI Overviews with helpful content, AEO, GEO, FAQs, technical SEO, trust signals, and internal links.",
       "h1": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2916,
@@ -3476,8 +3580,8 @@
         "impressionDelta": 10,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 18.6,
-        "previousWeightedPosition": 0,
-        "positionDelta": 18.6,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3499,24 +3603,25 @@
           "impressions": 10,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
       "path": "/blogs/ai-readiness-for-websites/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026 - D&#x27;Genius Solutions",
       "metaDescription": "AI readiness for websites is becoming essential in 2026. A business website can look polished, load well, and still be difficult for Google, AI Overviews,",
       "h1": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3195,
@@ -3549,8 +3654,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3568,29 +3673,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
       "path": "/blogs/ai-search-behavior-2026/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Search Behavior: 7 Proven Changes Businesses Must Know",
       "metaDescription": "AI search behavior is changing how users find answers, trust brands, and interact with search results in 2026.",
       "h1": "How AI Is Transforming Search Behavior in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2082,
@@ -3646,22 +3752,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
       "path": "/blogs/ai-search-checklist-2026/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Search Checklist 2026 for Modern Websites",
       "metaDescription": "AI Search Checklist 2026 covers 10 essential steps to improve Google rankings, AI Overviews, AI search visibility and website performance",
       "h1": "AI Search Checklist 2026 10 Essential Checks for Better Rankings",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2043,
@@ -3695,8 +3802,8 @@
         "impressionDelta": 2,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 29.5,
-        "previousWeightedPosition": 0,
-        "positionDelta": 29.5,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3718,24 +3825,25 @@
           "impressions": 2,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
       "path": "/blogs/ai-search-optimization-ecommerce/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026 - D&#x27;Genius Solutions",
       "metaDescription": "AI Search Optimization for E-commerce Brands helps online stores appear in Google and AI recommendations. Discover 9 proven strategies for 2026.",
       "h1": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3339,
@@ -3768,8 +3876,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3787,29 +3895,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
       "path": "/blogs/ai-tools-marketing-agencies/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Top AI Tools for Digital Marketing Agencies in 2026",
       "metaDescription": "AI tools help digital marketing agencies create content, manage campaigns, automate workflows, improve SEO, and save time in 2026.",
       "h1": "Top AI Tools for Digital Marketing Agencies in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1653,
@@ -3868,22 +3977,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
       "path": "/blogs/ai-video-production-cost-india/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "How Much Does AI Video Production Cost in India in 2026? - D&#x27;Genius Solutions",
       "metaDescription": "AI video production costAI video production cost in India in 2026 depends on the type of video, creative complexity, duration, number of scenes, AI models",
       "h1": "How Much Does AI Video Production Cost in India in 2026?",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3653,
@@ -3917,8 +4027,8 @@
         "impressionDelta": 36,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 6.44,
-        "previousWeightedPosition": 0,
-        "positionDelta": 6.44,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3940,24 +4050,25 @@
           "impressions": 36,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
       "path": "/blogs/ai-video-production-for-business/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "11 Ways AI Video Production for Business Helps Create More Content Faster",
       "metaDescription": "Learn how AI video production for business helps brands create more content faster, reduce costs, improve marketing, and scale content creation across digital platforms.",
       "h1": "AI Video Production for Business: How It Helps Brands Create More Content Faster",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2431,
@@ -4016,22 +4127,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
       "path": "/blogs/ai-video-vs-traditional-video/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "AI Video vs Traditional Video 7 Proven Differences for Brands",
       "metaDescription": "AI Video vs Traditional Video explained for brands. Compare cost, speed, quality, scalability and creative control to choose the right production approach.",
       "h1": "AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3356,
@@ -4065,8 +4177,8 @@
         "impressionDelta": 14,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 17.21,
-        "previousWeightedPosition": 0,
-        "positionDelta": 17.21,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -4088,24 +4200,25 @@
           "impressions": 14,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
       "path": "/blogs/brand-identity-seo-trust-lead-generation/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation - D&#x27;Genius Solutions",
       "metaDescription": "Brand identity is more than a logo, color palette, or business name. It is the complete way people recognize, remember, and trust your business online. In",
       "h1": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2523,
@@ -4164,22 +4277,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
       "path": "/blogs/brand-mentions-for-ai-tools/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Brand Mentions for AI Tools: 7 Powerful Ways to Build Trust",
       "metaDescription": "Brand Mentions for AI Tools help build online authority, improve AI visibility and increase your chances of appearing in trusted business recommendations.",
       "h1": "How Brand Mentions Help AI Tools Trust and Recommend Your Business",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2793,
@@ -4238,22 +4352,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
       "path": "/blogs/brand-visibility-in-ai-search/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Brand Visibility in AI Search: 7 Proven Measurement Methods",
       "metaDescription": "Learn how to measure brand visibility in AI search across ChatGPT, Gemini and Google AI Overviews using mentions, citations and share of voice.",
       "h1": "Brand Visibility in AI Search: 7 Ways to Measure It",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1755,
@@ -4312,22 +4427,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
       "path": "/blogs/chatgpt-brand-visibility/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "ChatGPT brand visibility: 7 Critical Reasons Competitors Win",
       "metaDescription": "ChatGPT brand visibility depends on clear entity signals, expert content and trusted proof. Learn 7 reasons competitors get recommended and how to fix it.",
       "h1": "ChatGPT Brand Visibility: Why Does ChatGPT Recommend Your Competitors but Not Your Brand?",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2426,
@@ -4386,22 +4502,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
       "path": "/blogs/content-strategy-for-seo/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss - D&#x27;Genius Solutions",
       "metaDescription": "Content strategy for SEO is not about publishing more blogs every week. It is about publishing the right content, targeting the right intent, supporting the",
       "h1": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2658,
@@ -4460,22 +4577,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
       "path": "/blogs/content-strategy-high-intent-traffic/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "7 Smart Content Strategy Tips for High-Intent Traffic",
       "metaDescription": "Learn how to build a content strategy for high-intent traffic with SEO, EEAT, and AEO-focused content that attracts the right audience and drives better leads",
       "h1": "7 Smart Content Strategy Tips for High-Intent Traffic",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2458,
@@ -4534,22 +4652,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
       "path": "/blogs/content-writing-for-seo/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Content Writing for SEO: 9 Ways to Rank and Convert - D&#x27;Genius Solutions",
       "metaDescription": "Content writing for SEO helps businesses create helpful, search-focused, and conversion-ready pages that rank higher on Google and convert visitors into",
       "h1": "Content Writing for SEO: 9 Ways to Rank and Convert",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3133,
@@ -4582,8 +4701,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4601,29 +4720,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
       "path": "/blogs/core-update-strategy/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Core Update Strategy: 8 Proven Ways to Protect Rankings",
       "metaDescription": "Build a core update strategy with original content, strong E-E-A-T, technical SEO and regular audits to protect your Google rankings.",
       "h1": "How to Build a Google Core Update-Resistant Content Strategy",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2206,
@@ -4656,8 +4776,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4675,29 +4795,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
       "path": "/blogs/future-of-seo/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Is SEO Dead in 2026? What Business Owners Need to Know",
       "metaDescription": "The future of SEO includes AEO, GEO, AIO, voice search, and AI readiness. Learn how businesses can improve visibility and generate qualified leads in 2026.",
       "h1": "Is SEO Dead in 2026? What Business Owners Need to Know",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1999,
@@ -4753,22 +4874,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
       "path": "/blogs/generative-engine-optimization-business/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026 - D&#x27;Genius Solutions",
       "metaDescription": "Generative Engine Optimization is now becoming a serious part of digital marketing because the way people search is changing. Earlier, most customers searched",
       "h1": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2587,
@@ -4802,8 +4924,8 @@
         "impressionDelta": 5,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 6.6,
-        "previousWeightedPosition": 0,
-        "positionDelta": 6.6,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -4825,24 +4947,25 @@
           "impressions": 5,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
       "path": "/blogs/generative-engine-optimization/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "7 Ways Generative Engine Optimization Helps Your Business",
       "metaDescription": "Learn what Generative Engine Optimization is, how GEO improves AI search visibility, and how it helps businesses build authority and generate better leads.",
       "h1": "What Is Generative Engine Optimization and How Can It Help Your Business?",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4531,
@@ -4901,22 +5024,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
       "path": "/blogs/geo-vs-seo-google-ai-search/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "GEO vs SEO: 7 Powerful Ways Businesses Can Rank in Google and AI Search",
       "metaDescription": "GEO vs SEO explains how businesses can improve visibility in Google search, AI Overviews, ChatGPT, Perplexity, and other AI search platforms with SEO and Generative Engine Optimization.",
       "h1": "GEO vs SEO: How to Rank in Google and AI Search",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3973,
@@ -4949,8 +5073,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4968,29 +5092,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
       "path": "/blogs/google-ads-ai-max-2026/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes",
       "metaDescription": "Google Ads AI Max 2026 is changing how advertisers manage Search campaigns, targeting, advertising assets and landing pages. Instead of depending only on manually selected keywords and fixed landing pages, Google is giving its AI more freedom to understand search intent, expand relevant reach, customise advertising mes",
       "h1": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3036,
@@ -5024,8 +5149,8 @@
         "impressionDelta": 40,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 17.6,
-        "previousWeightedPosition": 0,
-        "positionDelta": 17.6,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5047,24 +5172,25 @@
           "impressions": 40,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
       "path": "/blogs/google-ads-vs-meta-ads/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026? - D&#x27;Genius Solutions",
       "metaDescription": "Google Ads vs Meta Ads does not have one universal winner for lead generation in 2026. Google Ads generally performs strongly when people are already",
       "h1": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026?",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3828,
@@ -5097,8 +5223,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5116,29 +5242,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
       "path": "/blogs/google-agentic-browsing/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Agentic Browsing: 7 Website Changes for 2026 - D&#x27;Genius Solutions",
       "metaDescription": "Google Agentic Browsing is changing how AI agents understand and use websites. Discover 7 steps to prepare your website for AI search in 2026",
       "h1": "Google Agentic Browsing: 7 Website Changes for 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2803,
@@ -5194,22 +5321,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
       "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google AI Overviews and the Growth of Zero-Click Searches",
       "metaDescription": "Google AI Overviews are reshaping search behavior and increasing zero-click searches. Learn how this shift impacts SEO, traffic, and digital visibility in 2025",
       "h1": "Google AI Overviews and the Growth of Zero-Click Searches",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1761,
@@ -5268,22 +5396,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
       "path": "/blogs/google-ai-overviews-image-generation/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take - D&#x27;Genius Solutions",
       "metaDescription": "Google AI Overviews image generation is changing how people discover, create and interact with visual information through Google Search.",
       "h1": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3134,
@@ -5317,8 +5446,8 @@
         "impressionDelta": 8,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 9.5,
-        "previousWeightedPosition": 0,
-        "positionDelta": 9.5,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5340,24 +5469,25 @@
           "impressions": 8,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
       "path": "/blogs/google-ai-search-update/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads - D&#x27;Genius Solutions",
       "metaDescription": "Google AI Search Update helps businesses improve AI search visibility, build trust, answer user queries, and generate better leads.",
       "h1": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3944,
@@ -5390,8 +5520,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5409,29 +5539,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
       "path": "/blogs/google-algorithm-business/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Algorithm: 5 Critical Reasons Business Search Rankings Change",
       "metaDescription": "Discover 5 ways the Google Algorithm affects business search visibility, rankings, traffic, and lead generation, and why it matters for long-term online growth.",
       "h1": "Google Algorithm for Businesses: What It Means for Search Visibility",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1631,
@@ -5464,8 +5595,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5483,29 +5614,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
       "path": "/blogs/google-august-2026-spam-update/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings",
       "metaDescription": "The Google August 2026 spam update has put website quality back under the spotlight. For businesses that depend on Google for enquiries, sales and organic visibility, even a small ranking shift can have a noticeable impact on website performance. Google started rolling out the update on August 18, 2026, and completed i",
       "h1": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3329,
@@ -5539,8 +5671,8 @@
         "impressionDelta": 5,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 70,
-        "previousWeightedPosition": 0,
-        "positionDelta": 70,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5562,24 +5694,25 @@
           "impressions": 5,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-io-2026/",
       "path": "/blogs/google-io-2026/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google I/O 2026 SEO Updates That Will Transform AI Search - D&#x27;Genius Solutions",
       "metaDescription": "Google I/O 2026 made one thing clear: the future of search is becoming more AI-driven, more conversational, and more personalized.",
       "h1": "Google I/O 2026 SEO Updates That Will Transform AI Search",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-io-2026/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2935,
@@ -5612,8 +5745,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5631,29 +5764,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
       "path": "/blogs/google-ranking-fixes/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Ranking: 7 Proven Fixes for Better Visibility",
       "metaDescription": "Google ranking can improve when your website SEO, technical issues, content quality, backlinks, and local SEO signals are properly optimized. Learn how to fix it.",
       "h1": "7 Critical Reasons Why Your Business Is Not Ranking on Google",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4324,
@@ -5712,22 +5846,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
       "path": "/blogs/google-search-console-social-media/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026 - D&#x27;Genius Solutions",
       "metaDescription": "Google Search Console social media tracking is becoming an important topic for businesses, marketers, creators and SEO teams. Google Search is no longer",
       "h1": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2824,
@@ -5761,8 +5896,8 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 8,
-        "previousWeightedPosition": 0,
-        "positionDelta": 8,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5784,24 +5919,25 @@
           "impressions": 3,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
       "path": "/blogs/google-spam-update/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
       "metaDescription": "A Google spam update can affect your website ranking, traffic, and leads. Learn why rankings drop and how DGS helps businesses recover with clean SEO, content, and backlink fixes.",
       "h1": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2047,
@@ -5834,8 +5970,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5853,29 +5989,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
       "path": "/blogs/llm-seo-ai-search/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models - D&#x27;Genius Solutions",
       "metaDescription": "LLM SEO is becoming important for businesses that want visibility on Google, AI search tools and large language models like ChatGPT, Gemini, Perplexity and",
       "h1": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3187,
@@ -5908,8 +6045,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5927,29 +6064,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
       "path": "/blogs/llm-seo-services-mumbai/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "LLM SEO Services: 7 Proven Ways to Improve AI Visibility",
       "metaDescription": "LLM SEO Services help Mumbai businesses improve AI visibility, search relevance, citations, and content clarity across modern search platforms.",
       "h1": "Key LLM SEO Services for Modern Businesses in Mumbai",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2271,
@@ -6008,22 +6146,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
       "path": "/blogs/local-seo-business-growth/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Local SEO: 7 Proven Ways to Grow Your Business",
       "metaDescription": "Local SEO helps businesses improve nearby visibility, attract targeted customers, build trust, and generate qualified local leads.",
       "h1": "Why Local SEO Is Important for Business Growth",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2002,
@@ -6057,8 +6196,8 @@
         "impressionDelta": 2,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 5,
-        "previousWeightedPosition": 0,
-        "positionDelta": 5,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6080,24 +6219,25 @@
           "impressions": 2,
           "ctr": 0
         },
-        "recoveryTier": "PARTIAL_RECOVERY"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
       "path": "/blogs/low-social-media-reach/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Low Social Media Reach in 2026? 9 Proven Fixes",
       "metaDescription": "Low social media reach despite trending audio and hashtags? Learn why posts stall, what affects visibility, and how to improve organic reach in 2026.",
       "h1": "Low Social Media Reach in 2026? Why Trending Audio and Hashtags Are Not Enough",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3467,
@@ -6131,8 +6271,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 1,
-        "previousWeightedPosition": 0,
-        "positionDelta": 1,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6154,24 +6294,25 @@
           "impressions": 1,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
       "path": "/blogs/modern-seo-business-growth/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Modern SEO Strategies for Business Growth 2026",
       "metaDescription": "Discover how modern SEO Strategies like EEAT, AEO, GEO drives revenue and visibility. D&#x27;Genius Solutions Mumbai shares actionable Insights for growth and leads.",
       "h1": "How Modern SEO Strategies Are Transforming Business Growth",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2350,
@@ -6230,22 +6371,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
       "path": "/blogs/optimize-content-ai-search/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Optimize Content for AI Search With 11 Proven Strategies",
       "metaDescription": "Optimize content for AI search with 11 proven strategies for ChatGPT, Gemini, Perplexity",
       "h1": "How to Optimize Content for ChatGPT, Gemini, Perplexity and Google AI Mode",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4036,
@@ -6279,8 +6421,8 @@
         "impressionDelta": 6,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 12.33,
-        "previousWeightedPosition": 0,
-        "positionDelta": 12.33,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6302,24 +6444,25 @@
           "impressions": 6,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
       "path": "/blogs/optimize-for-ai-overviews/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "How to Optimize for AI Overviews in 2026 | DGS",
       "metaDescription": "Learn how to optimize for AI overviews in 2026 with AEO, GEO, LLM SEO, voice search, AI readiness, and lead-generation hints from DGS.",
       "h1": "Optimize for AI Overviews in 2026: Proven Growth Guide",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3724,
@@ -6352,8 +6495,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6371,29 +6514,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
       "path": "/blogs/schema-seo-for-small-business/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Schema SEO for Small Business: 7 Easy Steps for 2026 - D&#x27;Genius Solutions",
       "metaDescription": "Schema SEO for small business helps search engines understand what a company does, where it operates and what information is available on its website.",
       "h1": "Schema SEO for Small Business: 7 Easy Steps for 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3080,
@@ -6426,8 +6570,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6445,29 +6589,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
       "path": "/blogs/search-generative-ai-performance-reports/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility - D&#x27;Genius Solutions",
       "metaDescription": "Google has introduced a major new update for website owners, SEO teams, publishers, and digital marketers: dedicated Search Generative AI performance reports",
       "h1": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2976,
@@ -6523,22 +6668,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
       "path": "/blogs/seo-company-in-mumbai/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "7 Proven Tips to Hire an SEO Agency in Mumbai",
       "metaDescription": "Choosing the right SEO Company in Mumbai can directly affect your website visibility, lead generation and long-term digital growth. The challenge is that many SEO providers make similar promises around rankings, traffic and backlinks, which makes it difficult for businesses to identify the right partner. A strong SEO c",
       "h1": "7 Proven Tips to Hire an SEO Agency in Mumbai",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1656,
@@ -6572,8 +6718,8 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 7,
-        "previousWeightedPosition": 0,
-        "positionDelta": 7,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6595,24 +6741,25 @@
           "impressions": 3,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
       "path": "/blogs/seo-friendly-website/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site - D&#x27;Genius Solutions",
       "metaDescription": "SEO friendly website planning is no longer only about adding keywords to pages. A business website now needs clean development, strong web design, fast",
       "h1": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3298,
@@ -6645,8 +6792,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6664,29 +6811,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
       "path": "/blogs/seo-rankings-up-but-traffic-down/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling - D&#x27;Genius Solutions",
       "metaDescription": "SEO rankings up but traffic down is one of the most confusing situations a business can face. Your tracked keywords may be moving higher on Google, yet",
       "h1": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3719,
@@ -6745,22 +6893,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
       "path": "/blogs/seo-services-india-2026/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Rising Demand for SEO Services in India in 2026",
       "metaDescription": "Explore why SEO services are in rising demand in India in 2026 and how businesses are using SEO for visibility, leads, local reach, and long-term growth",
       "h1": "Rising Demand for SEO Services in India in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2368,
@@ -6794,8 +6943,8 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 36,
-        "previousWeightedPosition": 0,
-        "positionDelta": 36,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6817,24 +6966,25 @@
           "impressions": 3,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
       "path": "/blogs/seo-strategies-business-growth/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
       "metaDescription": "Learn how SEO strategies for business growth improve rankings, search visibility, user trust, and lead generation for businesses.",
       "h1": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2186,
@@ -6867,8 +7017,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6886,29 +7036,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
       "path": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Social Media Conversion: 9 Reasons Followers Don&#x27;t Buy",
       "metaDescription": "Struggling with social media conversion? Learn why followers are not becoming customers and how to turn social media engagement into leads and sales.",
       "h1": "Social Media Conversion: Why Your Followers Are Not Becoming Customers",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3551,
@@ -6942,8 +7093,8 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 13,
-        "previousWeightedPosition": 0,
-        "positionDelta": 13,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6965,24 +7116,25 @@
           "impressions": 3,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
       "path": "/blogs/social-media-marketing-strategy/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Social Media Marketing Strategy 2026 for Small Businesses",
       "metaDescription": "Learn how a social media marketing strategy helps small businesses grow reach, branding, engagement, traffic, and leads with smarter digital marketing.",
       "h1": "Social Media Marketing Strategy 2026 for Small Businesses",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2212,
@@ -7041,22 +7193,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
       "path": "/blogs/topical-authority-seo/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Why Topical Authority Matters More Than Keyword Density in 2026",
       "metaDescription": "Learn why topical authority matters more than keyword density in 2026 and how it helps improve SEO, AEO, GEO, and long-term organic visibility.",
       "h1": "Why Topical Authority Matters More Than Keyword Density in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2222,
@@ -7090,8 +7243,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 8,
-        "previousWeightedPosition": 0,
-        "positionDelta": 8,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -7113,24 +7266,25 @@
           "impressions": 1,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
       "path": "/blogs/voice-search-seo/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches - D&#x27;Genius Solutions",
       "metaDescription": "Voice Search SEO helps businesses optimise their websites for searches made through spoken questions and natural, conversational language.",
       "h1": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3515,
@@ -7163,8 +7317,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7182,29 +7336,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
       "path": "/blogs/website-design-lead-generation-mumbai/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Why Website Design Directly Affects Lead Generation",
       "metaDescription": "Website design and lead generation are directly connected because users decide within seconds whether they trust a business or not. A website may get traffic,",
       "h1": "Why Website Design Directly Affects Lead Generation",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2783,
@@ -7237,8 +7392,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7256,29 +7411,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/website-development-leads/",
       "path": "/blogs/website-development-leads/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "How to Turn Website Traffic Into Qualified Leads",
       "metaDescription": "Website Development helps businesses turn website traffic into qualified leads through better structure, trust, content, and user journey.",
       "h1": "How to Turn Website Traffic Into Qualified Leads",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/website-development-leads/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2425,
@@ -7337,22 +7493,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
       "path": "/blogs/website-development-mistakes/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Website Development Mistakes That Hurt Business Growth",
       "metaDescription": "Website development mistakes are not just design errors. They are structural, technical, content, and trust-related gaps that stop a website from ranking,",
       "h1": "Website Development Mistakes That Hurt Business Growth",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3471,
@@ -7385,8 +7542,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7404,29 +7561,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
       "path": "/blogs/website-development-quality-leads/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "7 Website Development Features That Help Businesses Generate Quality Leads - D&#x27;Genius Solutions",
       "metaDescription": "Website Development plays a major role in how a business attracts, engages, and converts potential customers online. A website may look professional, but its",
       "h1": "7 Website Development Features That Help Businesses Generate Quality Leads",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2330,
@@ -7459,8 +7617,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7478,29 +7636,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
       "path": "/blogs/website-performance-conversions/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Why Website Performance Still Decides Conversions in 2026",
       "metaDescription": "Discover why website performance still drives conversions in 2026 and how faster, smoother user experiences help improve trust, SEO, and business growth.",
       "h1": "Why Website Performance Still Decides Conversions in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2375,
@@ -7559,22 +7718,23 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
       "path": "/blogs/website-traffic-but-no-leads/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "Website Traffic but No Leads? 9 Proven Fixes That Work",
       "metaDescription": "Website traffic but no leads? Discover 9 proven reasons visitors do not convert and learn how to improve traffic quality, landing pages, CTAs, trust and tracking.",
       "h1": "Website Traffic but No Leads? 9 Proven Fixes That Work",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2625,
@@ -7608,8 +7768,8 @@
         "impressionDelta": 62,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 24.63,
-        "previousWeightedPosition": 0,
-        "positionDelta": 24.63,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -7631,24 +7791,25 @@
           "impressions": 62,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
       "path": "/blogs/what-is-llm-seo/",
-      "pageType": "post",
+      "pageType": "blog",
       "title": "What Is LLM SEO? Powerful 2026 Guide to AI Search Optimization",
       "metaDescription": "LLM SEO helps businesses improve visibility across AI search platforms like ChatGPT, Gemini, Perplexity, Copilot, and Google AI results. Learn how it supports brand authority, AI visibility, and lead generation in 2026.",
       "h1": "What Is LLM SEO and Why Businesses Should Care in 2026",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3807,
@@ -7681,8 +7842,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7700,16 +7861,18 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -7722,7 +7885,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/career/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 691,
@@ -7747,8 +7909,8 @@
         "impressionDelta": 4,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 13.25,
-        "previousWeightedPosition": 0,
-        "positionDelta": 13.25,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -7770,11 +7932,13 @@
           "impressions": 4,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -7787,7 +7951,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/case_studies/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1657,
@@ -7842,9 +8005,11 @@
         },
         "recoveryTier": "AT_HISTORICAL_PEAK"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -7857,7 +8022,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/contact-us/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 595,
@@ -7912,9 +8076,11 @@
         },
         "recoveryTier": "SIGNIFICANT_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -7927,7 +8093,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/our-services/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1018,
@@ -7982,9 +8147,11 @@
         },
         "recoveryTier": "SIGNIFICANT_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -7997,7 +8164,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/portfolio/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 753,
@@ -8052,9 +8218,11 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8067,7 +8235,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/privacy-policy/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2938,
@@ -8096,8 +8263,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -8115,29 +8282,30 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
       "url": "https://www.dgeniussolutions.com/services/",
       "path": "/services/",
-      "pageType": "page",
+      "pageType": "service",
       "title": "Services - D&#x27;Genius Solutions",
       "metaDescription": "Services Archive - D&#x27;Genius Solutions",
       "h1": "Our Services",
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1033,
@@ -8166,8 +8334,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -8185,16 +8353,18 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8207,7 +8377,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3300,
@@ -8232,43 +8401,56 @@
       "primaryQueryFamily": "AEO (Answer Engine Optimisation)",
       "isProtectedTier0": true,
       "metrics": {
-        "currentClicks": 0,
+        "currentClicks": 1,
         "previousClicks": 1,
-        "clickDelta": -1,
-        "clickDeltaPct": -100,
-        "currentImpressions": 143,
-        "previousImpressions": 177,
-        "impressionDelta": -34,
-        "impressionDeltaPct": -19.2,
-        "currentWeightedPosition": 19.55,
-        "previousWeightedPosition": 18.85,
-        "positionDelta": 0.7,
-        "currentCtr": 0,
-        "previousCtr": 0.56
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 11,
+        "previousImpressions": 11,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": 1.2,
+        "previousWeightedPosition": 1,
+        "positionDelta": 0.2,
+        "currentCtr": 9.09,
+        "previousCtr": 9.09
       },
-      "classification": "DECLINING",
+      "classification": "INSUFFICIENT_DATA",
       "oldClassification": "STABLE",
-      "spamRisk": "LOW",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
       "riskReasons": [],
       "blogClassification": null,
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
           "peakPosition": 1,
           "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 19.55,
-          "clicks": 0,
-          "impressions": 143,
-          "ctr": 0
+          "weightedPosition": 1.2,
+          "clicks": 1,
+          "impressions": 11,
+          "ctr": 9.09
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
+      "historicalRecovery": {
+        "primaryCommercialQuery": "aeo services in mumbai",
+        "historicalPeakPosition": 1,
+        "currentCommercialQueryPosition": 1.2,
+        "currentCommercialQueryImpressions": 11,
+        "currentCommercialQueryClicks": 1,
+        "historicalRecoveryTier": "AT_HISTORICAL_PEAK",
+        "positionLoss": 0.2,
+        "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+        "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+        "pageWideAveragePositionSupplemental": 1.2
       },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8281,7 +8463,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3197,
@@ -8337,9 +8518,11 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8352,7 +8535,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4756,
@@ -8374,43 +8556,56 @@
       "primaryQueryFamily": "AI Video Production",
       "isProtectedTier0": true,
       "metrics": {
-        "currentClicks": 8,
-        "previousClicks": 10,
-        "clickDelta": -2,
-        "clickDeltaPct": -20,
-        "currentImpressions": 292,
-        "previousImpressions": 328,
-        "impressionDelta": -36,
-        "impressionDeltaPct": -11,
-        "currentWeightedPosition": 16.07,
-        "previousWeightedPosition": 15.15,
-        "positionDelta": 0.92,
-        "currentCtr": 2.74,
-        "previousCtr": 3.05
+        "currentClicks": 2,
+        "previousClicks": 2,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 53,
+        "previousImpressions": 53,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": 2.1,
+        "previousWeightedPosition": 2.8,
+        "positionDelta": -0.7,
+        "currentCtr": 3.77,
+        "previousCtr": 3.77
       },
-      "classification": "DECLINING",
+      "classification": "STABLE",
       "oldClassification": "CRITICAL_DECLINE",
       "spamRisk": "LOW",
       "riskReasons": [],
       "blogClassification": null,
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
           "peakPosition": 1,
           "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 16.07,
-          "clicks": 8,
-          "impressions": 292,
-          "ctr": 2.74
+          "weightedPosition": 2.1,
+          "clicks": 2,
+          "impressions": 53,
+          "ctr": 3.77
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "NEAR_HISTORICAL_PEAK"
+      },
+      "historicalRecovery": {
+        "primaryCommercialQuery": "ai video production agency in mumbai",
+        "historicalPeakPosition": 1,
+        "currentCommercialQueryPosition": 2.1,
+        "currentCommercialQueryImpressions": 53,
+        "currentCommercialQueryClicks": 2,
+        "historicalRecoveryTier": "NEAR_HISTORICAL_PEAK",
+        "positionLoss": 1.1,
+        "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+        "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+        "pageWideAveragePositionSupplemental": 2.1
       },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8423,7 +8618,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/branding/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1618,
@@ -8468,8 +8662,8 @@
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": 1,
-          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
         },
         "currentPerformanceBaseline": {
           "weightedPosition": 63.67,
@@ -8479,9 +8673,11 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8494,7 +8690,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/content-creation/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2389,
@@ -8527,8 +8722,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -8542,20 +8737,22 @@
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": 1,
-          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8568,7 +8765,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/dubai-seo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4195,
@@ -8594,13 +8790,13 @@
         "previousClicks": 0,
         "clickDelta": 0,
         "clickDeltaPct": 0,
-        "currentImpressions": 0,
-        "previousImpressions": 0,
+        "currentImpressions": 4,
+        "previousImpressions": 4,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
-        "positionDelta": 0,
+        "currentWeightedPosition": 8.25,
+        "previousWeightedPosition": 2,
+        "positionDelta": 6.25,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -8613,20 +8809,33 @@
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": null,
-          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": 8.25,
           "clicks": 0,
-          "impressions": 0,
+          "impressions": 4,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
+      "historicalRecovery": {
+        "primaryCommercialQuery": "seo agency in dubai",
+        "historicalPeakPosition": 1,
+        "currentCommercialQueryPosition": 8.25,
+        "currentCommercialQueryImpressions": 4,
+        "currentCommercialQueryClicks": 0,
+        "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+        "positionLoss": 7.25,
+        "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+        "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+        "pageWideAveragePositionSupplemental": 8.25
       },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8639,7 +8848,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/geo/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2522,
@@ -8664,43 +8872,56 @@
       "primaryQueryFamily": "GEO (Generative Engine Optimisation)",
       "isProtectedTier0": true,
       "metrics": {
-        "currentClicks": 1,
-        "previousClicks": 5,
-        "clickDelta": -4,
-        "clickDeltaPct": -80,
-        "currentImpressions": 255,
-        "previousImpressions": 324,
-        "impressionDelta": -69,
-        "impressionDeltaPct": -21.3,
-        "currentWeightedPosition": 30.14,
-        "previousWeightedPosition": 25.95,
-        "positionDelta": 4.19,
-        "currentCtr": 0.39,
-        "previousCtr": 1.54
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 25,
+        "previousImpressions": 25,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": 5.2,
+        "previousWeightedPosition": 4,
+        "positionDelta": 1.2,
+        "currentCtr": 0,
+        "previousCtr": 0
       },
-      "classification": "CRITICAL_DECLINE",
+      "classification": "STABLE",
       "oldClassification": "STABLE",
       "spamRisk": "LOW",
       "riskReasons": [],
       "blogClassification": null,
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
           "peakPosition": 1,
           "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 30.14,
-          "clicks": 1,
-          "impressions": 255,
-          "ctr": 0.39
+          "weightedPosition": 5.2,
+          "clicks": 0,
+          "impressions": 25,
+          "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
+      "historicalRecovery": {
+        "primaryCommercialQuery": "geo services in mumbai",
+        "historicalPeakPosition": 1,
+        "currentCommercialQueryPosition": 5.2,
+        "currentCommercialQueryImpressions": 25,
+        "currentCommercialQueryClicks": 0,
+        "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+        "positionLoss": 4.2,
+        "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+        "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+        "pageWideAveragePositionSupplemental": 5.2
       },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8713,7 +8934,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/llm-seo-service/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2300,
@@ -8739,42 +8959,55 @@
       "isProtectedTier0": true,
       "metrics": {
         "currentClicks": 0,
-        "previousClicks": 2,
-        "clickDelta": -2,
-        "clickDeltaPct": -100,
-        "currentImpressions": 109,
-        "previousImpressions": 159,
-        "impressionDelta": -50,
-        "impressionDeltaPct": -31.4,
-        "currentWeightedPosition": 35.63,
-        "previousWeightedPosition": 17.45,
-        "positionDelta": 18.18,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 18,
+        "previousImpressions": 18,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": 10.8,
+        "previousWeightedPosition": 8,
+        "positionDelta": 2.8,
         "currentCtr": 0,
-        "previousCtr": 1.26
+        "previousCtr": 0
       },
-      "classification": "CRITICAL_DECLINE",
+      "classification": "STABLE",
       "oldClassification": "STABLE",
       "spamRisk": "LOW",
       "riskReasons": [],
       "blogClassification": null,
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
           "peakPosition": 1,
           "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 35.63,
+          "weightedPosition": 10.8,
           "clicks": 0,
-          "impressions": 109,
+          "impressions": 18,
           "ctr": 0
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": {
+        "primaryCommercialQuery": "best llm seo agency in mumbai",
+        "historicalPeakPosition": 1,
+        "currentCommercialQueryPosition": 10.8,
+        "currentCommercialQueryImpressions": 18,
+        "currentCommercialQueryClicks": 0,
+        "historicalRecoveryTier": "CRITICAL_LOSS",
+        "positionLoss": 9.8,
+        "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
+        "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
+        "pageWideAveragePositionSupplemental": 10.8
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8787,7 +9020,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/performance-marketing/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1545,
@@ -8817,8 +9049,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -8832,20 +9064,22 @@
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": 1,
-          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8858,7 +9092,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4436,
@@ -8892,8 +9125,8 @@
         "impressionDelta": 48,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 55.9,
-        "previousWeightedPosition": 0,
-        "positionDelta": 55.9,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -8915,11 +9148,13 @@
           "impressions": 48,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -8932,7 +9167,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4431,
@@ -8966,8 +9200,8 @@
         "impressionDelta": 6,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 45.83,
-        "previousWeightedPosition": 0,
-        "positionDelta": 45.83,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -8989,11 +9223,13 @@
           "impressions": 6,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9006,7 +9242,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/seo-service-pune/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4468,
@@ -9040,8 +9275,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 37,
-        "previousWeightedPosition": 0,
-        "positionDelta": 37,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -9063,11 +9298,13 @@
           "impressions": 1,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9080,7 +9317,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4427,
@@ -9114,8 +9350,8 @@
         "impressionDelta": 18,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 55.67,
-        "previousWeightedPosition": 0,
-        "positionDelta": 55.67,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -9137,11 +9373,13 @@
           "impressions": 18,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9154,7 +9392,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4687,
@@ -9202,8 +9439,8 @@
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": 1,
-          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
         },
         "currentPerformanceBaseline": {
           "weightedPosition": 20.9,
@@ -9213,9 +9450,11 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9228,7 +9467,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1834,
@@ -9258,8 +9496,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -9277,16 +9515,18 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9299,7 +9539,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/social-media-marketing/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2201,
@@ -9344,8 +9583,8 @@
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": 1,
-          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
         },
         "currentPerformanceBaseline": {
           "weightedPosition": 53.23,
@@ -9355,9 +9594,11 @@
         },
         "recoveryTier": "CRITICAL_LOSS"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9370,7 +9611,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/website-development-amc/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3648,
@@ -9401,8 +9641,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 2,
-        "previousWeightedPosition": 0,
-        "positionDelta": 2,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -9415,8 +9655,8 @@
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
-          "peakPosition": 1,
-          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
           "weightedPosition": 2,
@@ -9424,11 +9664,13 @@
           "impressions": 1,
           "ctr": 0
         },
-        "recoveryTier": "NEAR_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "MONITORED"
+        "status": "MONITORED",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9441,7 +9683,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3828,
@@ -9471,8 +9712,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -9490,16 +9731,18 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9512,7 +9755,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/sitemap/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 650,
@@ -9541,8 +9783,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": 0,
-        "previousWeightedPosition": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -9560,16 +9802,18 @@
           "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
         },
         "currentPerformanceBaseline": {
-          "weightedPosition": 0,
+          "weightedPosition": null,
           "clicks": 0,
           "impressions": 0,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     },
     {
@@ -9582,7 +9826,6 @@
       "h1Count": 1,
       "canonical": "https://www.dgeniussolutions.com/us-landing-page/",
       "robots": "index, follow",
-      "sitemap": true,
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 1954,
@@ -9612,8 +9855,8 @@
         "impressionDelta": 10,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 6.8,
-        "previousWeightedPosition": 0,
-        "positionDelta": 6.8,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -9635,11 +9878,230 @@
           "impressions": 10,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
       },
+      "historicalRecovery": null,
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/career/generative-ai-artist/",
+      "path": "/career/generative-ai-artist/",
+      "pageType": "page",
+      "title": "Generative AI Artist Job in Mumbai | Careers at D&#x27;Genius Solutions",
+      "metaDescription": "Generate high-impact AI images, concept art, storyboards, and AI-powered video sequences for social campaigns, advertisements, and client brand productions at D&#x27;Genius Solutions in Khar West, Mumbai. View responsibilities, requirements, workplace details and apply online.",
+      "h1": "Generative AI Artist",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/career/generative-ai-artist/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 913,
+      "contentHash": "da2b24796fc99c4a8b352c452627ab899ec0dc04c7a2f7d87033a75870d009ce",
+      "schemaTypes": [
+        "JobPosting",
+        "Organization",
+        "Place",
+        "PostalAddress",
+        "Country",
+        "MonetaryAmount",
+        "QuantitativeValue",
+        "BreadcrumbList",
+        "ListItem"
+      ],
+      "internalLinksCount": 50,
+      "externalLinksCount": 15,
+      "imagesCount": 8,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": null,
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": null,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
+      },
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/dgs-cms-scheduled-cron-qa/",
+      "path": "/blogs/dgs-cms-scheduled-cron-qa/",
+      "pageType": "blog",
+      "title": "DGS CMS Scheduled Cron QA | DGS Verification",
+      "metaDescription": "Technical automated verification of the DGS Native CMS scheduled publishing pipeline executed via GitHub Actions cron schedule event.",
+      "h1": "DGS CMS Scheduled Cron QA",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/dgs-cms-scheduled-cron-qa/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 796,
+      "contentHash": "5819afcad9fbb97bdd2a153e2b0466b5cfc1ffc36433ab3b419e2920aa5210fb",
+      "schemaTypes": [
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "ListItem",
+        "BlogPosting"
+      ],
+      "internalLinksCount": 59,
+      "externalLinksCount": 15,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": null,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
+      },
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
+      "path": "/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
+      "pageType": "blog",
+      "title": "Google Ads for B2B Lead Generation How to Get Better...",
+      "metaDescription": "Google Ads for B2B Lead Generation How to Get Better Quality Leads Getting leads from Google Ads is relatively easy. Getting the right B2B leads is where",
+      "h1": "Google Ads for B2B Lead Generation How to Get Better Quality Leads",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2391,
+      "contentHash": "de5ed44e0eeb843be5634f69b0f987644751442f9f443d914d746f50c45dd818",
+      "schemaTypes": [
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "ListItem",
+        "BlogPosting"
+      ],
+      "internalLinksCount": 67,
+      "externalLinksCount": 15,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": null,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "INSUFFICIENT_HISTORICAL_DATA"
+      },
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
       }
     }
   ]

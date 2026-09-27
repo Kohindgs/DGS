@@ -32,6 +32,13 @@ export type GoogleSearchUpdate = {
   affected_dgs_areas: string[];
   status: "new" | "acknowledged" | "monitoring" | "resolved";
   assessment_status: "NOT APPLICABLE" | "NOT ASSESSED" | "ASSESSING" | "COMPLIANT" | "NEEDS REVIEW" | "NON-COMPLIANT" | "INSUFFICIENT EVIDENCE";
+  site_policy_compliance?: "COMPLIANT" | "NEEDS REVIEW" | "NON-COMPLIANT" | "INSUFFICIENT EVIDENCE" | null;
+  ranking_impact_status?: "ACTIVE — PARTIAL DATA" | "PENDING POST-ROLLOUT" | "STABLE" | "DECLINING" | "RECOVERING" | null;
+  sitePolicyCompliance?: "COMPLIANT" | "NEEDS REVIEW" | "NON-COMPLIANT" | "INSUFFICIENT EVIDENCE" | null;
+  rankingImpactStatus?: "ACTIVE — PARTIAL DATA" | "PENDING POST-ROLLOUT" | "STABLE" | "DECLINING" | "RECOVERING" | null;
+  reputation_verified_by?: string | null;
+  reputation_verified_at?: string | null;
+  reputation_notes?: string | null;
   assessment_date?: string | null;
   evidence?: string | null;
   affected_pages?: string[];
@@ -526,6 +533,31 @@ function mapRowToUpdate(row: Record<string, unknown>): GoogleSearchUpdate {
     assessmentStatus = "NOT ASSESSED";
   }
 
+  let sitePolicyCompliance = row.site_policy_compliance ? String(row.site_policy_compliance) : null;
+  let rankingImpactStatus = row.ranking_impact_status ? String(row.ranking_impact_status) : null;
+
+  if (!sitePolicyCompliance) {
+    if (assessmentStatus === "COMPLIANT") sitePolicyCompliance = "COMPLIANT";
+    else if (assessmentStatus === "NEEDS REVIEW") sitePolicyCompliance = "NEEDS REVIEW";
+    else if (assessmentStatus === "NON-COMPLIANT") sitePolicyCompliance = "NON-COMPLIANT";
+    else if (assessmentStatus === "INSUFFICIENT EVIDENCE") sitePolicyCompliance = "INSUFFICIENT EVIDENCE";
+    else sitePolicyCompliance = null;
+  }
+
+  if (!rankingImpactStatus) {
+    const pubDate = row.published_at ? new Date(String(row.published_at)) : null;
+    const now = Date.now();
+    if (pubDate && (now - pubDate.getTime()) < 14 * 24 * 60 * 60 * 1000) {
+      rankingImpactStatus = "ACTIVE — PARTIAL DATA";
+    } else if (pubDate && (now - pubDate.getTime()) < 28 * 24 * 60 * 60 * 1000) {
+      rankingImpactStatus = "PENDING POST-ROLLOUT";
+    } else if (assessmentStatus !== "NOT ASSESSED" && assessmentStatus !== "NOT APPLICABLE") {
+      rankingImpactStatus = "STABLE";
+    } else {
+      rankingImpactStatus = null;
+    }
+  }
+
   return {
     id: String(row.id),
     title,
@@ -542,6 +574,13 @@ function mapRowToUpdate(row: Record<string, unknown>): GoogleSearchUpdate {
     affected_dgs_areas: affectedAreas,
     status: String(row.status) as GoogleSearchUpdate["status"],
     assessment_status: assessmentStatus,
+    site_policy_compliance: sitePolicyCompliance as any,
+    ranking_impact_status: rankingImpactStatus as any,
+    sitePolicyCompliance: sitePolicyCompliance as any,
+    rankingImpactStatus: rankingImpactStatus as any,
+    reputation_verified_by: row.reputation_verified_by ? String(row.reputation_verified_by) : null,
+    reputation_verified_at: row.reputation_verified_at ? String(row.reputation_verified_at) : null,
+    reputation_notes: row.reputation_notes ? String(row.reputation_notes) : null,
     assessment_date: row.assessment_date ? String(row.assessment_date) : null,
     evidence: row.evidence ? String(row.evidence) : null,
     affected_pages: affectedAreas,
@@ -662,9 +701,9 @@ export function generateDgsImpact(
   ) {
     return {
       whatChanged:
-        "Algorithmic spam enforcement targeting low-effort scaled content, expired domain abuse, site reputation abuse, and manipulative backlink schemes.",
+        "Official: Google released a global spam update. DGS Policy Review Areas: scaled-content abuse, site reputation abuse, expired-domain abuse, link spam, doorway behaviour, and other published spam policies.",
       impactAnalysis:
-        "Potential DGS Impact (Hypothesis): Google is enforcing algorithmic penalties against low-effort scaled content, site reputation abuse, and expired domains. DGS editorial standards and white-hat practices serve as defensive architecture; verified compliance and risk status require empirical site audit and GSC performance evidence.",
+        "Potential DGS Impact (Hypothesis): Google is rolling out an automated spam update across search systems. DGS policy review areas encompass scaled-content abuse, site reputation abuse, expired-domain abuse, link spam, and doorway behavior. DGS white-hat architectural standards serve as defensive baseline; verified compliance and risk status require empirical site audit and GSC performance evidence.",
       actionRequired:
         "Audit incoming backlink referrers for unnatural patterns; verify that all published blog articles carry verified author credentials and editorial review.",
       recommendedActions: generateSafeRecommendations(severity, "Spam Update"),

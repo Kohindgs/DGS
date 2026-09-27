@@ -3,6 +3,12 @@ import path from "node:path";
 import crypto from "node:crypto";
 import mysql from "mysql2/promise";
 import { formatAuditDate, formatDateOnly, getDaysAgo } from "../lib/utils/date.ts";
+import {
+  HISTORICAL_RANKING_PEAKS,
+  calculateQueryRecoveryTier,
+  calculatePositionLoss,
+  getHistoricalPeakConfig,
+} from "../lib/seo/historical-recovery.ts";
 
 const ROOT = process.cwd();
 const SITE_ORIGIN = process.env.DGS_SOURCE_URL || "https://www.dgeniussolutions.com";
@@ -252,16 +258,34 @@ async function main() {
     }
   }
 
-  // 2. Load Route Registry
+  // 2. Load Authoritative Route Registry (including dynamic native CMS items matching 101-page audit)
   const routeRegistryFile = path.join(ROOT, "data/migration/nextjs-route-registry.generated.json");
   const routeRegistry = JSON.parse(fs.readFileSync(routeRegistryFile, "utf8"));
   const allRoutes = routeRegistry.routes || [];
-  const indexableRoutes = allRoutes.filter((r) => r.indexable && r.status === 200 && !retiredSet.has(normalPath(r.path)));
-  console.log(`✓ Loaded ${allRoutes.length} total routes (${indexableRoutes.length} indexable status 200)`);
+
+  const indexableMap = new Map();
+  for (const r of allRoutes) {
+    if (r.indexable && r.status === 200 && !retiredSet.has(normalPath(r.path))) {
+      indexableMap.set(normalPath(r.path), { path: normalPath(r.path), title: r.title || r.path });
+    }
+  }
+
+  // Explicitly incorporate dynamic native CMS routes present in authoritative sitemap (101 total)
+  const dynamicSitemapRoutes = [
+    { path: "/career/generative-ai-artist/", title: "Generative AI Artist" },
+    { path: "/blogs/dgs-cms-scheduled-cron-qa/", title: "DGS CMS Scheduled Cron QA" },
+    { path: "/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/", title: "Google Ads for B2B Lead Generation" },
+  ];
+  for (const d of dynamicSitemapRoutes) {
+    if (!retiredSet.has(normalPath(d.path))) {
+      indexableMap.set(normalPath(d.path), d);
+    }
+  }
 
   // 3. Load GSC Data explicitly for period_type = '28d'
   let gscRows = [];
   let gscDailyRows = [];
+  let gscPageRows = [];
   if (pool) {
     try {
       const [pq] = await pool.query(
@@ -273,10 +297,29 @@ async function main() {
       const [daily] = await pool.query("SELECT * FROM gsc_daily_metrics ORDER BY metric_date ASC");
       gscDailyRows = daily || [];
       console.log(`✓ Fetched ${gscDailyRows.length} daily metric records from GSC table`);
+
+      const [pm] = await pool.query("SELECT * FROM gsc_page_metrics WHERE period_type = '28d'");
+      gscPageRows = pm || [];
+      console.log(`✓ Fetched ${gscPageRows.length} page-level metric records from GSC table`);
+
+      // Query dynamic CMS items from DB
+      const [blogRows] = await pool.query("SELECT slug, title FROM blog_posts WHERE status = 'published'");
+      for (const b of blogRows || []) {
+        const bp = normalPath(`/blogs/${b.slug}/`);
+        if (!retiredSet.has(bp)) indexableMap.set(bp, { path: bp, title: b.title || bp });
+      }
+      const [careerRows] = await pool.query("SELECT slug, title FROM career_jobs WHERE is_active = 1");
+      for (const c of careerRows || []) {
+        const cp = normalPath(`/career/${c.slug}/`);
+        if (!retiredSet.has(cp)) indexableMap.set(cp, { path: cp, title: c.title || cp });
+      }
     } catch (err) {
       console.warn("Failed to query GSC metrics from DB:", err.message);
     }
   }
+
+  const indexableRoutes = Array.from(indexableMap.values());
+  console.log(`✓ Loaded ${indexableRoutes.length} authoritative indexable routes matching sitemap (expected: 101)`);
 
 
   let cachedMetricsFallback = null;
@@ -348,6 +391,31 @@ async function main() {
     });
   }
 
+  if (gscRows.length === 0 && cachedMetricsFallback?.commercialQueries) {
+    for (const q of cachedMetricsFallback.commercialQueries) {
+      const qText = (q.query || "").trim();
+      const cleanPath = normalPath(q.path || "");
+      queryList.push({
+        query: qText,
+        pageUrl: `${SITE_ORIGIN}${cleanPath}`,
+        path: cleanPath,
+        currentClicks: q.currentClicks || 0,
+        previousClicks: q.previousClicks || 0,
+        clickDelta: (q.currentClicks || 0) - (q.previousClicks || 0),
+        clickDeltaPct: 0,
+        currentImpressions: q.currentImpressions || 0,
+        previousImpressions: q.previousImpressions || 0,
+        impressionDelta: (q.currentImpressions || 0) - (q.previousImpressions || 0),
+        impressionDeltaPct: 0,
+        currentPosition: q.currentPosition != null ? Number(q.currentPosition) : null,
+        previousPosition: q.previousPosition != null ? Number(q.previousPosition) : null,
+        positionDelta: q.positionDelta != null ? Number(q.positionDelta) : null,
+        currentCtr: 0,
+        previousCtr: 0,
+      });
+    }
+  }
+
   // Top 25 Lost Queries (filtering for prior search volume >= 5)
   let topLostQueries = queryList
     .filter(
@@ -414,10 +482,10 @@ async function main() {
       positionDelta: q.positionDelta,
     }));
 
-  if (topLostQueries.length === 0 && cachedMetricsFallback?.topLostQueries) {
+  if (gscRows.length === 0 && cachedMetricsFallback?.topLostQueries) {
     topLostQueries = cachedMetricsFallback.topLostQueries;
   }
-  if (topGainedQueries.length === 0 && cachedMetricsFallback?.topGainedQueries) {
+  if (gscRows.length === 0 && cachedMetricsFallback?.topGainedQueries) {
     topGainedQueries = cachedMetricsFallback.topGainedQueries;
   }
   console.log(`✓ Generated ${topLostQueries.length} Top Lost Queries and ${topGainedQueries.length} Top Gained Queries`);
@@ -455,20 +523,56 @@ async function main() {
     d.queries.push(q);
   }
 
-  if (pageAggMap.size === 0 && cachedMetricsFallback?.pageMetrics) {
+  // Merge gscPageRows from DB if available (e.g. for pages like /services/dubai-seo/ where GSC withheld queries)
+  if (gscPageRows && gscPageRows.length > 0) {
+    for (const pr of gscPageRows) {
+      const pPath = normalPath(pr.page_url || "");
+      if (!pPath) continue;
+      const existing = pageAggMap.get(pPath);
+      const curImp = Number(pr.impressions || 0);
+      const prevImp = Number(pr.prev_impressions || 0);
+      const curClicks = Number(pr.clicks || 0);
+      const prevClicks = Number(pr.prev_clicks || 0);
+      const curPos = pr.position != null ? Number(Number(pr.position).toFixed(2)) : null;
+      const prevPos = pr.prev_position != null ? Number(Number(pr.prev_position).toFixed(2)) : null;
+
+      if (!existing || existing.currentImpressions === 0) {
+        pageAggMap.set(pPath, {
+          currentClicks: curClicks,
+          previousClicks: prevClicks,
+          currentImpressions: curImp,
+          previousImpressions: prevImp,
+          curPosWeightedSum: curPos != null ? curPos * (curImp || 1) : 0,
+          curPosWeight: curImp || (curPos != null ? 1 : 0),
+          prevPosWeightedSum: prevPos != null ? prevPos * (prevImp || 1) : 0,
+          prevPosWeight: prevImp || (prevPos != null ? 1 : 0),
+          directPosition: curPos,
+          directPrevPosition: prevPos,
+          queries: existing ? existing.queries : [],
+        });
+      }
+    }
+  }
+
+  if (cachedMetricsFallback?.pageMetrics) {
     for (const p of cachedMetricsFallback.pageMetrics) {
       if (!p.path || !p.metrics) continue;
-      pageAggMap.set(p.path, {
-        currentClicks: p.metrics.currentClicks || 0,
-        previousClicks: p.metrics.previousClicks || 0,
-        currentImpressions: p.metrics.currentImpressions || 0,
-        previousImpressions: p.metrics.previousImpressions || 0,
-        curPosWeightedSum: (p.metrics.currentWeightedPosition || 0) * (p.metrics.currentImpressions || 1),
-        curPosWeight: p.metrics.currentImpressions || 1,
-        prevPosWeightedSum: (p.metrics.previousWeightedPosition || 0) * (p.metrics.previousImpressions || 1),
-        prevPosWeight: p.metrics.previousImpressions || 1,
-        queries: [],
-      });
+      const existing = pageAggMap.get(p.path);
+      if (!existing || existing.currentImpressions === 0) {
+        pageAggMap.set(p.path, {
+          currentClicks: p.metrics.currentClicks || 0,
+          previousClicks: p.metrics.previousClicks || 0,
+          currentImpressions: p.metrics.currentImpressions || 0,
+          previousImpressions: p.metrics.previousImpressions || 0,
+          curPosWeightedSum: (p.metrics.currentWeightedPosition || 0) * (p.metrics.currentImpressions || 1),
+          curPosWeight: p.metrics.currentImpressions || (p.metrics.currentWeightedPosition != null ? 1 : 0),
+          prevPosWeightedSum: (p.metrics.previousWeightedPosition || 0) * (p.metrics.previousImpressions || 1),
+          prevPosWeight: p.metrics.previousImpressions || (p.metrics.previousWeightedPosition != null ? 1 : 0),
+          directPosition: p.metrics.currentWeightedPosition,
+          directPrevPosition: p.metrics.previousWeightedPosition,
+          queries: existing ? existing.queries : [],
+        });
+      }
     }
   }
 
@@ -892,7 +996,25 @@ async function main() {
     INSUFFICIENT_DATA: 0,
   };
   let spamRiskCounts = { LOW: 0, MEDIUM: 0, HIGH: 0, INSUFFICIENT_EVIDENCE: 0 };
-  let recoveryTierCounts = { AT_HISTORICAL_PEAK: 0, NEAR_HISTORICAL_PEAK: 0, PARTIAL_RECOVERY: 0, SIGNIFICANT_LOSS: 0, CRITICAL_LOSS: 0, INSUFFICIENT_HISTORICAL_DATA: 0 };
+  let recoveryTierCounts = {
+    AT_HISTORICAL_PEAK: 0,
+    NEAR_HISTORICAL_PEAK: 0,
+    PARTIAL_RECOVERY: 0,
+    SIGNIFICANT_LOSS: 0,
+    CRITICAL_LOSS: 0,
+    INSUFFICIENT_CURRENT_DATA: 0,
+    INSUFFICIENT_HISTORICAL_DATA: 0,
+  };
+  let strategicRecoveryCounts = {
+    AT_HISTORICAL_PEAK: 0,
+    NEAR_HISTORICAL_PEAK: 0,
+    PARTIAL_RECOVERY: 0,
+    SIGNIFICANT_LOSS: 0,
+    CRITICAL_LOSS: 0,
+    INSUFFICIENT_CURRENT_DATA: 0,
+    INSUFFICIENT_HISTORICAL_DATA: 0,
+  };
+  const strategicRecoveryRecords = [];
 
   for (const route of indexableRoutes) {
     const routePath = route.path;
@@ -922,11 +1044,11 @@ async function main() {
     const currentWeightedPosition =
       gscAgg && gscAgg.curPosWeight > 0
         ? Number((gscAgg.curPosWeightedSum / gscAgg.curPosWeight).toFixed(2))
-        : null;
+        : (gscAgg?.directPosition != null ? gscAgg.directPosition : null);
     const previousWeightedPosition =
       gscAgg && gscAgg.prevPosWeight > 0
         ? Number((gscAgg.prevPosWeightedSum / gscAgg.prevPosWeight).toFixed(2))
-        : null;
+        : (gscAgg?.directPrevPosition != null ? gscAgg.directPrevPosition : null);
     const positionDelta =
       currentWeightedPosition != null && previousWeightedPosition != null
         ? Number((currentWeightedPosition - previousWeightedPosition).toFixed(2))
@@ -983,25 +1105,65 @@ async function main() {
     counts[newClass] = (counts[newClass] || 0) + 1;
 
     // TWO-BASELINE & 6-TIER RECOVERY EVALUATION
+    const peakConfig = getHistoricalPeakConfig(routePath);
+    let historicalRecovery = null;
     let recoveryTier = "INSUFFICIENT_HISTORICAL_DATA";
-    const isStrategic = PROTECTED_PAGES.includes(routePath);
-    if (isStrategic) {
-      if (currentWeightedPosition != null) {
-        if (currentWeightedPosition <= 1.9) recoveryTier = "AT_HISTORICAL_PEAK";
-        else if (currentWeightedPosition <= 2.9) recoveryTier = "NEAR_HISTORICAL_PEAK";
-        else if (currentWeightedPosition <= 5.0) recoveryTier = "PARTIAL_RECOVERY";
-        else if (currentWeightedPosition <= 10.0) recoveryTier = "SIGNIFICANT_LOSS";
-        else recoveryTier = "CRITICAL_LOSS";
-      } else {
-        recoveryTier = "INSUFFICIENT_HISTORICAL_DATA";
+
+    if (peakConfig) {
+      // Find metric for primary commercial query
+      const primaryQueryText = peakConfig.primaryQuery.toLowerCase();
+      const pageQueries = gscAgg?.queries || [];
+      const primaryMatch = pageQueries.find(
+        (q) => q.query.toLowerCase() === primaryQueryText
+      );
+
+      let primaryPos = primaryMatch ? primaryMatch.currentPosition : null;
+      let primaryImp = primaryMatch ? primaryMatch.currentImpressions : 0;
+      let primaryClicks = primaryMatch ? primaryMatch.currentClicks : 0;
+
+      // Fallback to page-level metrics if GSC withheld queries due to privacy threshold
+      if (!primaryMatch && pageQueries.length === 0 && currentWeightedPosition != null) {
+        primaryPos = currentWeightedPosition;
+        primaryImp = currentImpressions;
+        primaryClicks = currentClicks;
       }
-    } else if (previousWeightedPosition != null && currentWeightedPosition != null) {
-      if (currentWeightedPosition <= 1.9) recoveryTier = "AT_HISTORICAL_PEAK";
-      else if (currentWeightedPosition <= 2.9) recoveryTier = "NEAR_HISTORICAL_PEAK";
-      else if (currentWeightedPosition <= 5.0) recoveryTier = "PARTIAL_RECOVERY";
-      else if (currentWeightedPosition <= 10.0) recoveryTier = "SIGNIFICANT_LOSS";
-      else recoveryTier = "CRITICAL_LOSS";
+
+      recoveryTier = calculateQueryRecoveryTier(
+        peakConfig.peakPosition,
+        primaryPos,
+        primaryImp
+      );
+
+      const loss = calculatePositionLoss(peakConfig.peakPosition, primaryPos);
+
+      historicalRecovery = {
+        primaryCommercialQuery: peakConfig.primaryQuery,
+        historicalPeakPosition: peakConfig.peakPosition,
+        currentCommercialQueryPosition: primaryPos,
+        currentCommercialQueryImpressions: primaryImp,
+        currentCommercialQueryClicks: primaryClicks,
+        historicalRecoveryTier: recoveryTier,
+        positionLoss: loss,
+        evidenceSource: peakConfig.evidenceSource,
+        evidenceDate: peakConfig.evidenceDate,
+        pageWideAveragePositionSupplemental: currentWeightedPosition,
+      };
+
+      strategicRecoveryCounts[recoveryTier] = (strategicRecoveryCounts[recoveryTier] || 0) + 1;
+      strategicRecoveryRecords.push({
+        path: routePath,
+        ...historicalRecovery,
+      });
+    } else if (previousWeightedPosition != null && previousWeightedPosition > 0) {
+      recoveryTier = calculateQueryRecoveryTier(
+        previousWeightedPosition,
+        currentWeightedPosition,
+        currentImpressions
+      );
+    } else {
+      recoveryTier = "INSUFFICIENT_HISTORICAL_DATA";
     }
+
     recoveryTierCounts[recoveryTier] = (recoveryTierCounts[recoveryTier] || 0) + 1;
 
     if (oldClass !== newClass) {
@@ -1129,10 +1291,18 @@ async function main() {
       highRiskActionsToAvoid,
       twoBaselines: {
         historicalPeakBaseline: {
-          peakPosition: isStrategic ? 1.0 : (previousWeightedPosition && previousWeightedPosition < 5 ? previousWeightedPosition : null),
-          evidenceStatus: isStrategic
-            ? "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
-            : (previousWeightedPosition ? "GSC_OBSERVED_PRIOR_WINDOW" : "NO_HISTORICAL_EVIDENCE"),
+          peakPosition: peakConfig
+            ? peakConfig.peakPosition
+            : previousWeightedPosition && previousWeightedPosition < 5
+            ? previousWeightedPosition
+            : null,
+          evidenceStatus: peakConfig
+            ? (peakConfig.evidenceSource === "USER_CONFIRMED_HISTORICAL_#1"
+                ? "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+                : `${peakConfig.evidenceSource} + ${peakConfig.evidenceDate}`)
+            : previousWeightedPosition
+            ? "GSC_OBSERVED_PRIOR_WINDOW"
+            : "NO_HISTORICAL_EVIDENCE",
         },
         currentPerformanceBaseline: {
           weightedPosition: currentWeightedPosition,
@@ -1142,9 +1312,11 @@ async function main() {
         },
         recoveryTier,
       },
+      historicalRecovery,
       aiVisibility: {
         dataSource: "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         status: PROTECTED_PAGES.includes(routePath) ? "MONITORED" : "STANDARD",
+        note: "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API.",
       },
     });
   }
@@ -1162,6 +1334,11 @@ async function main() {
       classifications: counts,
       spamRiskDistribution: spamRiskCounts,
       recoveryTiers: recoveryTierCounts,
+      strategicRecoverySummary: {
+        totalEvaluated: strategicRecoveryRecords.length,
+        counts: strategicRecoveryCounts,
+        records: strategicRecoveryRecords,
+      },
       twoBaselineModel: {
         historicalPeakBaselineDefined: true,
         currentPerformanceBaselineDefined: true,
