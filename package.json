@@ -104,7 +104,8 @@
     "test:google-data-v8.3-integrity": "node --experimental-strip-types scripts/test-google-data-v8.3-integrity.mjs",
     "test:google-monitor-v8.4-integrity": "node --experimental-strip-types scripts/test-google-monitor-v8.4-integrity.mjs",
     "test:blog-responsive-v8.4": "node scripts/test-blog-responsive-v8.4.mjs",
-    "test:ai-video-recovery": "node --test scripts/test-ai-video-ranking-recovery.mjs"
+    "test:ai-video-recovery": "node --test scripts/test-ai-video-ranking-recovery.mjs",
+    "test:google-update-assessment-v8.4.2": "node --experimental-strip-types --test scripts/test-google-update-assessment-v8.4.2.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

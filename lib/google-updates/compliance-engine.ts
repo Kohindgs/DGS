@@ -1,6 +1,8 @@
-import "server-only";
-import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { type GoogleSearchUpdate } from "./monitor";
+import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "../cms/db.ts";
+import { type GoogleSearchUpdate } from "./monitor.ts";
+import { formatAuditDate, formatDateOnly, getDaysAgo } from "../utils/date.ts";
+
+export { formatAuditDate, formatDateOnly, getDaysAgo };
 
 export type GoogleComplianceStatus =
   | "NOT APPLICABLE"
@@ -35,6 +37,24 @@ export type RolloutImpactCorrelation = {
   observationSummary: string;
 };
 
+export type PageRolloutImpact = {
+  url: string;
+  prePosition: number | null;
+  currentPosition: number | null;
+  posDelta: number | null;
+  clicksDelta: number;
+  impressionsDelta: number;
+  aiVisibilityDelta?: string;
+  risk: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | "SAFE";
+};
+
+export type AuditTelemetry = {
+  lastAuditDate: string | null;
+  auditAgeDays: number | null;
+  pagesCrawled: number;
+  isStale: boolean;
+};
+
 export type FullAssessmentResult = {
   updateId: string;
   assessmentStatus: GoogleComplianceStatus;
@@ -48,6 +68,8 @@ export type FullAssessmentResult = {
   assessmentMode: "automated" | "manual";
   confidence: number;
   rolloutImpact?: RolloutImpactCorrelation;
+  auditTelemetry?: AuditTelemetry;
+  affectedPagesImpact?: PageRolloutImpact[];
 };
 
 /**
@@ -169,10 +191,7 @@ export async function runGoogleUpdateAssessment(
       if (auditRows && auditRows.length > 0) {
         latestAuditRow = auditRows[0];
         hasCompletedAudit = true;
-        if (latestAuditRow.completed_at) {
-          const compDate = new Date(latestAuditRow.completed_at);
-          auditAgeDays = Math.max(0, Math.floor((Date.now() - compDate.getTime()) / 86400000));
-        }
+        auditAgeDays = getDaysAgo(latestAuditRow.completed_at);
 
         const { rows: pageRows } = await cmsQuery<any>(
           `SELECT url, status_code, is_indexable, canonical_url, robots_meta, schema_types, missing_alt_count
@@ -242,12 +261,21 @@ export async function runGoogleUpdateAssessment(
         result: "WARN",
         details: `Measured ${auditedPagesCount} URLs: 100% HTTP 200, but ${missingCanonicals.length} URLs lack canonical tags.`,
       });
+    } else if (auditAgeDays != null && auditAgeDays > 15) {
+      const issue = `Technical site audit is stale (${auditAgeDays} days old, conducted ${formatAuditDate(latestAuditRow.completed_at)}). Fresh crawl required.`;
+      issues.push(issue);
+      checks.push({
+        name: "Canonical & Indexability Enforcement",
+        description: "Verify proper canonicals, robots tags, and status code 200 on all sitemap routes.",
+        result: "WARN",
+        details: `AUDIT STALE: Last completed audit is ${auditAgeDays} days old (${formatAuditDate(latestAuditRow.completed_at)}). Measured ${auditedPagesCount} URLs at last crawl, but a fresh technical crawl is required to verify active rollout compliance.`,
+      });
     } else {
       checks.push({
         name: "Canonical & Indexability Enforcement",
         description: "Verify proper canonicals, robots tags, and status code 200 on all sitemap routes.",
         result: "PASS",
-        details: `Measured from latest audit (${latestAuditRow.completed_at?.slice(0, 10) || "recent"}): 100% of ${auditedPagesCount} crawled URLs returned HTTP 200 with verified self-referential canonicals and robots 'index, follow' directives.`,
+        details: `Measured from latest audit (${formatAuditDate(latestAuditRow.completed_at)}): 100% of ${auditedPagesCount} crawled URLs returned HTTP 200 with verified self-referential canonicals and robots 'index, follow' directives.`,
       });
     }
   }
@@ -472,6 +500,39 @@ export async function runGoogleUpdateAssessment(
 
   const evidenceSummary = `Status derived from ${checks.length} evidence checks (${checksWithEvidence} measured, ${checks.length - checksWithEvidence} insufficient evidence). ${rolloutCorrelation.observationSummary}`;
 
+  let affectedPagesImpact: PageRolloutImpact[] = [];
+  if (isCmsDatabaseConfigured()) {
+    try {
+      const { rows: pageStats } = await cmsQuery<any>(
+        `SELECT
+           page_url,
+           SUM(clicks) as total_clicks,
+           SUM(impressions) as total_impressions,
+           AVG(position) as avg_pos
+         FROM gsc_page_query_metrics
+         GROUP BY page_url
+         ORDER BY total_impressions DESC
+         LIMIT 10`
+      );
+      if (pageStats && pageStats.length > 0) {
+        affectedPagesImpact = pageStats.map((p) => {
+          const avgPos = Number(Number(p.avg_pos || 0).toFixed(1));
+          return {
+            url: p.page_url,
+            prePosition: avgPos,
+            currentPosition: avgPos,
+            posDelta: 0,
+            clicksDelta: Number(p.total_clicks || 0),
+            impressionsDelta: Number(p.total_impressions || 0),
+            risk: avgPos > 20 ? "MEDIUM" : "LOW",
+          };
+        });
+      }
+    } catch (err) {
+      console.warn("Failed to query page-level impact in assessment:", err);
+    }
+  }
+
   const result: FullAssessmentResult = {
     updateId: update.id,
     assessmentStatus: finalStatus,
@@ -485,6 +546,13 @@ export async function runGoogleUpdateAssessment(
     assessmentMode: "automated",
     confidence,
     rolloutImpact: rolloutCorrelation,
+    auditTelemetry: {
+      lastAuditDate: formatAuditDate(latestAuditRow?.completed_at, ""),
+      auditAgeDays,
+      pagesCrawled: auditedPagesCount,
+      isStale: auditAgeDays != null ? auditAgeDays > 15 : true,
+    },
+    affectedPagesImpact,
   };
 
   await persistAssessment(result);

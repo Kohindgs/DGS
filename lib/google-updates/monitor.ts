@@ -661,7 +661,7 @@ export function generateDgsImpact(
       whatChanged:
         "Algorithmic spam enforcement targeting low-effort scaled content, expired domain abuse, site reputation abuse, and manipulative backlink schemes.",
       impactAnalysis:
-        "Google is cracking down on low-effort scaled content, site reputation abuse, and expired domains. DGS adheres strictly to original editorial standards and white-hat organic practices. Competitors employing manipulative strategies may lose rankings, creating organic capture opportunities for DGS.",
+        "Potential DGS Impact (Hypothesis): Google is enforcing algorithmic penalties against low-effort scaled content, site reputation abuse, and expired domains. DGS editorial standards and white-hat practices serve as defensive architecture; verified compliance and risk status require empirical site audit and GSC performance evidence.",
       actionRequired:
         "Audit incoming backlink referrers for unnatural patterns; verify that all published blog articles carry verified author credentials and editorial review.",
       recommendedActions: generateSafeRecommendations(severity, "Spam Update"),
@@ -691,7 +691,7 @@ export function generateDgsImpact(
       whatChanged:
         "Evaluation systems assessing whether content provides original analysis and first-hand expertise rather than search-engine-first synthetic material.",
       impactAnalysis:
-        "Sitewide helpfulness signals assess whether visitor experience matches search intent. DGS in-depth guides and case studies are structured to demonstrate first-hand domain expertise.",
+        "Potential DGS Impact (Hypothesis): Sitewide helpfulness signals assess whether visitor experience matches search intent. DGS in-depth guides and case studies are structured to demonstrate first-hand domain expertise. Active verification is required to confirm full alignment.",
       actionRequired:
         "Audit key content guides and service pages for unique expert perspectives, customer evidence, and clear value proposition.",
       recommendedActions: [

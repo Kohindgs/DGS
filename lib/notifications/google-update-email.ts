@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { renderDgsEmailHtml, type EmailSection } from "./email-template.ts";
+import { formatAuditDate } from "../utils/date.ts";
 
 export const DEFAULT_GOOGLE_UPDATE_RECIPIENTS: string[] = [
   "kohin@dgeniussolutions.com",
@@ -125,8 +126,8 @@ export async function sendGoogleUpdateAlertEmail(
         {
           label: "Rollout Window",
           value: input.incidentBegin
-            ? `${input.incidentBegin.slice(0, 10)} — ${input.incidentEnd ? input.incidentEnd.slice(0, 10) : "Active (In Progress)"}`
-            : input.publishedAt.slice(0, 10),
+            ? `${formatAuditDate(input.incidentBegin)} — ${input.incidentEnd ? formatAuditDate(input.incidentEnd) : "Active (In Progress)"}`
+            : formatAuditDate(input.publishedAt),
         },
         {
           label: "Official Source",
@@ -208,7 +209,7 @@ export async function sendGoogleUpdateAlertEmail(
   const html = renderDgsEmailHtml({
     kicker: "GOOGLE SEARCH ALGORITHM ALERT",
     title: input.title,
-    subtitle: `${input.category} &bull; ${input.source} &bull; Published ${input.publishedAt.slice(0, 10)}`,
+    subtitle: `${input.category} &bull; ${input.source} &bull; Published ${formatAuditDate(input.publishedAt)}`,
     statusBadge: {
       text: rolloutStatus,
       color: "#ffffff",

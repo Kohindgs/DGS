@@ -1,0 +1,3390 @@
+{
+  "generatedAt": "2026-09-27T08:45:49.178Z",
+  "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
+  "summary": {
+    "totalIndexablePages": 100,
+    "protectedTier0PagesCount": 11,
+    "pagesWithGscData": 0,
+    "classifications": {
+      "criticalDeclines": 1,
+      "declining": 0,
+      "stable": 10,
+      "growing": 0,
+      "insufficientData": 89
+    },
+    "cannibalizationCandidateCount": 0,
+    "aiVideoSharedQueriesCount": 0,
+    "machineLabelsDetected": [
+      {
+        "file": "aeo-dubai.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "aeo-dubai.json",
+        "label": "Internal Link",
+        "count": 9
+      },
+      {
+        "file": "aeo-services-mumbai-google-ads-landing-page.json",
+        "label": "Local SEO",
+        "count": 4
+      },
+      {
+        "file": "aeo-services-mumbai-google-ads-landing-page.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "australia-page.json",
+        "label": "Local SEO",
+        "count": 3
+      },
+      {
+        "file": "australia-page.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "blogs__3-3-3-rule-in-marketing.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__3-3-3-rule-in-marketing.json",
+        "label": "Internal Link",
+        "count": 7
+      },
+      {
+        "file": "blogs__aeo-business.json",
+        "label": "AEO Answer",
+        "count": 1
+      },
+      {
+        "file": "blogs__aeo-business.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__aeo-business.json",
+        "label": "Internal Link",
+        "count": 6
+      },
+      {
+        "file": "blogs__aeo-in-2026.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__aeo-in-2026.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "blogs__ai-generated-summaries-in-search-ads.json",
+        "label": "Internal Link",
+        "count": 4
+      },
+      {
+        "file": "blogs__ai-marketing-strategies-2026.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__ai-overview-ranking.json",
+        "label": "Internal Link",
+        "count": 5
+      },
+      {
+        "file": "blogs__ai-overview-seo.json",
+        "label": "Target Keyword",
+        "count": 1
+      },
+      {
+        "file": "blogs__ai-overview-seo.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__ai-overview-seo.json",
+        "label": "Internal Link",
+        "count": 11
+      },
+      {
+        "file": "blogs__ai-readiness-for-websites.json",
+        "label": "Internal Link",
+        "count": 5
+      },
+      {
+        "file": "blogs__ai-search-behavior-2026.json",
+        "label": "Local SEO",
+        "count": 2
+      },
+      {
+        "file": "blogs__ai-search-checklist-2026.json",
+        "label": "Target Keyword",
+        "count": 1
+      },
+      {
+        "file": "blogs__ai-search-checklist-2026.json",
+        "label": "Internal Link",
+        "count": 4
+      },
+      {
+        "file": "blogs__ai-search-optimization-ecommerce.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__ai-video-production-for-business.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__brand-identity-seo-trust-lead-generation.json",
+        "label": "Internal Link",
+        "count": 3
+      },
+      {
+        "file": "blogs__brand-visibility-in-ai-search.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__chatgpt-brand-visibility.json",
+        "label": "Internal Link",
+        "count": 4
+      },
+      {
+        "file": "blogs__content-strategy-for-seo.json",
+        "label": "Local SEO",
+        "count": 2
+      },
+      {
+        "file": "blogs__content-strategy-for-seo.json",
+        "label": "Internal Link",
+        "count": 14
+      },
+      {
+        "file": "blogs__content-strategy-high-intent-traffic.json",
+        "label": "Internal Link",
+        "count": 3
+      },
+      {
+        "file": "blogs__content-writing-for-seo.json",
+        "label": "Internal Link",
+        "count": 18
+      },
+      {
+        "file": "blogs__core-update-strategy.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__core-update-strategy.json",
+        "label": "Internal Link",
+        "count": 5
+      },
+      {
+        "file": "blogs__future-of-seo.json",
+        "label": "Local SEO",
+        "count": 3
+      },
+      {
+        "file": "blogs__future-of-seo.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__generative-engine-optimization-business.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__generative-engine-optimization-business.json",
+        "label": "Internal Link",
+        "count": 10
+      },
+      {
+        "file": "blogs__generative-engine-optimization.json",
+        "label": "Target Keyword",
+        "count": 1
+      },
+      {
+        "file": "blogs__generative-engine-optimization.json",
+        "label": "Internal Link",
+        "count": 19
+      },
+      {
+        "file": "blogs__geo-vs-seo-google-ai-search.json",
+        "label": "Local SEO",
+        "count": 6
+      },
+      {
+        "file": "blogs__geo-vs-seo-google-ai-search.json",
+        "label": "Internal Link",
+        "count": 11
+      },
+      {
+        "file": "blogs__google-ads-ai-max-2026.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__google-agentic-browsing.json",
+        "label": "Internal Link",
+        "count": 4
+      },
+      {
+        "file": "blogs__google-ai-overviews-image-generation.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__google-ai-overviews-image-generation.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "blogs__google-ai-search-update.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__google-ai-search-update.json",
+        "label": "Internal Link",
+        "count": 11
+      },
+      {
+        "file": "blogs__google-algorithm-business.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__google-august-2026-spam-update.json",
+        "label": "Internal Link",
+        "count": 3
+      },
+      {
+        "file": "blogs__google-io-2026.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__google-ranking-fixes.json",
+        "label": "Local SEO",
+        "count": 22
+      },
+      {
+        "file": "blogs__google-ranking-fixes.json",
+        "label": "Internal Link",
+        "count": 15
+      },
+      {
+        "file": "blogs__google-search-console-social-media.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__google-spam-update.json",
+        "label": "Internal Link",
+        "count": 8
+      },
+      {
+        "file": "blogs__llm-seo-ai-search.json",
+        "label": "Internal Link",
+        "count": 14
+      },
+      {
+        "file": "blogs__llm-seo-services-mumbai.json",
+        "label": "Local SEO",
+        "count": 2
+      },
+      {
+        "file": "blogs__llm-seo-services-mumbai.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__local-seo-business-growth.json",
+        "label": "Local SEO",
+        "count": 26
+      },
+      {
+        "file": "blogs__local-seo-business-growth.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__modern-seo-business-growth.json",
+        "label": "Local SEO",
+        "count": 5
+      },
+      {
+        "file": "blogs__modern-seo-business-growth.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__optimize-content-ai-search.json",
+        "label": "Internal Link",
+        "count": 12
+      },
+      {
+        "file": "blogs__optimize-for-ai-overviews.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "blogs__schema-seo-for-small-business.json",
+        "label": "Internal Link",
+        "count": 3
+      },
+      {
+        "file": "blogs__search-generative-ai-performance-reports.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__search-generative-ai-performance-reports.json",
+        "label": "Internal Link",
+        "count": 5
+      },
+      {
+        "file": "blogs__seo-company-in-mumbai.json",
+        "label": "Local SEO",
+        "count": 6
+      },
+      {
+        "file": "blogs__seo-company-in-mumbai.json",
+        "label": "Internal Link",
+        "count": 3
+      },
+      {
+        "file": "blogs__seo-friendly-website.json",
+        "label": "AEO Answer",
+        "count": 1
+      },
+      {
+        "file": "blogs__seo-friendly-website.json",
+        "label": "Internal Link",
+        "count": 12
+      },
+      {
+        "file": "blogs__seo-rankings-up-but-traffic-down.json",
+        "label": "Target Keyword",
+        "count": 1
+      },
+      {
+        "file": "blogs__seo-rankings-up-but-traffic-down.json",
+        "label": "Internal Link",
+        "count": 6
+      },
+      {
+        "file": "blogs__seo-services-india-2026.json",
+        "label": "Local SEO",
+        "count": 4
+      },
+      {
+        "file": "blogs__seo-services-india-2026.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "blogs__seo-strategies-business-growth.json",
+        "label": "Internal Link",
+        "count": 7
+      },
+      {
+        "file": "blogs__topical-authority-seo.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__topical-authority-seo.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "blogs__voice-search-seo.json",
+        "label": "Local SEO",
+        "count": 8
+      },
+      {
+        "file": "blogs__voice-search-seo.json",
+        "label": "Internal Link",
+        "count": 4
+      },
+      {
+        "file": "blogs__website-design-lead-generation-mumbai.json",
+        "label": "Internal Link",
+        "count": 5
+      },
+      {
+        "file": "blogs__website-development-leads.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "blogs__website-development-mistakes.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "blogs__website-development-mistakes.json",
+        "label": "Internal Link",
+        "count": 10
+      },
+      {
+        "file": "blogs__website-development-quality-leads.json",
+        "label": "Internal Link",
+        "count": 5
+      },
+      {
+        "file": "blogs__website-traffic-but-no-leads.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "blogs__what-is-llm-seo.json",
+        "label": "AEO Answer",
+        "count": 1
+      },
+      {
+        "file": "blogs__what-is-llm-seo.json",
+        "label": "Internal Link",
+        "count": 9
+      },
+      {
+        "file": "case_studies.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "our-services.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "our-services.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "seo-executive-assessment.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "seo-manager-assessment.json",
+        "label": "Internal Link",
+        "count": 2
+      },
+      {
+        "file": "seo-pricing.json",
+        "label": "Target Keyword",
+        "count": 1
+      },
+      {
+        "file": "seo-pricing.json",
+        "label": "Local SEO",
+        "count": 6
+      },
+      {
+        "file": "seo-pricing.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "seo-services-mumbai-google-ads-landing-page.json",
+        "label": "Local SEO",
+        "count": 11
+      },
+      {
+        "file": "seo-services-mumbai-google-ads-landing-page.json",
+        "label": "Internal Link",
+        "count": 6
+      },
+      {
+        "file": "services.json",
+        "label": "Local SEO",
+        "count": 1
+      },
+      {
+        "file": "services.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "services__aeo-services-in-mumbai.json",
+        "label": "Internal Link",
+        "count": 12
+      },
+      {
+        "file": "services__ai-production-dubai-page.json",
+        "label": "Internal Link",
+        "count": 7
+      },
+      {
+        "file": "services__content-creation.json",
+        "label": "Internal Link",
+        "count": 1
+      },
+      {
+        "file": "services__dubai-seo.json",
+        "label": "Local SEO",
+        "count": 36
+      },
+      {
+        "file": "services__dubai-seo.json",
+        "label": "Internal Link",
+        "count": 19
+      },
+      {
+        "file": "services__geo.json",
+        "label": "Internal Link",
+        "count": 9
+      },
+      {
+        "file": "services__llm-seo-service.json",
+        "label": "Local SEO",
+        "count": 2
+      },
+      {
+        "file": "services__llm-seo-service.json",
+        "label": "Internal Link",
+        "count": 5
+      },
+      {
+        "file": "services__seo-service-in-banglore.json",
+        "label": "Local SEO",
+        "count": 13
+      },
+      {
+        "file": "services__seo-service-in-banglore.json",
+        "label": "Internal Link",
+        "count": 17
+      },
+      {
+        "file": "services__seo-service-in-gurugram.json",
+        "label": "Local SEO",
+        "count": 13
+      },
+      {
+        "file": "services__seo-service-in-gurugram.json",
+        "label": "Internal Link",
+        "count": 17
+      },
+      {
+        "file": "services__seo-service-pune.json",
+        "label": "Local SEO",
+        "count": 13
+      },
+      {
+        "file": "services__seo-service-pune.json",
+        "label": "Internal Link",
+        "count": 17
+      },
+      {
+        "file": "services__seo-services-in-hyderabad.json",
+        "label": "Local SEO",
+        "count": 13
+      },
+      {
+        "file": "services__seo-services-in-hyderabad.json",
+        "label": "Internal Link",
+        "count": 17
+      },
+      {
+        "file": "services__seo-services-in-mumbai.json",
+        "label": "Local SEO",
+        "count": 12
+      },
+      {
+        "file": "services__seo-services-in-mumbai.json",
+        "label": "Internal Link",
+        "count": 19
+      },
+      {
+        "file": "services__website-development-amc.json",
+        "label": "Internal Link",
+        "count": 7
+      },
+      {
+        "file": "services__website-development-pune-page.json",
+        "label": "Internal Link",
+        "count": 7
+      },
+      {
+        "file": "us-landing-page.json",
+        "label": "Local SEO",
+        "count": 9
+      },
+      {
+        "file": "us-landing-page.json",
+        "label": "Internal Link",
+        "count": 3
+      },
+      {
+        "file": "website-development-services-in-mumbai-dgenius-solutions.json",
+        "label": "Local SEO",
+        "count": 2
+      },
+      {
+        "file": "website-development-services-in-mumbai-dgenius-solutions.json",
+        "label": "Internal Link",
+        "count": 2
+      }
+    ]
+  },
+  "protectedTier0Pages": [
+    "/",
+    "/services/seo-services-in-mumbai/",
+    "/services/ai-video-production-agency/",
+    "/services/aeo-services-in-mumbai/",
+    "/services/geo/",
+    "/services/llm-seo-service/",
+    "/services/performance-marketing/",
+    "/services/social-media-marketing/",
+    "/services/website-development-amc/",
+    "/services/branding/",
+    "/services/content-creation/"
+  ],
+  "queryOwnershipMap": [
+    {
+      "family": "AI Video Production",
+      "primaryUrl": "/services/ai-video-production-agency/",
+      "coreKeywords": [
+        "ai video production agency in mumbai",
+        "ai video production agency",
+        "ai video production company",
+        "ai video ads mumbai",
+        "generative ai video production",
+        "ai video production house in mumbai"
+      ],
+      "currentOwnerStatus": "STABLE_LOCAL_WEAK_NATIONAL"
+    },
+    {
+      "family": "SEO Services Mumbai",
+      "primaryUrl": "/services/seo-services-in-mumbai/",
+      "coreKeywords": [
+        "seo services in mumbai",
+        "seo company in mumbai",
+        "seo agency in mumbai",
+        "best seo company in mumbai",
+        "best seo agency in mumbai"
+      ],
+      "currentOwnerStatus": "STRONG_TOP_3"
+    },
+    {
+      "family": "AEO (Answer Engine Optimisation)",
+      "primaryUrl": "/services/aeo-services-in-mumbai/",
+      "coreKeywords": [
+        "aeo services in mumbai",
+        "aeo agency mumbai",
+        "answer engine optimisation mumbai",
+        "aeo services",
+        "answer engine optimization company"
+      ],
+      "currentOwnerStatus": "RANKING_#1"
+    },
+    {
+      "family": "GEO (Generative Engine Optimisation)",
+      "primaryUrl": "/services/geo/",
+      "coreKeywords": [
+        "geo services in mumbai",
+        "generative engine optimization agency",
+        "geo agency mumbai",
+        "generative engine optimisation company"
+      ],
+      "currentOwnerStatus": "RANKING_#1"
+    },
+    {
+      "family": "LLM SEO / Optimization",
+      "primaryUrl": "/services/llm-seo-service/",
+      "coreKeywords": [
+        "llm seo service",
+        "llm optimization agency",
+        "llm search optimization mumbai",
+        "ai search optimization agency"
+      ],
+      "currentOwnerStatus": "RANKING_#1"
+    },
+    {
+      "family": "Performance Marketing",
+      "primaryUrl": "/services/performance-marketing/",
+      "coreKeywords": [
+        "performance marketing agency in mumbai",
+        "performance marketing company mumbai",
+        "best performance marketing agency in mumbai",
+        "paid ads agency mumbai"
+      ],
+      "currentOwnerStatus": "DEFENDED_TOP_5"
+    },
+    {
+      "family": "Social Media Marketing",
+      "primaryUrl": "/services/social-media-marketing/",
+      "coreKeywords": [
+        "social media marketing agency in mumbai",
+        "social media company mumbai",
+        "smm agency mumbai"
+      ],
+      "currentOwnerStatus": "STABLE"
+    },
+    {
+      "family": "Website Development & AMC",
+      "primaryUrl": "/services/website-development-amc/",
+      "coreKeywords": [
+        "website development amc in mumbai",
+        "web maintenance company mumbai",
+        "wordpress amc mumbai"
+      ],
+      "currentOwnerStatus": "STABLE"
+    },
+    {
+      "family": "Branding Agency",
+      "primaryUrl": "/services/branding/",
+      "coreKeywords": [
+        "branding agency in mumbai",
+        "corporate branding company mumbai",
+        "brand design agency mumbai"
+      ],
+      "currentOwnerStatus": "STABLE"
+    },
+    {
+      "family": "Content Creation / Marketing",
+      "primaryUrl": "/services/content-creation/",
+      "coreKeywords": [
+        "content marketing agency in mumbai",
+        "content creation services mumbai",
+        "corporate content writing mumbai"
+      ],
+      "currentOwnerStatus": "STABLE"
+    },
+    {
+      "family": "Full Service Digital Marketing (Brand / Agency)",
+      "primaryUrl": "/",
+      "coreKeywords": [
+        "dgenius solutions",
+        "d genius solutions",
+        "dgeniussolutions",
+        "digital marketing agency in mumbai",
+        "best digital marketing agency in mumbai"
+      ],
+      "currentOwnerStatus": "DOMINANT_BRAND_#1"
+    }
+  ],
+  "aiVideoCannibalizationReport": [],
+  "topCannibalizationInstances": [],
+  "inventory": [
+    {
+      "url": "https://www.dgeniussolutions.com/",
+      "path": "/",
+      "pageType": "page",
+      "title": "Digital Marketing Agency in Mumbai | D’Genius Solutions",
+      "metaDescription": "D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
+      "h1": "Full Service Digital Marketing Agency In Mumbai",
+      "canonical": "https://www.dgeniussolutions.com/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-13T00:24:31",
+      "primaryQueryFamily": "Full Service Digital Marketing (Brand / Agency)",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/about-us/",
+      "path": "/about-us/",
+      "pageType": "page",
+      "title": "About Us D’Genius Solutions Digital Growth Experts",
+      "metaDescription": "Learn about D’Genius Solutions, a results-driven digital marketing agency specializing in SEO, AI marketing, and performance growth strategies.",
+      "h1": "Innovators Driven by Passion & Purpose Since 2021",
+      "canonical": "https://www.dgeniussolutions.com/about-us/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-04-02T19:30:57",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/aeo-dubai/",
+      "path": "/aeo-dubai/",
+      "pageType": "page",
+      "title": "AEO Dubai",
+      "metaDescription": "D'Genius Solutions provides AEO services in Dubai to help brands appear in Google AI Overviews, ChatGPT, Gemini, Perplexity, featured snippets and People Also Ask. Get a free AEO audit.",
+      "h1": "AEO Agency in Dubai for AI Search Visibility, Google AI Overviews & Qualified Leads",
+      "canonical": "https://www.dgeniussolutions.com/aeo-dubai/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-08T15:34:39",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/australia-page/",
+      "path": "/australia-page/",
+      "pageType": "page",
+      "title": "Australia Page",
+      "metaDescription": "We create city-focused search, website, content and lead generation strategies for Australian brands that want stronger visibility in high-intent local markets.",
+      "h1": "Full Service Digital Marketing Agency In Australia",
+      "canonical": "https://www.dgeniussolutions.com/australia-page/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-03T14:07:04",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/better-ceasons-case-study/",
+      "path": "/better-ceasons-case-study/",
+      "pageType": "page",
+      "title": "Better Ceasons Case Study",
+      "metaDescription": "Website Development Case Study",
+      "h1": "Better Ceasons Website Development",
+      "canonical": "https://www.dgeniussolutions.com/better-ceasons-case-study/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-17T13:19:52",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/",
+      "path": "/blogs/",
+      "pageType": "page",
+      "title": "Digital Marketing Blogs D'Genius Solutions in Mumbai",
+      "metaDescription": "Explore expert digital marketing blogs from D'Genius Solutions in Mumbai covering SEO, AI marketing, branding, and performance strategies.",
+      "h1": "Blogs",
+      "canonical": "https://www.dgeniussolutions.com/blogs/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-04-10T19:20:38",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
+      "path": "/blogs/3-3-3-rule-in-marketing/",
+      "pageType": "post",
+      "title": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster - D'Genius Solutions",
+      "metaDescription": "3-3-3 rule in marketing is a practical way to simplify how a business communicates, promotes, and converts customers. It helps brands focus on three clear",
+      "h1": "3-3-3 Rule in Marketing: 7 Smart Ways to Grow Faster",
+      "canonical": "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-23T16:25:23",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/aeo-business/",
+      "path": "/blogs/aeo-business/",
+      "pageType": "post",
+      "title": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization - D'Genius Solutions",
+      "metaDescription": "AEO stands for Answer Engine Optimization. It is the process of improving website content so search engines, AI platforms, voice assistants, and answer",
+      "h1": "AEO: 7 Powerful Reasons Businesses Need Answer Engine Optimization",
+      "canonical": "https://www.dgeniussolutions.com/blogs/aeo-business/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-10T13:02:17",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
+      "path": "/blogs/aeo-in-2026/",
+      "pageType": "post",
+      "title": "AEO in 2026 How to Rank on ChatGPT and Perplexity",
+      "metaDescription": "AEO in 2026 is becoming an important part of search marketing as people increasingly use ChatGPT, Perplexity and other AI-powered platforms to research companies, compare services and find direct answers. Traditional Google rankings still matter, but visibility is no longer limited to ten blue links. Businesses now nee",
+      "h1": "AEO in 2026 How to Rank on ChatGPT and Perplexity",
+      "canonical": "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-09-10T18:12:35",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
+      "path": "/blogs/ai-content-optimization/",
+      "pageType": "post",
+      "title": "AI Content Optimization: 7 Proven Ways to Boost Results",
+      "metaDescription": "Learn how AI content optimization helps brands plan smarter posts, improve engagement, track performance, and scale content without losing creativity.",
+      "h1": "AI Content Optimization: 7 Proven Ways to Boost Results",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-23T19:59:19",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
+      "path": "/blogs/ai-generated-summaries-in-search-ads/",
+      "pageType": "post",
+      "title": "AI-Generated Summaries in Search Ads: What This Means for Advertisers - D'Genius Solutions",
+      "metaDescription": "Learn how AI-generated summaries in search ads can affect Google Ads, PPC strategy, landing pages, CTR, SEO, brand control, and AI search visibility.",
+      "h1": "AI-Generated Summaries in Search Ads: What This Means for Advertisers",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-02T11:55:35",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "pageType": "post",
+      "title": "How AI Is Reshaping Digital Marketing Strategies in 2026",
+      "metaDescription": "AI marketing strategies are helping brands plan smarter campaigns, understand customers better, and improve digital performance in 2026.",
+      "h1": "How AI Is Reshaping Digital Marketing Strategies in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-18T15:11:12",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
+      "path": "/blogs/ai-overview-ranking/",
+      "pageType": "post",
+      "title": "AI Overview: 7 Powerful Ways to Boost Search Visibility",
+      "metaDescription": "AI Overview optimization helps businesses improve search visibility, build trust, answer user queries, and rank better in AI search.",
+      "h1": "How to Rank in Google AI Overviews in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-09T14:56:35",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
+      "path": "/blogs/ai-overview-seo/",
+      "pageType": "post",
+      "title": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews - D'Genius Solutions",
+      "metaDescription": "AI Overview SEO helps websites rank in Google AI Overviews with helpful content, AEO, GEO, FAQs, technical SEO, trust signals, and internal links.",
+      "h1": "AI Overview SEO: 9 Powerful Ways to Rank in Google AI Overviews",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-06T12:20:06",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
+      "path": "/blogs/ai-readiness-for-websites/",
+      "pageType": "post",
+      "title": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026 - D'Genius Solutions",
+      "metaDescription": "AI readiness for websites is becoming essential in 2026. A business website can look polished, load well, and still be difficult for Google, AI Overviews,",
+      "h1": "AI Readiness for Websites: Essential Checklist for Business Growth in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-20T13:40:00",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
+      "path": "/blogs/ai-search-behavior-2026/",
+      "pageType": "post",
+      "title": "AI Search Behavior: 7 Proven Changes Businesses Must Know",
+      "metaDescription": "AI search behavior is changing how users find answers, trust brands, and interact with search results in 2026.",
+      "h1": "How AI Is Transforming Search Behavior in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-09T14:43:15",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
+      "path": "/blogs/ai-search-checklist-2026/",
+      "pageType": "post",
+      "title": "AI Search Checklist 2026 for Modern Websites",
+      "metaDescription": "AI Search Checklist 2026 covers 10 essential steps to improve Google rankings, AI Overviews, AI search visibility and website performance",
+      "h1": "AI Search Checklist 2026 10 Essential Checks for Better Rankings",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-10T17:19:47",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "pageType": "post",
+      "title": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026 - D'Genius Solutions",
+      "metaDescription": "AI Search Optimization for E-commerce Brands helps online stores appear in Google and AI recommendations. Discover 9 proven strategies for 2026.",
+      "h1": "AI Search Optimization for E-commerce Brands: 9 Proven Strategies for 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-24T15:52:27",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "pageType": "post",
+      "title": "Top AI Tools for Digital Marketing Agencies in 2026",
+      "metaDescription": "AI tools help digital marketing agencies create content, manage campaigns, automate workflows, improve SEO, and save time in 2026.",
+      "h1": "Top AI Tools for Digital Marketing Agencies in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-18T11:31:07",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
+      "path": "/blogs/ai-video-production-cost-india/",
+      "pageType": "post",
+      "title": "How Much Does AI Video Production Cost in India in 2026? - D'Genius Solutions",
+      "metaDescription": "AI video production costAI video production cost in India in 2026 depends on the type of video, creative complexity, duration, number of scenes, AI models",
+      "h1": "How Much Does AI Video Production Cost in India in 2026?",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-12T16:14:54",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
+      "path": "/blogs/ai-video-production-for-business/",
+      "pageType": "post",
+      "title": "11 Ways AI Video Production for Business Helps Create More Content Faster",
+      "metaDescription": "Learn how AI video production for business helps brands create more content faster, reduce costs, improve marketing, and scale content creation across digital platforms.",
+      "h1": "AI Video Production for Business: How It Helps Brands Create More Content Faster",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-22T13:37:22",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
+      "path": "/blogs/ai-video-vs-traditional-video/",
+      "pageType": "post",
+      "title": "AI Video vs Traditional Video 7 Proven Differences for Brands",
+      "metaDescription": "AI Video vs Traditional Video explained for brands. Compare cost, speed, quality, scalability and creative control to choose the right production approach.",
+      "h1": "AI Video vs Traditional Video Production: Which Is Right for Your Brand?",
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-17T13:35:55",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
+      "path": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "pageType": "post",
+      "title": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation - D'Genius Solutions",
+      "metaDescription": "Brand identity is more than a logo, color palette, or business name. It is the complete way people recognize, remember, and trust your business online. In",
+      "h1": "Brand Identity: 7 Powerful Reasons It Builds SEO Trust and Lead Generation",
+      "canonical": "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-17T15:08:10",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "pageType": "post",
+      "title": "Brand Mentions for AI Tools: 7 Powerful Ways to Build Trust",
+      "metaDescription": "Brand Mentions for AI Tools help build online authority, improve AI visibility and increase your chances of appearing in trusted business recommendations.",
+      "h1": "How Brand Mentions Help AI Tools Trust and Recommend Your Business",
+      "canonical": "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-27T13:04:12",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
+      "path": "/blogs/brand-visibility-in-ai-search/",
+      "pageType": "post",
+      "title": "Brand Visibility in AI Search: 7 Proven Measurement Methods",
+      "metaDescription": "Learn how to measure brand visibility in AI search across ChatGPT, Gemini and Google AI Overviews using mentions, citations and share of voice.",
+      "h1": "Brand Visibility in AI Search: 7 Ways to Measure It",
+      "canonical": "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-06T19:47:13",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
+      "path": "/blogs/chatgpt-brand-visibility/",
+      "pageType": "post",
+      "title": "ChatGPT brand visibility: 7 Critical Reasons Competitors Win",
+      "metaDescription": "ChatGPT brand visibility depends on clear entity signals, expert content and trusted proof. Learn 7 reasons competitors get recommended and how to fix it.",
+      "h1": "ChatGPT Brand Visibility: Why Does ChatGPT Recommend Your Competitors but Not Your Brand?",
+      "canonical": "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-21T15:44:42",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
+      "path": "/blogs/content-strategy-for-seo/",
+      "pageType": "post",
+      "title": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss - D'Genius Solutions",
+      "metaDescription": "Content strategy for SEO is not about publishing more blogs every week. It is about publishing the right content, targeting the right intent, supporting the",
+      "h1": "Content Strategy for SEO: 7 Powerful Ways to Avoid Ranking Loss",
+      "canonical": "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-19T16:36:18",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "pageType": "post",
+      "title": "7 Smart Content Strategy Tips for High-Intent Traffic",
+      "metaDescription": "Learn how to build a content strategy for high-intent traffic with SEO, EEAT, and AEO-focused content that attracts the right audience and drives better leads",
+      "h1": "7 Smart Content Strategy Tips for High-Intent Traffic",
+      "canonical": "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-15T11:44:55",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
+      "path": "/blogs/content-writing-for-seo/",
+      "pageType": "post",
+      "title": "Content Writing for SEO: 9 Ways to Rank and Convert - D'Genius Solutions",
+      "metaDescription": "Content writing for SEO helps businesses create helpful, search-focused, and conversion-ready pages that rank higher on Google and convert visitors into",
+      "h1": "Content Writing for SEO: 9 Ways to Rank and Convert",
+      "canonical": "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-15T14:07:09",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
+      "path": "/blogs/core-update-strategy/",
+      "pageType": "post",
+      "title": "Core Update Strategy: 8 Proven Ways to Protect Rankings",
+      "metaDescription": "Build a core update strategy with original content, strong E-E-A-T, technical SEO and regular audits to protect your Google rankings.",
+      "h1": "How to Build a Google Core Update-Resistant Content Strategy",
+      "canonical": "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-29T16:36:08",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+      "path": "/blogs/future-of-seo/",
+      "pageType": "post",
+      "title": "Is SEO Dead in 2026? What Business Owners Need to Know",
+      "metaDescription": "The future of SEO includes AEO, GEO, AIO, voice search, and AI readiness. Learn how businesses can improve visibility and generate qualified leads in 2026.",
+      "h1": "Is SEO Dead in 2026? What Business Owners Need to Know",
+      "canonical": "https://www.dgeniussolutions.com/blogs/future-of-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-26T10:01:06",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
+      "path": "/blogs/generative-engine-optimization-business/",
+      "pageType": "post",
+      "title": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026 - D'Genius Solutions",
+      "metaDescription": "Generative Engine Optimization is now becoming a serious part of digital marketing because the way people search is changing. Earlier, most customers searched",
+      "h1": "Generative Engine Optimization: What Business Owners Need to Know About GEO vs SEO in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-08T18:26:06",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
+      "path": "/blogs/generative-engine-optimization/",
+      "pageType": "post",
+      "title": "7 Ways Generative Engine Optimization Helps Your Business",
+      "metaDescription": "Learn what Generative Engine Optimization is, how GEO improves AI search visibility, and how it helps businesses build authority and generate better leads.",
+      "h1": "What Is Generative Engine Optimization and How Can It Help Your Business?",
+      "canonical": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-04T15:22:19",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
+      "path": "/blogs/geo-vs-seo-google-ai-search/",
+      "pageType": "post",
+      "title": "GEO vs SEO: 7 Powerful Ways Businesses Can Rank in Google and AI Search",
+      "metaDescription": "GEO vs SEO explains how businesses can improve visibility in Google search, AI Overviews, ChatGPT, Perplexity, and other AI search platforms with SEO and Generative Engine Optimization.",
+      "h1": "GEO vs SEO: How to Rank in Google and AI Searc",
+      "canonical": "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-30T17:26:02",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
+      "path": "/blogs/google-ads-ai-max-2026/",
+      "pageType": "post",
+      "title": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes",
+      "metaDescription": "Google Ads AI Max 2026 is changing how advertisers manage Search campaigns, targeting, advertising assets and landing pages. Instead of depending only on manually selected keywords and fixed landing pages, Google is giving its AI more freedom to understand search intent, expand relevant reach, customise advertising mes",
+      "h1": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-09-10T18:12:27",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
+      "path": "/blogs/google-ads-vs-meta-ads/",
+      "pageType": "post",
+      "title": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026? - D'Genius Solutions",
+      "metaDescription": "Google Ads vs Meta Ads does not have one universal winner for lead generation in 2026. Google Ads generally performs strongly when people are already",
+      "h1": "Google Ads vs Meta Ads: Which Generates Better Leads in 2026?",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-19T13:41:27",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
+      "path": "/blogs/google-agentic-browsing/",
+      "pageType": "post",
+      "title": "Google Agentic Browsing: 7 Website Changes for 2026 - D'Genius Solutions",
+      "metaDescription": "Google Agentic Browsing is changing how AI agents understand and use websites. Discover 7 steps to prepare your website for AI search in 2026",
+      "h1": "Google Agentic Browsing: 7 Website Changes for 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-17T12:44:08",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "pageType": "post",
+      "title": "Google AI Overviews and the Growth of Zero-Click Searches",
+      "metaDescription": "Google AI Overviews are reshaping search behavior and increasing zero-click searches. Learn how this shift impacts SEO, traffic, and digital visibility in 2025",
+      "h1": "Google AI Overviews and the Growth of Zero-Click Searches",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-12T18:38:48",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
+      "path": "/blogs/google-ai-overviews-image-generation/",
+      "pageType": "post",
+      "title": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take - D'Genius Solutions",
+      "metaDescription": "Google AI Overviews image generation is changing how people discover, create and interact with visual information through Google Search.",
+      "h1": "Google AI Overviews Image Generation: 7 SEO Actions Brands Should Take",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-15T11:48:12",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
+      "path": "/blogs/google-ai-search-update/",
+      "pageType": "post",
+      "title": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads - D'Genius Solutions",
+      "metaDescription": "Google AI Search Update helps businesses improve AI search visibility, build trust, answer user queries, and generate better leads.",
+      "h1": "Google AI Search Update: 7 Ways Businesses Can Get Better Leads",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-18T15:50:53",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
+      "path": "/blogs/google-algorithm-business/",
+      "pageType": "post",
+      "title": "Google Algorithm: 5 Critical Reasons Business Search Rankings Change",
+      "metaDescription": "Discover 5 ways the Google Algorithm affects business search visibility, rankings, traffic, and lead generation, and why it matters for long-term online growth.",
+      "h1": "Google Algorithm for Businesses: What It Means for Search Visibility",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-22T12:25:21",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
+      "path": "/blogs/google-august-2026-spam-update/",
+      "pageType": "post",
+      "title": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings",
+      "metaDescription": "The Google August 2026 spam update has put website quality back under the spotlight. For businesses that depend on Google for enquiries, sales and organic visibility, even a small ranking shift can have a noticeable impact on website performance. Google started rolling out the update on August 18, 2026, and completed i",
+      "h1": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-09-01T17:27:36",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-io-2026/",
+      "path": "/blogs/google-io-2026/",
+      "pageType": "post",
+      "title": "Google I/O 2026 SEO Updates That Will Transform AI Search - D'Genius Solutions",
+      "metaDescription": "Google I/O 2026 made one thing clear: the future of search is becoming more AI-driven, more conversational, and more personalized.",
+      "h1": "Google I/O 2026 SEO Updates That Will Transform AI Search",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-io-2026/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-22T12:28:02",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
+      "path": "/blogs/google-ranking-fixes/",
+      "pageType": "post",
+      "title": "Google Ranking: 7 Proven Fixes for Better Visibility",
+      "metaDescription": "Google ranking can improve when your website SEO, technical issues, content quality, backlinks, and local SEO signals are properly optimized. Learn how to fix it.",
+      "h1": "7 Critical Reasons Why Your Business Is Not Ranking on Google",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-02T16:50:40",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
+      "path": "/blogs/google-search-console-social-media/",
+      "pageType": "post",
+      "title": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026 - D'Genius Solutions",
+      "metaDescription": "Google Search Console social media tracking is becoming an important topic for businesses, marketers, creators and SEO teams. Google Search is no longer",
+      "h1": "Google Search Console Social Media Update: 7 Key Changes for Brands in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-09T11:23:53",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
+      "path": "/blogs/google-spam-update/",
+      "pageType": "post",
+      "title": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
+      "metaDescription": "A Google spam update can affect your website ranking, traffic, and leads. Learn why rankings drop and how DGS helps businesses recover with clean SEO, content, and backlink fixes.",
+      "h1": "Google Spam Update: 7 Smart Ways to Protect Your Website Ranking",
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-spam-update/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-01T12:48:08",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
+      "path": "/blogs/llm-seo-ai-search/",
+      "pageType": "post",
+      "title": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models - D'Genius Solutions",
+      "metaDescription": "LLM SEO is becoming important for businesses that want visibility on Google, AI search tools and large language models like ChatGPT, Gemini, Perplexity and",
+      "h1": "LLM SEO: 9 Smart Ways to Prepare Your Website for AI Tools and Large Language Models",
+      "canonical": "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-29T12:53:45",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
+      "path": "/blogs/llm-seo-services-mumbai/",
+      "pageType": "post",
+      "title": "LLM SEO Services: 7 Proven Ways to Improve AI Visibility",
+      "metaDescription": "LLM SEO Services help Mumbai businesses improve AI visibility, search relevance, citations, and content clarity across modern search platforms.",
+      "h1": "Key LLM SEO Services for Modern Businesses in Mumbai",
+      "canonical": "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-16T16:23:51",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+      "path": "/blogs/local-seo-business-growth/",
+      "pageType": "post",
+      "title": "Local SEO: 7 Proven Ways to Grow Your Business",
+      "metaDescription": "Local SEO helps businesses improve nearby visibility, attract targeted customers, build trust, and generate qualified local leads.",
+      "h1": "Why Local SEO Is Important for Business Growth",
+      "canonical": "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-17T15:34:48",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
+      "path": "/blogs/low-social-media-reach/",
+      "pageType": "post",
+      "title": "Low Social Media Reach in 2026? 9 Proven Fixes",
+      "metaDescription": "Low social media reach despite trending audio and hashtags? Learn why posts stall, what affects visibility, and how to improve organic reach in 2026.",
+      "h1": "Low Social Media Reach in 2026? Why Trending Audio and Hashtags Are Not Enough",
+      "canonical": "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-14T11:31:35",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
+      "path": "/blogs/modern-seo-business-growth/",
+      "pageType": "post",
+      "title": "Modern SEO Strategies for Business Growth 2026",
+      "metaDescription": "Discover how modern SEO Strategies like EEAT, AEO, GEO drives revenue and visibility. D'Genius Solutions Mumbai shares actionable Insights for growth and leads.",
+      "h1": "How Modern SEO Strategies Are Transforming Business Growth",
+      "canonical": "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-19T11:10:15",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
+      "path": "/blogs/optimize-content-ai-search/",
+      "pageType": "post",
+      "title": "Optimize Content for AI Search With 11 Proven Strategies",
+      "metaDescription": "Optimize content for AI search with 11 proven strategies for ChatGPT, Gemini, Perplexity",
+      "h1": "How to Optimize Content for ChatGPT, Gemini, Perplexity and Google AI Mode",
+      "canonical": "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-13T13:11:24",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+      "path": "/blogs/optimize-for-ai-overviews/",
+      "pageType": "post",
+      "title": "How to Optimize for AI Overviews in 2026 | DGS",
+      "metaDescription": "Learn how to optimize for AI overviews in 2026 with AEO, GEO, LLM SEO, voice search, AI readiness, and lead-generation hints from DGS.",
+      "h1": "Optimize for AI Overviews in 2026: Proven Growth Guide",
+      "canonical": "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-27T13:11:21",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
+      "path": "/blogs/schema-seo-for-small-business/",
+      "pageType": "post",
+      "title": "Schema SEO for Small Business: 7 Easy Steps for 2026 - D'Genius Solutions",
+      "metaDescription": "Schema SEO for small business helps search engines understand what a company does, where it operates and what information is available on its website.",
+      "h1": "Schema SEO for Small Business: 7 Easy Steps for 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-20T12:51:53",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "pageType": "post",
+      "title": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility - D'Genius Solutions",
+      "metaDescription": "Google has introduced a major new update for website owners, SEO teams, publishers, and digital marketers: dedicated Search Generative AI performance reports",
+      "h1": "Google Launches Search Generative AI Performance Reports in Search Console: What It Means for SEO, GEO and AI Visibility",
+      "canonical": "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-05T15:24:27",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
+      "path": "/blogs/seo-company-in-mumbai/",
+      "pageType": "post",
+      "title": "7 Proven Tips to Hire an SEO Agency in Mumbai",
+      "metaDescription": "Choosing the right SEO Company in Mumbai can directly affect your website visibility, lead generation and long-term digital growth. The challenge is that many SEO providers make similar promises around rankings, traffic and backlinks, which makes it difficult for businesses to identify the right partner. A strong SEO c",
+      "h1": "7 Proven Tips to Hire an SEO Agency in Mumbai",
+      "canonical": "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-09-04T12:12:10",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
+      "path": "/blogs/seo-friendly-website/",
+      "pageType": "post",
+      "title": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site - D'Genius Solutions",
+      "metaDescription": "SEO friendly website planning is no longer only about adding keywords to pages. A business website now needs clean development, strong web design, fast",
+      "h1": "SEO Friendly Website: 7 Powerful Ways to Build a Lead-Ready Site",
+      "canonical": "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-12T12:50:10",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
+      "path": "/blogs/seo-rankings-up-but-traffic-down/",
+      "pageType": "post",
+      "title": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling - D'Genius Solutions",
+      "metaDescription": "SEO rankings up but traffic down is one of the most confusing situations a business can face. Your tracked keywords may be moving higher on Google, yet",
+      "h1": "SEO Rankings Up but Traffic Down: 9 Reasons Your Clicks Are Falling",
+      "canonical": "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-10T12:51:27",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
+      "path": "/blogs/seo-services-india-2026/",
+      "pageType": "post",
+      "title": "Rising Demand for SEO Services in India in 2026",
+      "metaDescription": "Explore why SEO services are in rising demand in India in 2026 and how businesses are using SEO for visibility, leads, local reach, and long-term growth",
+      "h1": "Rising Demand for SEO Services in India in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-13T11:41:51",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
+      "path": "/blogs/seo-strategies-business-growth/",
+      "pageType": "post",
+      "title": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
+      "metaDescription": "Learn how SEO strategies for business growth improve rankings, search visibility, user trust, and lead generation for businesses.",
+      "h1": "5 SEO Strategies for Business Growth That Improve Rankings and Leads",
+      "canonical": "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-15T10:58:53",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "path": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "pageType": "post",
+      "title": "Social Media Conversion: 9 Reasons Followers Don't Buy",
+      "metaDescription": "Struggling with social media conversion? Learn why followers are not becoming customers and how to turn social media engagement into leads and sales.",
+      "h1": "Social Media Conversion: Why Your Followers Are Not Becoming Customers",
+      "canonical": "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-24T11:23:55",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
+      "path": "/blogs/social-media-marketing-strategy/",
+      "pageType": "post",
+      "title": "Social Media Marketing Strategy 2026 for Small Businesses",
+      "metaDescription": "Learn how a social media marketing strategy helps small businesses grow reach, branding, engagement, traffic, and leads with smarter digital marketing.",
+      "h1": "Social Media Marketing Strategy 2026 for Small Businesses",
+      "canonical": "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-25T12:52:41",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
+      "path": "/blogs/topical-authority-seo/",
+      "pageType": "post",
+      "title": "Why Topical Authority Matters More Than Keyword Density in 2026",
+      "metaDescription": "Learn why topical authority matters more than keyword density in 2026 and how it helps improve SEO, AEO, GEO, and long-term organic visibility.",
+      "h1": "Why Topical Authority Matters More Than Keyword Density in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-15T16:29:04",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
+      "path": "/blogs/voice-search-seo/",
+      "pageType": "post",
+      "title": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches - D'Genius Solutions",
+      "metaDescription": "Voice Search SEO helps businesses optimise their websites for searches made through spoken questions and natural, conversational language.",
+      "h1": "Voice Search SEO in 2026: How Businesses Can Win Conversational Searches",
+      "canonical": "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-22T15:48:27",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "pageType": "post",
+      "title": "Why Website Design Directly Affects Lead Generation",
+      "metaDescription": "Website design and lead generation are directly connected because users decide within seconds whether they trust a business or not. A website may get traffic,",
+      "h1": "Why Website Design Directly Affects Lead Generation",
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-26T15:30:57",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-development-leads/",
+      "path": "/blogs/website-development-leads/",
+      "pageType": "post",
+      "title": "How to Turn Website Traffic Into Qualified Leads",
+      "metaDescription": "Website Development helps businesses turn website traffic into qualified leads through better structure, trust, content, and user journey.",
+      "h1": "How to Turn Website Traffic Into Qualified Leads",
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-development-leads/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-15T15:25:28",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
+      "path": "/blogs/website-development-mistakes/",
+      "pageType": "post",
+      "title": "Website Development Mistakes That Hurt Business Growth",
+      "metaDescription": "Website development mistakes are not just design errors. They are structural, technical, content, and trust-related gaps that stop a website from ranking,",
+      "h1": "Website Development Mistakes That Hurt Business Growth",
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-14T11:07:00",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
+      "path": "/blogs/website-development-quality-leads/",
+      "pageType": "post",
+      "title": "7 Website Development Features That Help Businesses Generate Quality Leads - D'Genius Solutions",
+      "metaDescription": "Website Development plays a major role in how a business attracts, engages, and converts potential customers online. A website may look professional, but its",
+      "h1": "7 Website Development Features That Help Businesses Generate Quality Leads",
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-14T18:31:53",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
+      "path": "/blogs/website-performance-conversions/",
+      "pageType": "post",
+      "title": "Why Website Performance Still Decides Conversions in 2026",
+      "metaDescription": "Discover why website performance still drives conversions in 2026 and how faster, smoother user experiences help improve trust, SEO, and business growth.",
+      "h1": "Why Website Performance Still Decides Conversions in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-26T15:36:51",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
+      "path": "/blogs/website-traffic-but-no-leads/",
+      "pageType": "post",
+      "title": "Website Traffic but No Leads? 9 Proven Fixes That Work",
+      "metaDescription": "Website traffic but no leads? Discover 9 proven reasons visitors do not convert and learn how to improve traffic quality, landing pages, CTAs, trust and tracking.",
+      "h1": "Website Traffic but No Leads? 9 Proven Fixes That Work",
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-27T13:57:02",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
+      "path": "/blogs/what-is-llm-seo/",
+      "pageType": "post",
+      "title": "What Is LLM SEO? Powerful 2026 Guide to AI Search Optimization",
+      "metaDescription": "LLM SEO helps businesses improve visibility across AI search platforms like ChatGPT, Gemini, Perplexity, Copilot, and Google AI results. Learn how it supports brand authority, AI visibility, and lead generation in 2026.",
+      "h1": "What Is LLM SEO and Why Businesses Should Care in 2026",
+      "canonical": "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-08T12:55:03",
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/career/",
+      "path": "/career/",
+      "pageType": "page",
+      "title": "Career",
+      "metaDescription": "D’Genius Solutions is a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.",
+      "h1": "Join Our Team",
+      "canonical": "https://www.dgeniussolutions.com/career/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-02-17T17:29:40",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/case_studies/",
+      "path": "/case_studies/",
+      "pageType": "page",
+      "title": "Case studies - D'Genius Solutions",
+      "metaDescription": "Explore DGS project work across website development, SEO, AEO, GEO, LLM SEO, AI video production, AI avatar storytelling, content creation, and branding. This",
+      "h1": "Our Work Across Websites, SEO, AI Search, Content, Branding & AI Video",
+      "canonical": "https://www.dgeniussolutions.com/case_studies/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-08T15:01:08",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/contact-us/",
+      "path": "/contact-us/",
+      "pageType": "page",
+      "title": "Contact Us",
+      "metaDescription": "Tell us about your project. We respond within 24 hours.",
+      "h1": null,
+      "canonical": "https://www.dgeniussolutions.com/contact-us/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-04-13T13:00:15",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/motion-graphics/",
+      "path": "/motion-graphics/",
+      "pageType": "page",
+      "title": "Motion Graphics",
+      "metaDescription": null,
+      "h1": "AI Motion Graphic Designer",
+      "canonical": "https://www.dgeniussolutions.com/motion-graphics/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-19T10:59:07",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/our-services/",
+      "path": "/our-services/",
+      "pageType": "page",
+      "title": "Digital Marketing Services in Mumbai | D’Genius Solutions",
+      "metaDescription": "Boost your brand with expert SEO, performance marketing, social media, branding, and web development services by D’Genius Solutions.",
+      "h1": "Our Services",
+      "canonical": "https://www.dgeniussolutions.com/our-services/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-08T14:32:00",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/portfolio/",
+      "path": "/portfolio/",
+      "pageType": "page",
+      "title": "Portfolio D’Genius Solutions Digital Marketing Case Studies",
+      "metaDescription": "Explore the portfolio of D’Genius Solutions featuring real digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.",
+      "h1": "PORTFOLIO",
+      "canonical": "https://www.dgeniussolutions.com/portfolio/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-04-17T17:01:38",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/privacy-policy/",
+      "path": "/privacy-policy/",
+      "pageType": "page",
+      "title": "Privacy Policy D’Genius Solutions",
+      "metaDescription": "Read the Privacy Policy of D’Genius Solutions to understand how we collect, use, protect, and manage your personal information.",
+      "h1": "Privacy Policy for D'Genius Solutions",
+      "canonical": "https://www.dgeniussolutions.com/privacy-policy/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-02-17T16:59:11",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/seo-pricing/",
+      "path": "/seo-pricing/",
+      "pageType": "page",
+      "title": "SEO Pricing",
+      "metaDescription": "Mumbai's most trusted SEO agency — Page 1 rankings to AI search dominance across ChatGPT, Perplexity & Google SGE.",
+      "h1": "Search that sells. Priced with purpose.",
+      "canonical": "https://www.dgeniussolutions.com/seo-pricing/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-04-13T13:03:34",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/",
+      "path": "/services/",
+      "pageType": "page",
+      "title": "Services - D'Genius Solutions",
+      "metaDescription": "Services Archive - D'Genius Solutions",
+      "h1": "Archives: Services",
+      "canonical": "https://www.dgeniussolutions.com/services/",
+      "robots": "follow, index",
+      "sitemap": true,
+      "statusCode": 200,
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "path": "/services/aeo-services-in-mumbai/",
+      "pageType": "service",
+      "title": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
+      "metaDescription": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
+      "h1": "AEO Services in Mumbai from a Mumbai-Based AEO Agency",
+      "canonical": "https://www.dgeniussolutions.com/services/aeo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-07T11:02:20",
+      "primaryQueryFamily": "AEO (Answer Engine Optimisation)",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+      "path": "/services/ai-production-dubai-page/",
+      "pageType": "service",
+      "title": "AI Production Dubai page - D'Genius Solutions",
+      "metaDescription": "AI Video Production Agency In Dubai",
+      "h1": "AI Video Production Agency In Dubai For Ads, Reels & Brand Films",
+      "canonical": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-09T17:13:15",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "path": "/services/ai-video-production-agency/",
+      "pageType": "service",
+      "title": "AI Video Production Agency in Mumbai | D’Genius Solutions",
+      "metaDescription": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
+      "h1": "AI Video Production House In Mumbai For AI Ads, Brand Films & Product Videos",
+      "canonical": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-04T10:34:24",
+      "primaryQueryFamily": "AI Video Production",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "CRITICAL_DECLINE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": "2026-09-17",
+        "firstDeclineDate": "2026-09-21",
+        "worstDeclineDate": "2026-09-24",
+        "lastDeploymentBeforeDecline": "2026-09-22 15:12 (Commit 0c13e7c)",
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "Keyword-heavy format cluster injected",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/branding/",
+      "path": "/services/branding/",
+      "pageType": "service",
+      "title": "Branding Services | 100+ Clients | D'Genius Solutions",
+      "metaDescription": "Transform your brand identity into market dominance. D’Genius Solutions offers strategic branding services in Mumbai, offering brand strategy & visual identity.",
+      "h1": "TRANSFORM YOUR BRAND IDENTITY INTO MARKET DOMINANCE",
+      "canonical": "https://www.dgeniussolutions.com/services/branding/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-08T13:36:39",
+      "primaryQueryFamily": "Branding Agency",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/content-creation/",
+      "path": "/services/content-creation/",
+      "pageType": "service",
+      "title": "Content Creation Services | 100+ Clients | D'Genius Solutions",
+      "metaDescription": "Get high-quality content creation services in Mumbai designed for clarity, credibility, and conversions. We create SEO-ready content that builds trust and drives growth",
+      "h1": "Content that transforms brands",
+      "canonical": "https://www.dgeniussolutions.com/services/content-creation/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-05-08T13:35:58",
+      "primaryQueryFamily": "Content Creation / Marketing",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/dubai-seo/",
+      "path": "/services/dubai-seo/",
+      "pageType": "service",
+      "title": "Dubai SEO - D'Genius Solutions",
+      "metaDescription": "Click any case study to view the complete performance breakdown, key results, achievements, and SEO growth context from our SEO company in Dubai.",
+      "h1": "SEO Agency in Dubai for Rankings, Leads & Local Growth",
+      "canonical": "https://www.dgeniussolutions.com/services/dubai-seo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-09T19:57:41",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/geo/",
+      "path": "/services/geo/",
+      "pageType": "service",
+      "title": "GEO Services in Mumbai | D'Genius Solutions",
+      "metaDescription": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
+      "h1": "Generative Engine Optimization (GEO) Services in Mumbai",
+      "canonical": "https://www.dgeniussolutions.com/services/geo/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-07T12:49:23",
+      "primaryQueryFamily": "GEO (Generative Engine Optimisation)",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "path": "/services/llm-seo-service/",
+      "pageType": "service",
+      "title": "LLM SEO Services in Mumbai: 7 Proven Ways to Win AI Search",
+      "metaDescription": "LLM SEO services in Mumbai to improve visibility in ChatGPT Gemini AI Overviews and Perplexity. Get a free AI search audit by D'Genius Solutions.",
+      "h1": "LLM SEO Services in Mumbai for AI Search Visibility",
+      "canonical": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-10T11:45:23",
+      "primaryQueryFamily": "LLM SEO / Optimization",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/performance-marketing/",
+      "path": "/services/performance-marketing/",
+      "pageType": "service",
+      "title": "Performance Marketing - D'Genius Solutions",
+      "metaDescription": "Trusted By 200+ Brands",
+      "h1": "Performance Marketing for Qualified Leads, Sales & ROI",
+      "canonical": "https://www.dgeniussolutions.com/services/performance-marketing/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-10T12:15:23",
+      "primaryQueryFamily": "Performance Marketing",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+      "path": "/services/seo-service-in-banglore/",
+      "pageType": "service",
+      "title": "SEO services in Bangalore",
+      "metaDescription": "D'Genius Solutions provides SEO services in Bangalore to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
+      "h1": "SEO Agency in Bangalore for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Bangalore ↗",
+      "canonical": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-31T19:04:28",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+      "path": "/services/seo-service-in-gurugram/",
+      "pageType": "service",
+      "title": "SEO Services in Gurugram | SEO Agency in Gurugram for Rankings & Leads | DGS",
+      "metaDescription": "D’Genius Solutions provides SEO services in Gurugram to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
+      "h1": "SEO Agency in Gurugram for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Gurugram ↗",
+      "canonical": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-31T19:10:52",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+      "path": "/services/seo-service-pune/",
+      "pageType": "service",
+      "title": "SEO Services in Pune | SEO Agency in Pune for Rankings & Leads | DGS",
+      "metaDescription": "D'Genius Solutions provides SEO services in Pune to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
+      "h1": "SEO Agency in Pune for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Pune ↗",
+      "canonical": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-31T19:00:48",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+      "path": "/services/seo-services-in-hyderabad/",
+      "pageType": "service",
+      "title": "SEO Services in Hyderabad | SEO Agency in Hyderabad for Rankings & Leads | DGS",
+      "metaDescription": "D’Genius Solutions provides SEO services in Hyderabad to improve Google rankings, local SEO, technical SEO, Google Maps visibility, organic traffic, and qualified business leads.",
+      "h1": "SEO Agency in Hyderabad for Rankings, Qualified Traffic and Leads — SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Hyderabad ↗",
+      "canonical": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-31T19:08:11",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "path": "/services/seo-services-in-mumbai/",
+      "pageType": "service",
+      "title": "SEO Services in Mumbai | SEO Agency for Rankings & Leads | DGS",
+      "metaDescription": "D'Genius Solutions is an SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.",
+      "h1": "SEO Services in Mumbai for Rankings, Traffic and Qualified Leads SEO THAT MOVES Rankings. Traffic. Leads. Revenue. In Mumbai ↗",
+      "canonical": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "robots": "follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-06T19:10:12",
+      "primaryQueryFamily": "SEO Services Mumbai",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
+      "path": "/services/shirdi-se-sai-tak-case-study/",
+      "pageType": "service",
+      "title": "Shirdi Se Sai Tak Case Study - D'Genius Solutions",
+      "metaDescription": "Premium Case Study Experience",
+      "h1": "Mythological AI Avatar Case Study For Shirdi Se Sai Tak Sai Baba Devotional Storytelling",
+      "canonical": "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-09T15:24:26",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/social-media-marketing/",
+      "path": "/services/social-media-marketing/",
+      "pageType": "service",
+      "title": "Social Media Marketing | 100+ Clients | D'Genius Solutions",
+      "metaDescription": "Grow your brand with ROI-focused social media marketing services in Mumbai. D’Genius Solutions helps businesses scale engagement, leads, and conversions",
+      "h1": "Transform Your Social Media Into a Strategic Revenue Channel",
+      "canonical": "https://www.dgeniussolutions.com/services/social-media-marketing/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-26T10:57:13",
+      "primaryQueryFamily": "Social Media Marketing",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "path": "/services/website-development-amc/",
+      "pageType": "service",
+      "title": "Website Development Company in Mumbai | Web Design & AMC",
+      "metaDescription": "D'Genius Solutions builds responsive, SEO-ready websites in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.",
+      "h1": "Website Development Company in Mumbai Built for Leads, SEO & Growth",
+      "canonical": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "robots": "follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-07-31T18:26:53",
+      "primaryQueryFamily": "Website Development & AMC",
+      "isProtectedTier0": true,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "STABLE",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "MONITORED"
+      },
+      "dropDetection": {
+        "lastStrongDate": null,
+        "firstDeclineDate": null,
+        "worstDeclineDate": null,
+        "lastDeploymentBeforeDecline": null,
+        "googleUpdateActive": "Google September 2026 Spam Update (Rollout started 24 Sep 2026)",
+        "contentChangeNearDecline": "None",
+        "titleH1Change": "None (Protected)",
+        "canonicalChange": "None (Strict Self-Canonical)",
+        "internalLinkChange": "None"
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+      "path": "/services/website-development-pune-page/",
+      "pageType": "service",
+      "title": "Website Development Pune Page - D'Genius Solutions",
+      "metaDescription": "D'Genius Solutions is a website development company in Pune delivering responsive, conversion-focused and SEO-friendly websites for startups, SMEs and",
+      "h1": "Website Development Company in Pune Built for Leads, SEO & Growth",
+      "canonical": "https://www.dgeniussolutions.com/services/website-development-pune-page/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-08-04T18:57:54",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/sitemap/",
+      "path": "/sitemap/",
+      "pageType": "page",
+      "title": "Sitemap | D'Genius Solutions - Web Design & SEO Mumbai",
+      "metaDescription": "Browse D'Genius Solutions' full sitemap: Discover WordPress designs, Elementor templates, SEO services, and client projects in Mumbai. Quick navigation to all pages.",
+      "h1": "Explore D'Genius Solutions",
+      "canonical": "https://www.dgeniussolutions.com/sitemap/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-04-29T16:16:11",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/us-landing-page/",
+      "path": "/us-landing-page/",
+      "pageType": "page",
+      "title": "US Digital Marketing Services for Search Visibility and Leads",
+      "metaDescription": "D'Genius Solutions helps US businesses grow search visibility, AI search presence and qualified leads with SEO, AEO, GEO, LLM SEO and digital marketing services.",
+      "h1": "Digital Marketing Services Designed for the US Market.",
+      "canonical": "https://www.dgeniussolutions.com/us-landing-page/",
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "sitemap": true,
+      "statusCode": 200,
+      "lastModified": "2026-06-30T14:31:57",
+      "primaryQueryFamily": "General Service",
+      "isProtectedTier0": false,
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "avgPosition": 0,
+      "classification": "INSUFFICIENT_DATA",
+      "aiVisibility": {
+        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
+        "status": "STANDARD"
+      },
+      "dropDetection": null
+    }
+  ]
+}
