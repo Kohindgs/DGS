@@ -1,31 +1,44 @@
 {
-  "generatedAt": "2026-09-27T10:24:30.018Z",
-  "auditTimestamp": "2026-09-27T10:24:25.540Z",
+  "generatedAt": "2026-09-27T14:58:34.193Z",
+  "auditTimestamp": "2026-09-27T14:58:26.425Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
   "summary": {
-    "totalIndexablePages": 100,
+    "totalIndexablePages": 98,
     "protectedTier0PagesCount": 11,
-    "pagesWithGscData": 70,
+    "pagesWithGscData": 100,
     "classifications": {
       "CRITICAL_DECLINE": 4,
       "DECLINING": 9,
       "VOLATILE": 1,
       "STABLE": 2,
       "GROWING": 19,
-      "INSUFFICIENT_DATA": 65
+      "INSUFFICIENT_DATA": 63
     },
     "spamRiskDistribution": {
-      "LOW": 34,
+      "LOW": 35,
       "MEDIUM": 0,
-      "HIGH": 6,
-      "INSUFFICIENT_EVIDENCE": 60
+      "HIGH": 0,
+      "INSUFFICIENT_EVIDENCE": 63
+    },
+    "recoveryTiers": {
+      "AT_HISTORICAL_PEAK": 33,
+      "NEAR_HISTORICAL_PEAK": 1,
+      "PARTIAL_RECOVERY": 1,
+      "SIGNIFICANT_LOSS": 10,
+      "CRITICAL_LOSS": 53,
+      "INSUFFICIENT_HISTORICAL_DATA": 0
+    },
+    "twoBaselineModel": {
+      "historicalPeakBaselineDefined": true,
+      "currentPerformanceBaselineDefined": true,
+      "userConfirmedStrategicPages": 11
     },
     "cannibalizationCandidateCount": 50,
     "falseCannibalizationRecordsRemoved": 0,
-    "publiclyRenderedMachineLabels": 6,
-    "sourceCommentMachineLabels": 2,
-    "internalMetadataMachineLabels": 116
+    "publiclyRenderedMachineLabels": 0,
+    "sourceCommentMachineLabels": 1,
+    "internalMetadataMachineLabels": 0
   },
   "oldVsNewClassificationDelta": [
     {
@@ -935,7 +948,7 @@
         "prevImpressions": 10,
         "prevPosition": 1.1
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video agency mumbai",
@@ -960,7 +973,7 @@
         "prevImpressions": 18,
         "prevPosition": 3.89
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video production agency",
@@ -985,7 +998,7 @@
         "prevImpressions": 12,
         "prevPosition": 8.58
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video marketing agency",
@@ -1010,7 +1023,7 @@
         "prevImpressions": 1,
         "prevPosition": 3
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     }
   ],
   "cannibalizationCandidates": [
@@ -1037,7 +1050,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "GEOGRAPHIC_SEGMENTATION"
     },
     {
       "query": "how to rank for ai overviews",
@@ -1062,7 +1075,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "HUB_AND_SPOKE"
     },
     {
       "query": "dgs marketing",
@@ -1087,7 +1100,7 @@
         "prevImpressions": 2,
         "prevPosition": 2
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "dgs solutions",
@@ -1112,7 +1125,7 @@
         "prevImpressions": 1,
         "prevPosition": 63
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "d genius",
@@ -1137,7 +1150,7 @@
         "prevImpressions": 12,
         "prevPosition": 9.83
       },
-      "classification": "BRAND_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video production agency in mumbai",
@@ -1162,7 +1175,7 @@
         "prevImpressions": 10,
         "prevPosition": 1.1
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "d genius solutions",
@@ -1187,7 +1200,7 @@
         "prevImpressions": 16,
         "prevPosition": 6.56
       },
-      "classification": "BRAND_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai ad film production agency",
@@ -1212,7 +1225,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "geo agency india",
@@ -1237,7 +1250,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "d'genius solutions",
@@ -1262,7 +1275,7 @@
         "prevImpressions": 32,
         "prevPosition": 4.5
       },
-      "classification": "BRAND_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "dgenius solutions",
@@ -1287,7 +1300,7 @@
         "prevImpressions": 38,
         "prevPosition": 7.16
       },
-      "classification": "BRAND_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "best llm seo agency in mumbai",
@@ -1312,7 +1325,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "TRUE_CANNIBALIZATION"
     },
     {
       "query": "insta kohin",
@@ -1337,7 +1350,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "digital marketing agency in bandra",
@@ -1362,7 +1375,7 @@
         "prevImpressions": 1,
         "prevPosition": 21
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "aeo agency near me",
@@ -1387,7 +1400,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "geo services in mumbai",
@@ -1412,7 +1425,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "aeo agency in mumbai",
@@ -1437,7 +1450,7 @@
         "prevImpressions": 4,
         "prevPosition": 11
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "genius advertising",
@@ -1462,7 +1475,7 @@
         "prevImpressions": 1,
         "prevPosition": 83
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "compare how traditional and ai-first video platforms process live content",
@@ -1487,7 +1500,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "HUB_AND_SPOKE"
     },
     {
       "query": "aeo services in mumbai",
@@ -1512,7 +1525,7 @@
         "prevImpressions": 2,
         "prevPosition": 1
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "TRUE_CANNIBALIZATION"
     },
     {
       "query": "what are the best practices for improving on site seo and generative engine optimization for my business?",
@@ -1537,7 +1550,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "GEOGRAPHIC_SEGMENTATION"
     },
     {
       "query": "rank in ai overviews",
@@ -1562,7 +1575,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "HUB_AND_SPOKE"
     },
     {
       "query": "ai video production agencies",
@@ -1587,7 +1600,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "llm seo company",
@@ -1612,7 +1625,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "SUPPORTING_PAGE"
+      "classification": "HUB_AND_SPOKE"
     },
     {
       "query": "ai video agency mumbai",
@@ -1637,7 +1650,7 @@
         "prevImpressions": 18,
         "prevPosition": 3.89
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "best llm seo agency in navi mumbai",
@@ -1687,7 +1700,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "HUB_AND_SPOKE"
     },
     {
       "query": "dgenius",
@@ -1712,7 +1725,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "BRAND_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai seo services in mumbai",
@@ -1737,7 +1750,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "TRUE_CANNIBALIZATION"
     },
     {
       "query": "top answer engine optimization agency in mumbai. my location is mumbai, maharashtra, india, india.",
@@ -1787,7 +1800,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "what business problem does geo solve for brands?",
@@ -1812,7 +1825,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "SUPPORTING_PAGE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video production agency in india",
@@ -1837,7 +1850,7 @@
         "prevImpressions": 2,
         "prevPosition": 8
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "online marketing genius company limited",
@@ -1862,7 +1875,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "dgs agency",
@@ -1887,7 +1900,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "seo genius",
@@ -1912,7 +1925,7 @@
         "prevImpressions": 7,
         "prevPosition": 10.57
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video maker near me",
@@ -1937,7 +1950,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video production service in mumbai",
@@ -1962,7 +1975,7 @@
         "prevImpressions": 1,
         "prevPosition": 1
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video production agency",
@@ -1987,7 +2000,7 @@
         "prevImpressions": 12,
         "prevPosition": 8.58
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "aeo agency",
@@ -2012,7 +2025,7 @@
         "prevImpressions": 6,
         "prevPosition": 29.5
       },
-      "classification": "INCIDENTAL_OVERLAP"
+      "classification": "GEOGRAPHIC_SEGMENTATION"
     },
     {
       "query": "generative engine optimization services",
@@ -2037,7 +2050,7 @@
         "prevImpressions": 2,
         "prevPosition": 33.5
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "HUB_AND_SPOKE"
     },
     {
       "query": "ai video marketing agency",
@@ -2062,7 +2075,7 @@
         "prevImpressions": 1,
         "prevPosition": 3
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video creator near me",
@@ -2087,7 +2100,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video production for brands",
@@ -2112,7 +2125,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "GEOGRAPHIC_SEGMENTATION"
     },
     {
       "query": "geo agency in mumbai",
@@ -2137,7 +2150,7 @@
         "prevImpressions": 1,
         "prevPosition": 1
       },
-      "classification": "TRUE_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "advertising agency in bandra",
@@ -2162,7 +2175,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai production agency in mumbai",
@@ -2187,7 +2200,7 @@
         "prevImpressions": 11,
         "prevPosition": 4.09
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "dgsol creative ltd",
@@ -2212,7 +2225,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "INSUFFICIENT_EVIDENCE"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "ai video agency",
@@ -2237,7 +2250,7 @@
         "prevImpressions": 0,
         "prevPosition": null
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     },
     {
       "query": "top geo services company in mumbai for ai search visibility. my location is mumbai, maharashtra, india, india.",
@@ -2262,7 +2275,7 @@
         "prevImpressions": 1,
         "prevPosition": 4
       },
-      "classification": "POTENTIAL_CANNIBALIZATION"
+      "classification": "BRAND_HOMEPAGE_ANCHOR"
     }
   ],
   "locationSimilarityReport": [
@@ -2525,6 +2538,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 10.14,
+          "clicks": 72,
+          "impressions": 555,
+          "ctr": 12.97
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -2582,6 +2608,19 @@
       "blogClassification": null,
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 9.37,
+          "clicks": 0,
+          "impressions": 48,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2642,6 +2681,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 18.23,
+          "clicks": 2,
+          "impressions": 61,
+          "ctr": 3.28
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2690,8 +2742,8 @@
         "impressionDelta": 9,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 28.89,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 28.89,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -2702,6 +2754,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 28.89,
+          "clicks": 0,
+          "impressions": 9,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2746,8 +2811,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -2759,6 +2824,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2813,13 +2891,24 @@
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: Local SEO"
-      ],
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
       "blogClassification": "KEEP",
-      "safeAction": "REMOVE_RENDERED_LABEL",
+      "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 2,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 14.2,
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2881,6 +2970,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 11.76,
+          "clicks": 1,
+          "impressions": 55,
+          "ctr": 1.82
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2930,8 +3032,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 47,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 47,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -2942,6 +3044,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 47,
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -2990,8 +3105,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3003,6 +3118,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3051,8 +3179,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3064,6 +3192,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3125,6 +3266,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 36.21,
+          "clicks": 1,
+          "impressions": 248,
+          "ctr": 0.4
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3186,6 +3340,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 46.79,
+          "clicks": 0,
+          "impressions": 28,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3247,6 +3414,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 26.83,
+          "clicks": 0,
+          "impressions": 1244,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3296,8 +3476,8 @@
         "impressionDelta": 10,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 18.6,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 18.6,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3308,6 +3488,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 18.6,
+          "clicks": 0,
+          "impressions": 10,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3356,8 +3549,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3369,6 +3562,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3427,6 +3633,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 36.58,
+          "clicks": 0,
+          "impressions": 36,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3476,8 +3695,8 @@
         "impressionDelta": 2,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 29.5,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 29.5,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3488,6 +3707,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 29.5,
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3536,8 +3768,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -3549,6 +3781,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3610,6 +3855,19 @@
       "blogClassification": "REFRESH_CANDIDATE",
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 31.24,
+          "clicks": 0,
+          "impressions": 401,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3659,8 +3917,8 @@
         "impressionDelta": 36,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 6.44,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 6.44,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3671,6 +3929,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 6.44,
+          "clicks": 0,
+          "impressions": 36,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3732,6 +4003,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 23.83,
+          "clicks": 0,
+          "impressions": 52,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3781,8 +4065,8 @@
         "impressionDelta": 14,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 17.21,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 17.21,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -3793,6 +4077,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 17.21,
+          "clicks": 0,
+          "impressions": 14,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3854,6 +4151,19 @@
       "blogClassification": "REFRESH_CANDIDATE",
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 27.28,
+          "clicks": 0,
+          "impressions": 18,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3915,6 +4225,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 12.12,
+          "clicks": 0,
+          "impressions": 17,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -3976,6 +4299,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 20.25,
+          "clicks": 0,
+          "impressions": 139,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4037,6 +4373,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 36.82,
+          "clicks": 0,
+          "impressions": 62,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4098,6 +4447,19 @@
       "blogClassification": "REFRESH_CANDIDATE",
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 15.07,
+          "clicks": 0,
+          "impressions": 87,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4159,6 +4521,19 @@
       "blogClassification": "REFRESH_CANDIDATE",
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 42.19,
+          "clicks": 0,
+          "impressions": 72,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4207,8 +4582,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4220,6 +4595,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4268,8 +4656,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4281,6 +4669,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4334,13 +4735,24 @@
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: Local SEO"
-      ],
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
       "blogClassification": "KEEP",
-      "safeAction": "REMOVE_RENDERED_LABEL",
+      "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 23.67,
+          "clicks": 0,
+          "impressions": 12,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4390,8 +4802,8 @@
         "impressionDelta": 5,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 6.6,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 6.6,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -4402,6 +4814,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 6.6,
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4463,6 +4888,19 @@
       "blogClassification": "REFRESH_CANDIDATE",
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 24.7,
+          "clicks": 0,
+          "impressions": 903,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4511,8 +4949,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4524,6 +4962,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4573,8 +5024,8 @@
         "impressionDelta": 40,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 17.6,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 17.6,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -4585,6 +5036,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 17.6,
+          "clicks": 0,
+          "impressions": 40,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4633,8 +5097,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4646,6 +5110,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4704,6 +5181,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 11.22,
+          "clicks": 0,
+          "impressions": 9,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4765,6 +5255,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 32.04,
+          "clicks": 0,
+          "impressions": 23,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4814,8 +5317,8 @@
         "impressionDelta": 8,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 9.5,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 9.5,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -4826,6 +5329,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 9.5,
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4874,8 +5390,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4887,6 +5403,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4935,8 +5464,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -4948,6 +5477,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -4997,8 +5539,8 @@
         "impressionDelta": 5,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 70,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 70,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5009,6 +5551,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 70,
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5057,8 +5612,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5070,6 +5625,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5131,6 +5699,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 11.5,
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5180,8 +5761,8 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 8,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 8,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5192,6 +5773,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 8,
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5240,8 +5834,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5253,6 +5847,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5301,8 +5908,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5314,6 +5921,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5375,6 +5995,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 14,
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5424,20 +6057,31 @@
         "impressionDelta": 2,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 5,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 5,
         "currentCtr": 0,
         "previousCtr": 0
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: Local SEO"
-      ],
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
       "blogClassification": "KEEP",
-      "safeAction": "REMOVE_RENDERED_LABEL",
+      "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 5,
+          "clicks": 0,
+          "impressions": 2,
+          "ctr": 0
+        },
+        "recoveryTier": "PARTIAL_RECOVERY"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5487,8 +6131,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 1,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 1,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5499,6 +6143,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 1,
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5555,13 +6212,24 @@
       },
       "classification": "CRITICAL_DECLINE",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: Local SEO"
-      ],
+      "spamRisk": "LOW",
+      "riskReasons": [],
       "blogClassification": "REFRESH_CANDIDATE",
-      "safeAction": "REMOVE_RENDERED_LABEL",
-      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
+      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 17.27,
+          "clicks": 0,
+          "impressions": 55,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5611,8 +6279,8 @@
         "impressionDelta": 6,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 12.33,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 12.33,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5623,6 +6291,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 12.33,
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5671,8 +6352,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5684,6 +6365,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5732,8 +6426,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5745,6 +6439,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5803,6 +6510,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 61.08,
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5852,8 +6572,8 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 7,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 7,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -5864,6 +6584,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 7,
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5912,8 +6645,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -5925,6 +6658,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -5986,6 +6732,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 31.43,
+          "clicks": 0,
+          "impressions": 23,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6035,20 +6794,31 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 36,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 36,
         "currentCtr": 0,
         "previousCtr": 0
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: Local SEO"
-      ],
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
       "blogClassification": "KEEP",
-      "safeAction": "REMOVE_RENDERED_LABEL",
+      "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 36,
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6097,21 +6867,32 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: Local SEO"
-      ],
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
       "blogClassification": "KEEP",
-      "safeAction": "REMOVE_RENDERED_LABEL",
+      "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6161,8 +6942,8 @@
         "impressionDelta": 3,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 13,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 13,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6173,6 +6954,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 13,
+          "clicks": 0,
+          "impressions": 3,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6234,6 +7028,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 26,
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6283,8 +7090,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 8,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 8,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6295,6 +7102,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 8,
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6343,8 +7163,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6356,6 +7176,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6404,8 +7237,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6417,6 +7250,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6478,6 +7324,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 15.4,
+          "clicks": 0,
+          "impressions": 5,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6526,8 +7385,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6539,6 +7398,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6587,8 +7459,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6600,6 +7472,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6661,6 +7546,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 18.61,
+          "clicks": 0,
+          "impressions": 41,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6710,8 +7608,8 @@
         "impressionDelta": 62,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 24.63,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 24.63,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6722,6 +7620,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 24.63,
+          "clicks": 0,
+          "impressions": 62,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6770,8 +7681,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -6783,6 +7694,19 @@
       "blogClassification": "KEEP",
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6823,8 +7747,8 @@
         "impressionDelta": 4,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 13.25,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 13.25,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -6835,6 +7759,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 13.25,
+          "clicks": 0,
+          "impressions": 4,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6892,6 +7829,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 1,
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -6949,63 +7899,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
-      "aiVisibility": {
-        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
-      }
-    },
-    {
-      "url": "https://www.dgeniussolutions.com/motion-graphics/",
-      "path": "/motion-graphics/",
-      "pageType": "page",
-      "title": "Motion Graphics",
-      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "h1": "AI Motion Graphic Designer",
-      "h1Count": 1,
-      "canonical": "https://www.dgeniussolutions.com/motion-graphics/",
-      "robots": "index, follow",
-      "sitemap": true,
-      "statusCode": 200,
-      "isIndexable": true,
-      "wordCount": 1675,
-      "contentHash": "983f52db437d64b991fd3f2b94f24670c004859d8844d34951aa30c11f997b04",
-      "schemaTypes": [
-        "Organization",
-        "ImageObject",
-        "PostalAddress",
-        "WebSite",
-        "WebPage",
-        "BreadcrumbList",
-        "ListItem"
-      ],
-      "internalLinksCount": 47,
-      "externalLinksCount": 15,
-      "imagesCount": 8,
-      "missingAltCount": 0,
-      "primaryQueryFamily": "General Service",
-      "isProtectedTier0": false,
-      "metrics": {
-        "currentClicks": 0,
-        "previousClicks": 0,
-        "clickDelta": 0,
-        "clickDeltaPct": 0,
-        "currentImpressions": 0,
-        "previousImpressions": 0,
-        "impressionDelta": 0,
-        "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
-        "currentCtr": 0,
-        "previousCtr": 0
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 7.08,
+          "clicks": 9,
+          "impressions": 160,
+          "ctr": 5.63
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
       },
-      "classification": "INSUFFICIENT_DATA",
-      "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "INSUFFICIENT_EVIDENCE",
-      "riskReasons": [],
-      "blogClassification": null,
-      "safeAction": "MONITOR",
-      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7063,6 +7969,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 5.12,
+          "clicks": 0,
+          "impressions": 67,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7120,6 +8039,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 20.5,
+          "clicks": 0,
+          "impressions": 8,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7164,8 +8096,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7177,63 +8109,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
-      "aiVisibility": {
-        "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
-        "status": "STANDARD"
-      }
-    },
-    {
-      "url": "https://www.dgeniussolutions.com/seo-pricing/",
-      "path": "/seo-pricing/",
-      "pageType": "page",
-      "title": "SEO Pricing",
-      "metaDescription": "Mumbai&#x27;s most trusted SEO agency — Page 1 rankings to AI search dominance across ChatGPT, Perplexity &amp; Google SGE.",
-      "h1": "Search that sells. Priced with purpose.",
-      "h1Count": 1,
-      "canonical": "https://www.dgeniussolutions.com/seo-pricing/",
-      "robots": "index, follow",
-      "sitemap": true,
-      "statusCode": 200,
-      "isIndexable": true,
-      "wordCount": 2374,
-      "contentHash": "e61573328d79b8bdb86d0f78dd52a30d9f98b1ebd7066930cf974948ad73b0a3",
-      "schemaTypes": [
-        "Organization",
-        "ImageObject",
-        "PostalAddress",
-        "WebSite",
-        "WebPage",
-        "BreadcrumbList",
-        "ListItem"
-      ],
-      "internalLinksCount": 47,
-      "externalLinksCount": 16,
-      "imagesCount": 166,
-      "missingAltCount": 0,
-      "primaryQueryFamily": "General Service",
-      "isProtectedTier0": false,
-      "metrics": {
-        "currentClicks": 0,
-        "previousClicks": 0,
-        "clickDelta": 0,
-        "clickDeltaPct": 0,
-        "currentImpressions": 0,
-        "previousImpressions": 0,
-        "impressionDelta": 0,
-        "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
-        "currentCtr": 0,
-        "previousCtr": 0
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
       },
-      "classification": "INSUFFICIENT_DATA",
-      "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "INSUFFICIENT_EVIDENCE",
-      "riskReasons": [],
-      "blogClassification": null,
-      "safeAction": "MONITOR",
-      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7278,8 +8166,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7291,6 +8179,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7352,6 +8253,19 @@
       "blogClassification": null,
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 19.55,
+          "clicks": 0,
+          "impressions": 143,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -7410,6 +8324,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "GSC_OBSERVED_PRIOR_WINDOW"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 25.92,
+          "clicks": 0,
+          "impressions": 13,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7468,6 +8395,19 @@
       "blogClassification": null,
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 16.07,
+          "clicks": 8,
+          "impressions": 292,
+          "ctr": 2.74
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -7526,6 +8466,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 63.67,
+          "clicks": 0,
+          "impressions": 9,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -7574,8 +8527,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7587,6 +8540,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -7632,8 +8598,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7645,6 +8611,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7706,6 +8685,19 @@
       "blogClassification": null,
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 30.14,
+          "clicks": 1,
+          "impressions": 255,
+          "ctr": 0.39
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -7767,6 +8759,19 @@
       "blogClassification": null,
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 35.63,
+          "clicks": 0,
+          "impressions": 109,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -7812,8 +8817,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -7825,6 +8830,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -7874,8 +8892,8 @@
         "impressionDelta": 48,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 55.9,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 55.9,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -7886,6 +8904,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 55.9,
+          "clicks": 0,
+          "impressions": 48,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7935,8 +8966,8 @@
         "impressionDelta": 6,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 45.83,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 45.83,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -7947,6 +8978,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 45.83,
+          "clicks": 0,
+          "impressions": 6,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -7996,8 +9040,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 37,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 37,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -8008,6 +9052,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 37,
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -8057,8 +9114,8 @@
         "impressionDelta": 18,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 55.67,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 55.67,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -8069,6 +9126,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 55.67,
+          "clicks": 0,
+          "impressions": 18,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -8130,6 +9200,19 @@
       "blogClassification": null,
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 20.9,
+          "clicks": 0,
+          "impressions": 49,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -8175,8 +9258,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -8188,6 +9271,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -8246,6 +9342,19 @@
       "blogClassification": null,
       "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
       "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 53.23,
+          "clicks": 0,
+          "impressions": 22,
+          "ctr": 0
+        },
+        "recoveryTier": "CRITICAL_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -8292,8 +9401,8 @@
         "impressionDelta": 1,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 2,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 2,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -8304,6 +9413,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": 1,
+          "evidenceStatus": "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 2,
+          "clicks": 0,
+          "impressions": 1,
+          "ctr": 0
+        },
+        "recoveryTier": "NEAR_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "MONITORED"
@@ -8349,8 +9471,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -8362,6 +9484,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -8406,8 +9541,8 @@
         "previousImpressions": 0,
         "impressionDelta": 0,
         "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
+        "currentWeightedPosition": 0,
+        "previousWeightedPosition": 0,
         "positionDelta": 0,
         "currentCtr": 0,
         "previousCtr": 0
@@ -8419,6 +9554,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 0,
+          "clicks": 0,
+          "impressions": 0,
+          "ctr": 0
+        },
+        "recoveryTier": "AT_HISTORICAL_PEAK"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"
@@ -8464,8 +9612,8 @@
         "impressionDelta": 10,
         "impressionDeltaPct": 100,
         "currentWeightedPosition": 6.8,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
+        "previousWeightedPosition": 0,
+        "positionDelta": 6.8,
         "currentCtr": 0,
         "previousCtr": 0
       },
@@ -8476,6 +9624,19 @@
       "blogClassification": null,
       "safeAction": "MONITOR",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": {
+        "historicalPeakBaseline": {
+          "peakPosition": null,
+          "evidenceStatus": "NO_HISTORICAL_EVIDENCE"
+        },
+        "currentPerformanceBaseline": {
+          "weightedPosition": 6.8,
+          "clicks": 0,
+          "impressions": 10,
+          "ctr": 0
+        },
+        "recoveryTier": "SIGNIFICANT_LOSS"
+      },
       "aiVisibility": {
         "dataSource": "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         "status": "STANDARD"

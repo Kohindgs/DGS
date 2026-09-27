@@ -266,8 +266,8 @@ async function runHealthAudit() {
       id: "native_forms",
       name: "Native Forms & Lead Capture",
       status: (totalLeads > 0 || totalSubs > 0) ? "HEALTHY" : "CONFIGURED",
-      details: `${approvedFormsCount} approved native forms active (Form 18 on /seo-pricing/ is LEGACY / UNMIGRATED) · ${totalLeads} leads, ${totalSubs} raw submissions captured`,
-      metrics: { approvedFormsCount, legacyForm: "Form 18 (/seo-pricing/) is LEGACY / UNMIGRATED", totalLeads, newLeads, totalSubmissions: totalSubs },
+      details: `${approvedFormsCount} approved native forms active (Form 18 on /seo-pricing/ is LEGACY / UNMIGRATED · ARCHIVED / INACTIVE) · ${totalLeads} leads, ${totalSubs} raw submissions captured`,
+      metrics: { approvedFormsCount, legacyForm: "Form 18 (/seo-pricing/) is LEGACY / UNMIGRATED · ARCHIVED / INACTIVE", totalLeads, newLeads, totalSubmissions: totalSubs },
     };
   } catch (err) {
     subsystems.native_forms = { id: "native_forms", name: "Native Forms & Lead Capture", status: "FAILED", details: err.message };

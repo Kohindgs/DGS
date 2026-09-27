@@ -180,6 +180,9 @@ function normalPath(u = "") {
   return p;
 }
 
+const retiredData = JSON.parse(fs.readFileSync(path.join(ROOT, "data/migration/retired-routes.approved.json"), "utf8"));
+const retiredSet = new Set((retiredData.retired || []).map((r) => normalPath(r.path)));
+
 function stripHtml(html = "") {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
@@ -253,7 +256,7 @@ async function main() {
   const routeRegistryFile = path.join(ROOT, "data/migration/nextjs-route-registry.generated.json");
   const routeRegistry = JSON.parse(fs.readFileSync(routeRegistryFile, "utf8"));
   const allRoutes = routeRegistry.routes || [];
-  const indexableRoutes = allRoutes.filter((r) => r.indexable && r.status === 200);
+  const indexableRoutes = allRoutes.filter((r) => r.indexable && r.status === 200 && !retiredSet.has(normalPath(r.path)));
   console.log(`✓ Loaded ${allRoutes.length} total routes (${indexableRoutes.length} indexable status 200)`);
 
   // 3. Load GSC Data explicitly for period_type = '28d'
@@ -272,6 +275,18 @@ async function main() {
       console.log(`✓ Fetched ${gscDailyRows.length} daily metric records from GSC table`);
     } catch (err) {
       console.warn("Failed to query GSC metrics from DB:", err.message);
+    }
+  }
+
+
+  let cachedMetricsFallback = null;
+  const cacheFilePath = path.join(ROOT, "data/audit/gsc-page-query-metrics.cache.json");
+  if (gscRows.length === 0 && fs.existsSync(cacheFilePath)) {
+    try {
+      cachedMetricsFallback = JSON.parse(fs.readFileSync(cacheFilePath, "utf8"));
+      console.log(`✓ Loaded offline GSC fallback cache (${cachedMetricsFallback.pageMetrics?.length || 0} pages)`);
+    } catch (e) {
+      console.warn("Could not read GSC cache file:", e.message);
     }
   }
 
@@ -334,7 +349,7 @@ async function main() {
   }
 
   // Top 25 Lost Queries (filtering for prior search volume >= 5)
-  const topLostQueries = queryList
+  let topLostQueries = queryList
     .filter(
       (q) =>
         (q.previousImpressions >= 5 || q.currentImpressions >= 5) &&
@@ -367,7 +382,7 @@ async function main() {
     }));
 
   // Top 25 Gained Queries
-  const topGainedQueries = queryList
+  let topGainedQueries = queryList
     .filter(
       (q) =>
         (q.currentImpressions >= 5 || q.previousImpressions >= 5) &&
@@ -399,6 +414,12 @@ async function main() {
       positionDelta: q.positionDelta,
     }));
 
+  if (topLostQueries.length === 0 && cachedMetricsFallback?.topLostQueries) {
+    topLostQueries = cachedMetricsFallback.topLostQueries;
+  }
+  if (topGainedQueries.length === 0 && cachedMetricsFallback?.topGainedQueries) {
+    topGainedQueries = cachedMetricsFallback.topGainedQueries;
+  }
   console.log(`✓ Generated ${topLostQueries.length} Top Lost Queries and ${topGainedQueries.length} Top Gained Queries`);
 
   // 5. Aggregate GSC Data per Page (Current vs Previous)
@@ -432,6 +453,23 @@ async function main() {
       d.prevPosWeight += q.previousImpressions;
     }
     d.queries.push(q);
+  }
+
+  if (pageAggMap.size === 0 && cachedMetricsFallback?.pageMetrics) {
+    for (const p of cachedMetricsFallback.pageMetrics) {
+      if (!p.path || !p.metrics) continue;
+      pageAggMap.set(p.path, {
+        currentClicks: p.metrics.currentClicks || 0,
+        previousClicks: p.metrics.previousClicks || 0,
+        currentImpressions: p.metrics.currentImpressions || 0,
+        previousImpressions: p.metrics.previousImpressions || 0,
+        curPosWeightedSum: (p.metrics.currentWeightedPosition || 0) * (p.metrics.currentImpressions || 1),
+        curPosWeight: p.metrics.currentImpressions || 1,
+        prevPosWeightedSum: (p.metrics.previousWeightedPosition || 0) * (p.metrics.previousImpressions || 1),
+        prevPosWeight: p.metrics.previousImpressions || 1,
+        queries: [],
+      });
+    }
   }
 
   // 6. Cannibalization Engine (Rule 2.1: primaryUrl != competingUrl)
@@ -502,30 +540,49 @@ async function main() {
     );
     const intendedPrimaryUrl = family ? family.primaryUrl : topRanked.page;
 
-    // Rule 2.3 Nuanced Classification
-    let classification = "INCIDENTAL_OVERLAP";
+    // 6-Category Cannibalization Classification
+    let classification = "INSUFFICIENT_EVIDENCE";
     const isBrand = /d[\s'-]?genius|dgeniussolutions/i.test(qNorm);
     const lowVolume = topRanked.impressions < 5 && competing.impressions < 5;
 
+    const isRetiredA = retiredSet.has(normalPath(topRanked.page));
+    const isRetiredB = retiredSet.has(normalPath(competing.page));
+
+    const isGeoA = /dubai|australia|us/i.test(topRanked.page);
+    const isGeoB = /dubai|australia|us/i.test(competing.page);
+    const isDifferentGeo = (isGeoA && !isGeoB) || (!isGeoA && isGeoB);
+
+    const isInformationalQuery = /^(what|how|why|when|guide|tips|best practices|difference|vs)\b/i.test(qNorm) || qNorm.includes("how to");
+
     if (lowVolume) {
       classification = "INSUFFICIENT_EVIDENCE";
-    } else if (isBrand) {
-      classification = "BRAND_OVERLAP";
+    } else if (isRetiredA || isRetiredB) {
+      classification = "HISTORICAL_RESIDUAL";
+    } else if (topRanked.page === "/" || competing.page === "/" || isBrand) {
+      classification = "BRAND_HOMEPAGE_ANCHOR";
+    } else if (isDifferentGeo) {
+      classification = "GEOGRAPHIC_SEGMENTATION";
     } else if (
       (topRanked.page.startsWith("/blogs/") && !competing.page.startsWith("/blogs/")) ||
       (!topRanked.page.startsWith("/blogs/") && competing.page.startsWith("/blogs/"))
     ) {
-      classification = "SUPPORTING_PAGE";
+      if (isInformationalQuery) {
+        classification = "INFORMATIONAL_VS_COMMERCIAL";
+      } else {
+        classification = "HUB_AND_SPOKE";
+      }
     } else if (
-      (topRanked.page === "/" || topRanked.page.startsWith("/services/")) &&
-      (competing.page === "/" || competing.page.startsWith("/services/"))
+      topRanked.page.startsWith("/services/") &&
+      competing.page.startsWith("/services/")
     ) {
       const competingShare = competing.impressions / (topRanked.impressions + competing.impressions);
       if (competingShare >= 0.25 || (family && family.primaryUrl === competing.page)) {
         classification = "TRUE_CANNIBALIZATION";
       } else {
-        classification = "POTENTIAL_CANNIBALIZATION";
+        classification = "HUB_AND_SPOKE";
       }
+    } else {
+      classification = "HUB_AND_SPOKE";
     }
 
     cannibalizationInstances.push({
@@ -539,6 +596,44 @@ async function main() {
     });
   }
 
+  if (cannibalizationInstances.length === 0 && cachedMetricsFallback?.cannibalizationCandidates) {
+    for (const c of cachedMetricsFallback.cannibalizationCandidates) {
+      const qNorm = (c.query || "").toLowerCase().trim();
+      const topPage = c.actualTopRankingUrl || c.intendedPrimaryUrl;
+      const compPage = c.competingUrl;
+
+      const isBrand = /d[\s'-]?genius|dgeniussolutions/i.test(qNorm);
+      const isRetiredA = retiredSet.has(normalPath(topPage));
+      const isRetiredB = retiredSet.has(normalPath(compPage));
+      const isGeoA = /dubai|australia|us/i.test(topPage);
+      const isGeoB = /dubai|australia|us/i.test(compPage);
+      const isDifferentGeo = (isGeoA && !isGeoB) || (!isGeoA && isGeoB);
+      const isInformationalQuery = /^(what|how|why|when|guide|tips|best practices|difference|vs)\b/i.test(qNorm) || qNorm.includes("how to");
+
+      let classification = "INSUFFICIENT_EVIDENCE";
+      if (isRetiredA || isRetiredB) {
+        classification = "HISTORICAL_RESIDUAL";
+      } else if (topPage === "/" || compPage === "/" || isBrand) {
+        classification = "BRAND_HOMEPAGE_ANCHOR";
+      } else if (isDifferentGeo) {
+        classification = "GEOGRAPHIC_SEGMENTATION";
+      } else if (
+        (topPage.startsWith("/blogs/") && !compPage.startsWith("/blogs/")) ||
+        (!topPage.startsWith("/blogs/") && compPage.startsWith("/blogs/"))
+      ) {
+        classification = isInformationalQuery ? "INFORMATIONAL_VS_COMMERCIAL" : "HUB_AND_SPOKE";
+      } else if (topPage.startsWith("/services/") && compPage.startsWith("/services/")) {
+        classification = "TRUE_CANNIBALIZATION";
+      } else {
+        classification = "HUB_AND_SPOKE";
+      }
+
+      cannibalizationInstances.push({
+        ...c,
+        classification,
+      });
+    }
+  }
   console.log(`✓ Cannibalization analysis: ${cannibalizationInstances.length} valid cases (0 self-records, ${falseSelfRecordsExcluded} excluded)`);
 
   // AI Video specific cannibalization recheck
@@ -710,17 +805,20 @@ async function main() {
   console.log(`✓ Completed fresh crawl of ${crawlResults.size} live URLs`);
 
   // 8. Machine Labels Classification (Rendered vs Comment vs Metadata)
-  const BANNED_MACHINE_LABELS = [
-    "Target Keyword",
-    "AI Overview Answer",
-    "AEO Answer",
-    "LLM Answer",
-    "GEO Target",
-    "Local SEO",
-    "Internal Link",
-    "Crawler Answer",
-    "Case Signal",
-    "Mumbai Local",
+  // Whitelist legitimate marketing / agency service terms:
+  // "Local SEO", "Technical SEO", "SEO", "AEO", "GEO", "LLM SEO", "India SEO", "Mumbai Local"
+  // Only detect genuine staging / placeholder markers:
+  const GENUINE_STAGING_LABEL_PATTERNS = [
+    { name: "Target Keyword", regex: /Target\s+Keyword\s*[:\-\]]/i },
+    { name: "AI Overview Answer", regex: /AI\s+Overview\s+Answer\s*[:\-\]]/i },
+    { name: "Internal Link", regex: /Internal\s+Link\s*[:\-\]]/i },
+    { name: "Case Signal", regex: /Case\s+Signal\s*[:\-\]]/i },
+    { name: "SEO Notes", regex: /SEO\s+Notes?\s*[:\-\]]/i },
+    { name: "Editor Note", regex: /Editor(?:'s)?\s+Note\s*[:\-\]]/i },
+    { name: "Primary Keyword", regex: /Primary\s+Keyword\s*[:\-\]]/i },
+    { name: "Crawler Answer", regex: /Crawler\s+Answer\s*[:\-\]]/i },
+    { name: "GEO Target", regex: /GEO\s+Target\s*[:\-\]]/i },
+    { name: "LLM Answer", regex: /LLM\s+Answer\s*[:\-\]]/i },
   ];
 
   const machineLabelAnalysis = {
@@ -735,23 +833,15 @@ async function main() {
     const html = crawl.rawHtml;
     const visibleText = crawl.visibleTextRaw || "";
 
-    for (const label of BANNED_MACHINE_LABELS) {
-      const reg = new RegExp(label, "i");
-      if (!reg.test(html)) continue;
-
-      // 1. Is it publicly rendered in visible text?
-      // Avoid matching legitimate sentences like "Local SEO strategies" or "Internal Link structuring"
-      // Standalone machine labels appear as exact label prefixes e.g. "Target Keyword: ...", "[Local SEO]", "Local SEO:"
-      const labelPrefixReg = new RegExp(`\\b${label}\\s*[:\\]\\-]`, "i");
-      if (labelPrefixReg.test(visibleText)) {
-        machineLabelAnalysis.PUBLICLY_RENDERED.push({ path: pathKey, label, context: "Rendered standalone label in body" });
-      } else if (reg.test(html)) {
-        // Is it in an HTML comment?
+    for (const pat of GENUINE_STAGING_LABEL_PATTERNS) {
+      if (pat.regex.test(visibleText)) {
+        machineLabelAnalysis.PUBLICLY_RENDERED.push({ path: pathKey, label: pat.name, context: "Rendered standalone label in body" });
+      } else if (pat.regex.test(html)) {
         const comments = [...html.matchAll(/<!--([\s\S]*?)-->/g)].map((m) => m[1]).join(" ");
-        if (reg.test(comments)) {
-          machineLabelAnalysis.SOURCE_COMMENT_ONLY.push({ path: pathKey, label });
+        if (pat.regex.test(comments)) {
+          machineLabelAnalysis.SOURCE_COMMENT_ONLY.push({ path: pathKey, label: pat.name });
         } else {
-          machineLabelAnalysis.INTERNAL_METADATA.push({ path: pathKey, label });
+          machineLabelAnalysis.INTERNAL_METADATA.push({ path: pathKey, label: pat.name });
         }
       }
     }
@@ -802,6 +892,7 @@ async function main() {
     INSUFFICIENT_DATA: 0,
   };
   let spamRiskCounts = { LOW: 0, MEDIUM: 0, HIGH: 0, INSUFFICIENT_EVIDENCE: 0 };
+  let recoveryTierCounts = { AT_HISTORICAL_PEAK: 0, NEAR_HISTORICAL_PEAK: 0, PARTIAL_RECOVERY: 0, SIGNIFICANT_LOSS: 0, CRITICAL_LOSS: 0, INSUFFICIENT_HISTORICAL_DATA: 0 };
 
   for (const route of indexableRoutes) {
     const routePath = route.path;
@@ -890,6 +981,28 @@ async function main() {
     }
 
     counts[newClass] = (counts[newClass] || 0) + 1;
+
+    // TWO-BASELINE & 6-TIER RECOVERY EVALUATION
+    let recoveryTier = "INSUFFICIENT_HISTORICAL_DATA";
+    const isStrategic = PROTECTED_PAGES.includes(routePath);
+    if (isStrategic) {
+      if (currentWeightedPosition != null) {
+        if (currentWeightedPosition <= 1.9) recoveryTier = "AT_HISTORICAL_PEAK";
+        else if (currentWeightedPosition <= 2.9) recoveryTier = "NEAR_HISTORICAL_PEAK";
+        else if (currentWeightedPosition <= 5.0) recoveryTier = "PARTIAL_RECOVERY";
+        else if (currentWeightedPosition <= 10.0) recoveryTier = "SIGNIFICANT_LOSS";
+        else recoveryTier = "CRITICAL_LOSS";
+      } else {
+        recoveryTier = "INSUFFICIENT_HISTORICAL_DATA";
+      }
+    } else if (previousWeightedPosition != null && currentWeightedPosition != null) {
+      if (currentWeightedPosition <= 1.9) recoveryTier = "AT_HISTORICAL_PEAK";
+      else if (currentWeightedPosition <= 2.9) recoveryTier = "NEAR_HISTORICAL_PEAK";
+      else if (currentWeightedPosition <= 5.0) recoveryTier = "PARTIAL_RECOVERY";
+      else if (currentWeightedPosition <= 10.0) recoveryTier = "SIGNIFICANT_LOSS";
+      else recoveryTier = "CRITICAL_LOSS";
+    }
+    recoveryTierCounts[recoveryTier] = (recoveryTierCounts[recoveryTier] || 0) + 1;
 
     if (oldClass !== newClass) {
       oldVsNewClassificationDelta.push({
@@ -1014,6 +1127,21 @@ async function main() {
       blogClassification,
       safeAction,
       highRiskActionsToAvoid,
+      twoBaselines: {
+        historicalPeakBaseline: {
+          peakPosition: isStrategic ? 1.0 : (previousWeightedPosition && previousWeightedPosition < 5 ? previousWeightedPosition : null),
+          evidenceStatus: isStrategic
+            ? "USER-CONFIRMED HISTORICAL #1 + GSC HISTORICAL DATE EVIDENCE UNAVAILABLE"
+            : (previousWeightedPosition ? "GSC_OBSERVED_PRIOR_WINDOW" : "NO_HISTORICAL_EVIDENCE"),
+        },
+        currentPerformanceBaseline: {
+          weightedPosition: currentWeightedPosition,
+          clicks: currentClicks,
+          impressions: currentImpressions,
+          ctr: currentCtr,
+        },
+        recoveryTier,
+      },
       aiVisibility: {
         dataSource: "UNAVAILABLE VIA CURRENT SEARCH CONSOLE API",
         status: PROTECTED_PAGES.includes(routePath) ? "MONITORED" : "STANDARD",
@@ -1033,6 +1161,12 @@ async function main() {
       pagesWithGscData: pageAggMap.size,
       classifications: counts,
       spamRiskDistribution: spamRiskCounts,
+      recoveryTiers: recoveryTierCounts,
+      twoBaselineModel: {
+        historicalPeakBaselineDefined: true,
+        currentPerformanceBaselineDefined: true,
+        userConfirmedStrategicPages: PROTECTED_PAGES.length,
+      },
       cannibalizationCandidateCount: cannibalizationInstances.length,
       falseCannibalizationRecordsRemoved: falseSelfRecordsExcluded,
       publiclyRenderedMachineLabels: machineLabelAnalysis.PUBLICLY_RENDERED.length,

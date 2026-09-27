@@ -28,6 +28,7 @@ type Props = {
 export default function GoogleUpdatesClientView({ updates: initialUpdates, schedulerState }: Props) {
   const [updates, setUpdates] = useState<GoogleSearchUpdate[]>(initialUpdates);
   const [selectedUpdate, setSelectedUpdate] = useState<GoogleSearchUpdate | null>(null);
+  const [drillDownFilter, setDrillDownFilter] = useState<"high" | "medium" | "low" | "critical" | "cannibalization" | "labels" | null>(null);
   const [assessingId, setAssessingId] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [isCheckingFeeds, setIsCheckingFeeds] = useState(false);
@@ -684,22 +685,39 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
           onClick={() => setSelectedUpdate(null)}
         >
           <div
+            className="dgs-google-update-drawer"
             style={{
-              width: "100%",
-              maxWidth: "680px",
+              width: "min(94vw, 920px)",
+              maxWidth: "100vw",
               background: "#0c0c14",
               borderLeft: "1px solid rgba(255,255,255,0.12)",
               height: "100%",
               overflowY: "auto",
-              padding: "28px",
+              overflowX: "hidden",
+              boxSizing: "border-box",
+              padding: "24px",
               display: "flex",
               flexDirection: "column",
               gap: "20px",
               boxShadow: "-10px 0 30px rgba(0,0,0,0.5)",
+              minWidth: 0,
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <style id="dgs-google-update-drawer-styles">{`
+              @media (max-width: 720px) {
+                .dgs-google-update-drawer {
+                  width: 100vw !important;
+                  max-width: 100vw !important;
+                  padding: 16px 12px !important;
+                  border-left: none !important;
+                }
+                .dgs-drawer-grid-2col {
+                  grid-template-columns: 1fr !important;
+                }
+              }
+            `}</style>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minWidth: 0 }}>
               <div>
                 <div style={{ display: "flex", gap: "6px", alignItems: "center", marginBottom: "8px" }}>
                   <span className="dgs-saas-chip primary" style={{ display: "inline-block" }}>
@@ -1036,29 +1054,95 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                     <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>URLs Assessed</div>
                     <div style={{ fontSize: "0.82rem", color: "#fff", fontWeight: 600 }}>{selectedUpdate.sitewide_spam_impact.urlsAssessed}</div>
                   </div>
-                  <div style={{ background: "rgba(239, 68, 68, 0.1)", padding: "8px 10px", borderRadius: "4px", border: "1px solid rgba(239, 68, 68, 0.2)" }}>
+                  <div
+                    onClick={() => setDrillDownFilter(drillDownFilter === "high" ? null : "high")}
+                    style={{
+                      background: "rgba(239, 68, 68, 0.1)",
+                      padding: "8px 10px",
+                      borderRadius: "4px",
+                      border: drillDownFilter === "high" ? "1.5px solid #f87171" : "1px solid rgba(239, 68, 68, 0.2)",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                    title="Click to filter pages with High Risk"
+                  >
                     <div style={{ fontSize: "0.68rem", color: "#f87171" }}>High Risk</div>
                     <div style={{ fontSize: "0.82rem", color: "#f87171", fontWeight: 700 }}>{selectedUpdate.sitewide_spam_impact.highRiskPages}</div>
                   </div>
-                  <div style={{ background: "rgba(245, 158, 11, 0.1)", padding: "8px 10px", borderRadius: "4px", border: "1px solid rgba(245, 158, 11, 0.2)" }}>
+                  <div
+                    onClick={() => setDrillDownFilter(drillDownFilter === "medium" ? null : "medium")}
+                    style={{
+                      background: "rgba(245, 158, 11, 0.1)",
+                      padding: "8px 10px",
+                      borderRadius: "4px",
+                      border: drillDownFilter === "medium" ? "1.5px solid #fbbf24" : "1px solid rgba(245, 158, 11, 0.2)",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                    title="Click to filter pages with Medium Risk"
+                  >
                     <div style={{ fontSize: "0.68rem", color: "#fbbf24" }}>Medium Risk</div>
                     <div style={{ fontSize: "0.82rem", color: "#fbbf24", fontWeight: 700 }}>{selectedUpdate.sitewide_spam_impact.mediumRiskPages}</div>
                   </div>
-                  <div style={{ background: "rgba(16, 185, 129, 0.1)", padding: "8px 10px", borderRadius: "4px", border: "1px solid rgba(16, 185, 129, 0.2)" }}>
+                  <div
+                    onClick={() => setDrillDownFilter(drillDownFilter === "low" ? null : "low")}
+                    style={{
+                      background: "rgba(16, 185, 129, 0.1)",
+                      padding: "8px 10px",
+                      borderRadius: "4px",
+                      border: drillDownFilter === "low" ? "1.5px solid #34d399" : "1px solid rgba(16, 185, 129, 0.2)",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                    title="Click to filter pages with Low Risk"
+                  >
                     <div style={{ fontSize: "0.68rem", color: "#34d399" }}>Low Risk</div>
                     <div style={{ fontSize: "0.82rem", color: "#34d399", fontWeight: 700 }}>{selectedUpdate.sitewide_spam_impact.lowRiskPages}</div>
                   </div>
-                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                  <div
+                    onClick={() => setDrillDownFilter(drillDownFilter === "critical" ? null : "critical")}
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      padding: "8px 10px",
+                      borderRadius: "4px",
+                      border: drillDownFilter === "critical" ? "1.5px solid #f87171" : "1px solid rgba(255,255,255,0.08)",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                    title="Click to filter pages with Critical Ranking Drops"
+                  >
                     <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Critical Drops</div>
                     <div style={{ fontSize: "0.82rem", color: selectedUpdate.sitewide_spam_impact.criticalRankingLosses > 0 ? "#f87171" : "#10b981", fontWeight: 700 }}>
                       {selectedUpdate.sitewide_spam_impact.criticalRankingLosses}
                     </div>
                   </div>
-                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                  <div
+                    onClick={() => setDrillDownFilter(drillDownFilter === "cannibalization" ? null : "cannibalization")}
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      padding: "8px 10px",
+                      borderRadius: "4px",
+                      border: drillDownFilter === "cannibalization" ? "1.5px solid #a5b4fc" : "1px solid rgba(255,255,255,0.08)",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                    title="Click to view true cannibalization instances"
+                  >
                     <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Cannibalization</div>
                     <div style={{ fontSize: "0.82rem", color: "#a5b4fc", fontWeight: 600 }}>{selectedUpdate.sitewide_spam_impact.trueCannibalizationCases} cases</div>
                   </div>
-                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
+                  <div
+                    onClick={() => setDrillDownFilter(drillDownFilter === "labels" ? null : "labels")}
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      padding: "8px 10px",
+                      borderRadius: "4px",
+                      border: drillDownFilter === "labels" ? "1.5px solid #f87171" : "1px solid rgba(255,255,255,0.08)",
+                      cursor: "pointer",
+                      transition: "all 0.15s ease",
+                    }}
+                    title="Click to view public machine label detections"
+                  >
                     <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Public Labels</div>
                     <div style={{ fontSize: "0.82rem", color: selectedUpdate.sitewide_spam_impact.publicMachineLabels > 0 ? "#f87171" : "#34d399", fontWeight: 600 }}>
                       {selectedUpdate.sitewide_spam_impact.publicMachineLabels}
@@ -1067,7 +1151,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                 </div>
 
                 {/* Top Lost & Gained Queries */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "16px" }}>
+                <div className="dgs-drawer-grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "16px", minWidth: 0 }}>
                   {/* Top Lost Queries */}
                   <div style={{ background: "rgba(239, 68, 68, 0.04)", padding: "10px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(239, 68, 68, 0.15)" }}>
                     <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "#f87171", marginBottom: "6px" }}>Top Lost Queries (Period-over-Period)</div>
@@ -1115,8 +1199,14 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                     <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>
                       Key Pages Period-Over-Period Telemetry
                     </div>
-                    <div style={{ overflowX: "auto" }}>
-                      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.72rem" }}>
+                    {drillDownFilter && (
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.3)", padding: "6px 10px", borderRadius: "var(--dgs-radius-sm)", marginBottom: "8px", fontSize: "0.74rem" }}>
+                        <span style={{ color: "#a5b4fc" }}>Filtered by: <strong>{drillDownFilter.toUpperCase()}</strong></span>
+                        <button type="button" onClick={() => setDrillDownFilter(null)} style={{ background: "transparent", border: "none", color: "#fff", cursor: "pointer", textDecoration: "underline", fontSize: "0.72rem" }}>Clear filter</button>
+                      </div>
+                    )}
+                    <div style={{ overflowX: "auto", width: "100%", maxWidth: "100%", WebkitOverflowScrolling: "touch", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                      <table style={{ width: "100%", minWidth: "760px", borderCollapse: "collapse", fontSize: "0.72rem" }}>
                         <thead>
                           <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", textAlign: "left", color: "var(--dgs-text-muted)" }}>
                             <th style={{ padding: "6px 8px" }}>Page</th>
@@ -1129,7 +1219,16 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                           </tr>
                         </thead>
                         <tbody>
-                          {selectedUpdate.sitewide_spam_impact.pageImpactTable.map((row: any, rIdx: number) => (
+                          {selectedUpdate.sitewide_spam_impact.pageImpactTable.filter((row: any) => {
+    if (!drillDownFilter) return true;
+    if (drillDownFilter === "high") return row.spamRisk === "HIGH";
+    if (drillDownFilter === "medium") return row.spamRisk === "MEDIUM";
+    if (drillDownFilter === "low") return row.spamRisk === "LOW";
+    if (drillDownFilter === "critical") return row.trend === "CRITICAL_DECLINE";
+    if (drillDownFilter === "cannibalization") return String(row.action).toLowerCase().includes("cannibal") || row.spamRisk === "HIGH";
+    if (drillDownFilter === "labels") return String(row.action).toLowerCase().includes("label");
+    return true;
+  }).map((row: any, rIdx: number) => (
                             <tr key={rIdx} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                               <td style={{ padding: "6px 8px", color: "#fff", fontWeight: 500, maxWidth: "160px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={row.page}>
                                 {row.page}

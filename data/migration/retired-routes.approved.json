@@ -6,6 +6,41 @@
       "path": "/wp-file-download-search/",
       "statusCode": 410,
       "reason": "Legacy WordPress download-search plugin route retired. Do not redirect to homepage."
+    },
+    {
+      "path": "/seo-pricing/",
+      "statusCode": 410,
+      "reason": "Legacy unmigrated WordPress pricing page retired. Zero GSC traffic, thin/duplicate content risk. Form 18 archived."
+    },
+    {
+      "path": "/seo-executive-assessment/",
+      "statusCode": 410,
+      "reason": "Obsolete WordPress candidate recruitment quiz retired. Zero GSC traffic. Page template safely archived in data/archive/legacy-assessments."
+    },
+    {
+      "path": "/seo-manager-assessment/",
+      "statusCode": 410,
+      "reason": "Obsolete WordPress candidate recruitment quiz retired. Zero GSC traffic. Page template safely archived in data/archive/legacy-assessments."
+    },
+    {
+      "path": "/ai-motion-graphic-designer/",
+      "statusCode": 410,
+      "reason": "Obsolete recruitment assessment route retired. Zero GSC traffic. Archived in data/archive/legacy-assessments."
+    },
+    {
+      "path": "/social-media-executive/",
+      "statusCode": 410,
+      "reason": "Obsolete recruitment assessment route retired. Zero GSC traffic. Archived in data/archive/legacy-assessments."
+    },
+    {
+      "path": "/indriya-test/",
+      "statusCode": 410,
+      "reason": "Obsolete internal test form retired. Zero GSC traffic. Archived in data/archive/legacy-assessments."
+    },
+    {
+      "path": "/motion-graphics/",
+      "statusCode": 410,
+      "reason": "Obsolete assessment landing page with zero clicks retired. Preserves crawl budget and prevents content mismatch. Archived in data/archive/legacy-assessments."
     }
   ]
 }

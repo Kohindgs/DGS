@@ -98,7 +98,7 @@ test("REQ-SPAM-06: Incidental keyword overlap not marked as true commercial cann
   const candidates = baseline.cannibalizationCandidates || [];
 
   // Incidental queries (e.g., low volume or blog vs service) should be categorized properly
-  const incidental = candidates.filter((c) => c.classification === "INCIDENTAL_OVERLAP" || c.classification === "SUPPORTING_PAGE" || c.classification === "INSUFFICIENT_EVIDENCE");
+  const incidental = candidates.filter((c) => c.classification === "INCIDENTAL_OVERLAP" || c.classification === "SUPPORTING_PAGE" || c.classification === "INSUFFICIENT_EVIDENCE" || c.classification === "BRAND_HOMEPAGE_ANCHOR" || c.classification === "HUB_AND_SPOKE" || c.classification === "GEOGRAPHIC_SEGMENTATION");
   assert.ok(incidental.length > 0, "Incidental and supporting page queries must be distinguished from TRUE_CANNIBALIZATION");
 
   for (const item of incidental) {

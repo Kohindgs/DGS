@@ -1,0 +1,3810 @@
+{
+  "topLostQueries": [
+    {
+      "query": "what are the best practices for improving on site seo and generative engine optimization for my business?",
+      "primaryPage": "/blogs/generative-engine-optimization/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 20,
+      "previousImpressions": 457,
+      "currentPosition": 10.85,
+      "previousPosition": 7.05,
+      "clickDelta": 0,
+      "impressionDelta": -437,
+      "positionDelta": 3.8
+    },
+    {
+      "query": "ai for marketing agencies",
+      "primaryPage": "/blogs/ai-tools-marketing-agencies/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 14,
+      "previousImpressions": 201,
+      "currentPosition": 35.93,
+      "previousPosition": 34.05,
+      "clickDelta": 0,
+      "impressionDelta": -187,
+      "positionDelta": 1.88
+    },
+    {
+      "query": "llm seo agency india",
+      "primaryPage": "/services/llm-seo-service/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 13,
+      "previousImpressions": 1,
+      "currentPosition": 88.31,
+      "previousPosition": 30,
+      "clickDelta": 0,
+      "impressionDelta": 12,
+      "positionDelta": 58.31
+    },
+    {
+      "query": "ai overview ranking",
+      "primaryPage": "/blogs/ai-overview-ranking/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 207,
+      "previousImpressions": 352,
+      "currentPosition": 26.35,
+      "previousPosition": 28.16,
+      "clickDelta": 0,
+      "impressionDelta": -145,
+      "positionDelta": -1.81
+    },
+    {
+      "query": "geo services",
+      "primaryPage": "/services/geo/",
+      "currentClicks": 0,
+      "previousClicks": 2,
+      "currentImpressions": 73,
+      "previousImpressions": 115,
+      "currentPosition": 27.82,
+      "previousPosition": 20.94,
+      "clickDelta": -2,
+      "impressionDelta": -42,
+      "positionDelta": 6.88
+    },
+    {
+      "query": "d genius",
+      "primaryPage": "/",
+      "currentClicks": 3,
+      "previousClicks": 7,
+      "currentImpressions": 22,
+      "previousImpressions": 24,
+      "currentPosition": 1.41,
+      "previousPosition": 2,
+      "clickDelta": -4,
+      "impressionDelta": -2,
+      "positionDelta": -0.59
+    },
+    {
+      "query": "modern seo",
+      "primaryPage": "/blogs/modern-seo-business-growth/",
+      "currentClicks": 0,
+      "previousClicks": 3,
+      "currentImpressions": 26,
+      "previousImpressions": 31,
+      "currentPosition": 8.96,
+      "previousPosition": 5.61,
+      "clickDelta": -3,
+      "impressionDelta": -5,
+      "positionDelta": 3.35
+    },
+    {
+      "query": "zero-click search",
+      "primaryPage": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 1,
+      "previousImpressions": 14,
+      "currentPosition": 91,
+      "previousPosition": 69.86,
+      "clickDelta": 0,
+      "impressionDelta": -13,
+      "positionDelta": 21.14
+    },
+    {
+      "query": "ai production agencies in india",
+      "primaryPage": "/services/ai-video-production-agency/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 3,
+      "previousImpressions": 5,
+      "currentPosition": 32.67,
+      "previousPosition": 9.4,
+      "clickDelta": 0,
+      "impressionDelta": -2,
+      "positionDelta": 23.27
+    },
+    {
+      "query": "aeo optimisation services in dubai",
+      "primaryPage": "/aeo-dubai/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 2,
+      "previousImpressions": 5,
+      "currentPosition": 34.5,
+      "previousPosition": 11.6,
+      "clickDelta": 0,
+      "impressionDelta": -3,
+      "positionDelta": 22.9
+    },
+    {
+      "query": "llm seo agency",
+      "primaryPage": "/services/llm-seo-service/",
+      "currentClicks": 0,
+      "previousClicks": 1,
+      "currentImpressions": 2,
+      "previousImpressions": 13,
+      "currentPosition": 35.5,
+      "previousPosition": 24.54,
+      "clickDelta": -1,
+      "impressionDelta": -11,
+      "positionDelta": 10.96
+    },
+    {
+      "query": "ai video making agency",
+      "primaryPage": "/services/ai-video-production-agency/",
+      "currentClicks": 0,
+      "previousClicks": 1,
+      "currentImpressions": 4,
+      "previousImpressions": 9,
+      "currentPosition": 21.25,
+      "previousPosition": 9.78,
+      "clickDelta": -1,
+      "impressionDelta": -5,
+      "positionDelta": 11.47
+    },
+    {
+      "query": "dgs solutions",
+      "primaryPage": "/",
+      "currentClicks": 5,
+      "previousClicks": 7,
+      "currentImpressions": 14,
+      "previousImpressions": 22,
+      "currentPosition": 2.71,
+      "previousPosition": 2.95,
+      "clickDelta": -2,
+      "impressionDelta": -8,
+      "positionDelta": -0.24
+    },
+    {
+      "query": "ai for digital agencies",
+      "primaryPage": "/blogs/ai-tools-marketing-agencies/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 22,
+      "previousImpressions": 61,
+      "currentPosition": 39.23,
+      "previousPosition": 33.89,
+      "clickDelta": 0,
+      "impressionDelta": -39,
+      "positionDelta": 5.34
+    },
+    {
+      "query": "llm seo services in mumbai",
+      "primaryPage": "/services/llm-seo-service/",
+      "currentClicks": 0,
+      "previousClicks": 1,
+      "currentImpressions": 1,
+      "previousImpressions": 21,
+      "currentPosition": 8,
+      "previousPosition": 5.1,
+      "clickDelta": -1,
+      "impressionDelta": -20,
+      "positionDelta": 2.9
+    },
+    {
+      "query": "ai video production agency in india",
+      "primaryPage": "/services/ai-video-production-agency/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 7,
+      "previousImpressions": 6,
+      "currentPosition": 25,
+      "previousPosition": 7.83,
+      "clickDelta": 0,
+      "impressionDelta": 1,
+      "positionDelta": 17.17
+    },
+    {
+      "query": "dgenius",
+      "primaryPage": "/",
+      "currentClicks": 0,
+      "previousClicks": 1,
+      "currentImpressions": 14,
+      "previousImpressions": 5,
+      "currentPosition": 15,
+      "previousPosition": 5.2,
+      "clickDelta": -1,
+      "impressionDelta": 9,
+      "positionDelta": 9.8
+    },
+    {
+      "query": "geo optimization agency",
+      "primaryPage": "/services/geo/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 1,
+      "previousImpressions": 5,
+      "currentPosition": 52,
+      "previousPosition": 38.6,
+      "clickDelta": 0,
+      "impressionDelta": -4,
+      "positionDelta": 13.4
+    },
+    {
+      "query": "llm seo company",
+      "primaryPage": "/services/llm-seo-service/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 14,
+      "previousImpressions": 10,
+      "currentPosition": 42.5,
+      "previousPosition": 26.6,
+      "clickDelta": 0,
+      "impressionDelta": 4,
+      "positionDelta": 15.9
+    },
+    {
+      "query": "geo seo services",
+      "primaryPage": "/services/geo/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 15,
+      "previousImpressions": 9,
+      "currentPosition": 42.93,
+      "previousPosition": 26.56,
+      "clickDelta": 0,
+      "impressionDelta": 6,
+      "positionDelta": 16.37
+    },
+    {
+      "query": "ai production agency in mumbai",
+      "primaryPage": "/services/ai-video-production-agency/",
+      "currentClicks": 0,
+      "previousClicks": 1,
+      "currentImpressions": 1,
+      "previousImpressions": 14,
+      "currentPosition": 2,
+      "previousPosition": 1.21,
+      "clickDelta": -1,
+      "impressionDelta": -13,
+      "positionDelta": 0.79
+    },
+    {
+      "query": "generative engine optimization services in mumbai",
+      "primaryPage": "/services/geo/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 1,
+      "previousImpressions": 24,
+      "currentPosition": 8,
+      "previousPosition": 2.63,
+      "clickDelta": 0,
+      "impressionDelta": -23,
+      "positionDelta": 5.37
+    },
+    {
+      "query": "why is generative engine optimization important?",
+      "primaryPage": "/blogs/generative-engine-optimization/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 3,
+      "previousImpressions": 19,
+      "currentPosition": 24.33,
+      "previousPosition": 17.05,
+      "clickDelta": 0,
+      "impressionDelta": -16,
+      "positionDelta": 7.28
+    },
+    {
+      "query": "ai video production agency",
+      "primaryPage": "/services/ai-video-production-agency/",
+      "currentClicks": 1,
+      "previousClicks": 1,
+      "currentImpressions": 19,
+      "previousImpressions": 48,
+      "currentPosition": 17.79,
+      "previousPosition": 15.02,
+      "clickDelta": 0,
+      "impressionDelta": -29,
+      "positionDelta": 2.77
+    },
+    {
+      "query": "aeo agency",
+      "primaryPage": "/aeo-dubai/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 1,
+      "previousImpressions": 6,
+      "currentPosition": 40,
+      "previousPosition": 29.5,
+      "clickDelta": 0,
+      "impressionDelta": -5,
+      "positionDelta": 10.5
+    }
+  ],
+  "topGainedQueries": [
+    {
+      "query": "dgenius solutions",
+      "primaryPage": "/",
+      "currentClicks": 43,
+      "previousClicks": 15,
+      "currentImpressions": 95,
+      "previousImpressions": 60,
+      "currentPosition": 1.04,
+      "previousPosition": 1.18,
+      "clickDelta": 28,
+      "impressionDelta": 35,
+      "positionDelta": -0.14
+    },
+    {
+      "query": "dgenius solutions",
+      "primaryPage": "/contact-us/",
+      "currentClicks": 9,
+      "previousClicks": 1,
+      "currentImpressions": 85,
+      "previousImpressions": 38,
+      "currentPosition": 7.8,
+      "previousPosition": 7.16,
+      "clickDelta": 8,
+      "impressionDelta": 47,
+      "positionDelta": 0.64
+    },
+    {
+      "query": "d genius solutions",
+      "primaryPage": "/",
+      "currentClicks": 10,
+      "previousClicks": 5,
+      "currentImpressions": 36,
+      "previousImpressions": 23,
+      "currentPosition": 1,
+      "previousPosition": 3.57,
+      "clickDelta": 5,
+      "impressionDelta": 13,
+      "positionDelta": -2.57
+    },
+    {
+      "query": "ai video production agency in mumbai",
+      "primaryPage": "/services/ai-video-production-agency/",
+      "currentClicks": 3,
+      "previousClicks": 0,
+      "currentImpressions": 53,
+      "previousImpressions": 28,
+      "currentPosition": 2.13,
+      "previousPosition": 2.79,
+      "clickDelta": 3,
+      "impressionDelta": 25,
+      "positionDelta": -0.66
+    },
+    {
+      "query": "aeo services in dubai",
+      "primaryPage": "/aeo-dubai/",
+      "currentClicks": 2,
+      "previousClicks": 0,
+      "currentImpressions": 19,
+      "previousImpressions": 15,
+      "currentPosition": 7,
+      "previousPosition": 17.93,
+      "clickDelta": 2,
+      "impressionDelta": 4,
+      "positionDelta": -10.93
+    },
+    {
+      "query": "marketing genius",
+      "primaryPage": "/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 1,
+      "previousImpressions": 5,
+      "currentPosition": 4,
+      "previousPosition": 31,
+      "clickDelta": 0,
+      "impressionDelta": -4,
+      "positionDelta": -27
+    },
+    {
+      "query": "d genius solutions",
+      "primaryPage": "/our-services/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 15,
+      "previousImpressions": 6,
+      "currentPosition": 3.07,
+      "previousPosition": 24.33,
+      "clickDelta": 0,
+      "impressionDelta": 9,
+      "positionDelta": -21.26
+    },
+    {
+      "query": "ai overview analysis",
+      "primaryPage": "/blogs/ai-overview-ranking/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 50,
+      "previousImpressions": 1,
+      "currentPosition": 29.8,
+      "previousPosition": 37,
+      "clickDelta": 0,
+      "impressionDelta": 49,
+      "positionDelta": -7.2
+    },
+    {
+      "query": "generative engine optimization",
+      "primaryPage": "/blogs/generative-engine-optimization/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 69,
+      "previousImpressions": 2,
+      "currentPosition": 50.09,
+      "previousPosition": 24,
+      "clickDelta": 0,
+      "impressionDelta": 67,
+      "positionDelta": 26.09
+    },
+    {
+      "query": "google ads sge ai gedreven zoekresultaten",
+      "primaryPage": "/blogs/ai-generated-summaries-in-search-ads/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 96,
+      "previousImpressions": 44,
+      "currentPosition": 60.78,
+      "previousPosition": 64.57,
+      "clickDelta": 0,
+      "impressionDelta": 52,
+      "positionDelta": -3.79
+    },
+    {
+      "query": "chatgpt brand visibility",
+      "primaryPage": "/blogs/chatgpt-brand-visibility/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 5,
+      "previousImpressions": 1,
+      "currentPosition": 11.8,
+      "previousPosition": 30,
+      "clickDelta": 0,
+      "impressionDelta": 4,
+      "positionDelta": -18.2
+    },
+    {
+      "query": "affordable local seo services in mumbai",
+      "primaryPage": "/services/seo-services-in-mumbai/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 2,
+      "previousImpressions": 5,
+      "currentPosition": 22.5,
+      "previousPosition": 40.2,
+      "clickDelta": 0,
+      "impressionDelta": -3,
+      "positionDelta": -17.7
+    },
+    {
+      "query": "how do you measure your brand's visibility in ai assistants like chatgpt credibly? what methods exist and where are their limits?",
+      "primaryPage": "/blogs/brand-visibility-in-ai-search/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 22,
+      "previousImpressions": 17,
+      "currentPosition": 43.09,
+      "previousPosition": 55.76,
+      "clickDelta": 0,
+      "impressionDelta": 5,
+      "positionDelta": -12.67
+    },
+    {
+      "query": "sponsored results ai",
+      "primaryPage": "/blogs/ai-generated-summaries-in-search-ads/",
+      "currentClicks": 1,
+      "previousClicks": 0,
+      "currentImpressions": 9,
+      "previousImpressions": 1,
+      "currentPosition": 7.89,
+      "previousPosition": 10,
+      "clickDelta": 1,
+      "impressionDelta": 8,
+      "positionDelta": -2.11
+    },
+    {
+      "query": "ai business safety,39,0,i,video, people also ask, bottom ads, ai overview, related searches,10,0,0",
+      "primaryPage": "/blogs/ai-generated-summaries-in-search-ads/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 14,
+      "previousImpressions": 9,
+      "currentPosition": 73.79,
+      "previousPosition": 85,
+      "clickDelta": 0,
+      "impressionDelta": 5,
+      "positionDelta": -11.21
+    },
+    {
+      "query": "dgs agency",
+      "primaryPage": "/",
+      "currentClicks": 1,
+      "previousClicks": 0,
+      "currentImpressions": 6,
+      "previousImpressions": 1,
+      "currentPosition": 5.33,
+      "previousPosition": 8,
+      "clickDelta": 1,
+      "impressionDelta": 5,
+      "positionDelta": -2.67
+    },
+    {
+      "query": "ai overviews seo",
+      "primaryPage": "/blogs/ai-overview-ranking/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 8,
+      "previousImpressions": 1,
+      "currentPosition": 24.88,
+      "previousPosition": 35,
+      "clickDelta": 0,
+      "impressionDelta": 7,
+      "positionDelta": -10.12
+    },
+    {
+      "query": "digital genius solution",
+      "primaryPage": "/",
+      "currentClicks": 1,
+      "previousClicks": 0,
+      "currentImpressions": 20,
+      "previousImpressions": 8,
+      "currentPosition": 6.65,
+      "previousPosition": 6.13,
+      "clickDelta": 1,
+      "impressionDelta": 12,
+      "positionDelta": 0.52
+    },
+    {
+      "query": "generative ai seo optimization benefits",
+      "primaryPage": "/blogs/generative-engine-optimization/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 170,
+      "previousImpressions": 141,
+      "currentPosition": 22.91,
+      "previousPosition": 24.7,
+      "clickDelta": 0,
+      "impressionDelta": 29,
+      "positionDelta": -1.79
+    },
+    {
+      "query": "geo optimization services india",
+      "primaryPage": "/services/geo/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 30,
+      "previousImpressions": 19,
+      "currentPosition": 46.43,
+      "previousPosition": 54.05,
+      "clickDelta": 0,
+      "impressionDelta": 11,
+      "positionDelta": -7.62
+    },
+    {
+      "query": "review your ai brand visibility",
+      "primaryPage": "/blogs/brand-visibility-in-ai-search/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 33,
+      "previousImpressions": 0,
+      "currentPosition": 20.94,
+      "previousPosition": null,
+      "clickDelta": 0,
+      "impressionDelta": 33,
+      "positionDelta": null
+    },
+    {
+      "query": "3-3-3 rule in marketing",
+      "primaryPage": "/blogs/3-3-3-rule-in-marketing/",
+      "currentClicks": 1,
+      "previousClicks": 0,
+      "currentImpressions": 7,
+      "previousImpressions": 0,
+      "currentPosition": 8.43,
+      "previousPosition": null,
+      "clickDelta": 1,
+      "impressionDelta": 7,
+      "positionDelta": null
+    },
+    {
+      "query": "digital solutions agency",
+      "primaryPage": "/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 22,
+      "previousImpressions": 30,
+      "currentPosition": 30.32,
+      "previousPosition": 43.5,
+      "clickDelta": 0,
+      "impressionDelta": -8,
+      "positionDelta": -13.18
+    },
+    {
+      "query": "ai video production operations agency to platform business model",
+      "primaryPage": "/blogs/ai-video-production-for-business/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 31,
+      "previousImpressions": 0,
+      "currentPosition": 11,
+      "previousPosition": null,
+      "clickDelta": 0,
+      "impressionDelta": 31,
+      "positionDelta": null
+    },
+    {
+      "query": "generative engine optimization with ai for enhanced seo",
+      "primaryPage": "/blogs/generative-engine-optimization/",
+      "currentClicks": 0,
+      "previousClicks": 0,
+      "currentImpressions": 75,
+      "previousImpressions": 54,
+      "currentPosition": 21.39,
+      "previousPosition": 24.43,
+      "clickDelta": 0,
+      "impressionDelta": 21,
+      "positionDelta": -3.04
+    }
+  ],
+  "cannibalizationCandidates": [
+    {
+      "query": "ai commercial production",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/blogs/ai-video-production-for-business/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 25.5,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 28
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-video-production-for-business/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 63,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "how to rank for ai overviews",
+      "intendedPrimaryUrl": "/blogs/ai-overview-ranking/",
+      "actualTopRankingUrl": "/blogs/ai-overview-ranking/",
+      "competingUrl": "/blogs/ai-overview-seo/",
+      "primaryMetrics": {
+        "page": "/blogs/ai-overview-ranking/",
+        "clicks": 0,
+        "impressions": 46,
+        "position": 22.67,
+        "prevClicks": 0,
+        "prevImpressions": 40,
+        "prevPosition": 24.13
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-overview-seo/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 19.5,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "dgs marketing",
+      "intendedPrimaryUrl": "/australia-page/",
+      "actualTopRankingUrl": "/australia-page/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/australia-page/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 5,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 17.5,
+        "prevClicks": 0,
+        "prevImpressions": 2,
+        "prevPosition": 2
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "dgs solutions",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/portfolio/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 5,
+        "impressions": 14,
+        "position": 2.71,
+        "prevClicks": 7,
+        "prevImpressions": 22,
+        "prevPosition": 2.95
+      },
+      "competingMetrics": {
+        "page": "/portfolio/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 60,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 63
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "d genius",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/contact-us/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 3,
+        "impressions": 22,
+        "position": 1.41,
+        "prevClicks": 7,
+        "prevImpressions": 24,
+        "prevPosition": 2
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 0,
+        "impressions": 9,
+        "position": 10.89,
+        "prevClicks": 0,
+        "prevImpressions": 12,
+        "prevPosition": 9.83
+      },
+      "classification": "BRAND_OVERLAP"
+    },
+    {
+      "query": "ai video production agency in mumbai",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 3,
+        "impressions": 53,
+        "position": 2.13,
+        "prevClicks": 0,
+        "prevImpressions": 28,
+        "prevPosition": 2.79
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 32,
+        "position": 2.5,
+        "prevClicks": 0,
+        "prevImpressions": 10,
+        "prevPosition": 1.1
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "d genius solutions",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/contact-us/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 10,
+        "impressions": 36,
+        "position": 1,
+        "prevClicks": 5,
+        "prevImpressions": 23,
+        "prevPosition": 3.57
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 0,
+        "impressions": 30,
+        "position": 4.7,
+        "prevClicks": 0,
+        "prevImpressions": 16,
+        "prevPosition": 6.56
+      },
+      "classification": "BRAND_OVERLAP"
+    },
+    {
+      "query": "ai ad film production agency",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 5,
+        "position": 19.8,
+        "prevClicks": 0,
+        "prevImpressions": 6,
+        "prevPosition": 19.83
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 5.5,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "geo agency india",
+      "intendedPrimaryUrl": "/services/geo/",
+      "actualTopRankingUrl": "/services/geo/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 72.33,
+        "prevClicks": 0,
+        "prevImpressions": 7,
+        "prevPosition": 79.43
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 4,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "d'genius solutions",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/contact-us/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 6,
+        "impressions": 40,
+        "position": 1.05,
+        "prevClicks": 7,
+        "prevImpressions": 51,
+        "prevPosition": 1.18
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 0,
+        "impressions": 33,
+        "position": 6.06,
+        "prevClicks": 0,
+        "prevImpressions": 32,
+        "prevPosition": 4.5
+      },
+      "classification": "BRAND_OVERLAP"
+    },
+    {
+      "query": "dgenius solutions",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/contact-us/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 43,
+        "impressions": 95,
+        "position": 1.04,
+        "prevClicks": 15,
+        "prevImpressions": 60,
+        "prevPosition": 1.18
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 9,
+        "impressions": 85,
+        "position": 7.8,
+        "prevClicks": 1,
+        "prevImpressions": 38,
+        "prevPosition": 7.16
+      },
+      "classification": "BRAND_OVERLAP"
+    },
+    {
+      "query": "best llm seo agency in mumbai",
+      "intendedPrimaryUrl": "/services/llm-seo-service/",
+      "actualTopRankingUrl": "/services/llm-seo-service/",
+      "competingUrl": "/services/seo-services-in-mumbai/",
+      "primaryMetrics": {
+        "page": "/services/llm-seo-service/",
+        "clicks": 0,
+        "impressions": 13,
+        "position": 10.77,
+        "prevClicks": 0,
+        "prevImpressions": 15,
+        "prevPosition": 13.27
+      },
+      "competingMetrics": {
+        "page": "/services/seo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "insta kohin",
+      "intendedPrimaryUrl": "/about-us/",
+      "actualTopRankingUrl": "/about-us/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/about-us/",
+        "clicks": 0,
+        "impressions": 21,
+        "position": 8.71,
+        "prevClicks": 0,
+        "prevImpressions": 2,
+        "prevPosition": 9.5
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "digital marketing agency in bandra",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/ai-video-production-agency/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 26,
+        "prevClicks": 0,
+        "prevImpressions": 6,
+        "prevPosition": 32.17
+      },
+      "competingMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 21,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 21
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "aeo agency near me",
+      "intendedPrimaryUrl": "/services/aeo-services-in-mumbai/",
+      "actualTopRankingUrl": "/services/aeo-services-in-mumbai/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/aeo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 7,
+        "position": 3.14,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "geo services in mumbai",
+      "intendedPrimaryUrl": "/services/geo/",
+      "actualTopRankingUrl": "/services/geo/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 17,
+        "position": 5.24,
+        "prevClicks": 1,
+        "prevImpressions": 5,
+        "prevPosition": 2.6
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "aeo agency in mumbai",
+      "intendedPrimaryUrl": "/services/aeo-services-in-mumbai/",
+      "actualTopRankingUrl": "/services/aeo-services-in-mumbai/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/aeo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 14,
+        "position": 3.14,
+        "prevClicks": 0,
+        "prevImpressions": 14,
+        "prevPosition": 2.36
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 4,
+        "prevPosition": 11
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "genius advertising",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/branding/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 6,
+        "position": 1.83,
+        "prevClicks": 0,
+        "prevImpressions": 17,
+        "prevPosition": 1.71
+      },
+      "competingMetrics": {
+        "page": "/services/branding/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 91,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 83
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "compare how traditional and ai-first video platforms process live content",
+      "intendedPrimaryUrl": "/blogs/ai-video-vs-traditional-video/",
+      "actualTopRankingUrl": "/blogs/ai-video-vs-traditional-video/",
+      "competingUrl": "/blogs/ai-the-v-traditional-video/",
+      "primaryMetrics": {
+        "page": "/blogs/ai-video-vs-traditional-video/",
+        "clicks": 0,
+        "impressions": 7,
+        "position": 3,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-the-v-traditional-video/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "aeo services in mumbai",
+      "intendedPrimaryUrl": "/services/aeo-services-in-mumbai/",
+      "actualTopRankingUrl": "/services/aeo-services-in-mumbai/",
+      "competingUrl": "/services/aeo/",
+      "primaryMetrics": {
+        "page": "/services/aeo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 11,
+        "position": 1.18,
+        "prevClicks": 1,
+        "prevImpressions": 14,
+        "prevPosition": 1
+      },
+      "competingMetrics": {
+        "page": "/services/aeo/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 10,
+        "prevClicks": 0,
+        "prevImpressions": 2,
+        "prevPosition": 1
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "what are the best practices for improving on site seo and generative engine optimization for my business?",
+      "intendedPrimaryUrl": "/blogs/generative-engine-optimization/",
+      "actualTopRankingUrl": "/blogs/generative-engine-optimization/",
+      "competingUrl": "/blogs/generative-engine-optimization-business/",
+      "primaryMetrics": {
+        "page": "/blogs/generative-engine-optimization/",
+        "clicks": 0,
+        "impressions": 20,
+        "position": 10.85,
+        "prevClicks": 0,
+        "prevImpressions": 457,
+        "prevPosition": 7.05
+      },
+      "competingMetrics": {
+        "page": "/blogs/generative-engine-optimization-business/",
+        "clicks": 0,
+        "impressions": 5,
+        "position": 6.6,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "rank in ai overviews",
+      "intendedPrimaryUrl": "/blogs/ai-overview-ranking/",
+      "actualTopRankingUrl": "/blogs/ai-overview-ranking/",
+      "competingUrl": "/blogs/ai-overview-seo/",
+      "primaryMetrics": {
+        "page": "/blogs/ai-overview-ranking/",
+        "clicks": 0,
+        "impressions": 187,
+        "position": 27.78,
+        "prevClicks": 0,
+        "prevImpressions": 198,
+        "prevPosition": 29.21
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-overview-seo/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 26,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "ai video production agencies",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 24.5,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 38
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 5,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "llm seo company",
+      "intendedPrimaryUrl": "/services/llm-seo-service/",
+      "actualTopRankingUrl": "/services/llm-seo-service/",
+      "competingUrl": "/blogs/llm-seo-services-mumbai/",
+      "primaryMetrics": {
+        "page": "/services/llm-seo-service/",
+        "clicks": 0,
+        "impressions": 14,
+        "position": 42.5,
+        "prevClicks": 0,
+        "prevImpressions": 10,
+        "prevPosition": 26.6
+      },
+      "competingMetrics": {
+        "page": "/blogs/llm-seo-services-mumbai/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 50,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "SUPPORTING_PAGE"
+    },
+    {
+      "query": "ai video agency mumbai",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/ai-video-production-agency/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 1,
+        "impressions": 8,
+        "position": 1.38,
+        "prevClicks": 0,
+        "prevImpressions": 20,
+        "prevPosition": 4.5
+      },
+      "competingMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 2,
+        "impressions": 5,
+        "position": 4.8,
+        "prevClicks": 2,
+        "prevImpressions": 18,
+        "prevPosition": 3.89
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "best llm seo agency in navi mumbai",
+      "intendedPrimaryUrl": "/services/llm-seo-service/",
+      "actualTopRankingUrl": "/services/llm-seo-service/",
+      "competingUrl": "/services/seo-services-in-mumbai/",
+      "primaryMetrics": {
+        "page": "/services/llm-seo-service/",
+        "clicks": 0,
+        "impressions": 7,
+        "position": 14.29,
+        "prevClicks": 0,
+        "prevImpressions": 12,
+        "prevPosition": 14.25
+      },
+      "competingMetrics": {
+        "page": "/services/seo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 16,
+        "prevClicks": 0,
+        "prevImpressions": 3,
+        "prevPosition": 16.33
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "best llm seo agency in vashi",
+      "intendedPrimaryUrl": "/services/llm-seo-service/",
+      "actualTopRankingUrl": "/services/llm-seo-service/",
+      "competingUrl": "/blogs/",
+      "primaryMetrics": {
+        "page": "/services/llm-seo-service/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 71.33,
+        "prevClicks": 0,
+        "prevImpressions": 3,
+        "prevPosition": 33.33
+      },
+      "competingMetrics": {
+        "page": "/blogs/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 26,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "dgenius",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/contact-us/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 14,
+        "position": 15,
+        "prevClicks": 1,
+        "prevImpressions": 5,
+        "prevPosition": 5.2
+      },
+      "competingMetrics": {
+        "page": "/contact-us/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 11,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "BRAND_OVERLAP"
+    },
+    {
+      "query": "ai seo services in mumbai",
+      "intendedPrimaryUrl": "/services/seo-services-in-mumbai/",
+      "actualTopRankingUrl": "/services/seo-services-in-mumbai/",
+      "competingUrl": "/services/geo/",
+      "primaryMetrics": {
+        "page": "/services/seo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 10,
+        "position": 16.4,
+        "prevClicks": 0,
+        "prevImpressions": 10,
+        "prevPosition": 14.4
+      },
+      "competingMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 2,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "top answer engine optimization agency in mumbai. my location is mumbai, maharashtra, india, india.",
+      "intendedPrimaryUrl": "/services/aeo-services-in-mumbai/",
+      "actualTopRankingUrl": "/services/aeo-services-in-mumbai/",
+      "competingUrl": "/services/aeo/",
+      "primaryMetrics": {
+        "page": "/services/aeo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 5,
+        "position": 5.4,
+        "prevClicks": 0,
+        "prevImpressions": 5,
+        "prevPosition": 3.4
+      },
+      "competingMetrics": {
+        "page": "/services/aeo/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 3,
+        "prevClicks": 0,
+        "prevImpressions": 3,
+        "prevPosition": 3.33
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "digital genius solution",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/portfolio/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 1,
+        "impressions": 20,
+        "position": 6.65,
+        "prevClicks": 0,
+        "prevImpressions": 8,
+        "prevPosition": 6.13
+      },
+      "competingMetrics": {
+        "page": "/portfolio/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 10,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "what business problem does geo solve for brands?",
+      "intendedPrimaryUrl": "/blogs/generative-engine-optimization/",
+      "actualTopRankingUrl": "/blogs/generative-engine-optimization/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/blogs/generative-engine-optimization/",
+        "clicks": 0,
+        "impressions": 18,
+        "position": 4.11,
+        "prevClicks": 0,
+        "prevImpressions": 28,
+        "prevPosition": 6.43
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "SUPPORTING_PAGE"
+    },
+    {
+      "query": "ai video production agency in india",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 7,
+        "position": 25,
+        "prevClicks": 0,
+        "prevImpressions": 6,
+        "prevPosition": 7.83
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 8,
+        "prevClicks": 0,
+        "prevImpressions": 2,
+        "prevPosition": 8
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "online marketing genius company limited",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/social-media-marketing/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 8,
+        "position": 35.63,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "competingMetrics": {
+        "page": "/services/social-media-marketing/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 45.33,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "dgs agency",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/seo-services-in-mumbai/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 1,
+        "impressions": 6,
+        "position": 5.33,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 8
+      },
+      "competingMetrics": {
+        "page": "/services/seo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 9,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "seo genius",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/blogs/modern-seo-business-growth/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 2,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 45
+      },
+      "competingMetrics": {
+        "page": "/blogs/modern-seo-business-growth/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 9,
+        "prevClicks": 0,
+        "prevImpressions": 7,
+        "prevPosition": 10.57
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "ai video maker near me",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 4,
+        "position": 7.75,
+        "prevClicks": 1,
+        "prevImpressions": 2,
+        "prevPosition": 5
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "ai video production service in mumbai",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 12,
+        "position": 5.58,
+        "prevClicks": 0,
+        "prevImpressions": 5,
+        "prevPosition": 1.2
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 2,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 1
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "ai video production agency",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 1,
+        "impressions": 19,
+        "position": 17.79,
+        "prevClicks": 1,
+        "prevImpressions": 48,
+        "prevPosition": 15.02
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 6,
+        "position": 5.67,
+        "prevClicks": 0,
+        "prevImpressions": 12,
+        "prevPosition": 8.58
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "aeo agency",
+      "intendedPrimaryUrl": "/services/aeo-services-in-mumbai/",
+      "actualTopRankingUrl": "/services/aeo-services-in-mumbai/",
+      "competingUrl": "/aeo-dubai/",
+      "primaryMetrics": {
+        "page": "/services/aeo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 38,
+        "position": 26.29,
+        "prevClicks": 0,
+        "prevImpressions": 61,
+        "prevPosition": 24.72
+      },
+      "competingMetrics": {
+        "page": "/aeo-dubai/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 40,
+        "prevClicks": 0,
+        "prevImpressions": 6,
+        "prevPosition": 29.5
+      },
+      "classification": "INCIDENTAL_OVERLAP"
+    },
+    {
+      "query": "generative engine optimization services",
+      "intendedPrimaryUrl": "/blogs/generative-engine-optimization/",
+      "actualTopRankingUrl": "/blogs/generative-engine-optimization/",
+      "competingUrl": "/services/geo/",
+      "primaryMetrics": {
+        "page": "/blogs/generative-engine-optimization/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 93.5,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 92
+      },
+      "competingMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 39,
+        "prevClicks": 0,
+        "prevImpressions": 2,
+        "prevPosition": 33.5
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "ai video marketing agency",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/ai-video-production-agency/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 6,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 2
+      },
+      "competingMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 5,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 3
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "ai video creator near me",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 2,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 12
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "ai video production for brands",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/blogs/ai-video-production-for-business/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 30.67,
+        "prevClicks": 0,
+        "prevImpressions": 2,
+        "prevPosition": 27.5
+      },
+      "competingMetrics": {
+        "page": "/blogs/ai-video-production-for-business/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 58,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "geo agency in mumbai",
+      "intendedPrimaryUrl": "/services/geo/",
+      "actualTopRankingUrl": "/services/geo/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 1,
+        "impressions": 11,
+        "position": 1.82,
+        "prevClicks": 2,
+        "prevImpressions": 20,
+        "prevPosition": 1.3
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 6,
+        "position": 1.33,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 1
+      },
+      "classification": "TRUE_CANNIBALIZATION"
+    },
+    {
+      "query": "advertising agency in bandra",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/ai-video-production-agency/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 21,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "competingMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 21,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "ai production agency in mumbai",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 2,
+        "prevClicks": 1,
+        "prevImpressions": 14,
+        "prevPosition": 1.21
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 11,
+        "prevPosition": 4.09
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "dgsol creative ltd",
+      "intendedPrimaryUrl": "/",
+      "actualTopRankingUrl": "/",
+      "competingUrl": "/services/seo-services-in-mumbai/",
+      "primaryMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 54.5,
+        "prevClicks": 0,
+        "prevImpressions": 2,
+        "prevPosition": 38
+      },
+      "competingMetrics": {
+        "page": "/services/seo-services-in-mumbai/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 65,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "query": "ai video agency",
+      "intendedPrimaryUrl": "/services/ai-video-production-agency/",
+      "actualTopRankingUrl": "/services/ai-video-production-agency/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/ai-video-production-agency/",
+        "clicks": 1,
+        "impressions": 19,
+        "position": 12.58,
+        "prevClicks": 2,
+        "prevImpressions": 13,
+        "prevPosition": 8.85
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 1,
+        "prevClicks": 0,
+        "prevImpressions": 0,
+        "prevPosition": null
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    },
+    {
+      "query": "top geo services company in mumbai for ai search visibility. my location is mumbai, maharashtra, india, india.",
+      "intendedPrimaryUrl": "/services/geo/",
+      "actualTopRankingUrl": "/services/geo/",
+      "competingUrl": "/",
+      "primaryMetrics": {
+        "page": "/services/geo/",
+        "clicks": 0,
+        "impressions": 19,
+        "position": 2.21,
+        "prevClicks": 0,
+        "prevImpressions": 8,
+        "prevPosition": 2.38
+      },
+      "competingMetrics": {
+        "page": "/",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 9,
+        "prevClicks": 0,
+        "prevImpressions": 1,
+        "prevPosition": 4
+      },
+      "classification": "POTENTIAL_CANNIBALIZATION"
+    }
+  ],
+  "pageMetrics": [
+    {
+      "path": "/",
+      "metrics": {
+        "currentClicks": 72,
+        "previousClicks": 42,
+        "clickDelta": 30,
+        "clickDeltaPct": 71.4,
+        "currentImpressions": 555,
+        "previousImpressions": 429,
+        "impressionDelta": 126,
+        "impressionDeltaPct": 29.4,
+        "currentWeightedPosition": 10.14,
+        "previousWeightedPosition": 10.82,
+        "positionDelta": -0.68,
+        "currentCtr": 12.97,
+        "previousCtr": 9.79
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/about-us/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 48,
+        "previousImpressions": 22,
+        "impressionDelta": 26,
+        "impressionDeltaPct": 118.2,
+        "currentWeightedPosition": 9.37,
+        "previousWeightedPosition": 6.27,
+        "positionDelta": 3.1,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/aeo-dubai/",
+      "metrics": {
+        "currentClicks": 2,
+        "previousClicks": 0,
+        "clickDelta": 2,
+        "clickDeltaPct": 100,
+        "currentImpressions": 61,
+        "previousImpressions": 61,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": 18.23,
+        "previousWeightedPosition": 18.64,
+        "positionDelta": -0.41,
+        "currentCtr": 3.28,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/australia-page/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 9,
+        "previousImpressions": 0,
+        "impressionDelta": 9,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 28.89,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/better-ceasons-case-study/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 5,
+        "previousImpressions": 1,
+        "impressionDelta": 4,
+        "impressionDeltaPct": 400,
+        "currentWeightedPosition": 14.2,
+        "previousWeightedPosition": 2,
+        "positionDelta": 12.2,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/3-3-3-rule-in-marketing/",
+      "metrics": {
+        "currentClicks": 1,
+        "previousClicks": 0,
+        "clickDelta": 1,
+        "clickDeltaPct": 100,
+        "currentImpressions": 55,
+        "previousImpressions": 7,
+        "impressionDelta": 48,
+        "impressionDeltaPct": 685.7,
+        "currentWeightedPosition": 11.76,
+        "previousWeightedPosition": 8.86,
+        "positionDelta": 2.9,
+        "currentCtr": 1.82,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/aeo-business/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 0,
+        "impressionDelta": 1,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 47,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/aeo-in-2026/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/ai-content-optimization/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/ai-generated-summaries-in-search-ads/",
+      "metrics": {
+        "currentClicks": 1,
+        "previousClicks": 0,
+        "clickDelta": 1,
+        "clickDeltaPct": 100,
+        "currentImpressions": 248,
+        "previousImpressions": 156,
+        "impressionDelta": 92,
+        "impressionDeltaPct": 59,
+        "currentWeightedPosition": 36.21,
+        "previousWeightedPosition": 33.47,
+        "positionDelta": 2.74,
+        "currentCtr": 0.4,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 28,
+        "previousImpressions": 18,
+        "impressionDelta": 10,
+        "impressionDeltaPct": 55.6,
+        "currentWeightedPosition": 46.79,
+        "previousWeightedPosition": 65.72,
+        "positionDelta": -18.93,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/ai-overview-ranking/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1244,
+        "previousImpressions": 1276,
+        "impressionDelta": -32,
+        "impressionDeltaPct": -2.5,
+        "currentWeightedPosition": 26.83,
+        "previousWeightedPosition": 27.19,
+        "positionDelta": -0.36,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "STABLE"
+    },
+    {
+      "path": "/blogs/ai-overview-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 10,
+        "previousImpressions": 0,
+        "impressionDelta": 10,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 18.6,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/ai-readiness-for-websites/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/ai-search-behavior-2026/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 36,
+        "previousImpressions": 2,
+        "impressionDelta": 34,
+        "impressionDeltaPct": 1700,
+        "currentWeightedPosition": 36.58,
+        "previousWeightedPosition": 32,
+        "positionDelta": 4.58,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/ai-search-checklist-2026/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 2,
+        "previousImpressions": 0,
+        "impressionDelta": 2,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 29.5,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/ai-search-optimization-ecommerce/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 401,
+        "previousImpressions": 813,
+        "impressionDelta": -412,
+        "impressionDeltaPct": -50.7,
+        "currentWeightedPosition": 31.24,
+        "previousWeightedPosition": 30.82,
+        "positionDelta": 0.42,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "CRITICAL_DECLINE"
+    },
+    {
+      "path": "/blogs/ai-video-production-cost-india/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 36,
+        "previousImpressions": 0,
+        "impressionDelta": 36,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 6.44,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/ai-video-production-for-business/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 52,
+        "previousImpressions": 1,
+        "impressionDelta": 51,
+        "impressionDeltaPct": 5100,
+        "currentWeightedPosition": 23.83,
+        "previousWeightedPosition": 71,
+        "positionDelta": -47.17,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/ai-video-vs-traditional-video/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 14,
+        "previousImpressions": 0,
+        "impressionDelta": 14,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 17.21,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/brand-identity-seo-trust-lead-generation/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 18,
+        "previousImpressions": 46,
+        "impressionDelta": -28,
+        "impressionDeltaPct": -60.9,
+        "currentWeightedPosition": 27.28,
+        "previousWeightedPosition": 21.37,
+        "positionDelta": 5.91,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/blogs/brand-mentions-for-ai-tools/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 17,
+        "previousImpressions": 12,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 41.7,
+        "currentWeightedPosition": 12.12,
+        "previousWeightedPosition": 11,
+        "positionDelta": 1.12,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/brand-visibility-in-ai-search/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 139,
+        "previousImpressions": 30,
+        "impressionDelta": 109,
+        "impressionDeltaPct": 363.3,
+        "currentWeightedPosition": 20.25,
+        "previousWeightedPosition": 37.23,
+        "positionDelta": -16.98,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/chatgpt-brand-visibility/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 62,
+        "previousImpressions": 5,
+        "impressionDelta": 57,
+        "impressionDeltaPct": 1140,
+        "currentWeightedPosition": 36.82,
+        "previousWeightedPosition": 29.4,
+        "positionDelta": 7.42,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/content-strategy-for-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 87,
+        "previousImpressions": 108,
+        "impressionDelta": -21,
+        "impressionDeltaPct": -19.4,
+        "currentWeightedPosition": 15.07,
+        "previousWeightedPosition": 17.1,
+        "positionDelta": -2.03,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 72,
+        "previousImpressions": 58,
+        "impressionDelta": 14,
+        "impressionDeltaPct": 24.1,
+        "currentWeightedPosition": 42.19,
+        "previousWeightedPosition": 39.02,
+        "positionDelta": 3.17,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/blogs/content-writing-for-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/core-update-strategy/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/future-of-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 12,
+        "previousImpressions": 4,
+        "impressionDelta": 8,
+        "impressionDeltaPct": 200,
+        "currentWeightedPosition": 23.67,
+        "previousWeightedPosition": 32.5,
+        "positionDelta": -8.83,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/generative-engine-optimization-business/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 5,
+        "previousImpressions": 0,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 6.6,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/generative-engine-optimization/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 903,
+        "previousImpressions": 1094,
+        "impressionDelta": -191,
+        "impressionDeltaPct": -17.5,
+        "currentWeightedPosition": 24.7,
+        "previousWeightedPosition": 14.73,
+        "positionDelta": 9.97,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/blogs/geo-vs-seo-google-ai-search/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-ads-ai-max-2026/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 40,
+        "previousImpressions": 0,
+        "impressionDelta": 40,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 17.6,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/google-ads-vs-meta-ads/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-agentic-browsing/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 9,
+        "previousImpressions": 2,
+        "impressionDelta": 7,
+        "impressionDeltaPct": 350,
+        "currentWeightedPosition": 11.22,
+        "previousWeightedPosition": 10.5,
+        "positionDelta": 0.72,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 23,
+        "previousImpressions": 18,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 27.8,
+        "currentWeightedPosition": 32.04,
+        "previousWeightedPosition": 70.28,
+        "positionDelta": -38.24,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/google-ai-overviews-image-generation/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 8,
+        "previousImpressions": 0,
+        "impressionDelta": 8,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 9.5,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-ai-search-update/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-algorithm-business/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-august-2026-spam-update/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 5,
+        "previousImpressions": 0,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 70,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-io-2026/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-ranking-fixes/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 4,
+        "previousImpressions": 5,
+        "impressionDelta": -1,
+        "impressionDeltaPct": -20,
+        "currentWeightedPosition": 11.5,
+        "previousWeightedPosition": 18.8,
+        "positionDelta": -7.3,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-search-console-social-media/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 3,
+        "previousImpressions": 0,
+        "impressionDelta": 3,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 8,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/google-spam-update/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/llm-seo-ai-search/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/llm-seo-services-mumbai/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 13,
+        "previousImpressions": 14,
+        "impressionDelta": -1,
+        "impressionDeltaPct": -7.1,
+        "currentWeightedPosition": 14,
+        "previousWeightedPosition": 10.79,
+        "positionDelta": 3.21,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/local-seo-business-growth/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 2,
+        "previousImpressions": 0,
+        "impressionDelta": 2,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 5,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/low-social-media-reach/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 0,
+        "impressionDelta": 1,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 1,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/modern-seo-business-growth/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 3,
+        "clickDelta": -3,
+        "clickDeltaPct": -100,
+        "currentImpressions": 55,
+        "previousImpressions": 63,
+        "impressionDelta": -8,
+        "impressionDeltaPct": -12.7,
+        "currentWeightedPosition": 17.27,
+        "previousWeightedPosition": 8.36,
+        "positionDelta": 8.91,
+        "currentCtr": 0,
+        "previousCtr": 4.76
+      },
+      "classification": "CRITICAL_DECLINE"
+    },
+    {
+      "path": "/blogs/optimize-content-ai-search/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 6,
+        "previousImpressions": 0,
+        "impressionDelta": 6,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 12.33,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/optimize-for-ai-overviews/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/schema-seo-for-small-business/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/search-generative-ai-performance-reports/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 13,
+        "previousImpressions": 15,
+        "impressionDelta": -2,
+        "impressionDeltaPct": -13.3,
+        "currentWeightedPosition": 61.08,
+        "previousWeightedPosition": 67.14,
+        "positionDelta": -6.06,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "VOLATILE"
+    },
+    {
+      "path": "/blogs/seo-company-in-mumbai/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 3,
+        "previousImpressions": 0,
+        "impressionDelta": 3,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 7,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/seo-friendly-website/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/seo-rankings-up-but-traffic-down/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 23,
+        "previousImpressions": 4,
+        "impressionDelta": 19,
+        "impressionDeltaPct": 475,
+        "currentWeightedPosition": 31.43,
+        "previousWeightedPosition": 26.5,
+        "positionDelta": 4.93,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/seo-services-india-2026/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 3,
+        "previousImpressions": 0,
+        "impressionDelta": 3,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 36,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/seo-strategies-business-growth/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 3,
+        "previousImpressions": 0,
+        "impressionDelta": 3,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 13,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/social-media-marketing-strategy/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 1,
+        "clickDelta": -1,
+        "clickDeltaPct": -100,
+        "currentImpressions": 13,
+        "previousImpressions": 11,
+        "impressionDelta": 2,
+        "impressionDeltaPct": 18.2,
+        "currentWeightedPosition": 26,
+        "previousWeightedPosition": 15.73,
+        "positionDelta": 10.27,
+        "currentCtr": 0,
+        "previousCtr": 9.09
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/topical-authority-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 0,
+        "impressionDelta": 1,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 8,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/voice-search-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/website-design-lead-generation-mumbai/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/website-development-leads/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 5,
+        "previousImpressions": 1,
+        "impressionDelta": 4,
+        "impressionDeltaPct": 400,
+        "currentWeightedPosition": 15.4,
+        "previousWeightedPosition": 26,
+        "positionDelta": -10.6,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/website-development-mistakes/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/website-development-quality-leads/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/blogs/website-performance-conversions/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 41,
+        "previousImpressions": 44,
+        "impressionDelta": -3,
+        "impressionDeltaPct": -6.8,
+        "currentWeightedPosition": 18.61,
+        "previousWeightedPosition": 18.43,
+        "positionDelta": 0.18,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "STABLE"
+    },
+    {
+      "path": "/blogs/website-traffic-but-no-leads/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 62,
+        "previousImpressions": 0,
+        "impressionDelta": 62,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 24.63,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/blogs/what-is-llm-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/career/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 4,
+        "previousImpressions": 0,
+        "impressionDelta": 4,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 13.25,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/case_studies/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 1,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": 1,
+        "previousWeightedPosition": 80,
+        "positionDelta": -79,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/contact-us/",
+      "metrics": {
+        "currentClicks": 9,
+        "previousClicks": 1,
+        "clickDelta": 8,
+        "clickDeltaPct": 800,
+        "currentImpressions": 160,
+        "previousImpressions": 100,
+        "impressionDelta": 60,
+        "impressionDeltaPct": 60,
+        "currentWeightedPosition": 7.08,
+        "previousWeightedPosition": 6.55,
+        "positionDelta": 0.53,
+        "currentCtr": 5.63,
+        "previousCtr": 1
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/motion-graphics/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/our-services/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 67,
+        "previousImpressions": 34,
+        "impressionDelta": 33,
+        "impressionDeltaPct": 97.1,
+        "currentWeightedPosition": 5.12,
+        "previousWeightedPosition": 8.44,
+        "positionDelta": -3.32,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/portfolio/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 8,
+        "previousImpressions": 13,
+        "impressionDelta": -5,
+        "impressionDeltaPct": -38.5,
+        "currentWeightedPosition": 20.5,
+        "previousWeightedPosition": 9.84,
+        "positionDelta": 10.66,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/privacy-policy/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/seo-pricing/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/aeo-services-in-mumbai/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 1,
+        "clickDelta": -1,
+        "clickDeltaPct": -100,
+        "currentImpressions": 143,
+        "previousImpressions": 177,
+        "impressionDelta": -34,
+        "impressionDeltaPct": -19.2,
+        "currentWeightedPosition": 19.55,
+        "previousWeightedPosition": 18.85,
+        "positionDelta": 0.7,
+        "currentCtr": 0,
+        "previousCtr": 0.56
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/services/ai-production-dubai-page/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 13,
+        "previousImpressions": 14,
+        "impressionDelta": -1,
+        "impressionDeltaPct": -7.1,
+        "currentWeightedPosition": 25.92,
+        "previousWeightedPosition": 24.57,
+        "positionDelta": 1.35,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/ai-video-production-agency/",
+      "metrics": {
+        "currentClicks": 8,
+        "previousClicks": 10,
+        "clickDelta": -2,
+        "clickDeltaPct": -20,
+        "currentImpressions": 292,
+        "previousImpressions": 328,
+        "impressionDelta": -36,
+        "impressionDeltaPct": -11,
+        "currentWeightedPosition": 16.07,
+        "previousWeightedPosition": 15.15,
+        "positionDelta": 0.92,
+        "currentCtr": 2.74,
+        "previousCtr": 3.05
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/services/branding/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 9,
+        "previousImpressions": 4,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 125,
+        "currentWeightedPosition": 63.67,
+        "previousWeightedPosition": 56.25,
+        "positionDelta": 7.42,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/content-creation/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/dubai-seo/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/geo/",
+      "metrics": {
+        "currentClicks": 1,
+        "previousClicks": 5,
+        "clickDelta": -4,
+        "clickDeltaPct": -80,
+        "currentImpressions": 255,
+        "previousImpressions": 324,
+        "impressionDelta": -69,
+        "impressionDeltaPct": -21.3,
+        "currentWeightedPosition": 30.14,
+        "previousWeightedPosition": 25.95,
+        "positionDelta": 4.19,
+        "currentCtr": 0.39,
+        "previousCtr": 1.54
+      },
+      "classification": "CRITICAL_DECLINE"
+    },
+    {
+      "path": "/services/llm-seo-service/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 2,
+        "clickDelta": -2,
+        "clickDeltaPct": -100,
+        "currentImpressions": 109,
+        "previousImpressions": 159,
+        "impressionDelta": -50,
+        "impressionDeltaPct": -31.4,
+        "currentWeightedPosition": 35.63,
+        "previousWeightedPosition": 17.45,
+        "positionDelta": 18.18,
+        "currentCtr": 0,
+        "previousCtr": 1.26
+      },
+      "classification": "CRITICAL_DECLINE"
+    },
+    {
+      "path": "/services/performance-marketing/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/seo-service-in-banglore/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 48,
+        "previousImpressions": 0,
+        "impressionDelta": 48,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 55.9,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/services/seo-service-in-gurugram/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 6,
+        "previousImpressions": 0,
+        "impressionDelta": 6,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 45.83,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/seo-service-pune/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 0,
+        "impressionDelta": 1,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 37,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/seo-services-in-hyderabad/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 18,
+        "previousImpressions": 0,
+        "impressionDelta": 18,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 55.67,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING"
+    },
+    {
+      "path": "/services/seo-services-in-mumbai/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 49,
+        "previousImpressions": 44,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 11.4,
+        "currentWeightedPosition": 20.9,
+        "previousWeightedPosition": 17.27,
+        "positionDelta": 3.63,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/services/shirdi-se-sai-tak-case-study/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/social-media-marketing/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 22,
+        "previousImpressions": 30,
+        "impressionDelta": -8,
+        "impressionDeltaPct": -26.7,
+        "currentWeightedPosition": 53.23,
+        "previousWeightedPosition": 79.8,
+        "positionDelta": -26.57,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING"
+    },
+    {
+      "path": "/services/website-development-amc/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 0,
+        "impressionDelta": 1,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 2,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/services/website-development-pune-page/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/sitemap/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 0,
+        "previousImpressions": 0,
+        "impressionDelta": 0,
+        "impressionDeltaPct": 0,
+        "currentWeightedPosition": null,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    },
+    {
+      "path": "/us-landing-page/",
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 10,
+        "previousImpressions": 0,
+        "impressionDelta": 10,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 6.8,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA"
+    }
+  ]
+}

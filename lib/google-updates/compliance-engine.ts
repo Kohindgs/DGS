@@ -6,6 +6,9 @@ import { formatAuditDate, formatDateOnly, getDaysAgo } from "../utils/date.ts";
 
 export { formatAuditDate, formatDateOnly, getDaysAgo };
 
+export type SitePolicyCompliance = "COMPLIANT" | "NEEDS REVIEW" | "NON-COMPLIANT" | "INSUFFICIENT EVIDENCE";
+export type RankingImpactStatus = "ACTIVE — PARTIAL DATA" | "PENDING POST-ROLLOUT" | "STABLE" | "DECLINING" | "RECOVERING";
+
 export type GoogleComplianceStatus =
   | "NOT APPLICABLE"
   | "NOT ASSESSED"
@@ -104,6 +107,8 @@ export type SitewideSpamImpact = {
 export type FullAssessmentResult = {
   updateId: string;
   assessmentStatus: GoogleComplianceStatus;
+  sitePolicyCompliance?: GoogleComplianceStatus;
+  rankingImpactStatus?: RankingImpactStatus;
   assessmentDate: string;
   evidence: string;
   affectedPages: string[];
@@ -420,7 +425,21 @@ export async function runGoogleUpdateAssessment(
         const postStart = new Date(pubDate.getTime() + 15 * msDay).toISOString().slice(0, 10);
         const postEnd = new Date(pubDate.getTime() + 28 * msDay).toISOString().slice(0, 10);
 
+        let latestGscDate: string | null = null;
+        try {
+          const { rows: maxRows } = await cmsQuery<any>(`SELECT MAX(metric_date) as max_date FROM gsc_daily_metrics`);
+          if (maxRows && maxRows[0]?.max_date) {
+            latestGscDate = String(maxRows[0].max_date).slice(0, 10);
+          }
+        } catch {}
+
+        const todayStr = new Date().toISOString().slice(0, 10);
+        const observedCutoff = latestGscDate || todayStr;
+        const actualRollEnd = observedCutoff < rollEnd ? observedCutoff : rollEnd;
+        const isRolloutActive = observedCutoff < rollEnd;
+
         const queryWindow = async (start: string, end: string): Promise<WindowMetricSnapshot | null> => {
+          if (start > end) return null;
           const { rows } = await cmsQuery<any>(
             `SELECT
                SUM(clicks) as total_clicks,
@@ -446,7 +465,7 @@ export async function runGoogleUpdateAssessment(
 
         const [preSnap, rollSnap, postSnap] = await Promise.all([
           queryWindow(preStart, preEnd),
-          queryWindow(rollStart, rollEnd),
+          queryWindow(rollStart, actualRollEnd),
           queryWindow(postStart, postEnd),
         ]);
 
@@ -456,8 +475,18 @@ export async function runGoogleUpdateAssessment(
           rolloutCorrelation.rolloutPeriod = rollSnap || undefined;
           rolloutCorrelation.postRollout14d = postSnap || undefined;
 
-          // Comparison calculation
-          if (preSnap && postSnap && preSnap.clicks > 0) {
+          if (isRolloutActive || !postSnap) {
+            rolloutCorrelation.observationSummary = `PARTIAL ROLLOUT DATA: ${rollStart} -> ${actualRollEnd} (${
+              rollSnap ? `${rollSnap.clicks} clicks, ${rollSnap.impressions} impressions, Avg Position ${rollSnap.avgPosition}` : "telemetry in progress"
+            }). Post-rollout correlation pending complete 14-day post-rollout observation window.`;
+
+            checks.push({
+              name: "Search Console Rollout Correlation",
+              description: "Correlate traffic movement across Pre (-14d), Rollout, and Post (+14d) windows.",
+              result: "WARN",
+              details: rolloutCorrelation.observationSummary,
+            });
+          } else if (preSnap && postSnap && preSnap.clicks > 0) {
             const clickDelta = (((postSnap.clicks - preSnap.clicks) / preSnap.clicks) * 100).toFixed(1);
             const posDelta = (postSnap.avgPosition - preSnap.avgPosition).toFixed(1);
             const clickSign = Number(clickDelta) >= 0 ? "+" : "";
@@ -469,15 +498,6 @@ export async function runGoogleUpdateAssessment(
               name: "Search Console Rollout Correlation",
               description: "Correlate traffic movement across Pre (-14d), Rollout, and Post (+14d) windows.",
               result: Number(clickDelta) < -25 ? "WARN" : "PASS",
-              details: rolloutCorrelation.observationSummary,
-            });
-          } else if (rollSnap) {
-            rolloutCorrelation.observationSummary = `Change observed during rollout window (${rollSnap.startDate} to ${rollSnap.endDate}): ${rollSnap.clicks} clicks, ${rollSnap.impressions} impressions, Avg Position ${rollSnap.avgPosition}. Pre/Post comparison pending complete date series.`;
-
-            checks.push({
-              name: "Search Console Rollout Correlation",
-              description: "Correlate traffic movement across Pre (-14d), Rollout, and Post (+14d) windows.",
-              result: "PASS",
               details: rolloutCorrelation.observationSummary,
             });
           }
@@ -498,31 +518,38 @@ export async function runGoogleUpdateAssessment(
   }
 
   // -------------------------------------------------------------------------
-  // Strict Status Logic per Section 3:
-  // COMPLIANT: only when all required measurable checks PASS and no unresolved issues exist
-  // NEEDS REVIEW: when WARN or unresolved issues exist
-  // NON-COMPLIANT: when a relevant measurable requirement FAILS
-  // INSUFFICIENT EVIDENCE: when required evidence is unavailable
-  // NEVER default to COMPLIANT.
+  // Strict Status Logic: Separate SITE POLICY COMPLIANCE from RANKING IMPACT
   // -------------------------------------------------------------------------
-  let finalStatus: GoogleComplianceStatus;
+  const technicalPolicyChecks = checks.filter((c) => c.name !== "Search Console Rollout Correlation");
+  const policyFail = technicalPolicyChecks.some((c) => c.result === "FAIL");
+  const policyWarn = technicalPolicyChecks.some((c) => c.result === "WARN");
+  const policyInsufficient = technicalPolicyChecks.some((c) => c.result === "INSUFFICIENT EVIDENCE");
 
-  const hasFailingCheck = checks.some((c) => c.result === "FAIL");
-  const hasWarningCheck = checks.some((c) => c.result === "WARN");
-  const hasInsufficientEvidence = checks.some((c) => c.result === "INSUFFICIENT EVIDENCE");
-  const allPassing = checks.length > 0 && checks.every((c) => c.result === "PASS" || c.result === "INFO");
+  let sitePolicyCompliance: GoogleComplianceStatus;
+  if (policyFail) sitePolicyCompliance = "NON-COMPLIANT";
+  else if (policyWarn || issues.length > 0) sitePolicyCompliance = "NEEDS REVIEW";
+  else if (policyInsufficient) sitePolicyCompliance = "INSUFFICIENT EVIDENCE";
+  else sitePolicyCompliance = "COMPLIANT";
 
-  if (hasFailingCheck) {
-    finalStatus = "NON-COMPLIANT";
-  } else if (hasWarningCheck || issues.length > 0) {
-    finalStatus = "NEEDS REVIEW";
-  } else if (allPassing && !hasInsufficientEvidence) {
-    finalStatus = "COMPLIANT";
+  let rankingImpactStatus: RankingImpactStatus;
+  if (!rolloutCorrelation.hasGscData) {
+    rankingImpactStatus = "ACTIVE — PARTIAL DATA";
+  } else if (!rolloutCorrelation.postRollout14d) {
+    rankingImpactStatus = "PENDING POST-ROLLOUT";
+  } else if (rolloutCorrelation.preRollout14d && rolloutCorrelation.postRollout14d) {
+    const preClicks = rolloutCorrelation.preRollout14d.clicks;
+    const postClicks = rolloutCorrelation.postRollout14d.clicks;
+    const deltaPct = preClicks > 0 ? ((postClicks - preClicks) / preClicks) * 100 : 0;
+    if (deltaPct < -25) rankingImpactStatus = "DECLINING";
+    else if (deltaPct > 20) rankingImpactStatus = "RECOVERING";
+    else rankingImpactStatus = "STABLE";
   } else {
-    finalStatus = "INSUFFICIENT EVIDENCE";
+    rankingImpactStatus = "STABLE";
   }
 
-  // Calculate dynamic confidence score (no hardcoded 95)
+  const finalStatus: GoogleComplianceStatus = sitePolicyCompliance;
+
+  // Calculate dynamic confidence score
   const checksWithEvidence = checks.filter((c) => c.result === "PASS" || c.result === "FAIL" || c.result === "WARN").length;
   const confidence = calculateComplianceConfidence({
     totalRequiredChecks: checks.length,
@@ -541,9 +568,15 @@ export async function runGoogleUpdateAssessment(
     "Schedule automated technical crawls every 15 days to maintain fresh indexability and schema evidence."
   );
 
-  if (hasWarningCheck || hasInsufficientEvidence) {
+  if (rolloutCorrelation.hasGscData) {
+    recommendations.push("Continue collecting daily GSC telemetry until post-rollout observation window completes (14 days post-completion).");
+  } else {
     recommendations.push("Connect Google Search Console and complete site crawl to replace unmeasured checks with validated evidence.");
   }
+
+  recommendations.push(
+    "Pillar 2: Technical, Architectural, and Quality Signals (Note: Google has not publicly specified every internal system updated during this rollout; evaluation is based on Search Central quality guidelines, Core Web Vitals, and observed ranking correlations)."
+  );
 
   const evidenceSummary = `Status derived from ${checks.length} evidence checks (${checksWithEvidence} measured, ${checks.length - checksWithEvidence} insufficient evidence). ${rolloutCorrelation.observationSummary}`;
 

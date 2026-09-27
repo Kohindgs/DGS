@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { normalizePath } from "./path";
+import { getRetiredRoute } from "@/lib/migration/retired-routes";
 
 const REGISTRY_PATH = path.join(process.cwd(), "data/migration/nextjs-route-registry.generated.json");
 
@@ -60,6 +61,7 @@ export async function getIndexableRoutes(): Promise<RouteRecord[]> {
     (r) =>
       r.indexable &&
       r.includeInSitemap &&
-      (r.proposedAction === "KEEP_SAME_URL" || r.proposedAction === "PROTECTED"),
+      (r.proposedAction === "KEEP_SAME_URL" || r.proposedAction === "PROTECTED") &&
+      !getRetiredRoute(r.path),
   );
 }
