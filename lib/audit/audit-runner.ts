@@ -1,5 +1,5 @@
 import "server-only";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { publishNotificationEvent } from "@/lib/notifications/engine";
 
@@ -728,12 +728,10 @@ export async function runFullWebsiteAudit(triggerType: "scheduled" | "manual" = 
             if (altItem.altStatus === "EMPTY_ALT_DECORATIVE") continue; // Valid decorative images not errors
 
             // Deterministic identity (Requirement C)
-            const sourceHash = require("node:crypto")
-              .createHash("sha256")
+            const sourceHash = createHash("sha256")
               .update(`${altItem.pageUrl}|${altItem.imageSrc}`)
               .digest("hex");
-            const deterministicId = require("node:crypto")
-              .createHash("sha256")
+            const deterministicId = createHash("sha256")
               .update(`${auditId}|${altItem.pageUrl}|${altItem.imageSrc}`)
               .digest("hex")
               .slice(0, 36);
