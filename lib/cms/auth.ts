@@ -84,7 +84,15 @@ function safeEqualText(left: string, right: string) {
 
 export function validateAdminCredentials(email: string, password: string) {
   if (!isAdminAuthConfigured()) return false;
+  let expectedPassword = process.env.DGS_ADMIN_PASSWORD!.trim();
+  if ((expectedPassword.startsWith('"') && expectedPassword.endsWith('"')) || (expectedPassword.startsWith("'") && expectedPassword.endsWith("'"))) {
+    expectedPassword = expectedPassword.slice(1, -1);
+  }
+  let inputPassword = password.trim();
+  if ((inputPassword.startsWith('"') && inputPassword.endsWith('"')) || (inputPassword.startsWith("'") && inputPassword.endsWith("'"))) {
+    inputPassword = inputPassword.slice(1, -1);
+  }
   return safeEqualText(email.trim().toLowerCase(), process.env.DGS_ADMIN_EMAIL!.trim().toLowerCase())
-    && safeEqualText(password, process.env.DGS_ADMIN_PASSWORD!);
+    && (safeEqualText(password, process.env.DGS_ADMIN_PASSWORD!) || safeEqualText(inputPassword, expectedPassword));
 }
 

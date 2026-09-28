@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-28T10:20:43.338Z",
-  "auditTimestamp": "2026-09-28T10:20:35.661Z",
+  "generatedAt": "2026-09-28T10:33:51.579Z",
+  "auditTimestamp": "2026-09-28T10:33:42.031Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
   "latestDailyMetricDate": "2026-09-24",
@@ -27,9 +27,9 @@
       "INSUFFICIENT_DATA": 53
     },
     "spamRiskDistribution": {
-      "LOW": 41,
+      "LOW": 42,
       "MEDIUM": 0,
-      "HIGH": 12,
+      "HIGH": 11,
       "INSUFFICIENT_EVIDENCE": 48
     },
     "recoveryTiers": {
@@ -261,7 +261,7 @@
     },
     "cannibalizationCandidateCount": 50,
     "falseCannibalizationRecordsRemoved": 0,
-    "publiclyRenderedMachineLabels": 13,
+    "publiclyRenderedMachineLabels": 12,
     "sourceCommentMachineLabels": 1,
     "internalMetadataMachineLabels": 0
   },
@@ -3148,8 +3148,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 1917,
-      "contentHash": "b32214bfa5762f8df77db091db9ad016df9a728c6a9bfe1b585daed8a6955c37",
+      "wordCount": 1919,
+      "contentHash": "6d85a3fa4a6fc7edf0fe235e0ad2afb7d583c05751533b957e5fc0231b974893",
       "schemaTypes": [
         "Organization",
         "ImageObject",
@@ -12105,7 +12105,7 @@
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 4756,
-      "contentHash": "7a583476e7951dc695fa2ed5b884f89289388e99c2506144c48e61b4433e932c",
+      "contentHash": "87f0229bb565bef2987fb92202f0231267a38d0e405c4cbc8d83476e09d410a0",
       "schemaTypes": [
         "Organization",
         "ImageObject",
@@ -12139,13 +12139,11 @@
       },
       "classification": "DECLINING",
       "oldClassification": "CRITICAL_DECLINE",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: India SEO (Isolated Badge)"
-      ],
+      "spamRisk": "LOW",
+      "riskReasons": [],
       "blogClassification": null,
-      "safeAction": "REMOVE_RENDERED_LABEL",
-      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
+      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
       "twoBaselines": {
         "historicalPeakBaseline": {
           "peakPosition": 1,
@@ -12232,10 +12230,8 @@
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
         "offTopicMarkersDetected": 0,
-        "editorialArtifactsCount": 1,
-        "editorialArtifacts": [
-          "India SEO (Isolated Badge)"
-        ]
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {

@@ -66,32 +66,45 @@ export function hashPassword(password: string): string {
 export function verifyPassword(password: string, storedHash: string): boolean {
   if (!storedHash || !password) return false;
 
-  // Support scrypt$N$r$p$salt$hash format
-  if (storedHash.startsWith("scrypt$")) {
-    const parts = storedHash.split("$");
-    if (parts.length !== 6) return false;
-    const [, nStr, rStr, pStr, salt, hash] = parts;
-    const N = parseInt(nStr, 10);
-    const r = parseInt(rStr, 10);
-    const p = parseInt(pStr, 10);
+  const testCandidate = (pwd: string): boolean => {
+    // Support scrypt$N$r$p$salt$hash format
+    if (storedHash.startsWith("scrypt$")) {
+      const parts = storedHash.split("$");
+      if (parts.length !== 6) return false;
+      const [, nStr, rStr, pStr, salt, hash] = parts;
+      const N = parseInt(nStr, 10);
+      const r = parseInt(rStr, 10);
+      const p = parseInt(pStr, 10);
 
-    const targetBuf = Buffer.from(hash, "hex");
-    const derivedBuf = scryptSync(password, salt, targetBuf.length, {
-      N,
-      r,
-      p,
-      maxmem: 64 * 1024 * 1024,
-    });
+      const targetBuf = Buffer.from(hash, "hex");
+      const derivedBuf = scryptSync(pwd, salt, targetBuf.length, {
+        N,
+        r,
+        p,
+        maxmem: 64 * 1024 * 1024,
+      });
 
-    if (derivedBuf.length !== targetBuf.length) return false;
-    return timingSafeEqual(derivedBuf, targetBuf);
+      if (derivedBuf.length !== targetBuf.length) return false;
+      return timingSafeEqual(derivedBuf, targetBuf);
+    }
+
+    // Fallback for direct constant-time match (e.g. env password during transition)
+    const a = Buffer.from(pwd);
+    const b = Buffer.from(storedHash);
+    if (a.length !== b.length) return false;
+    return timingSafeEqual(a, b);
+  };
+
+  if (testCandidate(password)) return true;
+
+  // Fallback tolerance for passwords wrapped in literal quotes
+  if ((password.startsWith('"') && password.endsWith('"')) || (password.startsWith("'") && password.endsWith("'"))) {
+    if (testCandidate(password.slice(1, -1))) return true;
+  } else {
+    if (testCandidate(`"${password}"`)) return true;
   }
 
-  // Fallback for direct constant-time match (e.g. env password during transition)
-  const a = Buffer.from(password);
-  const b = Buffer.from(storedHash);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
+  return false;
 }
 
 // ---------------------------------------------------------------------------
@@ -223,7 +236,12 @@ export function hasPermission(role: CmsRole, resource: string, action: string): 
 export async function ensureSuperadminSeeded(): Promise<void> {
   if (!isCmsDatabaseConfigured()) return;
   const adminEmail = (process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com").trim().toLowerCase();
-  const adminPassword = process.env.DGS_ADMIN_PASSWORD?.trim();
+  let adminPassword = process.env.DGS_ADMIN_PASSWORD?.trim();
+
+  // Strip wrapping quotes if passed from env
+  if (adminPassword && ((adminPassword.startsWith('"') && adminPassword.endsWith('"')) || (adminPassword.startsWith("'") && adminPassword.endsWith("'")))) {
+    adminPassword = adminPassword.slice(1, -1);
+  }
 
   // Production must FAIL CLOSED if credentials are not explicitly configured.
   // Never seed a superadmin with a known source-code password.
