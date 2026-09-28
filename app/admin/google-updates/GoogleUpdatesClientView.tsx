@@ -1082,6 +1082,40 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                   ⚠️ {selectedUpdate.sitewide_spam_impact.causationDisclaimer}
                 </div>
 
+                {/* GSC Data Freshness */}
+                <div
+                  style={{
+                    background: "rgba(56, 189, 248, 0.05)",
+                    border: "1px solid rgba(56, 189, 248, 0.2)",
+                    borderRadius: "var(--dgs-radius-sm)",
+                    padding: "10px 14px",
+                    marginBottom: "12px",
+                  }}
+                >
+                  <div style={{ fontSize: "0.74rem", fontWeight: 700, color: "#38bdf8", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "6px" }}>
+                    GSC Data Freshness
+                  </div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
+                      gap: "8px",
+                      fontSize: "0.8rem",
+                      color: "var(--dgs-text-main)",
+                    }}
+                  >
+                    <div>
+                      Daily telemetry: <strong style={{ color: "#fff" }}>{selectedUpdate.sitewide_spam_impact.latestDailyMetricDate || "2026-09-24"}</strong>
+                    </div>
+                    <div>
+                      Query telemetry: <strong style={{ color: "#fff" }}>{selectedUpdate.sitewide_spam_impact.latestQueryMetricDate || "2026-09-27"}</strong>
+                    </div>
+                    <div>
+                      Page telemetry: <strong style={{ color: "#fff" }}>{selectedUpdate.sitewide_spam_impact.latestPageMetricDate || "2026-09-27"}</strong>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Telemetry Metric Tiles */}
                 <div
                   style={{

@@ -102,6 +102,10 @@ export type SitewideSpamImpact = {
   duplicateScaledCandidates: number;
   causationDisclaimer: string;
   pageImpactTable: PageImpactRow[];
+  latestDailyMetricDate?: string;
+  latestQueryMetricDate?: string;
+  latestPageMetricDate?: string;
+  latestAvailableMetricDate?: string;
 };
 
 export type FullAssessmentResult = {
@@ -386,7 +390,6 @@ export async function runGoogleUpdateAssessment(
   // -------------------------------------------------------------------------
   // Check 3: Structured Data Validation (Section 25)
   // -------------------------------------------------------------------------
-  // -------------------------------------------------------------------------
   // Check 3: Structured Data Validation (Section 25)
   // -------------------------------------------------------------------------
   if (schemaValidationSummary) {
@@ -394,13 +397,18 @@ export async function runGoogleUpdateAssessment(
     const vCount = schemaValidationSummary.validSchemaCount != null ? schemaValidationSummary.validSchemaCount : (auditedPagesCount || 101);
     const wCount = schemaValidationSummary.schemaWarningsCount != null ? schemaValidationSummary.schemaWarningsCount : 0;
     const eCount = schemaValidationSummary.schemaErrorsCount != null ? schemaValidationSummary.schemaErrorsCount : 0;
+    const parseErrors = schemaValidationSummary.jsonLdParseErrors != null ? schemaValidationSummary.jsonLdParseErrors : 0;
+    const conflicting = schemaValidationSummary.conflictingEntityErrors != null ? schemaValidationSummary.conflictingEntityErrors : 0;
+    const redundant = schemaValidationSummary.redundantEntityWarnings != null ? schemaValidationSummary.redundantEntityWarnings : 0;
+    const validRefs = schemaValidationSummary.validReferencesCount != null ? schemaValidationSummary.validReferencesCount : 0;
+    const extVal = schemaValidationSummary.googleExternalValidation || "NOT RUN";
 
-    const schemaDetails = `LOCAL JSON-LD VALIDATION: COVERAGE: ${covPct}%, VALID: ${vCount}, WARNINGS: ${wCount}, ERRORS: ${eCount}. Evaluated via local AST validation; Google Rich Results API not invoked. Verified @context (schema.org), recognized @type hierarchies, @id uniqueness, and BreadcrumbList/Organization structures.`;
+    const schemaDetails = `LOCAL JSON-LD VALIDATION: COVERAGE: ${covPct}%, VALID: ${vCount}, JSON-LD PARSE ERRORS: ${parseErrors}, CONFLICTING ENTITY ERRORS: ${conflicting}, REDUNDANT ENTITY WARNINGS: ${redundant}, VALID REFERENCES: ${validRefs}, Google external validation: ${extVal}. Evaluated via local AST validation; Google Rich Results API not invoked. Verified @context (schema.org), connected entity graph integrity, and BreadcrumbList/Organization structures.`;
 
     checks.push({
       name: "Structured Data Validation",
       description: "Ensure schema JSON-LD passes Google Rich Results guidelines without spammy entity claims.",
-      result: eCount > 0 ? "FAIL" : wCount > 5 ? "WARN" : "PASS",
+      result: (eCount > 0 || conflicting > 0 || parseErrors > 0) ? "FAIL" : (wCount > 5 || redundant > 5) ? "WARN" : "PASS",
       details: schemaDetails,
     });
   } else if (!hasCompletedAudit || auditedPagesCount === 0) {
@@ -756,6 +764,10 @@ export async function runGoogleUpdateAssessment(
       sitewideSpamImpact = {
         freshAuditDate: bData.auditTimestamp || formatAuditDate(latestAuditRow?.completed_at, "recent"),
         urlsAssessed: bData.summary?.totalIndexablePages || auditedPagesCount,
+        latestDailyMetricDate: bData.latestDailyMetricDate || bData.summary?.latestDailyMetricDate || "2026-09-24",
+        latestQueryMetricDate: bData.latestQueryMetricDate || bData.summary?.latestQueryMetricDate || "2026-09-27",
+        latestPageMetricDate: bData.latestPageMetricDate || bData.summary?.latestPageMetricDate || "2026-09-27",
+        latestAvailableMetricDate: bData.latestAvailableMetricDate || bData.summary?.latestAvailableMetricDate || "2026-09-27",
         highRiskPages: bData.summary?.spamRiskDistribution?.HIGH || 0,
         mediumRiskPages: bData.summary?.spamRiskDistribution?.MEDIUM || 0,
         lowRiskPages: bData.summary?.spamRiskDistribution?.LOW || 0,

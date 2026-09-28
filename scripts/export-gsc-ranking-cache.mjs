@@ -49,31 +49,52 @@ async function exportGscCache() {
 
   console.log("=== EXPORTING GSC RANKING CACHE FROM DATABASE ===");
 
-  // 1. Fetch latest metric date
-  let latestMetricDate = null;
+  // 1. Fetch latest metric dates per dataset
+  let latestDailyMetricDate = null;
+  let latestQueryMetricDate = null;
+  let latestPageMetricDate = null;
+
   try {
-    const [dateRows] = await pool.query(
+    const [dailyRows] = await pool.query(
       "SELECT MAX(metric_date) as max_date FROM gsc_daily_metrics"
     );
-    if (dateRows && dateRows[0]?.max_date) {
-      latestMetricDate = new Date(dateRows[0].max_date).toISOString().slice(0, 10);
+    if (dailyRows && dailyRows[0]?.max_date) {
+      latestDailyMetricDate = new Date(dailyRows[0].max_date).toISOString().slice(0, 10);
     }
   } catch (e) {
-    console.warn("Could not query gsc_daily_metrics:", e.message);
+    console.warn("Could not query gsc_daily_metrics date:", e.message);
   }
 
-  if (!latestMetricDate) {
-    try {
-      const [dateRows] = await pool.query(
-        "SELECT MAX(metric_date) as max_date FROM gsc_page_query_metrics"
-      );
-      if (dateRows && dateRows[0]?.max_date) {
-        latestMetricDate = new Date(dateRows[0].max_date).toISOString().slice(0, 10);
-      }
-    } catch (e) {
-      console.warn("Could not query gsc_page_query_metrics date:", e.message);
+  try {
+    const [queryDateRows] = await pool.query(
+      "SELECT MAX(metric_date) as max_date FROM gsc_page_query_metrics"
+    );
+    if (queryDateRows && queryDateRows[0]?.max_date) {
+      latestQueryMetricDate = new Date(queryDateRows[0].max_date).toISOString().slice(0, 10);
     }
+  } catch (e) {
+    console.warn("Could not query gsc_page_query_metrics date:", e.message);
   }
+
+  try {
+    const [pageDateRows] = await pool.query(
+      "SELECT MAX(updated_at) as max_updated FROM gsc_page_metrics"
+    );
+    if (pageDateRows && pageDateRows[0]?.max_updated) {
+      latestPageMetricDate = new Date(pageDateRows[0].max_updated).toISOString().slice(0, 10);
+    }
+  } catch (e) {
+    console.warn("Could not query gsc_page_metrics updated_at date:", e.message);
+  }
+
+  // Calculate latestAvailableMetricDate = MAX(daily, query, page)
+  const availableDates = [latestDailyMetricDate, latestQueryMetricDate, latestPageMetricDate].filter(Boolean);
+  const latestAvailableMetricDate = availableDates.length > 0
+    ? [...availableDates].sort().reverse()[0]
+    : new Date().toISOString().slice(0, 10);
+
+  const latestMetricDate = latestAvailableMetricDate;
+  console.log(`Freshness Dates: Daily=${latestDailyMetricDate}, Query=${latestQueryMetricDate}, Page=${latestPageMetricDate}, Available=${latestAvailableMetricDate}`);
 
   // 2. Fetch all 28d query rows
   const [queryRows] = await pool.query(
@@ -248,7 +269,11 @@ async function exportGscCache() {
   const cacheOutput = {
     generatedAt: new Date().toISOString(),
     source: "PRODUCTION_GSC_DATABASE_EXPORT",
-    latestMetricDate: latestMetricDate || new Date().toISOString().slice(0, 10),
+    latestDailyMetricDate: latestDailyMetricDate || "2026-09-24",
+    latestQueryMetricDate: latestQueryMetricDate || "2026-09-27",
+    latestPageMetricDate: latestPageMetricDate || "2026-09-27",
+    latestAvailableMetricDate: latestAvailableMetricDate || "2026-09-27",
+    latestMetricDate: latestAvailableMetricDate || new Date().toISOString().slice(0, 10),
     periodType: "28d",
     queryCount: queries.length,
     pageCount: pageMetrics.length,

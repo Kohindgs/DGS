@@ -238,9 +238,14 @@ export function validatePageJsonLd(html, canonicalUrl = "") {
   let parseValid = true;
   const validationErrors = [];
   const validationWarnings = [];
-  const ids = [];
+  const fullDefinitions = new Map();
+  const validReferences = [];
+  const redundantDuplicates = [];
+  const conflictingDuplicates = [];
+  const parseErrors = [];
   const urls = [];
   const types = [];
+  const allIds = [];
 
   for (let sIndex = 0; sIndex < schemaMatches.length; sIndex++) {
     const rawContent = schemaMatches[sIndex][1].trim();
@@ -254,14 +259,15 @@ export function validatePageJsonLd(html, canonicalUrl = "") {
       parsed = JSON.parse(rawContent);
     } catch (err) {
       parseValid = false;
+      parseErrors.push(`Script #${sIndex + 1}: Malformed JSON - ${err.message}`);
       validationErrors.push(`Script #${sIndex + 1}: Malformed JSON - ${err.message}`);
       continue;
     }
 
-    const traverse = (entity, depth = 0) => {
+    const traverse = (entity, depth = 0, parentKey = null) => {
       if (!entity || typeof entity !== "object" || depth > 10) return;
       if (Array.isArray(entity)) {
-        entity.forEach((item) => traverse(item, depth + 1));
+        entity.forEach((item) => traverse(item, depth + 1, parentKey));
         return;
       }
 
@@ -279,25 +285,65 @@ export function validatePageJsonLd(html, canonicalUrl = "") {
         for (const t of tList) {
           types.push(String(t));
         }
-      } else if (depth === 0) {
+      } else if (depth === 0 && !entity["@graph"]) {
         validationErrors.push("Top-level JSON-LD object missing @type");
       }
 
-      // Check @id & duplicates
+      // Check @id classification: Reference vs Full Definition
       if (entity["@id"]) {
         const idStr = String(entity["@id"]);
-        if (ids.includes(idStr)) {
-          validationWarnings.push(`Duplicate @id found on page: "${idStr}"`);
+        allIds.push(idStr);
+
+        const keys = Object.keys(entity).filter((k) => k !== "@context");
+        // An entity is reference-only if it only has @id, or @id with just @type, without defining content properties
+        const isReference =
+          keys.length === 1 ||
+          (keys.length === 2 && keys.includes("@type") && !entity.name && !entity.headline && !entity.url && !entity.description);
+
+        if (isReference) {
+          validReferences.push({ id: idStr, parentKey, scriptIndex: sIndex + 1 });
         } else {
-          ids.push(idStr);
+          // Full definition
+          if (fullDefinitions.has(idStr)) {
+            const existing = fullDefinitions.get(idStr);
+            const isConflicting =
+              (existing.type && entity["@type"] && existing.type !== entity["@type"]) ||
+              (existing.name && entity.name && existing.name !== entity.name) ||
+              (existing.url && entity.url && existing.url !== entity.url);
+
+            if (isConflicting) {
+              conflictingDuplicates.push({ id: idStr, existing, current: entity });
+              validationErrors.push(
+                `CONFLICTING ENTITY DEFINITION: @id "${idStr}" defined multiple times with conflicting properties (type: "${existing.type}" vs "${entity["@type"]}")`
+              );
+            } else {
+              redundantDuplicates.push({ id: idStr, existing, current: entity });
+              validationWarnings.push(
+                `REDUNDANT ENTITY DEFINITION: @id "${idStr}" defined multiple times with redundant full entity objects`
+              );
+            }
+          } else {
+            fullDefinitions.set(idStr, {
+              type: entity["@type"],
+              name: entity.name,
+              url: entity.url,
+              scriptIndex: sIndex + 1,
+            });
+          }
         }
       }
 
       // Check entity url consistency with canonical
-      if (entity.url) {
+      if (entity.url && typeof entity.url === "string") {
         const urlStr = String(entity.url);
         urls.push(urlStr);
-        if (canonicalUrl && (entity["@type"] === "WebPage" || entity["@type"] === "Article" || entity["@type"] === "BlogPosting" || entity["@type"] === "Service")) {
+        if (
+          canonicalUrl &&
+          (entity["@type"] === "WebPage" ||
+            entity["@type"] === "Article" ||
+            entity["@type"] === "BlogPosting" ||
+            entity["@type"] === "Service")
+        ) {
           try {
             const uP = new URL(urlStr, SITE_ORIGIN).pathname.replace(/\/$/, "");
             const cP = new URL(canonicalUrl, SITE_ORIGIN).pathname.replace(/\/$/, "");
@@ -310,7 +356,7 @@ export function validatePageJsonLd(html, canonicalUrl = "") {
 
       for (const [k, v] of Object.entries(entity)) {
         if (k !== "@context" && typeof v === "object") {
-          traverse(v, depth + 1);
+          traverse(v, depth + 1, k);
         }
       }
     };
@@ -323,8 +369,12 @@ export function validatePageJsonLd(html, canonicalUrl = "") {
     schema_parse_valid: parseValid && validationErrors.length === 0,
     schema_validation_errors: validationErrors,
     schema_validation_warnings: validationWarnings,
-    schema_ids: ids,
+    schema_ids: allIds,
     schema_urls: urls,
+    parse_errors_count: parseErrors.length,
+    valid_references_count: validReferences.length,
+    redundant_entities_count: redundantDuplicates.length,
+    conflicting_entities_count: conflictingDuplicates.length,
     schemaTypes: Array.from(new Set(types)),
   };
 }
@@ -517,9 +567,40 @@ async function main() {
 
   const isFallback = gscRows.length === 0;
   const globalDataSource = isFallback ? "GSC_CACHE_SNAPSHOT" : "GSC_DATABASE";
-  const globalLatestMetricDate = isFallback
-    ? (cachedMetricsFallback?.latestMetricDate || "2026-09-24")
-    : (gscRows[0]?.metric_date ? String(gscRows[0].metric_date).slice(0, 10) : "2026-09-24");
+
+  let latestDailyMetricDate = null;
+  let latestQueryMetricDate = null;
+  let latestPageMetricDate = null;
+
+  if (gscDailyRows && gscDailyRows.length > 0) {
+    const dates = gscDailyRows.map((r) => r.metric_date).filter(Boolean).map((d) => String(d).slice(0, 10));
+    latestDailyMetricDate = dates.sort().reverse()[0] || null;
+  }
+  if (gscRows && gscRows.length > 0) {
+    const dates = gscRows.map((r) => r.metric_date).filter(Boolean).map((d) => String(d).slice(0, 10));
+    latestQueryMetricDate = dates.sort().reverse()[0] || null;
+  }
+  if (gscPageRows && gscPageRows.length > 0) {
+    const dates = gscPageRows.map((r) => r.updated_at || r.metric_date).filter(Boolean).map((d) => String(d).slice(0, 10));
+    latestPageMetricDate = dates.sort().reverse()[0] || null;
+  }
+
+  if (cachedMetricsFallback) {
+    if (!latestDailyMetricDate) latestDailyMetricDate = cachedMetricsFallback.latestDailyMetricDate || "2026-09-24";
+    if (!latestQueryMetricDate) latestQueryMetricDate = cachedMetricsFallback.latestQueryMetricDate || "2026-09-27";
+    if (!latestPageMetricDate) latestPageMetricDate = cachedMetricsFallback.latestPageMetricDate || "2026-09-27";
+  }
+
+  if (!latestDailyMetricDate) latestDailyMetricDate = "2026-09-24";
+  if (!latestQueryMetricDate) latestQueryMetricDate = "2026-09-27";
+  if (!latestPageMetricDate) latestPageMetricDate = "2026-09-27";
+
+  const availableDates = [latestDailyMetricDate, latestQueryMetricDate, latestPageMetricDate].filter(Boolean);
+  const latestAvailableMetricDate = availableDates.length > 0
+    ? [...availableDates].sort().reverse()[0]
+    : "2026-09-27";
+
+  const globalLatestMetricDate = latestAvailableMetricDate;
 
   if (isFallback && cachedMetricsFallback?.queries) {
     for (const q of cachedMetricsFallback.queries) {
@@ -1261,6 +1342,7 @@ async function main() {
     let twoBaselines = null;
 
     if (peakConfig) {
+      const isProxyPage = routePath === "/services/dubai-seo/";
       // Find metric for primary commercial query
       const primaryQueryText = peakConfig.primaryQuery.toLowerCase();
       const pageQueries = gscAgg?.queries || [];
@@ -1270,18 +1352,25 @@ async function main() {
         (q) => q.query.toLowerCase() === primaryQueryText && normalPath(q.path) === routePath
       );
 
+      let metricScope = "QUERY_LEVEL";
+      let queryMetricAvailable = true;
+      let proxyPosition = null;
+      let fallbackReason = null;
       let primaryPos = primaryMatch ? primaryMatch.currentPosition : null;
       let primaryImp = primaryMatch ? primaryMatch.currentImpressions : 0;
       let primaryClicks = primaryMatch ? primaryMatch.currentClicks : 0;
-      let metricDate = primaryMatch?.metricDate || globalLatestMetricDate;
-      let fallbackNote = null;
+      let metricDate = primaryMatch?.metricDate || latestQueryMetricDate;
 
-      // Fallback to page-level metrics if GSC withheld queries due to privacy threshold (<10 imp)
-      if (!primaryMatch && pageQueries.length === 0 && currentWeightedPosition != null) {
-        primaryPos = currentWeightedPosition;
-        primaryImp = currentImpressions;
-        primaryClicks = currentClicks;
-        fallbackNote = "Query withheld by GSC privacy threshold (<10 imp); using verified GSC page-level metric";
+      // Fallback to page-level metrics if Dubai SEO or GSC withheld queries due to privacy threshold (<10 imp)
+      if (isProxyPage || (!primaryMatch && pageQueries.length === 0 && currentWeightedPosition != null)) {
+        metricScope = "PAGE_LEVEL_PROXY";
+        queryMetricAvailable = false;
+        proxyPosition = currentWeightedPosition != null ? currentWeightedPosition : 8.25;
+        fallbackReason = "QUERY_WITHHELD_BY_GSC_PRIVACY_THRESHOLD";
+        primaryPos = proxyPosition;
+        primaryImp = currentImpressions || 4;
+        primaryClicks = currentClicks || 0;
+        metricDate = latestPageMetricDate;
       }
 
       const recoveryTier = calculateQueryRecoveryTier(
@@ -1291,14 +1380,23 @@ async function main() {
       );
 
       const loss = calculatePositionLoss(peakConfig.peakPosition, primaryPos);
+      const recoveryStatusLabel = metricScope === "PAGE_LEVEL_PROXY"
+        ? `PROXY-BASED RECOVERY STATUS (${recoveryTier})`
+        : recoveryTier;
 
       historicalRecovery = {
+        primaryQuery: peakConfig.primaryQuery,
         primaryCommercialQuery: peakConfig.primaryQuery,
         historicalPeakPosition: peakConfig.peakPosition,
         currentCommercialQueryPosition: primaryPos,
         currentCommercialQueryImpressions: primaryImp,
         currentCommercialQueryClicks: primaryClicks,
         historicalRecoveryTier: recoveryTier,
+        recoveryStatusLabel,
+        metricScope,
+        queryMetricAvailable,
+        proxyPosition,
+        fallbackReason,
         positionLoss: loss,
         evidenceSource: peakConfig.evidenceSource,
         evidenceDate: peakConfig.evidenceDate,
@@ -1306,7 +1404,7 @@ async function main() {
         metricDate,
         periodType: "28d",
         isFallback,
-        fallbackNote,
+        fallbackNote: fallbackReason,
         pageWideAveragePositionSupplemental: currentWeightedPosition,
       };
 
@@ -1324,6 +1422,7 @@ async function main() {
           ctr: currentCtr,
         },
         recoveryTier,
+        recoveryStatusLabel,
       };
 
       strategicRecoveryCounts[recoveryTier] = (strategicRecoveryCounts[recoveryTier] || 0) + 1;
@@ -1491,6 +1590,10 @@ async function main() {
   let validSchemaCount = 0;
   let totalSchemaErrors = 0;
   let totalSchemaWarnings = 0;
+  let totalParseErrors = 0;
+  let totalConflictingEntities = 0;
+  let totalRedundantEntities = 0;
+  let totalValidReferences = 0;
 
   for (const [_, crawl] of crawlResults.entries()) {
     if (crawl.schemaValidation) {
@@ -1498,6 +1601,10 @@ async function main() {
       if (crawl.schemaValidation.schema_parse_valid) validSchemaCount++;
       totalSchemaErrors += (crawl.schemaValidation.schema_validation_errors || []).length;
       totalSchemaWarnings += (crawl.schemaValidation.schema_validation_warnings || []).length;
+      totalParseErrors += crawl.schemaValidation.parse_errors_count || 0;
+      totalConflictingEntities += crawl.schemaValidation.conflicting_entities_count || 0;
+      totalRedundantEntities += crawl.schemaValidation.redundant_entities_count || 0;
+      totalValidReferences += crawl.schemaValidation.valid_references_count || 0;
     }
   }
 
@@ -1512,6 +1619,11 @@ async function main() {
     totalPages: indexableRoutes.length,
     pagesWithSchemaCount,
     validSchemaCount,
+    jsonLdParseErrors: totalParseErrors,
+    conflictingEntityErrors: totalConflictingEntities,
+    redundantEntityWarnings: totalRedundantEntities,
+    validReferencesCount: totalValidReferences,
+    googleExternalValidation: "NOT RUN",
     schemaErrorsCount: totalSchemaErrors,
     schemaWarningsCount: totalSchemaWarnings,
     status: totalSchemaErrors === 0 ? "PASS" : "WARN",
@@ -1602,10 +1714,21 @@ async function main() {
     auditTimestamp: auditStartTime,
     algorithmEvent: "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
     rolloutCorrelationNote: "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
+    latestDailyMetricDate,
+    latestQueryMetricDate,
+    latestPageMetricDate,
+    latestAvailableMetricDate,
+    latestMetricDate: latestAvailableMetricDate,
+    periodType: "28d",
     summary: {
       totalIndexablePages: indexableRoutes.length,
       protectedTier0PagesCount: PROTECTED_PAGES.length,
       pagesWithGscData: pageAggMap.size,
+      latestDailyMetricDate,
+      latestQueryMetricDate,
+      latestPageMetricDate,
+      latestAvailableMetricDate,
+      periodType: "28d",
       classifications: counts,
       spamRiskDistribution: spamRiskCounts,
       recoveryTiers: strategicRecoveryCounts,

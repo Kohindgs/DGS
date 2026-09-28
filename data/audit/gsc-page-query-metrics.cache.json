@@ -1,7 +1,11 @@
 {
-  "generatedAt": "2026-09-27T17:43:44.663Z",
+  "generatedAt": "2026-09-28T09:27:33.170Z",
   "source": "PRODUCTION_GSC_DATABASE_EXPORT",
-  "latestMetricDate": "2026-09-24",
+  "latestDailyMetricDate": "2026-09-24",
+  "latestQueryMetricDate": "2026-09-27",
+  "latestPageMetricDate": "2026-09-27",
+  "latestAvailableMetricDate": "2026-09-27",
+  "latestMetricDate": "2026-09-27",
   "periodType": "28d",
   "queryCount": 919,
   "pageCount": 103,

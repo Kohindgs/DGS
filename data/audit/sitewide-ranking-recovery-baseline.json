@@ -1,12 +1,23 @@
 {
-  "generatedAt": "2026-09-27T17:54:47.025Z",
-  "auditTimestamp": "2026-09-27T17:54:38.318Z",
+  "generatedAt": "2026-09-28T09:28:40.007Z",
+  "auditTimestamp": "2026-09-28T09:28:32.110Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
+  "latestDailyMetricDate": "2026-09-24",
+  "latestQueryMetricDate": "2026-09-27",
+  "latestPageMetricDate": "2026-09-27",
+  "latestAvailableMetricDate": "2026-09-27",
+  "latestMetricDate": "2026-09-27",
+  "periodType": "28d",
   "summary": {
     "totalIndexablePages": 101,
     "protectedTier0PagesCount": 11,
     "pagesWithGscData": 103,
+    "latestDailyMetricDate": "2026-09-24",
+    "latestQueryMetricDate": "2026-09-27",
+    "latestPageMetricDate": "2026-09-27",
+    "latestAvailableMetricDate": "2026-09-27",
+    "periodType": "28d",
     "classifications": {
       "CRITICAL_DECLINE": 7,
       "DECLINING": 14,
@@ -44,12 +55,18 @@
       "records": [
         {
           "path": "/aeo-dubai/",
+          "primaryQuery": "aeo services in dubai",
           "primaryCommercialQuery": "aeo services in dubai",
           "historicalPeakPosition": 1,
           "currentCommercialQueryPosition": 7,
           "currentCommercialQueryImpressions": 19,
           "currentCommercialQueryClicks": 2,
           "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+          "recoveryStatusLabel": "SIGNIFICANT_LOSS",
+          "metricScope": "QUERY_LEVEL",
+          "queryMetricAvailable": true,
+          "proxyPosition": null,
+          "fallbackReason": null,
           "positionLoss": 6,
           "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
           "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -62,12 +79,18 @@
         },
         {
           "path": "/services/aeo-services-in-mumbai/",
+          "primaryQuery": "aeo services in mumbai",
           "primaryCommercialQuery": "aeo services in mumbai",
           "historicalPeakPosition": 1,
           "currentCommercialQueryPosition": 1.18,
           "currentCommercialQueryImpressions": 11,
           "currentCommercialQueryClicks": 0,
           "historicalRecoveryTier": "AT_HISTORICAL_PEAK",
+          "recoveryStatusLabel": "AT_HISTORICAL_PEAK",
+          "metricScope": "QUERY_LEVEL",
+          "queryMetricAvailable": true,
+          "proxyPosition": null,
+          "fallbackReason": null,
           "positionLoss": 0.18,
           "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
           "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -80,12 +103,18 @@
         },
         {
           "path": "/services/ai-video-production-agency/",
+          "primaryQuery": "ai video production agency in mumbai",
           "primaryCommercialQuery": "ai video production agency in mumbai",
           "historicalPeakPosition": 1,
           "currentCommercialQueryPosition": 2.13,
           "currentCommercialQueryImpressions": 53,
           "currentCommercialQueryClicks": 3,
           "historicalRecoveryTier": "NEAR_HISTORICAL_PEAK",
+          "recoveryStatusLabel": "NEAR_HISTORICAL_PEAK",
+          "metricScope": "QUERY_LEVEL",
+          "queryMetricAvailable": true,
+          "proxyPosition": null,
+          "fallbackReason": null,
           "positionLoss": 1.13,
           "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
           "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -98,30 +127,42 @@
         },
         {
           "path": "/services/dubai-seo/",
+          "primaryQuery": "seo agency in dubai",
           "primaryCommercialQuery": "seo agency in dubai",
           "historicalPeakPosition": 1,
           "currentCommercialQueryPosition": 8.25,
           "currentCommercialQueryImpressions": 4,
           "currentCommercialQueryClicks": 0,
           "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+          "recoveryStatusLabel": "PROXY-BASED RECOVERY STATUS (SIGNIFICANT_LOSS)",
+          "metricScope": "PAGE_LEVEL_PROXY",
+          "queryMetricAvailable": false,
+          "proxyPosition": 8.25,
+          "fallbackReason": "QUERY_WITHHELD_BY_GSC_PRIVACY_THRESHOLD",
           "positionLoss": 7.25,
           "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
           "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
           "dataSource": "GSC_CACHE_SNAPSHOT",
-          "metricDate": "2026-09-24",
+          "metricDate": "2026-09-27",
           "periodType": "28d",
           "isFallback": true,
-          "fallbackNote": "Query withheld by GSC privacy threshold (<10 imp); using verified GSC page-level metric",
+          "fallbackNote": "QUERY_WITHHELD_BY_GSC_PRIVACY_THRESHOLD",
           "pageWideAveragePositionSupplemental": 8.25
         },
         {
           "path": "/services/geo/",
+          "primaryQuery": "geo services in mumbai",
           "primaryCommercialQuery": "geo services in mumbai",
           "historicalPeakPosition": 1,
           "currentCommercialQueryPosition": 5.24,
           "currentCommercialQueryImpressions": 17,
           "currentCommercialQueryClicks": 0,
           "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+          "recoveryStatusLabel": "SIGNIFICANT_LOSS",
+          "metricScope": "QUERY_LEVEL",
+          "queryMetricAvailable": true,
+          "proxyPosition": null,
+          "fallbackReason": null,
           "positionLoss": 4.24,
           "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
           "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -134,12 +175,18 @@
         },
         {
           "path": "/services/llm-seo-service/",
+          "primaryQuery": "best llm seo agency in mumbai",
           "primaryCommercialQuery": "best llm seo agency in mumbai",
           "historicalPeakPosition": 1,
           "currentCommercialQueryPosition": 10.77,
           "currentCommercialQueryImpressions": 13,
           "currentCommercialQueryClicks": 0,
           "historicalRecoveryTier": "CRITICAL_LOSS",
+          "recoveryStatusLabel": "CRITICAL_LOSS",
+          "metricScope": "QUERY_LEVEL",
+          "queryMetricAvailable": true,
+          "proxyPosition": null,
+          "fallbackReason": null,
           "positionLoss": 9.77,
           "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
           "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -164,8 +211,13 @@
       "totalPages": 101,
       "pagesWithSchemaCount": 101,
       "validSchemaCount": 101,
+      "jsonLdParseErrors": 0,
+      "conflictingEntityErrors": 0,
+      "redundantEntityWarnings": 0,
+      "validReferencesCount": 383,
+      "googleExternalValidation": "NOT RUN",
       "schemaErrorsCount": 0,
-      "schemaWarningsCount": 383,
+      "schemaWarningsCount": 0,
       "status": "PASS"
     },
     "siteReputationSummary": {
@@ -220,8 +272,13 @@
     "totalPages": 101,
     "pagesWithSchemaCount": 101,
     "validSchemaCount": 101,
+    "jsonLdParseErrors": 0,
+    "conflictingEntityErrors": 0,
+    "redundantEntityWarnings": 0,
+    "validReferencesCount": 383,
+    "googleExternalValidation": "NOT RUN",
     "schemaErrorsCount": 0,
-    "schemaWarningsCount": 383,
+    "schemaWarningsCount": 0,
     "status": "PASS"
   },
   "siteReputationSummary": {
@@ -3145,17 +3202,16 @@
         "schema_jsonld_count": 5,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#localbusiness",
           "https://www.dgeniussolutions.com/#logo",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3165,6 +3221,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -3248,15 +3308,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/about-us/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/about-us/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3264,6 +3323,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/about-us/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -3346,15 +3409,22 @@
           "impressions": 61,
           "ctr": 3.28
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "SIGNIFICANT_LOSS",
+        "recoveryStatusLabel": "SIGNIFICANT_LOSS"
       },
       "historicalRecovery": {
+        "primaryQuery": "aeo services in dubai",
         "primaryCommercialQuery": "aeo services in dubai",
         "historicalPeakPosition": 1,
         "currentCommercialQueryPosition": 7,
         "currentCommercialQueryImpressions": 19,
         "currentCommercialQueryClicks": 2,
         "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+        "recoveryStatusLabel": "SIGNIFICANT_LOSS",
+        "metricScope": "QUERY_LEVEL",
+        "queryMetricAvailable": true,
+        "proxyPosition": null,
+        "fallbackReason": null,
         "positionLoss": 6,
         "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
         "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -3376,15 +3446,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/aeo-dubai/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/aeo-dubai/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3392,6 +3461,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/aeo-dubai/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -3479,15 +3552,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/australia-page/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/australia-page/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3495,6 +3567,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/australia-page/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -3579,15 +3655,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/better-ceasons-case-study/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/better-ceasons-case-study/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3595,6 +3670,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/better-ceasons-case-study/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -3678,17 +3757,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/#webpage",
-          "https://www.dgeniussolutions.com/blogs/#collection"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/#collection",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3762,6 +3840,10 @@
           "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -3849,17 +3931,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/#webpage",
-          "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3867,6 +3948,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -3956,17 +4041,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/aeo-business/#webpage",
-          "https://www.dgeniussolutions.com/blogs/aeo-business/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/aeo-business/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -3974,6 +4058,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/aeo-business/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4063,17 +4151,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/aeo-in-2026/#webpage",
-          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4081,6 +4168,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/aeo-in-2026/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4170,17 +4261,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-content-optimization/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-content-optimization/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-content-optimization/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4188,6 +4278,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-content-optimization/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4277,17 +4371,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4295,6 +4388,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4384,17 +4481,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4402,6 +4498,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4491,17 +4591,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4509,6 +4608,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4598,17 +4701,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-overview-seo/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-overview-seo/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-overview-seo/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4616,6 +4718,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-overview-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4705,17 +4811,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4723,6 +4828,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4809,17 +4918,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4827,6 +4935,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -4913,17 +5025,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -4931,6 +5042,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5020,17 +5135,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5038,6 +5152,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5127,17 +5245,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5145,6 +5262,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5234,17 +5355,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5252,6 +5372,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5341,17 +5465,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5359,6 +5482,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5448,17 +5575,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/#webpage",
-          "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5466,6 +5592,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5555,17 +5685,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/#webpage",
-          "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5573,6 +5702,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5662,17 +5795,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/#webpage",
-          "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5680,6 +5812,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5769,17 +5905,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/#webpage",
-          "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5787,6 +5922,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5876,17 +6015,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/#webpage",
-          "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -5894,6 +6032,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -5983,17 +6125,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/#webpage",
-          "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6001,6 +6142,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6090,17 +6235,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/#webpage",
-          "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6108,6 +6252,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6197,17 +6345,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/#webpage",
-          "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6215,6 +6362,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6304,17 +6455,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/core-update-strategy/#webpage",
-          "https://www.dgeniussolutions.com/blogs/core-update-strategy/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/core-update-strategy/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6322,6 +6472,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/core-update-strategy/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6408,17 +6562,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/future-of-seo/#webpage",
-          "https://www.dgeniussolutions.com/blogs/future-of-seo/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/future-of-seo/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6426,6 +6579,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/future-of-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6512,17 +6669,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/#webpage",
-          "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6530,6 +6686,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6619,17 +6779,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/#webpage",
-          "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6637,6 +6796,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6726,17 +6889,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/#webpage",
-          "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6744,6 +6906,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6833,17 +6999,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6851,6 +7016,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -6940,17 +7109,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -6958,6 +7126,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7044,17 +7216,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7062,6 +7233,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7148,17 +7323,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7166,6 +7340,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7255,17 +7433,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7273,6 +7450,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7362,17 +7543,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-ai-search-update/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-ai-search-update/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ai-search-update/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7380,6 +7560,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ai-search-update/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7469,17 +7653,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-algorithm-business/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-algorithm-business/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-algorithm-business/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7487,6 +7670,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-algorithm-business/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7576,17 +7763,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7594,6 +7780,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7683,17 +7873,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-io-2026/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-io-2026/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-io-2026/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7701,6 +7890,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-io-2026/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7790,17 +7983,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7808,6 +8000,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -7897,17 +8093,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -7915,6 +8110,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8004,17 +8203,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-spam-update/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-spam-update/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-spam-update/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8022,6 +8220,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-spam-update/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8111,17 +8313,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/#webpage",
-          "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8129,6 +8330,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8218,17 +8423,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/#webpage",
-          "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8236,6 +8440,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8325,17 +8533,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/#webpage",
-          "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8343,6 +8550,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8432,17 +8643,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/low-social-media-reach/#webpage",
-          "https://www.dgeniussolutions.com/blogs/low-social-media-reach/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/low-social-media-reach/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8450,6 +8660,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/low-social-media-reach/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8539,17 +8753,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/#webpage",
-          "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8557,6 +8770,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8646,17 +8863,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/#webpage",
-          "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8664,6 +8880,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8753,17 +8973,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/#webpage",
-          "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8771,6 +8990,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8860,17 +9083,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/#webpage",
-          "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8878,6 +9100,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -8964,17 +9190,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/#webpage",
-          "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -8982,6 +9207,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9068,17 +9297,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/#webpage",
-          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9086,6 +9314,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9175,17 +9407,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/seo-friendly-website/#webpage",
-          "https://www.dgeniussolutions.com/blogs/seo-friendly-website/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/seo-friendly-website/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9193,6 +9424,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-friendly-website/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9282,17 +9517,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/#webpage",
-          "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9300,6 +9534,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9389,17 +9627,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/#webpage",
-          "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9407,6 +9644,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9496,17 +9737,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/#webpage",
-          "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9514,6 +9754,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9603,17 +9847,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/#webpage",
-          "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9621,6 +9864,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9710,17 +9957,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/#webpage",
-          "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9728,6 +9974,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9817,17 +10067,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/topical-authority-seo/#webpage",
-          "https://www.dgeniussolutions.com/blogs/topical-authority-seo/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/topical-authority-seo/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9835,6 +10084,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/topical-authority-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -9924,17 +10177,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/voice-search-seo/#webpage",
-          "https://www.dgeniussolutions.com/blogs/voice-search-seo/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/voice-search-seo/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -9942,6 +10194,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/voice-search-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10031,17 +10287,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/#webpage",
-          "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10049,6 +10304,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10138,17 +10397,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/website-development-leads/#webpage",
-          "https://www.dgeniussolutions.com/blogs/website-development-leads/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-development-leads/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10156,6 +10414,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-development-leads/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10245,17 +10507,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/website-development-mistakes/#webpage",
-          "https://www.dgeniussolutions.com/blogs/website-development-mistakes/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-development-mistakes/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10263,6 +10524,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-development-mistakes/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10352,17 +10617,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/#webpage",
-          "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10370,6 +10634,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10459,17 +10727,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/website-performance-conversions/#webpage",
-          "https://www.dgeniussolutions.com/blogs/website-performance-conversions/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-performance-conversions/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10477,6 +10744,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-performance-conversions/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10566,17 +10837,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/#webpage",
-          "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10584,6 +10854,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10673,17 +10947,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/#webpage",
-          "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10691,6 +10964,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10776,6 +11053,10 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/career/generative-ai-artist/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 0,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "ItemList",
           "ListItem"
@@ -10852,15 +11133,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/case_studies/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/case_studies/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10868,6 +11148,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/case_studies/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -10949,15 +11233,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/contact-us/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/contact-us/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -10965,6 +11248,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/contact-us/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11046,15 +11333,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/our-services/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/our-services/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11062,6 +11348,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/our-services/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11143,15 +11433,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/portfolio/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/portfolio/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11159,6 +11448,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/portfolio/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11240,15 +11533,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/privacy-policy/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/privacy-policy/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11256,6 +11548,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/privacy-policy/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11337,15 +11633,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/services/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11353,6 +11648,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/services/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11436,15 +11735,22 @@
           "impressions": 143,
           "ctr": 0
         },
-        "recoveryTier": "AT_HISTORICAL_PEAK"
+        "recoveryTier": "AT_HISTORICAL_PEAK",
+        "recoveryStatusLabel": "AT_HISTORICAL_PEAK"
       },
       "historicalRecovery": {
+        "primaryQuery": "aeo services in mumbai",
         "primaryCommercialQuery": "aeo services in mumbai",
         "historicalPeakPosition": 1,
         "currentCommercialQueryPosition": 1.18,
         "currentCommercialQueryImpressions": 11,
         "currentCommercialQueryClicks": 0,
         "historicalRecoveryTier": "AT_HISTORICAL_PEAK",
+        "recoveryStatusLabel": "AT_HISTORICAL_PEAK",
+        "metricScope": "QUERY_LEVEL",
+        "queryMetricAvailable": true,
+        "proxyPosition": null,
+        "fallbackReason": null,
         "positionLoss": 0.18,
         "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
         "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -11466,17 +11772,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/#webpage",
-          "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11485,6 +11790,10 @@
           "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
           "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11571,17 +11880,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/ai-production-dubai-page/#webpage",
-          "https://www.dgeniussolutions.com/services/ai-production-dubai-page/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/ai-production-dubai-page/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11590,6 +11898,10 @@
           "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
           "https://www.dgeniussolutions.com/services/ai-production-dubai-page/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11671,15 +11983,22 @@
           "impressions": 292,
           "ctr": 2.74
         },
-        "recoveryTier": "NEAR_HISTORICAL_PEAK"
+        "recoveryTier": "NEAR_HISTORICAL_PEAK",
+        "recoveryStatusLabel": "NEAR_HISTORICAL_PEAK"
       },
       "historicalRecovery": {
+        "primaryQuery": "ai video production agency in mumbai",
         "primaryCommercialQuery": "ai video production agency in mumbai",
         "historicalPeakPosition": 1,
         "currentCommercialQueryPosition": 2.13,
         "currentCommercialQueryImpressions": 53,
         "currentCommercialQueryClicks": 3,
         "historicalRecoveryTier": "NEAR_HISTORICAL_PEAK",
+        "recoveryStatusLabel": "NEAR_HISTORICAL_PEAK",
+        "metricScope": "QUERY_LEVEL",
+        "queryMetricAvailable": true,
+        "proxyPosition": null,
+        "fallbackReason": null,
         "positionLoss": 1.13,
         "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
         "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -11701,17 +12020,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage",
-          "https://www.dgeniussolutions.com/services/ai-video-production-agency/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/ai-video-production-agency/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11720,6 +12038,10 @@
           "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
           "https://www.dgeniussolutions.com/services/ai-video-production-agency/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11803,17 +12125,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/branding/#webpage",
-          "https://www.dgeniussolutions.com/services/branding/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/branding/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11822,6 +12143,10 @@
           "https://www.dgeniussolutions.com/services/branding/",
           "https://www.dgeniussolutions.com/services/branding/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -11908,17 +12233,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/content-creation/#webpage",
-          "https://www.dgeniussolutions.com/services/content-creation/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/content-creation/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -11927,6 +12251,10 @@
           "https://www.dgeniussolutions.com/services/content-creation/",
           "https://www.dgeniussolutions.com/services/content-creation/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12011,23 +12339,30 @@
           "impressions": 4,
           "ctr": 0
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "SIGNIFICANT_LOSS",
+        "recoveryStatusLabel": "PROXY-BASED RECOVERY STATUS (SIGNIFICANT_LOSS)"
       },
       "historicalRecovery": {
+        "primaryQuery": "seo agency in dubai",
         "primaryCommercialQuery": "seo agency in dubai",
         "historicalPeakPosition": 1,
         "currentCommercialQueryPosition": 8.25,
         "currentCommercialQueryImpressions": 4,
         "currentCommercialQueryClicks": 0,
         "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+        "recoveryStatusLabel": "PROXY-BASED RECOVERY STATUS (SIGNIFICANT_LOSS)",
+        "metricScope": "PAGE_LEVEL_PROXY",
+        "queryMetricAvailable": false,
+        "proxyPosition": 8.25,
+        "fallbackReason": "QUERY_WITHHELD_BY_GSC_PRIVACY_THRESHOLD",
         "positionLoss": 7.25,
         "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
         "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
         "dataSource": "GSC_CACHE_SNAPSHOT",
-        "metricDate": "2026-09-24",
+        "metricDate": "2026-09-27",
         "periodType": "28d",
         "isFallback": true,
-        "fallbackNote": "Query withheld by GSC privacy threshold (<10 imp); using verified GSC page-level metric",
+        "fallbackNote": "QUERY_WITHHELD_BY_GSC_PRIVACY_THRESHOLD",
         "pageWideAveragePositionSupplemental": 8.25
       },
       "aiVisibility": {
@@ -12041,17 +12376,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/dubai-seo/#webpage",
-          "https://www.dgeniussolutions.com/services/dubai-seo/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/dubai-seo/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12060,6 +12394,10 @@
           "https://www.dgeniussolutions.com/services/dubai-seo/",
           "https://www.dgeniussolutions.com/services/dubai-seo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12144,15 +12482,22 @@
           "impressions": 255,
           "ctr": 0.39
         },
-        "recoveryTier": "SIGNIFICANT_LOSS"
+        "recoveryTier": "SIGNIFICANT_LOSS",
+        "recoveryStatusLabel": "SIGNIFICANT_LOSS"
       },
       "historicalRecovery": {
+        "primaryQuery": "geo services in mumbai",
         "primaryCommercialQuery": "geo services in mumbai",
         "historicalPeakPosition": 1,
         "currentCommercialQueryPosition": 5.24,
         "currentCommercialQueryImpressions": 17,
         "currentCommercialQueryClicks": 0,
         "historicalRecoveryTier": "SIGNIFICANT_LOSS",
+        "recoveryStatusLabel": "SIGNIFICANT_LOSS",
+        "metricScope": "QUERY_LEVEL",
+        "queryMetricAvailable": true,
+        "proxyPosition": null,
+        "fallbackReason": null,
         "positionLoss": 4.24,
         "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
         "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -12174,17 +12519,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/geo/#webpage",
-          "https://www.dgeniussolutions.com/services/geo/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/geo/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12193,6 +12537,10 @@
           "https://www.dgeniussolutions.com/services/geo/",
           "https://www.dgeniussolutions.com/services/geo/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12280,15 +12628,22 @@
           "impressions": 109,
           "ctr": 0
         },
-        "recoveryTier": "CRITICAL_LOSS"
+        "recoveryTier": "CRITICAL_LOSS",
+        "recoveryStatusLabel": "CRITICAL_LOSS"
       },
       "historicalRecovery": {
+        "primaryQuery": "best llm seo agency in mumbai",
         "primaryCommercialQuery": "best llm seo agency in mumbai",
         "historicalPeakPosition": 1,
         "currentCommercialQueryPosition": 10.77,
         "currentCommercialQueryImpressions": 13,
         "currentCommercialQueryClicks": 0,
         "historicalRecoveryTier": "CRITICAL_LOSS",
+        "recoveryStatusLabel": "CRITICAL_LOSS",
+        "metricScope": "QUERY_LEVEL",
+        "queryMetricAvailable": true,
+        "proxyPosition": null,
+        "fallbackReason": null,
         "positionLoss": 9.77,
         "evidenceSource": "USER_CONFIRMED_HISTORICAL_#1",
         "evidenceDate": "GSC_HISTORICAL_DATE_UNAVAILABLE",
@@ -12310,17 +12665,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/llm-seo-service/#webpage",
-          "https://www.dgeniussolutions.com/services/llm-seo-service/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/llm-seo-service/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12329,6 +12683,10 @@
           "https://www.dgeniussolutions.com/services/llm-seo-service/",
           "https://www.dgeniussolutions.com/services/llm-seo-service/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12415,17 +12773,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/performance-marketing/#webpage",
-          "https://www.dgeniussolutions.com/services/performance-marketing/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/performance-marketing/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12434,6 +12791,10 @@
           "https://www.dgeniussolutions.com/services/performance-marketing/",
           "https://www.dgeniussolutions.com/services/performance-marketing/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12520,17 +12881,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/seo-service-in-banglore/#webpage",
-          "https://www.dgeniussolutions.com/services/seo-service-in-banglore/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/seo-service-in-banglore/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12539,6 +12899,10 @@
           "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
           "https://www.dgeniussolutions.com/services/seo-service-in-banglore/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12628,17 +12992,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/#webpage",
-          "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12647,6 +13010,10 @@
           "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
           "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12736,17 +13103,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/seo-service-pune/#webpage",
-          "https://www.dgeniussolutions.com/services/seo-service-pune/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/seo-service-pune/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12755,6 +13121,10 @@
           "https://www.dgeniussolutions.com/services/seo-service-pune/",
           "https://www.dgeniussolutions.com/services/seo-service-pune/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12844,17 +13214,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/#webpage",
-          "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12863,6 +13232,10 @@
           "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
           "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -12952,17 +13325,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/#webpage",
-          "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -12971,6 +13343,10 @@
           "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
           "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13057,17 +13433,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/#webpage",
-          "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13076,6 +13451,10 @@
           "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/",
           "https://www.dgeniussolutions.com/services/shirdi-se-sai-tak-case-study/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13159,17 +13538,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/social-media-marketing/#webpage",
-          "https://www.dgeniussolutions.com/services/social-media-marketing/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/social-media-marketing/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13178,6 +13556,10 @@
           "https://www.dgeniussolutions.com/services/social-media-marketing/",
           "https://www.dgeniussolutions.com/services/social-media-marketing/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13261,17 +13643,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/website-development-amc/#webpage",
-          "https://www.dgeniussolutions.com/services/website-development-amc/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/website-development-amc/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13280,6 +13661,10 @@
           "https://www.dgeniussolutions.com/services/website-development-amc/",
           "https://www.dgeniussolutions.com/services/website-development-amc/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13363,17 +13748,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/services/website-development-pune-page/#webpage",
-          "https://www.dgeniussolutions.com/services/website-development-pune-page/#service"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/services/website-development-pune-page/#service",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13382,6 +13766,10 @@
           "https://www.dgeniussolutions.com/services/website-development-pune-page/",
           "https://www.dgeniussolutions.com/services/website-development-pune-page/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13464,15 +13852,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/sitemap/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/sitemap/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13480,6 +13867,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/sitemap/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13561,15 +13952,14 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
-          "https://www.dgeniussolutions.com/us-landing-page/#webpage"
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/us-landing-page/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13577,6 +13967,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/us-landing-page/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 3,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13665,6 +14059,10 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/career/generative-ai-artist/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 0,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "JobPosting",
           "Organization",
@@ -13749,17 +14147,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/dgs-cms-scheduled-cron-qa/#webpage",
-          "https://www.dgeniussolutions.com/blogs/dgs-cms-scheduled-cron-qa/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/dgs-cms-scheduled-cron-qa/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13767,6 +14164,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/dgs-cms-scheduled-cron-qa/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
@@ -13850,17 +14251,16 @@
         "schema_jsonld_count": 1,
         "schema_parse_valid": true,
         "schema_validation_errors": [],
-        "schema_validation_warnings": [
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#website\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\"",
-          "Duplicate @id found on page: \"https://www.dgeniussolutions.com/#organization\""
-        ],
+        "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
           "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/#webpage",
-          "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/#article"
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/#article",
+          "https://www.dgeniussolutions.com/#organization"
         ],
         "schema_urls": [
           "https://www.dgeniussolutions.com",
@@ -13868,6 +14268,10 @@
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/"
         ],
+        "parse_errors_count": 0,
+        "valid_references_count": 4,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "Organization",
           "ImageObject",
