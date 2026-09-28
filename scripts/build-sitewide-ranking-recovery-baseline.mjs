@@ -379,6 +379,47 @@ export function validatePageJsonLd(html, canonicalUrl = "") {
   };
 }
 
+export function detectPageEditorialArtifacts(html, routePath = "") {
+  const artifacts = [];
+
+  // 1. Staging / Internal Labels (even without trailing colon/brackets)
+  const stagingPatterns = [
+    { name: "Target Keyword", regex: /\bTarget\s+Keyword\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
+    { name: "AI Overview Answer", regex: /\bAI\s+Overview\s+Answer\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
+    { name: "Case Signal", regex: /\bCase\s+Signal\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
+    { name: "SEO Notes", regex: /\bSEO\s+Notes?\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
+    { name: "Editor Note", regex: /\bEditor(?:'s)?\s+Note\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
+    { name: "Internal Link", regex: /\bInternal\s+Link\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
+    { name: "Crawlable Signals Heading", regex: /<h[1-6]\b[^>]*>[\s\S]*?\bCrawlable\b[\w\s]{1,40}\bSignals\b[\s\S]*?<\/h[1-6]>/i },
+    { name: "Proof / Studio Signals Heading", regex: /<h[1-6]\b[^>]*>[\s\S]*?\b(?:Proof|Studio)\b[\w\s]{1,40}\bSignals\b[\s\S]*?<\/h[1-6]>/i },
+  ];
+
+  for (const p of stagingPatterns) {
+    if (p.regex.test(html)) {
+      artifacts.push(p.name);
+    }
+  }
+
+  // 2. Contextual Badges in HTML:
+  // "Local SEO" or "India SEO" appearing as isolated badges (<small>, <span>, pill)
+  // or immediately preceding a heading.
+  // Note: "Local SEO" in ordinary prose ("Our local SEO work connects Google Business Profile...") is legitimate and NOT an artifact.
+  const contextualPatterns = [
+    { name: "India SEO (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*India\s+SEO\s*<\/(?:small|span|div|p)>/i },
+    { name: "Local SEO (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*Local\s+SEO\s*<\/(?:small|span|div|p)>(?:\s*<h[1-6]\b|\s*<div\b)/i },
+    { name: "Target Keyword (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*Target\s+Keyword\s*<\/(?:small|span|div|p)>/i },
+    { name: "Case Signal (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*Case\s+Signal\s*<\/(?:small|span|div|p)>/i },
+  ];
+
+  for (const cp of contextualPatterns) {
+    if (cp.regex.test(html)) {
+      artifacts.push(cp.name);
+    }
+  }
+
+  return [...new Set(artifacts)];
+}
+
 export function inspectPageReputationSignals(html, routePath) {
   const parasitePatterns = [
     /\/wp-content\/plugins\//i,
@@ -398,11 +439,15 @@ export function inspectPageReputationSignals(html, routePath) {
   const offTopicRegex = /\b(casino|gambling|crypto loans|payday loans|viagra|cialis|essay writing service)\b/i;
   const hasOffTopic = offTopicRegex.test(html);
 
+  const editorialArtifacts = detectPageEditorialArtifacts(html, routePath);
+
   return {
     urlPatternRisk,
     sponsoredLinksCount: sponsoredLinks,
     affiliateLinksCount: affiliateLinks,
     offTopicMarkersDetected: hasOffTopic ? 1 : 0,
+    editorialArtifactsCount: editorialArtifacts.length,
+    editorialArtifacts,
   };
 }
 
@@ -1169,9 +1214,16 @@ async function main() {
     const html = crawl.rawHtml;
     const visibleText = crawl.visibleTextRaw || "";
 
+    const renderedArtifacts = detectPageEditorialArtifacts(html, pathKey);
+    for (const art of renderedArtifacts) {
+      machineLabelAnalysis.PUBLICLY_RENDERED.push({ path: pathKey, label: art, context: "Rendered editorial/taxonomy artifact in body" });
+    }
+
     for (const pat of GENUINE_STAGING_LABEL_PATTERNS) {
       if (pat.regex.test(visibleText)) {
-        machineLabelAnalysis.PUBLICLY_RENDERED.push({ path: pathKey, label: pat.name, context: "Rendered standalone label in body" });
+        if (!renderedArtifacts.includes(pat.name)) {
+          machineLabelAnalysis.PUBLICLY_RENDERED.push({ path: pathKey, label: pat.name, context: "Rendered standalone label in body" });
+        }
       } else if (pat.regex.test(html)) {
         const comments = [...html.matchAll(/<!--([\s\S]*?)-->/g)].map((m) => m[1]).join(" ");
         if (pat.regex.test(comments)) {

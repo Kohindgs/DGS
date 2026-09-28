@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-28T09:28:40.007Z",
-  "auditTimestamp": "2026-09-28T09:28:32.110Z",
+  "generatedAt": "2026-09-28T10:20:43.338Z",
+  "auditTimestamp": "2026-09-28T10:20:35.661Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
   "latestDailyMetricDate": "2026-09-24",
@@ -27,10 +27,10 @@
       "INSUFFICIENT_DATA": 53
     },
     "spamRiskDistribution": {
-      "LOW": 48,
+      "LOW": 41,
       "MEDIUM": 0,
-      "HIGH": 0,
-      "INSUFFICIENT_EVIDENCE": 53
+      "HIGH": 12,
+      "INSUFFICIENT_EVIDENCE": 48
     },
     "recoveryTiers": {
       "AT_HISTORICAL_PEAK": 1,
@@ -261,7 +261,7 @@
     },
     "cannibalizationCandidateCount": 50,
     "falseCannibalizationRecordsRemoved": 0,
-    "publiclyRenderedMachineLabels": 0,
+    "publiclyRenderedMachineLabels": 13,
     "sourceCommentMachineLabels": 1,
     "internalMetadataMachineLabels": 0
   },
@@ -3241,7 +3241,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -3341,7 +3343,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -3393,10 +3397,12 @@
       },
       "classification": "GROWING",
       "oldClassification": "STABLE",
-      "spamRisk": "LOW",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Proof / Studio Signals Heading"
+      ],
       "blogClassification": null,
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
@@ -3482,7 +3488,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Proof / Studio Signals Heading"
+        ]
       }
     },
     {
@@ -3588,7 +3598,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -3688,7 +3700,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -3860,7 +3874,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -3970,7 +3986,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4080,7 +4098,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4190,7 +4210,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4300,7 +4322,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4410,7 +4434,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4520,7 +4546,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4630,7 +4658,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4740,7 +4770,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4850,7 +4882,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -4954,7 +4988,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5064,7 +5100,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5174,7 +5212,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5284,7 +5324,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5394,7 +5436,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5504,7 +5548,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5614,7 +5660,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5724,7 +5772,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5834,7 +5884,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5944,7 +5996,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6054,7 +6108,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6164,7 +6220,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6274,7 +6332,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6384,7 +6444,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6494,7 +6556,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6598,7 +6662,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6708,7 +6774,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -6761,11 +6829,13 @@
       },
       "classification": "DECLINING",
       "oldClassification": "DECLINING",
-      "spamRisk": "LOW",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Proof / Studio Signals Heading"
+      ],
       "blogClassification": "REFRESH_CANDIDATE",
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "REMOVE_RENDERED_LABEL",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
       "aiVisibility": {
@@ -6818,7 +6888,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Proof / Studio Signals Heading"
+        ]
       }
     },
     {
@@ -6928,7 +7002,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7038,7 +7114,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7148,7 +7226,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7252,7 +7332,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7362,7 +7444,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7472,7 +7556,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7582,7 +7668,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7692,7 +7780,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7802,7 +7892,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -7912,7 +8004,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8022,7 +8116,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8132,7 +8228,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8242,7 +8340,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8352,7 +8452,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8462,7 +8564,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8572,7 +8676,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8682,7 +8788,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8792,7 +8900,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -8902,7 +9012,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9012,7 +9124,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9122,7 +9236,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9226,7 +9342,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9336,7 +9454,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9446,7 +9566,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9556,7 +9678,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9666,7 +9790,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9776,7 +9902,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9886,7 +10014,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -9996,7 +10126,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10106,7 +10238,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10216,7 +10350,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10326,7 +10462,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10436,7 +10574,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10546,7 +10686,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10656,7 +10798,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10766,7 +10910,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10876,7 +11022,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -10986,7 +11134,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11066,7 +11216,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11166,7 +11318,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11266,7 +11420,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11366,7 +11522,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11466,7 +11624,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11566,7 +11726,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11666,7 +11828,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11812,7 +11976,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -11862,10 +12028,12 @@
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "INSUFFICIENT_EVIDENCE",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Internal Link"
+      ],
       "blogClassification": null,
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
@@ -11917,7 +12085,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Internal Link"
+        ]
       }
     },
     {
@@ -11967,11 +12139,13 @@
       },
       "classification": "DECLINING",
       "oldClassification": "CRITICAL_DECLINE",
-      "spamRisk": "LOW",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: India SEO (Isolated Badge)"
+      ],
       "blogClassification": null,
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "REMOVE_RENDERED_LABEL",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
           "peakPosition": 1,
@@ -12057,7 +12231,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "India SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -12162,7 +12340,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -12273,7 +12453,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -12323,10 +12505,12 @@
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "INSUFFICIENT_EVIDENCE",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Local SEO (Isolated Badge)"
+      ],
       "blogClassification": null,
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
@@ -12413,7 +12597,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Local SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -12559,7 +12747,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -12612,11 +12802,13 @@
       },
       "classification": "CRITICAL_DECLINE",
       "oldClassification": "STABLE",
-      "spamRisk": "LOW",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Proof / Studio Signals Heading"
+      ],
       "blogClassification": null,
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "REMOVE_RENDERED_LABEL",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": {
         "historicalPeakBaseline": {
           "peakPosition": 1,
@@ -12705,7 +12897,12 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 2,
+        "editorialArtifacts": [
+          "Proof / Studio Signals Heading",
+          "Local SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -12810,7 +13007,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -12863,10 +13062,12 @@
       },
       "classification": "GROWING",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "LOW",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Local SEO (Isolated Badge)"
+      ],
       "blogClassification": null,
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
@@ -12921,7 +13122,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Local SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -12974,10 +13179,12 @@
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "INSUFFICIENT_EVIDENCE",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Local SEO (Isolated Badge)"
+      ],
       "blogClassification": null,
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
@@ -13032,7 +13239,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Local SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -13085,10 +13296,12 @@
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "INSUFFICIENT_EVIDENCE",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Local SEO (Isolated Badge)"
+      ],
       "blogClassification": null,
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
@@ -13143,7 +13356,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Local SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -13196,10 +13413,12 @@
       },
       "classification": "GROWING",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "LOW",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Local SEO (Isolated Badge)"
+      ],
       "blogClassification": null,
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
@@ -13254,7 +13473,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Local SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -13307,11 +13530,13 @@
       },
       "classification": "DECLINING",
       "oldClassification": "STABLE",
-      "spamRisk": "LOW",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Local SEO (Isolated Badge)"
+      ],
       "blogClassification": null,
-      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
-      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "safeAction": "REMOVE_RENDERED_LABEL",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
       "aiVisibility": {
@@ -13365,7 +13590,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Local SEO (Isolated Badge)"
+        ]
       }
     },
     {
@@ -13470,7 +13699,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -13575,7 +13806,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -13680,7 +13913,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -13785,7 +14020,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -13885,7 +14122,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -13985,7 +14224,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -14079,7 +14320,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -14183,7 +14426,9 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -14233,10 +14478,12 @@
       },
       "classification": "INSUFFICIENT_DATA",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "INSUFFICIENT_EVIDENCE",
-      "riskReasons": [],
+      "spamRisk": "HIGH",
+      "riskReasons": [
+        "Publicly rendered machine label detected: Proof / Studio Signals Heading"
+      ],
       "blogClassification": "KEEP",
-      "safeAction": "MONITOR",
+      "safeAction": "REMOVE_RENDERED_LABEL",
       "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
       "twoBaselines": null,
       "historicalRecovery": null,
@@ -14287,7 +14534,11 @@
         "urlPatternRisk": "PASS",
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 1,
+        "editorialArtifacts": [
+          "Proof / Studio Signals Heading"
+        ]
       }
     }
   ]

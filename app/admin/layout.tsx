@@ -12,7 +12,12 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const currentUser = await getCurrentCmsUser();
+  let currentUser: Awaited<ReturnType<typeof getCurrentCmsUser>> = null;
+  try {
+    currentUser = await getCurrentCmsUser();
+  } catch (err) {
+    console.error("[AdminLayout] Non-fatal error resolving current CMS user:", err);
+  }
 
   return (
     <AdminLayoutClient currentUser={currentUser}>

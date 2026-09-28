@@ -68,6 +68,24 @@ type CandidateRow = {
   created_at: string | Date;
 };
 
+function formatSyncDate(value: unknown): string | null {
+  if (!value) return null;
+  if (value instanceof Date) {
+    return value.toISOString().slice(0, 10);
+  }
+  const str = String(value);
+  if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
+    return str.slice(0, 10);
+  }
+  try {
+    const d = new Date(str);
+    if (!isNaN(d.getTime())) {
+      return d.toISOString().slice(0, 10);
+    }
+  } catch {}
+  return str.length >= 10 ? str.slice(0, 10) : str;
+}
+
 async function getDashboardData() {
   const stats: DashboardStats = {
     leadsCount: null,
@@ -155,7 +173,7 @@ async function getDashboardData() {
     if (auditRes.status === "fulfilled" && auditRes.value.rows[0]) {
       const row = auditRes.value.rows[0];
       stats.auditScore = row.overall_score != null ? Number(row.overall_score) : null;
-      stats.lastAuditDate = row.completed_at || row.created_at || null;
+      stats.lastAuditDate = formatSyncDate(row.completed_at || row.created_at);
       stats.sitemapUrls = Number(row.crawled_url_count || row.crawled_pages || row.total_pages || 0);
       stats.failedUrls = Number(row.failed_url_count || 0);
     }
@@ -169,11 +187,11 @@ async function getDashboardData() {
       for (const row of connRes.value.rows) {
         if (row.service === "gsc" && row.status === "connected") {
           stats.gscConnected = true;
-          stats.gscLastSync = row.last_successful_sync_at || row.last_sync_at || null;
+          stats.gscLastSync = formatSyncDate(row.last_successful_sync_at || row.last_sync_at);
         }
         if (row.service === "ga4" && row.status === "connected") {
           stats.ga4Connected = true;
-          stats.ga4LastSync = row.last_successful_sync_at || row.last_sync_at || null;
+          stats.ga4LastSync = formatSyncDate(row.last_successful_sync_at || row.last_sync_at);
         }
       }
       if (stats.gscConnected) {
@@ -204,7 +222,7 @@ async function getDashboardData() {
             stats.gscImpressions = Number(rows[0].total_impressions ?? 0);
             stats.gscCtr = Number((Number(rows[0].avg_ctr || 0) * 100).toFixed(2));
             stats.gscPosition = Number(Number(rows[0].avg_position || 0).toFixed(1));
-            if (!stats.gscLastSync) stats.gscLastSync = rows[0].last_date || null;
+            if (!stats.gscLastSync) stats.gscLastSync = formatSyncDate(rows[0].last_date);
           }
         } catch {}
       }
@@ -236,7 +254,7 @@ async function getDashboardData() {
             stats.ga4Views = Number(rows[0].total_views ?? 0);
             stats.ga4EngagementRate = Number((Number(rows[0].avg_engagement_rate || 0) * 100).toFixed(1));
             stats.ga4KeyEvents = Number(rows[0].total_key_events ?? 0);
-            if (!stats.ga4LastSync) stats.ga4LastSync = rows[0].last_date || null;
+            if (!stats.ga4LastSync) stats.ga4LastSync = formatSyncDate(rows[0].last_date);
           }
         } catch {}
       }
@@ -357,7 +375,7 @@ export default async function AdminPage() {
           </div>
           <div className="dgs-saas-kpi-source">
             <Link href={stats.gscConnected ? "/admin/search-console/" : "/admin/integrations/google/setup/"} style={{ color: "inherit", textDecoration: "none" }}>
-              {stats.gscConnected ? (stats.gscLastSync ? `Last Sync: ${stats.gscLastSync.slice(0, 10)}` : "Google Search Console API →") : "Connect Google Search →"}
+              {stats.gscConnected ? (stats.gscLastSync ? `Last Sync: ${stats.gscLastSync}` : "Google Search Console API →") : "Connect Google Search →"}
             </Link>
           </div>
         </div>
@@ -378,7 +396,7 @@ export default async function AdminPage() {
           </div>
           <div className="dgs-saas-kpi-source">
             <Link href={stats.ga4Connected ? "/admin/analytics/" : "/admin/integrations/google/setup/"} style={{ color: "inherit", textDecoration: "none" }}>
-              {stats.ga4Connected ? (stats.ga4LastSync ? `Last Sync: ${stats.ga4LastSync.slice(0, 10)}` : "Google Analytics 4 Data API →") : "Connect Google Analytics →"}
+              {stats.ga4Connected ? (stats.ga4LastSync ? `Last Sync: ${stats.ga4LastSync}` : "Google Analytics 4 Data API →") : "Connect Google Analytics →"}
             </Link>
           </div>
         </div>
