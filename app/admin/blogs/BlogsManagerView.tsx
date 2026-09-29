@@ -41,6 +41,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       needs_review: 0,
       seo_issues: 0,
       missing_images: 0,
+      trashed: 0,
     }
   );
   const [loading, setLoading] = useState(false);
@@ -59,8 +60,12 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
   const [restoringRevisionId, setRestoringRevisionId] = useState<string | null>(null);
   const [revisionViewMode, setRevisionViewMode] = useState<"preview" | "compare">("compare");
 
-  // Delete modal state
+  // Delete & Lifecycle modal state
   const [deleteTarget, setDeleteTarget] = useState<CmsBlogSummary | null>(null);
+  const [permanentDeleteTarget, setPermanentDeleteTarget] = useState<CmsBlogSummary | null>(null);
+  const [loadingInboundLinks, setLoadingInboundLinks] = useState(false);
+  const [inboundLinks, setInboundLinks] = useState<Array<{ url: string; title: string; sourceType: string }>>([]);
+  const [confirmSlugInput, setConfirmSlugInput] = useState("");
 
   // Media Picker state
   const [showMediaPicker, setShowMediaPicker] = useState(false);
@@ -207,6 +212,12 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       excerpt: editingBlog.excerpt || "",
       bodyHtml: editingBlog.content?.bodyHtml || "",
       featured_image_url: editingBlog.featured_image_url || null,
+      featured_image_alt: editingBlog.featured_image_alt || null,
+      author_name: editingBlog.author_name || null,
+      category: editingBlog.category || null,
+      canonical_url: editingBlog.canonical_url || null,
+      redirect_url: editingBlog.redirect_url || null,
+      redirect_status_code: editingBlog.redirect_status_code || null,
       needs_review: editingBlog.needs_review,
       optimization: editingBlog.content?.optimization,
     };
@@ -262,6 +273,105 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       setNotice({ type: "error", message: "Failed to save blog" });
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Move blog to trash
+  const handleTrash = async (blog: CmsBlogSummary) => {
+    if (!window.confirm(`Move blog "${blog.title}" to Trash? It will be removed from search engines, sitemap, and the public blog archive.`)) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/admin/blogs/${blog.id}/trash`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setNotice({ type: "success", message: `Moved "${blog.title}" to Trash` });
+        fetchBlogs();
+      } else {
+        setNotice({ type: "error", message: data.message || "Failed to move to Trash" });
+      }
+    } catch (err) {
+      console.error("Failed to trash blog:", err);
+      setNotice({ type: "error", message: "Failed to move blog to Trash" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Restore blog from trash
+  const handleRestore = async (id: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/admin/blogs/${id}/restore`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setNotice({ type: "success", message: "Blog restored successfully!" });
+        fetchBlogs();
+      } else {
+        setNotice({ type: "error", message: data.message || "Failed to restore blog" });
+      }
+    } catch (err) {
+      console.error("Failed to restore blog:", err);
+      setNotice({ type: "error", message: "Failed to restore blog" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Open Permanent Delete Modal
+  const openPermanentDeleteModal = async (blog: CmsBlogSummary) => {
+    setPermanentDeleteTarget(blog);
+    setConfirmSlugInput("");
+    setLoadingInboundLinks(true);
+    try {
+      const res = await fetch(`/api/admin/blogs/${blog.id}/inbound-links`);
+      const data = await res.json();
+      if (data.ok && Array.isArray(data.links)) {
+        setInboundLinks(data.links);
+      } else {
+        setInboundLinks([]);
+      }
+    } catch {
+      setInboundLinks([]);
+    } finally {
+      setLoadingInboundLinks(false);
+    }
+  };
+
+  // Confirm Permanent Delete
+  const handleConfirmPermanentDelete = async () => {
+    if (!permanentDeleteTarget) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/admin/blogs/${permanentDeleteTarget.id}/permanent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirmedSlug: confirmSlugInput }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setNotice({ type: "success", message: `Blog "${permanentDeleteTarget.slug}" permanently deleted.` });
+        setPermanentDeleteTarget(null);
+        setConfirmSlugInput("");
+        setInboundLinks([]);
+        fetchBlogs();
+      } else {
+        setNotice({ type: "error", message: data.message || "Permanent delete failed" });
+      }
+    } catch (err) {
+      console.error("Failed to permanently delete blog:", err);
+      setNotice({ type: "error", message: "Permanent delete failed" });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -552,6 +662,14 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
             >
               Missing Images ({counts.missing_images})
             </button>
+            <button
+              type="button"
+              className={`dgs-filter-pill ${filterView === "trashed" ? "active" : ""}`}
+              onClick={() => handleTabChange("trashed")}
+              style={{ color: filterView === "trashed" ? "#fff" : "#ff4d4f" }}
+            >
+              Trash ({counts.trashed})
+            </button>
           </div>
 
           {/* Search bar */}
@@ -707,30 +825,50 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                       {/* Actions */}
                       <td style={{ textAlign: "right" }}>
                         <div className="dgs-action-group">
-                          <button
-                            type="button"
-                            className="dgs-btn-edit"
-                            onClick={() => startEditing(b.id)}
-                          >
-                            Edit
-                          </button>
-                          {b.status !== "published" && (
-                            <button
-                              type="button"
-                              className="dgs-btn-publish"
-                              onClick={() => handleQuickPublish(b)}
-                            >
-                              Publish
-                            </button>
-                          )}
-                          {b.status !== "published" && (
-                            <button
-                              type="button"
-                              className="dgs-btn-delete"
-                              onClick={() => setDeleteTarget(b)}
-                            >
-                              Delete
-                            </button>
+                          {b.status === "trashed" ? (
+                            <>
+                              <button
+                                type="button"
+                                className="dgs-btn-edit"
+                                onClick={() => handleRestore(b.id)}
+                              >
+                                Restore
+                              </button>
+                              <button
+                                type="button"
+                                className="dgs-btn-delete"
+                                onClick={() => openPermanentDeleteModal(b)}
+                              >
+                                Delete Permanently
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                className="dgs-btn-edit"
+                                onClick={() => startEditing(b.id)}
+                              >
+                                Edit
+                              </button>
+                              {b.status !== "published" && (
+                                <button
+                                  type="button"
+                                  className="dgs-btn-publish"
+                                  onClick={() => handleQuickPublish(b)}
+                                >
+                                  Publish
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                className="dgs-btn-delete"
+                                onClick={() => handleTrash(b)}
+                                title="Move to Trash"
+                              >
+                                Trash
+                              </button>
+                            </>
                           )}
                         </div>
                       </td>
@@ -1270,6 +1408,27 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                 </label>
               </div>
 
+              <div className="dgs-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                <label>
+                  Author Attribution
+                  <input
+                    type="text"
+                    value={editingBlog.author_name || ""}
+                    placeholder="D'Genius Solutions (Default)"
+                    onChange={(e) => setEditingBlog({ ...editingBlog, author_name: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Category
+                  <input
+                    type="text"
+                    value={editingBlog.category || ""}
+                    placeholder="e.g. Digital Marketing, AI & Automation"
+                    onChange={(e) => setEditingBlog({ ...editingBlog, category: e.target.value })}
+                  />
+                </label>
+              </div>
+
               <div className="dgs-form-row">
                 <label>Featured Image (Media CMS)</label>
                 <div className="dgs-featured-image-card">
@@ -1311,6 +1470,18 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                     </button>
                   )}
                 </div>
+              </div>
+
+              <div className="dgs-form-row">
+                <label>
+                  Featured Image Alt Text (Required for A11y &amp; Image SEO)
+                  <input
+                    type="text"
+                    value={editingBlog.featured_image_alt || ""}
+                    placeholder="Descriptive alt text for the cover image"
+                    onChange={(e) => setEditingBlog({ ...editingBlog, featured_image_alt: e.target.value })}
+                  />
+                </label>
               </div>
 
               <div className="dgs-form-row">
@@ -1545,6 +1716,49 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                       })
                     }
                   />
+                </label>
+              </div>
+
+              <div className="dgs-form-row">
+                <label>
+                  Canonical URL (Leave blank to default to <code>https://dgeniussolutions.com/blogs/{editingBlog.slug}/</code>)
+                  <input
+                    type="url"
+                    value={editingBlog.canonical_url || ""}
+                    placeholder={`https://dgeniussolutions.com/blogs/${editingBlog.slug}/`}
+                    onChange={(e) => setEditingBlog({ ...editingBlog, canonical_url: e.target.value })}
+                  />
+                </label>
+              </div>
+
+              <div className="dgs-form-row" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "16px" }}>
+                <label>
+                  Redirect URL (Optional fallback if retired/trashed)
+                  <input
+                    type="text"
+                    value={editingBlog.redirect_url || ""}
+                    placeholder="e.g. /services/seo-services/ or /blogs/new-guide/"
+                    onChange={(e) => setEditingBlog({ ...editingBlog, redirect_url: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Redirect HTTP Code
+                  <select
+                    value={editingBlog.redirect_status_code || 301}
+                    onChange={(e) => setEditingBlog({ ...editingBlog, redirect_status_code: parseInt(e.target.value, 10) })}
+                    style={{
+                      width: "100%",
+                      padding: "10px 14px",
+                      borderRadius: "8px",
+                      border: "1px solid rgba(255, 255, 255, 0.15)",
+                      background: "#18181b",
+                      color: "#fff",
+                    }}
+                  >
+                    <option value={301}>301 Moved Permanently</option>
+                    <option value={302}>302 Found (Temporary)</option>
+                    <option value={410}>410 Gone (Removed)</option>
+                  </select>
                 </label>
               </div>
             </div>
@@ -2059,6 +2273,74 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
               )}
             </div>
 
+            {/* Publish Readiness / QA Assessment Panel */}
+            {editingBlog && (
+              <div style={{
+                margin: "16px 0",
+                padding: "16px 20px",
+                borderRadius: "12px",
+                border: editQa && editQa.errors.length > 0
+                  ? "1px solid rgba(239, 68, 68, 0.4)"
+                  : editQa && editQa.warnings.length > 0
+                  ? "1px solid rgba(245, 158, 11, 0.3)"
+                  : "1px solid rgba(16, 185, 129, 0.3)",
+                background: editQa && editQa.errors.length > 0
+                  ? "rgba(239, 68, 68, 0.06)"
+                  : editQa && editQa.warnings.length > 0
+                  ? "rgba(245, 158, 11, 0.06)"
+                  : "rgba(16, 185, 129, 0.06)",
+              }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                  <span style={{ fontWeight: 650, fontSize: "0.95rem", color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span>{editQa && editQa.errors.length > 0 ? "❌" : editQa && editQa.warnings.length > 0 ? "⚠️" : "✅"}</span>
+                    Publish Readiness &amp; SEO Quality Assessment
+                  </span>
+                  <span style={{
+                    fontSize: "0.78rem",
+                    padding: "3px 10px",
+                    borderRadius: "9999px",
+                    background: editQa && editQa.errors.length > 0 ? "rgba(239,68,68,0.2)" : editQa && editQa.warnings.length > 0 ? "rgba(245,158,11,0.2)" : "rgba(16,185,129,0.2)",
+                    color: editQa && editQa.errors.length > 0 ? "#fca5a5" : editQa && editQa.warnings.length > 0 ? "#fde68a" : "#6ee7b7",
+                    border: editQa && editQa.errors.length > 0 ? "1px solid rgba(239,68,68,0.3)" : editQa && editQa.warnings.length > 0 ? "1px solid rgba(245,158,11,0.3)" : "1px solid rgba(16,185,129,0.3)",
+                  }}>
+                    {editQa && editQa.errors.length > 0 ? "Publish Blocked" : editQa && editQa.warnings.length > 0 ? "Advisories (Publish Allowed)" : "Ready to Publish"}
+                  </span>
+                </div>
+
+                {editQa && editQa.errors.length > 0 && (
+                  <div style={{ marginTop: "10px" }}>
+                    <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#f87171", marginBottom: "4px" }}>
+                      Blocking Errors (Must fix before publishing):
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#fca5a5", fontSize: "0.85rem" }}>
+                      {editQa.errors.map((err, i) => (
+                        <li key={i}>{err}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {editQa && editQa.warnings.length > 0 && (
+                  <div style={{ marginTop: "10px" }}>
+                    <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fbbf24", marginBottom: "4px" }}>
+                      Recommendations &amp; Quality Advisories (Will not block publishing):
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#fde68a", fontSize: "0.85rem" }}>
+                      {editQa.warnings.map((warn, i) => (
+                        <li key={i}>{warn}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {(!editQa || (editQa.errors.length === 0 && editQa.warnings.length === 0)) && (
+                  <div style={{ fontSize: "0.85rem", color: "#a7f3d0", marginTop: "4px" }}>
+                    All core publishing criteria met. Content, slugs, and schema are ready for live deployment.
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="dgs-publish-controls">
               <button
                 type="button"
@@ -2114,6 +2396,112 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                 onClick={handleConfirmDelete}
               >
                 Yes, Delete Draft
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* PERMANENT DELETE CONFIRMATION MODAL                                       */}
+      {/* ========================================================================= */}
+      {permanentDeleteTarget && (
+        <div className="dgs-modal-backdrop">
+          <div className="dgs-modal-dialog" style={{ width: "min(100%, 560px)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px", color: "#ef4444" }}>
+              <span style={{ fontSize: "1.5rem" }}>⚠️</span>
+              <h3 style={{ margin: 0, color: "#ef4444" }}>Permanently Delete Blog?</h3>
+            </div>
+
+            <p style={{ margin: "0 0 16px", color: "#e5e7eb" }}>
+              You are about to permanently erase <strong>&quot;{permanentDeleteTarget.title}&quot;</strong> (<code>/blogs/{permanentDeleteTarget.slug}/</code>).
+              This action <strong>CANNOT</strong> be undone. The database record and revisions will be permanently deleted.
+            </p>
+
+            {/* Inbound internal links check */}
+            <div style={{
+              background: "rgba(239, 68, 68, 0.08)",
+              border: "1px solid rgba(239, 68, 68, 0.25)",
+              borderRadius: "10px",
+              padding: "14px",
+              marginBottom: "16px",
+              fontSize: "0.88rem"
+            }}>
+              <div style={{ fontWeight: 650, color: "#f87171", marginBottom: "6px" }}>
+                Inbound Internal Links Audit
+              </div>
+              {loadingInboundLinks ? (
+                <div style={{ color: "#9ca3af" }}>Scanning site content for links to this slug...</div>
+              ) : inboundLinks.length > 0 ? (
+                <div>
+                  <div style={{ color: "#fca5a5", marginBottom: "8px" }}>
+                    ⚠️ Found {inboundLinks.length} internal reference(s) to this blog! Permanently deleting will break links on:
+                  </div>
+                  <ul style={{ margin: 0, paddingLeft: "18px", color: "#d1d5db", maxHeight: "120px", overflowY: "auto" }}>
+                    {inboundLinks.map((link, idx) => (
+                      <li key={idx} style={{ marginBottom: "4px" }}>
+                        <span style={{ color: "#a78bfa" }}>[{link.sourceType}]</span> {link.title || link.url}
+                      </li>
+                    ))}
+                  </ul>
+                  <div style={{ marginTop: "8px", color: "#fbbf24", fontSize: "0.82rem" }}>
+                    Recommendation: Update or remove inbound links, or soft-delete (Trash) with a 301 Redirect URL set instead.
+                  </div>
+                </div>
+              ) : (
+                <div style={{ color: "#10b981" }}>
+                  ✓ No inbound internal links detected referencing <code>/blogs/{permanentDeleteTarget.slug}</code>.
+                </div>
+              )}
+            </div>
+
+            {/* Confirmation input */}
+            <div style={{ marginBottom: "20px" }}>
+              <label style={{ display: "block", fontSize: "0.86rem", color: "#9ca3af", marginBottom: "6px" }}>
+                Type the exact slug <strong style={{ color: "#fff" }}>{permanentDeleteTarget.slug}</strong> to confirm:
+              </label>
+              <input
+                type="text"
+                value={confirmSlugInput}
+                onChange={(e) => setConfirmSlugInput(e.target.value)}
+                placeholder={permanentDeleteTarget.slug}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  background: "rgba(0, 0, 0, 0.4)",
+                  color: "#fff",
+                  fontFamily: "monospace",
+                  fontSize: "0.95rem"
+                }}
+              />
+            </div>
+
+            <div className="dgs-modal-actions">
+              <button
+                type="button"
+                className="dgs-btn-secondary"
+                disabled={loading}
+                onClick={() => {
+                  setPermanentDeleteTarget(null);
+                  setConfirmSlugInput("");
+                  setInboundLinks([]);
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="dgs-btn-delete"
+                disabled={loading || confirmSlugInput.trim() !== permanentDeleteTarget.slug}
+                style={{
+                  background: confirmSlugInput.trim() === permanentDeleteTarget.slug ? "#dc2626" : "rgba(220, 38, 38, 0.3)",
+                  cursor: confirmSlugInput.trim() === permanentDeleteTarget.slug ? "pointer" : "not-allowed"
+                }}
+                onClick={handleConfirmPermanentDelete}
+              >
+                {loading ? "Deleting..." : "Permanently Erase Blog"}
               </button>
             </div>
           </div>

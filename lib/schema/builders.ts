@@ -191,19 +191,37 @@ export function articleSchema(input: {
   imageUrl?: string;
 }) {
   const url = absoluteUrl(input.path);
+  const toIso = (val?: string) => {
+    if (!val) return undefined;
+    try {
+      const d = new Date(val);
+      if (!isNaN(d.getTime())) return d.toISOString();
+    } catch {}
+    return val;
+  };
+  const published = toIso(input.datePublished);
+  const modified = toIso(input.dateModified) || published;
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": `${url}#article`,
-    mainEntityOfPage: url,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
     headline: cleanSchemaText(input.headline),
     description: cleanSchemaText(input.description),
-    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
-    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    ...(published ? { datePublished: published } : {}),
+    ...(modified ? { dateModified: modified } : {}),
     publisher: { "@id": input.publisherId },
-    ...(input.authorName
-      ? { author: { "@type": "Person", name: cleanSchemaText(input.authorName) } }
-      : {}),
+    author: input.authorName
+      ? { "@type": "Person", name: cleanSchemaText(input.authorName) }
+      : {
+          "@type": "Organization",
+          name: "D'Genius Solutions",
+          url: "https://www.dgeniussolutions.com",
+        },
     ...(input.imageUrl ? { image: absoluteUrl(input.imageUrl) } : {}),
   };
 }

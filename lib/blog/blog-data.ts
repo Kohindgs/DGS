@@ -17,6 +17,7 @@ export type BlogPostMeta = {
   canonical: string;
   date?: string;
   modified?: string;
+  author?: string;
   featuredImage?: {
     src: string;
     alt: string;

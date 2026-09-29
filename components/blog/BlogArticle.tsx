@@ -17,6 +17,17 @@ function formatDate(iso: string): string {
   }
 }
 
+function isMaterialUpdate(pub?: string, mod?: string): boolean {
+  if (!pub || !mod) return false;
+  try {
+    const pubD = new Date(pub);
+    const modD = new Date(mod);
+    return Math.abs(modD.getTime() - pubD.getTime()) > 3600 * 1000;
+  } catch {
+    return pub.slice(0, 10) !== mod.slice(0, 10);
+  }
+}
+
 export function BlogArticle({
   article,
   relatedPosts,
@@ -49,15 +60,20 @@ export function BlogArticle({
           {article.date ? (
             <div className={styles.articleMetaBar}>
               <div className={styles.metaItem}>
+                <span>By:</span>
+                <span>{article.author || "D'Genius Solutions"}</span>
+              </div>
+              <span>•</span>
+              <div className={styles.metaItem}>
                 <span>Published:</span>
                 <time dateTime={article.date}>{formatDate(article.date)}</time>
               </div>
-              {article.modified && article.modified !== article.date ? (
+              {isMaterialUpdate(article.date, article.modified) ? (
                 <>
                   <span>•</span>
                   <div className={styles.metaItem}>
                     <span>Updated:</span>
-                    <time dateTime={article.modified}>{formatDate(article.modified)}</time>
+                    <time dateTime={article.modified!}>{formatDate(article.modified!)}</time>
                   </div>
                 </>
               ) : null}

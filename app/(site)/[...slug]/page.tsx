@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Metadata } from "next";
 import { loadRouteRegistry, getRouteByPath } from "@/lib/nextjs/routes";
 import { loadContentBlocks } from "@/lib/nextjs/content-blocks";
@@ -29,7 +29,7 @@ import {
 } from "@/lib/schema/builders";
 import { ORGANIZATION_ID, WEBSITE_ID } from "@/lib/schema/entity";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { cmsBlogToPublicPost, getPublishedCmsBlogBySlug, listPublishedCmsBlogs } from "@/lib/cms/blogs";
+import { cmsBlogToPublicPost, getPublishedCmsBlogBySlug, getCmsBlogBySlug, listPublishedCmsBlogs } from "@/lib/cms/blogs";
 
 export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   const path = slugToPath(slug || []);
   const route = await getRouteByPath(path);
 
-  if (!route && path.startsWith("/blogs/") && path !== "/blogs/" && isCmsDatabaseConfigured()) {
+  if (path.startsWith("/blogs/") && path !== "/blogs/" && isCmsDatabaseConfigured()) {
     try {
       const slugValue = path.replace(/^\/blogs\/|\/$/g, "");
       const cmsBlog = await getPublishedCmsBlogBySlug(slugValue);
@@ -56,11 +56,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
           title: article.title,
           description: article.description,
           path: article.path,
-          canonicalPath: article.path,
+          canonicalPath: article.canonical || article.path,
           indexable: true,
           image: article.featuredImage?.src,
           type: "article",
         });
+      }
+      const cmsSummary = await getCmsBlogBySlug(slugValue);
+      if (cmsSummary) {
+        return {
+          title: "Not Found",
+          robots: { index: false, follow: false },
+        };
       }
     } catch {
       // Unknown CMS routes stay unavailable if the CMS database is unreachable.
@@ -97,9 +104,21 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   const path = slugToPath(slug || []);
   const route = await getRouteByPath(path);
 
-  if (!route && path.startsWith("/blogs/") && path !== "/blogs/" && isCmsDatabaseConfigured()) {
+  if (path.startsWith("/blogs/") && path !== "/blogs/" && isCmsDatabaseConfigured()) {
     try {
       const slugValue = path.replace(/^\/blogs\/|\/$/g, "");
+      const cmsSummary = await getCmsBlogBySlug(slugValue);
+      if (cmsSummary) {
+        if (cmsSummary.status === "trashed") {
+          if (cmsSummary.redirect_url) {
+            permanentRedirect(cmsSummary.redirect_url);
+          }
+          notFound();
+        }
+        if (cmsSummary.status !== "published") {
+          notFound();
+        }
+      }
       const cmsBlog = await getPublishedCmsBlogBySlug(slugValue);
       const article = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
       if (article) {
@@ -126,6 +145,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
             datePublished: article.date,
             dateModified: article.modified,
             publisherId: ORGANIZATION_ID,
+            authorName: article.author,
             imageUrl: article.featuredImage?.src,
           }),
         ];
@@ -139,7 +159,10 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
           </>
         );
       }
-    } catch {
+    } catch (err) {
+      if ((err as any)?.digest?.startsWith("NEXT_REDIRECT") || (err as any)?.digest?.startsWith("NEXT_NOT_FOUND")) {
+        throw err;
+      }
       // Do not expose an unpublished or unavailable CMS post.
     }
   }
@@ -227,6 +250,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
         datePublished: article.date,
         dateModified: article.modified,
         publisherId: ORGANIZATION_ID,
+        authorName: article.author,
         imageUrl: article.featuredImage?.src,
       }),
     ];

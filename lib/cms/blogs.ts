@@ -31,16 +31,24 @@ export type CmsBlogSummary = {
   id: string;
   slug: string;
   title: string;
-  status: "draft" | "review" | "scheduled" | "published";
+  status: "draft" | "review" | "scheduled" | "published" | "trashed";
   featured_image_url: string | null;
+  featured_image_alt?: string | null;
   seo_title: string | null;
   seo_description: string | null;
   focus_keyword: string | null;
+  author_name?: string | null;
+  category?: string | null;
+  canonical_url?: string | null;
+  redirect_url?: string | null;
+  redirect_status_code?: number | null;
   word_count: number;
   reading_time_minutes: number;
   needs_review: boolean;
   scheduled_for: string | null;
   published_at: string | null;
+  deleted_at?: string | null;
+  deleted_by?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -66,6 +74,11 @@ export type CmsPublishedBlog = {
   excerpt: string | null;
   content: unknown;
   status: string;
+  author_name?: string | null;
+  featured_image_alt?: string | null;
+  canonical_url?: string | null;
+  redirect_url?: string | null;
+  redirect_status_code?: number | null;
   published_at: string | null;
   updated_at: string;
 };
@@ -77,7 +90,8 @@ export type BlogFilterView =
   | "published"
   | "needs_review"
   | "seo_issues"
-  | "missing_images";
+  | "missing_images"
+  | "trashed";
 
 export type BlogViewCounts = {
   all: number;
@@ -87,6 +101,7 @@ export type BlogViewCounts = {
   needs_review: number;
   seo_issues: number;
   missing_images: number;
+  trashed: number;
 };
 
 function normalizeContent(value: unknown): CmsBlogContent[] {
@@ -135,15 +150,17 @@ export async function listCmsBlogsDetailed(params?: {
       total_needs_review: number;
       total_seo_issues: number;
       total_missing_images: number;
+      total_trashed: number;
     }>(
       `SELECT
-        COUNT(*) AS total_all,
-        SUM(CASE WHEN status = 'draft' THEN 1 ELSE 0 END) AS total_drafts,
-        SUM(CASE WHEN status = 'scheduled' THEN 1 ELSE 0 END) AS total_scheduled,
-        SUM(CASE WHEN status = 'published' THEN 1 ELSE 0 END) AS total_published,
-        SUM(CASE WHEN needs_review = 1 OR status = 'review' THEN 1 ELSE 0 END) AS total_needs_review,
-        SUM(CASE WHEN seo_title IS NULL OR seo_description IS NULL OR LENGTH(seo_description) < 60 OR word_count < 250 THEN 1 ELSE 0 END) AS total_seo_issues,
-        SUM(CASE WHEN featured_image_url IS NULL OR featured_image_url = '' THEN 1 ELSE 0 END) AS total_missing_images
+        COUNT(CASE WHEN (deleted_at IS NULL AND status != 'trashed') THEN 1 END) AS total_all,
+        SUM(CASE WHEN status = 'draft' AND (deleted_at IS NULL AND status != 'trashed') THEN 1 ELSE 0 END) AS total_drafts,
+        SUM(CASE WHEN status = 'scheduled' AND (deleted_at IS NULL AND status != 'trashed') THEN 1 ELSE 0 END) AS total_scheduled,
+        SUM(CASE WHEN status = 'published' AND (deleted_at IS NULL AND status != 'trashed') THEN 1 ELSE 0 END) AS total_published,
+        SUM(CASE WHEN (needs_review = 1 OR status = 'review') AND (deleted_at IS NULL AND status != 'trashed') THEN 1 ELSE 0 END) AS total_needs_review,
+        SUM(CASE WHEN (seo_title IS NULL OR seo_description IS NULL OR LENGTH(seo_description) < 60 OR word_count < 250) AND (deleted_at IS NULL AND status != 'trashed') THEN 1 ELSE 0 END) AS total_seo_issues,
+        SUM(CASE WHEN (featured_image_url IS NULL OR featured_image_url = '') AND (deleted_at IS NULL AND status != 'trashed') THEN 1 ELSE 0 END) AS total_missing_images,
+        SUM(CASE WHEN status = 'trashed' OR deleted_at IS NOT NULL THEN 1 ELSE 0 END) AS total_trashed
       FROM blog_posts`
     ),
   ]);
@@ -156,6 +173,7 @@ export async function listCmsBlogsDetailed(params?: {
     total_needs_review: 0,
     total_seo_issues: 0,
     total_missing_images: 0,
+    total_trashed: 0,
   };
 
   const counts: BlogViewCounts = {
@@ -166,34 +184,40 @@ export async function listCmsBlogsDetailed(params?: {
     needs_review: Number(rawCounts.total_needs_review || 0),
     seo_issues: Number(rawCounts.total_seo_issues || 0),
     missing_images: Number(rawCounts.total_missing_images || 0),
+    trashed: Number(rawCounts.total_trashed || 0),
   };
 
   // Build WHERE conditions for current query
   const whereClauses: string[] = [];
   const queryArgs: unknown[] = [];
 
-  switch (view) {
-    case "drafts":
-      whereClauses.push("status = 'draft'");
-      break;
-    case "scheduled":
-      whereClauses.push("status = 'scheduled'");
-      break;
-    case "published":
-      whereClauses.push("status = 'published'");
-      break;
-    case "needs_review":
-      whereClauses.push("(needs_review = 1 OR status = 'review')");
-      break;
-    case "seo_issues":
-      whereClauses.push("(seo_title IS NULL OR seo_description IS NULL OR LENGTH(seo_description) < 60 OR word_count < 250)");
-      break;
-    case "missing_images":
-      whereClauses.push("(featured_image_url IS NULL OR featured_image_url = '')");
-      break;
-    case "all":
-    default:
-      break;
+  if (view === "trashed") {
+    whereClauses.push("(status = 'trashed' OR deleted_at IS NOT NULL)");
+  } else {
+    whereClauses.push("(deleted_at IS NULL AND status != 'trashed')");
+    switch (view) {
+      case "drafts":
+        whereClauses.push("status = 'draft'");
+        break;
+      case "scheduled":
+        whereClauses.push("status = 'scheduled'");
+        break;
+      case "published":
+        whereClauses.push("status = 'published'");
+        break;
+      case "needs_review":
+        whereClauses.push("(needs_review = 1 OR status = 'review')");
+        break;
+      case "seo_issues":
+        whereClauses.push("(seo_title IS NULL OR seo_description IS NULL OR LENGTH(seo_description) < 60 OR word_count < 250)");
+        break;
+      case "missing_images":
+        whereClauses.push("(featured_image_url IS NULL OR featured_image_url = '')");
+        break;
+      case "all":
+      default:
+        break;
+    }
   }
 
   if (search) {
@@ -213,9 +237,11 @@ export async function listCmsBlogsDetailed(params?: {
   // Get paginated list
   const listSql = `
     SELECT
-      id, slug, title, status, featured_image_url, seo_title, seo_description,
-      focus_keyword, word_count, reading_time_minutes, needs_review,
-      scheduled_for, published_at, created_at, updated_at
+      id, slug, title, status, featured_image_url, featured_image_alt,
+      seo_title, seo_description, focus_keyword, author_name, category,
+      canonical_url, redirect_url, redirect_status_code,
+      word_count, reading_time_minutes, needs_review,
+      scheduled_for, published_at, deleted_at, deleted_by, created_at, updated_at
     FROM blog_posts
     ${whereSql}
     ORDER BY
@@ -317,12 +343,19 @@ export type CreateCmsBlogInput = {
   excerpt?: string;
   content?: unknown[];
   featured_image_url?: string;
+  featured_image_alt?: string;
+  author_name?: string;
+  category?: string;
+  canonical_url?: string;
+  redirect_url?: string;
+  redirect_status_code?: number;
   seo_title?: string;
   seo_description?: string;
   focus_keyword?: string;
   word_count?: number;
   reading_time_minutes?: number;
-  status?: "draft" | "review";
+  status?: "draft" | "review" | "published";
+  published_at?: string;
 };
 
 export async function createCmsBlog(input: CreateCmsBlogInput): Promise<CmsBlogSummary> {
@@ -332,18 +365,26 @@ export async function createCmsBlog(input: CreateCmsBlogInput): Promise<CmsBlogS
   const excerpt = input.excerpt?.trim() || null;
   const status = input.status || "draft";
   const featuredImageUrl = input.featured_image_url?.trim() || null;
+  const featuredImageAlt = input.featured_image_alt?.trim() || null;
+  const authorName = input.author_name?.trim() || null;
+  const category = input.category?.trim() || null;
+  const canonicalUrl = input.canonical_url?.trim() || null;
+  const redirectUrl = input.redirect_url?.trim() || null;
+  const redirectStatusCode = input.redirect_status_code || 301;
   const seoTitle = input.seo_title?.trim() || title;
   const seoDescription = input.seo_description?.trim() || excerpt;
   const focusKeyword = input.focus_keyword?.trim() || null;
   const wordCount = Number(input.word_count || 0);
   const readingTime = Number(input.reading_time_minutes || Math.max(1, Math.ceil(wordCount / 200)));
+  const publishedAt = input.published_at || (status === "published" ? new Date().toISOString().slice(0, 19).replace("T", " ") : null);
 
   await cmsExecute(
     `INSERT INTO blog_posts (
-      id, slug, title, excerpt, content, status, featured_image_url,
+      id, slug, title, excerpt, content, status, featured_image_url, featured_image_alt,
+      author_name, category, canonical_url, redirect_url, redirect_status_code,
       seo_title, seo_description, focus_keyword, word_count,
-      reading_time_minutes, needs_review, created_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW())`,
+      reading_time_minutes, needs_review, published_at, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, NOW(), NOW())`,
     [
       id,
       slug,
@@ -352,18 +393,27 @@ export async function createCmsBlog(input: CreateCmsBlogInput): Promise<CmsBlogS
       JSON.stringify(input.content || []),
       status,
       featuredImageUrl,
+      featuredImageAlt,
+      authorName,
+      category,
+      canonicalUrl,
+      redirectUrl,
+      redirectStatusCode,
       seoTitle,
       seoDescription,
       focusKeyword,
       wordCount,
       readingTime,
+      publishedAt,
     ]
   );
 
   const created = await cmsQuery<CmsBlogSummary>(
-    `SELECT id, slug, title, status, featured_image_url, seo_title, seo_description,
-            focus_keyword, word_count, reading_time_minutes, needs_review,
-            scheduled_for, published_at, created_at, updated_at
+    `SELECT id, slug, title, status, featured_image_url, featured_image_alt,
+            author_name, category, canonical_url, redirect_url, redirect_status_code,
+            seo_title, seo_description, focus_keyword, word_count, reading_time_minutes,
+            needs_review, scheduled_for, published_at, deleted_at, deleted_by,
+            created_at, updated_at
      FROM blog_posts WHERE id = ? LIMIT 1`,
     [id]
   );
@@ -384,8 +434,15 @@ export type UpdateCmsBlogInput = {
   bodyHtml?: string;
   images?: StoredBlogImage[];
   featured_image_url?: string | null;
-  status?: "draft" | "review" | "scheduled" | "published";
+  featured_image_alt?: string | null;
+  author_name?: string | null;
+  category?: string | null;
+  canonical_url?: string | null;
+  redirect_url?: string | null;
+  redirect_status_code?: number | null;
+  status?: "draft" | "review" | "scheduled" | "published" | "trashed";
   scheduled_for?: string | null;
+  published_at?: string | null;
   needs_review?: boolean;
   optimization?: Partial<BlogOptimizationPackage>;
   updatedBy?: string | null;
@@ -407,6 +464,12 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
   const excerpt = input.excerpt !== undefined ? input.excerpt?.trim() || null : existing.excerpt;
   const status = input.status !== undefined ? input.status : existing.status;
   const featuredImageUrl = input.featured_image_url !== undefined ? input.featured_image_url : existing.featured_image_url;
+  const featuredImageAlt = input.featured_image_alt !== undefined ? input.featured_image_alt : (existing.featured_image_alt || null);
+  const authorName = input.author_name !== undefined ? input.author_name : (existing.author_name || null);
+  const category = input.category !== undefined ? input.category : (existing.category || null);
+  const canonicalUrl = input.canonical_url !== undefined ? input.canonical_url : (existing.canonical_url || null);
+  const redirectUrl = input.redirect_url !== undefined ? input.redirect_url : (existing.redirect_url || null);
+  const redirectStatusCode = input.redirect_status_code !== undefined ? input.redirect_status_code : (existing.redirect_status_code || 301);
   const scheduledFor = input.scheduled_for !== undefined ? input.scheduled_for : existing.scheduled_for;
   const needsReview = input.needs_review !== undefined ? (input.needs_review ? 1 : 0) : (existing.needs_review ? 1 : 0);
 
@@ -435,16 +498,40 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
   const wordCount = words.length;
   const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
 
-  const seoTitle = content.optimization.seo.title || title;
-  const seoDescription = content.optimization.seo.description || excerpt || "";
-  const focusKeyword = content.optimization.seo.focusKeyword || null;
+  const seoTitle = content.optimization?.seo?.title || title;
+  const seoDescription = content.optimization?.seo?.description || excerpt || "";
+  const focusKeyword = content.optimization?.seo?.focusKeyword || null;
+
+  // Determine published_at handling:
+  // If explicitly specified in input, use it.
+  // Otherwise, if transitioning to "published" and currently NULL, set to NOW().
+  // Otherwise, PRESERVE existing published_at!
+  let publishedAtSql = "";
+  const extraArgs: unknown[] = [];
+  if (input.published_at !== undefined) {
+    publishedAtSql = ", published_at = ?";
+    extraArgs.push(input.published_at);
+  } else if (status === "published" && !existing.published_at) {
+    publishedAtSql = ", published_at = NOW()";
+  }
+
+  // Determine soft-delete / trash handling:
+  let deletedAtSql = "";
+  if (status === "trashed" && !existing.deleted_at) {
+    deletedAtSql = ", deleted_at = NOW(), deleted_by = ?";
+    extraArgs.push(input.updatedBy || null);
+  } else if (status !== "trashed" && existing.deleted_at) {
+    deletedAtSql = ", deleted_at = NULL, deleted_by = NULL";
+  }
 
   await cmsExecute(
     `UPDATE blog_posts SET
       title = ?, slug = ?, excerpt = ?, content = ?, status = ?,
-      featured_image_url = ?, seo_title = ?, seo_description = ?,
-      focus_keyword = ?, word_count = ?, reading_time_minutes = ?,
-      needs_review = ?, scheduled_for = ?, updated_at = NOW()
+      featured_image_url = ?, featured_image_alt = ?, author_name = ?,
+      category = ?, canonical_url = ?, redirect_url = ?, redirect_status_code = ?,
+      seo_title = ?, seo_description = ?, focus_keyword = ?,
+      word_count = ?, reading_time_minutes = ?, needs_review = ?,
+      scheduled_for = ?${publishedAtSql}${deletedAtSql}, updated_at = NOW()
      WHERE id = ?`,
     [
       title,
@@ -453,6 +540,12 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
       JSON.stringify([content]),
       status,
       featuredImageUrl,
+      featuredImageAlt,
+      authorName,
+      category,
+      canonicalUrl,
+      redirectUrl,
+      redirectStatusCode,
       seoTitle,
       seoDescription,
       focusKeyword,
@@ -460,12 +553,14 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
       readingTimeMinutes,
       needsReview,
       scheduledFor,
+      ...extraArgs,
       id,
     ]
   );
 
   // Sync seo_metadata
-  const canonicalUrl = `https://www.dgeniussolutions.com/blogs/${slug}/`;
+  const effectiveCanonical = canonicalUrl || `https://www.dgeniussolutions.com/blogs/${slug}/`;
+  const isRobotsIndexable = status === "published" && !existing.deleted_at ? 1 : 0;
   await cmsExecute(
     `INSERT INTO seo_metadata (id, entity_type, entity_id, title, description, canonical_url, robots_index, robots_follow, schema_json, updated_at)
      VALUES (?, 'blog_post', ?, ?, ?, ?, ?, 1, ?, NOW())
@@ -481,9 +576,9 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
       id,
       seoTitle,
       seoDescription,
-      canonicalUrl,
-      status === "published" ? 1 : 0,
-      JSON.stringify(content.optimization.schemas || []),
+      effectiveCanonical,
+      isRobotsIndexable,
+      JSON.stringify(content.optimization?.schemas || []),
     ]
   );
 
@@ -643,17 +738,17 @@ export async function validateCmsBlogForPublish(id: string): Promise<{
 
   const aeo = blog.content?.optimization?.aeo;
   if (!aeo?.conciseAnswer?.trim()) {
-    errors.push("AEO concise answer is missing (required for AI search optimization).");
+    warnings.push("AEO concise answer is recommended for AI search optimization (will fall back to article excerpt).");
   }
 
   const schemaTypes = new Set(
     (blog.content?.optimization?.schemas || []).map((s) => String(s?.["@type"] || ""))
   );
   if (!schemaTypes.has("BlogPosting")) {
-    errors.push("Schema.org BlogPosting structured data is missing.");
+    warnings.push("Schema.org BlogPosting structured data will be automatically generated on render.");
   }
   if (!schemaTypes.has("BreadcrumbList")) {
-    errors.push("Schema.org BreadcrumbList structured data is missing.");
+    warnings.push("Schema.org BreadcrumbList structured data will be automatically generated on render.");
   }
 
   if (!blog.featured_image_url && (!blog.content?.images || blog.content.images.length === 0)) {
@@ -711,6 +806,9 @@ export async function publishCmsBlog(id: string) {
       status = 'published',
       needs_review = 0,
       scheduled_for = NULL,
+      deleted_at = NULL,
+      deleted_by = NULL,
+      redirect_url = NULL,
       published_at = COALESCE(published_at, NOW()),
       updated_at = NOW()
      WHERE id = ?`,
@@ -829,9 +927,9 @@ export async function listPublishedCmsBlogs(limit = 100): Promise<CmsPublishedBl
   const result = await cmsQuery<CmsPublishedBlog>(
     `SELECT id, slug, title, excerpt, content, status, published_at, updated_at
      FROM blog_posts
-     WHERE status = 'published'
-     ORDER BY (published_at IS NULL), published_at DESC, updated_at DESC
-     LIMIT ?`,
+      WHERE status = 'published' AND deleted_at IS NULL
+      ORDER BY (published_at IS NULL), published_at DESC, updated_at DESC
+      LIMIT ?`,
     [safeLimit]
   );
   return result.rows;
@@ -840,27 +938,95 @@ export async function listPublishedCmsBlogs(limit = 100): Promise<CmsPublishedBl
 // 13. Get Single Published Blog by Slug for Public Rendering
 export async function getPublishedCmsBlogBySlug(slug: string): Promise<CmsPublishedBlog | null> {
   const result = await cmsQuery<CmsPublishedBlog>(
-    `SELECT id, slug, title, excerpt, content, status, published_at, updated_at
+    `SELECT id, slug, title, excerpt, content, status, author_name, featured_image_alt,
+            canonical_url, redirect_url, redirect_status_code, published_at, updated_at
      FROM blog_posts
-     WHERE slug = ? AND status = 'published'
+     WHERE slug = ? AND status = 'published' AND deleted_at IS NULL
      LIMIT 1`,
     [slug.toLowerCase()]
   );
   return result.rows[0] || null;
 }
 
+// 13b. Get Any CMS Blog by Slug (including trashed / draft)
+export async function getCmsBlogBySlug(slug: string): Promise<CmsBlogSummary | null> {
+  const result = await cmsQuery<CmsBlogSummary>(
+    `SELECT id, slug, title, excerpt, status, author_name, featured_image_alt,
+            category, canonical_url, redirect_url, redirect_status_code,
+            published_at, deleted_at, deleted_by, created_at, updated_at
+     FROM blog_posts
+     WHERE slug = ?
+     LIMIT 1`,
+    [slug.toLowerCase()]
+  );
+  return result.rows[0] || null;
+}
+
+function toIsoDate(val: string | null | undefined): string | undefined {
+  if (!val) return undefined;
+  try {
+    const d = new Date(val);
+    if (!isNaN(d.getTime())) return d.toISOString();
+  } catch {}
+  return String(val);
+}
+
 // 14. Helper to Convert CMS Blog Row to Public Post for Frontend Renderer
 export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
-  const content = normalizeContent(blog.content)[0];
-  if (!content) return null;
-  const optimized = content.optimization;
+  const content = normalizeContent(blog.content)[0] || {
+    version: 1 as const,
+    bodyHtml: typeof blog.content === "string" ? blog.content : "",
+    sourceHash: "",
+    optimization: {
+      seo: {
+        title: blog.title,
+        description: blog.excerpt || "",
+        h1: blog.title,
+        canonicalPath: `/blogs/${blog.slug}/`,
+        focusKeyword: "",
+        secondaryKeywords: [],
+      },
+      aeo: { conciseAnswer: blog.excerpt || "", questions: [] },
+      geo: { entities: [], topics: [], keyFacts: [] },
+      llm: { answerSummary: blog.excerpt || "", citableFacts: [], semanticHeadings: [] },
+      schemas: [],
+      internalLinks: [],
+    },
+    images: [],
+  };
+
+  const optimized = content.optimization || {
+    seo: {
+      title: blog.title,
+      description: blog.excerpt || "",
+      h1: blog.title,
+      canonicalPath: `/blogs/${blog.slug}/`,
+      focusKeyword: "",
+      secondaryKeywords: [],
+    },
+    aeo: { conciseAnswer: blog.excerpt || "", questions: [] },
+    geo: { entities: [], topics: [], keyFacts: [] },
+    llm: { answerSummary: blog.excerpt || "", citableFacts: [], semanticHeadings: [] },
+    schemas: [],
+    internalLinks: [],
+  };
+
+  const optSeo = optimized.seo || {
+    title: blog.title,
+    description: blog.excerpt || "",
+    h1: blog.title,
+    canonicalPath: `/blogs/${blog.slug}/`,
+    focusKeyword: "",
+    secondaryKeywords: [],
+  };
+
   const featured = content.images?.find((img) => img.featured) || content.images?.[0];
   const text = stripHtmlText(content.bodyHtml || "");
 
   // Build TOC
   const toc: Array<{ id: string; text: string; level: 2 | 3 }> = [];
   const usedIds = new Set<string>();
-  const anchoredHtml = content.bodyHtml.replace(
+  const anchoredHtml = (content.bodyHtml || "").replace(
     /<h([23])([^>]*)>([\s\S]*?)<\/h\1>/gi,
     (full, levelRaw, attrs, inner) => {
       const headingText = stripHtmlText(String(inner));
@@ -894,21 +1060,25 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
     if (q && a) faqs.push({ question: q, answer: a });
   }
 
+  const datePublished = toIsoDate(blog.published_at);
+  const dateModified = toIsoDate(blog.updated_at) || datePublished;
+
   return {
-    path: optimized.seo.canonicalPath || `/blogs/${blog.slug}/`,
+    path: optSeo.canonicalPath || `/blogs/${blog.slug}/`,
     slug: blog.slug,
-    title: optimized.seo.title || blog.title,
-    h1: optimized.seo.h1 || blog.title,
-    description: optimized.seo.description || blog.excerpt || "",
-    canonical: `https://www.dgeniussolutions.com${optimized.seo.canonicalPath || `/blogs/${blog.slug}/`}`,
-    date: blog.published_at || undefined,
-    modified: blog.updated_at || undefined,
+    title: optSeo.title || blog.title,
+    h1: optSeo.h1 || blog.title,
+    description: optSeo.description || blog.excerpt || "",
+    canonical: blog.canonical_url || `https://www.dgeniussolutions.com${optSeo.canonicalPath || `/blogs/${blog.slug}/`}`,
+    date: datePublished,
+    modified: dateModified,
+    author: blog.author_name || "D'Genius Solutions Editorial Team",
     featuredImage: featured
       ? {
           src: featured.url,
-          alt: featured.altText,
-          width: featured.width,
-          height: featured.height,
+          alt: blog.featured_image_alt || featured.altText || blog.title,
+          width: featured.width || 1200,
+          height: featured.height || 675,
         }
       : undefined,
     readingTimeMinutes: Math.max(3, Math.ceil(text.split(/\s+/).filter(Boolean).length / 200)),
@@ -916,6 +1086,116 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
     faqs: faqs.slice(0, 8),
     toc,
   };
+}
+
+// 15. Trash / Soft Delete Blog
+export async function trashCmsBlog(
+  id: string,
+  userId?: string | null,
+  options?: { redirectUrl?: string; statusCode?: number }
+) {
+  const blog = await getCmsBlogById(id);
+  if (!blog) throw new Error("Blog not found");
+
+  const redirectUrl = options?.redirectUrl?.trim() || null;
+  const statusCode = options?.statusCode || 301;
+
+  await cmsExecute(
+    `UPDATE blog_posts SET
+      status = 'trashed',
+      deleted_at = NOW(),
+      deleted_by = ?,
+      redirect_url = ?,
+      redirect_status_code = ?,
+      updated_at = NOW()
+     WHERE id = ?`,
+    [userId || null, redirectUrl, statusCode, id]
+  );
+
+  // De-index in seo_metadata
+  await cmsExecute(
+    `UPDATE seo_metadata SET robots_index = 0, updated_at = NOW() WHERE entity_type = 'blog_post' AND entity_id = ?`,
+    [id]
+  );
+
+  return getCmsBlogById(id);
+}
+
+// 16. Restore Blog from Trash
+export async function restoreCmsBlog(id: string, targetStatus?: "draft" | "published") {
+  const blog = await getCmsBlogById(id);
+  if (!blog) throw new Error("Blog not found");
+
+  const newStatus = targetStatus || (blog.published_at ? "published" : "draft");
+
+  await cmsExecute(
+    `UPDATE blog_posts SET
+      status = ?,
+      deleted_at = NULL,
+      deleted_by = NULL,
+      redirect_url = NULL,
+      updated_at = NOW()
+     WHERE id = ?`,
+    [newStatus, id]
+  );
+
+  if (newStatus === "published") {
+    await cmsExecute(
+      `UPDATE seo_metadata SET robots_index = 1, updated_at = NOW() WHERE entity_type = 'blog_post' AND entity_id = ?`,
+      [id]
+    );
+  }
+
+  return getCmsBlogById(id);
+}
+
+// 17. Permanently Delete Blog
+export async function permanentlyDeleteCmsBlog(id: string, confirmedSlug: string) {
+  const blog = await getCmsBlogById(id);
+  if (!blog) throw new Error("Blog not found");
+
+  if (blog.slug.toLowerCase().trim() !== confirmedSlug.toLowerCase().trim()) {
+    throw new Error(`Confirmation mismatch: expected "${blog.slug}", got "${confirmedSlug}".`);
+  }
+
+  await cmsExecute(`DELETE FROM blog_revisions WHERE blog_post_id = ?`, [id]);
+  await cmsExecute(`DELETE FROM media_usage WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
+  await cmsExecute(`DELETE FROM seo_metadata WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
+  await cmsExecute(`DELETE FROM blog_posts WHERE id = ?`, [id]);
+
+  return { ok: true, deletedSlug: blog.slug };
+}
+
+// 18. Check Inbound Internal Links to Blog
+export type InboundBlogLink = {
+  url: string;
+  title: string;
+  sourceType: "blog" | "page" | "service";
+};
+
+export async function checkInboundBlogLinks(slug: string): Promise<InboundBlogLink[]> {
+  const cleanSlug = slug.toLowerCase().replace(/^\/blogs\/|\/$/g, "");
+  const targetPattern = `/blogs/${cleanSlug}/`;
+  const links: InboundBlogLink[] = [];
+
+  // Check in database blog posts
+  try {
+    const dbPosts = await cmsQuery<{ id: string; title: string; slug: string; content: string }>(
+      `SELECT id, title, slug, content FROM blog_posts WHERE content LIKE ? AND slug != ? AND (deleted_at IS NULL AND status != 'trashed')`,
+      [`%${targetPattern}%`, cleanSlug]
+    );
+    for (const post of dbPosts.rows) {
+      links.push({
+        url: `/blogs/${post.slug}/`,
+        title: post.title,
+        sourceType: "blog",
+      });
+    }
+  } catch (err) {
+    console.warn("Failed to check db inbound links:", err);
+  }
+
+  return links;
 }
 
 // 15. Blog Revisions Management & Rollback

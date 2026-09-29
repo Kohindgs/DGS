@@ -3,15 +3,13 @@ import { getIndexableRoutes } from "@/lib/nextjs/routes";
 import { siteConfig } from "@/lib/seo/site";
 import { careerJobPath, getActiveCareerJobs } from "@/lib/careers/jobs";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
+import { listPublishedCmsBlogs, listCmsBlogsDetailed } from "@/lib/cms/blogs";
+import { formatW3CDate } from "@/lib/seo/sitemap-date";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-import { formatW3CDate } from "@/lib/seo/sitemap-date";
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-
   const routes = await getIndexableRoutes();
 
   const migratedRoutes = routes
@@ -44,19 +42,47 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   const entries: MetadataRoute.Sitemap = [...migratedRoutes, ...careerJobs];
+
   if (isCmsDatabaseConfigured()) {
     try {
-      const existing = new Set(entries.map((entry) => entry.url.replace(/\/$/, "")));
-      for (const blog of await listPublishedCmsBlogs()) {
-        const url = `${siteConfig.url}/blogs/${blog.slug}/`;
-        if (!existing.has(url.replace(/\/$/, ""))) {
-          const entry: MetadataRoute.Sitemap[number] = { url };
-          const formatted = formatW3CDate(blog.updated_at || blog.published_at);
-          if (formatted) {
-            entry.lastModified = formatted;
-          }
-          entries.push(entry);
+      const cmsPublished = await listPublishedCmsBlogs(200);
+      const cmsPublishedMap = new Map(
+        cmsPublished.map((b) => [`${siteConfig.url}/blogs/${b.slug}/`.replace(/\/$/, ""), b])
+      );
+
+      // Identify trashed blogs to purge them even if present in static registry
+      const trashed = await listCmsBlogsDetailed({ view: "trashed", limit: 100 });
+      const trashedUrls = new Set(
+        trashed.blogs.map((b) => `${siteConfig.url}/blogs/${b.slug}/`.replace(/\/$/, ""))
+      );
+
+      // Filter out any trashed blogs from migratedRoutes and update lastModified for published ones
+      for (let i = 0; i < entries.length; i++) {
+        const normUrl = entries[i].url.replace(/\/$/, "");
+        if (trashedUrls.has(normUrl)) {
+          entries.splice(i, 1);
+          i--;
+          continue;
         }
+        const cmsBlog = cmsPublishedMap.get(normUrl);
+        if (cmsBlog) {
+          const formatted = formatW3CDate(cmsBlog.updated_at || cmsBlog.published_at);
+          if (formatted) {
+            entries[i].lastModified = formatted;
+          }
+          cmsPublishedMap.delete(normUrl);
+        }
+      }
+
+      // Add any remaining published CMS blogs not previously in migratedRoutes
+      for (const [_, blog] of cmsPublishedMap) {
+        const url = `${siteConfig.url}/blogs/${blog.slug}/`;
+        const entry: MetadataRoute.Sitemap[number] = { url };
+        const formatted = formatW3CDate(blog.updated_at || blog.published_at);
+        if (formatted) {
+          entry.lastModified = formatted;
+        }
+        entries.push(entry);
       }
     } catch {
       // Preserve the static sitemap if the native CMS is temporarily unavailable.

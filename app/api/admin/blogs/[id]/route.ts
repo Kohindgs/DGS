@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { deleteCmsDraftBlog, getCmsBlogById, updateCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
+import { deleteCmsDraftBlog, getCmsBlogById, trashCmsBlog, updateCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -48,6 +49,7 @@ export async function PATCH(
   if (!id) return NextResponse.json({ ok: false, message: "Blog ID required" }, { status: 400 });
 
   const body = await request.json();
+  body.updatedBy = currentUser.id;
 
   try {
     const updated = await updateCmsBlog(id, body);
@@ -70,6 +72,12 @@ export async function PATCH(
       status: "success",
     });
 
+    revalidatePath("/blogs/");
+    revalidatePath(`/blogs/${updated.slug}/`);
+    revalidatePath("/sitemap.xml");
+    revalidatePath("/llms.txt");
+    revalidatePath("/llms.md");
+
     const qa = await validateCmsBlogForPublish(id);
     return NextResponse.json({ ok: true, blog: updated, qa });
   } catch (error) {
@@ -87,7 +95,7 @@ export async function DELETE(
   if (!isCmsDatabaseConfigured()) return NextResponse.json({ ok: false, error: "Database not configured" }, { status: 503 });
 
   const currentUser = await getCurrentCmsUser();
-  if (!currentUser || !hasPermission(currentUser.role, "blogs", "delete")) {
+  if (!currentUser || (!hasPermission(currentUser.role, "blogs", "delete") && !hasPermission(currentUser.role, "blogs", "edit"))) {
     return NextResponse.json({ ok: false, error: "Forbidden: insufficient permissions" }, { status: 403 });
   }
 
@@ -97,24 +105,17 @@ export async function DELETE(
   const blog = await getCmsBlogById(id);
   if (!blog) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
 
-  if (blog.status === "published") {
-    return NextResponse.json(
-      { ok: false, message: "Cannot delete a published blog directly. Unpublish or revert to draft first." },
-      { status: 400 }
-    );
-  }
-
   try {
-    await deleteCmsDraftBlog(id);
+    const trashed = await trashCmsBlog(id, currentUser.id);
 
     await logAuditEvent({
       user_id: currentUser.id,
       actor_email: currentUser.email,
       role: currentUser.role,
-      action: "BLOG_DELETED",
+      action: "BLOG_TRASHED",
       resource: "blog_post",
       resource_id: id,
-      summary: `Deleted blog "${blog.title}" (${id})`,
+      summary: `Moved blog "${blog.title}" (${id}) to Trash`,
       before_state: {
         title: blog.title,
         slug: blog.slug,
@@ -123,7 +124,13 @@ export async function DELETE(
       status: "success",
     });
 
-    return NextResponse.json({ ok: true, message: "Blog deleted successfully" });
+    revalidatePath("/blogs/");
+    revalidatePath(`/blogs/${blog.slug}/`);
+    revalidatePath("/sitemap.xml");
+    revalidatePath("/llms.txt");
+    revalidatePath("/llms.md");
+
+    return NextResponse.json({ ok: true, message: "Blog moved to Trash", blog: trashed });
   } catch (error) {
     console.error("Failed to delete CMS blog", error);
     return NextResponse.json({ ok: false, message: "Failed to delete blog" }, { status: 500 });

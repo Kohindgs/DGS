@@ -27,6 +27,7 @@ export default async function AdminBlogsPage() {
           needs_review: 0,
           seo_issues: 0,
           missing_images: 0,
+          trashed: 0,
         },
       };
 
