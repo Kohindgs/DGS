@@ -32,6 +32,9 @@ function normalizeSemanticH1(path: string, html: string): string {
   if (path === "/services/") {
     output = output.replace(/<h1([^>]*)>(?:Archives:\s*)?<span>Services<\/span><\/h1>/i, '<h1$1>Digital Marketing, SEO & AI Services</h1>');
   }
+  if (path === "/services/ai-production-dubai-page/") {
+    output = output.replace(/In Dubai For Ads, Reels & Brand Films/g, "in Dubai for Ads, Reels & Brand Films");
+  }
   return output;
 }
 
