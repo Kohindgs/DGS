@@ -17,6 +17,15 @@ function formatDate(iso: string): string {
   }
 }
 
+function toIsoWithTimezone(val?: string | null): string | undefined {
+  if (!val) return undefined;
+  try {
+    const d = new Date(val);
+    if (!isNaN(d.getTime())) return d.toISOString();
+  } catch {}
+  return String(val);
+}
+
 function isMaterialUpdate(pub?: string, mod?: string): boolean {
   if (!pub || !mod) return false;
   try {
@@ -35,6 +44,11 @@ export function BlogArticle({
   article: BlogPostDetail;
   relatedPosts: BlogPostMeta[];
 }) {
+  const authorName = article.author?.trim() || "D'Genius Solutions Editorial Team";
+  const isoPublished = toIsoWithTimezone(article.date);
+  const isoModified = toIsoWithTimezone(article.modified);
+  const showUpdated = isMaterialUpdate(article.date, article.modified);
+
   return (
     <article className={styles.articleWrapper}>
       <div className={styles.articleContainer}>
@@ -57,28 +71,36 @@ export function BlogArticle({
 
           <h1 className={styles.articleH1}>{article.h1}</h1>
 
-          {article.date ? (
-            <div className={styles.articleMetaBar}>
-              <div className={styles.metaItem}>
-                <span>By:</span>
-                <span>{article.author || "D'Genius Solutions"}</span>
-              </div>
-              <span>•</span>
-              <div className={styles.metaItem}>
-                <span>Published:</span>
-                <time dateTime={article.date}>{formatDate(article.date)}</time>
-              </div>
-              {isMaterialUpdate(article.date, article.modified) ? (
-                <>
-                  <span>•</span>
-                  <div className={styles.metaItem}>
-                    <span>Updated:</span>
-                    <time dateTime={article.modified!}>{formatDate(article.modified!)}</time>
-                  </div>
-                </>
-              ) : null}
+          <div className={styles.articleMetaBar} itemScope itemType="https://schema.org/BlogPosting">
+            <div className={styles.metaItem}>
+              <span>By </span>
+              <span className="author-name" itemProp="author" style={{ fontWeight: 600 }}>
+                {authorName}
+              </span>
             </div>
-          ) : null}
+            {isoPublished ? (
+              <>
+                <span>•</span>
+                <div className={styles.metaItem}>
+                  <span>Published: </span>
+                  <time dateTime={isoPublished} itemProp="datePublished">
+                    {formatDate(isoPublished)}
+                  </time>
+                </div>
+              </>
+            ) : null}
+            {showUpdated && isoModified ? (
+              <>
+                <span>•</span>
+                <div className={styles.metaItem}>
+                  <span>Updated: </span>
+                  <time dateTime={isoModified} itemProp="dateModified">
+                    {formatDate(isoModified)}
+                  </time>
+                </div>
+              </>
+            ) : null}
+          </div>
         </header>
 
         {/* Hero Featured Image — Natural aspect ratio, zero crop */}

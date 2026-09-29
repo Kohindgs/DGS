@@ -128,7 +128,18 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
           { name: "Blogs", path: "/blogs/" },
           { name: article.title, path: article.path },
         ];
-        const articleSchemas: Record<string, unknown>[] = [
+        const blogPostingSchema = articleSchema({
+          headline: article.h1 || article.title,
+          description: article.description,
+          path: article.path,
+          datePublished: article.date,
+          dateModified: article.modified,
+          publisherId: ORGANIZATION_ID,
+          authorName: article.author,
+          imageUrl: article.featuredImage?.src,
+        });
+
+        const companionSchemas: Record<string, unknown>[] = [
           ...buildGlobalEntitySchemas(),
           webPageSchema({
             name: article.title,
@@ -138,23 +149,19 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
             websiteId: WEBSITE_ID,
           }),
           breadcrumbSchema(breadcrumbItems),
-          articleSchema({
-            headline: article.h1 || article.title,
-            description: article.description,
-            path: article.path,
-            datePublished: article.date,
-            dateModified: article.modified,
-            publisherId: ORGANIZATION_ID,
-            authorName: article.author,
-            imageUrl: article.featuredImage?.src,
-          }),
         ];
+
         if (article.faqs.length > 0) {
-          articleSchemas.push(faqSchema(article.faqs.map((f) => ({ question: f.question, answer: f.answer }))));
+          companionSchemas.push(faqSchema(article.faqs.map((f) => ({ question: f.question, answer: f.answer }))));
         }
+
         return (
           <>
-            <JsonLd value={articleSchemas as unknown as JsonLdValue} />
+            <JsonLd id="schema-blogposting" value={blogPostingSchema as unknown as JsonLdValue} />
+            <JsonLd
+              id="schema-graph"
+              value={{ "@context": "https://schema.org", "@graph": companionSchemas } as unknown as JsonLdValue}
+            />
             <BlogWpChrome><BlogArticle article={article} relatedPosts={relatedPosts} /></BlogWpChrome>
           </>
         );
@@ -191,7 +198,18 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
       { name: "Blogs", path: "/blogs/" },
       { name: article.title, path: article.path },
     ];
-    const articleSchemas: Record<string, unknown>[] = [
+    const blogPostingSchema = articleSchema({
+      headline: article.h1 || article.title,
+      description: article.description,
+      path: article.path,
+      datePublished: article.date,
+      dateModified: article.modified,
+      publisherId: ORGANIZATION_ID,
+      authorName: article.author,
+      imageUrl: article.featuredImage?.src,
+    });
+
+    const companionSchemas: Record<string, unknown>[] = [
       ...buildGlobalEntitySchemas(),
       webPageSchema({
         name: article.title,
@@ -201,27 +219,21 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
         websiteId: WEBSITE_ID,
       }),
       breadcrumbSchema(breadcrumbItems),
-      articleSchema({
-        headline: article.h1 || article.title,
-        description: article.description,
-        path: article.path,
-        datePublished: article.date,
-        dateModified: article.modified,
-        publisherId: ORGANIZATION_ID,
-        authorName: article.author,
-        imageUrl: article.featuredImage?.src,
-      }),
     ];
 
     if (article.faqs.length > 0) {
-      articleSchemas.push(
+      companionSchemas.push(
         faqSchema(article.faqs.map((f) => ({ question: f.question, answer: f.answer }))),
       );
     }
 
     return (
       <>
-        <JsonLd value={articleSchemas as unknown as JsonLdValue} />
+        <JsonLd id="schema-blogposting" value={blogPostingSchema as unknown as JsonLdValue} />
+        <JsonLd
+          id="schema-graph"
+          value={{ "@context": "https://schema.org", "@graph": companionSchemas } as unknown as JsonLdValue}
+        />
         <BlogWpChrome><BlogArticle article={article} relatedPosts={relatedPosts} /></BlogWpChrome>
       </>
     );

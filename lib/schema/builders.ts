@@ -186,7 +186,7 @@ export function articleSchema(input: {
   path: string;
   datePublished?: string;
   dateModified?: string;
-  publisherId: string;
+  publisherId?: string;
   authorName?: string;
   imageUrl?: string;
 }) {
@@ -202,27 +202,54 @@ export function articleSchema(input: {
   const published = toIso(input.datePublished);
   const modified = toIso(input.dateModified) || published;
 
+  const rawAuthor = input.authorName?.trim() || "D'Genius Solutions Editorial Team";
+  const isOrgAuthor =
+    /editorial team|team|agency|solutions|organization|dgs/i.test(rawAuthor) ||
+    rawAuthor === "D'Genius Solutions";
+
+  const authorObj = isOrgAuthor
+    ? {
+        "@type": "Organization",
+        name: cleanSchemaText(rawAuthor),
+        url: "https://www.dgeniussolutions.com",
+      }
+    : {
+        "@type": "Person",
+        name: cleanSchemaText(rawAuthor),
+        url: "https://www.dgeniussolutions.com",
+      };
+
+  const publisherObj = {
+    "@type": "Organization",
+    "@id": "https://www.dgeniussolutions.com/#organization",
+    name: "D'Genius Solutions",
+    url: "https://www.dgeniussolutions.com/",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp",
+    },
+  };
+
+  const imageArray = input.imageUrl
+    ? [absoluteUrl(input.imageUrl)]
+    : ["https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp"];
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "@id": `${url}#article`,
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": url,
-    },
+    "@id": `${url}#blogposting`,
+    url,
     headline: cleanSchemaText(input.headline),
     description: cleanSchemaText(input.description),
     ...(published ? { datePublished: published } : {}),
     ...(modified ? { dateModified: modified } : {}),
-    publisher: { "@id": input.publisherId },
-    author: input.authorName
-      ? { "@type": "Person", name: cleanSchemaText(input.authorName) }
-      : {
-          "@type": "Organization",
-          name: "D'Genius Solutions",
-          url: "https://www.dgeniussolutions.com",
-        },
-    ...(input.imageUrl ? { image: absoluteUrl(input.imageUrl) } : {}),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    author: authorObj,
+    publisher: publisherObj,
+    image: imageArray,
   };
 }
 
