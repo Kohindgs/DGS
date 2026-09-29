@@ -201,21 +201,24 @@ export function evaluateBlogPage(url, html, status) {
 
   // FAQ
   const hasVisibleFaqSection =
-    /frequently asked questions|\bfaqs?\b/i.test(html) &&
-    (/<h[23][^>]*>[\s\S]*?\?[\s\S]*?<\/h[23]>/i.test(html) || /class="[^"]*faq/i.test(html));
+    /<h[2-4][^>]*>[^<]*(?:frequently asked questions|\bfaqs?\b)[^<]*<\/h[2-4]>/i.test(html) ||
+    /class=["'][^"']*faq/i.test(html);
   const faqSchema = allObjects.find((o) => String(o["@type"] || "").toLowerCase() === "faqpage");
   let faqStatus = "N/A";
-  if (hasVisibleFaqSection) {
-    faqStatus = faqSchema ? "PASS" : "FAIL";
+  if (faqSchema) {
+    faqStatus = "PASS";
+  } else if (hasVisibleFaqSection) {
+    faqStatus = "FAIL";
   }
 
   // HowTo
-  const hasVisibleHowToSteps = /<ol\b[^>]*class=["'][^"']*steps?[^"']*["']/i.test(html) ||
-    (/\bstep 1\b/i.test(html) && /\bstep 2\b/i.test(html) && /\bstep 3\b/i.test(html));
+  const hasVisibleHowToSteps = /<ol\b[^>]*class=["'][^"']*steps?[^"']*["']/i.test(html);
   const howToSchema = allObjects.find((o) => String(o["@type"] || "").toLowerCase() === "howto");
   let howToStatus = "N/A";
-  if (hasVisibleHowToSteps) {
-    howToStatus = howToSchema ? "PASS" : "FAIL";
+  if (howToSchema) {
+    howToStatus = "PASS";
+  } else if (hasVisibleHowToSteps) {
+    howToStatus = "FAIL";
   }
 
   // Tables
