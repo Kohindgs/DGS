@@ -9,6 +9,11 @@ import {
   setupDeferredRecaptcha,
   type DeferredRecaptchaController,
 } from "./captcha-client";
+import {
+  extractUtmParams,
+  fireFormConversionAnalytics,
+  getFormEventName,
+} from "@/lib/forms/analytics";
 
 function normalizeRoutePath(pathname: string): string {
   if (!pathname || pathname === "/") return "/";
@@ -111,6 +116,30 @@ export function InnerFormBridge() {
 
     const definition = getFormDefinitionForRoute(route);
     if (!definition?.activationEnabled) return;
+
+    // Adapt custom Elementor HTML lead form on US Landing Page if present
+    if (route === "/us-landing-page/") {
+      const usForm = document.querySelector<HTMLFormElement>("#lead-form form, .lead-form form");
+      if (usForm && !usForm.id) {
+        usForm.id = `fluentform_${definition.fluentFormId}`;
+        const controls = usForm.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+          "input, select, textarea",
+        );
+        for (const el of controls) {
+          if (el.tagName === "SELECT") el.name = "service";
+          else if (el.tagName === "TEXTAREA") el.name = "message";
+          else if (el instanceof HTMLInputElement) {
+            if (el.type === "email") el.name = "email";
+            else if (el.type === "tel") el.name = "phone";
+            else if (el.type === "url") el.name = "website";
+            else if (el.placeholder?.toLowerCase().includes("company")) el.name = "company";
+            else if (el.placeholder?.toLowerCase().includes("name")) el.name = "name";
+          }
+        }
+        const submitBtn = usForm.querySelector<HTMLButtonElement>("button.submit, button");
+        if (submitBtn) submitBtn.type = "submit";
+      }
+    }
 
     const form = document.getElementById(`fluentform_${definition.fluentFormId}`);
     if (!(form instanceof HTMLFormElement)) return;
@@ -269,6 +298,18 @@ export function InnerFormBridge() {
         clearFieldErrors(form);
         setFeedback(form, "success", result.message || definition.confirmation?.message || "Thank you for your submission.");
         form.reset();
+
+        const utm = extractUtmParams();
+        fireFormConversionAnalytics({
+          eventName: getFormEventName(definition.fluentFormId, route),
+          formId: definition.fluentFormId,
+          formTitle: definition.title,
+          route,
+          leadId: (result as { leadId?: string }).leadId ? String((result as { leadId?: string }).leadId) : undefined,
+          submissionId: (result as { submissionId?: string }).submissionId ? String((result as { submissionId?: string }).submissionId) : undefined,
+          service: fields["dropdown"] || fields["dropdown_service"] || fields["service"] || undefined,
+          utm,
+        });
       } catch {
         setFeedback(form, "network-error", "Network error while submitting the form. Please try again.");
       } finally {

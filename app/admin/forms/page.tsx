@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
-import { listApprovedForms } from "@/lib/forms/registry";
+import { runFormHealthProbe } from "@/lib/forms/health-probe";
 import FormsClientView from "./FormsClientView";
 
 export const dynamic = "force-dynamic";
@@ -9,7 +9,7 @@ export default async function AdminFormsPage() {
   if (process.env.DGS_ADMIN_ENABLED !== "true") notFound();
   if (!(await hasAdminSession())) redirect("/admin/login/");
 
-  const forms = listApprovedForms();
+  const healthReport = await runFormHealthProbe();
 
-  return <FormsClientView forms={forms} />;
+  return <FormsClientView healthReport={healthReport} />;
 }

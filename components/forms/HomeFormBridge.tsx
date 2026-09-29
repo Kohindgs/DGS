@@ -6,6 +6,7 @@ import { getFormDefinitionForRoute } from "@/lib/forms/registry";
 import { normalizeHomepageBridgeFields } from "@/lib/forms/homepage-service-normalize.mjs";
 // Uses renderRecaptchaV2 deferred via setupDeferredRecaptcha
 import { ensureHomepageRecaptchaHost, setupDeferredRecaptcha, type DeferredRecaptchaController } from "./captcha-client";
+import { extractUtmParams, fireFormConversionAnalytics } from "@/lib/forms/analytics";
 
 function ensureFeedback(form: HTMLFormElement) {
   let node = form.querySelector<HTMLElement>("[data-form-feedback-host]");
@@ -163,6 +164,18 @@ export function HomeFormBridge() {
 
         setFeedback(form, "success", result.message || definition.confirmation?.message || "Thank you for your submission.");
         form.reset();
+
+        const utm = extractUtmParams();
+        fireFormConversionAnalytics({
+          eventName: "contact_submit",
+          formId: definition.fluentFormId,
+          formTitle: definition.title,
+          route: "/",
+          leadId: (result as { leadId?: string }).leadId ? String((result as { leadId?: string }).leadId) : undefined,
+          submissionId: (result as { submissionId?: string }).submissionId ? String((result as { submissionId?: string }).submissionId) : undefined,
+          service: payloadFields["dropdown"] || undefined,
+          utm,
+        });
       } catch {
         setFeedback(form, "network-error", "Network error while submitting the form. Please try again.");
       } finally {

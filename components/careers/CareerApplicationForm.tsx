@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { extractUtmParams, fireFormConversionAnalytics } from "@/lib/forms/analytics";
 import styles from "./CareerApplicationForm.module.css";
 
 export type CareerApplicationFormProps = {
@@ -161,6 +162,17 @@ export function CareerApplicationForm({
         payload.message ||
           "Thank you! Your application and files have been securely received. Our recruitment team will review your profile.",
       );
+
+      const utm = extractUtmParams();
+      fireFormConversionAnalytics({
+        eventName: "career_application",
+        formTitle: "Career Application Form",
+        route: typeof window !== "undefined" ? window.location.pathname : "/career/",
+        leadId: payload.leadId ? String(payload.leadId) : undefined,
+        submissionId: payload.submissionId ? String(payload.submissionId) : undefined,
+        service: selectedPosition || undefined,
+        utm,
+      });
     } catch (err) {
       console.error("Submission failed:", err);
       setStatus("error");

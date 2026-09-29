@@ -100,6 +100,7 @@ export type FormSubmissionResult = {
   message?: string;
   fieldErrors?: Record<string, string>;
   submissionId?: string | number;
+  leadId?: string | number;
 };
 
 export interface FormBackendAdapter {

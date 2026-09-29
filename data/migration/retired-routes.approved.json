@@ -8,11 +8,6 @@
       "reason": "Legacy WordPress download-search plugin route retired. Do not redirect to homepage."
     },
     {
-      "path": "/seo-pricing/",
-      "statusCode": 410,
-      "reason": "Legacy unmigrated WordPress pricing page retired. Zero GSC traffic, thin/duplicate content risk. Form 18 archived."
-    },
-    {
       "path": "/seo-executive-assessment/",
       "statusCode": 410,
       "reason": "Obsolete WordPress candidate recruitment quiz retired. Zero GSC traffic. Page template safely archived in data/archive/legacy-assessments."

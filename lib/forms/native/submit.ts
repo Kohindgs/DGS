@@ -48,10 +48,11 @@ export async function submitNativeLeadForm(options: {
   route: string;
   sanitizedFields: Record<string, string>;
   captchaToken?: string;
+  skipCaptcha?: boolean;
 }): Promise<FormSubmissionResult> {
-  const { definition, route, sanitizedFields, captchaToken } = options;
+  const { definition, route, sanitizedFields, captchaToken, skipCaptcha } = options;
 
-  if (definition.captcha?.enabled) {
+  if (definition.captcha?.enabled && !skipCaptcha) {
     if (definition.captcha.provider !== "recaptcha") {
       return { ok: false, message: "This CAPTCHA provider is not yet enabled for native submission." };
     }
@@ -120,5 +121,6 @@ export async function submitNativeLeadForm(options: {
     ok: true,
     message: definition.confirmation?.message || "Thank you for your submission.",
     submissionId,
+    leadId,
   };
 }
