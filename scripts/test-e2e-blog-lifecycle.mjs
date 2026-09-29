@@ -76,10 +76,12 @@ async function run() {
       <p>Investing in SEO services in Mumbai and Dubai ensures your enterprise captures both classic organic search and generative search answers.</p>
     `;
 
+    const contentJson = JSON.stringify([{ version: 1, bodyHtml: fullBodyHtml }]);
+
     await pool.query(
-      `INSERT INTO blog_posts (id, slug, title, content, excerpt, status, author, created_at, updated_at)
+      `INSERT INTO blog_posts (id, slug, title, content, excerpt, status, author_name, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, 'draft', 'DGS Editorial Team', UTC_TIMESTAMP(), UTC_TIMESTAMP())`,
-      [testId, testSlug, testTitle, fullBodyHtml, "A complete guide to AI answer engine optimization."]
+      [testId, testSlug, testTitle, contentJson, "A complete guide to AI answer engine optimization."]
     );
     console.log(`✓ Draft inserted into blog_posts table (ID: ${testId}, Slug: ${testSlug})`);
 

@@ -34,8 +34,31 @@ function fetchUrl(url, maxRedirects = 5) {
   });
 }
 
+function extractBodyHtml(content) {
+  if (!content) return "";
+  if (Array.isArray(content) && content[0]?.bodyHtml) {
+    return content[0].bodyHtml;
+  }
+  if (content && typeof content === "object" && content.bodyHtml) {
+    return content.bodyHtml;
+  }
+  if (typeof content === "string") {
+    try {
+      const parsed = JSON.parse(content);
+      if (Array.isArray(parsed) && parsed[0]?.bodyHtml) {
+        return parsed[0].bodyHtml;
+      }
+      if (parsed?.bodyHtml) return parsed.bodyHtml;
+    } catch {
+      return content;
+    }
+  }
+  return String(content);
+}
+
 function stripHtml(html) {
-  return (html || "")
+  const str = typeof html === "string" ? html : (html ? String(html) : "");
+  return str
     .replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, "")
     .replace(/<style[^>]*>([\S\s]*?)<\/style>/gmi, "")
     .replace(/<[^>]+>/g, " ")
@@ -49,7 +72,8 @@ function stripHtml(html) {
 }
 
 function countWords(str) {
-  const plain = stripHtml(str);
+  const body = extractBodyHtml(str);
+  const plain = stripHtml(body);
   if (!plain) return 0;
   return plain.split(/\s+/).filter(Boolean).length;
 }
@@ -90,7 +114,7 @@ async function run() {
       });
 
       const [rows] = await pool.query(
-        "SELECT id, slug, title, status, published_at, updated_at, created_at, content, excerpt, featured_image, featured_image_alt FROM blog_posts WHERE deleted_at IS NULL ORDER BY created_at DESC"
+        "SELECT id, slug, title, status, published_at, updated_at, created_at, content, excerpt, featured_image_url, featured_image_alt, author_name, word_count FROM blog_posts WHERE deleted_at IS NULL ORDER BY created_at DESC"
       );
       dbBlogs = rows;
       console.log(`✓ Loaded ${dbBlogs.length} active blogs from MySQL database`);
@@ -117,7 +141,7 @@ async function run() {
 
   // Add DB blogs
   for (const b of dbBlogs) {
-    const wordCount = countWords(b.content);
+    const wordCount = b.word_count || countWords(b.content);
     const inSitemap = sitemapSet.has(b.slug);
     
     // Check duplicates
@@ -138,11 +162,12 @@ async function run() {
     if (wordCount < 50) errors.push("Body content under 50 words");
     else if (wordCount < 300) warnings.push("Thin content (under 300 words)");
     if (!b.excerpt) warnings.push("Missing excerpt / meta description");
-    if (!b.featured_image) warnings.push("Missing featured image");
+    if (!b.featured_image_url) warnings.push("Missing featured image");
 
     // 2. AEO
-    const plain = stripHtml(b.content);
-    if (!b.content?.includes("<h2") && !b.content?.includes("<h3")) {
+    const contentStr = extractBodyHtml(b.content);
+    const plain = stripHtml(contentStr);
+    if (!contentStr.includes("<h2") && !contentStr.includes("<h3")) {
       warnings.push("AEO: Lacks structured H2/H3 subheadings");
     }
     if (!plain.toLowerCase().includes("what is") && !plain.toLowerCase().includes("how to") && !plain.toLowerCase().includes("why")) {
@@ -176,12 +201,12 @@ async function run() {
     }
 
     // 8. AI Overview
-    if (!b.content?.includes("<ul") && !b.content?.includes("<ol")) {
+    if (!contentStr.includes("<ul") && !contentStr.includes("<ol")) {
       warnings.push("AI Overview: No bullet lists or key takeaway steps found");
     }
 
     // 9. Social
-    if (!b.featured_image) {
+    if (!b.featured_image_url) {
       warnings.push("Social: Missing og:image / social sharing image");
     }
 
