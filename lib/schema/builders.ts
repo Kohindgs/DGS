@@ -226,13 +226,13 @@ export function articleSchema(input: {
     url: "https://www.dgeniussolutions.com/",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp",
+      url: "https://www.dgeniussolutions.com/images/dgs-logo.webp",
     },
   };
 
   const imageArray = input.imageUrl
     ? [absoluteUrl(input.imageUrl)]
-    : ["https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO-1.webp"];
+    : ["https://www.dgeniussolutions.com/images/dgs-logo.webp"];
 
   return {
     "@context": "https://schema.org",

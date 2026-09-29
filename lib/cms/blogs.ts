@@ -1050,36 +1050,27 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
     }
   );
 
-  // Extract FAQs
+  // Extract FAQs strictly from an explicit visible FAQ section
   const faqs: Array<{ question: string; answer: string }> = [];
   const faqHeadingMatches = [...anchoredHtml.matchAll(/<h([234])[^>]*>([\s\S]*?)<\/h\1>/gi)];
   let faqHeadingIdx = -1;
   for (const h of faqHeadingMatches) {
     const text = stripHtmlText(h[2]);
-    if (/\bfaqs?\b|frequently asked questions/i.test(text)) {
+    if (/\bfaqs?\b|frequently asked questions|people also ask/i.test(text)) {
       faqHeadingIdx = h.index ?? anchoredHtml.indexOf(h[0]);
       break;
     }
   }
 
-  const searchHtml = faqHeadingIdx !== -1 ? anchoredHtml.slice(faqHeadingIdx) : anchoredHtml;
-  for (const match of searchHtml.matchAll(
-    /<h([234])[^>]*>([\s\S]*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi
-  )) {
-    const q = stripHtmlText(match[2]);
-    const a = stripHtmlText(match[3]);
-    if (q && a && q.includes("?") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
-      faqs.push({ question: q, answer: a });
-    }
-  }
-
-  // Fallback to optimization AEO questions if no HTML FAQs found
-  if (faqs.length === 0 && Array.isArray(optimized.aeo?.questions)) {
-    for (const item of optimized.aeo.questions) {
-      if (typeof item === "string" && item.trim()) {
-        faqs.push({ question: item.trim(), answer: optimized.aeo?.conciseAnswer || "" });
-      } else if (item && typeof item === "object" && (item as any).question && (item as any).answer) {
-        faqs.push({ question: (item as any).question, answer: (item as any).answer });
+  if (faqHeadingIdx !== -1) {
+    const searchHtml = anchoredHtml.slice(faqHeadingIdx);
+    for (const match of searchHtml.matchAll(
+      /<h([234])[^>]*>([\s\S]*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi
+    )) {
+      const q = stripHtmlText(match[2]);
+      const a = stripHtmlText(match[3]);
+      if (q && a && q.includes("?") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
+        faqs.push({ question: q, answer: a });
       }
     }
   }

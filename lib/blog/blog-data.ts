@@ -249,41 +249,28 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   let faqHeading: RegExpMatchArray | undefined;
   for (const match of headings) {
     const text = match[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-    if (/\bfaqs?\b|frequently asked questions/i.test(text)) faqHeading = match;
+    if (/\bfaqs?\b|frequently asked questions|people also ask/i.test(text)) faqHeading = match;
   }
-  const faqHeadingIdx = faqHeading?.index ?? -1;
+  let faqHeadingIdx = faqHeading?.index ?? -1;
+  if (faqHeadingIdx === -1) {
+    const pFaqIdx = bodyHtml.search(/frequently asked questions/i);
+    if (pFaqIdx !== -1) {
+      faqHeadingIdx = pFaqIdx;
+    }
+  }
+
   if (faqHeadingIdx !== -1) {
     const faqSnippet = bodyHtml.slice(faqHeadingIdx);
     const qMatches = [...faqSnippet.matchAll(/<h([234])[^>]*>([\s\S]*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi)];
     for (const qm of qMatches) {
       const q = qm[2].replace(/<[^>]+>/g, "").trim();
       const a = qm[3].replace(/<[^>]+>/g, "").trim();
-      if (q && a && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post")) {
+      if (q && a && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
         faqs.push({
           question: normalizeBrandName(decodeHtmlEntities(q)),
           answer: normalizeBrandName(decodeHtmlEntities(a)),
         });
       }
-    }
-  } else {
-    // Check if there is an explicit trailing Q&A block before related posts
-    const relatedIdx = bodyHtml.toLowerCase().indexOf("related posts");
-    const preRelated = relatedIdx !== -1 ? bodyHtml.slice(0, relatedIdx) : bodyHtml;
-    const trailingMatches = [...preRelated.matchAll(/<h([234])[^>]*>([\s\S]*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi)];
-    const candidateFaqs: BlogPostFaq[] = [];
-    for (const qm of trailingMatches) {
-      const q = qm[2].replace(/<[^>]+>/g, "").trim();
-      const a = qm[3].replace(/<[^>]+>/g, "").trim();
-      if (q && a && q.includes("?") && !q.toLowerCase().includes("related post")) {
-        candidateFaqs.push({
-          question: normalizeBrandName(decodeHtmlEntities(q)),
-          answer: normalizeBrandName(decodeHtmlEntities(a)),
-        });
-      }
-    }
-    // Only accept if at least 3 Q&A questions exist
-    if (candidateFaqs.length >= 3) {
-      faqs.push(...candidateFaqs);
     }
   }
 
