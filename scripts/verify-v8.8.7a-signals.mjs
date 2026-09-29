@@ -162,7 +162,7 @@ async function run() {
   console.log("\n--- TEST 4: Sitemap Metadata & Freshness ---");
   try {
     const xml = await fetchLive("/sitemap.xml");
-    const entryMatch = xml.match(/<url>[\s\S]*?\/services\/ai-production-dubai-page\/[\s\S]*?<\/url>/i);
+    const entryMatch = xml.match(/<url>(?:(?!<url>)[\s\S])*?<loc>https:\/\/www\.dgeniussolutions\.com\/services\/ai-production-dubai-page\/<\/loc>[\s\S]*?<\/url>/i);
     const hasEntry = Boolean(entryMatch);
     const lastmod = entryMatch ? entryMatch[0].match(/<lastmod>([^<]+)<\/lastmod>/i)?.[1] : null;
 
