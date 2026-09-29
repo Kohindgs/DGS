@@ -260,8 +260,16 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   }
 
   if (faqHeadingIdx !== -1) {
-    const faqSnippet = bodyHtml.slice(faqHeadingIdx);
-    const qMatches = [...faqSnippet.matchAll(/<h([234])[^>]*>([\s\S]*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi)];
+    let cleanFaqSnippet = bodyHtml.slice(faqHeadingIdx);
+    const endMarkers = [/accelerate your digital/i, /related posts/i, /related insights/i, /about the author/i, /leave a reply/i];
+    let endIdx = cleanFaqSnippet.length;
+    for (const em of endMarkers) {
+      const m = cleanFaqSnippet.search(em);
+      if (m !== -1 && m < endIdx) endIdx = m;
+    }
+    cleanFaqSnippet = cleanFaqSnippet.slice(0, endIdx);
+    const safeRegex = /<h([2-4])\b[^>]*>((?:(?!<h[1-6]\b)[\s\S])*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+    const qMatches = [...cleanFaqSnippet.matchAll(safeRegex)];
     for (const qm of qMatches) {
       const q = qm[2].replace(/<[^>]+>/g, "").trim();
       const a = qm[3].replace(/<[^>]+>/g, "").trim();

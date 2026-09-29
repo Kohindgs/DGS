@@ -1063,13 +1063,19 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
   }
 
   if (faqHeadingIdx !== -1) {
-    const searchHtml = anchoredHtml.slice(faqHeadingIdx);
-    for (const match of searchHtml.matchAll(
-      /<h([234])[^>]*>([\s\S]*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi
-    )) {
+    let cleanFaqSnippet = anchoredHtml.slice(faqHeadingIdx);
+    const endMarkers = [/accelerate your digital/i, /related posts/i, /related insights/i, /about the author/i, /leave a reply/i];
+    let endIdx = cleanFaqSnippet.length;
+    for (const em of endMarkers) {
+      const m = cleanFaqSnippet.search(em);
+      if (m !== -1 && m < endIdx) endIdx = m;
+    }
+    cleanFaqSnippet = cleanFaqSnippet.slice(0, endIdx);
+    const safeRegex = /<h([2-4])\b[^>]*>((?:(?!<h[1-6]\b)[\s\S])*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+    for (const match of cleanFaqSnippet.matchAll(safeRegex)) {
       const q = stripHtmlText(match[2]);
       const a = stripHtmlText(match[3]);
-      if (q && a && q.includes("?") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
+      if (q && a && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
         faqs.push({ question: q, answer: a });
       }
     }

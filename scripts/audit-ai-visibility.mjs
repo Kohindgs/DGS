@@ -226,12 +226,18 @@ export function evaluateBlogPage(url, html, status) {
   const hasVisibleFaqSection = visibleFaqHeadingIdx !== -1;
   const visibleFaqQuestions = [];
   if (hasVisibleFaqSection) {
-    const faqSnippet = html.slice(visibleFaqHeadingIdx);
-    const qMatches = [...faqSnippet.matchAll(/<h([2-4])\b[^>]*>([\s\S]*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi)];
-    for (const qm of qMatches) {
+    let faqSnippet = html.slice(visibleFaqHeadingIdx);
+    const endMarkers = [/accelerate your digital/i, /related posts/i, /related insights/i, /leave a reply/i, /class=["'][^"']*related/i];
+    let endIdx = faqSnippet.length;
+    for (const em of endMarkers) {
+      const m = faqSnippet.search(em);
+      if (m !== -1 && m < endIdx) endIdx = m;
+    }
+    faqSnippet = faqSnippet.slice(0, endIdx);
+    const safeRegex = /<h([2-4])\b[^>]*>((?:(?!<h[1-6]\b)[\s\S])*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+    for (const qm of faqSnippet.matchAll(safeRegex)) {
       const q = stripHtml(qm[2]).trim();
-      const a = stripHtml(qm[3]).trim();
-      if (q && a && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
+      if (q && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
         visibleFaqQuestions.push(q);
       }
     }
@@ -250,16 +256,17 @@ export function evaluateBlogPage(url, html, status) {
   }
 
   const visibleFaqQuestionCount = visibleFaqQuestions.length;
-  const schemaFaqQuestionCount = schemaFaqQuestions.length;
+  const faqSchemaQuestionCount = schemaFaqQuestions.length;
 
   // C. Question Matching
-  const norm = (s) => (s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const norm = (s) => (s || "").toLowerCase().replace(/&[a-z0-9#]+;/g, "").replace(/[^a-z0-9]/g, "");
   let exactFaqMatch = false;
-  if (visibleFaqQuestionCount > 0 && schemaFaqQuestionCount > 0) {
+  if (visibleFaqQuestionCount > 0 && faqSchemaQuestionCount > 0) {
     const schemaNorm = schemaFaqQuestions.map(norm);
-    const allMatch = visibleFaqQuestions.every((vq) => schemaNorm.includes(norm(vq)));
-    exactFaqMatch = visibleFaqQuestionCount === schemaFaqQuestionCount && allMatch;
-  } else if (visibleFaqQuestionCount === 0 && schemaFaqQuestionCount === 0) {
+    const visNorm = visibleFaqQuestions.map(norm);
+    const allMatch = visNorm.every((vq) => schemaNorm.includes(vq)) && schemaNorm.every((sq) => visNorm.includes(sq));
+    exactFaqMatch = (visibleFaqQuestionCount === faqSchemaQuestionCount) && allMatch;
+  } else if (visibleFaqQuestionCount === 0 && faqSchemaQuestionCount === 0) {
     exactFaqMatch = true; // Both 0 -> exact agreement
   }
 
