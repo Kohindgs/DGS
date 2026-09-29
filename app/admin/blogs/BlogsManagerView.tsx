@@ -13,6 +13,7 @@ import type {
   UpdateCmsBlogInput,
 } from "@/lib/cms/blogs";
 import { imageMatchesSlug } from "@/lib/cms/blog-import";
+import type { PrePublishGateResult } from "@/lib/cms/pre-publish-gate";
 
 interface BlogsManagerViewProps {
   initialData: {
@@ -50,6 +51,9 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
   // Edit & Detail state
   const [editingBlog, setEditingBlog] = useState<CmsBlogDetail | null>(null);
   const [editQa, setEditQa] = useState<{ ok: boolean; errors: string[]; warnings: string[]; cannibalization?: any } | null>(null);
+  const [editGate, setEditGate] = useState<PrePublishGateResult | null>(null);
+  const [showGateDetails, setShowGateDetails] = useState(false);
+  const [previewMode, setPreviewMode] = useState<"google" | "social" | "links">("google");
   const [editTab, setEditTab] = useState<"content" | "seo" | "aeo" | "geo" | "schema" | "links" | "revisions">("content");
   const [saving, setSaving] = useState(false);
 
@@ -138,6 +142,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       if (data.ok && data.blog) {
         setEditingBlog(data.blog);
         setEditQa(data.qa || null);
+        setEditGate(data.gate || null);
         setActiveTab("edit");
         setEditTab("content");
         fetchRevisions(blogId);
@@ -245,18 +250,23 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
 
       setEditingBlog(data.blog);
       setEditQa(data.qa || null);
+      if (data.gate) setEditGate(data.gate);
 
       if (publishImmediate) {
         // Trigger publish endpoint
         const pubRes = await fetch(`/api/admin/blogs/${editingBlog.id}/publish`, {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: editingBlog.id }),
         });
         const pubData = await pubRes.json();
         if (pubRes.ok && pubData.ok) {
           setEditingBlog(pubData.blog);
+          if (pubData.gate) setEditGate(pubData.gate);
           setNotice({ type: "success", message: `Published live at /blogs/${pubData.blog.slug}/` });
         } else {
-          setNotice({ type: "error", message: pubData.message || "Publish QA failed" });
+          if (pubData.gate) setEditGate(pubData.gate);
+          setNotice({ type: "error", message: pubData.message || "Publish readiness check blocked" });
         }
       } else if (scheduleTime) {
         setNotice({
@@ -406,13 +416,17 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
     }
 
     try {
-      const res = await fetch(`/api/admin/blogs/${blog.id}/publish`, { method: "POST" });
+      const res = await fetch(`/api/admin/blogs/${blog.id}/publish`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: blog.id }),
+      });
       const data = await res.json();
       if (res.ok && data.ok) {
         setNotice({ type: "success", message: `Published live at /blogs/${blog.slug}/` });
         fetchBlogs();
       } else {
-        setNotice({ type: "error", message: data.message || "Publish QA failed" });
+        setNotice({ type: "error", message: data.message || "Publish readiness check blocked" });
       }
     } catch (err) {
       console.error("Quick publish failed:", err);
@@ -2273,69 +2287,392 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
               )}
             </div>
 
-            {/* Publish Readiness / QA Assessment Panel */}
+            {/* UNIFIED PRE-PUBLISH READINESS & PREVIEWS GATE */}
             {editingBlog && (
               <div style={{
-                margin: "16px 0",
-                padding: "16px 20px",
-                borderRadius: "12px",
-                border: editQa && editQa.errors.length > 0
-                  ? "1px solid rgba(239, 68, 68, 0.4)"
-                  : editQa && editQa.warnings.length > 0
-                  ? "1px solid rgba(245, 158, 11, 0.3)"
-                  : "1px solid rgba(16, 185, 129, 0.3)",
-                background: editQa && editQa.errors.length > 0
-                  ? "rgba(239, 68, 68, 0.06)"
-                  : editQa && editQa.warnings.length > 0
-                  ? "rgba(245, 158, 11, 0.06)"
-                  : "rgba(16, 185, 129, 0.06)",
+                margin: "20px 0",
+                padding: "20px",
+                borderRadius: "14px",
+                border: editGate && !editGate.canPublish
+                  ? "1px solid rgba(239, 68, 68, 0.45)"
+                  : editGate && editGate.totalWarnings > 0
+                  ? "1px solid rgba(245, 158, 11, 0.35)"
+                  : "1px solid rgba(16, 185, 129, 0.35)",
+                background: editGate && !editGate.canPublish
+                  ? "rgba(239, 68, 68, 0.05)"
+                  : editGate && editGate.totalWarnings > 0
+                  ? "rgba(245, 158, 11, 0.04)"
+                  : "rgba(16, 185, 129, 0.04)",
               }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                  <span style={{ fontWeight: 650, fontSize: "0.95rem", color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span>{editQa && editQa.errors.length > 0 ? "❌" : editQa && editQa.warnings.length > 0 ? "⚠️" : "✅"}</span>
-                    Publish Readiness &amp; SEO Quality Assessment
-                  </span>
-                  <span style={{
-                    fontSize: "0.78rem",
-                    padding: "3px 10px",
-                    borderRadius: "9999px",
-                    background: editQa && editQa.errors.length > 0 ? "rgba(239,68,68,0.2)" : editQa && editQa.warnings.length > 0 ? "rgba(245,158,11,0.2)" : "rgba(16,185,129,0.2)",
-                    color: editQa && editQa.errors.length > 0 ? "#fca5a5" : editQa && editQa.warnings.length > 0 ? "#fde68a" : "#6ee7b7",
-                    border: editQa && editQa.errors.length > 0 ? "1px solid rgba(239,68,68,0.3)" : editQa && editQa.warnings.length > 0 ? "1px solid rgba(245,158,11,0.3)" : "1px solid rgba(16,185,129,0.3)",
-                  }}>
-                    {editQa && editQa.errors.length > 0 ? "Publish Blocked" : editQa && editQa.warnings.length > 0 ? "Advisories (Publish Allowed)" : "Ready to Publish"}
-                  </span>
+                {/* Header Strip */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <span style={{ fontSize: "1.2rem" }}>
+                      {editGate && !editGate.canPublish ? "🚫" : editGate && editGate.totalWarnings > 0 ? "⚠️" : "✅"}
+                    </span>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: "1rem", color: "#fff" }}>
+                        Pre-Publish Readiness &amp; AI Search Engine Gate
+                      </div>
+                      <div style={{ fontSize: "0.82rem", color: "#9ca3af" }}>
+                        Unified SEO, AEO, GEO, LLM, Schema, and Indexability validation
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{
+                      fontSize: "0.8rem",
+                      fontWeight: 650,
+                      padding: "4px 12px",
+                      borderRadius: "9999px",
+                      background: editGate && !editGate.canPublish
+                        ? "rgba(239,68,68,0.2)"
+                        : editGate && editGate.totalWarnings > 0
+                        ? "rgba(245,158,11,0.2)"
+                        : "rgba(16,185,129,0.2)",
+                      color: editGate && !editGate.canPublish
+                        ? "#fca5a5"
+                        : editGate && editGate.totalWarnings > 0
+                        ? "#fde68a"
+                        : "#6ee7b7",
+                      border: editGate && !editGate.canPublish
+                        ? "1px solid rgba(239,68,68,0.35)"
+                        : editGate && editGate.totalWarnings > 0
+                        ? "1px solid rgba(245,158,11,0.35)"
+                        : "1px solid rgba(16,185,129,0.35)",
+                    }}>
+                      {editGate && !editGate.canPublish
+                        ? `Blocked (${editGate.totalErrors} Technical Errors)`
+                        : editGate && editGate.totalWarnings > 0
+                        ? `Ready with ${editGate.totalWarnings} Advisories`
+                        : "Ready to Publish"}
+                    </span>
+                  </div>
                 </div>
 
-                {editQa && editQa.errors.length > 0 && (
-                  <div style={{ marginTop: "10px" }}>
-                    <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#f87171", marginBottom: "4px" }}>
-                      Blocking Errors (Must fix before publishing):
-                    </div>
-                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#fca5a5", fontSize: "0.85rem" }}>
-                      {editQa.errors.map((err, i) => (
-                        <li key={i}>{err}</li>
-                      ))}
-                    </ul>
+                {/* 9 Dimensions Badge Grid */}
+                {editGate && (
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(115px, 1fr))",
+                    gap: "8px",
+                    marginBottom: "16px",
+                  }}>
+                    {Object.entries(editGate.dimensions).map(([key, dim]) => {
+                      const isErr = dim.status === "ERROR";
+                      const isWarn = dim.status === "WARNING";
+                      const isAio = key === "aiOverview";
+                      const badgeText = isAio
+                        ? (dim as any).readiness
+                        : isErr
+                        ? "ERROR"
+                        : isWarn
+                        ? "WARNING"
+                        : "PASS";
+
+                      return (
+                        <div
+                          key={key}
+                          style={{
+                            padding: "8px 10px",
+                            borderRadius: "8px",
+                            background: isErr
+                              ? "rgba(239,68,68,0.12)"
+                              : isWarn
+                              ? "rgba(245,158,11,0.1)"
+                              : "rgba(16,185,129,0.1)",
+                            border: isErr
+                              ? "1px solid rgba(239,68,68,0.3)"
+                              : isWarn
+                              ? "1px solid rgba(245,158,11,0.25)"
+                              : "1px solid rgba(16,185,129,0.25)",
+                            textAlign: "center",
+                          }}
+                        >
+                          <div style={{ fontSize: "0.72rem", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "2px" }}>
+                            {key === "aiOverview" ? "AI OVERVIEW" : key.toUpperCase()}
+                          </div>
+                          <div style={{
+                            fontSize: "0.78rem",
+                            fontWeight: 700,
+                            color: isErr ? "#f87171" : isWarn ? "#fbbf24" : "#34d399",
+                          }}>
+                            {badgeText}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
 
-                {editQa && editQa.warnings.length > 0 && (
-                  <div style={{ marginTop: "10px" }}>
-                    <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fbbf24", marginBottom: "4px" }}>
-                      Recommendations &amp; Quality Advisories (Will not block publishing):
-                    </div>
-                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#fde68a", fontSize: "0.85rem" }}>
-                      {editQa.warnings.map((warn, i) => (
-                        <li key={i}>{warn}</li>
-                      ))}
-                    </ul>
+                {/* Indexability & Lifecycle Status Strip */}
+                {editGate && (
+                  <div style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "10px 14px",
+                    background: "rgba(0,0,0,0.3)",
+                    borderRadius: "8px",
+                    marginBottom: "16px",
+                    fontSize: "0.82rem",
+                  }}>
+                    <span style={{ color: "#9ca3af", fontWeight: 600 }}>Lifecycle State:</span>
+                    <span style={{
+                      padding: "2px 8px",
+                      borderRadius: "4px",
+                      background: editingBlog.status === "published" ? "rgba(16,185,129,0.15)" : "rgba(156,163,175,0.15)",
+                      color: editingBlog.status === "published" ? "#6ee7b7" : "#d1d5db",
+                    }}>
+                      PUBLISHED: {editingBlog.status === "published" ? "YES" : "NO"}
+                    </span>
+                    <span style={{
+                      padding: "2px 8px",
+                      borderRadius: "4px",
+                      background: "rgba(16,185,129,0.15)",
+                      color: "#6ee7b7",
+                    }}>
+                      CRAWLABLE: YES (index, follow)
+                    </span>
+                    <span style={{
+                      padding: "2px 8px",
+                      borderRadius: "4px",
+                      background: editingBlog.status === "published" && !editingBlog.deleted_at ? "rgba(16,185,129,0.15)" : "rgba(245,158,11,0.15)",
+                      color: editingBlog.status === "published" && !editingBlog.deleted_at ? "#6ee7b7" : "#fde68a",
+                    }}>
+                      IN SITEMAP: {editingBlog.status === "published" && !editingBlog.deleted_at ? "YES" : "ON PUBLISH"}
+                    </span>
+                    <span style={{
+                      padding: "2px 8px",
+                      borderRadius: "4px",
+                      background: "rgba(59,130,246,0.15)",
+                      color: "#93c5fd",
+                    }}>
+                      GOOGLE INDEXED: PENDING GSC CRAWL
+                    </span>
                   </div>
                 )}
 
-                {(!editQa || (editQa.errors.length === 0 && editQa.warnings.length === 0)) && (
-                  <div style={{ fontSize: "0.85rem", color: "#a7f3d0", marginTop: "4px" }}>
-                    All core publishing criteria met. Content, slugs, and schema are ready for live deployment.
+                {/* Interactive Preview & Suggestions Selector */}
+                <div style={{ display: "flex", gap: "8px", marginBottom: "12px", borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "10px" }}>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewMode("google")}
+                    style={{
+                      background: previewMode === "google" ? "rgba(255,255,255,0.15)" : "transparent",
+                      color: previewMode === "google" ? "#fff" : "#9ca3af",
+                      border: "none",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                      fontSize: "0.84rem",
+                      cursor: "pointer",
+                      fontWeight: previewMode === "google" ? 650 : 500,
+                    }}
+                  >
+                    Google Search Preview
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewMode("social")}
+                    style={{
+                      background: previewMode === "social" ? "rgba(255,255,255,0.15)" : "transparent",
+                      color: previewMode === "social" ? "#fff" : "#9ca3af",
+                      border: "none",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                      fontSize: "0.84rem",
+                      cursor: "pointer",
+                      fontWeight: previewMode === "social" ? 650 : 500,
+                    }}
+                  >
+                    Social Card Preview
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewMode("links")}
+                    style={{
+                      background: previewMode === "links" ? "rgba(255,255,255,0.15)" : "transparent",
+                      color: previewMode === "links" ? "#fff" : "#9ca3af",
+                      border: "none",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                      fontSize: "0.84rem",
+                      cursor: "pointer",
+                      fontWeight: previewMode === "links" ? 650 : 500,
+                    }}
+                  >
+                    Internal Link Suggestions ({editGate?.internalLinkingSuggestions.length || 0})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowGateDetails(!showGateDetails)}
+                    style={{
+                      marginLeft: "auto",
+                      background: "transparent",
+                      color: "#a78bfa",
+                      border: "1px solid rgba(167,139,250,0.3)",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                      fontSize: "0.82rem",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {showGateDetails ? "Hide Check Details ▲" : "View Full Checklist ▼"}
+                  </button>
+                </div>
+
+                {/* TAB 1: Google SERP Preview */}
+                {previewMode === "google" && (
+                  <div style={{
+                    background: "#202124",
+                    borderRadius: "10px",
+                    padding: "16px",
+                    fontFamily: "Arial, sans-serif",
+                    maxWidth: "600px",
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                      <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: "#a855f7", display: "grid", placeItems: "center", color: "#fff", fontSize: "10px", fontWeight: "bold" }}>D</div>
+                      <div>
+                        <div style={{ fontSize: "12px", color: "#dadce0", lineHeight: 1.2 }}>D&apos;Genius Solutions</div>
+                        <div style={{ fontSize: "11px", color: "#bdc1c6" }}>https://www.dgeniussolutions.com &gt; blogs &gt; {editingBlog.slug}</div>
+                      </div>
+                    </div>
+                    <div style={{ color: "#8ab4f8", fontSize: "18px", lineHeight: 1.3, marginBottom: "4px", textDecoration: "none" }}>
+                      {editingBlog.content?.optimization?.seo?.title || editingBlog.title || "Untitled Article"}
+                    </div>
+                    <div style={{ color: "#bdc1c6", fontSize: "13px", lineHeight: 1.4 }}>
+                      {editingBlog.excerpt || editingBlog.content?.optimization?.seo?.description || "Read strategic insights on search, AI, and digital growth from D'Genius Solutions."}
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB 2: Social Card Preview */}
+                {previewMode === "social" && (
+                  <div style={{
+                    background: "#18181b",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "10px",
+                    overflow: "hidden",
+                    maxWidth: "520px",
+                  }}>
+                    {editingBlog.featured_image_url ? (
+                      <img
+                        src={editingBlog.featured_image_url}
+                        alt="OG Preview"
+                        style={{ width: "100%", height: "220px", objectFit: "cover" }}
+                      />
+                    ) : (
+                      <div style={{ height: "160px", background: "linear-gradient(135deg, #1e1b4b, #31104b)", display: "grid", placeItems: "center", color: "#a78bfa" }}>
+                        Featured Image Fallback
+                      </div>
+                    )}
+                    <div style={{ padding: "14px" }}>
+                      <div style={{ fontSize: "0.75rem", color: "#a1a1aa", textTransform: "uppercase" }}>DGENIUSSOLUTIONS.COM</div>
+                      <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#fff", margin: "4px 0" }}>
+                        {editingBlog.content?.optimization?.seo?.title || editingBlog.title}
+                      </div>
+                      <div style={{ fontSize: "0.82rem", color: "#a1a1aa", lineHeight: 1.4 }}>
+                        {editingBlog.excerpt || "Insights from D'Genius Solutions."}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB 3: Internal Link Suggestions */}
+                {previewMode === "links" && editGate && (
+                  <div>
+                    {editGate.internalLinkingSuggestions.length > 0 ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        <div style={{ fontSize: "0.82rem", color: "#9ca3af", marginBottom: "4px" }}>
+                          Recommended contextual internal links based on article themes (click to copy anchor snippet):
+                        </div>
+                        {editGate.internalLinkingSuggestions.map((link, idx) => (
+                          <div
+                            key={idx}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              background: "rgba(255,255,255,0.04)",
+                              padding: "10px 14px",
+                              borderRadius: "8px",
+                              border: "1px solid rgba(255,255,255,0.08)",
+                            }}
+                          >
+                            <div>
+                              <div style={{ fontSize: "0.88rem", fontWeight: 600, color: "#fff" }}>
+                                <span style={{ color: "#a78bfa", marginRight: "6px" }}>[{link.category}]</span>
+                                {link.targetTitle}
+                              </div>
+                              <div style={{ fontSize: "0.78rem", color: "#9ca3af", marginTop: "2px" }}>
+                                Target: <code>{link.targetPath}</code> | {link.reason}
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              className="dgs-btn-secondary dgs-btn-small"
+                              onClick={() => {
+                                navigator.clipboard.writeText(`<a href="${link.targetPath}">${link.suggestedAnchor}</a>`);
+                                setNotice({ type: "info", message: `Copied anchor link for "${link.suggestedAnchor}"` });
+                              }}
+                            >
+                              Copy Link HTML
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: "0.85rem", color: "#a1a1aa" }}>
+                        No additional internal linking suggestions. Core service keywords are already referenced.
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Expandable Full Checklist Drawer */}
+                {showGateDetails && editGate && (
+                  <div style={{
+                    marginTop: "16px",
+                    paddingTop: "16px",
+                    borderTop: "1px solid rgba(255,255,255,0.08)",
+                  }}>
+                    {editGate.totalErrors > 0 && (
+                      <div style={{ marginBottom: "14px" }}>
+                        <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "#f87171", marginBottom: "6px" }}>
+                          🚨 Blocking Errors (Must be resolved before publishing):
+                        </div>
+                        <ul style={{ margin: 0, paddingLeft: "18px", color: "#fca5a5", fontSize: "0.85rem" }}>
+                          {Object.values(editGate.dimensions)
+                            .flatMap((d) => d.issues)
+                            .filter((i) => i.severity === "ERROR")
+                            .map((err, idx) => (
+                              <li key={idx} style={{ marginBottom: "3px" }}>
+                                <strong>[{err.code}]</strong> {err.message}
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {editGate.totalWarnings > 0 && (
+                      <div>
+                        <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "#fbbf24", marginBottom: "6px" }}>
+                          ⚡ Quality Advisories (Recommended, but will not block publishing):
+                        </div>
+                        <ul style={{ margin: 0, paddingLeft: "18px", color: "#fde68a", fontSize: "0.85rem" }}>
+                          {Object.values(editGate.dimensions)
+                            .flatMap((d) => d.issues)
+                            .filter((i) => i.severity === "WARNING")
+                            .map((warn, idx) => (
+                              <li key={idx} style={{ marginBottom: "3px" }}>
+                                <strong>[{warn.code}]</strong> {warn.message}
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

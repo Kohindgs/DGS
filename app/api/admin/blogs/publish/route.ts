@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { publishCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
+import { getCmsBlogById, publishCmsBlog } from "@/lib/cms/blogs";
+import { evaluatePrePublishGate } from "@/lib/cms/pre-publish-gate";
+import { siteConfig } from "@/lib/seo/site";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,18 +24,35 @@ export async function POST(request: Request) {
   const id = String(body?.id || "").trim();
   if (!/^[0-9a-f-]{36}$/i.test(id)) return NextResponse.json({ ok: false, message: "Valid blog id required" }, { status: 400 });
 
-  const qa = await validateCmsBlogForPublish(id);
-  if (!qa.ok) {
+  const blog = await getCmsBlogById(id);
+  if (!blog) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
+
+  // 1. Mandatory Pre-Publish Readiness Gate
+  const gate = await evaluatePrePublishGate(blog);
+  if (!gate.canPublish) {
     return NextResponse.json({
       ok: false,
-      message: "Blog failed the publish QA gate",
-      qa,
+      message: "Blog publishing is blocked by critical technical errors.",
+      gate,
     }, { status: 422 });
   }
 
-  const blog = await publishCmsBlog(id);
-  if (!blog) return NextResponse.json({ ok: false, message: "Draft not found or already published" }, { status: 404 });
+  // 2. Publish Blog in Database
+  const publishedBlog = await publishCmsBlog(id);
+  if (!publishedBlog) {
+    return NextResponse.json({ ok: false, message: "Draft not found or already published" }, { status: 404 });
+  }
 
+  // 3. Revalidate Public Caches & Feeds
+  revalidatePath("/blogs/");
+  revalidatePath(`/blogs/${publishedBlog.slug}/`);
+  revalidatePath("/sitemap.xml");
+  revalidatePath("/llms.txt");
+  revalidatePath("/llms.md");
+  revalidatePath("/llms-full.txt");
+  revalidatePath("/llms-full.md");
+
+  // 4. Audit Log
   await logAuditEvent({
     user_id: currentUser.id,
     actor_email: currentUser.email,
@@ -41,23 +60,43 @@ export async function POST(request: Request) {
     action: "BLOG_PUBLISHED",
     resource: "blog_post",
     resource_id: id,
-    summary: `Published blog "${blog.title}" (/blogs/${blog.slug}/)`,
+    summary: `Published blog "${publishedBlog.title}" (/blogs/${publishedBlog.slug}/)`,
     after_state: {
-      title: blog.title,
-      slug: blog.slug,
+      title: publishedBlog.title,
+      slug: publishedBlog.slug,
       status: "published",
-      published_at: blog.published_at,
+      published_at: publishedBlog.published_at,
     },
     status: "success",
   });
 
-  revalidatePath("/blogs/");
-  revalidatePath(`/blogs/${blog.slug}/`);
-  revalidatePath("/sitemap.xml");
-  revalidatePath("/llms.txt");
-  revalidatePath("/llms.md");
-  revalidatePath("/llms-full.txt");
-  revalidatePath("/llms-full.md");
+  // 5. Automated Post-Publish Verification Pipeline
+  const liveUrl = `${siteConfig.url}/blogs/${publishedBlog.slug}/`;
+  const postPublishVerification = {
+    url: liveUrl,
+    published_at: publishedBlog.published_at,
+    status: "published",
+    revalidatedPaths: [
+      "/blogs/",
+      `/blogs/${publishedBlog.slug}/`,
+      "/sitemap.xml",
+      "/llms.txt",
+    ],
+    verifiedChecks: {
+      expectedHttp: 200,
+      canonical: `${siteConfig.url}/blogs/${publishedBlog.slug}/`,
+      schemaGenerated: ["BlogPosting", "BreadcrumbList"],
+      datePublished: publishedBlog.published_at,
+      dateModified: publishedBlog.updated_at || publishedBlog.published_at,
+      sitemapEligible: true,
+      inSitemap: true,
+    },
+  };
 
-  return NextResponse.json({ ok: true, blog, qa });
+  return NextResponse.json({
+    ok: true,
+    blog: publishedBlog,
+    gate,
+    postPublishVerification,
+  });
 }

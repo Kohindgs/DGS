@@ -4,6 +4,7 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { deleteCmsDraftBlog, getCmsBlogById, trashCmsBlog, updateCmsBlog, validateCmsBlogForPublish } from "@/lib/cms/blogs";
+import { evaluatePrePublishGate } from "@/lib/cms/pre-publish-gate";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -28,8 +29,9 @@ export async function GET(
   if (!blog) return NextResponse.json({ ok: false, message: "Blog not found" }, { status: 404 });
 
   const qa = await validateCmsBlogForPublish(id);
+  const gate = await evaluatePrePublishGate(blog);
 
-  return NextResponse.json({ ok: true, blog, qa });
+  return NextResponse.json({ ok: true, blog, qa, gate });
 }
 
 export async function PATCH(
@@ -79,7 +81,8 @@ export async function PATCH(
     revalidatePath("/llms.md");
 
     const qa = await validateCmsBlogForPublish(id);
-    return NextResponse.json({ ok: true, blog: updated, qa });
+    const gate = await evaluatePrePublishGate(updated);
+    return NextResponse.json({ ok: true, blog: updated, qa, gate });
   } catch (error) {
     console.error("Failed to update CMS blog", error);
     return NextResponse.json({ ok: false, message: "Failed to update blog" }, { status: 500 });

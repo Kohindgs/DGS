@@ -35,7 +35,7 @@ export async function generateStaticParams() {
   const { routes } = await loadRouteRegistry();
   return routes
     .filter((r) => r.proposedAction === "KEEP_SAME_URL" || r.proposedAction === "PROTECTED")
-    .filter((r) => r.path !== "/")
+    .filter((r) => r.path !== "/" && r.path !== "/blogs/")
     .filter((r) => !getRetiredRoute(r.path))
     .filter((r) => !shouldExcludeFromStaticGeneration(r.path))
     .map((r) => ({ slug: r.path.split("/").filter(Boolean) }));
@@ -178,48 +178,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
       indexable: route.indexable,
       includeInSitemap: route.includeInSitemap,
     });
-  }
-
-  if (path === "/blogs/") {
-    let posts = await getAllBlogPosts();
-    if (isCmsDatabaseConfigured()) {
-      try {
-        const nativePosts = (await listPublishedCmsBlogs())
-          .map(cmsBlogToPublicPost)
-          .filter((post) => post !== null);
-        const existingPaths = new Set(posts.map((post) => post.path));
-        posts = [...nativePosts.filter((post) => !existingPaths.has(post.path)), ...posts];
-      } catch {
-        // Keep the existing archive available if the native CMS is unavailable.
-      }
-    }
-    const blogSchemas = [
-      ...buildGlobalEntitySchemas(),
-      webPageSchema({
-        name: route.title || "Blogs - D'Genius Solutions",
-        description: route.description || "Strategic thinking on SEO, AI search, and digital growth.",
-        path,
-        organizationId: ORGANIZATION_ID,
-      }),
-      blogArchiveSchema({
-        name: route.title || "Blogs - D'Genius Solutions",
-        description: route.description || "Strategic thinking on SEO, AI search, and digital growth.",
-        path,
-        organizationId: ORGANIZATION_ID,
-        posts: posts.map((p, idx) => ({ name: p.title, path: p.path, position: idx + 1 })),
-      }),
-      breadcrumbSchema([
-        { name: "Home", path: "/" },
-        { name: "Blogs", path: "/blogs/" },
-      ]),
-    ];
-
-    return (
-      <>
-        <JsonLd value={blogSchemas as unknown as JsonLdValue} />
-        <BlogWpChrome><BlogArchive posts={posts} /></BlogWpChrome>
-      </>
-    );
   }
 
   if (path.startsWith("/blogs/") && path !== "/blogs/") {
