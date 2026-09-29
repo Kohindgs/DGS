@@ -130,6 +130,7 @@ export function serviceSchema(input: {
   path: string;
   providerId: string;
   serviceType?: string;
+  areaServed?: string | string[];
 }) {
   const url = absoluteUrl(input.path);
   return {
@@ -141,6 +142,13 @@ export function serviceSchema(input: {
     description: cleanSchemaText(input.description),
     provider: { "@id": input.providerId },
     ...(input.serviceType ? { serviceType: cleanSchemaText(input.serviceType) } : {}),
+    ...(input.areaServed
+      ? {
+          areaServed: Array.isArray(input.areaServed)
+            ? input.areaServed.map((a) => cleanSchemaText(a))
+            : cleanSchemaText(input.areaServed),
+        }
+      : {}),
   };
 }
 

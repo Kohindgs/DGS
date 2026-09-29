@@ -1,4 +1,13 @@
-export type PageSeoOverride = { title?: string; description?: string };
+export type PageSeoOverride = {
+  title?: string;
+  description?: string;
+  ogTitle?: string;
+  twitterTitle?: string;
+  breadcrumbLabel?: string;
+  serviceName?: string;
+  serviceType?: string;
+  areaServed?: string | string[];
+};
 
 const PAGE_SEO_OVERRIDES: Record<string, PageSeoOverride> = {
   "/career/": {
@@ -26,16 +35,38 @@ const PAGE_SEO_OVERRIDES: Record<string, PageSeoOverride> = {
     description: "Website development company in Pune for responsive websites, SEO-ready builds, landing pages, eCommerce development and ongoing website AMC support.",
   },
   "/services/dubai-seo/": {
-    title: "SEO Agency in Dubai | SEO Services for UAE Growth | DGS",
+    title: "SEO Agency in Dubai | SEO Services & Local SEO UAE | DGS",
     description: "SEO services for businesses targeting Dubai and the UAE, covering technical SEO, local search, content, authority building and lead-focused organic growth.",
+    breadcrumbLabel: "SEO Dubai",
+    serviceName: "SEO Services in Dubai",
+    serviceType: "Search Engine Optimization",
+    areaServed: ["Dubai", "United Arab Emirates"],
   },
   "/aeo-dubai/": {
     title: "AEO Agency in Dubai | AI Search & Google AI Overviews | DGS",
     description: "AEO services for Dubai-focused brands seeking visibility across Google AI Overviews, ChatGPT, Gemini, Perplexity, featured snippets and People Also Ask.",
+    breadcrumbLabel: "AEO Dubai",
+    serviceName: "AEO Services in Dubai",
+    serviceType: "Answer Engine Optimization",
+    areaServed: ["Dubai", "United Arab Emirates"],
   },
   "/services/ai-production-dubai-page/": {
-    title: "AI Video Production Agency in Dubai | Ads, Reels & Brand Films | DGS",
-    description: "AI video production for Dubai-focused brands creating campaign ads, reels, product videos, social content and brand films with scalable AI-led workflows.",
+    title: "AI Video Production Agency in Dubai | AI Video Services | DGS",
+    description: "D'Genius Solutions creates AI video ads, product films, avatars, reels and brand films for Dubai and UAE brands with human-led creative direction, editing and campaign-ready delivery.",
+    ogTitle: "AI Video Production Agency in Dubai | DGS",
+    twitterTitle: "AI Video Production Agency in Dubai | DGS",
+    breadcrumbLabel: "AI Video Production Dubai",
+    serviceName: "AI Video Production Services in Dubai",
+    serviceType: "AI Video Production",
+    areaServed: ["Dubai", "United Arab Emirates"],
+  },
+  "/services/": {
+    title: "Digital Marketing, SEO & AI Services | D'Genius Solutions",
+    description: "Explore D'Genius Solutions digital marketing, SEO, AEO, AI video production, web development, performance marketing, and branding services.",
+  },
+  "/our-services/": {
+    title: "Our Services | Digital Marketing, SEO & AI Solutions | DGS",
+    description: "Discover our full range of search, creative, technology, and performance marketing services built for business growth.",
   },
   "/australia-page/": {
     title: "Digital Marketing Agency in Australia | SEO, Ads, Web & AI | DGS",

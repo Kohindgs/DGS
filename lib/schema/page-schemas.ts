@@ -56,13 +56,15 @@ export function buildRouteSchemas(input: {
     }),
   );
 
-  if (route.wordpressType === "service") {
+  if (route.wordpressType === "service" || path === "/aeo-dubai/") {
     schemas.push(
       serviceSchema({
-        name: pageTitle,
+        name: seoOverride?.serviceName || pageTitle,
         description: pageDescription,
         path,
         providerId: ORGANIZATION_ID,
+        serviceType: seoOverride?.serviceType,
+        areaServed: seoOverride?.areaServed,
       }),
     );
   }

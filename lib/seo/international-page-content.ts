@@ -1,4 +1,4 @@
-﻿function replaceOnce(html: string, from: string, to: string): string {
+function replaceOnce(html: string, from: string, to: string): string {
   return html.includes(from) ? html.replace(from, to) : html;
 }
 
@@ -15,6 +15,31 @@ export function applyInternationalPageContent(path: string, html: string): strin
       out,
       "The goal is simple: position DGS as a best SEO agency in Dubai choice for your audience and turn search visibility into measurable leads.",
       "The goal is simple: position DGS as a credible SEO partner for Dubai-focused businesses and turn search visibility into measurable leads.",
+    );
+    out = replaceOnce(
+      out,
+      "D'Genius Solutions provides SEO services in Dubai for businesses improve Google rankings",
+      "D'Genius Solutions provides SEO services in Dubai for businesses that want to improve Google rankings",
+    );
+    out = replaceOnce(
+      out,
+      "Business Bay, DIFC, Andheri, Sharjah, and Abu Dhabi discovery.",
+      "Business Bay, DIFC, Downtown Dubai, Sharjah, and Abu Dhabi discovery.",
+    );
+    out = replaceOnce(
+      out,
+      "Dubai, Business Bay, DIFC, Andheri, Sharjah, and Abu Dhabi searches.",
+      "Dubai, Business Bay, DIFC, Downtown Dubai, Sharjah, and Abu Dhabi searches.",
+    );
+    out = replaceOnce(
+      out,
+      "targeting Downtown Dubai and Worli searches.",
+      "targeting Downtown Dubai and Business Bay searches.",
+    );
+    out = replaceOnce(
+      out,
+      "targeting Dubai Marina, Fort, Churchgate, and Colaba.",
+      "targeting Dubai Marina, DIFC, JLT, and Business Bay.",
     );
   }
 

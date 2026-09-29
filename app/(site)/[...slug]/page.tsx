@@ -81,6 +81,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   return buildPageMetadata({
     title,
     description,
+    ogTitle: seoOverride?.ogTitle,
+    twitterTitle: seoOverride?.twitterTitle,
     path,
     canonicalPath: canonicalPath.startsWith("http")
       ? new URL(canonicalPath).pathname

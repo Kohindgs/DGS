@@ -30,7 +30,7 @@ function normalizeSemanticH1(path: string, html: string): string {
     output = output.replace(/Join Our<br\s*\/?>\s*<span/gi, "Join Our<br> <span");
   }
   if (path === "/services/") {
-    output = output.replace(/<h1([^>]*)>Archives:\s*<span>Services<\/span><\/h1>/i, '<h1$1>Our <span>Services</span></h1>');
+    output = output.replace(/<h1([^>]*)>(?:Archives:\s*)?<span>Services<\/span><\/h1>/i, '<h1$1>Digital Marketing, SEO & AI Services</h1>');
   }
   return output;
 }

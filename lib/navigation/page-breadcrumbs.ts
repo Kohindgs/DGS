@@ -20,26 +20,32 @@ export function resolveInnerPageVariant(path: string, wordpressType: RouteRecord
   return "page";
 }
 
+import { getPageSeoOverride } from "@/lib/seo/page-overrides";
+
 export function buildPageBreadcrumbs(
   path: string,
   route: Pick<RouteRecord, "path" | "wordpressType" | "title">,
 ): BreadcrumbItem[] {
   const segments = path.split("/").filter(Boolean);
   const crumbs: BreadcrumbItem[] = [{ name: "Home", path: "/" }];
+  const seoOverride = getPageSeoOverride(path);
 
   if (route.wordpressType === "service" && segments[0] === "services") {
     crumbs.push({ name: "Services", path: "/our-services/" });
-    crumbs.push({ name: route.title || "Service", path });
+    crumbs.push({ name: seoOverride?.breadcrumbLabel || route.title || "Service", path });
   } else if (route.wordpressType === "post" && segments[0] === "blogs") {
     crumbs.push({ name: "Blogs", path: "/blogs/" });
-    crumbs.push({ name: route.title || "Post", path });
+    crumbs.push({ name: seoOverride?.breadcrumbLabel || route.title || "Post", path });
   } else if (path === "/") {
     return [];
   } else {
     let built = "";
     for (let i = 0; i < segments.length; i++) {
       built += "/" + segments[i];
-      const name = segments[i].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+      const isLast = i === segments.length - 1;
+      const name = isLast && seoOverride?.breadcrumbLabel
+        ? seoOverride.breadcrumbLabel
+        : segments[i].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
       crumbs.push({ name, path: built + "/" });
     }
   }

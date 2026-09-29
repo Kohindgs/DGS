@@ -16,6 +16,8 @@ export type PageMetadataInput = {
   image?: string;
   type?: "website" | "article";
   metadataReview?: boolean;
+  ogTitle?: string;
+  twitterTitle?: string;
 };
 
 export function normalizeSitePath(input: string) {
@@ -42,6 +44,13 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
   const follow = publicIndexing && input.follow !== false;
   const image = absoluteUrl(input.image || DEFAULT_SHARE_IMAGE_PATH);
 
+  const ogTitle = input.ogTitle?.trim()
+    ? normalizeBrandName(decodeHtmlEntities(input.ogTitle.trim()))
+    : title;
+  const twitterTitle = input.twitterTitle?.trim()
+    ? normalizeBrandName(decodeHtmlEntities(input.twitterTitle.trim()))
+    : title;
+
   const metadata: Metadata = {
     title,
     alternates: {
@@ -60,7 +69,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
     },
     openGraph: {
       type: input.type || "website",
-      title,
+      title: ogTitle,
       url: absoluteUrl(path),
       siteName: DGS_BRAND_NAME,
       locale: "en_IN",
@@ -68,7 +77,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: twitterTitle,
       images: [image],
     },
   };
