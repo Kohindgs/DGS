@@ -1055,16 +1055,34 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
   const faqHeadingMatches = [...anchoredHtml.matchAll(/<h([234])[^>]*>([\s\S]*?)<\/h\1>/gi)];
   let faqHeadingIdx = -1;
   for (const h of faqHeadingMatches) {
-    const text = stripHtmlText(h[2]);
-    if (/\bfaqs?\b|frequently asked questions|people also ask/i.test(text)) {
+    const text = stripHtmlText(h[2]).trim();
+    if (
+      /^(?:(?:\d+[\.\)]\s*)?(?:faqs?|frequently asked questions|people also ask)(?:\s*[\(:–—].*)?)$/i.test(text) ||
+      /\b(?:frequently asked questions|people also ask)\b/i.test(text) ||
+      /^\s*faqs?\s*$/i.test(text)
+    ) {
       faqHeadingIdx = h.index ?? anchoredHtml.indexOf(h[0]);
-      break;
+    }
+  }
+
+  if (faqHeadingIdx === -1) {
+    const pFaqIdx = anchoredHtml.search(/frequently asked questions/i);
+    if (pFaqIdx !== -1) {
+      faqHeadingIdx = pFaqIdx;
     }
   }
 
   if (faqHeadingIdx !== -1) {
     let cleanFaqSnippet = anchoredHtml.slice(faqHeadingIdx);
-    const endMarkers = [/accelerate your digital/i, /related posts/i, /related insights/i, /about the author/i, /leave a reply/i];
+    const endMarkers = [
+      /<h[1-6]\b[^>]*>\s*(?:conclusion|final thoughts|wrap[\s-]?up|prepare your brand|ready to|accelerate your digital|related posts?|related insights?|about the author|leave a reply)/i,
+      /accelerate your digital/i,
+      /related posts/i,
+      /related insights/i,
+      /about the author/i,
+      /leave a reply/i,
+      /class=["'][^"']*related/i,
+    ];
     let endIdx = cleanFaqSnippet.length;
     for (const em of endMarkers) {
       const m = cleanFaqSnippet.search(em);
@@ -1073,9 +1091,14 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
     cleanFaqSnippet = cleanFaqSnippet.slice(0, endIdx);
     const safeRegex = /<h([2-4])\b[^>]*>((?:(?!<h[1-6]\b)[\s\S])*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
     for (const match of cleanFaqSnippet.matchAll(safeRegex)) {
-      const q = stripHtmlText(match[2]);
-      const a = stripHtmlText(match[3]);
-      if (q && a && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
+      const q = stripHtmlText(match[2]).trim();
+      const a = stripHtmlText(match[3]).trim();
+      if (
+        q &&
+        a &&
+        q.includes("?") &&
+        !/^(?:conclusion|final thoughts|accelerate your digital|related)/i.test(q)
+      ) {
         faqs.push({ question: q, answer: a });
       }
     }

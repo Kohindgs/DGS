@@ -249,7 +249,13 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   let faqHeading: RegExpMatchArray | undefined;
   for (const match of headings) {
     const text = match[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-    if (/\bfaqs?\b|frequently asked questions|people also ask/i.test(text)) faqHeading = match;
+    if (
+      /^(?:(?:\d+[\.\)]\s*)?(?:faqs?|frequently asked questions|people also ask)(?:\s*[\(:–—].*)?)$/i.test(text) ||
+      /\b(?:frequently asked questions|people also ask)\b/i.test(text) ||
+      /^\s*faqs?\s*$/i.test(text)
+    ) {
+      faqHeading = match;
+    }
   }
   let faqHeadingIdx = faqHeading?.index ?? -1;
   if (faqHeadingIdx === -1) {
@@ -261,7 +267,15 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
 
   if (faqHeadingIdx !== -1) {
     let cleanFaqSnippet = bodyHtml.slice(faqHeadingIdx);
-    const endMarkers = [/accelerate your digital/i, /related posts/i, /related insights/i, /about the author/i, /leave a reply/i];
+    const endMarkers = [
+      /<h[1-6]\b[^>]*>\s*(?:conclusion|final thoughts|wrap[\s-]?up|prepare your brand|ready to|accelerate your digital|related posts?|related insights?|about the author|leave a reply)/i,
+      /accelerate your digital/i,
+      /related posts/i,
+      /related insights/i,
+      /about the author/i,
+      /leave a reply/i,
+      /class=["'][^"']*related/i,
+    ];
     let endIdx = cleanFaqSnippet.length;
     for (const em of endMarkers) {
       const m = cleanFaqSnippet.search(em);
@@ -273,7 +287,12 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
     for (const qm of qMatches) {
       const q = qm[2].replace(/<[^>]+>/g, "").trim();
       const a = qm[3].replace(/<[^>]+>/g, "").trim();
-      if (q && a && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
+      if (
+        q &&
+        a &&
+        q.includes("?") &&
+        !/^(?:conclusion|final thoughts|accelerate your digital|related)/i.test(q)
+      ) {
         faqs.push({
           question: normalizeBrandName(decodeHtmlEntities(q)),
           answer: normalizeBrandName(decodeHtmlEntities(a)),

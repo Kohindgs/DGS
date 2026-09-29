@@ -208,10 +208,13 @@ export function evaluateBlogPage(url, html, status) {
 
   for (const h of headingTags) {
     const text = stripHtml(h[2]).trim();
-    if (/\bfaqs?\b|frequently asked questions|people also ask/i.test(text)) {
+    if (
+      /^(?:(?:\d+[\.\)]\s*)?(?:faqs?|frequently asked questions|people also ask)(?:\s*[\(:–—].*)?)$/i.test(text) ||
+      /\b(?:frequently asked questions|people also ask)\b/i.test(text) ||
+      /^\s*faqs?\s*$/i.test(text)
+    ) {
       visibleFaqHeadingIdx = h.index ?? html.indexOf(h[0]);
       visibleFaqHeadingText = text;
-      break;
     }
   }
 
@@ -227,7 +230,15 @@ export function evaluateBlogPage(url, html, status) {
   const visibleFaqQuestions = [];
   if (hasVisibleFaqSection) {
     let faqSnippet = html.slice(visibleFaqHeadingIdx);
-    const endMarkers = [/accelerate your digital/i, /related posts/i, /related insights/i, /leave a reply/i, /class=["'][^"']*related/i];
+    const endMarkers = [
+      /<h[1-6]\b[^>]*>\s*(?:conclusion|final thoughts|wrap[\s-]?up|prepare your brand|ready to|accelerate your digital|related posts?|related insights?|about the author|leave a reply)/i,
+      /accelerate your digital/i,
+      /related posts/i,
+      /related insights/i,
+      /about the author/i,
+      /leave a reply/i,
+      /class=["'][^"']*related/i,
+    ];
     let endIdx = faqSnippet.length;
     for (const em of endMarkers) {
       const m = faqSnippet.search(em);
@@ -237,7 +248,11 @@ export function evaluateBlogPage(url, html, status) {
     const safeRegex = /<h([2-4])\b[^>]*>((?:(?!<h[1-6]\b)[\s\S])*?)<\/h\1>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
     for (const qm of faqSnippet.matchAll(safeRegex)) {
       const q = stripHtml(qm[2]).trim();
-      if (q && !q.toLowerCase().includes("faq") && !q.toLowerCase().includes("related post") && !q.toLowerCase().includes("accelerate your digital")) {
+      if (
+        q &&
+        q.includes("?") &&
+        !/^(?:conclusion|final thoughts|accelerate your digital|related)/i.test(q)
+      ) {
         visibleFaqQuestions.push(q);
       }
     }
