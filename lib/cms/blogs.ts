@@ -35,9 +35,13 @@ export type ReviewStatus =
 
 export type SourceType =
   | "FIRST_PARTY_ORIGINAL"
+  | "VERIFIED_COMMISSIONED"
   | "REWRITTEN_LEGACY"
   | "OUTSOURCED_LEGACY"
-  | "AI_ASSISTED_VERIFIED";
+  | "AI_ASSISTED_VERIFIED"
+  | "THIRD_PARTY"
+  | "SPONSORED"
+  | "UNVERIFIED";
 
 export type CmsBlogSummary = {
   id: string;
@@ -394,6 +398,11 @@ export async function createCmsBlog(input: CreateCmsBlogInput): Promise<CmsBlogS
   const featuredImageUrl = input.featured_image_url?.trim() || null;
   const featuredImageAlt = input.featured_image_alt?.trim() || null;
   const authorName = input.author_name?.trim() || null;
+  const contentOwner = input.content_owner?.trim() || null;
+  const reviewer = input.reviewer?.trim() || null;
+  const reviewDate = input.review_date || null;
+  const reviewStatus = input.review_status || "REVIEW_REQUIRED";
+  const sourceType = input.source_type || "UNVERIFIED";
   const category = input.category?.trim() || null;
   const canonicalUrl = input.canonical_url?.trim() || null;
   const redirectUrl = input.redirect_url?.trim() || null;
@@ -408,10 +417,11 @@ export async function createCmsBlog(input: CreateCmsBlogInput): Promise<CmsBlogS
   await cmsExecute(
     `INSERT INTO blog_posts (
       id, slug, title, excerpt, content, status, featured_image_url, featured_image_alt,
-      author_name, category, canonical_url, redirect_url, redirect_status_code,
+      author_name, content_owner, reviewer, review_date, review_status, source_type,
+      category, canonical_url, redirect_url, redirect_status_code,
       seo_title, seo_description, focus_keyword, word_count,
       reading_time_minutes, needs_review, published_at, created_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, NOW(), NOW())`,
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, NOW(), NOW())`,
     [
       id,
       slug,
@@ -422,6 +432,11 @@ export async function createCmsBlog(input: CreateCmsBlogInput): Promise<CmsBlogS
       featuredImageUrl,
       featuredImageAlt,
       authorName,
+      contentOwner,
+      reviewer,
+      reviewDate,
+      reviewStatus,
+      sourceType,
       category,
       canonicalUrl,
       redirectUrl,
@@ -498,6 +513,11 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
   const featuredImageUrl = input.featured_image_url !== undefined ? input.featured_image_url : existing.featured_image_url;
   const featuredImageAlt = input.featured_image_alt !== undefined ? input.featured_image_alt : (existing.featured_image_alt || null);
   const authorName = input.author_name !== undefined ? input.author_name : (existing.author_name || null);
+  const contentOwner = input.content_owner !== undefined ? (input.content_owner?.trim() || null) : (existing.content_owner || null);
+  const reviewer = input.reviewer !== undefined ? (input.reviewer?.trim() || null) : (existing.reviewer || null);
+  const reviewDate = input.review_date !== undefined ? input.review_date : (existing.review_date || null);
+  const reviewStatus = input.review_status !== undefined ? input.review_status : (existing.review_status || "REVIEW_REQUIRED");
+  const sourceType = input.source_type !== undefined ? input.source_type : (existing.source_type || "UNVERIFIED");
   const category = input.category !== undefined ? input.category : (existing.category || null);
   const canonicalUrl = input.canonical_url !== undefined ? input.canonical_url : (existing.canonical_url || null);
   const redirectUrl = input.redirect_url !== undefined ? input.redirect_url : (existing.redirect_url || null);
@@ -560,6 +580,7 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
     `UPDATE blog_posts SET
       title = ?, slug = ?, excerpt = ?, content = ?, status = ?,
       featured_image_url = ?, featured_image_alt = ?, author_name = ?,
+      content_owner = ?, reviewer = ?, review_date = ?, review_status = ?, source_type = ?,
       category = ?, canonical_url = ?, redirect_url = ?, redirect_status_code = ?,
       seo_title = ?, seo_description = ?, focus_keyword = ?,
       word_count = ?, reading_time_minutes = ?, needs_review = ?,
@@ -574,6 +595,11 @@ export async function updateCmsBlog(id: string, input: UpdateCmsBlogInput): Prom
       featuredImageUrl,
       featuredImageAlt,
       authorName,
+      contentOwner,
+      reviewer,
+      reviewDate,
+      reviewStatus,
+      sourceType,
       category,
       canonicalUrl,
       redirectUrl,
