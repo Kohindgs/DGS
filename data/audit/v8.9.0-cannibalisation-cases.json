@@ -1,0 +1,48 @@
+[
+  {
+    "caseId": 1,
+    "query": "best llm seo agency in navi mumbai",
+    "urlA": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "urlAMetrics": {
+      "pos": 14.29,
+      "prevPos": 14.25,
+      "imp": 7,
+      "prevImp": 12,
+      "clicks": 0
+    },
+    "urlB": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+    "urlBMetrics": {
+      "pos": 16,
+      "prevPos": 16.33,
+      "imp": 3,
+      "prevImp": 3,
+      "clicks": 0
+    },
+    "intendedOwner": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "rootCause": "The general Mumbai SEO page mentions 'LLM SEO / AI Search Optimization' in its services list, causing Google to rank both URLs in positions 14-16 for Navi Mumbai LLM queries.",
+    "resolutionAction": "Enforce exact internal linking from /services/seo-services-in-mumbai/ to /services/llm-seo-service/ using anchor 'LLM SEO Services in Mumbai' to signal specialist hierarchy. Do NOT rewrite titles or H1s during rollout."
+  },
+  {
+    "caseId": 2,
+    "query": "top answer engine optimization agency in mumbai. my location is mumbai, maharashtra, india, india.",
+    "urlA": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "urlAMetrics": {
+      "pos": 5.4,
+      "prevPos": 3.4,
+      "imp": 5,
+      "prevImp": 5,
+      "clicks": 0
+    },
+    "urlB": "https://www.dgeniussolutions.com/services/aeo/",
+    "urlBMetrics": {
+      "pos": 3,
+      "prevPos": 3.33,
+      "imp": 3,
+      "prevImp": 3,
+      "clicks": 0
+    },
+    "intendedOwner": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "rootCause": "Historical migration redirect consolidation: /services/aeo/ is a 301 Permanent Redirect to /services/aeo-services-in-mumbai/. GSC recorded historical impressions for both during the consolidation period.",
+    "resolutionAction": "Already resolved at network level: /services/aeo/ returns HTTP 301 Moved Permanently. Google will fully consolidate query metrics to the canonical URL as the update completes. No code changes needed."
+  }
+]

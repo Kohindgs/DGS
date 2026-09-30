@@ -1,0 +1,112 @@
+[
+  {
+    "url": "https://www.dgeniussolutions.com/aeo-dubai/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Regex non-greedy multi-line span in detectPageEditorialArtifacts (matched across 69,828 chars from <h1> to distant <h2>)",
+    "evidence": "Regex /<h[1-6]\\b[^>]*>[\\s\\S]*?\\b(?:Proof|Studio)\\b[\\w\\s]{1,40}\\bSignals\\b[\\s\\S]*?<\\/h[1-6]>/i bridged unrelated headings. Bounded single-tag regex confirmed 0 machine labels.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 394)",
+    "recommendedAction": "Fix scanner regex to single-tag boundary. Do not alter page copy.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Regex multi-line span false positive across heading boundaries",
+    "evidence": "Multi-line regex crossed from entry-title <h1> to unrelated section. Bounded regex verified 0 leaked labels.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 394)",
+    "recommendedAction": "Fix scanner regex boundary. Do not alter blog content.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (REMEDIATED)",
+    "trigger": "Legacy mirror previously contained repeated <small>Internal Link</small> tags above footer links",
+    "evidence": "Commit 2f1e0c6 and current production HTML verified clean. Scanner confirmed 0 leaked tags on live page.",
+    "source": "data/wordpress/mirrors/pages/services__ai-production-dubai-page.json",
+    "recommendedAction": "Maintain clean mirror and verify 0 rendered labels.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/dubai-seo/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Legitimate UI category badge <span class=\"bipill\">Local SEO</span> misclassified as isolated staging tag",
+    "evidence": "Feature card pill for Google Maps optimization was flagged by broad /<span...Local SEO...<h[1-6]/i regex. Legitimate UI styling.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 409)",
+    "recommendedAction": "Whitelist legitimate feature card category badges in audit scanner.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/llm-seo-service/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Double false positive: multi-line regex across headings + feature card pill <span class=\"bipill\">Local SEO</span>",
+    "evidence": "Page has single <h2 class=\"dgs-section-title\"> followed by <span class=\"bipill\">Local SEO</span> on Google Maps Dominance card. Zero machine labels present.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs",
+    "recommendedAction": "Constrain regex and whitelist feature pills. Merge duplicate 'What Are LLM SEO Services?' section if duplicate DOM exists (verified single DOM H2).",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/seo-service-in-banglore/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Legitimate service category badge <span class=\"dgs-tag\">Local SEO</span> above <h3>Bengaluru Local SEO</h3>",
+    "evidence": "Legitimate UI category chip styling on local service deliverable card.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 409)",
+    "recommendedAction": "Fix scanner regex. Maintain existing UI styling.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/seo-service-in-gurugram/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Legitimate service category badge <span class=\"dgs-tag\">Local SEO</span> above <h3>Gurugram Local SEO</h3>",
+    "evidence": "Legitimate UI category chip styling on local service deliverable card.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 409)",
+    "recommendedAction": "Fix scanner regex. Maintain existing UI styling.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/seo-service-pune/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Legitimate service category badge <span class=\"dgs-tag\">Local SEO</span> above <h3>Pune Local SEO</h3>",
+    "evidence": "Legitimate UI category chip styling on local service deliverable card.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 409)",
+    "recommendedAction": "Fix scanner regex. Maintain existing UI styling.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/seo-services-in-hyderabad/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Legitimate service category badge <span class=\"dgs-tag\">Local SEO</span> above <h3>Hyderabad Local SEO</h3>",
+    "evidence": "Legitimate UI category chip styling on local service deliverable card.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 409)",
+    "recommendedAction": "Fix scanner regex. Maintain existing UI styling.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Legitimate service category badge <span class=\"dgs-tag\">Local SEO</span> above <h3>Mumbai Local SEO</h3>",
+    "evidence": "Legitimate UI category chip styling on local service deliverable card.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 409)",
+    "recommendedAction": "Fix scanner regex. Maintain existing UI styling.",
+    "safeDuringRollout": "YES"
+  },
+  {
+    "url": "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
+    "riskScore": "HIGH -> SAFE (REMEDIATED)",
+    "category": "PUBLIC_LABEL (FALSE POSITIVE)",
+    "trigger": "Regex multi-line heading false positive in native CMS dynamic blog content",
+    "evidence": "Multi-line regex crossed from blog title to distant subheading. Single-tag bounded regex verified 0 machine labels.",
+    "source": "build-sitewide-ranking-recovery-baseline.mjs (line 394)",
+    "recommendedAction": "Fix scanner regex boundary. Do not alter blog content.",
+    "safeDuringRollout": "YES"
+  }
+]

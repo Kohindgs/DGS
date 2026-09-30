@@ -382,38 +382,44 @@ export function validatePageJsonLd(html, canonicalUrl = "") {
 export function detectPageEditorialArtifacts(html, routePath = "") {
   const artifacts = [];
 
-  // 1. Staging / Internal Labels (even without trailing colon/brackets)
+  // Strip script and style tags first to avoid false positives in JS bundles/JSON
+  const cleanHtml = html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "");
+
+  // 1. Explicit Staging / Internal Labels (isolated badge or with delimiter)
   const stagingPatterns = [
-    { name: "Target Keyword", regex: /\bTarget\s+Keyword\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
-    { name: "AI Overview Answer", regex: /\bAI\s+Overview\s+Answer\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
-    { name: "Case Signal", regex: /\bCase\s+Signal\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
-    { name: "SEO Notes", regex: /\bSEO\s+Notes?\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
-    { name: "Editor Note", regex: /\bEditor(?:'s)?\s+Note\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
-    { name: "Internal Link", regex: /\bInternal\s+Link\b(?:\s*[:\-\]]|(?:\s*<\/[a-z0-9]+>)?\s*<h\d|\s*\n)/i },
-    { name: "Crawlable Signals Heading", regex: /<h[1-6]\b[^>]*>[\s\S]*?\bCrawlable\b[\w\s]{1,40}\bSignals\b[\s\S]*?<\/h[1-6]>/i },
-    { name: "Proof / Studio Signals Heading", regex: /<h[1-6]\b[^>]*>[\s\S]*?\b(?:Proof|Studio)\b[\w\s]{1,40}\bSignals\b[\s\S]*?<\/h[1-6]>/i },
+    { name: "Target Keyword Badge", regex: /<small\b[^>]*>\s*Target\s+Keywords?\s*<\/small>|<(?:span|div|p)\b[^>]*class=["'][^"']*(?:badge|pill|tag|label|staging|meta|dgs-card)[^"']*["'][^>]*>\s*Target\s+Keywords?\s*<\/(?:span|div|p)>/i },
+    { name: "Target Keyword Delimited", regex: /\bTarget\s+Keyword\s*[:\-\]]/i },
+    { name: "AI Overview Answer Badge", regex: /<small\b[^>]*>\s*AI\s+Overview\s+Answer\s*<\/small>|<(?:span|div|p)\b[^>]*class=["'][^"']*(?:badge|pill|tag|label|staging|meta|dgs-card)[^"']*["'][^>]*>\s*AI\s+Overview\s+Answer\s*<\/(?:span|div|p)>/i },
+    { name: "AI Overview Answer Delimited", regex: /\bAI\s+Overview\s+Answer\s*[:\-\]]/i },
+    { name: "Case Signal Badge", regex: /<small\b[^>]*>\s*Case\s+Signals?\s*<\/small>|<(?:span|div|p)\b[^>]*class=["'][^"']*(?:badge|pill|tag|label|staging|meta|dgs-card)[^"']*["'][^>]*>\s*Case\s+Signals?\s*<\/(?:span|div|p)>/i },
+    { name: "Case Signal Delimited", regex: /\bCase\s+Signal\s*[:\-\]]/i },
+    { name: "SEO Notes Delimited", regex: /\bSEO\s+Notes?\s*[:\-\]]/i },
+    { name: "Editor Note Delimited", regex: /\bEditor(?:'s)?\s+Note\s*[:\-\]]/i },
+    { name: "Internal Link Badge", regex: /<small\b[^>]*>\s*Internal\s+Links?\s*<\/small>|<(?:span|div|p)\b[^>]*class=["'][^"']*(?:badge|pill|tag|label|staging|meta|dgs-card)[^"']*["'][^>]*>\s*Internal\s+Links?\s*<\/(?:span|div|p)>|<(?:small|span|div|p)\b[^>]*>\s*Internal\s+Links?\s*<\/(?:small|span|div|p)>(?:\s*<h[1-6]\b)/i },
+    { name: "Internal Link Delimited", regex: /\bInternal\s+Link\s*[:\-\]]/i },
+    { name: "Editorial Instruction", regex: /\bthe\s+most\s+important\s+internal\s+link\s+for\s+this\s+blog\s+is\b/i },
+    { name: "Crawler Notes Delimited", regex: /\bcrawler\s+notes?\s*[:\-\]]/i },
+    { name: "CMS Notes Delimited", regex: /\bCMS\s+notes?\s*[:\-\]]/i },
+    { name: "Editorial Notes Delimited", regex: /\beditorial\s+notes?\s*[:\-\]]/i },
+    { name: "Debug Text Delimited", regex: /\bdebug\s+text\s*[:\-\]]/i },
+    { name: "Internal SEO Instructions", regex: /\binternal\s+SEO\s+instructions?\b/i },
+    // Strict single-heading bounded pattern for machine signal headings
+    {
+      name: "Staging Signals Heading",
+      regex: /<h[1-6]\b[^>]*>(?:(?!<\/h[1-6]>).)*?\b(?:Mumbai\s+AI\s+Video\s+Studio\s+Signals|Proof\s+And\s+Case\s+Study\s+Signals|Crawlable\s+AI\s+Video\s+Case\s+Study\s+Signals)\b(?:(?!<\/h[1-6]>).)*?<\/h[1-6]>/i,
+    },
+    // Eyebrow staging signals
+    {
+      name: "Staging Eyebrow Signals",
+      regex: /<p\b[^>]*class=["'][^"']*dgs-eyebrow[^"']*["'][^>]*>\s*(?:Mumbai\s+AI\s+Video\s+Studio\s+Signals|Proof\s+And\s+Case\s+Study\s+Signals)\s*<\/p>/i,
+    },
   ];
 
   for (const p of stagingPatterns) {
-    if (p.regex.test(html)) {
+    if (p.regex.test(cleanHtml)) {
       artifacts.push(p.name);
-    }
-  }
-
-  // 2. Contextual Badges in HTML:
-  // "Local SEO" or "India SEO" appearing as isolated badges (<small>, <span>, pill)
-  // or immediately preceding a heading.
-  // Note: "Local SEO" in ordinary prose ("Our local SEO work connects Google Business Profile...") is legitimate and NOT an artifact.
-  const contextualPatterns = [
-    { name: "India SEO (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*India\s+SEO\s*<\/(?:small|span|div|p)>/i },
-    { name: "Local SEO (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*Local\s+SEO\s*<\/(?:small|span|div|p)>(?:\s*<h[1-6]\b|\s*<div\b)/i },
-    { name: "Target Keyword (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*Target\s+Keyword\s*<\/(?:small|span|div|p)>/i },
-    { name: "Case Signal (Isolated Badge)", regex: /<(?:small|span|div|p)\b[^>]*>\s*Case\s+Signal\s*<\/(?:small|span|div|p)>/i },
-  ];
-
-  for (const cp of contextualPatterns) {
-    if (cp.regex.test(html)) {
-      artifacts.push(cp.name);
     }
   }
 

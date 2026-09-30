@@ -1,0 +1,126 @@
+[
+  {
+    "entity": "Homepage",
+    "url": "/",
+    "primaryQueryFamilies": [
+      "D'Genius Solutions",
+      "digital marketing agency in mumbai",
+      "broad AI-led marketing/production positioning"
+    ],
+    "rule": "Owns broad brand & agency authority queries; delegates specialist service queries to child pages via contextual internal links."
+  },
+  {
+    "entity": "AI Video Production",
+    "url": "/services/ai-video-production-agency/",
+    "primaryQueryFamilies": [
+      "ai video production agency in mumbai",
+      "ai video production service in mumbai",
+      "ai video production services in mumbai",
+      "ai video production house in mumbai",
+      "ai video company in mumbai",
+      "ai video agency in mumbai"
+    ],
+    "rule": "Consolidates agency/service/house/company variations into a single authoritative service page. Zero doorway pages allowed."
+  },
+  {
+    "entity": "SEO Services Mumbai",
+    "url": "/services/seo-services-in-mumbai/",
+    "primaryQueryFamilies": [
+      "seo services in mumbai",
+      "seo company in mumbai",
+      "seo agency mumbai",
+      "mumbai seo services"
+    ],
+    "rule": "Owns core Mumbai SEO commercial queries. Links out to LLM SEO, AEO, and GEO as advanced AI services."
+  },
+  {
+    "entity": "AEO Services Mumbai",
+    "url": "/services/aeo-services-in-mumbai/",
+    "primaryQueryFamilies": [
+      "aeo services in mumbai",
+      "answer engine optimization agency mumbai",
+      "aeo agency mumbai"
+    ],
+    "rule": "Owns Mumbai Answer Engine Optimization queries. Target of 301 redirect from legacy /services/aeo/."
+  },
+  {
+    "entity": "GEO Services",
+    "url": "/services/geo/",
+    "primaryQueryFamilies": [
+      "geo services",
+      "geo agency in mumbai",
+      "generative engine optimization services in mumbai"
+    ],
+    "rule": "Owns Generative Engine Optimization service queries. Informational queries are addressed by /blogs/generative-engine-optimization/."
+  },
+  {
+    "entity": "LLM SEO Service",
+    "url": "/services/llm-seo-service/",
+    "primaryQueryFamilies": [
+      "llm seo services",
+      "llm seo agency india",
+      "best llm seo agency in mumbai",
+      "llm seo company"
+    ],
+    "rule": "Owns all commercial LLM SEO queries. Informational definitions belong to /blogs/what-is-llm-seo/."
+  },
+  {
+    "entity": "Performance Marketing",
+    "url": "/services/performance-marketing/",
+    "primaryQueryFamilies": [
+      "performance marketing agency in mumbai",
+      "google ads agency mumbai",
+      "meta ads agency mumbai"
+    ],
+    "rule": "Owns paid media, ROI, and PPC management queries."
+  },
+  {
+    "entity": "Content Creation",
+    "url": "/services/content-creation/",
+    "primaryQueryFamilies": [
+      "content creation services",
+      "content marketing agency in mumbai",
+      "seo content writing services mumbai"
+    ],
+    "rule": "Owns commercial content writing and creative assets queries. Target of blog educational links."
+  },
+  {
+    "entity": "Branding",
+    "url": "/services/branding/",
+    "primaryQueryFamilies": [
+      "branding agency in mumbai",
+      "brand strategy mumbai",
+      "brand identity design agency"
+    ],
+    "rule": "Owns brand identity, packaging, and corporate positioning queries."
+  },
+  {
+    "entity": "Social Media Marketing",
+    "url": "/services/social-media-marketing/",
+    "primaryQueryFamilies": [
+      "social media marketing agency in mumbai",
+      "smm services mumbai",
+      "social media management"
+    ],
+    "rule": "Owns organic social, reels strategy, and community management queries."
+  },
+  {
+    "entity": "Website Development",
+    "url": "/services/website-development-amc/",
+    "primaryQueryFamilies": [
+      "website development services in mumbai",
+      "web development amc mumbai",
+      "nextjs web development"
+    ],
+    "rule": "Owns web design, Next.js engineering, and AMC maintenance queries."
+  },
+  {
+    "entity": "Services Hub",
+    "url": "/services/ & /our-services/",
+    "primaryQueryFamilies": [
+      "dgenius services",
+      "digital marketing services overview"
+    ],
+    "rule": "Navigation and indexation hubs linking to specialist service landing pages. /our-services/?page=2 self-canonicals to /our-services/."
+  }
+]
