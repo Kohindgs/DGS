@@ -27,6 +27,18 @@ export type StoredBlogVideo = {
   bytes?: number;
 };
 
+export type ReviewStatus =
+  | "DRAFT"
+  | "REVIEW_REQUIRED"
+  | "VERIFIED_FIRST_PARTY"
+  | "THIRD_PARTY_NEEDS_REPLACEMENT";
+
+export type SourceType =
+  | "FIRST_PARTY_ORIGINAL"
+  | "REWRITTEN_LEGACY"
+  | "OUTSOURCED_LEGACY"
+  | "AI_ASSISTED_VERIFIED";
+
 export type CmsBlogSummary = {
   id: string;
   slug: string;
@@ -38,6 +50,11 @@ export type CmsBlogSummary = {
   seo_description: string | null;
   focus_keyword: string | null;
   author_name?: string | null;
+  content_owner?: string | null;
+  reviewer?: string | null;
+  review_date?: string | null;
+  review_status?: ReviewStatus | string;
+  source_type?: SourceType | string;
   category?: string | null;
   canonical_url?: string | null;
   redirect_url?: string | null;
@@ -75,6 +92,11 @@ export type CmsPublishedBlog = {
   content: unknown;
   status: string;
   author_name?: string | null;
+  content_owner?: string | null;
+  reviewer?: string | null;
+  review_date?: string | null;
+  review_status?: ReviewStatus | string;
+  source_type?: SourceType | string;
   featured_image_alt?: string | null;
   canonical_url?: string | null;
   redirect_url?: string | null;
@@ -345,6 +367,11 @@ export type CreateCmsBlogInput = {
   featured_image_url?: string;
   featured_image_alt?: string;
   author_name?: string;
+  content_owner?: string;
+  reviewer?: string;
+  review_date?: string;
+  review_status?: ReviewStatus;
+  source_type?: SourceType;
   category?: string;
   canonical_url?: string;
   redirect_url?: string;
@@ -436,6 +463,11 @@ export type UpdateCmsBlogInput = {
   featured_image_url?: string | null;
   featured_image_alt?: string | null;
   author_name?: string | null;
+  content_owner?: string | null;
+  reviewer?: string | null;
+  review_date?: string | null;
+  review_status?: ReviewStatus | string;
+  source_type?: SourceType | string;
   category?: string | null;
   canonical_url?: string | null;
   redirect_url?: string | null;
@@ -938,8 +970,10 @@ export async function listPublishedCmsBlogs(limit = 100): Promise<CmsPublishedBl
 // 13. Get Single Published Blog by Slug for Public Rendering
 export async function getPublishedCmsBlogBySlug(slug: string): Promise<CmsPublishedBlog | null> {
   const result = await cmsQuery<CmsPublishedBlog>(
-    `SELECT id, slug, title, excerpt, content, status, author_name, featured_image_alt,
-            canonical_url, redirect_url, redirect_status_code, published_at, updated_at
+    `SELECT id, slug, title, excerpt, content, status, author_name,
+            content_owner, reviewer, review_date, review_status, source_type,
+            featured_image_alt, canonical_url, redirect_url, redirect_status_code,
+            published_at, updated_at
      FROM blog_posts
      WHERE slug = ? AND status = 'published' AND deleted_at IS NULL
      LIMIT 1`,
@@ -951,8 +985,9 @@ export async function getPublishedCmsBlogBySlug(slug: string): Promise<CmsPublis
 // 13b. Get Any CMS Blog by Slug (including trashed / draft)
 export async function getCmsBlogBySlug(slug: string): Promise<CmsBlogSummary | null> {
   const result = await cmsQuery<CmsBlogSummary>(
-    `SELECT id, slug, title, excerpt, status, author_name, featured_image_alt,
-            category, canonical_url, redirect_url, redirect_status_code,
+    `SELECT id, slug, title, excerpt, status, author_name,
+            content_owner, reviewer, review_date, review_status, source_type,
+            featured_image_alt, category, canonical_url, redirect_url, redirect_status_code,
             published_at, deleted_at, deleted_by, created_at, updated_at
      FROM blog_posts
      WHERE slug = ?

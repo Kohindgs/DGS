@@ -494,10 +494,9 @@ async function main() {
     }
   }
 
-  // Explicitly incorporate dynamic native CMS routes present in authoritative sitemap (101 total)
+  // Explicitly incorporate dynamic native CMS routes present in authoritative sitemap (98 total)
   const dynamicSitemapRoutes = [
     { path: "/career/generative-ai-artist/", title: "Generative AI Artist" },
-    { path: "/blogs/dgs-cms-scheduled-cron-qa/", title: "DGS CMS Scheduled Cron QA" },
     { path: "/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/", title: "Google Ads for B2B Lead Generation" },
   ];
   for (const d of dynamicSitemapRoutes) {

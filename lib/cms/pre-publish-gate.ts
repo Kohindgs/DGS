@@ -348,6 +348,23 @@ export async function evaluatePrePublishGate(
     });
   }
 
+  // Content Ownership & Review Governance Checks
+  if (blog.review_status === "THIRD_PARTY_NEEDS_REPLACEMENT") {
+    geoIssues.push({
+      severity: "ERROR",
+      code: "GOVERNANCE_THIRD_PARTY_FLAGGED",
+      message: "Content is flagged as THIRD_PARTY_NEEDS_REPLACEMENT. It must be replaced or rewritten with first-party original verification prior to publication.",
+      field: "review_status",
+    });
+  } else if (blog.review_status === "REVIEW_REQUIRED") {
+    geoIssues.push({
+      severity: "WARNING",
+      code: "GOVERNANCE_REVIEW_PENDING",
+      message: "Content has review status REVIEW_REQUIRED. First-party technical lead review is recommended prior to live indexing.",
+      field: "review_status",
+    });
+  }
+
   // Location/Entity Signals
   const entityKeywords = ["dubai", "mumbai", "uae", "india", "d'genius solutions", "agency", "marketing", "google", "meta"];
   const lowerBody = bodyText.toLowerCase();

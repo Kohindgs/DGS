@@ -38,7 +38,10 @@
     { "source": "/how-modern-seo-strategies-are-transforming-business-growth/", "destination": "/blogs/seo-strategies-business-growth/", "statusCode": 301, "reason": "Legacy WordPress blog URL; authoritative blog canonical is /blogs/seo-strategies-business-growth/" },
     { "source": "/services/seo-services-dubai/", "destination": "/services/dubai-seo/", "statusCode": 301, "reason": "WordPress legacy Dubai SEO slug alias; authoritative service canonical is /services/dubai-seo/" },
     { "source": "/services/aeo-services-in-dubai/", "destination": "/aeo-dubai/", "statusCode": 301, "reason": "WordPress legacy Dubai AEO slug alias; authoritative route canonical is /aeo-dubai/" },
-    { "source": "/services/google-ads/", "destination": "/services/performance-marketing/", "statusCode": 301, "reason": "Legacy Google Ads service alias; authoritative service canonical is /services/performance-marketing/" },
-    { "source": "/career/junior-hr-generalist/", "destination": "/career/", "statusCode": 301, "reason": "Archived role redirected to active careers hub" }
+    { "source": "/career/junior-hr-generalist/", "destination": "/career/", "statusCode": 301, "reason": "Archived role redirected to active careers hub" },
+    { "source": "/services/llm-seo-services-in-mumbai/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "Legacy LLM SEO Mumbai service alias; canonical is /services/llm-seo-service/" },
+    { "source": "/services/generative-engine-optimization-services-in-mumbai/", "destination": "/services/geo/", "statusCode": 301, "reason": "Legacy GEO Mumbai service alias; canonical is /services/geo/" },
+    { "source": "/blogs/google-august-2026-spam-update/", "destination": "/blogs/google-september-2026-spam-update-what-website-owners-should-know/", "statusCode": 301, "reason": "Superseded August 2026 spam update redirected to active September 2026 update guide" },
+    { "source": "/blogs/seo-company-in-mumbai/", "destination": "/services/seo-services-in-mumbai/", "statusCode": 301, "reason": "Commercial query intent consolidated to primary protected Mumbai SEO service page" }
   ]
 }
