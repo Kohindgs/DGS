@@ -22,7 +22,10 @@ export default async function AssessmentAdminPage() {
   if (isCmsDatabaseConfigured()) {
     try {
       const { rows: jdRows } = await cmsQuery(
-        `SELECT id, role_title, role_level, department, created_at FROM assessment_jds ORDER BY created_at DESC`
+        `SELECT id, role_title, role_level, department, jd_text, status, created_at 
+         FROM assessment_jds 
+         WHERE status != 'archived' 
+         ORDER BY created_at DESC`
       );
       jds = jdRows || [];
 
@@ -30,6 +33,7 @@ export default async function AssessmentAdminPage() {
         `SELECT v.id, v.jd_id, v.version_number, v.difficulty, v.status, v.created_at, v.approved_at, j.role_title
          FROM assessment_versions v
          LEFT JOIN assessment_jds j ON v.jd_id = j.id
+         WHERE v.status != 'archived'
          ORDER BY v.created_at DESC`
       );
       versions = verRows || [];

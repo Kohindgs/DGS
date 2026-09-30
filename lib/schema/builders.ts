@@ -1,5 +1,6 @@
 import { absoluteUrl } from "@/lib/seo/site";
 import { normalizeBrandName, decodeHtmlEntities } from "@/lib/brand";
+import { ORGANIZATION_ID } from "@/lib/schema/entity";
 
 function cleanSchemaText(text: string | undefined): string {
   if (!text) return "";
@@ -221,13 +222,7 @@ export function articleSchema(input: {
 
   const publisherObj = {
     "@type": "Organization",
-    "@id": "https://www.dgeniussolutions.com/#organization",
-    name: "D'Genius Solutions",
-    url: "https://www.dgeniussolutions.com/",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.dgeniussolutions.com/images/dgs-logo.webp",
-    },
+    "@id": input.publisherId || ORGANIZATION_ID,
   };
 
   const imageArray = input.imageUrl

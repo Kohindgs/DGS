@@ -26,6 +26,9 @@ import {
   Shield,
   FileSpreadsheet,
   FileUp,
+  Check,
+  Archive,
+  Briefcase,
 } from "lucide-react";
 
 type JD = {
@@ -33,6 +36,8 @@ type JD = {
   role_title: string;
   role_level: string;
   department: string;
+  jd_text?: string;
+  status?: string;
   created_at: string;
 };
 
@@ -85,13 +90,37 @@ export default function AssessmentClientView({
     testing: false,
   });
 
-  // JD creation modal
+  // Toast state
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3500);
+  };
+
+  // JD creation & edit modal
   const [showCreateJdModal, setShowCreateJdModal] = useState(false);
+  const [editingJd, setEditingJd] = useState<JD | null>(null);
   const [newJdTitle, setNewJdTitle] = useState("");
   const [newJdDept, setNewJdDept] = useState("SEO & Digital");
   const [newJdLevel, setNewJdLevel] = useState("mid");
+  const [newJdEmploymentType, setNewJdEmploymentType] = useState("Full-time");
+  const [newJdExperience, setNewJdExperience] = useState("");
+  const [newJdLocation, setNewJdLocation] = useState("Khar West, Mumbai (On-site)");
+  const [newJdSalary, setNewJdSalary] = useState("");
+  const [newJdQualification, setNewJdQualification] = useState("");
+  const [newJdSkills, setNewJdSkills] = useState("");
+  const [newJdResponsibilities, setNewJdResponsibilities] = useState("");
+  const [newJdRequirements, setNewJdRequirements] = useState("");
   const [newJdContent, setNewJdContent] = useState("");
   const [creatingJd, setCreatingJd] = useState(false);
+
+  // JD delete/archive modal
+  const [jdToDelete, setJdToDelete] = useState<JD | null>(null);
+  const [isDeletingJd, setIsDeletingJd] = useState(false);
+
+  // Version delete/archive modal
+  const [versionToDelete, setVersionToDelete] = useState<Version | null>(null);
+  const [isDeletingVersion, setIsDeletingVersion] = useState(false);
 
   // Generate test modal
   const [selectedJdForGen, setSelectedJdForGen] = useState<JD | null>(null);
@@ -159,29 +188,111 @@ export default function AssessmentClientView({
     }
   };
 
-  // Create JD
-  const handleCreateJd = async (e: React.FormEvent) => {
+  // Open Create JD Modal
+  const handleOpenCreateJd = () => {
+    setEditingJd(null);
+    setNewJdTitle("");
+    setNewJdDept("SEO & Digital");
+    setNewJdLevel("mid");
+    setNewJdEmploymentType("Full-time");
+    setNewJdExperience("");
+    setNewJdLocation("Khar West, Mumbai (On-site)");
+    setNewJdSalary("");
+    setNewJdQualification("");
+    setNewJdSkills("");
+    setNewJdResponsibilities("");
+    setNewJdRequirements("");
+    setNewJdContent("");
+    setShowCreateJdModal(true);
+  };
+
+  // Open Edit JD Modal
+  const handleOpenEditJd = (jd: JD) => {
+    setEditingJd(jd);
+    setNewJdTitle(jd.role_title);
+    setNewJdDept(jd.department || "SEO & Digital");
+    setNewJdLevel(jd.role_level || "mid");
+    setNewJdEmploymentType("Full-time");
+    setNewJdExperience("");
+    setNewJdLocation("Khar West, Mumbai (On-site)");
+    setNewJdSalary("");
+    setNewJdQualification("");
+    setNewJdSkills("");
+    setNewJdResponsibilities("");
+    setNewJdRequirements("");
+    setNewJdContent(jd.jd_text || "");
+    setShowCreateJdModal(true);
+  };
+
+  // Create or Update JD
+  const handleSaveJd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newJdTitle || !newJdContent) return;
+    if (!newJdTitle) return;
+
+    // Compile comprehensive structured JD text
+    const structuredSections: string[] = [];
+    if (newJdEmploymentType) structuredSections.push(`Employment Type: ${newJdEmploymentType}`);
+    if (newJdExperience) structuredSections.push(`Experience Required: ${newJdExperience}`);
+    if (newJdLocation) structuredSections.push(`Location: ${newJdLocation}`);
+    if (newJdSalary) structuredSections.push(`Compensation: ${newJdSalary}`);
+    if (newJdQualification) structuredSections.push(`Qualification: ${newJdQualification}`);
+    if (newJdSkills) structuredSections.push(`\nKey Skills & Competencies:\n${newJdSkills}`);
+    if (newJdResponsibilities) structuredSections.push(`\nCore Responsibilities:\n${newJdResponsibilities}`);
+    if (newJdRequirements) structuredSections.push(`\nRequirements & Eligibility:\n${newJdRequirements}`);
+    if (newJdContent) structuredSections.push(`\nRole Overview & Specifications:\n${newJdContent}`);
+
+    const finalContent = structuredSections.join("\n\n").trim();
+    if (!finalContent) {
+      alert("Please provide JD description, responsibilities, or requirements.");
+      return;
+    }
+
     setCreatingJd(true);
     try {
-      const res = await fetch("/api/admin/assessment/jds", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: newJdTitle,
-          department: newJdDept,
-          level: newJdLevel,
-          content: newJdContent,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to create JD");
-      setJds((prev) => [data.jd, ...prev]);
-      setShowCreateJdModal(false);
-      setNewJdTitle("");
-      setNewJdContent("");
-      alert(`Job Description "${data.jd.role_title}" created.`);
+      if (editingJd) {
+        // Update existing JD
+        const res = await fetch("/api/admin/assessment/jds", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: editingJd.id,
+            title: newJdTitle,
+            department: newJdDept,
+            level: newJdLevel,
+            content: finalContent,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to update JD");
+
+        setJds((prev) =>
+          prev.map((j) =>
+            j.id === editingJd.id
+              ? { ...j, role_title: newJdTitle, department: newJdDept, role_level: newJdLevel, jd_text: finalContent }
+              : j
+          )
+        );
+        setShowCreateJdModal(false);
+        showToast(`Job Description "${newJdTitle}" updated successfully.`);
+      } else {
+        // Create new JD
+        const res = await fetch("/api/admin/assessment/jds", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: newJdTitle,
+            department: newJdDept,
+            level: newJdLevel,
+            content: finalContent,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to create JD");
+
+        setJds((prev) => [data.jd, ...prev]);
+        setShowCreateJdModal(false);
+        showToast(`Job Description "${data.jd.role_title}" created successfully.`);
+      }
     } catch (err: any) {
       alert(err.message);
     } finally {
@@ -200,9 +311,56 @@ export default function AssessmentClientView({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to duplicate");
       setJds((prev) => [data.jd, ...prev]);
-      alert("JD duplicated successfully.");
+      showToast("Job Description duplicated successfully.");
     } catch (err: any) {
       alert(err.message);
+    }
+  };
+
+  // Delete / Archive JD
+  const handleDeleteJdSubmit = async () => {
+    if (!jdToDelete) return;
+    setIsDeletingJd(true);
+    try {
+      const res = await fetch(`/api/admin/assessment/jds?id=${jdToDelete.id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to delete JD");
+
+      setJds((prev) => prev.filter((j) => j.id !== jdToDelete.id));
+      const actionLabel = data.action === "archived" ? "archived" : "permanently deleted";
+      showToast(`Job Description "${jdToDelete.role_title}" ${actionLabel}.`);
+      setJdToDelete(null);
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setIsDeletingJd(false);
+    }
+  };
+
+  // Delete / Archive Version
+  const handleDeleteVersionSubmit = async () => {
+    if (!versionToDelete) return;
+    setIsDeletingVersion(true);
+    try {
+      const res = await fetch(`/api/admin/assessment/versions/${versionToDelete.id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to delete assessment version");
+
+      setVersions((prev) => prev.filter((v) => v.id !== versionToDelete.id));
+      if (selectedVersion && selectedVersion.id === versionToDelete.id) {
+        setSelectedVersion(null);
+      }
+      const actionLabel = data.action === "archived" ? "archived" : "permanently deleted";
+      showToast(`Assessment version #${versionToDelete.version_number} ${actionLabel}.`);
+      setVersionToDelete(null);
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setIsDeletingVersion(false);
     }
   };
 
@@ -586,7 +744,7 @@ export default function AssessmentClientView({
             <button
               type="button"
               className="dgs-saas-btn primary sm"
-              onClick={() => setShowCreateJdModal(true)}
+              onClick={handleOpenCreateJd}
               style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
             >
               <Plus size={14} /> Create Job Description
@@ -614,6 +772,22 @@ export default function AssessmentClientView({
                   title="Duplicate JD"
                 >
                   <Copy size={13} />
+                </button>
+                <button
+                  type="button"
+                  className="dgs-saas-btn secondary sm"
+                  onClick={() => handleOpenEditJd(j)}
+                  title="Edit JD"
+                >
+                  <Edit3 size={13} />
+                </button>
+                <button
+                  type="button"
+                  className="dgs-saas-btn danger sm"
+                  onClick={() => setJdToDelete(j)}
+                  title="Delete / Archive JD"
+                >
+                  <Trash2 size={13} />
                 </button>
               </div>
             )}
@@ -653,6 +827,14 @@ export default function AssessmentClientView({
                     <Lock size={11} style={{ marginRight: 3 }} /> IMMUTABLE
                   </span>
                 )}
+                <button
+                  type="button"
+                  className="dgs-saas-btn danger sm"
+                  onClick={() => setVersionToDelete(v)}
+                  title="Delete / Archive Assessment Version"
+                >
+                  <Trash2 size={13} />
+                </button>
               </div>
             )}
           />
@@ -701,22 +883,22 @@ export default function AssessmentClientView({
         </div>
       )}
 
-      {/* MODAL: Create JD */}
+      {/* MODAL: Create / Edit JD */}
       {showCreateJdModal && (
         <div className="dgs-saas-search-overlay" onClick={() => setShowCreateJdModal(false)}>
-          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "650px", maxWidth: "95vw" }}>
+          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "800px", maxWidth: "95vw", maxHeight: "90vh", display: "flex", flexDirection: "column" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
               <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
-                <FileText size={18} /> New Job Description
+                <Briefcase size={18} /> {editingJd ? "Edit Job Description" : "Create Structured Job Description"}
               </h3>
               <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
-                Define structured role criteria used by Gemini for test generation and CV matching.
+                {editingJd ? "Update role specifications, requirements, and candidate evaluation criteria." : "Define structured role specifications, requirements, and evaluation criteria (Gemini AI optional)."}
               </p>
             </div>
-            <form onSubmit={handleCreateJd} style={{ padding: "24px", display: "grid", gap: "16px" }}>
+            <form onSubmit={handleSaveJd} style={{ padding: "24px", overflowY: "auto", display: "grid", gap: "16px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "12px" }}>
-                <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                  Role Title
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                  Role Title *
                   <input
                     type="text"
                     required
@@ -726,8 +908,8 @@ export default function AssessmentClientView({
                     style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                   />
                 </label>
-                <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                  Level
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                  Seniority Level
                   <select
                     value={newJdLevel}
                     onChange={(e) => setNewJdLevel(e.target.value)}
@@ -741,36 +923,128 @@ export default function AssessmentClientView({
                 </label>
               </div>
 
-              <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                Department
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                  Department
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. SEO & Organic Search"
+                    value={newJdDept}
+                    onChange={(e) => setNewJdDept(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  />
+                </label>
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                  Employment Type
+                  <select
+                    value={newJdEmploymentType}
+                    onChange={(e) => setNewJdEmploymentType(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  >
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Freelance">Freelance</option>
+                  </select>
+                </label>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                  Experience Required
+                  <input
+                    type="text"
+                    placeholder="e.g. 3-5 Years"
+                    value={newJdExperience}
+                    onChange={(e) => setNewJdExperience(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  />
+                </label>
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                  Location / Mode
+                  <input
+                    type="text"
+                    placeholder="e.g. Khar West, Mumbai (On-site)"
+                    value={newJdLocation}
+                    onChange={(e) => setNewJdLocation(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  />
+                </label>
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                  Compensation / Salary
+                  <input
+                    type="text"
+                    placeholder="e.g. ₹8,00,000 - ₹12,00,000 PA"
+                    value={newJdSalary}
+                    onChange={(e) => setNewJdSalary(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  />
+                </label>
+              </div>
+
+              <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                Educational Qualification
                 <input
                   type="text"
-                  required
-                  placeholder="e.g. SEO &amp; Organic Search"
-                  value={newJdDept}
-                  onChange={(e) => setNewJdDept(e.target.value)}
+                  placeholder="e.g. Bachelor's in CS / IT / Marketing or equivalent practical experience"
+                  value={newJdQualification}
+                  onChange={(e) => setNewJdQualification(e.target.value)}
                   style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                 />
               </label>
 
-              <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                Job Description Text (Responsibilities, Requirements, Tools)
+              <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                Key Skills & Competencies (comma separated)
                 <textarea
-                  rows={8}
-                  required
-                  placeholder="Paste complete JD specifications here..."
+                  rows={2}
+                  placeholder="e.g. Technical SEO, Google Search Console, Screaming Frog, Log File Analysis, Schema Markup"
+                  value={newJdSkills}
+                  onChange={(e) => setNewJdSkills(e.target.value)}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", resize: "vertical" }}
+                />
+              </label>
+
+              <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                Core Responsibilities
+                <textarea
+                  rows={3}
+                  placeholder="e.g. 1. Conduct monthly deep-dive technical audits.&#10;2. Architect schema markup and indexing strategies.&#10;3. Supervise indexing recovery across client portals."
+                  value={newJdResponsibilities}
+                  onChange={(e) => setNewJdResponsibilities(e.target.value)}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", resize: "vertical" }}
+                />
+              </label>
+
+              <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                Requirements & Eligibility
+                <textarea
+                  rows={3}
+                  placeholder="e.g. 1. Minimum 3+ years in enterprise SEO.&#10;2. Strong grasp of rendering, canonicalization, and crawl budget.&#10;3. Experience with headless and React architectures."
+                  value={newJdRequirements}
+                  onChange={(e) => setNewJdRequirements(e.target.value)}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", resize: "vertical" }}
+                />
+              </label>
+
+              <label style={{ display: "grid", gap: "6px", fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+                Role Overview / Additional Specifications
+                <textarea
+                  rows={4}
+                  placeholder="Paste any comprehensive JD specifications, company overview, or benefits..."
                   value={newJdContent}
                   onChange={(e) => setNewJdContent(e.target.value)}
                   style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", resize: "vertical" }}
                 />
               </label>
 
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px", borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>
                 <button type="button" className="dgs-saas-btn secondary" onClick={() => setShowCreateJdModal(false)}>
                   Cancel
                 </button>
                 <button type="submit" className="dgs-saas-btn primary" disabled={creatingJd}>
-                  {creatingJd ? "Saving…" : "Save Job Description"}
+                  {creatingJd ? "Saving…" : editingJd ? "Update Job Description" : "Save Job Description"}
                 </button>
               </div>
             </form>
@@ -1431,6 +1705,109 @@ export default function AssessmentClientView({
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* MODAL: Delete / Archive JD */}
+      {jdToDelete && (
+        <div className="dgs-saas-search-overlay" onClick={() => !isDeletingJd && setJdToDelete(null)}>
+          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "520px", maxWidth: "95vw" }}>
+            <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
+              <h3 style={{ margin: 0, color: "var(--dgs-danger)", display: "flex", alignItems: "center", gap: "8px" }}>
+                <Trash2 size={18} /> Delete Job Description
+              </h3>
+            </div>
+            <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
+              <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--dgs-text-primary)", lineHeight: 1.5 }}>
+                Are you sure you want to delete <strong>{jdToDelete.role_title}</strong>?
+              </p>
+              <div style={{ background: "rgba(59, 130, 246, 0.08)", border: "1px solid rgba(59, 130, 246, 0.2)", borderRadius: "6px", padding: "12px", fontSize: "0.82rem", color: "var(--dgs-text-muted)", lineHeight: 1.5 }}>
+                ℹ️ <strong>Safe Archival Policy:</strong> If assessment blueprints or candidate applications are linked to this JD, it will be safely <strong>archived</strong> to preserve recruitment history and audit trails. If unused, it will be permanently deleted.
+              </div>
+            </div>
+            <div style={{ padding: "16px 24px", borderTop: "1px solid var(--dgs-border)", display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+              <button
+                type="button"
+                className="dgs-saas-btn secondary sm"
+                onClick={() => setJdToDelete(null)}
+                disabled={isDeletingJd}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="dgs-saas-btn danger sm"
+                disabled={isDeletingJd}
+                onClick={handleDeleteJdSubmit}
+              >
+                {isDeletingJd ? "Deleting..." : "Delete / Archive JD"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: Delete / Archive Assessment Version */}
+      {versionToDelete && (
+        <div className="dgs-saas-search-overlay" onClick={() => !isDeletingVersion && setVersionToDelete(null)}>
+          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "520px", maxWidth: "95vw" }}>
+            <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
+              <h3 style={{ margin: 0, color: "var(--dgs-danger)", display: "flex", alignItems: "center", gap: "8px" }}>
+                <Trash2 size={18} /> Delete Assessment Version
+              </h3>
+            </div>
+            <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
+              <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--dgs-text-primary)", lineHeight: 1.5 }}>
+                Are you sure you want to delete <strong>v{versionToDelete.version_number}</strong> ({versionToDelete.role_title})?
+              </p>
+              <div style={{ background: "rgba(59, 130, 246, 0.08)", border: "1px solid rgba(59, 130, 246, 0.2)", borderRadius: "6px", padding: "12px", fontSize: "0.82rem", color: "var(--dgs-text-muted)", lineHeight: 1.5 }}>
+                ℹ️ <strong>Immutable Record Protection:</strong> If candidate assessment attempts exist for this version, it will be <strong>archived</strong> rather than deleted to ensure candidate scores remain verifiable. Draft unused versions are permanently deleted.
+              </div>
+            </div>
+            <div style={{ padding: "16px 24px", borderTop: "1px solid var(--dgs-border)", display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+              <button
+                type="button"
+                className="dgs-saas-btn secondary sm"
+                onClick={() => setVersionToDelete(null)}
+                disabled={isDeletingVersion}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="dgs-saas-btn danger sm"
+                disabled={isDeletingVersion}
+                onClick={handleDeleteVersionSubmit}
+              >
+                {isDeletingVersion ? "Deleting..." : "Delete / Archive Version"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Toast Notification */}
+      {toastMessage && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "24px",
+            right: "24px",
+            background: "#1E293B",
+            border: "1px solid var(--dgs-border)",
+            borderRadius: "8px",
+            padding: "12px 18px",
+            color: "#F8FAFC",
+            fontSize: "0.85rem",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.5)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <CheckCircle2 size={16} style={{ color: "var(--dgs-success)" }} />
+          <span>{toastMessage}</span>
         </div>
       )}
     </div>
