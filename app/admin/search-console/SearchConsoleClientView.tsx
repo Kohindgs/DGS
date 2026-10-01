@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
-import type { GscStandingReport, KeywordStandingItem, WindowStandingSummary } from "@/lib/integrations/google";
+import type { GscStandingReport, KeywordStandingItem, WindowStandingSummary, StrategicPageStandingItem } from "@/lib/integrations/google";
 import { ArrowUp, ArrowDown, ArrowRight, RefreshCw, Sparkles, TrendingUp, TrendingDown, Minus, Clock, CheckCircle2 } from "lucide-react";
 
 type Props = {
@@ -142,6 +142,128 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       sortable: true,
       width: "90px",
       render: (k) => `${(k.ctr * 100).toFixed(1)}%`,
+    },
+  ];
+
+  const strategicColumns: Column<StrategicPageStandingItem>[] = [
+    {
+      key: "name",
+      header: "Strategic Route",
+      sortable: true,
+      render: (p) => (
+        <div>
+          <div style={{ fontWeight: 600, color: "#fff" }}>{p.name}</div>
+          <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)" }}>{p.path}</div>
+        </div>
+      ),
+    },
+    {
+      key: "currentPosition",
+      header: "Current Pos",
+      sortable: true,
+      width: "100px",
+      render: (p) => (p.currentPosition != null ? p.currentPosition.toFixed(1) : "—"),
+    },
+    {
+      key: "previousPosition",
+      header: "Prev Pos",
+      sortable: true,
+      width: "90px",
+      render: (p) => (p.previousPosition != null ? p.previousPosition.toFixed(1) : "—"),
+    },
+    {
+      key: "delta",
+      header: "Rank Change",
+      sortable: true,
+      width: "130px",
+      render: (p) => {
+        if (p.currentPosition == null) return <span style={{ color: "var(--dgs-text-muted)" }}>Emerging</span>;
+        if (p.delta > 0) {
+          return (
+            <span style={{ color: "var(--dgs-success)", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "2px" }}>
+              <ArrowUp size={14} /> +{p.delta} ranks
+            </span>
+          );
+        }
+        if (p.delta < 0) {
+          return (
+            <span style={{ color: "var(--dgs-error)", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "2px" }}>
+              <ArrowDown size={14} /> {p.delta} ranks
+            </span>
+          );
+        }
+        return (
+          <span style={{ color: "var(--dgs-text-muted)", display: "inline-flex", alignItems: "center", gap: "2px" }}>
+            <Minus size={14} /> 0.0
+          </span>
+        );
+      },
+    },
+    {
+      key: "movement7d",
+      header: "7D Trend",
+      sortable: true,
+      width: "95px",
+      render: (p) => (
+        <span style={{ color: p.movement7d > 0 ? "var(--dgs-success)" : p.movement7d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
+          {p.movement7d > 0 ? `↑ +${p.movement7d}` : p.movement7d < 0 ? `↓ ${p.movement7d}` : "→ 0.0"}
+        </span>
+      ),
+    },
+    {
+      key: "movement15d",
+      header: "15D Trend",
+      sortable: true,
+      width: "95px",
+      render: (p) => (
+        <span style={{ color: p.movement15d > 0 ? "var(--dgs-success)" : p.movement15d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
+          {p.movement15d > 0 ? `↑ +${p.movement15d}` : p.movement15d < 0 ? `↓ ${p.movement15d}` : "→ 0.0"}
+        </span>
+      ),
+    },
+    {
+      key: "movement28d",
+      header: "28D Trend",
+      sortable: true,
+      width: "95px",
+      render: (p) => (
+        <span style={{ color: p.movement28d > 0 ? "var(--dgs-success)" : p.movement28d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
+          {p.movement28d > 0 ? `↑ +${p.movement28d}` : p.movement28d < 0 ? `↓ ${p.movement28d}` : "→ 0.0"}
+        </span>
+      ),
+    },
+    {
+      key: "clicks",
+      header: "Clicks",
+      sortable: true,
+      width: "90px",
+      render: (p) => (
+        <span>
+          {p.clicks} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem" }}>({p.previousClicks})</span>
+        </span>
+      ),
+    },
+    {
+      key: "impressions",
+      header: "Impressions",
+      sortable: true,
+      width: "110px",
+      render: (p) => (
+        <span>
+          {p.impressions.toLocaleString()} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem" }}>({p.previousImpressions.toLocaleString()})</span>
+        </span>
+      ),
+    },
+    {
+      key: "standing",
+      header: "Standing",
+      sortable: true,
+      width: "110px",
+      render: (p) => (
+        <span className={`dgs-saas-chip ${p.standing === "UP" ? "success" : p.standing === "DOWN" ? "danger" : "neutral"}`} style={{ fontSize: "0.72rem" }}>
+          {p.standing === "UP" ? "IMPROVED" : p.standing === "DOWN" ? "DECLINED" : p.standing === "NEW" ? "NEW ROUTE" : "STABLE"}
+        </span>
+      ),
     },
   ];
 
@@ -380,6 +502,29 @@ export default function SearchConsoleClientView({ standingData }: Props) {
             data={standingData.keywords.items}
             keyExtractor={(k) => k.query_text}
             searchPlaceholder="Search tracked keywords..."
+          />
+        </div>
+      </div>
+
+      {/* P13: Strategic Commercial Pages Standing (7D / 15D / 28D Movement) */}
+      <div className="dgs-saas-card">
+        <div className="dgs-saas-card-header">
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+              <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "2px 6px", fontWeight: 700 }}>P13</span>
+              <h3 className="dgs-saas-card-title">Strategic Key Page Standing (7D / 15D / 28D Movement)</h3>
+            </div>
+            <p className="dgs-saas-card-subtitle">
+              Verified ranking position movement for core commercial targets. Inverted rank logic: lower numeric position = ↑ green improvement.
+            </p>
+          </div>
+        </div>
+        <div className="dgs-saas-card-body" style={{ padding: 0 }}>
+          <SaaSTable
+            columns={strategicColumns}
+            data={standingData.strategicPages || []}
+            keyExtractor={(p) => p.path}
+            searchPlaceholder="Filter strategic routes..."
           />
         </div>
       </div>

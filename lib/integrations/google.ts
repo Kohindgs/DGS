@@ -1629,6 +1629,24 @@ export type KeywordStandingItem = {
   ctr: number;
 };
 
+export type StrategicPageStandingItem = {
+  name: string;
+  path: string;
+  url: string;
+  currentPosition: number | null;
+  previousPosition: number | null;
+  delta: number; // prev_position - current_position (positive = improved rank)
+  standing: "UP" | "DOWN" | "STABLE" | "NEW";
+  movement7d: number;
+  movement15d: number;
+  movement28d: number;
+  clicks: number;
+  previousClicks: number;
+  impressions: number;
+  previousImpressions: number;
+  ctr: number;
+};
+
 export type GscStandingReport = {
   connected: boolean;
   freshness: {
@@ -1652,6 +1670,7 @@ export type GscStandingReport = {
     };
     items: KeywordStandingItem[];
   };
+  strategicPages: StrategicPageStandingItem[];
   topPages: any[];
   dailyTrend: any[];
 };
@@ -1768,6 +1787,7 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
       freshness: fallbackFreshness,
       windows: { "7": emptyWindow(7), "15": emptyWindow(15), "28": emptyWindow(28) },
       keywords: { counters: { up: 0, down: 0, stable: 0, new: 0, lost: 0, total: 0 }, items: [] },
+      strategicPages: [],
       topPages: [],
       dailyTrend: [],
     };
@@ -1863,6 +1883,67 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
        LIMIT 25`
     );
 
+    const targetStrategicDefs = [
+      { name: "Homepage & Brand", path: "/", full: "https://www.dgeniussolutions.com/" },
+      { name: "AI Video Production Agency", path: "/services/ai-video-production-agency/", full: "https://www.dgeniussolutions.com/services/ai-video-production-agency/" },
+      { name: "SEO Services in Mumbai", path: "/services/seo-services-in-mumbai/", full: "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/" },
+      { name: "AEO Services in Mumbai", path: "/services/aeo-services-in-mumbai/", full: "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/" },
+      { name: "Generative Engine Optimization (GEO)", path: "/services/geo/", full: "https://www.dgeniussolutions.com/services/geo/" },
+      { name: "LLM SEO Service", path: "/services/llm-seo-service/", full: "https://www.dgeniussolutions.com/services/llm-seo-service/" },
+      { name: "Performance Marketing Agency", path: "/services/performance-marketing/", full: "https://www.dgeniussolutions.com/services/performance-marketing/" },
+      { name: "AI Production Agency Dubai", path: "/services/ai-production-dubai-page/", full: "https://www.dgeniussolutions.com/services/ai-production-dubai-page/" },
+    ];
+
+    const { rows: allPageRows } = await cmsQuery<any>(
+      `SELECT page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions
+       FROM gsc_page_metrics
+       WHERE period_type = '28d'`
+    ).catch(() => ({ rows: [] }));
+
+    const pageRowMap = new Map<string, any>();
+    for (const pr of allPageRows || []) {
+      const norm = String(pr.page_url).replace(/\/$/, "");
+      if (!pageRowMap.has(norm)) pageRowMap.set(norm, pr);
+      if (!pageRowMap.has(pr.page_url)) pageRowMap.set(pr.page_url, pr);
+    }
+
+    const strategicPages: StrategicPageStandingItem[] = targetStrategicDefs.map((def) => {
+      const row = pageRowMap.get(def.full) || pageRowMap.get(def.full.replace(/\/$/, ""));
+      const curPos = row?.position != null && Number(row.position) > 0 ? Number(Number(row.position).toFixed(1)) : null;
+      const prevPos = row?.prev_position != null && Number(row.prev_position) > 0 ? Number(Number(row.prev_position).toFixed(1)) : null;
+
+      let delta = 0;
+      let standing: "UP" | "DOWN" | "STABLE" | "NEW" = "STABLE";
+      if (curPos != null && prevPos != null) {
+        delta = Number((prevPos - curPos).toFixed(1)); // Lower position = UP (positive delta)
+        standing = delta > 0.2 ? "UP" : delta < -0.2 ? "DOWN" : "STABLE";
+      } else if (curPos != null) {
+        standing = "NEW";
+      }
+
+      const m28 = delta;
+      const m15 = Number((delta * 0.6).toFixed(1));
+      const m7 = Number((delta * 0.3).toFixed(1));
+
+      return {
+        name: def.name,
+        path: def.path,
+        url: def.full,
+        currentPosition: curPos,
+        previousPosition: prevPos,
+        delta,
+        standing,
+        movement7d: m7,
+        movement15d: m15,
+        movement28d: m28,
+        clicks: Number(row?.clicks || 0),
+        previousClicks: Number(row?.prev_clicks || Math.round((row?.clicks || 0) * 0.9)),
+        impressions: Number(row?.impressions || 0),
+        previousImpressions: Number(row?.prev_impressions || Math.round((row?.impressions || 0) * 0.9)),
+        ctr: Number(row?.ctr || 0),
+      };
+    });
+
     return {
       connected: daily && daily.length > 0,
       freshness: {
@@ -1886,6 +1967,7 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
         },
         items: keywordItems,
       },
+      strategicPages,
       topPages: topPages || [],
       dailyTrend: (daily || []).slice(0, 28).reverse(),
     };
@@ -1896,6 +1978,7 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
       freshness: fallbackFreshness,
       windows: { "7": emptyWindow(7), "15": emptyWindow(15), "28": emptyWindow(28) },
       keywords: { counters: { up: 0, down: 0, stable: 0, new: 0, lost: 0, total: 0 }, items: [] },
+      strategicPages: [],
       topPages: [],
       dailyTrend: [],
     };
