@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "./site";
 import { isPublicIndexingEnabled } from "./environment";
 
-const DISALLOWED_PATHS = ["/api/", "/admin/", "/wp-admin/", "/wp-login.php"];
+const DISALLOWED_PATHS = ["/api/", "/admin/", "/wp-admin/", "/wp-login.php", "/assessment/"];
 
 export function stagingRobotsHeaderValue() {
   return "noindex, nofollow, noarchive";

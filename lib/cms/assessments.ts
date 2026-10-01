@@ -218,9 +218,54 @@ export async function getAssessmentVersion(id: string): Promise<AssessmentVersio
   );
   if (!rows[0]) return null;
   const item = rows[0];
+  const testData = typeof item.test_data === "string" ? JSON.parse(item.test_data) : item.test_data;
+  if (testData && !Array.isArray(testData.questions)) {
+    const questions: any[] = [];
+    if (Array.isArray(testData.mcqs)) {
+      for (const m of testData.mcqs) {
+        questions.push({
+          id: m.id || `mcq_${questions.length + 1}`,
+          type: "mcq",
+          prompt: m.question || m.prompt || "",
+          options: m.options || [],
+          correctIndex: Number(m.correctIndex ?? 0),
+          explanation: m.explanation || "",
+          competencyTag: m.competencyTag || "",
+        });
+      }
+    }
+    if (Array.isArray(testData.shortAnswers)) {
+      for (const s of testData.shortAnswers) {
+        questions.push({
+          id: s.id || `short_${questions.length + 1}`,
+          type: "short",
+          prompt: s.question || s.prompt || "",
+          rubric: s.rubric || "",
+          idealAnswerTraits: s.idealAnswerTraits || [],
+          maxScore: s.maxScore || 5,
+          competencyTag: s.competencyTag || "",
+        });
+      }
+    }
+    if (Array.isArray(testData.longAnswers)) {
+      for (const l of testData.longAnswers) {
+        questions.push({
+          id: l.id || `long_${questions.length + 1}`,
+          type: "long",
+          prompt: l.question || l.prompt || "",
+          scenario: l.scenario || "",
+          minWords: l.minWords || 80,
+          rubric: Array.isArray(l.evaluationCriteria) ? l.evaluationCriteria.join("; ") : (l.rubric || ""),
+          maxScore: l.maxScore || 10,
+          competencyTag: l.competencyTag || "",
+        });
+      }
+    }
+    testData.questions = questions;
+  }
   return {
     ...item,
-    test_data: typeof item.test_data === "string" ? JSON.parse(item.test_data) : item.test_data,
+    test_data: testData,
   };
 }
 
@@ -389,6 +434,43 @@ export async function getCandidateDetails(id: string): Promise<CandidateRecord |
         review_status: dc.review_status,
         reviewer_notes: dc.reviewer_notes,
         submitted_at: dc.submitted_at,
+      } as any];
+    }
+  }
+
+  // Fallback 2: Check assessment_attempts directly
+  if (!rows[0]) {
+    const { rows: attemptCand } = await cmsQuery<any>(
+      `SELECT a.*, j.role_title
+       FROM assessment_attempts a
+       LEFT JOIN assessment_versions v ON a.assessment_key = v.id
+       LEFT JOIN assessment_jds j ON v.jd_id = j.id
+       WHERE a.id = ? OR a.assignment_id = ? LIMIT 1`,
+      [id, id]
+    );
+    if (attemptCand[0]) {
+      const att = attemptCand[0];
+      rows = [{
+        id: att.id,
+        candidate_name: att.candidate_name,
+        candidate_email: att.candidate_email,
+        candidate_phone: att.candidate_phone,
+        position_id: att.assessment_key,
+        role_title: att.role_title || "Candidate Assessment",
+        stage: "test_submitted",
+        assessment_id: att.id,
+        assignment_id: att.assignment_id,
+        objective_score: att.objective_score,
+        objective_total: att.objective_total,
+        role_match_score: att.objective_total > 0 ? Math.round((att.objective_score / att.objective_total) * 100) : 0,
+        evaluation_notes: null,
+        answers: att.answers,
+        activity_log: att.activity,
+        review_status: att.review_status,
+        reviewer_notes: att.reviewer_notes,
+        submitted_at: att.submitted_at,
+        created_at: att.created_at,
+        updated_at: att.created_at,
       } as any];
     }
   }
@@ -588,6 +670,28 @@ export async function submitAssessmentAttempt(input: {
     "UPDATE assessment_attempts SET answers=?,activity=?,objective_score=?,objective_total=?,submitted_at=? WHERE id=? AND submitted_at IS NULL",
     [JSON.stringify(input.answers), JSON.stringify(input.activity), input.score, input.total, submittedAt, input.id]
   );
+
+  try {
+    const { rows } = await cmsQuery<AssessmentAttempt>("SELECT * FROM assessment_attempts WHERE id=? LIMIT 1", [input.id]);
+    if (rows[0]) {
+      const att = rows[0];
+      const matchScore = input.total > 0 ? Math.round((input.score / input.total) * 100) : 0;
+      await cmsExecute(
+        `INSERT INTO assessment_candidates (id, assignment_id, answers, objective_score, objective_total, role_match_score, activity_log, started_at, submitted_at, review_status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+         ON DUPLICATE KEY UPDATE
+           answers=VALUES(answers),
+           objective_score=VALUES(objective_score),
+           objective_total=VALUES(objective_total),
+           role_match_score=VALUES(role_match_score),
+           activity_log=VALUES(activity_log),
+           submitted_at=VALUES(submitted_at)`,
+        [att.id, att.assignment_id, JSON.stringify(input.answers), input.score, input.total, matchScore, JSON.stringify(input.activity), att.started_at, submittedAt]
+      );
+    }
+  } catch (syncErr) {
+    console.warn("Failed to sync attempt to assessment_candidates:", syncErr);
+  }
 }
 
 export async function listAssessmentAttempts(limit = 200) {

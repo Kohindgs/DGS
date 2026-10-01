@@ -6,12 +6,12 @@ export type AssessmentQuestion =
   | { id:string; type:"long"; prompt:string; minWords?:number };
 
 export type AssessmentDefinition = {
-  key:"seo-executive"|"seo-manager";
-  slug:string;
-  title:string;
-  summary:string;
-  durationMinutes:number;
-  questions:AssessmentQuestion[];
+  key: string;
+  slug: string;
+  title: string;
+  summary: string;
+  durationMinutes: number;
+  questions: AssessmentQuestion[];
 };
 
 const executiveQuestions: AssessmentQuestion[] = [
@@ -83,4 +83,90 @@ export function getPublicQuestions(definition:AssessmentDefinition) {
     const { correctIndex: _correctIndex, ...publicQuestion } = question;
     return publicQuestion;
   });
+}
+
+export async function resolveAssessmentDefinition(key: string): Promise<AssessmentDefinition | null> {
+  const staticDef = getAssessmentByKey(key);
+  if (staticDef) return staticDef;
+
+  try {
+    const { getAssessmentVersion } = await import("@/lib/cms/assessments");
+    const version = await getAssessmentVersion(key);
+    if (!version || !version.test_data) return null;
+
+    const testData = version.test_data;
+    const questions: AssessmentQuestion[] = [];
+
+    if (Array.isArray(testData.questions)) {
+      for (const q of testData.questions) {
+        if (q.type === "mcq") {
+          questions.push({
+            id: String(q.id || `mcq_${questions.length + 1}`),
+            type: "mcq",
+            prompt: q.prompt || q.question || "",
+            options: Array.isArray(q.options) ? q.options : [],
+            correctIndex: Number(q.correctIndex ?? q.answer ?? 0),
+          });
+        } else if (q.type === "short" || q.type === "short_answer") {
+          questions.push({
+            id: String(q.id || `short_${questions.length + 1}`),
+            type: "short",
+            prompt: q.prompt || q.question || "",
+            minWords: Number(q.minWords || 30),
+          });
+        } else if (q.type === "long" || q.type === "long_answer") {
+          questions.push({
+            id: String(q.id || `long_${questions.length + 1}`),
+            type: "long",
+            prompt: q.prompt || q.question || "",
+            minWords: Number(q.minWords || 80),
+          });
+        }
+      }
+    } else {
+      if (Array.isArray(testData.mcqs)) {
+        for (const m of testData.mcqs) {
+          questions.push({
+            id: String(m.id || `mcq_${questions.length + 1}`),
+            type: "mcq",
+            prompt: m.question || m.prompt || "",
+            options: Array.isArray(m.options) ? m.options : [],
+            correctIndex: Number(m.correctIndex ?? 0),
+          });
+        }
+      }
+      if (Array.isArray(testData.shortAnswers)) {
+        for (const s of testData.shortAnswers) {
+          questions.push({
+            id: String(s.id || `short_${questions.length + 1}`),
+            type: "short",
+            prompt: s.question || s.prompt || "",
+            minWords: 30,
+          });
+        }
+      }
+      if (Array.isArray(testData.longAnswers)) {
+        for (const l of testData.longAnswers) {
+          questions.push({
+            id: String(l.id || `long_${questions.length + 1}`),
+            type: "long",
+            prompt: l.question || l.prompt || "",
+            minWords: 80,
+          });
+        }
+      }
+    }
+
+    return {
+      key: version.id,
+      slug: `assessment-${version.id}`,
+      title: version.jd_title ? `${version.jd_title} Assessment` : `Assessment v${version.version_number}`,
+      summary: `Hiring assessment for ${version.jd_title || "Candidate"} (${version.difficulty.toUpperCase()})`,
+      durationMinutes: 60,
+      questions,
+    };
+  } catch (err) {
+    console.error("Failed to resolve dynamic assessment definition:", err);
+    return null;
+  }
 }

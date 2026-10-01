@@ -29,6 +29,9 @@ import {
   Check,
   Archive,
   Briefcase,
+  ArrowUp,
+  ArrowDown,
+  ExternalLink,
 } from "lucide-react";
 
 type JD = {
@@ -122,14 +125,42 @@ export default function AssessmentClientView({
   const [versionToDelete, setVersionToDelete] = useState<Version | null>(null);
   const [isDeletingVersion, setIsDeletingVersion] = useState(false);
 
-  // Generate test modal
-  const [selectedJdForGen, setSelectedJdForGen] = useState<JD | null>(null);
+  // Generate test / Make Assessment modal
+  const [showMakeAssessmentModal, setShowMakeAssessmentModal] = useState(false);
+  const [selectedJdIdForGen, setSelectedJdIdForGen] = useState<string>("");
+  const [customRoleTitle, setCustomRoleTitle] = useState("");
   const [difficulty, setDifficulty] = useState<"junior" | "mid" | "senior" | "lead">("mid");
   const [mcqCount, setMcqCount] = useState(5);
   const [shortCount, setShortCount] = useState(2);
   const [longCount, setLongCount] = useState(1);
   const [focusAreas, setFocusAreas] = useState("");
   const [generating, setGenerating] = useState(false);
+  const [generationError, setGenerationError] = useState<string | null>(null);
+
+  // Candidate Assignment Modal
+  const [assignModalVersion, setAssignModalVersion] = useState<Version | null>(null);
+  const [assignName, setAssignName] = useState("");
+  const [assignEmail, setAssignEmail] = useState("");
+  const [assignPhone, setAssignPhone] = useState("");
+  const [assignExp, setAssignExp] = useState("");
+  const [assignNotice, setAssignNotice] = useState("Immediate");
+  const [assignExpiresDays, setAssignExpiresDays] = useState(7);
+  const [assignLoading, setAssignLoading] = useState(false);
+  const [assignedLinkInfo, setAssignedLinkInfo] = useState<{ token: string; url: string; path: string } | null>(null);
+
+  // Blueprint Question Editor Modal
+  const [showAddQuestionModal, setShowAddQuestionModal] = useState(false);
+  const [newQuestionType, setNewQuestionType] = useState<"mcq" | "short" | "long">("mcq");
+  const [newQuestionPrompt, setNewQuestionPrompt] = useState("");
+  const [newQuestionOptions, setNewQuestionOptions] = useState<string[]>([
+    "Verified protocol and peer-reviewed checklist",
+    "Direct staging push without verification",
+    "External delegation without QA validation",
+    "Bypassing tests for speed",
+  ]);
+  const [newQuestionCorrectIndex, setNewQuestionCorrectIndex] = useState(0);
+  const [newQuestionRubric, setNewQuestionRubric] = useState("");
+  const [savingBlueprintDraft, setSavingBlueprintDraft] = useState(false);
 
   // Version Blueprint inspection & editing
   const [selectedVersion, setSelectedVersion] = useState<any | null>(null);
@@ -364,34 +395,204 @@ export default function AssessmentClientView({
     }
   };
 
-  // Generate Test Blueprint
-  const handleGenerateTest = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedJdForGen) return;
+  // Open Make Assessment Modal
+  const handleOpenMakeAssessment = (preselectedJd?: JD) => {
+    if (preselectedJd) {
+      setSelectedJdIdForGen(preselectedJd.id);
+      setCustomRoleTitle(preselectedJd.role_title);
+    } else if (jds.length > 0) {
+      setSelectedJdIdForGen(jds[0].id);
+      setCustomRoleTitle("");
+    } else {
+      setSelectedJdIdForGen("__new__");
+      setCustomRoleTitle("");
+    }
+    setGenerationError(null);
+    setShowMakeAssessmentModal(true);
+  };
+
+  // Execute Make Assessment (Gemini AI or Manual Draft)
+  const handleExecuteMakeAssessment = async (isManual: boolean) => {
+    let targetJdId = selectedJdIdForGen;
+    let targetRoleTitle = "";
+    if (targetJdId === "__new__") {
+      if (!customRoleTitle.trim()) {
+        alert("Please enter a role title for the new assessment.");
+        return;
+      }
+      targetRoleTitle = customRoleTitle.trim();
+      targetJdId = "";
+    } else {
+      const found = jds.find((j) => j.id === targetJdId);
+      targetRoleTitle = found ? found.role_title : "Assessment Role";
+    }
+
     setGenerating(true);
+    setGenerationError(null);
     try {
       const res = await fetch("/api/admin/assessment/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          jd_id: selectedJdForGen.id,
+          jd_id: targetJdId || undefined,
+          role_title: targetRoleTitle || undefined,
           difficulty,
           mcq_count: mcqCount,
           short_count: shortCount,
           long_count: longCount,
           focus_areas: focusAreas,
+          manual_draft: isManual,
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Generation failed");
-      alert(`Successfully generated assessment version #${data.versionNumber} for ${selectedJdForGen.role_title}!`);
-      setSelectedJdForGen(null);
-      // Reload versions
-      window.location.reload();
+      if (!res.ok) throw new Error(data.error || "Assessment generation failed");
+
+      // Add new version to local state
+      const newVersion: Version = {
+        id: data.versionId,
+        jd_id: targetJdId || data.versionId,
+        role_title: targetRoleTitle || data.roleTitle,
+        version_number: data.versionNumber,
+        difficulty,
+        status: "draft",
+        created_at: new Date().toISOString(),
+        approved_at: null,
+      };
+      setVersions((prev) => [newVersion, ...prev]);
+
+      showToast(`Created ${isManual ? "draft" : "AI"} assessment blueprint v${data.versionNumber}!`);
+      setShowMakeAssessmentModal(false);
+      setActiveTab("versions");
+
+      // Inspect newly created blueprint immediately
+      await handleInspectVersion(data.versionId);
+    } catch (err: any) {
+      setGenerationError(err.message || "Failed to generate assessment");
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  // Save Blueprint Draft questions to database
+  const handleSaveBlueprintQuestions = async (updatedQuestions: any[]) => {
+    if (!selectedVersion) return;
+    setSavingBlueprintDraft(true);
+    try {
+      const updatedTestData = {
+        ...selectedVersion.test_data,
+        questions: updatedQuestions,
+      };
+      const res = await fetch(`/api/admin/assessment/versions/${selectedVersion.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ testData: updatedTestData }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to save draft");
+
+      setSelectedVersion({
+        ...selectedVersion,
+        test_data: updatedTestData,
+      });
+      showToast("Draft blueprint updated.");
     } catch (err: any) {
       alert(err.message);
     } finally {
-      setGenerating(false);
+      setSavingBlueprintDraft(false);
+    }
+  };
+
+  // Move Question up/down
+  const handleMoveQuestion = (index: number, direction: "up" | "down") => {
+    if (!selectedVersion || selectedVersion.status === "approved") return;
+    const questions = [...(selectedVersion.test_data?.questions || [])];
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= questions.length) return;
+    const temp = questions[index];
+    questions[index] = questions[targetIndex];
+    questions[targetIndex] = temp;
+    handleSaveBlueprintQuestions(questions);
+  };
+
+  // Delete Question from draft
+  const handleDeleteQuestion = (index: number) => {
+    if (!selectedVersion || selectedVersion.status === "approved") return;
+    if (!confirm("Are you sure you want to remove this question from the draft?")) return;
+    const questions = [...(selectedVersion.test_data?.questions || [])];
+    questions.splice(index, 1);
+    handleSaveBlueprintQuestions(questions);
+  };
+
+  // Add Question Submit
+  const handleAddQuestionSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedVersion || !newQuestionPrompt) return;
+    const questions = [...(selectedVersion.test_data?.questions || [])];
+    const newQ: any = {
+      id: `q_${Date.now()}`,
+      type: newQuestionType,
+      prompt: newQuestionPrompt,
+    };
+    if (newQuestionType === "mcq") {
+      newQ.options = newQuestionOptions.filter(Boolean);
+      newQ.correctIndex = newQuestionCorrectIndex;
+    } else if (newQuestionType === "short") {
+      newQ.rubric = newQuestionRubric || "Technical evaluation rubric";
+      newQ.minWords = 30;
+    } else {
+      newQ.rubric = newQuestionRubric || "Comprehensive scenario evaluation criteria";
+      newQ.minWords = 80;
+    }
+    questions.push(newQ);
+    handleSaveBlueprintQuestions(questions);
+    setShowAddQuestionModal(false);
+    setNewQuestionPrompt("");
+    setNewQuestionRubric("");
+  };
+
+  // Candidate Assignment Modal Triggers
+  const handleOpenAssignModal = (version: Version) => {
+    setAssignModalVersion(version);
+    setAssignName("");
+    setAssignEmail("");
+    setAssignPhone("");
+    setAssignExp("");
+    setAssignNotice("Immediate");
+    setAssignExpiresDays(7);
+    setAssignedLinkInfo(null);
+  };
+
+  const handleCreateAssignmentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!assignModalVersion || !assignName || !assignEmail) return;
+    setAssignLoading(true);
+    try {
+      const res = await fetch("/api/admin/assessment/assignments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          assessmentKey: assignModalVersion.id,
+          name: assignName,
+          email: assignEmail,
+          phone: assignPhone || "N/A",
+          experience: assignExp || "N/A",
+          noticePeriod: assignNotice,
+          expiresInDays: assignExpiresDays,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to create assignment");
+
+      setAssignedLinkInfo({
+        token: data.token,
+        url: data.assessmentUrl,
+        path: data.assessmentPath,
+      });
+      showToast("Candidate test assignment created successfully!");
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setAssignLoading(false);
     }
   };
 
@@ -660,6 +861,15 @@ export default function AssessmentClientView({
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <button
               type="button"
+              className="dgs-saas-btn primary sm"
+              data-testid="make-assessment-cta"
+              onClick={() => handleOpenMakeAssessment()}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+            >
+              <Sparkles size={14} /> MAKE AN ASSESSMENT
+            </button>
+            <button
+              type="button"
               className="dgs-saas-btn secondary sm"
               onClick={handleTestConnection}
               disabled={apiHealth.testing}
@@ -740,10 +950,18 @@ export default function AssessmentClientView({
       {/* TAB 1: JDs */}
       {activeTab === "jds" && (
         <div>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginBottom: "12px" }}>
             <button
               type="button"
               className="dgs-saas-btn primary sm"
+              onClick={() => handleOpenMakeAssessment()}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
+            >
+              <Sparkles size={14} /> Make an Assessment
+            </button>
+            <button
+              type="button"
+              className="dgs-saas-btn secondary sm"
               onClick={handleOpenCreateJd}
               style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
             >
@@ -760,7 +978,7 @@ export default function AssessmentClientView({
                 <button
                   type="button"
                   className="dgs-saas-btn primary sm"
-                  onClick={() => setSelectedJdForGen(j)}
+                  onClick={() => handleOpenMakeAssessment(j)}
                   style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
                 >
                   <Sparkles size={13} /> Generate Test
@@ -798,6 +1016,20 @@ export default function AssessmentClientView({
       {/* TAB 2: Versions & Blueprint Editor */}
       {activeTab === "versions" && (
         <div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <div style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+              Technical test blueprints, question banks, and candidate assignment links.
+            </div>
+            <button
+              type="button"
+              className="dgs-saas-btn primary sm"
+              data-testid="tab-make-assessment-cta"
+              onClick={() => handleOpenMakeAssessment()}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
+            >
+              <Plus size={14} /> Make an Assessment
+            </button>
+          </div>
           <SaaSTable
             columns={versionColumns}
             data={versions}
@@ -823,9 +1055,19 @@ export default function AssessmentClientView({
                     <CheckCircle2 size={13} /> Approve
                   </button>
                 ) : (
-                  <span className="dgs-saas-chip success" style={{ fontSize: "0.7rem" }}>
-                    <Lock size={11} style={{ marginRight: 3 }} /> IMMUTABLE
-                  </span>
+                  <>
+                    <span className="dgs-saas-chip success" style={{ fontSize: "0.7rem" }}>
+                      <Lock size={11} style={{ marginRight: 3 }} /> IMMUTABLE
+                    </span>
+                    <button
+                      type="button"
+                      className="dgs-saas-btn primary sm"
+                      onClick={() => handleOpenAssignModal(v)}
+                      style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
+                    >
+                      <UserCheck size={13} /> Assign Test
+                    </button>
+                  </>
                 )}
                 <button
                   type="button"
@@ -1052,39 +1294,95 @@ export default function AssessmentClientView({
         </div>
       )}
 
-      {/* MODAL: Generate Assessment Test */}
-      {selectedJdForGen && (
-        <div className="dgs-saas-search-overlay" onClick={() => setSelectedJdForGen(null)}>
-          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "520px", maxWidth: "95vw" }}>
-            <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
-              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
-                <Sparkles size={18} style={{ color: "var(--dgs-purple-light)" }} /> Generate Assessment with Gemini
-              </h3>
-              <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
-                Role: <strong style={{ color: "var(--dgs-text-primary)" }}>{selectedJdForGen.role_title}</strong>
-              </p>
+      {/* MODAL: Make An Assessment (AI or Manual Draft) */}
+      {showMakeAssessmentModal && (
+        <div className="dgs-saas-search-overlay" onClick={() => !generating && setShowMakeAssessmentModal(false)}>
+          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "580px", maxWidth: "95vw" }}>
+            <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Sparkles size={18} style={{ color: "var(--dgs-purple-light)" }} /> Make an Assessment Blueprint
+                </h3>
+                <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
+                  Create a structured technical test blueprint via Gemini AI or instant manual draft template.
+                </p>
+              </div>
+              <button
+                type="button"
+                className="dgs-saas-btn secondary sm"
+                disabled={generating}
+                onClick={() => setShowMakeAssessmentModal(false)}
+              >
+                ✕
+              </button>
             </div>
-            <form onSubmit={handleGenerateTest} style={{ padding: "24px", display: "grid", gap: "16px" }}>
+
+            <div style={{ padding: "24px", display: "grid", gap: "16px" }}>
+              {/* Role Selection */}
               <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                Difficulty Level
+                Target Role / Job Description *
                 <select
-                  value={difficulty}
-                  onChange={(e) => setDifficulty(e.target.value as any)}
+                  value={selectedJdIdForGen}
+                  onChange={(e) => setSelectedJdIdForGen(e.target.value)}
                   style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                 >
-                  <option value="junior">Junior (Foundational agency process &amp; concepts)</option>
-                  <option value="mid">Mid-Level (Hands-on execution &amp; troubleshooting)</option>
-                  <option value="senior">Senior (Architecture, strategy, advanced debugging)</option>
-                  <option value="lead">Lead (Leadership, system vision, enterprise clients)</option>
+                  {jds.map((j) => (
+                    <option key={j.id} value={j.id}>
+                      {j.role_title} ({j.role_level || "mid"})
+                    </option>
+                  ))}
+                  <option value="__new__">+ Create for New Role...</option>
                 </select>
               </label>
+
+              {/* Custom Role Title if __new__ */}
+              {selectedJdIdForGen === "__new__" && (
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                  Role Title *
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Senior Organic Search Engineer"
+                    value={customRoleTitle}
+                    onChange={(e) => setCustomRoleTitle(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  />
+                </label>
+              )}
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                  Difficulty Level
+                  <select
+                    value={difficulty}
+                    onChange={(e) => setDifficulty(e.target.value as any)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  >
+                    <option value="junior">Junior</option>
+                    <option value="mid">Mid-Level</option>
+                    <option value="senior">Senior</option>
+                    <option value="lead">Lead / Principal</option>
+                  </select>
+                </label>
+
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                  Focus Competencies
+                  <input
+                    type="text"
+                    placeholder="e.g. Technical SEO, CWV, Schema"
+                    value={focusAreas}
+                    onChange={(e) => setFocusAreas(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  />
+                </label>
+              </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
                 <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
                   MCQ Count
                   <input
                     type="number"
-                    min={3}
+                    min={1}
                     max={25}
                     value={mcqCount}
                     onChange={(e) => setMcqCount(Number(e.target.value))}
@@ -1092,7 +1390,7 @@ export default function AssessmentClientView({
                   />
                 </label>
                 <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                  Short Answers
+                  Short Written
                   <input
                     type="number"
                     min={0}
@@ -1103,7 +1401,7 @@ export default function AssessmentClientView({
                   />
                 </label>
                 <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                  Long Written
+                  Long Scenario
                   <input
                     type="number"
                     min={0}
@@ -1115,26 +1413,55 @@ export default function AssessmentClientView({
                 </label>
               </div>
 
-              <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
-                Focus Areas / Custom Instructions
-                <textarea
-                  rows={3}
-                  placeholder="e.g. Core Web Vitals, programmatic SEO, schema markup, high-intent client communication"
-                  value={focusAreas}
-                  onChange={(e) => setFocusAreas(e.target.value)}
-                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", resize: "vertical" }}
-                />
-              </label>
+              {/* Error Banner & Fallback Trigger */}
+              {generationError && (
+                <div style={{ background: "rgba(239, 68, 68, 0.1)", border: "1px solid var(--dgs-danger)", borderRadius: "6px", padding: "12px", display: "grid", gap: "8px" }}>
+                  <div style={{ fontSize: "0.82rem", color: "#fca5a5" }}>
+                    ⚠️ {generationError}
+                  </div>
+                  <button
+                    type="button"
+                    className="dgs-saas-btn primary sm"
+                    onClick={() => handleExecuteMakeAssessment(true)}
+                    disabled={generating}
+                    style={{ justifySelf: "start" }}
+                  >
+                    Create as Manual Draft Template Instead
+                  </button>
+                </div>
+              )}
 
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "12px" }}>
-                <button type="button" className="dgs-saas-btn secondary" onClick={() => setSelectedJdForGen(null)}>
+              {/* Modal Action Controls */}
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "12px", borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>
+                <button
+                  type="button"
+                  className="dgs-saas-btn secondary"
+                  disabled={generating}
+                  onClick={() => setShowMakeAssessmentModal(false)}
+                >
                   Cancel
                 </button>
-                <button type="submit" className="dgs-saas-btn primary" disabled={generating}>
-                  {generating ? "Generating with Gemini…" : "Generate Test Draft"}
+                <button
+                  type="button"
+                  className="dgs-saas-btn secondary"
+                  disabled={generating}
+                  onClick={() => handleExecuteMakeAssessment(true)}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                >
+                  <FileText size={14} /> Create Manual Draft
+                </button>
+                <button
+                  type="button"
+                  className="dgs-saas-btn primary"
+                  disabled={generating}
+                  onClick={() => handleExecuteMakeAssessment(false)}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
+                >
+                  <Sparkles size={14} className={generating ? "spin" : ""} />
+                  {generating ? "Generating Blueprint…" : "Generate with Gemini AI"}
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}
@@ -1164,7 +1491,36 @@ export default function AssessmentClientView({
                   </span>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: "8px" }}>
+              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                {selectedVersion.status === "approved" ? (
+                  <button
+                    type="button"
+                    className="dgs-saas-btn primary sm"
+                    onClick={() => handleOpenAssignModal(selectedVersion)}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontWeight: 600 }}
+                  >
+                    <UserCheck size={13} /> Assign to Candidate
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="dgs-saas-btn secondary sm"
+                      onClick={() => setShowAddQuestionModal(true)}
+                      style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
+                    >
+                      <Plus size={13} /> Add Question
+                    </button>
+                    <button
+                      type="button"
+                      className="dgs-saas-btn primary sm"
+                      onClick={() => handleApproveVersion(selectedVersion.id)}
+                      style={{ display: "inline-flex", alignItems: "center", gap: "5px", fontWeight: 600 }}
+                    >
+                      <CheckCircle2 size={13} /> Approve &amp; Lock
+                    </button>
+                  </>
+                )}
                 <button
                   type="button"
                   className="dgs-saas-btn secondary sm"
@@ -1173,16 +1529,6 @@ export default function AssessmentClientView({
                 >
                   <Eye size={13} /> Candidate Test Preview
                 </button>
-                {selectedVersion.status === "draft" && (
-                  <button
-                    type="button"
-                    className="dgs-saas-btn primary sm"
-                    onClick={() => handleApproveVersion(selectedVersion.id)}
-                    style={{ display: "inline-flex", alignItems: "center", gap: "5px" }}
-                  >
-                    <CheckCircle2 size={13} /> Approve &amp; Lock
-                  </button>
-                )}
                 <button type="button" className="dgs-saas-btn secondary sm" onClick={() => setSelectedVersion(null)}>
                   Close
                 </button>
@@ -1211,9 +1557,29 @@ export default function AssessmentClientView({
                       </span>
                     </div>
 
-                    {/* Question Actions (REQ-04, REQ-05) */}
+                    {/* Question Actions (Move Up, Move Down, AI Regen, Delete) */}
                     {selectedVersion.status === "draft" && (
-                      <div style={{ display: "flex", gap: "6px" }}>
+                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                        <button
+                          type="button"
+                          className="dgs-saas-btn secondary sm"
+                          onClick={() => handleMoveQuestion(idx, "up")}
+                          disabled={idx === 0}
+                          title="Move Question Up"
+                          style={{ padding: "3px 6px" }}
+                        >
+                          <ArrowUp size={11} />
+                        </button>
+                        <button
+                          type="button"
+                          className="dgs-saas-btn secondary sm"
+                          onClick={() => handleMoveQuestion(idx, "down")}
+                          disabled={idx === (selectedVersion.test_data?.questions?.length || 0) - 1}
+                          title="Move Question Down"
+                          style={{ padding: "3px 6px" }}
+                        >
+                          <ArrowDown size={11} />
+                        </button>
                         <button
                           type="button"
                           className="dgs-saas-btn secondary sm"
@@ -1228,6 +1594,15 @@ export default function AssessmentClientView({
                           style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.72rem", padding: "3px 8px" }}
                         >
                           <Sparkles size={11} /> AI Regenerate
+                        </button>
+                        <button
+                          type="button"
+                          className="dgs-saas-btn danger sm"
+                          onClick={() => handleDeleteQuestion(idx)}
+                          title="Remove Question"
+                          style={{ padding: "3px 6px" }}
+                        >
+                          <Trash2 size={11} />
                         </button>
                       </div>
                     )}
@@ -1782,6 +2157,262 @@ export default function AssessmentClientView({
                 {isDeletingVersion ? "Deleting..." : "Delete / Archive Version"}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: Assign Assessment to Candidate */}
+      {assignModalVersion && (
+        <div className="dgs-saas-search-overlay" onClick={() => !assignLoading && setAssignModalVersion(null)}>
+          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "560px", maxWidth: "95vw" }}>
+            <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <UserCheck size={18} style={{ color: "var(--dgs-success)" }} /> Assign Test to Candidate
+                </h3>
+                <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
+                  Blueprint: <strong>{assignModalVersion.role_title}</strong> (v{assignModalVersion.version_number})
+                </p>
+              </div>
+              <button
+                type="button"
+                className="dgs-saas-btn secondary sm"
+                disabled={assignLoading}
+                onClick={() => setAssignModalVersion(null)}
+              >
+                ✕
+              </button>
+            </div>
+
+            {assignedLinkInfo ? (
+              <div style={{ padding: "24px", display: "grid", gap: "16px" }}>
+                <div style={{ background: "rgba(34, 197, 94, 0.1)", border: "1px solid var(--dgs-success)", borderRadius: "8px", padding: "16px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--dgs-success)", fontWeight: 600 }}>
+                    <CheckCircle2 size={18} /> Candidate Assessment Link Ready!
+                  </div>
+                  <p style={{ margin: "8px 0 0", fontSize: "0.82rem", color: "var(--dgs-text-primary)" }}>
+                    This unique one-time assessment link has been created and bound to {assignName} ({assignEmail}).
+                  </p>
+                </div>
+
+                <div>
+                  <label style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Candidate URL</label>
+                  <div style={{ display: "flex", gap: "8px", marginTop: "6px" }}>
+                    <input
+                      type="text"
+                      readOnly
+                      value={assignedLinkInfo.url}
+                      style={{ flex: 1, background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", fontSize: "0.85rem" }}
+                    />
+                    <button
+                      type="button"
+                      className="dgs-saas-btn secondary"
+                      onClick={() => {
+                        navigator.clipboard.writeText(assignedLinkInfo.url);
+                        showToast("Link copied to clipboard!");
+                      }}
+                    >
+                      <Copy size={14} /> Copy
+                    </button>
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "8px" }}>
+                  <a
+                    href={assignedLinkInfo.path}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="dgs-saas-btn primary"
+                    style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                  >
+                    <ExternalLink size={14} /> Open Candidate Test Portal
+                  </a>
+                  <button
+                    type="button"
+                    className="dgs-saas-btn secondary"
+                    onClick={() => setAssignModalVersion(null)}
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleCreateAssignmentSubmit} style={{ padding: "24px", display: "grid", gap: "16px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                  <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                    Candidate Name *
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Rahul Sharma"
+                      value={assignName}
+                      onChange={(e) => setAssignName(e.target.value)}
+                      style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                    Candidate Email *
+                    <input
+                      type="email"
+                      required
+                      placeholder="e.g. rahul@example.com"
+                      value={assignEmail}
+                      onChange={(e) => setAssignEmail(e.target.value)}
+                      style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                    />
+                  </label>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
+                  <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                    Phone Number
+                    <input
+                      type="text"
+                      placeholder="+91 98765 43210"
+                      value={assignPhone}
+                      onChange={(e) => setAssignPhone(e.target.value)}
+                      style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                    Experience
+                    <input
+                      type="text"
+                      placeholder="e.g. 4 Years"
+                      value={assignExp}
+                      onChange={(e) => setAssignExp(e.target.value)}
+                      style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                    />
+                  </label>
+                  <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                    Link Expiry (Days)
+                    <input
+                      type="number"
+                      min={1}
+                      max={30}
+                      value={assignExpiresDays}
+                      onChange={(e) => setAssignExpiresDays(Number(e.target.value))}
+                      style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                    />
+                  </label>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "12px", borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>
+                  <button
+                    type="button"
+                    className="dgs-saas-btn secondary"
+                    disabled={assignLoading}
+                    onClick={() => setAssignModalVersion(null)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="dgs-saas-btn primary"
+                    disabled={assignLoading}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
+                  >
+                    <UserCheck size={14} />
+                    {assignLoading ? "Generating Link…" : "Generate & Assign Link"}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: Add Question to Blueprint */}
+      {showAddQuestionModal && selectedVersion && (
+        <div className="dgs-saas-search-overlay" onClick={() => setShowAddQuestionModal(false)}>
+          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "620px", maxWidth: "95vw" }}>
+            <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
+                <Plus size={18} /> Add Question to Blueprint
+              </h3>
+              <button type="button" className="dgs-saas-btn secondary sm" onClick={() => setShowAddQuestionModal(false)}>
+                ✕
+              </button>
+            </div>
+            <form onSubmit={handleAddQuestionSubmit} style={{ padding: "24px", display: "grid", gap: "16px" }}>
+              <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                Question Type
+                <select
+                  value={newQuestionType}
+                  onChange={(e) => setNewQuestionType(e.target.value as any)}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                >
+                  <option value="mcq">Multiple Choice Question (MCQ)</option>
+                  <option value="short">Short Written Answer</option>
+                  <option value="long">Long Scenario / Practical Task</option>
+                </select>
+              </label>
+
+              <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                Question Prompt *
+                <textarea
+                  rows={3}
+                  required
+                  placeholder="Enter the question or practical challenge..."
+                  value={newQuestionPrompt}
+                  onChange={(e) => setNewQuestionPrompt(e.target.value)}
+                  style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                />
+              </label>
+
+              {newQuestionType === "mcq" && (
+                <div style={{ display: "grid", gap: "8px" }}>
+                  <div style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)", fontWeight: 600 }}>
+                    Options &amp; Correct Answer
+                  </div>
+                  {newQuestionOptions.map((opt, idx) => (
+                    <div key={idx} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <input
+                        type="radio"
+                        name="correctAnswer"
+                        checked={newQuestionCorrectIndex === idx}
+                        onChange={() => setNewQuestionCorrectIndex(idx)}
+                        title="Mark as correct answer"
+                      />
+                      <input
+                        type="text"
+                        required
+                        placeholder={`Option ${String.fromCharCode(65 + idx)}`}
+                        value={opt}
+                        onChange={(e) => {
+                          const updated = [...newQuestionOptions];
+                          updated[idx] = e.target.value;
+                          setNewQuestionOptions(updated);
+                        }}
+                        style={{ flex: 1, background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "8px 10px", color: "var(--dgs-text-primary)", fontSize: "0.85rem" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {(newQuestionType === "short" || newQuestionType === "long") && (
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                  Evaluation Rubric / Criteria
+                  <textarea
+                    rows={2}
+                    placeholder="Key concepts or keywords expected in high-scoring candidate response..."
+                    value={newQuestionRubric}
+                    onChange={(e) => setNewQuestionRubric(e.target.value)}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                  />
+                </label>
+              )}
+
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px", borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>
+                <button type="button" className="dgs-saas-btn secondary" onClick={() => setShowAddQuestionModal(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="dgs-saas-btn primary" disabled={savingBlueprintDraft}>
+                  {savingBlueprintDraft ? "Adding…" : "Add to Blueprint"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

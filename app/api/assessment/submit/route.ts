@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAssessmentByKey } from "@/lib/assessments/definitions";
+import { resolveAssessmentDefinition } from "@/lib/assessments/definitions";
 import { getAttempt, submitAssessmentAttempt } from "@/lib/cms/assessments";
 import { publishNotificationEvent } from "@/lib/notifications/engine";
 
@@ -20,7 +20,7 @@ export async function POST(request:Request) {
     if(!attempt || attempt.submitted_at) {
       return NextResponse.json({ok:false,message:"Assessment attempt is unavailable."},{status:400});
     }
-    const definition=getAssessmentByKey(attempt.assessment_key);
+    const definition=await resolveAssessmentDefinition(attempt.assessment_key);
     if(!definition) return NextResponse.json({ok:false,message:"Assessment configuration missing."},{status:400});
 
     const startedTime = attempt.started_at instanceof Date

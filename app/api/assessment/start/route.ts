@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAssessmentByKey } from "@/lib/assessments/definitions";
+import { resolveAssessmentDefinition } from "@/lib/assessments/definitions";
 import { startAssessmentAttempt } from "@/lib/cms/assessments";
 
 export const runtime="nodejs";
@@ -10,7 +10,7 @@ export async function POST(request:Request) {
     const input=await request.json() as { token?:string; assessmentKey?:string };
     const token=String(input.token||"");
     const assessmentKey=String(input.assessmentKey||"");
-    const definition=getAssessmentByKey(assessmentKey);
+    const definition=await resolveAssessmentDefinition(assessmentKey);
     if(!definition || !token) return NextResponse.json({ok:false,message:"Invalid assessment link."},{status:400});
     const attempt=await startAssessmentAttempt(token,assessmentKey);
     return NextResponse.json({

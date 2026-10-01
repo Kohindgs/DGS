@@ -55,6 +55,13 @@ export async function PUT(
       [reviewStatus, reviewerNotes, evaluationNotes, id, id]
     );
 
+    await cmsExecute(
+      `UPDATE assessment_attempts
+       SET review_status = ?, reviewer_notes = ?
+       WHERE id = ? OR assignment_id = ?`,
+      [reviewStatus, reviewerNotes, id, id]
+    );
+
     if (body.interview_notes !== undefined) {
       await cmsExecute("UPDATE hr_pipeline SET interview_notes = ? WHERE id = ?", [body.interview_notes, id]);
     }

@@ -39,20 +39,28 @@ export default async function AssessmentAdminPage() {
       versions = verRows || [];
 
       const { rows: candRows } = await cmsQuery(
-        `SELECT c.id, c.assignment_id, c.objective_score, c.objective_total, c.role_match_score, c.review_status, c.submitted_at,
-                hp.candidate_name as name, hp.candidate_email as email
+        `SELECT a.id, a.assignment_id, a.objective_score, a.objective_total,
+                CASE WHEN a.objective_total > 0 THEN ROUND((a.objective_score / a.objective_total) * 100) ELSE 0 END as role_match_score,
+                a.review_status, a.submitted_at,
+                a.candidate_name as name, a.candidate_email as email
+         FROM assessment_attempts a
+         WHERE a.submitted_at IS NOT NULL
+         UNION
+         SELECT c.id, c.assignment_id, c.objective_score, c.objective_total, c.role_match_score, c.review_status, c.submitted_at,
+                COALESCE(hp.candidate_name, 'Candidate') as name, COALESCE(hp.candidate_email, 'Missing HR linkage') as email
          FROM assessment_candidates c
          LEFT JOIN hr_pipeline hp ON (c.assignment_id = hp.id OR c.id = hp.id)
-         ORDER BY c.submitted_at DESC
+         WHERE c.id NOT IN (SELECT id FROM assessment_attempts)
+         ORDER BY submitted_at DESC
          LIMIT 100`
       );
-      candidates = candRows.map((r: any) => ({
+      candidates = (candRows || []).map((r: any) => ({
         id: r.id,
         name: r.name || "Unknown candidate",
         email: r.email || "Missing HR linkage",
-        objective_score: r.objective_score || 0,
-        objective_total: r.objective_total || 0,
-        role_match_score: r.role_match_score || 0,
+        objective_score: Number(r.objective_score || 0),
+        objective_total: Number(r.objective_total || 0),
+        role_match_score: Number(r.role_match_score || 0),
         review_status: r.review_status || "pending",
         submitted_at: r.submitted_at || null,
       }));
