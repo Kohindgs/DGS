@@ -141,31 +141,35 @@ function parseCreativeRequirements(value: unknown): CreativeRequirementConfig | 
 }
 
 export async function loadActiveCareerJobs(): Promise<CareerJob[]> {
-  const { listCmsCareerJobs } = await import("@/lib/cms/careers");
-  const rows = await listCmsCareerJobs(true);
-  if (!rows.length) return getActiveCareerJobs();
-  return rows.map((row) => ({
-    slug: row.slug,
-    title: row.title,
-    summary: row.summary,
-    employmentType: row.employment_type as CareerJob["employmentType"],
-    employmentLabel: row.employment_label,
-    location: row.location,
-    workplaceType: row.workplace_type,
-    schedule: row.schedule,
-    experience: row.experience,
-    compensation: row.compensation,
-    education: row.slug === "generative-ai-artist" ? "12th Pass" : undefined,
-    overview: row.overview,
-    responsibilities: parseList(row.responsibilities),
-    requirements: parseList(row.requirements),
-    benefits: parseList(row.benefits),
-    datePosted: row.date_posted,
-    active: Boolean(row.active),
-    creativeRequirements:
-      parseCreativeRequirements(row.creative_requirements) ||
-      CAREER_JOBS.find((j) => j.slug === row.slug)?.creativeRequirements,
-  }));
+  try {
+    const { listCmsCareerJobs } = await import("@/lib/cms/careers");
+    const rows = await listCmsCareerJobs(true);
+    if (!rows.length) return getActiveCareerJobs();
+    return rows.map((row) => ({
+      slug: row.slug,
+      title: row.title,
+      summary: row.summary,
+      employmentType: row.employment_type as CareerJob["employmentType"],
+      employmentLabel: row.employment_label,
+      location: row.location,
+      workplaceType: row.workplace_type,
+      schedule: row.schedule,
+      experience: row.experience,
+      compensation: row.compensation,
+      education: row.slug === "generative-ai-artist" ? "12th Pass" : undefined,
+      overview: row.overview,
+      responsibilities: parseList(row.responsibilities),
+      requirements: parseList(row.requirements),
+      benefits: parseList(row.benefits),
+      datePosted: row.date_posted,
+      active: Boolean(row.active),
+      creativeRequirements:
+        parseCreativeRequirements(row.creative_requirements) ||
+        CAREER_JOBS.find((j) => j.slug === row.slug)?.creativeRequirements,
+    }));
+  } catch (err) {
+    return getActiveCareerJobs();
+  }
 }
 
 export async function loadCareerJob(slug: string): Promise<CareerJob | undefined> {

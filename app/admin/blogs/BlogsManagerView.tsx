@@ -12,7 +12,7 @@ import type {
   CreateCmsBlogInput,
   UpdateCmsBlogInput,
 } from "@/lib/cms/blogs";
-import { imageMatchesSlug } from "@/lib/cms/blog-import";
+import { imageMatchesSlug } from "@/lib/cms/blog-media-match";
 import type { PrePublishGateResult } from "@/lib/cms/pre-publish-gate";
 
 interface BlogsManagerViewProps {

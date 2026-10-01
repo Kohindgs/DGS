@@ -858,7 +858,7 @@ export default function AssessmentClientView({
         title="Assessment & Recruitment Intelligence OS"
         subtitle="AI-driven technical testing, multi-dimensional candidate evaluation, and immutable assessment blueprints."
         actions={
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
             <button
               type="button"
               className="dgs-saas-btn primary sm"
@@ -867,6 +867,15 @@ export default function AssessmentClientView({
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
             >
               <Sparkles size={14} /> MAKE AN ASSESSMENT
+            </button>
+            <button
+              type="button"
+              className="dgs-saas-btn secondary sm"
+              data-testid="make-jd-cta"
+              onClick={handleOpenCreateJd}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+            >
+              <Briefcase size={14} /> MAKE A JOB DESCRIPTION
             </button>
             <button
               type="button"
@@ -962,10 +971,11 @@ export default function AssessmentClientView({
             <button
               type="button"
               className="dgs-saas-btn secondary sm"
+              data-testid="tab-make-jd-cta"
               onClick={handleOpenCreateJd}
-              style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
             >
-              <Plus size={14} /> Create Job Description
+              <Plus size={14} /> MAKE A JOB DESCRIPTION
             </button>
           </div>
           <SaaSTable
@@ -1127,8 +1137,44 @@ export default function AssessmentClientView({
 
       {/* MODAL: Create / Edit JD */}
       {showCreateJdModal && (
-        <div className="dgs-saas-search-overlay" onClick={() => setShowCreateJdModal(false)}>
-          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "800px", maxWidth: "95vw", maxHeight: "90vh", display: "flex", flexDirection: "column" }}>
+        <div
+          className="dgs-saas-search-overlay"
+          onClick={() => setShowCreateJdModal(false)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0, 0, 0, 0.8)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            zIndex: 99999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px",
+            boxSizing: "border-box",
+          }}
+        >
+          <div
+            className="dgs-saas-search-modal"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "800px",
+              maxWidth: "95vw",
+              maxHeight: "90vh",
+              display: "flex",
+              flexDirection: "column",
+              background: "#0f121d",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              borderRadius: "12px",
+              boxShadow: "0 25px 70px rgba(0, 0, 0, 0.85)",
+              zIndex: 100000,
+            }}
+          >
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)" }}>
               <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
                 <Briefcase size={18} /> {editingJd ? "Edit Job Description" : "Create Structured Job Description"}
@@ -1296,8 +1342,44 @@ export default function AssessmentClientView({
 
       {/* MODAL: Make An Assessment (AI or Manual Draft) */}
       {showMakeAssessmentModal && (
-        <div className="dgs-saas-search-overlay" onClick={() => !generating && setShowMakeAssessmentModal(false)}>
-          <div className="dgs-saas-search-modal" onClick={(e) => e.stopPropagation()} style={{ width: "580px", maxWidth: "95vw" }}>
+        <div
+          className="dgs-saas-search-overlay"
+          onClick={() => !generating && setShowMakeAssessmentModal(false)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0, 0, 0, 0.8)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            zIndex: 99999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px",
+            boxSizing: "border-box",
+          }}
+        >
+          <div
+            className="dgs-saas-search-modal"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "580px",
+              maxWidth: "95vw",
+              maxHeight: "90vh",
+              display: "flex",
+              flexDirection: "column",
+              background: "#0f121d",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              borderRadius: "12px",
+              boxShadow: "0 25px 70px rgba(0, 0, 0, 0.85)",
+              zIndex: 100000,
+            }}
+          >
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
                 <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
