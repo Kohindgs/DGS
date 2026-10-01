@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 const SEO_ROUTES: SeoRoute[] = [
   { route: "/", title: "Leading Digital Marketing & Growth Agency | D'Genius Solutions", category: "Core Service", schemaType: "Organization, LocalBusiness", status: "200 OK", canonical: "Self", robots: "index, follow" },
   { route: "/services/ai-video-production-agency/", title: "AI Video Production Agency | DGS Mumbai", category: "Core Service", schemaType: "Service, VideoObject", status: "200 OK", canonical: "Self", robots: "index, follow" },
-  { route: "/services/ai-production-dubai-page/", title: "AI Video Production Agency in Dubai | DGS", category: "Location Pillar", schemaType: "Service, LocalBusiness", status: "200 OK", canonical: "Self", robots: "index, follow" },
+  { route: "/services/ai-production-dubai-page/", title: "AI Video Production Agency in Dubai | D'Genius Solutions", category: "Location Pillar", schemaType: "Service, LocalBusiness", status: "200 OK", canonical: "Self", robots: "index, follow" },
   { route: "/services/aeo-services-in-mumbai/", title: "AEO Services in Mumbai | Answer Engine Optimization", category: "Core Service", schemaType: "Service, FAQPage", status: "200 OK", canonical: "Self", robots: "index, follow" },
   { route: "/aeo-dubai/", title: "AEO Services in Dubai | Answer Engine Optimization UAE", category: "Location Pillar", schemaType: "Service, LocalBusiness", status: "200 OK", canonical: "Self", robots: "index, follow" },
   { route: "/services/seo-company-in-mumbai/", title: "SEO Company in Mumbai | Search Engine Optimization", category: "Core Service", schemaType: "Service, LocalBusiness", status: "200 OK", canonical: "Self", robots: "index, follow" },

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-30T08:20:33.865Z",
-  "auditTimestamp": "2026-09-30T08:20:29.767Z",
+  "generatedAt": "2026-09-30T16:52:53.465Z",
+  "auditTimestamp": "2026-09-30T16:52:47.771Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
   "latestDailyMetricDate": "2026-09-24",
@@ -10,7 +10,7 @@
   "latestMetricDate": "2026-09-27",
   "periodType": "28d",
   "summary": {
-    "totalIndexablePages": 88,
+    "totalIndexablePages": 101,
     "protectedTier0PagesCount": 11,
     "pagesWithGscData": 103,
     "latestDailyMetricDate": "2026-09-24",
@@ -19,18 +19,18 @@
     "latestAvailableMetricDate": "2026-09-27",
     "periodType": "28d",
     "classifications": {
-      "CRITICAL_DECLINE": 6,
-      "DECLINING": 12,
+      "CRITICAL_DECLINE": 7,
+      "DECLINING": 14,
       "VOLATILE": 1,
-      "STABLE": 4,
-      "GROWING": 17,
-      "INSUFFICIENT_DATA": 48
+      "STABLE": 5,
+      "GROWING": 21,
+      "INSUFFICIENT_DATA": 53
     },
     "spamRiskDistribution": {
-      "LOW": 39,
-      "MEDIUM": 1,
-      "HIGH": 1,
-      "INSUFFICIENT_EVIDENCE": 47
+      "LOW": 48,
+      "MEDIUM": 0,
+      "HIGH": 0,
+      "INSUFFICIENT_EVIDENCE": 53
     },
     "recoveryTiers": {
       "AT_HISTORICAL_PEAK": 1,
@@ -207,18 +207,18 @@
     "schemaValidationSummary": {
       "astValidationMode": "LOCAL_JSON_LD_AST_VALIDATION",
       "externalApiDisclaimer": "Evaluated via local AST validation; Google Rich Results API not invoked",
-      "coveragePercent": 99,
-      "totalPages": 88,
-      "pagesWithSchemaCount": 87,
-      "validSchemaCount": 36,
+      "coveragePercent": 100,
+      "totalPages": 101,
+      "pagesWithSchemaCount": 101,
+      "validSchemaCount": 101,
       "jsonLdParseErrors": 0,
-      "conflictingEntityErrors": 52,
+      "conflictingEntityErrors": 0,
       "redundantEntityWarnings": 0,
-      "validReferencesCount": 327,
+      "validReferencesCount": 449,
       "googleExternalValidation": "NOT RUN",
-      "schemaErrorsCount": 52,
+      "schemaErrorsCount": 0,
       "schemaWarningsCount": 0,
-      "status": "WARN"
+      "status": "PASS"
     },
     "siteReputationSummary": {
       "urlLevelAutomatedScreen": "PASS",
@@ -233,10 +233,8 @@
     "scaledContentSummary": {
       "wordCountScreen": {
         "thinContentThreshold": 250,
-        "thinPagesCount": 1,
-        "thinPages": [
-          "/blogs/dgs-cms-scheduled-cron-qa/"
-        ],
+        "thinPagesCount": 0,
+        "thinPages": [],
         "status": "PASS"
       },
       "duplicationScreen": {
@@ -250,9 +248,9 @@
         "status": "PASS"
       },
       "titleH1Uniqueness": {
-        "totalTitles": 88,
+        "totalTitles": 101,
         "duplicateTitlesCount": 0,
-        "singleH1ComplianceCount": 88,
+        "singleH1ComplianceCount": 101,
         "status": "PASS"
       },
       "doorwayRisk": {
@@ -263,25 +261,25 @@
     },
     "cannibalizationCandidateCount": 50,
     "falseCannibalizationRecordsRemoved": 0,
-    "publiclyRenderedMachineLabels": 1,
+    "publiclyRenderedMachineLabels": 0,
     "sourceCommentMachineLabels": 1,
     "internalMetadataMachineLabels": 0
   },
   "schemaValidationSummary": {
     "astValidationMode": "LOCAL_JSON_LD_AST_VALIDATION",
     "externalApiDisclaimer": "Evaluated via local AST validation; Google Rich Results API not invoked",
-    "coveragePercent": 99,
-    "totalPages": 88,
-    "pagesWithSchemaCount": 87,
-    "validSchemaCount": 36,
+    "coveragePercent": 100,
+    "totalPages": 101,
+    "pagesWithSchemaCount": 101,
+    "validSchemaCount": 101,
     "jsonLdParseErrors": 0,
-    "conflictingEntityErrors": 52,
+    "conflictingEntityErrors": 0,
     "redundantEntityWarnings": 0,
-    "validReferencesCount": 327,
+    "validReferencesCount": 449,
     "googleExternalValidation": "NOT RUN",
-    "schemaErrorsCount": 52,
+    "schemaErrorsCount": 0,
     "schemaWarningsCount": 0,
-    "status": "WARN"
+    "status": "PASS"
   },
   "siteReputationSummary": {
     "urlLevelAutomatedScreen": "PASS",
@@ -296,10 +294,8 @@
   "scaledContentSummary": {
     "wordCountScreen": {
       "thinContentThreshold": 250,
-      "thinPagesCount": 1,
-      "thinPages": [
-        "/blogs/dgs-cms-scheduled-cron-qa/"
-      ],
+      "thinPagesCount": 0,
+      "thinPages": [],
       "status": "PASS"
     },
     "duplicationScreen": {
@@ -313,9 +309,9 @@
       "status": "PASS"
     },
     "titleH1Uniqueness": {
-      "totalTitles": 88,
+      "totalTitles": 101,
       "duplicateTitlesCount": 0,
-      "singleH1ComplianceCount": 88,
+      "singleH1ComplianceCount": 101,
       "status": "PASS"
     },
     "doorwayRisk": {
@@ -350,10 +346,22 @@
       "reason": "Period comparison reclassified based on true delta"
     },
     {
+      "path": "/blogs/ai-content-optimization/",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "DECLINING",
+      "reason": "Period comparison reclassified based on true delta"
+    },
+    {
       "path": "/blogs/ai-generated-summaries-in-search-ads/",
       "oldClassification": "DECLINING",
       "newClassification": "GROWING",
       "reason": "Removed false decline: Page actually grew in impressions/clicks"
+    },
+    {
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "GROWING",
+      "reason": "Period comparison reclassified based on true delta"
     },
     {
       "path": "/blogs/ai-overview-ranking/",
@@ -370,6 +378,12 @@
     {
       "path": "/blogs/ai-search-optimization-ecommerce/",
       "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "CRITICAL_DECLINE",
+      "reason": "Period comparison reclassified based on true delta"
+    },
+    {
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "oldClassification": "DECLINING",
       "newClassification": "CRITICAL_DECLINE",
       "reason": "Period comparison reclassified based on true delta"
     },
@@ -416,6 +430,12 @@
       "reason": "Period comparison reclassified based on true delta"
     },
     {
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "DECLINING",
+      "reason": "Period comparison reclassified based on true delta"
+    },
+    {
       "path": "/blogs/content-writing-for-seo/",
       "oldClassification": "INSUFFICIENT_DATA",
       "newClassification": "DECLINING",
@@ -431,6 +451,12 @@
       "path": "/blogs/google-ads-vs-meta-ads/",
       "oldClassification": "STABLE",
       "newClassification": "CRITICAL_DECLINE",
+      "reason": "Period comparison reclassified based on true delta"
+    },
+    {
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "GROWING",
       "reason": "Period comparison reclassified based on true delta"
     },
     {
@@ -467,6 +493,12 @@
       "path": "/blogs/seo-rankings-up-but-traffic-down/",
       "oldClassification": "INSUFFICIENT_DATA",
       "newClassification": "GROWING",
+      "reason": "Period comparison reclassified based on true delta"
+    },
+    {
+      "path": "/blogs/website-performance-conversions/",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "STABLE",
       "reason": "Period comparison reclassified based on true delta"
     },
     {
@@ -573,6 +605,18 @@
     },
     {
       "path": "/sitemap/",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "GROWING",
+      "reason": "Period comparison reclassified based on true delta"
+    },
+    {
+      "path": "/blogs/aeo-in-2026/",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "newClassification": "GROWING",
+      "reason": "Period comparison reclassified based on true delta"
+    },
+    {
+      "path": "/blogs/google-ads-ai-max-2026/",
       "oldClassification": "INSUFFICIENT_DATA",
       "newClassification": "GROWING",
       "reason": "Period comparison reclassified based on true delta"
@@ -3674,8 +3718,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 3020,
-      "contentHash": "2531f86edddd80ac6d02ca0bb10df002107f6636729693b71d6d5ff790420116",
+      "wordCount": 3208,
+      "contentHash": "0e48398e5dc802619ddbbe7a01da09893c01c6200a5ed8808253d18107b8c85d",
       "schemaTypes": [
         "Organization",
         "ImageObject",
@@ -3687,9 +3731,9 @@
         "ListItem",
         "BreadcrumbList"
       ],
-      "internalLinksCount": 236,
+      "internalLinksCount": 248,
       "externalLinksCount": 15,
-      "imagesCount": 71,
+      "imagesCount": 75,
       "missingAltCount": 0,
       "primaryQueryFamily": "Blog Topic",
       "isProtectedTier0": false,
@@ -3747,6 +3791,10 @@
           "https://www.dgeniussolutions.com/blogs/",
           "https://www.dgeniussolutions.com/blogs/google-september-2026-spam-update-what-website-owners-should-know/",
           "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
+          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
+          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
+          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
+          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
           "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
           "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
           "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
@@ -3900,10 +3948,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/#blogposting",
@@ -3919,17 +3965,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/3-3-3-rule-in-marketing/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -3966,7 +4010,7 @@
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 3108,
-      "contentHash": "7dfb95cb53441544d501add5e4a2f571cd44648e9ccff9ba7ef7aea616f9ca13",
+      "contentHash": "3ae5ec9d6241109b82846d420ed15bf0f7a2c0b9ee6e6c0fc1c8597be0e55bb6",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -4019,10 +4063,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/aeo-business/#blogposting",
@@ -4038,17 +4080,130 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/aeo-business/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/aeo-business/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
+      "path": "/blogs/ai-content-optimization/",
+      "pageType": "blog",
+      "title": "AI Content Optimization: 7 Proven Ways to Boost Results",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "AI Content Optimization: 7 Proven Ways to Boost Results",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 1757,
+      "contentHash": "e3319b19340bc0226ce325dc9e128506a5a72f0f17e52e69be02e30eefba20cb",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 63,
+      "externalLinksCount": 17,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 27,
+        "impressionDelta": -26,
+        "impressionDeltaPct": -96.3,
+        "currentWeightedPosition": 18,
+        "previousWeightedPosition": 24.85,
+        "positionDelta": -6.85,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "REFRESH_CANDIDATE",
+      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
+      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/ai-content-optimization/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-content-optimization/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/ai-content-optimization/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/ai-content-optimization/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4084,8 +4239,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 2384,
-      "contentHash": "1fd6d98dc0c68b8d061b189181090377df263c8d1227ef0480c56589f286ecd1",
+      "wordCount": 2376,
+      "contentHash": "0f041ab53d5bfaebcb90f6d2e4fe2eff084e76297a93cfa96944f748f4a33f90",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -4138,10 +4293,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/#blogposting",
@@ -4157,17 +4310,130 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-generated-summaries-in-search-ads/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
+      "path": "/blogs/ai-marketing-strategies-2026/",
+      "pageType": "blog",
+      "title": "How AI Is Reshaping Digital Marketing Strategies in 2026",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "How AI Is Reshaping Digital Marketing Strategies in 2026",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2107,
+      "contentHash": "fd4de5b01023cca8c660aee19a80c1c02d6fccbed0f4968f8655b718556a1ffe",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 60,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 28,
+        "previousImpressions": 18,
+        "impressionDelta": 10,
+        "impressionDeltaPct": 55.6,
+        "currentWeightedPosition": 46.79,
+        "previousWeightedPosition": 65.72,
+        "positionDelta": -18.93,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/ai-marketing-strategies-2026/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4257,10 +4523,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/#blogposting",
@@ -4276,17 +4540,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-overview-ranking/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4376,10 +4638,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-overview-seo/#blogposting",
@@ -4395,17 +4655,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-overview-seo/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-overview-seo/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4495,10 +4753,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/#blogposting",
@@ -4514,17 +4770,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-readiness-for-websites/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4614,10 +4868,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/#blogposting",
@@ -4633,17 +4885,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-search-behavior-2026/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4733,10 +4983,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/#blogposting",
@@ -4752,17 +5000,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-search-checklist-2026/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4852,10 +5098,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/#blogposting",
@@ -4871,17 +5115,130 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-search-optimization-ecommerce/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
+      "path": "/blogs/ai-tools-marketing-agencies/",
+      "pageType": "blog",
+      "title": "Top AI Tools for Digital Marketing Agencies in 2026",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "Top AI Tools for Digital Marketing Agencies in 2026",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 1641,
+      "contentHash": "369781ee22e96fd87f16e7c4fcf8f09c0a4afde55f62ce4fb8d724a291136984",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 63,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 401,
+        "previousImpressions": 813,
+        "impressionDelta": -412,
+        "impressionDeltaPct": -50.7,
+        "currentWeightedPosition": 31.24,
+        "previousWeightedPosition": 30.82,
+        "positionDelta": 0.42,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "CRITICAL_DECLINE",
+      "oldClassification": "DECLINING",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "REFRESH_CANDIDATE",
+      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
+      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/ai-tools-marketing-agencies/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -4971,10 +5328,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/#blogposting",
@@ -4990,17 +5345,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-video-production-cost-india/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5090,10 +5443,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/#blogposting",
@@ -5109,17 +5460,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-video-production-for-business/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5209,10 +5558,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/#blogposting",
@@ -5228,17 +5575,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/ai-video-vs-traditional-video/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5328,10 +5673,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/#blogposting",
@@ -5347,17 +5690,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/brand-identity-seo-trust-lead-generation/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5447,10 +5788,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/#blogposting",
@@ -5466,17 +5805,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/brand-mentions-for-ai-tools/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5566,10 +5903,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/#blogposting",
@@ -5585,17 +5920,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/brand-visibility-in-ai-search/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5685,10 +6018,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/#blogposting",
@@ -5704,17 +6035,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/chatgpt-brand-visibility/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5750,8 +6079,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 2639,
-      "contentHash": "76cb11784499777e7866e32489e6cf3da074249e61931031722b493bcf77c4ff",
+      "wordCount": 2644,
+      "contentHash": "f7457ce21a46a1585e1d8bc028fab3fac1272bd9ea0286356f2de9909bca6a6a",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -5804,10 +6133,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/#blogposting",
@@ -5823,17 +6150,130 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/content-strategy-for-seo/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
+      "path": "/blogs/content-strategy-high-intent-traffic/",
+      "pageType": "blog",
+      "title": "7 Smart Content Strategy Tips for High-Intent Traffic",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "7 Smart Content Strategy Tips for High-Intent Traffic",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2464,
+      "contentHash": "c9d1983c08eca91eaab093db3b9a05ddb58b730fdaf8d75848bca6ecc6dd8fce",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 65,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 72,
+        "previousImpressions": 58,
+        "impressionDelta": 14,
+        "impressionDeltaPct": 24.1,
+        "currentWeightedPosition": 42.19,
+        "previousWeightedPosition": 39.02,
+        "positionDelta": 3.17,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "DECLINING",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "REFRESH_CANDIDATE",
+      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
+      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/content-strategy-high-intent-traffic/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5869,8 +6309,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 3134,
-      "contentHash": "92e521a28144c6ad45ea1fce6f97484d670cbfe5b417298c5aa5f28983dc8e3d",
+      "wordCount": 3117,
+      "contentHash": "a34e571a6266cc7e45eca168724c1dbaeb7ffa6703e3cefa7c8fefa3adbe97cb",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -5907,13 +6347,11 @@
       },
       "classification": "DECLINING",
       "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "HIGH",
-      "riskReasons": [
-        "Publicly rendered machine label detected: Editorial Instruction"
-      ],
+      "spamRisk": "LOW",
+      "riskReasons": [],
       "blogClassification": "REFRESH_CANDIDATE",
-      "safeAction": "REMOVE_RENDERED_LABEL",
-      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "safeAction": "CORRELATE_ROLLOUT_TELEMETRY",
+      "highRiskActionsToAvoid": "DO NOT panic rewrite content or redirect URL during active rollout",
       "twoBaselines": null,
       "historicalRecovery": null,
       "aiVisibility": {
@@ -5925,10 +6363,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/#blogposting",
@@ -5944,17 +6380,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/content-writing-for-seo/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -5974,10 +6408,8 @@
         "sponsoredLinksCount": 0,
         "affiliateLinksCount": 0,
         "offTopicMarkersDetected": 0,
-        "editorialArtifactsCount": 1,
-        "editorialArtifacts": [
-          "Editorial Instruction"
-        ]
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
       }
     },
     {
@@ -5992,8 +6424,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 2181,
-      "contentHash": "f2be89e74c754059fa6e816fa6f2682c55879c1df0643d326556685d9652fc85",
+      "wordCount": 2187,
+      "contentHash": "bee607c650ee99467cf30bb72f5e0417ed3c9eabbf5ffe22829d21b2112d60d4",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -6046,10 +6478,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/core-update-strategy/#blogposting",
@@ -6065,17 +6495,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/core-update-strategy/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/core-update-strategy/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6162,10 +6590,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/future-of-seo/#blogposting",
@@ -6181,17 +6607,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/future-of-seo/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/future-of-seo/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6278,10 +6702,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/#blogposting",
@@ -6297,17 +6719,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization-business/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6397,10 +6817,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/#blogposting",
@@ -6416,17 +6834,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/generative-engine-optimization/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6516,10 +6932,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/#blogposting",
@@ -6535,17 +6949,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/geo-vs-seo-google-ai-search/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6581,8 +6993,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 3804,
-      "contentHash": "30f8db99d7c2e52de637a3b7de4df627bab9ef100cb6046f24f0dc08c87cbcdf",
+      "wordCount": 3803,
+      "contentHash": "162302836980318e1cb0cbc79daa9290f6711139b1d8695bd895ba0406714b85",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -6635,10 +7047,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/#blogposting",
@@ -6654,17 +7064,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ads-vs-meta-ads/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6700,8 +7108,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 2776,
-      "contentHash": "d017247f6905e8de2a84a12af6802ea33ea56aa9efd4922b2ba33ce863b55ca9",
+      "wordCount": 2778,
+      "contentHash": "e5c284b6b5c46883d59c607127e52e0d0e68252ebdaaa91efaece575ce00400a",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -6754,10 +7162,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/#blogposting",
@@ -6773,17 +7179,130 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-agentic-browsing/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "path": "/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "pageType": "blog",
+      "title": "Google AI Overviews and the Growth of Zero-Click Searches",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "Google AI Overviews and the Growth of Zero-Click Searches",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 1761,
+      "contentHash": "a7a989ae8a3a5732e3cf8ef463bbec7dac3152cb9b6e6f850900f11649931a41",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 62,
+      "externalLinksCount": 15,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 23,
+        "previousImpressions": 18,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 27.8,
+        "currentWeightedPosition": 32.04,
+        "previousWeightedPosition": 70.28,
+        "positionDelta": -38.24,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/google-ai-overviews-and-the-growth-of-zero-click-searches/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6873,10 +7392,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/#blogposting",
@@ -6892,17 +7409,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ai-overviews-image-generation/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -6992,10 +7507,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-ai-search-update/#blogposting",
@@ -7011,17 +7524,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-ai-search-update/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ai-search-update/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7111,10 +7622,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-algorithm-business/#blogposting",
@@ -7130,17 +7639,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-algorithm-business/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-algorithm-business/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7230,10 +7737,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-io-2026/#blogposting",
@@ -7249,17 +7754,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-io-2026/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-io-2026/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7295,8 +7798,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 4330,
-      "contentHash": "bcf15be801a7547f346f8eae5c72ca176c9c9d0706dfd105d9f38d3b7c3cc540",
+      "wordCount": 4341,
+      "contentHash": "6ad0d79f009beff9c6d1198d791d9248cf22d7ee5851452730c4fd5a0640d252",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -7349,10 +7852,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/#blogposting",
@@ -7368,17 +7869,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ranking-fixes/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7414,8 +7913,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 2825,
-      "contentHash": "6065a181587277910fa6ccbaae722e02c845feceb6eddd95f2bdfdc6aa729faa",
+      "wordCount": 2823,
+      "contentHash": "94737cb1623976f249f72425eaa5d84fb5a15149184e7c10a32f7de5223305fd",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -7468,10 +7967,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/#blogposting",
@@ -7487,17 +7984,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-search-console-social-media/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7534,7 +8029,7 @@
       "statusCode": 200,
       "isIndexable": true,
       "wordCount": 2022,
-      "contentHash": "49cda1c1dbcadd4dac1806066d233bda02f6ecf4adb8d7d51692f35ff727f7f0",
+      "contentHash": "2985824c924cddd95e953f39fcb427efa48c705a835b31266bf597829cd9fc68",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -7587,10 +8082,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-spam-update/#blogposting",
@@ -7606,17 +8099,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-spam-update/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-spam-update/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7706,10 +8197,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/#blogposting",
@@ -7725,17 +8214,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/llm-seo-ai-search/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7825,10 +8312,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/#blogposting",
@@ -7844,17 +8329,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/llm-seo-services-mumbai/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -7944,10 +8427,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/#blogposting",
@@ -7963,17 +8444,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/local-seo-business-growth/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8063,10 +8542,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/low-social-media-reach/#blogposting",
@@ -8082,17 +8559,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/low-social-media-reach/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/low-social-media-reach/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8182,10 +8657,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/#blogposting",
@@ -8201,17 +8674,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/modern-seo-business-growth/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8301,10 +8772,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/#blogposting",
@@ -8320,17 +8789,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/optimize-content-ai-search/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8420,10 +8887,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/#blogposting",
@@ -8439,17 +8904,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/optimize-for-ai-overviews/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8539,10 +9002,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/#blogposting",
@@ -8558,17 +9019,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/schema-seo-for-small-business/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8655,10 +9114,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/#blogposting",
@@ -8674,17 +9131,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/search-generative-ai-performance-reports/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8771,10 +9226,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/seo-friendly-website/#blogposting",
@@ -8790,17 +9243,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/seo-friendly-website/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-friendly-website/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -8836,8 +9287,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 3720,
-      "contentHash": "bf281496da87239321c059ec463babcf2885a5c50f86715081de4c203adf60a4",
+      "wordCount": 3725,
+      "contentHash": "8ef31ab89e839f93edc93787d6a69b4bd7d9b46d951d7e29bda34a8f26bdc81a",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -8890,10 +9341,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/#blogposting",
@@ -8909,17 +9358,130 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-rankings-up-but-traffic-down/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
+      "path": "/blogs/seo-services-india-2026/",
+      "pageType": "blog",
+      "title": "Rising Demand for SEO Services in India in 2026",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "Rising Demand for SEO Services in India in 2026",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2365,
+      "contentHash": "1544ff42371c70d091df4f953c040e9c07376a0c85f0104c1cd03ab7572c8ebe",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 70,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 3,
+        "previousImpressions": 0,
+        "impressionDelta": 3,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 36,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/seo-services-india-2026/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9009,10 +9571,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/#blogposting",
@@ -9028,17 +9588,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/seo-strategies-business-growth/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9125,10 +9683,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/#blogposting",
@@ -9144,17 +9700,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/social-media-conversion-why-your-followers-are-not-becoming-customers/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9241,10 +9795,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/#blogposting",
@@ -9260,17 +9812,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/social-media-marketing-strategy/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9283,6 +9833,115 @@
           "FAQPage",
           "Question",
           "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
+      "path": "/blogs/topical-authority-seo/",
+      "pageType": "blog",
+      "title": "Why Topical Authority Matters More Than Keyword Density in 2026",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "Why Topical Authority Matters More Than Keyword Density in 2026",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2191,
+      "contentHash": "f38fbe671065a66d11f3e29f9f18cf189fea17babe81a86377b7171818121148",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem"
+      ],
+      "internalLinksCount": 64,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 1,
+        "previousImpressions": 0,
+        "impressionDelta": 1,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 8,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/topical-authority-seo/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/topical-authority-seo/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/topical-authority-seo/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/topical-authority-seo/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem"
         ]
       },
       "reputationSignals": {
@@ -9360,10 +10019,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/voice-search-seo/#blogposting",
@@ -9379,17 +10036,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/voice-search-seo/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/voice-search-seo/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9479,10 +10134,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/#blogposting",
@@ -9498,17 +10151,245 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-design-lead-generation-mumbai/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-development-leads/",
+      "path": "/blogs/website-development-leads/",
+      "pageType": "blog",
+      "title": "How to Turn Website Traffic Into Qualified Leads",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "How to Turn Website Traffic Into Qualified Leads",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-development-leads/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2409,
+      "contentHash": "4db1b5885785b79df35e6b36802a7b51cb43fe45aba46205d795979af953ccc7",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 60,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 5,
+        "previousImpressions": 1,
+        "impressionDelta": 4,
+        "impressionDeltaPct": 400,
+        "currentWeightedPosition": 15.4,
+        "previousWeightedPosition": 26,
+        "positionDelta": -10.6,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/website-development-leads/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/website-development-leads/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-development-leads/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/website-development-leads/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/website-development-leads/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
+      "path": "/blogs/website-development-mistakes/",
+      "pageType": "blog",
+      "title": "Website Development Mistakes That Hurt Business Growth",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "Website Development Mistakes That Hurt Business Growth",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 3459,
+      "contentHash": "b7f6bc75a3302c1a2af5ef3f32d25583350982ea22ee0b90fe99397bee675b2f",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 65,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 2,
+        "previousImpressions": 8,
+        "impressionDelta": -6,
+        "impressionDeltaPct": -75,
+        "currentWeightedPosition": 5.5,
+        "previousWeightedPosition": 21.38,
+        "positionDelta": -15.88,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/website-development-mistakes/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-development-mistakes/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/website-development-mistakes/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/website-development-mistakes/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9598,10 +10479,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/#blogposting",
@@ -9617,17 +10496,130 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-development-quality-leads/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
+      "path": "/blogs/website-performance-conversions/",
+      "pageType": "blog",
+      "title": "Why Website Performance Still Decides Conversions in 2026",
+      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
+      "h1": "Why Website Performance Still Decides Conversions in 2026",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2393,
+      "contentHash": "700bc6d70bac323ea09acb9bc93b1a32adba62e10f80213340e640a26821bd1b",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 64,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 41,
+        "previousImpressions": 44,
+        "impressionDelta": -3,
+        "impressionDeltaPct": -6.8,
+        "currentWeightedPosition": 18.61,
+        "previousWeightedPosition": 18.43,
+        "positionDelta": 0.18,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "STABLE",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/website-performance-conversions/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/website-performance-conversions/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/website-performance-conversions/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/website-performance-conversions/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9717,10 +10709,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/#blogposting",
@@ -9736,17 +10726,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/website-traffic-but-no-leads/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -9836,10 +10824,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/#blogposting",
@@ -9855,17 +10841,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/what-is-llm-seo/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",
@@ -10735,7 +11719,7 @@
       "url": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
       "path": "/services/ai-production-dubai-page/",
       "pageType": "service",
-      "title": "AI Video Production Agency in Dubai | AI Video Services | DGS",
+      "title": "AI Video Production Agency in Dubai | D'Genius Solutions",
       "metaDescription": "D&#x27;Genius Solutions creates AI video ads, product films, avatars, reels and brand films for Dubai and UAE brands with human-led creative direction, editing and campaign-ready delivery.",
       "h1": "AI Video Production Agency in Dubai for Ads, Reels & Brand Films",
       "h1Count": 1,
@@ -13045,6 +14029,466 @@
       }
     },
     {
+      "url": "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
+      "path": "/blogs/aeo-in-2026/",
+      "pageType": "blog",
+      "title": "AEO in 2026 How to Rank on ChatGPT and Perplexity - D&#x27;Genius Solutions",
+      "metaDescription": "AEO in 2026 is becoming an important part of search marketing as people increasingly use ChatGPT, Perplexity and other AI-powered platforms to research companies.",
+      "h1": "AEO in 2026 How to Rank on ChatGPT and Perplexity",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 2534,
+      "contentHash": "df67172668560002ba8c8edbf6b40bc93ade7287e8877c03bc2e219b6477bf4c",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 67,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 18,
+        "previousImpressions": 0,
+        "impressionDelta": 18,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 8.72,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/aeo-in-2026/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
+      "path": "/blogs/google-ads-ai-max-2026/",
+      "pageType": "blog",
+      "title": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes - D&#x27;Genius Solutions",
+      "metaDescription": "Google Ads AI Max 2026 is changing how advertisers manage Search campaigns, targeting, advertising assets and landing pages.",
+      "h1": "Google Ads AI Max 2026 What Advertisers Need to Know Before the September Changes",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 3040,
+      "contentHash": "ece431075ef659b30debf47e13116a4293950ed2406b639109c161e59180d32d",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 68,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 40,
+        "previousImpressions": 0,
+        "impressionDelta": 40,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 17.6,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "GROWING",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "LOW",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/google-ads-ai-max-2026/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
+      "path": "/blogs/google-august-2026-spam-update/",
+      "pageType": "blog",
+      "title": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings - D&#x27;Genius Solutions",
+      "metaDescription": "The Google August 2026 spam update has put website quality back under the spotlight. Learn what businesses need to know about SEO rankings.",
+      "h1": "Google August 2026 Spam Update What Businesses Need to Know About SEO Rankings",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 3334,
+      "contentHash": "f230c9dcb42a0d85a8da95fc9c183d15bf6a786d53c65e460d6a8c966703edc5",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 63,
+      "externalLinksCount": 18,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 5,
+        "previousImpressions": 0,
+        "impressionDelta": 5,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 70,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/google-august-2026-spam-update/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
+      "path": "/blogs/seo-company-in-mumbai/",
+      "pageType": "blog",
+      "title": "7 Proven Tips to Hire an SEO Agency in Mumbai - D&#x27;Genius Solutions",
+      "metaDescription": "Choosing the right SEO Company in Mumbai can directly affect your website visibility, lead generation and long-term digital growth. Here are 7 proven tips.",
+      "h1": "7 Proven Tips to Hire an SEO Agency in Mumbai",
+      "h1Count": 1,
+      "canonical": "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
+      "robots": "index, follow",
+      "statusCode": 200,
+      "isIndexable": true,
+      "wordCount": 1671,
+      "contentHash": "174e611e2a656072a0e1483107d4168f9d025ffd950110f487cc829034995d28",
+      "schemaTypes": [
+        "BlogPosting",
+        "WebPage",
+        "Organization",
+        "ImageObject",
+        "PostalAddress",
+        "WebSite",
+        "BreadcrumbList",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer"
+      ],
+      "internalLinksCount": 62,
+      "externalLinksCount": 16,
+      "imagesCount": 12,
+      "missingAltCount": 0,
+      "primaryQueryFamily": "Blog Topic",
+      "isProtectedTier0": false,
+      "metrics": {
+        "currentClicks": 0,
+        "previousClicks": 0,
+        "clickDelta": 0,
+        "clickDeltaPct": 0,
+        "currentImpressions": 3,
+        "previousImpressions": 0,
+        "impressionDelta": 3,
+        "impressionDeltaPct": 100,
+        "currentWeightedPosition": 7,
+        "previousWeightedPosition": null,
+        "positionDelta": 0,
+        "currentCtr": 0,
+        "previousCtr": 0
+      },
+      "classification": "INSUFFICIENT_DATA",
+      "oldClassification": "INSUFFICIENT_DATA",
+      "spamRisk": "INSUFFICIENT_EVIDENCE",
+      "riskReasons": [],
+      "blogClassification": "KEEP",
+      "safeAction": "MONITOR",
+      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
+      "twoBaselines": null,
+      "historicalRecovery": null,
+      "aiVisibility": {
+        "googleSearchConsole": "Available in dedicated Generative AI report",
+        "dgsCmsIngestion": "Not connected / Not yet ingested",
+        "currentCmsMetrics": "Standard Search GSC only",
+        "status": "STANDARD",
+        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
+      },
+      "schemaValidation": {
+        "schema_jsonld_count": 2,
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
+        "schema_validation_warnings": [],
+        "schema_ids": [
+          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/#blogposting",
+          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization",
+          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/#webpage",
+          "https://www.dgeniussolutions.com/#website",
+          "https://www.dgeniussolutions.com/#organization"
+        ],
+        "schema_urls": [
+          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
+          "https://www.dgeniussolutions.com",
+          "https://www.dgeniussolutions.com/blogs/seo-company-in-mumbai/"
+        ],
+        "parse_errors_count": 0,
+        "valid_references_count": 5,
+        "redundant_entities_count": 0,
+        "conflicting_entities_count": 0,
+        "schemaTypes": [
+          "BlogPosting",
+          "WebPage",
+          "Organization",
+          "ImageObject",
+          "PostalAddress",
+          "WebSite",
+          "BreadcrumbList",
+          "ListItem",
+          "FAQPage",
+          "Question",
+          "Answer"
+        ]
+      },
+      "reputationSignals": {
+        "urlPatternRisk": "PASS",
+        "sponsoredLinksCount": 0,
+        "affiliateLinksCount": 0,
+        "offTopicMarkersDetected": 0,
+        "editorialArtifactsCount": 0,
+        "editorialArtifacts": []
+      }
+    },
+    {
       "url": "https://www.dgeniussolutions.com/career/generative-ai-artist/",
       "path": "/career/generative-ai-artist/",
       "pageType": "page",
@@ -13141,81 +14585,6 @@
       }
     },
     {
-      "url": "https://www.dgeniussolutions.com/blogs/dgs-cms-scheduled-cron-qa/",
-      "path": "/blogs/dgs-cms-scheduled-cron-qa/",
-      "pageType": "blog",
-      "title": "D&#x27;Genius Solutions",
-      "metaDescription": "Digital marketing agency in Mumbai offering SEO, AEO, GEO, LLM SEO, AI video production, performance marketing, branding and website development.",
-      "h1Count": 1,
-      "robots": "noindex",
-      "statusCode": 404,
-      "isIndexable": false,
-      "wordCount": 2,
-      "contentHash": "a6d88349eba8ceb3f04364e9c5285d5df13218b4abc94b493c1e0c184d7dc564",
-      "schemaTypes": [],
-      "internalLinksCount": 0,
-      "externalLinksCount": 0,
-      "imagesCount": 0,
-      "missingAltCount": 0,
-      "primaryQueryFamily": "Blog Topic",
-      "isProtectedTier0": false,
-      "metrics": {
-        "currentClicks": 0,
-        "previousClicks": 0,
-        "clickDelta": 0,
-        "clickDeltaPct": 0,
-        "currentImpressions": 0,
-        "previousImpressions": 0,
-        "impressionDelta": 0,
-        "impressionDeltaPct": 0,
-        "currentWeightedPosition": null,
-        "previousWeightedPosition": null,
-        "positionDelta": 0,
-        "currentCtr": 0,
-        "previousCtr": 0
-      },
-      "classification": "INSUFFICIENT_DATA",
-      "oldClassification": "INSUFFICIENT_DATA",
-      "spamRisk": "MEDIUM",
-      "riskReasons": [
-        "Thin content: Word count under 250 words",
-        "Missing H1 heading"
-      ],
-      "blogClassification": "MERGE_REVIEW",
-      "safeAction": "MONITOR",
-      "highRiskActionsToAvoid": "No panic rewrites; maintain canonicals and URLs",
-      "twoBaselines": null,
-      "historicalRecovery": null,
-      "aiVisibility": {
-        "googleSearchConsole": "Available in dedicated Generative AI report",
-        "dgsCmsIngestion": "Not connected / Not yet ingested",
-        "currentCmsMetrics": "Standard Search GSC only",
-        "status": "STANDARD",
-        "note": "AI Search/AI Overview telemetry requires specialized tracking or Search Console AI features not exposed in current API."
-      },
-      "schemaValidation": {
-        "schema_jsonld_count": 0,
-        "schema_parse_valid": true,
-        "schema_validation_errors": [],
-        "schema_validation_warnings": [],
-        "schema_ids": [],
-        "schema_urls": [],
-        "parse_errors_count": 0,
-        "valid_references_count": 0,
-        "redundant_entities_count": 0,
-        "conflicting_entities_count": 0,
-        "schemaTypes": []
-      },
-      "reputationSignals": {
-        "urlPatternRisk": "PASS",
-        "sponsoredLinksCount": 0,
-        "affiliateLinksCount": 0,
-        "offTopicMarkersDetected": 0,
-        "editorialArtifactsCount": 0,
-        "editorialArtifacts": []
-      }
-    },
-    {
       "url": "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
       "path": "/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
       "pageType": "blog",
@@ -13227,8 +14596,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 2313,
-      "contentHash": "097bc02e5bb095b9d16b5b7c8cd7f53cf233a6cfab142dd80d554d03eb96696d",
+      "wordCount": 2327,
+      "contentHash": "b769cb6fefb03ff7705d1adf944606e3c8347f1bce2a468ea191e98bdae3035f",
       "schemaTypes": [
         "BlogPosting",
         "WebPage",
@@ -13281,10 +14650,8 @@
       },
       "schemaValidation": {
         "schema_jsonld_count": 2,
-        "schema_parse_valid": false,
-        "schema_validation_errors": [
-          "CONFLICTING ENTITY DEFINITION: @id \"https://www.dgeniussolutions.com/#organization\" defined multiple times with conflicting properties (type: \"Organization\" vs \"Organization\")"
-        ],
+        "schema_parse_valid": true,
+        "schema_validation_errors": [],
         "schema_validation_warnings": [],
         "schema_ids": [
           "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/#blogposting",
@@ -13300,17 +14667,15 @@
         "schema_urls": [
           "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/",
           "https://www.dgeniussolutions.com",
-          "https://www.dgeniussolutions.com/",
-          "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/images/dgs-logo.webp",
           "https://www.dgeniussolutions.com",
           "https://www.dgeniussolutions.com/blogs/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads/"
         ],
         "parse_errors_count": 0,
-        "valid_references_count": 4,
+        "valid_references_count": 5,
         "redundant_entities_count": 0,
-        "conflicting_entities_count": 1,
+        "conflicting_entities_count": 0,
         "schemaTypes": [
           "BlogPosting",
           "WebPage",

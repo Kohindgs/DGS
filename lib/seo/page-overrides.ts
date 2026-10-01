@@ -51,10 +51,10 @@ const PAGE_SEO_OVERRIDES: Record<string, PageSeoOverride> = {
     areaServed: ["Dubai", "United Arab Emirates"],
   },
   "/services/ai-production-dubai-page/": {
-    title: "AI Video Production Agency in Dubai | AI Video Services | DGS",
+    title: "AI Video Production Agency in Dubai | D'Genius Solutions",
     description: "D'Genius Solutions creates AI video ads, product films, avatars, reels and brand films for Dubai and UAE brands with human-led creative direction, editing and campaign-ready delivery.",
-    ogTitle: "AI Video Production Agency in Dubai | DGS",
-    twitterTitle: "AI Video Production Agency in Dubai | DGS",
+    ogTitle: "AI Video Production Agency in Dubai | D'Genius Solutions",
+    twitterTitle: "AI Video Production Agency in Dubai | D'Genius Solutions",
     breadcrumbLabel: "AI Video Production Dubai",
     serviceName: "AI Video Production Services in Dubai",
     serviceType: "AI Video Production",
