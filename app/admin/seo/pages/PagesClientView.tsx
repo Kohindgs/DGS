@@ -57,6 +57,7 @@ export default function PagesClientView({
   const [pages] = useState<SitePageRankingRow[]>(initialPages);
   const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
+  const [activePeriod, setActivePeriod] = useState<"7" | "15" | "28">("28");
 
   const filteredPages = useMemo(() => {
     return pages.filter((p) => {
@@ -133,23 +134,27 @@ export default function PagesClientView({
     },
     {
       key: "googleAvgPosition",
-      header: "GSC Avg. Position",
+      header: `GSC Avg. Position (${activePeriod}D)`,
       sortable: true,
-      width: "180px",
+      width: "190px",
       render: (p) => {
         if (p.googleAvgPosition != null && p.googleAvgPosition > 0) {
           const pos = p.googleAvgPosition;
           const variant = pos <= 3 ? "success" : pos <= 10 ? "primary" : "neutral";
-          const trend = p.rankingTrend;
+          const prev = p.prevPosition;
+          let delta = prev != null ? Number((prev - pos).toFixed(1)) : null;
 
           return (
             <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
               <span className={`dgs-saas-chip ${variant}`} style={{ fontWeight: 700 }}>
                 {pos.toFixed(1)}
               </span>
-              {trend && trend.status !== "stable" && (
-                <span className={`dgs-saas-chip ${trend.badgeClass}`} style={{ fontSize: "0.68rem", fontWeight: 600 }}>
-                  {trend.label}
+              {delta != null && (
+                <span
+                  className={`dgs-saas-chip sm ${delta > 0.3 ? "success" : delta < -0.3 ? "danger" : "neutral"}`}
+                  style={{ fontSize: "0.68rem", fontWeight: 700 }}
+                >
+                  {delta > 0.3 ? `↑ +${delta}` : delta < -0.3 ? `↓ ${delta}` : `→ 0.0`}
                 </span>
               )}
             </div>
@@ -327,6 +332,27 @@ export default function PagesClientView({
       </div>
 
       {/* REQ-17: Visible Neon Filters */}
+      {/* 7 / 15 / 28 Day Period Selector */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", padding: "12px 16px", background: "rgba(255,255,255,0.02)", borderRadius: "8px", border: "1px solid var(--dgs-border)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <span style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)", fontWeight: 600 }}>PERFORMANCE STANDING WINDOW:</span>
+          {(["7", "15", "28"] as const).map((win) => (
+            <button
+              key={win}
+              type="button"
+              className={`dgs-saas-btn sm ${activePeriod === win ? "primary" : "secondary"}`}
+              onClick={() => setActivePeriod(win)}
+              style={{ fontWeight: 700, minWidth: "80px" }}
+            >
+              {win} DAYS
+            </button>
+          ))}
+        </div>
+        <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
+          Inverted Ranking Rule: Lower position number indicates positive improvement (↑ green).
+        </div>
+      </div>
+
       <div
         style={{
           display: "flex",

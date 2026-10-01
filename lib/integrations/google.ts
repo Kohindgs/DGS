@@ -1592,3 +1592,313 @@ export async function getGa4DashboardMetrics(days: number = 28) {
     };
   }
 }
+
+// ---------------------------------------------------------------------------
+// 7 / 15 / 28 DAY PERFORMANCE STANDING & INVERTED RANKING ENGINE (P8 - P15)
+// ---------------------------------------------------------------------------
+
+export type StandingDirection = "up" | "down" | "neutral";
+
+export type MetricWithStanding = {
+  current: number;
+  previous: number;
+  delta: number;
+  pct: number;
+  direction: StandingDirection;
+};
+
+export type WindowStandingSummary = {
+  windowDays: 7 | 15 | 28;
+  currentRange: { start: string; end: string };
+  previousRange: { start: string; end: string };
+  clicks: MetricWithStanding;
+  impressions: MetricWithStanding;
+  ctr: MetricWithStanding;
+  position: MetricWithStanding; // Inverted: lower position = "up" (green improvement)
+};
+
+export type KeywordStandingItem = {
+  query_text: string;
+  page_url?: string;
+  current_position: number;
+  prev_position: number | null;
+  delta: number; // prev_position - current_position (positive = improved rank)
+  standing: "UP" | "DOWN" | "STABLE" | "NEW" | "LOST";
+  clicks: number;
+  impressions: number;
+  ctr: number;
+};
+
+export type GscStandingReport = {
+  connected: boolean;
+  freshness: {
+    dataThroughDate: string;
+    telemetryLatencyDays: number;
+    nextScheduledSync: string;
+  };
+  windows: {
+    "7": WindowStandingSummary;
+    "15": WindowStandingSummary;
+    "28": WindowStandingSummary;
+  };
+  keywords: {
+    counters: {
+      up: number;
+      down: number;
+      stable: number;
+      new: number;
+      lost: number;
+      total: number;
+    };
+    items: KeywordStandingItem[];
+  };
+  topPages: any[];
+  dailyTrend: any[];
+};
+
+function computeWindowStanding(
+  daily: Array<{ metric_date: any; clicks: any; impressions: any; ctr: any; position: any }>,
+  windowDays: 7 | 15 | 28
+): WindowStandingSummary {
+  const curSlice = daily.slice(0, windowDays);
+  const prevSlice = daily.slice(windowDays, windowDays * 2);
+
+  const curStart = curSlice.length > 0 ? String(curSlice[curSlice.length - 1].metric_date).slice(0, 10) : "";
+  const curEnd = curSlice.length > 0 ? String(curSlice[0].metric_date).slice(0, 10) : "";
+  const prevStart = prevSlice.length > 0 ? String(prevSlice[prevSlice.length - 1].metric_date).slice(0, 10) : "";
+  const prevEnd = prevSlice.length > 0 ? String(prevSlice[0].metric_date).slice(0, 10) : "";
+
+  let curClicks = 0;
+  let curImpressions = 0;
+  let curPosWeightedSum = 0;
+  for (const d of curSlice) {
+    const c = Number(d.clicks || 0);
+    const imp = Number(d.impressions || 0);
+    const pos = Number(d.position || 0);
+    curClicks += c;
+    curImpressions += imp;
+    curPosWeightedSum += (pos * imp);
+  }
+  const curCtr = curImpressions > 0 ? Number(((curClicks / curImpressions) * 100).toFixed(2)) : 0;
+  const curPos = curImpressions > 0 ? Number((curPosWeightedSum / curImpressions).toFixed(1)) : 0;
+
+  let prevClicks = 0;
+  let prevImpressions = 0;
+  let prevPosWeightedSum = 0;
+  for (const d of prevSlice) {
+    const c = Number(d.clicks || 0);
+    const imp = Number(d.impressions || 0);
+    const pos = Number(d.position || 0);
+    prevClicks += c;
+    prevImpressions += imp;
+    prevPosWeightedSum += (pos * imp);
+  }
+
+  // If prevSlice is empty or smaller (e.g. 28d window with 31 total days in DB), scale gracefully
+  if (prevSlice.length > 0 && prevSlice.length < windowDays) {
+    const scale = windowDays / prevSlice.length;
+    prevClicks = Math.round(prevClicks * scale);
+    prevImpressions = Math.round(prevImpressions * scale);
+    prevPosWeightedSum = prevPosWeightedSum * scale;
+  }
+
+  const prevCtr = prevImpressions > 0 ? Number(((prevClicks / prevImpressions) * 100).toFixed(2)) : 0;
+  const prevPos = prevImpressions > 0 ? Number((prevPosWeightedSum / prevImpressions).toFixed(1)) : (curPos || 0);
+
+  // Clicks: higher = UP (green)
+  const clicksDelta = curClicks - prevClicks;
+  const clicksPct = prevClicks > 0 ? Number(((clicksDelta / prevClicks) * 100).toFixed(1)) : 0;
+  const clicksDirection: StandingDirection = clicksDelta > 0 ? "up" : clicksDelta < 0 ? "down" : "neutral";
+
+  // Impressions: higher = UP (green)
+  const impDelta = curImpressions - prevImpressions;
+  const impPct = prevImpressions > 0 ? Number(((impDelta / prevImpressions) * 100).toFixed(1)) : 0;
+  const impDirection: StandingDirection = impDelta > 0 ? "up" : impDelta < 0 ? "down" : "neutral";
+
+  // CTR: higher = UP (green)
+  const ctrDelta = Number((curCtr - prevCtr).toFixed(2));
+  const ctrPct = prevCtr > 0 ? Number(((ctrDelta / prevCtr) * 100).toFixed(1)) : 0;
+  const ctrDirection: StandingDirection = ctrDelta > 0 ? "up" : ctrDelta < 0 ? "down" : "neutral";
+
+  // Position: INVERTED RANKING RULE (P11)
+  // LOWER number = ↑ (green / IMPROVEMENT)
+  // HIGHER number = ↓ (red / DECLINE)
+  const posDelta = Number((prevPos - curPos).toFixed(1));
+  let posDirection: StandingDirection = "neutral";
+  if (Math.abs(posDelta) < 0.3) {
+    posDirection = "neutral";
+  } else if (posDelta > 0) {
+    posDirection = "up"; // improved rank
+  } else {
+    posDirection = "down"; // dropped rank
+  }
+  const posPct = prevPos > 0 ? Number(((posDelta / prevPos) * 100).toFixed(1)) : 0;
+
+  return {
+    windowDays,
+    currentRange: { start: curStart, end: curEnd },
+    previousRange: { start: prevStart, end: prevEnd },
+    clicks: { current: curClicks, previous: prevClicks, delta: clicksDelta, pct: clicksPct, direction: clicksDirection },
+    impressions: { current: curImpressions, previous: prevImpressions, delta: impDelta, pct: impPct, direction: impDirection },
+    ctr: { current: curCtr, previous: prevCtr, delta: ctrDelta, pct: ctrPct, direction: ctrDirection },
+    position: { current: curPos, previous: prevPos, delta: posDelta, pct: posPct, direction: posDirection },
+  };
+}
+
+export async function getGscStandingDashboard(): Promise<GscStandingReport> {
+  const fallbackFreshness = {
+    dataThroughDate: "2026-09-24",
+    telemetryLatencyDays: 3,
+    nextScheduledSync: "Daily 03:00 UTC / On-Demand",
+  };
+
+  const emptyWindow = (days: 7 | 15 | 28): WindowStandingSummary => ({
+    windowDays: days,
+    currentRange: { start: "", end: "" },
+    previousRange: { start: "", end: "" },
+    clicks: { current: 0, previous: 0, delta: 0, pct: 0, direction: "neutral" },
+    impressions: { current: 0, previous: 0, delta: 0, pct: 0, direction: "neutral" },
+    ctr: { current: 0, previous: 0, delta: 0, pct: 0, direction: "neutral" },
+    position: { current: 0, previous: 0, delta: 0, pct: 0, direction: "neutral" },
+  });
+
+  if (!isCmsDatabaseConfigured()) {
+    return {
+      connected: false,
+      freshness: fallbackFreshness,
+      windows: { "7": emptyWindow(7), "15": emptyWindow(15), "28": emptyWindow(28) },
+      keywords: { counters: { up: 0, down: 0, stable: 0, new: 0, lost: 0, total: 0 }, items: [] },
+      topPages: [],
+      dailyTrend: [],
+    };
+  }
+
+  await ensureGoogleTablesExist();
+
+  try {
+    const { rows: daily } = await cmsQuery<any>(
+      `SELECT metric_date, clicks, impressions, ctr, position
+       FROM gsc_daily_metrics
+       ORDER BY metric_date DESC
+       LIMIT 60`
+    );
+
+    let dataThroughDate = "2026-09-24";
+    let telemetryLatencyDays = 3;
+    if (daily && daily.length > 0) {
+      dataThroughDate = String(daily[0].metric_date).slice(0, 10);
+      const latestMs = new Date(dataThroughDate).getTime();
+      const nowMs = Date.now();
+      telemetryLatencyDays = Math.max(1, Math.round((nowMs - latestMs) / (1000 * 60 * 60 * 24)));
+    }
+
+    const window7 = computeWindowStanding(daily || [], 7);
+    const window15 = computeWindowStanding(daily || [], 15);
+    const window28 = computeWindowStanding(daily || [], 28);
+
+    // Keyword movements
+    const { rows: qmRows } = await cmsQuery<any>(
+      `SELECT 
+         qm.query_text,
+         qm.clicks,
+         qm.impressions,
+         qm.ctr,
+         qm.position as current_position,
+         qm.prev_position,
+         (SELECT pq.page_url FROM gsc_page_query_metrics pq WHERE pq.query_text = qm.query_text ORDER BY pq.clicks DESC LIMIT 1) as page_url
+       FROM gsc_query_metrics qm
+       WHERE qm.period_type = '28d'
+       ORDER BY qm.clicks DESC, qm.impressions DESC
+       LIMIT 250`
+    );
+
+    let upCount = 0;
+    let downCount = 0;
+    let stableCount = 0;
+    let newCount = 0;
+    let lostCount = 0;
+
+    const keywordItems: KeywordStandingItem[] = (qmRows || []).map((r) => {
+      const curPos = Number(r.current_position || 0);
+      const prevPos = r.prev_position != null && Number(r.prev_position) > 0 ? Number(r.prev_position) : null;
+      let delta = 0;
+      let standing: "UP" | "DOWN" | "STABLE" | "NEW" | "LOST" = "STABLE";
+
+      if (prevPos == null) {
+        standing = "NEW";
+        newCount++;
+        delta = 0;
+      } else {
+        delta = Number((prevPos - curPos).toFixed(1)); // previous - current: positive = improved!
+        if (Math.abs(delta) < 0.3) {
+          standing = "STABLE";
+          stableCount++;
+        } else if (delta > 0) {
+          standing = "UP";
+          upCount++;
+        } else {
+          standing = "DOWN";
+          downCount++;
+        }
+      }
+
+      return {
+        query_text: r.query_text,
+        page_url: r.page_url || "https://www.dgeniussolutions.com/",
+        current_position: curPos,
+        prev_position: prevPos,
+        delta,
+        standing,
+        clicks: Number(r.clicks || 0),
+        impressions: Number(r.impressions || 0),
+        ctr: Number(r.ctr || 0),
+      };
+    });
+
+    const { rows: topPages } = await cmsQuery<any>(
+      `SELECT page_url, clicks, impressions, ctr, position
+       FROM gsc_page_metrics
+       WHERE period_type = '28d'
+       ORDER BY clicks DESC
+       LIMIT 25`
+    );
+
+    return {
+      connected: daily && daily.length > 0,
+      freshness: {
+        dataThroughDate,
+        telemetryLatencyDays,
+        nextScheduledSync: "Daily 03:00 UTC / On-Demand",
+      },
+      windows: {
+        "7": window7,
+        "15": window15,
+        "28": window28,
+      },
+      keywords: {
+        counters: {
+          up: upCount,
+          down: downCount,
+          stable: stableCount,
+          new: newCount,
+          lost: lostCount,
+          total: keywordItems.length,
+        },
+        items: keywordItems,
+      },
+      topPages: topPages || [],
+      dailyTrend: (daily || []).slice(0, 28).reverse(),
+    };
+  } catch (err) {
+    console.error("Error computing GSC standing dashboard:", err);
+    return {
+      connected: false,
+      freshness: fallbackFreshness,
+      windows: { "7": emptyWindow(7), "15": emptyWindow(15), "28": emptyWindow(28) },
+      keywords: { counters: { up: 0, down: 0, stable: 0, new: 0, lost: 0, total: 0 }, items: [] },
+      topPages: [],
+      dailyTrend: [],
+    };
+  }
+}
+

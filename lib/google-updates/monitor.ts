@@ -57,6 +57,7 @@ export type GoogleSearchUpdate = {
   incident_end?: string | null;
   raw_details?: string | null;
   audit_telemetry?: any;
+  rollout_impact?: any;
   affected_pages_impact?: any[];
   sitewide_spam_impact?: any;
 };

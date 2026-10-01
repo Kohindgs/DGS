@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
-import { getGscDashboardMetrics } from "@/lib/integrations/google";
+import { getGscStandingDashboard } from "@/lib/integrations/google";
 import SearchConsoleClientView from "./SearchConsoleClientView";
 
 export const dynamic = "force-dynamic";
@@ -15,7 +15,7 @@ export default async function AdminSearchConsolePage() {
     redirect("/admin/");
   }
 
-  const metrics = await getGscDashboardMetrics(28);
+  const standingData = await getGscStandingDashboard();
 
-  return <SearchConsoleClientView metrics={metrics as any} />;
+  return <SearchConsoleClientView standingData={standingData} />;
 }

@@ -957,7 +957,7 @@ export default function AssessmentClientView({
               onClick={() => handleOpenMakeAssessment()}
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
             >
-              <Sparkles size={14} /> Make an Assessment
+              <Sparkles size={14} /> MAKE AN ASSESSMENT
             </button>
             <button
               type="button"
@@ -1027,7 +1027,7 @@ export default function AssessmentClientView({
               onClick={() => handleOpenMakeAssessment()}
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
             >
-              <Plus size={14} /> Make an Assessment
+              <Plus size={14} /> MAKE AN ASSESSMENT
             </button>
           </div>
           <SaaSTable
@@ -1301,7 +1301,7 @@ export default function AssessmentClientView({
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--dgs-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
                 <h3 style={{ margin: 0, color: "var(--dgs-text-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
-                  <Sparkles size={18} style={{ color: "var(--dgs-purple-light)" }} /> Make an Assessment Blueprint
+                  <Sparkles size={18} style={{ color: "var(--dgs-purple-light)" }} /> MAKE AN ASSESSMENT
                 </h3>
                 <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
                   Create a structured technical test blueprint via Gemini AI or instant manual draft template.
@@ -1445,20 +1445,22 @@ export default function AssessmentClientView({
                   type="button"
                   className="dgs-saas-btn secondary"
                   disabled={generating}
+                  data-testid="create-manual-draft"
                   onClick={() => handleExecuteMakeAssessment(true)}
                   style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
                 >
-                  <FileText size={14} /> Create Manual Draft
+                  <FileText size={14} /> CREATE MANUAL DRAFT BLUEPRINT
                 </button>
                 <button
                   type="button"
                   className="dgs-saas-btn primary"
                   disabled={generating}
+                  data-testid="generate-gemini-ai"
                   onClick={() => handleExecuteMakeAssessment(false)}
                   style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
                 >
                   <Sparkles size={14} className={generating ? "spin" : ""} />
-                  {generating ? "Generating Blueprint…" : "Generate with Gemini AI"}
+                  {generating ? "Generating Blueprint…" : "GENERATE WITH GEMINI AI"}
                 </button>
               </div>
             </div>

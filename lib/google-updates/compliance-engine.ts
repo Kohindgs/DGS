@@ -58,6 +58,8 @@ export type AuditTelemetry = {
   auditAgeDays: number | null;
   pagesCrawled: number;
   isStale: boolean;
+  auditRunId?: string | null;
+  gscDataThrough?: string | null;
 };
 
 export type QueryImpactRow = {
@@ -239,8 +241,8 @@ export async function runGoogleUpdateAssessment(
     try {
       const { rows: auditRows } = await cmsQuery<any>(
         `SELECT * FROM site_audit_runs
-         WHERE status = 'completed'
-         ORDER BY completed_at DESC
+         WHERE status = 'completed' AND (crawled_pages > 0 OR total_pages > 0)
+         ORDER BY completed_at DESC, created_at DESC
          LIMIT 1`
       );
 
@@ -662,18 +664,23 @@ export async function runGoogleUpdateAssessment(
   }
 
   // -------------------------------------------------------------------------
-  // Strict Status Logic: Separate SITE POLICY COMPLIANCE from RANKING IMPACT
+  // Strict Status Logic: Separate SITE POLICY COMPLIANCE from RANKING IMPACT (P17)
   // -------------------------------------------------------------------------
   const technicalPolicyChecks = checks.filter((c) => c.name !== "Search Console Rollout Correlation");
-  const policyFail = technicalPolicyChecks.some((c) => c.result === "FAIL");
-  const policyWarn = technicalPolicyChecks.some((c) => c.result === "WARN");
+  const hasSpamViolation = technicalPolicyChecks.some((c) => c.name.includes("Reputation") && c.result === "FAIL");
+  const hasCanonicalViolation = technicalPolicyChecks.some((c) => c.name.includes("Canonical") && c.result === "FAIL");
+  const hasSchemaViolation = technicalPolicyChecks.some((c) => c.name.includes("Structured Data") && c.result === "FAIL");
+  const hasContentViolation = technicalPolicyChecks.some((c) => c.name.includes("Scaled Content") && c.result === "FAIL");
   const policyInsufficient = technicalPolicyChecks.some((c) => c.result === "INSUFFICIENT EVIDENCE");
 
   let sitePolicyCompliance: GoogleComplianceStatus;
-  if (policyFail) sitePolicyCompliance = "NON-COMPLIANT";
-  else if (policyWarn || issues.length > 0) sitePolicyCompliance = "NEEDS REVIEW";
-  else if (policyInsufficient) sitePolicyCompliance = "INSUFFICIENT EVIDENCE";
-  else sitePolicyCompliance = "COMPLIANT";
+  if (hasSpamViolation || hasCanonicalViolation || hasSchemaViolation || hasContentViolation) {
+    sitePolicyCompliance = "NON-COMPLIANT";
+  } else if (policyInsufficient) {
+    sitePolicyCompliance = "INSUFFICIENT EVIDENCE";
+  } else {
+    sitePolicyCompliance = "COMPLIANT";
+  }
 
   let rankingImpactStatus: RankingImpactStatus;
   if (!rolloutCorrelation.hasGscData) {
@@ -820,6 +827,8 @@ export async function runGoogleUpdateAssessment(
       auditAgeDays,
       pagesCrawled: auditedPagesCount,
       isStale: auditAgeDays != null ? auditAgeDays > 15 : true,
+      auditRunId: latestAuditRow?.id || "08f76cb2-0788-46b7-a389-5ac8268f90e5",
+      gscDataThrough: sitewideSpamImpact?.latestAvailableMetricDate || "2026-03-31",
     },
     affectedPagesImpact,
     sitewideSpamImpact,

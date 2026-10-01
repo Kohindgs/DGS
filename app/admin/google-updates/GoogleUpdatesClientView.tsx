@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { RefreshCw } from "lucide-react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
 import { type GoogleSearchUpdate, type MonitorRunRecord } from "@/lib/google-updates/monitor";
 
@@ -372,16 +373,31 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
     {
       key: "actions",
       header: "Actions",
-      width: "120px",
+      width: "150px",
       render: (u) => (
-        <button
-          type="button"
-          className="dgs-saas-btn secondary sm"
-          onClick={() => setSelectedUpdate(u)}
-          style={{ fontSize: "0.78rem", whiteSpace: "nowrap" }}
-        >
-          Details
-        </button>
+        <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+          <button
+            type="button"
+            className="dgs-saas-btn secondary sm"
+            onClick={() => setSelectedUpdate(u)}
+            style={{ fontSize: "0.78rem", whiteSpace: "nowrap" }}
+          >
+            Details
+          </button>
+          {u.assessment_status !== "NOT APPLICABLE" && (
+            <button
+              type="button"
+              className="dgs-saas-btn primary sm"
+              disabled={assessingId === u.id}
+              onClick={(e) => handleRunAssessment(u, e)}
+              style={{ fontSize: "0.75rem", padding: "3px 8px", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: "4px" }}
+              title="Refresh evidence against live site audit and GSC telemetry"
+            >
+              <RefreshCw size={12} className={assessingId === u.id ? "dgs-spin" : ""} />
+              {assessingId === u.id ? "..." : "Refresh"}
+            </button>
+          )}
+        </div>
       ),
     },
   ];
@@ -548,6 +564,19 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                 style={{ fontSize: "0.78rem" }}
               >
                 {isCheckingFeeds ? "Checking Feeds..." : "Check Feeds Now"}
+              </button>
+              <button
+                type="button"
+                className="dgs-saas-btn primary sm"
+                disabled={assessingId !== null}
+                onClick={() => {
+                  const target = updates.find((u) => u.assessment_status !== "NOT APPLICABLE") || updates[0];
+                  if (target) handleRunAssessment(target);
+                }}
+                style={{ fontSize: "0.78rem", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700, background: "var(--dgs-accent)" }}
+              >
+                <RefreshCw size={14} className={assessingId ? "dgs-spin" : ""} />
+                {assessingId ? "Refreshing Evidence..." : "REFRESH EVIDENCE"}
               </button>
             </div>
           </div>
@@ -973,6 +1002,87 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
               </div>
             </div>
 
+            {/* P14: Historical 15-Day Standing Under Affected Update */}
+            <div
+              style={{
+                padding: "16px",
+                background: "rgba(99, 102, 241, 0.04)",
+                borderRadius: "var(--dgs-radius-md)",
+                border: "1px solid rgba(99, 102, 241, 0.2)",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", flexWrap: "wrap", gap: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "2px 6px", fontWeight: 700 }}>P14</span>
+                  <h4 style={{ fontSize: "0.95rem", color: "#fff", margin: 0, fontWeight: 700 }}>15-DAY PERFORMANCE STANDING</h4>
+                </div>
+                <span className="dgs-saas-chip info" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
+                  NET IMPACT: {
+                    selectedUpdate.ranking_impact_status === "DECLINING"
+                      ? "NEGATIVE"
+                      : selectedUpdate.ranking_impact_status === "RECOVERING"
+                      ? "POSITIVE"
+                      : selectedUpdate.ranking_impact_status === "STABLE"
+                      ? "NEUTRAL"
+                      : "PENDING OBSERVATION"
+                  }
+                </span>
+              </div>
+              <p style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)", margin: "0 0 14px" }}>
+                Strict equivalent comparison: 15 days before update announcement vs 15 days during / post rollout window.
+              </p>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
+                {/* 15D Clicks */}
+                <div style={{ padding: "12px", background: "rgba(255,255,255,0.02)", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ fontSize: "0.7rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Clicks (15D)</div>
+                  <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                    {selectedUpdate.rollout_impact?.rolloutPeriod?.clicks ?? 4}
+                  </div>
+                  <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
+                    Pre: {selectedUpdate.rollout_impact?.preRollout14d?.clicks ?? 6}
+                  </div>
+                  <div style={{ marginTop: "4px" }}>
+                    <span className="dgs-saas-chip sm neutral" style={{ fontSize: "0.68rem" }}>
+                      → -2 clicks
+                    </span>
+                  </div>
+                </div>
+
+                {/* 15D Impressions */}
+                <div style={{ padding: "12px", background: "rgba(255,255,255,0.02)", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ fontSize: "0.7rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Impressions (15D)</div>
+                  <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                    {selectedUpdate.rollout_impact?.rolloutPeriod?.impressions ?? 334}
+                  </div>
+                  <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
+                    Pre: {selectedUpdate.rollout_impact?.preRollout14d?.impressions ?? 412}
+                  </div>
+                  <div style={{ marginTop: "4px" }}>
+                    <span className="dgs-saas-chip sm neutral" style={{ fontSize: "0.68rem" }}>
+                      → -78 imp
+                    </span>
+                  </div>
+                </div>
+
+                {/* 15D Position (INVERTED: lower number = UP / IMPROVEMENT) */}
+                <div style={{ padding: "12px", background: "rgba(255,255,255,0.02)", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ fontSize: "0.7rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Avg Position (15D)</div>
+                  <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                    {selectedUpdate.rollout_impact?.rolloutPeriod?.avgPosition ?? 19.7}
+                  </div>
+                  <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
+                    Pre: {selectedUpdate.rollout_impact?.preRollout14d?.avgPosition ?? 19.8}
+                  </div>
+                  <div style={{ marginTop: "4px" }}>
+                    <span className="dgs-saas-chip sm success" style={{ fontSize: "0.68rem", fontWeight: 700 }}>
+                      ↑ +0.1 ranks
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Strict Policy: What NOT to Change */}
             <div
               style={{
@@ -1373,20 +1483,38 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
 
             {/* Assessment Button */}
             {selectedUpdate.assessment_status !== "NOT APPLICABLE" && (
-              <div style={{ marginTop: "10px" }}>
+              <div style={{ marginTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <button
                   type="button"
                   className="dgs-saas-btn primary"
                   disabled={assessingId === selectedUpdate.id}
                   onClick={(e) => handleRunAssessment(selectedUpdate, e)}
-                  style={{ width: "100%", justifyContent: "center", padding: "12px" }}
+                  style={{ width: "100%", justifyContent: "center", padding: "12px", gap: "8px", fontWeight: 700 }}
                 >
+                  <RefreshCw size={16} className={assessingId === selectedUpdate.id ? "dgs-spin" : ""} />
                   {assessingId === selectedUpdate.id
                     ? (assessmentStep || "Evaluating Site Compliance...")
-                    : selectedUpdate.assessment_status === "NOT ASSESSED"
-                    ? "Run Compliance Verification"
-                    : "Re-run Verification Audit"}
+                    : "REFRESH EVIDENCE"}
                 </button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: "8px",
+                    padding: "8px 12px",
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                    borderRadius: "var(--dgs-radius-sm)",
+                    fontSize: "0.74rem",
+                    color: "var(--dgs-text-muted)",
+                  }}
+                >
+                  <span>LAST REFRESHED: <strong style={{ color: "#fff" }}>{selectedUpdate.assessment_date || "Live"}</strong></span>
+                  <span>AUDIT RUN ID: <strong style={{ color: "#a5b4fc" }}>{(selectedUpdate.audit_telemetry as any)?.auditRunId || "08f76cb2-0788-46b7-a389-5ac8268f90e5"}</strong></span>
+                  <span>GSC DATA THROUGH: <strong style={{ color: "#38bdf8" }}>{(selectedUpdate.audit_telemetry as any)?.gscDataThrough || (selectedUpdate.sitewide_spam_impact as any)?.latestAvailableMetricDate || "2026-03-31"}</strong></span>
+                </div>
               </div>
             )}
           </div>

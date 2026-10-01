@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-30T16:52:53.465Z",
-  "auditTimestamp": "2026-09-30T16:52:47.771Z",
+  "generatedAt": "2026-10-01T13:23:40.665Z",
+  "auditTimestamp": "2026-10-01T13:23:35.593Z",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
   "latestDailyMetricDate": "2026-09-24",
@@ -2958,7 +2958,7 @@
     {
       "pageA": "/aeo-dubai/",
       "pageB": "/services/ai-production-dubai-page/",
-      "jaccardSimilarity": 0.209,
+      "jaccardSimilarity": 0.208,
       "risk": "UNIQUE_CONTENT"
     },
     {
@@ -11719,7 +11719,7 @@
       "url": "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
       "path": "/services/ai-production-dubai-page/",
       "pageType": "service",
-      "title": "AI Video Production Agency in Dubai | D'Genius Solutions",
+      "title": "AI Video Production Agency in Dubai | D&#x27;Genius Solutions",
       "metaDescription": "D&#x27;Genius Solutions creates AI video ads, product films, avatars, reels and brand films for Dubai and UAE brands with human-led creative direction, editing and campaign-ready delivery.",
       "h1": "AI Video Production Agency in Dubai for Ads, Reels & Brand Films",
       "h1Count": 1,
@@ -11727,8 +11727,8 @@
       "robots": "index, follow",
       "statusCode": 200,
       "isIndexable": true,
-      "wordCount": 3195,
-      "contentHash": "24c51f0c2d9ecc6617ed77dc32c1cbbe7d7deed073fb59346c6307db50576650",
+      "wordCount": 3192,
+      "contentHash": "3b42d2afba319573c5370800c3c2d54c2c128c0348413329b29f441ab30893e3",
       "schemaTypes": [
         "Organization",
         "ImageObject",

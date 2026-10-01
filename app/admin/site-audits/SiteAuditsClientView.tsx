@@ -592,6 +592,28 @@ export default function SiteAuditsClientView({
   const crawledCount = latestAudit?.crawled_url_count ?? latestAudit?.crawled_pages ?? pages.filter((p) => p.statusCode > 0 && p.statusCode < 500).length;
   const failedCount = latestAudit?.failed_url_count ?? pages.filter((p) => p.statusCode >= 500 || p.statusCode === 0).length;
 
+  const lastAuditDate = latestAudit?.completed_at ? new Date(latestAudit.completed_at).toISOString().slice(0, 10) : "N/A";
+  let nextDue = "N/A";
+  let isOverdue = false;
+  if (latestAudit?.completed_at) {
+    const d = new Date(latestAudit.completed_at);
+    d.setDate(d.getDate() + 15);
+    nextDue = d.toISOString().slice(0, 10);
+    const todayStr = new Date().toISOString().slice(0, 10);
+    isOverdue = todayStr > nextDue;
+  }
+
+  const prevCompleted = auditHistory.find((r) => r.id !== latestAudit?.id && r.status === "completed");
+  const overallDelta = prevCompleted && latestAudit?.overall_score != null && prevCompleted.overall_score != null
+    ? latestAudit.overall_score - prevCompleted.overall_score
+    : 0;
+  const indexDelta = prevCompleted && latestAudit?.indexability_score != null && prevCompleted.indexability_score != null
+    ? latestAudit.indexability_score - prevCompleted.indexability_score
+    : 0;
+  const schemaDelta = prevCompleted && latestAudit?.schema_score != null && prevCompleted.schema_score != null
+    ? latestAudit.schema_score - prevCompleted.schema_score
+    : 0;
+
   return (
     <div>
       {/* Top Header */}
@@ -693,6 +715,66 @@ export default function SiteAuditsClientView({
           </div>
         </div>
       )}
+
+      {/* P16: 15-Day Recurring Technical Audit Cycle & QA Tracker */}
+      <div
+        className="dgs-saas-card"
+        style={{
+          padding: "16px 20px",
+          marginBottom: "18px",
+          borderLeft: `4px solid ${isOverdue ? "var(--dgs-danger)" : "var(--dgs-success)"}`,
+          background: isOverdue ? "rgba(239, 68, 68, 0.04)" : "rgba(40, 199, 111, 0.04)",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap" }}>
+            <div>
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                LAST TECHNICAL AUDIT
+              </div>
+              <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                {lastAuditDate}
+              </div>
+            </div>
+            <div style={{ borderLeft: "1px solid var(--dgs-border)", paddingLeft: "20px" }}>
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                NEXT 15-DAY QA DUE
+              </div>
+              <div style={{ fontSize: "1rem", fontWeight: 700, color: isOverdue ? "var(--dgs-danger)" : "#38bdf8", marginTop: "2px" }}>
+                {nextDue}
+              </div>
+            </div>
+            <div style={{ borderLeft: "1px solid var(--dgs-border)", paddingLeft: "20px" }}>
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+                CYCLE STATUS
+              </div>
+              <div style={{ marginTop: "4px" }}>
+                <span className={`dgs-saas-chip ${isOverdue ? "danger" : "success"}`} style={{ fontWeight: 700, fontSize: "0.72rem" }}>
+                  {isOverdue ? "AUDIT OVERDUE" : "UP TO DATE"}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Health Trend */}
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+            <div style={{ fontSize: "0.74rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
+              HEALTH TREND:
+            </div>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <span className={`dgs-saas-chip sm ${overallDelta > 0 ? "success" : overallDelta < 0 ? "danger" : "neutral"}`} style={{ fontWeight: 600 }}>
+                Overall: {overallDelta > 0 ? `↑ +${overallDelta}` : overallDelta < 0 ? `↓ ${overallDelta}` : "→ 0"}
+              </span>
+              <span className={`dgs-saas-chip sm ${indexDelta > 0 ? "success" : indexDelta < 0 ? "danger" : "neutral"}`} style={{ fontWeight: 600 }}>
+                Index: {indexDelta > 0 ? `↑ +${indexDelta}` : indexDelta < 0 ? `↓ ${indexDelta}` : "→ 0"}
+              </span>
+              <span className={`dgs-saas-chip sm ${schemaDelta > 0 ? "success" : schemaDelta < 0 ? "danger" : "neutral"}`} style={{ fontWeight: 600 }}>
+                Schema: {schemaDelta > 0 ? `↑ +${schemaDelta}` : schemaDelta < 0 ? `↓ ${schemaDelta}` : "→ 0"}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* KPI Cards — Zero Fabricated Scores */}
       <div className="dgs-saas-kpi-grid">

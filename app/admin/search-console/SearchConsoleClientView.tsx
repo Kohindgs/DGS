@@ -1,42 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
-
-type QueryMetric = {
-  query_text: string;
-  clicks: number;
-  impressions: number;
-  ctr: number;
-  position: number;
-};
-
-type PageMetric = {
-  page_url: string;
-  clicks: number;
-  impressions: number;
-  ctr: number;
-  position: number;
-};
+import type { GscStandingReport, KeywordStandingItem, WindowStandingSummary } from "@/lib/integrations/google";
+import { ArrowUp, ArrowDown, ArrowRight, RefreshCw, Sparkles, TrendingUp, TrendingDown, Minus, Clock, CheckCircle2 } from "lucide-react";
 
 type Props = {
-  metrics: {
-    connected: boolean;
-    summary: {
-      clicks: number;
-      impressions: number;
-      ctr: number;
-      position: number;
-    };
-    topQueries: QueryMetric[];
-    topPages: PageMetric[];
-  };
+  standingData: GscStandingReport;
 };
 
-export default function SearchConsoleClientView({ metrics }: Props) {
-  const [syncing, setSyncing] = React.useState(false);
-  const [syncMsg, setSyncMsg] = React.useState<string | null>(null);
+export default function SearchConsoleClientView({ standingData }: Props) {
+  const [activeWindow, setActiveWindow] = useState<"7" | "15" | "28">("28");
+  const [syncing, setSyncing] = useState(false);
+  const [syncMsg, setSyncMsg] = useState<string | null>(null);
+
+  const windowData: WindowStandingSummary = standingData.windows[activeWindow];
 
   const handleSync = async () => {
     setSyncing(true);
@@ -45,7 +24,7 @@ export default function SearchConsoleClientView({ metrics }: Props) {
       const res = await fetch("/api/admin/integrations/google/sync", { method: "POST" });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Sync failed");
-      setSyncMsg(`Synced successfully! Clicks: ${data.gsc?.clicks ?? 0}`);
+      setSyncMsg(`Synced successfully! Data updated from Google Search Console.`);
       setTimeout(() => window.location.reload(), 1500);
     } catch (err: any) {
       alert("Search Console sync error: " + err.message);
@@ -54,59 +33,149 @@ export default function SearchConsoleClientView({ metrics }: Props) {
     }
   };
 
-  const queryColumns: Column<QueryMetric>[] = [
-    { key: "query_text", header: "Top Search Queries", sortable: true },
-    { key: "clicks", header: "Clicks", sortable: true, width: "120px" },
-    { key: "impressions", header: "Impressions", sortable: true, width: "130px" },
+  const keywordColumns: Column<KeywordStandingItem>[] = [
+    {
+      key: "query_text",
+      header: "Search Keyword",
+      sortable: true,
+      render: (k) => (
+        <div>
+          <div style={{ fontWeight: 600, color: "#fff" }}>{k.query_text}</div>
+          {k.page_url && (
+            <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", maxWidth: "280px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {k.page_url.replace("https://www.dgeniussolutions.com", "") || "/"}
+            </div>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: "current_position",
+      header: "Current Pos",
+      sortable: true,
+      width: "110px",
+      render: (k) => (
+        <span style={{ fontWeight: 700, color: "var(--dgs-text-primary)" }}>
+          {Number(k.current_position).toFixed(1)}
+        </span>
+      ),
+    },
+    {
+      key: "prev_position",
+      header: `Prev (${activeWindow}D)`,
+      sortable: true,
+      width: "110px",
+      render: (k) => (
+        <span style={{ color: "var(--dgs-text-muted)" }}>
+          {k.prev_position != null ? Number(k.prev_position).toFixed(1) : "—"}
+        </span>
+      ),
+    },
+    {
+      key: "delta",
+      header: "Delta",
+      sortable: true,
+      width: "110px",
+      render: (k) => {
+        if (k.prev_position == null) return <span style={{ color: "var(--dgs-text-muted)" }}>—</span>;
+        // Inverted: positive delta means improved position!
+        const sign = k.delta > 0 ? "+" : "";
+        const color = k.delta > 0.3 ? "var(--dgs-success)" : k.delta < -0.3 ? "var(--dgs-danger)" : "var(--dgs-text-muted)";
+        return (
+          <span style={{ color, fontWeight: 600 }}>
+            {sign}{k.delta.toFixed(1)}
+          </span>
+        );
+      },
+    },
+    {
+      key: "standing",
+      header: "Standing",
+      sortable: true,
+      width: "120px",
+      render: (k) => {
+        if (k.standing === "UP") {
+          return (
+            <span className="dgs-saas-chip success" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.72rem", fontWeight: 700 }}>
+              <ArrowUp size={12} /> UP
+            </span>
+          );
+        }
+        if (k.standing === "DOWN") {
+          return (
+            <span className="dgs-saas-chip danger" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.72rem", fontWeight: 700 }}>
+              <ArrowDown size={12} /> DOWN
+            </span>
+          );
+        }
+        if (k.standing === "NEW") {
+          return (
+            <span className="dgs-saas-chip info" style={{ fontSize: "0.72rem", fontWeight: 600 }}>
+              NEW
+            </span>
+          );
+        }
+        return (
+          <span className="dgs-saas-chip neutral" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.72rem" }}>
+            <Minus size={12} /> STABLE
+          </span>
+        );
+      },
+    },
+    {
+      key: "clicks",
+      header: "Clicks",
+      sortable: true,
+      width: "90px",
+      render: (k) => k.clicks,
+    },
+    {
+      key: "impressions",
+      header: "Impressions",
+      sortable: true,
+      width: "110px",
+      render: (k) => k.impressions.toLocaleString(),
+    },
     {
       key: "ctr",
       header: "CTR",
       sortable: true,
-      width: "100px",
-      render: (r) => `${(r.ctr * 100).toFixed(1)}%`,
-    },
-    {
-      key: "position",
-      header: "Avg Position",
-      sortable: true,
-      width: "120px",
-      render: (r) => Number(r.position).toFixed(1),
+      width: "90px",
+      render: (k) => `${(k.ctr * 100).toFixed(1)}%`,
     },
   ];
 
-  const pageColumns: Column<PageMetric>[] = [
-    { key: "page_url", header: "Indexed Page URL", sortable: true },
-    { key: "clicks", header: "Clicks", sortable: true, width: "120px" },
-    { key: "impressions", header: "Impressions", sortable: true, width: "130px" },
+  const pageColumns: Column<any>[] = [
     {
-      key: "ctr",
-      header: "CTR",
+      key: "page_url",
+      header: "Target Page URL",
       sortable: true,
-      width: "100px",
-      render: (r) => `${(r.ctr * 100).toFixed(1)}%`,
+      render: (p) => (
+        <span style={{ fontWeight: 600, color: "#fff" }}>
+          {p.page_url.replace("https://www.dgeniussolutions.com", "") || "/"}
+        </span>
+      ),
     },
-    {
-      key: "position",
-      header: "Avg Position",
-      sortable: true,
-      width: "120px",
-      render: (r) => Number(r.position).toFixed(1),
-    },
+    { key: "clicks", header: "Clicks", sortable: true, width: "100px" },
+    { key: "impressions", header: "Impressions", sortable: true, width: "120px", render: (p) => p.impressions?.toLocaleString() },
+    { key: "ctr", header: "CTR", sortable: true, width: "100px", render: (p) => `${(p.ctr * 100).toFixed(1)}%` },
+    { key: "position", header: "Avg Position", sortable: true, width: "120px", render: (p) => Number(p.position).toFixed(1) },
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      {/* Page Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
         <div>
-          <h2 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#fff", margin: 0 }}>
-            Google Search Console Insights
+          <h2 style={{ fontSize: "1.35rem", fontWeight: 700, color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "10px" }}>
+            Google Search Console Intelligence
           </h2>
           <p style={{ fontSize: "0.85rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-            Official Read-Only Search Performance &middot; Cached Locally &middot; Sitemap Governance
+            Official search performance telemetry &middot; 7D / 15D / 28D equivalent period comparisons &middot; Inverted position analytics
           </p>
         </div>
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          {metrics.connected ? (
+          {standingData.connected ? (
             <>
               <Link href="/admin/integrations/google/setup/" className="dgs-saas-btn secondary sm">
                 Manage Property
@@ -116,8 +185,10 @@ export default function SearchConsoleClientView({ metrics }: Props) {
                 className="dgs-saas-btn primary sm"
                 disabled={syncing}
                 onClick={handleSync}
+                style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
               >
-                {syncing ? "Syncing..." : "Sync Now"}
+                <RefreshCw size={13} className={syncing ? "spin" : ""} />
+                {syncing ? "Syncing..." : "Sync GSC Data"}
               </button>
             </>
           ) : (
@@ -134,126 +205,201 @@ export default function SearchConsoleClientView({ metrics }: Props) {
         </div>
       )}
 
-      {/* Distinction Banner: Live Technical Status vs Google Last Read Status */}
-      <div className="dgs-saas-card" style={{ borderColor: "rgba(115, 103, 240, 0.4)" }}>
-        <div className="dgs-saas-card-header">
+      {/* P13: GSC Data Freshness & Telemetry Latency Banner */}
+      <div
+        className="dgs-saas-card"
+        style={{
+          padding: "16px 20px",
+          borderLeft: "4px solid #38bdf8",
+          background: "rgba(56, 189, 248, 0.04)",
+          borderColor: "rgba(56, 189, 248, 0.2)",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap" }}>
+            <div>
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.04em" }}>
+                GSC DATA THROUGH
+              </div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#38bdf8", marginTop: "2px" }}>
+                {standingData.freshness.dataThroughDate}
+              </div>
+            </div>
+            <div style={{ borderLeft: "1px solid var(--dgs-border)", paddingLeft: "20px" }}>
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.04em" }}>
+                TELEMETRY LATENCY
+              </div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginTop: "2px", display: "flex", alignItems: "center", gap: "6px" }}>
+                <Clock size={15} style={{ color: "var(--dgs-warning)" }} />
+                {standingData.freshness.telemetryLatencyDays} Days (GSC reporting delay)
+              </div>
+            </div>
+            <div style={{ borderLeft: "1px solid var(--dgs-border)", paddingLeft: "20px" }}>
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.04em" }}>
+                NEXT SCHEDULED SYNC
+              </div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                {standingData.freshness.nextScheduledSync}
+              </div>
+            </div>
+          </div>
+          <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)", maxWidth: "340px", lineHeight: "1.4" }}>
+            ℹ️ Google Search Console naturally incurs a 2-3 day data publication window. Telemetry is verified up to date.
+          </div>
+        </div>
+      </div>
+
+      {/* P8: Window Selection Tabs (7 DAYS / 15 DAYS / 28 DAYS) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", borderBottom: "1px solid var(--dgs-border)", paddingBottom: "12px" }}>
+        <div style={{ display: "flex", gap: "8px" }}>
+          {(["7", "15", "28"] as const).map((win) => (
+            <button
+              key={win}
+              type="button"
+              className={`dgs-saas-btn sm ${activeWindow === win ? "primary" : "secondary"}`}
+              onClick={() => setActiveWindow(win)}
+              style={{ fontWeight: 700, minWidth: "90px" }}
+            >
+              {win} DAYS
+            </button>
+          ))}
+        </div>
+        <div style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
+          Strict equivalent comparison: <strong>{activeWindow}D Current</strong> ({windowData.currentRange.start} → {windowData.currentRange.end}) vs <strong>{activeWindow}D Previous</strong> ({windowData.previousRange.start} → {windowData.previousRange.end})
+        </div>
+      </div>
+
+      {/* P10 & P11: 4 Standing KPI Cards with INVERTED POSITION LOGIC */}
+      <div className="dgs-saas-kpi-grid">
+        {/* KPI 1: Clicks */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-title">Total Clicks ({activeWindow}D)</div>
+          <div className="dgs-saas-kpi-value">{windowData.clicks.current.toLocaleString()}</div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>
+              Prev: {windowData.clicks.previous.toLocaleString()}
+            </span>
+            <span
+              className={`dgs-saas-chip sm ${windowData.clicks.direction === "up" ? "success" : windowData.clicks.direction === "down" ? "danger" : "neutral"}`}
+              style={{ display: "inline-flex", alignItems: "center", gap: "3px", fontWeight: 700 }}
+            >
+              {windowData.clicks.direction === "up" && <ArrowUp size={12} />}
+              {windowData.clicks.direction === "down" && <ArrowDown size={12} />}
+              {windowData.clicks.direction === "neutral" && <Minus size={12} />}
+              {windowData.clicks.delta >= 0 ? `+${windowData.clicks.delta}` : windowData.clicks.delta} ({windowData.clicks.pct}%)
+            </span>
+          </div>
+        </div>
+
+        {/* KPI 2: Impressions */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-title">Total Impressions ({activeWindow}D)</div>
+          <div className="dgs-saas-kpi-value">{windowData.impressions.current.toLocaleString()}</div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>
+              Prev: {windowData.impressions.previous.toLocaleString()}
+            </span>
+            <span
+              className={`dgs-saas-chip sm ${windowData.impressions.direction === "up" ? "success" : windowData.impressions.direction === "down" ? "danger" : "neutral"}`}
+              style={{ display: "inline-flex", alignItems: "center", gap: "3px", fontWeight: 700 }}
+            >
+              {windowData.impressions.direction === "up" && <ArrowUp size={12} />}
+              {windowData.impressions.direction === "down" && <ArrowDown size={12} />}
+              {windowData.impressions.direction === "neutral" && <Minus size={12} />}
+              {windowData.impressions.delta >= 0 ? `+${windowData.impressions.delta}` : windowData.impressions.delta} ({windowData.impressions.pct}%)
+            </span>
+          </div>
+        </div>
+
+        {/* KPI 3: CTR */}
+        <div className="dgs-saas-kpi-card">
+          <div className="dgs-saas-kpi-title">Average CTR ({activeWindow}D)</div>
+          <div className="dgs-saas-kpi-value">{windowData.ctr.current.toFixed(2)}%</div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>
+              Prev: {windowData.ctr.previous.toFixed(2)}%
+            </span>
+            <span
+              className={`dgs-saas-chip sm ${windowData.ctr.direction === "up" ? "success" : windowData.ctr.direction === "down" ? "danger" : "neutral"}`}
+              style={{ display: "inline-flex", alignItems: "center", gap: "3px", fontWeight: 700 }}
+            >
+              {windowData.ctr.direction === "up" && <ArrowUp size={12} />}
+              {windowData.ctr.direction === "down" && <ArrowDown size={12} />}
+              {windowData.ctr.direction === "neutral" && <Minus size={12} />}
+              {windowData.ctr.delta >= 0 ? `+${windowData.ctr.delta.toFixed(2)}%` : `${windowData.ctr.delta.toFixed(2)}%`}
+            </span>
+          </div>
+        </div>
+
+        {/* KPI 4: Average Position (CRITICAL INVERSION: lower number = UP / IMPROVEMENT) */}
+        <div className="dgs-saas-kpi-card" style={{ borderColor: windowData.position.direction === "up" ? "rgba(40, 199, 111, 0.4)" : windowData.position.direction === "down" ? "rgba(239, 68, 68, 0.4)" : "var(--dgs-border)" }}>
+          <div className="dgs-saas-kpi-title">Average Position ({activeWindow}D)</div>
+          <div className="dgs-saas-kpi-value">{windowData.position.current.toFixed(1)}</div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>
+              Prev: {windowData.position.previous.toFixed(1)}
+            </span>
+            <span
+              className={`dgs-saas-chip sm ${windowData.position.direction === "up" ? "success" : windowData.position.direction === "down" ? "danger" : "neutral"}`}
+              style={{ display: "inline-flex", alignItems: "center", gap: "3px", fontWeight: 700 }}
+            >
+              {windowData.position.direction === "up" && <ArrowUp size={12} />}
+              {windowData.position.direction === "down" && <ArrowDown size={12} />}
+              {windowData.position.direction === "neutral" && <Minus size={12} />}
+              {windowData.position.direction === "up" ? `↑ +${windowData.position.delta.toFixed(1)} ranks` : windowData.position.direction === "down" ? `↓ ${windowData.position.delta.toFixed(1)} ranks` : `→ 0.0`}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* P12: Keyword Level Ranking Movement & Counters */}
+      <div className="dgs-saas-card">
+        <div className="dgs-saas-card-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
           <div>
-            <h3 className="dgs-saas-card-title">Sitemap Validation &amp; Crawl Reconciliation</h3>
+            <h3 className="dgs-saas-card-title">Keyword Level Ranking Standing ({activeWindow}D Window)</h3>
             <p className="dgs-saas-card-subtitle">
-              Comparing live technical server state with Google&apos;s Search Console crawl index
+              Strict directional rank movement comparing current {activeWindow}-day standing against preceding {activeWindow}-day baseline
             </p>
           </div>
-          <span className="dgs-saas-chip info">Read-Only Scope Active</span>
-        </div>
-        <div className="dgs-saas-card-body">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
-            {/* Live Site Status */}
-            <div style={{ padding: "18px", background: "rgba(40, 199, 111, 0.05)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(40, 199, 111, 0.2)" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <strong style={{ color: "var(--dgs-success)", fontSize: "0.9rem" }}>LIVE TECHNICAL STATUS</strong>
-                <span className="dgs-saas-chip success" style={{ fontSize: "0.68rem" }}>100% HEALTHY</span>
-              </div>
-              <ul style={{ margin: "12px 0 0 16px", padding: 0, fontSize: "0.82rem", color: "var(--dgs-text-main)", display: "grid", gap: "6px" }}>
-                <li><strong>Endpoint:</strong> <code>https://www.dgeniussolutions.com/sitemap.xml</code></li>
-                <li><strong>Total Discovered URLs:</strong> 101 URLs (100% HTTP 200 OK)</li>
-                <li><strong>W3C Datetime Format:</strong> 100% valid <code>YYYY-MM-DD</code> (0 errors)</li>
-                <li><strong>Indexing:</strong> 101 / 101 indexable &middot; 0 canonical mismatches</li>
-                <li><strong>Legacy references:</strong> Removed from <code>robots.txt</code></li>
-              </ul>
-            </div>
-
-            {/* Google Search Console Status */}
-            <div style={{ padding: "18px", background: "rgba(255, 159, 67, 0.05)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(255, 159, 67, 0.2)" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <strong style={{ color: "var(--dgs-warning)", fontSize: "0.9rem" }}>GOOGLE LAST-READ STATUS</strong>
-                <span className="dgs-saas-chip warning" style={{ fontSize: "0.68rem" }}>AWAITING GOOGLE RECRAWL</span>
-              </div>
-              <p style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)", margin: "8px 0 10px" }}>
-                Google&apos;s Search Console displays stale crawl data from before the <code>formatW3CDate()</code> fix. Once Googlebot recrawls the updated sitemap, reported errors will drop from 99 to 0.
-              </p>
-              <div style={{ padding: "10px 12px", background: "rgba(255, 255, 255, 0.03)", borderRadius: "6px", fontSize: "0.8rem", color: "var(--dgs-text-muted)" }}>
-                <strong>Manual Action Required in GSC:</strong>
-                <br />
-                In Google Search Console &gt; Sitemaps:
-                <ul style={{ margin: "6px 0 0 16px", padding: 0 }}>
-                  <li>Keep / Resubmit: <code>/sitemap.xml</code></li>
-                  <li>Click into <code>/sitemap.rss</code> &rarr; &ldquo;Remove sitemap&rdquo;</li>
-                  <li>Click into <code>/video-sitemap.xml</code> &rarr; &ldquo;Remove sitemap&rdquo;</li>
-                </ul>
-              </div>
-            </div>
+          {/* Summary Counters */}
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
+            <span className="dgs-saas-chip success" style={{ fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}>
+              <ArrowUp size={12} /> KEYWORDS UP: {standingData.keywords.counters.up}
+            </span>
+            <span className="dgs-saas-chip danger" style={{ fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}>
+              <ArrowDown size={12} /> KEYWORDS DOWN: {standingData.keywords.counters.down}
+            </span>
+            <span className="dgs-saas-chip neutral" style={{ fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "4px" }}>
+              <Minus size={12} /> KEYWORDS STABLE: {standingData.keywords.counters.stable}
+            </span>
           </div>
         </div>
-      </div>
-
-      {/* KPI Stat Cards */}
-      <div className="dgs-saas-kpi-grid">
-        <div className="dgs-saas-kpi-card">
-          <div className="dgs-saas-kpi-title">Total Clicks (28d)</div>
-          <div className="dgs-saas-kpi-value">
-            {metrics.connected ? metrics.summary.clicks : "—"}
-          </div>
-          <div className="dgs-saas-kpi-delta neutral">
-            {metrics.connected ? "Official Google Search Data" : "Ready to connect"}
-          </div>
-        </div>
-
-        <div className="dgs-saas-kpi-card">
-          <div className="dgs-saas-kpi-title">Total Impressions (28d)</div>
-          <div className="dgs-saas-kpi-value">
-            {metrics.connected ? metrics.summary.impressions : "—"}
-          </div>
-          <div className="dgs-saas-kpi-delta neutral">
-            {metrics.connected ? "Organic Search Visibility" : "Ready to connect"}
-          </div>
-        </div>
-
-        <div className="dgs-saas-kpi-card">
-          <div className="dgs-saas-kpi-title">Average CTR</div>
-          <div className="dgs-saas-kpi-value">
-            {metrics.connected ? `${metrics.summary.ctr}%` : "—"}
-          </div>
-          <div className="dgs-saas-kpi-delta neutral">
-            Click-Through Rate
-          </div>
-        </div>
-
-        <div className="dgs-saas-kpi-card">
-          <div className="dgs-saas-kpi-title">Average Position</div>
-          <div className="dgs-saas-kpi-value">
-            {metrics.connected ? metrics.summary.position : "—"}
-          </div>
-          <div className="dgs-saas-kpi-delta neutral">
-            Google Search Rank
-          </div>
-        </div>
-      </div>
-
-      {/* Queries and Pages Tables */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "24px" }}>
-        <div>
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#fff", marginBottom: "12px" }}>
-            Top Queries
-          </h3>
-          <SaaSTable<QueryMetric>
-            columns={queryColumns}
-            data={metrics.topQueries}
-            keyExtractor={(q) => q.query_text}
-            searchPlaceholder="Search search queries..."
-            emptyMessage="No Search Console queries cached. Connect Google Search Console in Integrations to view real query metrics."
+        <div className="dgs-saas-card-body" style={{ padding: 0 }}>
+          <SaaSTable
+            columns={keywordColumns}
+            data={standingData.keywords.items}
+            keyExtractor={(k) => k.query_text}
+            searchPlaceholder="Search tracked keywords..."
           />
         </div>
+      </div>
 
-        <div>
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#fff", marginBottom: "12px" }}>
-            Top Performing Pages
-          </h3>
-          <SaaSTable<PageMetric>
+      {/* Top Performing Landing Pages */}
+      <div className="dgs-saas-card">
+        <div className="dgs-saas-card-header">
+          <div>
+            <h3 className="dgs-saas-card-title">Top Performing Landing Pages</h3>
+            <p className="dgs-saas-card-subtitle">
+              High-intent organic traffic entry points registered in Google Search Console
+            </p>
+          </div>
+        </div>
+        <div className="dgs-saas-card-body" style={{ padding: 0 }}>
+          <SaaSTable
             columns={pageColumns}
-            data={metrics.topPages}
+            data={standingData.topPages}
             keyExtractor={(p) => p.page_url}
-            searchPlaceholder="Search indexed pages..."
-            emptyMessage="No Search Console page metrics cached. Connect Google Search Console in Integrations to view real page performance."
+            searchPlaceholder="Filter landing pages..."
           />
         </div>
       </div>
