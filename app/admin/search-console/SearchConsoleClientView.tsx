@@ -20,12 +20,18 @@ import {
   Laptop,
   Smartphone,
   ExternalLink,
+  AlertTriangle,
+  AlertCircle,
+  FileSearch,
+  X,
 } from "lucide-react";
 import {
   OFFICIAL_GENERATIVE_AI_REPORT,
   AI_OVERVIEW_31_KEYWORDS,
   type AiOverviewKeywordItem,
   type AiOverviewCluster,
+  type AiOverviewStatus,
+  type MissedOpportunityDiagnostics,
 } from "@/lib/seo/ai-overview-tracker";
 
 type Props = {
@@ -35,6 +41,8 @@ type Props = {
 export default function SearchConsoleClientView({ standingData }: Props) {
   const [activeWindow, setActiveWindow] = useState<"7" | "15" | "28">("28");
   const [selectedCluster, setSelectedCluster] = useState<string>("ALL");
+  const [filterMissedOnly, setFilterMissedOnly] = useState(false);
+  const [selectedDiagnostics, setSelectedDiagnostics] = useState<AiOverviewKeywordItem | null>(null);
   const [syncing, setSyncing] = useState(false);
   const [syncMsg, setSyncMsg] = useState<string | null>(null);
 
@@ -308,15 +316,29 @@ export default function SearchConsoleClientView({ standingData }: Props) {
   ];
 
   const genAiMetrics = OFFICIAL_GENERATIVE_AI_REPORT.windows[activeWindow];
-  const filteredAiKeywords =
-    selectedCluster === "ALL"
-      ? AI_OVERVIEW_31_KEYWORDS
-      : AI_OVERVIEW_31_KEYWORDS.filter((k) => k.cluster === selectedCluster);
+  const filteredAiKeywords = AI_OVERVIEW_31_KEYWORDS.filter((k) => {
+    if (filterMissedOnly) {
+      return k.status === "AI_OVERVIEW_DGS_NOT_CITED";
+    }
+    if (selectedCluster === "ALL") return true;
+    return k.cluster === selectedCluster;
+  });
 
   const aiOverviewColumns: Column<AiOverviewKeywordItem>[] = [
     {
+      key: "keyword",
+      header: "KEYWORD",
+      sortable: true,
+      width: "220px",
+      render: (k) => (
+        <div>
+          <div style={{ fontWeight: 600, color: "#fff", fontSize: "0.84rem" }}>{k.keyword}</div>
+        </div>
+      ),
+    },
+    {
       key: "cluster",
-      header: "Cluster",
+      header: "CLUSTER",
       sortable: true,
       width: "110px",
       render: (k) => (
@@ -329,21 +351,24 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       ),
     },
     {
-      key: "keyword",
-      header: "Target Keyword",
+      key: "targetPage",
+      header: "TARGET PAGE",
       sortable: true,
+      width: "220px",
       render: (k) => (
-        <div>
-          <div style={{ fontWeight: 600, color: "#fff" }}>{k.keyword}</div>
-          <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
-            Target: <code style={{ color: "#38bdf8" }}>{k.targetPage}</code>
-          </div>
-        </div>
+        <a
+          href={k.targetPage}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ fontSize: "0.76rem", color: "#38bdf8", display: "inline-flex", alignItems: "center", gap: "3px" }}
+        >
+          {k.targetPage} <ExternalLink size={10} style={{ color: "var(--dgs-text-muted)" }} />
+        </a>
       ),
     },
     {
       key: "market",
-      header: "Market",
+      header: "MARKET",
       sortable: true,
       width: "90px",
       render: (k) => (
@@ -352,7 +377,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
     },
     {
       key: "device",
-      header: "Device",
+      header: "DEVICE",
       sortable: true,
       width: "95px",
       render: (k) => (
@@ -363,89 +388,116 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       ),
     },
     {
-      key: "organicPosition",
-      header: "Org Pos",
+      key: "checkedAt",
+      header: "CHECKED AT",
       sortable: true,
-      width: "95px",
+      width: "110px",
       render: (k) => (
-        <span style={{ fontWeight: 700, color: "#fff" }}>{k.organicPosition.toFixed(1)}</span>
+        <span style={{ fontSize: "0.76rem", color: "var(--dgs-text-muted)" }}>{k.checkedAt}</span>
       ),
     },
     {
       key: "aiOverviewTriggered",
-      header: "AI Overview",
+      header: "AI OVERVIEW TRIGGERED?",
       sortable: true,
-      width: "120px",
-      render: () => (
+      width: "140px",
+      render: (k) => (
         <span
-          className="dgs-saas-chip success"
+          className={`dgs-saas-chip ${k.aiOverviewTriggered === "YES" ? "success" : "neutral"}`}
           style={{ fontSize: "0.7rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}
         >
-          <Sparkles size={11} /> TRIGGERED
+          {k.aiOverviewTriggered === "YES" ? <Sparkles size={11} /> : <Minus size={11} />}
+          {k.aiOverviewTriggered}
         </span>
       ),
     },
     {
       key: "dgsCited",
-      header: "DGS Cited",
+      header: "DGS CITED?",
       sortable: true,
-      width: "115px",
-      render: () => (
+      width: "110px",
+      render: (k) => (
         <span
-          className="dgs-saas-chip success"
+          className={`dgs-saas-chip ${k.dgsCited === "YES" ? "success" : "danger"}`}
           style={{ fontSize: "0.7rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}
         >
-          <CheckCircle2 size={11} /> CITED
+          {k.dgsCited === "YES" ? <CheckCircle2 size={11} /> : <AlertTriangle size={11} />}
+          {k.dgsCited}
         </span>
       ),
     },
     {
-      key: "standing28d",
-      header: `Standing (${activeWindow}D)`,
+      key: "dgsCitedUrl",
+      header: "DGS CITED URL",
+      width: "180px",
+      render: (k) => (
+        k.dgsCitedUrl !== "—" ? (
+          <span style={{ fontSize: "0.74rem", color: "#a5b4fc", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block", maxWidth: "170px" }} title={k.dgsCitedUrl}>
+            {k.dgsCitedUrl.replace("https://www.dgeniussolutions.com", "")}
+          </span>
+        ) : (
+          <span style={{ color: "var(--dgs-text-muted)", fontSize: "0.8rem" }}>—</span>
+        )
+      ),
+    },
+    {
+      key: "normalOrganicPosition",
+      header: "NORMAL ORGANIC POSITION",
       sortable: true,
-      width: "120px",
+      width: "140px",
+      render: (k) => (
+        <span style={{ fontWeight: 700, color: "#fff", fontSize: "0.85rem" }}>{k.normalOrganicPosition.toFixed(1)}</span>
+      ),
+    },
+    {
+      key: "evidenceSource",
+      header: "EVIDENCE SOURCE",
+      render: (k) => (
+        <span style={{ fontSize: "0.74rem", color: "var(--dgs-text-muted)", maxWidth: "220px", display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={k.evidenceSource}>
+          {k.evidenceSource}
+        </span>
+      ),
+    },
+    {
+      key: "status",
+      header: "STATUS",
+      sortable: true,
+      width: "190px",
       render: (k) => {
-        const standing = activeWindow === "7" ? k.standing7d : activeWindow === "15" ? k.standing15d : k.standing28d;
+        let chipClass = "neutral";
+        if (k.status === "AI_OVERVIEW_DGS_CITED") chipClass = "success";
+        else if (k.status === "AI_OVERVIEW_DGS_NOT_CITED") chipClass = "danger";
+        else if (k.status === "AI_OVERVIEW_NOT_TRIGGERED") chipClass = "neutral";
+
         return (
           <span
-            className={`dgs-saas-chip ${standing === "UP" ? "success" : standing === "DOWN" ? "danger" : "neutral"}`}
-            style={{ fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}
+            className={`dgs-saas-chip ${chipClass}`}
+            style={{ fontSize: "0.68rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}
           >
-            {standing === "UP" && <ArrowUp size={11} />}
-            {standing === "DOWN" && <ArrowDown size={11} />}
-            {standing === "STABLE" && <Minus size={11} />}
-            {standing}
+            {k.status === "AI_OVERVIEW_DGS_CITED" && <CheckCircle2 size={10} />}
+            {k.status === "AI_OVERVIEW_DGS_NOT_CITED" && <AlertTriangle size={10} />}
+            {k.status}
           </span>
         );
       },
     },
     {
-      key: "issueDiagnosis",
-      header: "AI Overview Context & Diagnosis",
+      key: "diagnostics",
+      header: "DIAGNOSTICS",
+      width: "120px",
       render: (k) => (
-        <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-main)", maxWidth: "340px", lineHeight: "1.35" }}>
-          {k.issueDiagnosis}
-        </div>
-      ),
-    },
-    {
-      key: "recommendation",
-      header: "Action Recommendation",
-      render: (k) => (
-        <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-muted)", maxWidth: "300px", lineHeight: "1.35" }}>
-          {k.recommendation}
-        </div>
-      ),
-    },
-    {
-      key: "rectificationWorkflow",
-      header: "Status",
-      sortable: true,
-      width: "110px",
-      render: (k) => (
-        <span className="dgs-saas-chip success" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
-          {k.rectificationWorkflow}
-        </span>
+        k.diagnostics ? (
+          <button
+            type="button"
+            className="dgs-saas-btn primary sm"
+            onClick={() => setSelectedDiagnostics(k)}
+            style={{ fontSize: "0.7rem", padding: "2px 8px", background: "rgba(239, 68, 68, 0.2)", color: "#f87171", border: "1px solid rgba(239, 68, 68, 0.4)", whiteSpace: "nowrap" }}
+          >
+            Diagnose (Missed)
+          </button>
+        ) : (
+          <span style={{ color: "var(--dgs-text-muted)", fontSize: "0.74rem" }}>Optimal</span>
+        )
       ),
     },
   ];
@@ -904,14 +956,32 @@ export default function SearchConsoleClientView({ standingData }: Props) {
                 <button
                   key={cluster}
                   type="button"
-                  className={`dgs-saas-btn sm ${selectedCluster === cluster ? "primary" : "secondary"}`}
-                  onClick={() => setSelectedCluster(cluster)}
+                  className={`dgs-saas-btn sm ${!filterMissedOnly && selectedCluster === cluster ? "primary" : "secondary"}`}
+                  onClick={() => {
+                    setFilterMissedOnly(false);
+                    setSelectedCluster(cluster);
+                  }}
                   style={{ fontSize: "0.75rem", padding: "3px 10px", fontWeight: 600 }}
                 >
                   {cluster} ({count})
                 </button>
               );
             })}
+            <button
+              type="button"
+              className={`dgs-saas-btn sm ${filterMissedOnly ? "primary" : "secondary"}`}
+              onClick={() => setFilterMissedOnly(!filterMissedOnly)}
+              style={{
+                fontSize: "0.75rem",
+                padding: "3px 10px",
+                fontWeight: 700,
+                background: filterMissedOnly ? "#ef4444" : "rgba(239, 68, 68, 0.15)",
+                color: filterMissedOnly ? "#fff" : "#f87171",
+                border: "1px solid rgba(239, 68, 68, 0.4)",
+              }}
+            >
+              ⚠️ MISSED OPPORTUNITIES (8)
+            </button>
           </div>
         </div>
         <div className="dgs-saas-card-body" style={{ padding: 0 }}>
@@ -923,6 +993,223 @@ export default function SearchConsoleClientView({ standingData }: Props) {
           />
         </div>
       </div>
+
+      {/* Missed Opportunity Diagnostic Audit Modal */}
+      {selectedDiagnostics && selectedDiagnostics.diagnostics && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.75)",
+            backdropFilter: "blur(6px)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+          onClick={() => setSelectedDiagnostics(null)}
+        >
+          <div
+            style={{
+              background: "#0f121d",
+              border: "1px solid rgba(239, 68, 68, 0.4)",
+              borderRadius: "var(--dgs-radius-md)",
+              width: "100%",
+              maxWidth: "760px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.7)",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div
+              style={{
+                padding: "16px 20px",
+                borderBottom: "1px solid var(--dgs-border)",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                background: "rgba(239, 68, 68, 0.05)",
+              }}
+            >
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+                  <span className="dgs-saas-chip danger" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
+                    AI OVERVIEW TRIGGERED = YES · DGS CITED = NO
+                  </span>
+                  <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
+                    {selectedDiagnostics.cluster}
+                  </span>
+                </div>
+                <h3 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 700, color: "#fff" }}>
+                  Root-Cause Diagnostic Audit: &ldquo;{selectedDiagnostics.keyword}&rdquo;
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedDiagnostics(null)}
+                style={{ background: "none", border: "none", color: "var(--dgs-text-muted)", cursor: "pointer" }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Diagnostic Matrix Content */}
+            <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
+              {/* Summary KPIs */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" }}>
+                <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border)" }}>
+                  <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>Target Landing Route</div>
+                  <div style={{ fontSize: "0.85rem", color: "#38bdf8", fontWeight: 600, marginTop: "2px" }}>{selectedDiagnostics.targetPage}</div>
+                </div>
+                <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border)" }}>
+                  <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>Normal Organic Position</div>
+                  <div style={{ fontSize: "0.95rem", color: "#fff", fontWeight: 700, marginTop: "2px" }}>Pos {selectedDiagnostics.normalOrganicPosition.toFixed(1)}</div>
+                </div>
+                <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border)" }}>
+                  <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>Market / Device</div>
+                  <div style={{ fontSize: "0.85rem", color: "#fff", fontWeight: 600, marginTop: "2px" }}>{selectedDiagnostics.market} · {selectedDiagnostics.device}</div>
+                </div>
+              </div>
+
+              {/* 12-Point Root Cause Checklist */}
+              <div>
+                <h4 style={{ margin: "0 0 8px 0", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--dgs-text-muted)" }}>
+                  12 Technical Root-Cause Inspection Factors
+                </h4>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Wrong Landing Page?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.wrongLandingPage ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.wrongLandingPage ? "YES (DEFICIT)" : "NO"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Internal Cannibalisation?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.cannibalisation ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.cannibalisation ? "YES (DETECTED)" : "NO"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Indexability Standing</span>
+                    <span className="dgs-saas-chip success" style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.indexability}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Canonical Tag State</span>
+                    <span className="dgs-saas-chip success" style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.canonical}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Snippet Restrictions (nosnippet)?</span>
+                    <span className="dgs-saas-chip success" style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.snippetRestriction ? "RESTRICTED" : "NONE (OPEN)"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Search Intent Mismatch?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.intentMismatch ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.intentMismatch ? "YES (MISMATCH)" : "NO"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Weak First-Party Proof?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.weakFirstPartyEvidence ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.weakFirstPartyEvidence ? "WEAK PROOF" : "SOLID"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Missing Examples / Case Studies?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.missingCaseStudy ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.missingCaseStudy ? "MISSING CASE PROOF" : "PRESENT"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Internal Linking Deficit?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.internalLinkingDeficit ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.internalLinkingDeficit ? "DEFICIT" : "HEALTHY"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Entity Clarity</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.entityClarity === "HIGH" ? "success" : "warning"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.entityClarity}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Content Overlap?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.contentOverlap ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.contentOverlap ? "OVERLAP DETECTED" : "CLEAN"}
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "var(--dgs-radius-sm)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)" }}>Schema Mismatch?</span>
+                    <span className={`dgs-saas-chip ${selectedDiagnostics.diagnostics.schemaMismatch ? "danger" : "success"}`} style={{ fontSize: "0.68rem" }}>
+                      {selectedDiagnostics.diagnostics.schemaMismatch ? "MISMATCH" : "ALIGNED"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diagnosis Summary */}
+              <div style={{ padding: "12px 14px", background: "rgba(239, 68, 68, 0.08)", border: "1px solid rgba(239, 68, 68, 0.25)", borderRadius: "var(--dgs-radius-sm)" }}>
+                <div style={{ fontSize: "0.74rem", textTransform: "uppercase", fontWeight: 700, color: "#f87171", marginBottom: "4px" }}>
+                  Diagnostic Root-Cause Summary
+                </div>
+                <div style={{ fontSize: "0.85rem", color: "#fff", lineHeight: 1.45 }}>
+                  {selectedDiagnostics.diagnostics.rootCauseSummary}
+                </div>
+              </div>
+
+              {/* Recommended Rectification (Strictly Non-Deployable) */}
+              <div style={{ padding: "12px 14px", background: "rgba(56, 189, 248, 0.08)", border: "1px solid rgba(56, 189, 248, 0.25)", borderRadius: "var(--dgs-radius-sm)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+                  <div style={{ fontSize: "0.74rem", textTransform: "uppercase", fontWeight: 700, color: "#38bdf8" }}>
+                    Recommended Rectification Plan
+                  </div>
+                  <span style={{ fontSize: "0.68rem", color: "var(--dgs-warning)", fontWeight: 700 }}>
+                    [DO NOT DEPLOY PUBLIC CONTENT CHANGES]
+                  </span>
+                </div>
+                <div style={{ fontSize: "0.85rem", color: "var(--dgs-text-primary)", lineHeight: 1.45 }}>
+                  {selectedDiagnostics.diagnostics.recommendedRectification}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div style={{ padding: "12px 20px", borderTop: "1px solid var(--dgs-border)", display: "flex", justifyContent: "flex-end" }}>
+              <button
+                type="button"
+                className="dgs-saas-btn secondary sm"
+                onClick={() => setSelectedDiagnostics(null)}
+              >
+                Close Diagnosis
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
