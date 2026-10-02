@@ -46,6 +46,28 @@ export const PIPELINE_STAGES: Array<{
   { key: "rejected", label: "Rejected", variant: "danger" },
 ];
 
+function formatDateUTC(dateStr: string | null | undefined): string {
+  if (!dateStr) return "—";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toISOString().split("T")[0];
+  } catch {
+    return String(dateStr);
+  }
+}
+
+function formatDateTimeUTC(dateStr: string | null | undefined): string {
+  if (!dateStr) return "—";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toISOString().replace("T", " ").replace(/\.\d+Z$/, " UTC");
+  } catch {
+    return String(dateStr);
+  }
+}
+
 type Props = {
   initialApplications: ApplicationRow[];
   currentUserRole?: string;
@@ -268,7 +290,7 @@ export default function ApplicationsClientView({
       header: "Applied Date",
       sortable: true,
       width: "120px",
-      render: (a) => new Date(a.created_at).toLocaleDateString(),
+      render: (a) => <span suppressHydrationWarning>{formatDateUTC(a.created_at)}</span>,
     },
   ];
 
@@ -545,8 +567,8 @@ export default function ApplicationsClientView({
                   <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>
                     Applied On
                   </div>
-                  <div style={{ color: "var(--dgs-text-primary)", fontSize: "0.85rem", marginTop: "2px" }}>
-                    {new Date(selectedApp.created_at).toLocaleString()}
+                  <div style={{ color: "var(--dgs-text-primary)", fontSize: "0.85rem", marginTop: "2px" }} suppressHydrationWarning>
+                    {formatDateTimeUTC(selectedApp.created_at)}
                   </div>
                 </div>
                 <div>

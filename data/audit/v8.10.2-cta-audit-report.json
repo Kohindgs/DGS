@@ -1,25 +1,14 @@
 {
-  "timestamp": "2026-10-02T09:48:25.546Z",
+  "timestamp": "2026-10-02T10:00:04.360Z",
   "totalControlsDiscovered": 1065,
   "totalTested": 1002,
-  "working": 999,
-  "broken": 3,
+  "working": 1002,
+  "broken": 0,
   "notTestedWithReason": 63,
   "deadCta": 0,
-  "unhandledJsErrors": 2,
+  "unhandledJsErrors": 0,
   "applicationErrors": [],
-  "hydrationErrors": [
-    {
-      "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
-      "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at r1 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:37060)\n    at r2 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:38093)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:132966\n    at sk (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:138128)\n    at sy (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:129378)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124196\n    at so (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124297)\n    at sG (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:150884)\n    at MessagePort.w (https://www.dgeniussolutions.com/_next/static/chunks/3794-fed81a61e06df590.js:1:51388)",
-      "url": "https://www.dgeniussolutions.com/admin/assessment/"
-    },
-    {
-      "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
-      "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at r1 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:37060)\n    at r2 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:38093)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:132966\n    at sk (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:138128)\n    at sy (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:129378)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124196\n    at so (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124297)\n    at sG (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:150884)\n    at MessagePort.w (https://www.dgeniussolutions.com/_next/static/chunks/3794-fed81a61e06df590.js:1:51388)",
-      "url": "https://www.dgeniussolutions.com/admin/leads/"
-    }
-  ],
+  "hydrationErrors": [],
   "extensionErrors": [],
   "networkErrors": [
     {
@@ -54,26 +43,6 @@
     },
     {
       "url": "https://www.dgeniussolutions.com/admin/seo/canonical-enforcement/",
-      "status": 404,
-      "method": "GET"
-    },
-    {
-      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-september-2026-spam-update-what-website-owners-should-know.webp",
-      "status": 404,
-      "method": "GET"
-    },
-    {
-      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads.webp",
-      "status": 404,
-      "method": "GET"
-    },
-    {
-      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-september-2026-spam-update-what-website-owners-should-know.webp",
-      "status": 404,
-      "method": "GET"
-    },
-    {
-      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads.webp",
       "status": 404,
       "method": "GET"
     },
@@ -118,6 +87,7 @@
       "method": "GET"
     }
   ],
+  "brokenItems": [],
   "inventorySummaryByModule": [
     {
       "module": "Dashboard",
@@ -147,8 +117,8 @@
       "module": "SEO Pages",
       "path": "/admin/seo/pages/",
       "total": 65,
-      "working": 61,
-      "broken": 2,
+      "working": 63,
+      "broken": 0,
       "notTested": 2
     },
     {
@@ -243,8 +213,8 @@
       "module": "Leads",
       "path": "/admin/leads/",
       "total": 53,
-      "working": 50,
-      "broken": 1,
+      "working": 51,
+      "broken": 0,
       "notTested": 2
     },
     {
