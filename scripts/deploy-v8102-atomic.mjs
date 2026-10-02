@@ -92,6 +92,7 @@ ln -sfn "$NEW_REL" /home/u188101251/production-app/current
 echo "Restarting Passenger/Node app..."
 mkdir -p /home/u188101251/production-app/current/tmp
 touch /home/u188101251/production-app/current/tmp/restart.txt
+killall -9 lsnode node 2>/dev/null || true
 
 echo "=========================================="
 echo "PERSISTENT_DATA_SHARED = YES"
