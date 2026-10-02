@@ -1,0 +1,29 @@
+{
+  "case1": {
+    "query": "best llm seo agency in navi mumbai",
+    "correctOwner": "/services/llm-seo-service/",
+    "competingUrl": "/services/seo-services-in-mumbai/",
+    "currentOwnerImp": 7,
+    "currentOwnerPos": 14.29,
+    "prevOwnerImp": 12,
+    "prevOwnerPos": 14.25,
+    "competingImp": 3,
+    "competingPos": 16,
+    "prevCompetingImp": 1,
+    "prevCompetingPos": 16,
+    "status": "OWNER_IDENTIFIED_MONITORING",
+    "trend": "Competing URL impressions increased from 1 to 3; owner impressions decreased from 12 to 7. Active cannibalisation confirmed. No page modifications during rollout.",
+    "action": "MONITOR_ONLY"
+  },
+  "case2": {
+    "queryFamily": "top answer engine optimization agency in mumbai maharashtra",
+    "oldUrl": "/services/aeo/",
+    "currentOwner": "/services/aeo-services-in-mumbai/",
+    "http301Verified": true,
+    "redirectTarget": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "canonicalTarget": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+    "status": "STRUCTURALLY_RESOLVED_GSC_HISTORY_AGING",
+    "gscEvidence": "Old URL impressions decreased from 19 to 11 in 28d window as historical GSC data ages out.",
+    "action": "NO_ACTION_REQUIRED"
+  }
+}

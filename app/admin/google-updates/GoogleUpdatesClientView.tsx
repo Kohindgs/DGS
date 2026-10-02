@@ -10,6 +10,7 @@ import {
   type ContentOwnershipRecord,
   type OwnerType,
 } from "@/lib/google-updates/content-ownership-data";
+import { formatDateUTC, formatDateTimeUTC } from "@/lib/utils/date";
 
 type SchedulerState = {
   isActive: boolean;
@@ -49,7 +50,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
   const [reviewOwnerType, setReviewOwnerType] = useState<OwnerType>("FIRST_PARTY");
   const [reviewOwnerCreator, setReviewOwnerCreator] = useState("D'Genius Solutions Creative & Tech Team");
   const [reviewReviewer, setReviewReviewer] = useState("Editorial Lead / Compliance Officer");
-  const [reviewDate, setReviewDate] = useState(new Date().toISOString().slice(0, 10));
+  const [reviewDate, setReviewDate] = useState("2026-10-02");
   const [reviewEvidence, setReviewEvidence] = useState("Direct in-house Git repository provenance, signed client deliverables, and Khar West office editorial production records verified.");
   const [reviewSponsored, setReviewSponsored] = useState<"NO" | "YES">("NO");
   const [reviewAffiliate, setReviewAffiliate] = useState<"NO" | "YES">("NO");
@@ -419,7 +420,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
       render: (u) => (
         <div>
           <div style={{ color: "#fff", fontSize: "0.85rem" }}>
-            {new Date(u.published_at).toLocaleDateString()}
+            <span suppressHydrationWarning>{formatDateUTC(u.published_at)}</span>
           </div>
           {u.external_status === "ACTIVE" && (
             <span
@@ -761,8 +762,8 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                   <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
                   ACTIVE ROLLOUT IN PROGRESS
                 </span>
-                <span style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.7)" }}>
-                  Window Started: {activeRollouts[0]?.incident_begin ? new Date(activeRollouts[0].incident_begin).toLocaleString() : "2026-09-24 09:15 PDT"} (Estimated ~2 Weeks)
+                <span suppressHydrationWarning style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.7)" }}>
+                  Window Started: {activeRollouts[0]?.incident_begin ? formatDateUTC(activeRollouts[0].incident_begin) : "2026-09-24"} (Estimated ~2 Weeks)
                 </span>
               </div>
               <h3 style={{ fontSize: "1.18rem", fontWeight: 700, color: "#fff", margin: "0 0 6px" }}>
@@ -899,7 +900,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "12px 14px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Last Scheduled Run</div>
               <div style={{ fontSize: "0.86rem", color: "#fff", fontWeight: 600, marginTop: "4px" }}>
-                {schedulerState?.lastScheduledRun?.completed_at ? new Date(schedulerState.lastScheduledRun.completed_at).toLocaleString() : "Awaiting cron trigger"}
+                <span suppressHydrationWarning>{schedulerState?.lastScheduledRun?.completed_at ? formatDateTimeUTC(schedulerState.lastScheduledRun.completed_at) : "Awaiting cron trigger"}</span>
               </div>
               <div style={{ fontSize: "0.72rem", color: schedulerState?.lastScheduledRun?.status === "SUCCESS" ? "#10b981" : "var(--dgs-text-muted)", marginTop: "2px" }}>
                 Status: {schedulerState?.lastScheduledRun?.status || "PENDING"}
@@ -909,7 +910,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "12px 14px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Last Manual Run</div>
               <div style={{ fontSize: "0.86rem", color: "#fff", fontWeight: 600, marginTop: "4px" }}>
-                {schedulerState?.lastManualRun?.completed_at ? new Date(schedulerState.lastManualRun.completed_at).toLocaleString() : "None on record"}
+                <span suppressHydrationWarning>{schedulerState?.lastManualRun?.completed_at ? formatDateTimeUTC(schedulerState.lastManualRun.completed_at) : "None on record"}</span>
               </div>
               <div style={{ fontSize: "0.72rem", color: schedulerState?.lastManualRun?.status === "SUCCESS" ? "#10b981" : "var(--dgs-text-muted)", marginTop: "2px" }}>
                 Status: {schedulerState?.lastManualRun?.status || "N/A"}
@@ -919,7 +920,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "12px 14px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Last Successful Run</div>
               <div style={{ fontSize: "0.86rem", color: "#fff", fontWeight: 600, marginTop: "4px" }}>
-                {schedulerState?.lastSuccessfulRun?.completed_at ? new Date(schedulerState.lastSuccessfulRun.completed_at).toLocaleString() : "Active"}
+                <span suppressHydrationWarning>{schedulerState?.lastSuccessfulRun?.completed_at ? formatDateTimeUTC(schedulerState.lastSuccessfulRun.completed_at) : "Active"}</span>
               </div>
               <div style={{ fontSize: "0.72rem", color: "#10b981", marginTop: "2px" }}>
                 {schedulerState?.lastSuccessfulRun?.updates_detected ? `${schedulerState.lastSuccessfulRun.updates_detected} items tracked` : "Verified healthy"}
@@ -929,7 +930,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
             <div style={{ background: "rgba(255,255,255,0.03)", padding: "12px 14px", borderRadius: "var(--dgs-radius-sm)", border: "1px solid rgba(255,255,255,0.06)" }}>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase" }}>Next Expected Cron</div>
               <div style={{ fontSize: "0.86rem", color: "#a5b4fc", fontWeight: 600, marginTop: "4px" }}>
-                {schedulerState?.nextExpectedCron ? new Date(schedulerState.nextExpectedCron).toLocaleString() : "Every 3 hours"}
+                <span suppressHydrationWarning>{schedulerState?.nextExpectedCron ? formatDateTimeUTC(schedulerState.nextExpectedCron) : "Every 3 hours"}</span>
               </div>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "2px" }}>
                 Cadence: 17 */3 * * * (UTC)
@@ -952,7 +953,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
               </div>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>status.search.google.com/incidents.json</div>
               <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
-                Last success: {schedulerState?.sourceStatuses?.statusDashboard?.lastSuccessAt ? new Date(schedulerState.sourceStatuses.statusDashboard.lastSuccessAt).toLocaleString() : "Just now"}
+                <span suppressHydrationWarning>Last success: {schedulerState?.sourceStatuses?.statusDashboard?.lastSuccessAt ? formatDateTimeUTC(schedulerState.sourceStatuses.statusDashboard.lastSuccessAt) : "Just now"}</span>
               </div>
             </div>
 
@@ -963,7 +964,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
               </div>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>feeds.feedburner.com/blogspot/amDG</div>
               <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
-                Last success: {schedulerState?.sourceStatuses?.searchCentral?.lastSuccessAt ? new Date(schedulerState.sourceStatuses.searchCentral.lastSuccessAt).toLocaleString() : "Just now"}
+                <span suppressHydrationWarning>Last success: {schedulerState?.sourceStatuses?.searchCentral?.lastSuccessAt ? formatDateTimeUTC(schedulerState.sourceStatuses.searchCentral.lastSuccessAt) : "Just now"}</span>
               </div>
             </div>
 
@@ -974,7 +975,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
               </div>
               <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>search_docs_updates.rss</div>
               <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
-                Last success: {schedulerState?.sourceStatuses?.docsUpdates?.lastSuccessAt ? new Date(schedulerState.sourceStatuses.docsUpdates.lastSuccessAt).toLocaleString() : "Just now"}
+                <span suppressHydrationWarning>Last success: {schedulerState?.sourceStatuses?.docsUpdates?.lastSuccessAt ? formatDateTimeUTC(schedulerState.sourceStatuses.docsUpdates.lastSuccessAt) : "Just now"}</span>
               </div>
             </div>
           </div>
@@ -1195,7 +1196,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                   {selectedUpdate.title}
                 </h3>
                 <p style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)", margin: "4px 0 0" }}>
-                  Rollout Date: {new Date(selectedUpdate.published_at).toLocaleDateString()} · Source:{" "}
+                  <span suppressHydrationWarning>Rollout Date: {formatDateUTC(selectedUpdate.published_at)}</span> · Source:{" "}
                   <a href={selectedUpdate.source_url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--dgs-primary)" }}>
                     {selectedUpdate.source}
                   </a>
@@ -1293,10 +1294,10 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                 <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
                   ROLLOUT WINDOW
                 </div>
-                <div style={{ fontSize: "0.82rem", color: "#fff", marginTop: "6px" }}>
+                <div suppressHydrationWarning style={{ fontSize: "0.82rem", color: "#fff", marginTop: "6px" }}>
                   {selectedUpdate.incident_begin
-                    ? `${new Date(selectedUpdate.incident_begin).toLocaleDateString()} — ${selectedUpdate.incident_end ? new Date(selectedUpdate.incident_end).toLocaleDateString() : "Active"}`
-                    : new Date(selectedUpdate.published_at).toLocaleDateString()}
+                    ? `${formatDateUTC(selectedUpdate.incident_begin)} — ${selectedUpdate.incident_end ? formatDateUTC(selectedUpdate.incident_end) : "Active"}`
+                    : formatDateUTC(selectedUpdate.published_at)}
                 </div>
               </div>
             </div>
@@ -1652,7 +1653,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                 >
                   <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
                     <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>Fresh Audit</div>
-                    <div style={{ fontSize: "0.82rem", color: "#fff", fontWeight: 600 }}>{selectedUpdate.sitewide_spam_impact.freshAuditDate ? new Date(selectedUpdate.sitewide_spam_impact.freshAuditDate).toLocaleDateString() : "Live"}</div>
+                    <div suppressHydrationWarning style={{ fontSize: "0.82rem", color: "#fff", fontWeight: 600 }}>{selectedUpdate.sitewide_spam_impact.freshAuditDate ? formatDateUTC(selectedUpdate.sitewide_spam_impact.freshAuditDate) : "Live"}</div>
                   </div>
                   <div style={{ background: "rgba(255,255,255,0.03)", padding: "8px 10px", borderRadius: "4px" }}>
                     <div style={{ fontSize: "0.68rem", color: "var(--dgs-text-muted)" }}>URLs Assessed</div>
@@ -1926,13 +1927,13 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
                     color: "var(--dgs-text-muted)",
                   }}
                 >
-                  <span>LAST REFRESHED: <strong style={{ color: "#fff" }}>{selectedUpdate.assessment_date || "Live"}</strong></span>
-                  <span>AUDIT RUN ID: <strong style={{ color: "#a5b4fc" }}>{(selectedUpdate.audit_telemetry as any)?.auditRunId || "08f76cb2-0788-46b7-a389-5ac8268f90e5"}</strong></span>
-                  <span>GSC DATA THROUGH: <strong style={{ color: "#38bdf8" }}>{(selectedUpdate.audit_telemetry as any)?.gscDataThrough || (selectedUpdate.sitewide_spam_impact as any)?.latestAvailableMetricDate || "2026-03-31"}</strong></span>
-                  <span>TOTAL URLS: <strong style={{ color: "#10b981" }}>102</strong></span>
-                  <span>VALID: <strong style={{ color: "#10b981" }}>102</strong></span>
-                  <span>CONFLICTS: <strong style={{ color: "#10b981" }}>0</strong></span>
-                  <span>JSON PARSE ERRORS: <strong style={{ color: "#10b981" }}>0</strong></span>
+                  <span suppressHydrationWarning>LAST REFRESHED: <strong style={{ color: "#fff" }}>{selectedUpdate.assessment_date || "Live"}</strong></span>
+                  <span suppressHydrationWarning>AUDIT RUN ID: <strong style={{ color: "#a5b4fc" }}>{(selectedUpdate.audit_telemetry as any)?.auditRunId || "Awaiting Live Audit"}</strong></span>
+                  <span suppressHydrationWarning>GSC DATA THROUGH: <strong style={{ color: "#38bdf8" }}>{(selectedUpdate.audit_telemetry as any)?.gscDataThrough || (selectedUpdate.sitewide_spam_impact as any)?.latestAvailableMetricDate || "2026-03-31"}</strong></span>
+                  <span suppressHydrationWarning>TOTAL URLS: <strong style={{ color: "#10b981" }}>{(selectedUpdate.audit_telemetry as any)?.totalUrls ?? (selectedUpdate.sitewide_spam_impact as any)?.urlsAssessed ?? (selectedUpdate.audit_telemetry as any)?.pagesCrawled ?? 0}</strong></span>
+                  <span suppressHydrationWarning>VALID: <strong style={{ color: "#10b981" }}>{(selectedUpdate.audit_telemetry as any)?.validUrls ?? (selectedUpdate.sitewide_spam_impact as any)?.urlsAssessed ?? (selectedUpdate.audit_telemetry as any)?.pagesCrawled ?? 0}</strong></span>
+                  <span suppressHydrationWarning>CONFLICTS: <strong style={{ color: "#10b981" }}>{(selectedUpdate.audit_telemetry as any)?.conflicts ?? 0}</strong></span>
+                  <span suppressHydrationWarning>JSON PARSE ERRORS: <strong style={{ color: "#10b981" }}>{(selectedUpdate.audit_telemetry as any)?.parseErrors ?? 0}</strong></span>
                 </div>
               </div>
             )}

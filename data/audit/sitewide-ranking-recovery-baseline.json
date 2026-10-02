@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-01T13:23:40.665Z",
-  "auditTimestamp": "2026-10-01T13:23:35.593Z",
+  "auditTimestamp": "2026-10-02 09:27:39",
   "algorithmEvent": "Google September 2026 Spam Update (Rollout started: 24 Sep 2026, ~14 day duration)",
   "rolloutCorrelationNote": "DECLINE OCCURRED DURING ROLLOUT — Correlated with active spam update wave; empirical causation requires official Google confirmation.",
   "latestDailyMetricDate": "2026-09-24",
@@ -10,7 +10,7 @@
   "latestMetricDate": "2026-09-27",
   "periodType": "28d",
   "summary": {
-    "totalIndexablePages": 101,
+    "totalIndexablePages": 102,
     "protectedTier0PagesCount": 11,
     "pagesWithGscData": 103,
     "latestDailyMetricDate": "2026-09-24",
@@ -208,13 +208,13 @@
       "astValidationMode": "LOCAL_JSON_LD_AST_VALIDATION",
       "externalApiDisclaimer": "Evaluated via local AST validation; Google Rich Results API not invoked",
       "coveragePercent": 100,
-      "totalPages": 101,
-      "pagesWithSchemaCount": 101,
-      "validSchemaCount": 101,
+      "totalPages": 102,
+      "pagesWithSchemaCount": 102,
+      "validSchemaCount": 102,
       "jsonLdParseErrors": 0,
       "conflictingEntityErrors": 0,
       "redundantEntityWarnings": 0,
-      "validReferencesCount": 449,
+      "validReferencesCount": 440,
       "googleExternalValidation": "NOT RUN",
       "schemaErrorsCount": 0,
       "schemaWarningsCount": 0,
@@ -269,13 +269,13 @@
     "astValidationMode": "LOCAL_JSON_LD_AST_VALIDATION",
     "externalApiDisclaimer": "Evaluated via local AST validation; Google Rich Results API not invoked",
     "coveragePercent": 100,
-    "totalPages": 101,
-    "pagesWithSchemaCount": 101,
-    "validSchemaCount": 101,
+    "totalPages": 102,
+    "pagesWithSchemaCount": 102,
+    "validSchemaCount": 102,
     "jsonLdParseErrors": 0,
     "conflictingEntityErrors": 0,
     "redundantEntityWarnings": 0,
-    "validReferencesCount": 449,
+    "validReferencesCount": 440,
     "googleExternalValidation": "NOT RUN",
     "schemaErrorsCount": 0,
     "schemaWarningsCount": 0,
@@ -14699,5 +14699,6 @@
         "editorialArtifacts": []
       }
     }
-  ]
+  ],
+  "auditId": "8d2726b3-aacd-424b-ad24-6bc2c48c0977"
 }

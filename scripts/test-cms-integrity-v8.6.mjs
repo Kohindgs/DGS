@@ -8,7 +8,7 @@ console.log("=== RUNNING DGS CMS INTEGRITY V8.6 AUDIT TEST SUITE ===");
 test("1. OWASP-Compliant Fail-Closed Auth & No Hardcoded Passwords", () => {
   const authDbContent = fs.readFileSync(path.resolve("lib/cms/auth-db.ts"), "utf8");
   assert.ok(
-    !authDbContent.includes("DGS#Admin!27Kx9Qp4Mv8Ls"),
+    !authDbContent.includes("adminPassword || \"") && !authDbContent.includes("adminPassword = \""),
     "FAIL: lib/cms/auth-db.ts still contains hardcoded superadmin fallback password!"
   );
   assert.ok(

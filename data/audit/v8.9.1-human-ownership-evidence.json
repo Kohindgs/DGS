@@ -1,0 +1,38 @@
+[
+  {
+    "category": "Protected Tier-0 Service Pages",
+    "actualApprover": "admin",
+    "actualRole": "System Administrator",
+    "evidenceSource": "wpcl_users (ID 1) & git release commit history",
+    "reviewDate": "2026-09-30",
+    "status": "REVIEW_REQUIRED",
+    "evidenceGap": "No explicit cryptographic or stored database signoff record found in CMS database for individual service page copy."
+  },
+  {
+    "category": "Regional Service City Hubs",
+    "actualApprover": "Growth Business",
+    "actualRole": "Growth Manager",
+    "evidenceSource": "wpcl_users (ID 2)",
+    "reviewDate": "2026-09-30",
+    "status": "REVIEW_REQUIRED",
+    "evidenceGap": "No distinct regional editorial review record exists in database."
+  },
+  {
+    "category": "Technical AI & LLM Blogs",
+    "actualApprover": "None recorded",
+    "actualRole": "None recorded",
+    "evidenceSource": "blog_posts.author_name IS NULL in database",
+    "reviewDate": "2026-09-30",
+    "status": "REVIEW_REQUIRED",
+    "evidenceGap": "Author name is null across blog_posts table; requires human editorial attribution in CMS admin."
+  },
+  {
+    "category": "Legacy WordPress Ported Articles",
+    "actualApprover": "admin",
+    "actualRole": "System Administrator",
+    "evidenceSource": "wpcl_users (ID 1)",
+    "reviewDate": "2026-09-30",
+    "status": "REVIEW_REQUIRED",
+    "evidenceGap": "Imported legacy content lacks explicit first-party human signoff timestamp."
+  }
+]

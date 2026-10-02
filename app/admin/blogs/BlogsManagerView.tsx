@@ -14,6 +14,7 @@ import type {
 } from "@/lib/cms/blogs";
 import { imageMatchesSlug } from "@/lib/cms/blog-media-match";
 import type { PrePublishGateResult } from "@/lib/cms/pre-publish-gate";
+import { formatDateUTC, formatDateTimeUTC } from "@/lib/utils/date";
 
 interface BlogsManagerViewProps {
   initialData: {
@@ -823,15 +824,15 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
 
                       {/* Date */}
                       <td>
-                        <span className="dgs-meta-text">
+                        <span className="dgs-meta-text" suppressHydrationWarning>
                           {b.status === "scheduled" && b.scheduled_for ? (
                             <span className="dgs-sched-time">
-                              📅 {new Date(b.scheduled_for).toLocaleDateString()}
+                              📅 {formatDateUTC(b.scheduled_for)}
                             </span>
                           ) : b.published_at ? (
-                            new Date(b.published_at).toLocaleDateString()
+                            formatDateUTC(b.published_at)
                           ) : (
-                            new Date(b.updated_at).toLocaleDateString()
+                            formatDateUTC(b.updated_at)
                           )}
                         </span>
                       </td>
@@ -1996,7 +1997,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                           }}
                         >
                           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <strong style={{ fontSize: 13 }}>{new Date(rev.created_at).toLocaleString()}</strong>
+                            <strong style={{ fontSize: 13 }} suppressHydrationWarning>{formatDateTimeUTC(rev.created_at)}</strong>
                             <span className="dgs-admin-badge" style={{ fontSize: 10 }}>{rev.snapshot?.status || "draft"}</span>
                           </div>
                           <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}>
@@ -2017,8 +2018,8 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
                           <div>
                             <h4 style={{ margin: 0, fontSize: 16 }}>{selectedRevision.snapshot?.title}</h4>
-                            <p style={{ margin: "2px 0 0 0", fontSize: 12, color: "#9ca3af" }}>
-                              Snapshot created on {new Date(selectedRevision.created_at).toLocaleString()} · Author: {selectedRevision.created_by ? "User" : "System / Auto"}
+                            <p style={{ margin: "2px 0 0 0", fontSize: 12, color: "#9ca3af" }} suppressHydrationWarning>
+                              Snapshot created on {formatDateTimeUTC(selectedRevision.created_at)} · Author: {selectedRevision.created_by ? "User" : "System / Auto"}
                             </p>
                           </div>
                           <button

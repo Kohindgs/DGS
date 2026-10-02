@@ -60,6 +60,10 @@ export type AuditTelemetry = {
   isStale: boolean;
   auditRunId?: string | null;
   gscDataThrough?: string | null;
+  totalUrls?: number;
+  validUrls?: number;
+  conflicts?: number;
+  parseErrors?: number;
 };
 
 export type QueryImpactRow = {
@@ -827,8 +831,12 @@ export async function runGoogleUpdateAssessment(
       auditAgeDays,
       pagesCrawled: auditedPagesCount,
       isStale: auditAgeDays != null ? auditAgeDays > 15 : true,
-      auditRunId: latestAuditRow?.id || "08f76cb2-0788-46b7-a389-5ac8268f90e5",
-      gscDataThrough: sitewideSpamImpact?.latestAvailableMetricDate || "2026-03-31",
+      auditRunId: latestAuditRow?.id || null,
+      gscDataThrough: sitewideSpamImpact?.latestAvailableMetricDate || null,
+      totalUrls: auditedPagesCount,
+      validUrls: schemaValidationSummary?.validSchemaCount ?? auditedPagesCount,
+      conflicts: schemaValidationSummary?.conflictingEntityErrors ?? 0,
+      parseErrors: schemaValidationSummary?.jsonLdParseErrors ?? 0,
     },
     affectedPagesImpact,
     sitewideSpamImpact,

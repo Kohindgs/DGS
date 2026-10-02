@@ -315,7 +315,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
     { key: "position", header: "Avg Position", sortable: true, width: "120px", render: (p) => Number(p.position).toFixed(1) },
   ];
 
-  const genAiMetrics = OFFICIAL_GENERATIVE_AI_REPORT.windows[activeWindow];
+  const missedCount = AI_OVERVIEW_31_KEYWORDS.filter((k) => k.status === "AI_OVERVIEW_DGS_NOT_CITED").length;
   const filteredAiKeywords = AI_OVERVIEW_31_KEYWORDS.filter((k) => {
     if (filterMissedOnly) {
       return k.status === "AI_OVERVIEW_DGS_NOT_CITED";
@@ -441,12 +441,12 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       ),
     },
     {
-      key: "normalOrganicPosition",
-      header: "NORMAL ORGANIC POSITION",
+      key: "evidenceId",
+      header: "EVIDENCE ID",
       sortable: true,
-      width: "140px",
+      width: "150px",
       render: (k) => (
-        <span style={{ fontWeight: 700, color: "#fff", fontSize: "0.85rem" }}>{k.normalOrganicPosition.toFixed(1)}</span>
+        <span style={{ fontFamily: "monospace", fontSize: "0.72rem", color: "#a5b4fc" }}>{k.evidenceId}</span>
       ),
     },
     {
@@ -462,12 +462,12 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       key: "status",
       header: "STATUS",
       sortable: true,
-      width: "190px",
+      width: "170px",
       render: (k) => {
         let chipClass = "neutral";
         if (k.status === "AI_OVERVIEW_DGS_CITED") chipClass = "success";
         else if (k.status === "AI_OVERVIEW_DGS_NOT_CITED") chipClass = "danger";
-        else if (k.status === "AI_OVERVIEW_NOT_TRIGGERED") chipClass = "neutral";
+        else if (k.status === "NOT_CHECKED") chipClass = "neutral";
 
         return (
           <span
@@ -476,6 +476,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
           >
             {k.status === "AI_OVERVIEW_DGS_CITED" && <CheckCircle2 size={10} />}
             {k.status === "AI_OVERVIEW_DGS_NOT_CITED" && <AlertTriangle size={10} />}
+            {k.status === "NOT_CHECKED" && <Minus size={10} />}
             {k.status}
           </span>
         );
@@ -767,7 +768,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
         </div>
       </div>
 
-      {/* P30-P34: Google Generative AI Visibility (7D / 15D / 28D Performance) */}
+      {/* Official Google Generative AI Visibility & Performance Connection Status */}
       <div
         className="dgs-saas-card"
         style={{
@@ -780,156 +781,68 @@ export default function SearchConsoleClientView({ standingData }: Props) {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
               <span className="dgs-saas-chip primary" style={{ background: "rgba(168, 85, 247, 0.2)", color: "#c084fc", border: "1px solid rgba(168, 85, 247, 0.4)", fontSize: "0.7rem", padding: "2px 6px", fontWeight: 700 }}>
-                OFFICIAL GSC SGE TELEMETRY
+                OFFICIAL GOOGLE SOURCE
               </span>
               <h3 className="dgs-saas-card-title" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <Bot size={18} style={{ color: "#c084fc" }} /> Google Generative AI Visibility ({activeWindow}D Window)
+                <Bot size={18} style={{ color: "#c084fc" }} /> Google Search Console — Generative AI Performance Report
               </h3>
             </div>
             <p className="dgs-saas-card-subtitle">
-              Comprehensive telemetry for Google AI Overviews, Search Generative Experience citations, and conversational expander interactions. Data-through: <strong>{OFFICIAL_GENERATIVE_AI_REPORT.dataThroughDate}</strong> ({OFFICIAL_GENERATIVE_AI_REPORT.telemetryLatencyDays}D GSC latency).
+              Official connection status for GSC Generative AI performance reporting. Automated REST API ingestion is unavailable from Google; ingestion requires manual export.
             </p>
           </div>
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-            <span className="dgs-saas-chip success" style={{ fontSize: "0.74rem", fontWeight: 700 }}>
-              AI OVERVIEW COVERAGE: 100%
-            </span>
-            <span className="dgs-saas-chip info" style={{ fontSize: "0.74rem", fontWeight: 700 }}>
-              CITATION RATE: 93.5%
+            <span className="dgs-saas-chip warning" style={{ fontSize: "0.74rem", fontWeight: 700 }}>
+              STATUS: {OFFICIAL_GENERATIVE_AI_REPORT.status}
             </span>
           </div>
         </div>
 
-        <div className="dgs-saas-card-body" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {/* 6 Core Generative AI KPIs */}
-          <div className="dgs-saas-kpi-grid">
-            <div className="dgs-saas-kpi-card" style={{ borderColor: "rgba(168, 85, 247, 0.2)" }}>
-              <div className="dgs-saas-kpi-title">AI Overview Impressions ({activeWindow}D)</div>
-              <div className="dgs-saas-kpi-value" style={{ color: "#c084fc" }}>
-                {genAiMetrics.impressions.toLocaleString()}
+        <div className="dgs-saas-card-body" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          {/* Connection Status & Dimensions Grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px" }}>
+            <div className="dgs-saas-kpi-card">
+              <div className="dgs-saas-kpi-title">Report Availability</div>
+              <div className="dgs-saas-kpi-value" style={{ fontSize: "1.1rem", color: "var(--dgs-warning)" }}>
+                {OFFICIAL_GENERATIVE_AI_REPORT.available ? "AVAILABLE" : "MANUAL EXPORT REQUIRED"}
               </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
-                Organic appearances inside Gemini/SGE
-              </div>
-            </div>
-
-            <div className="dgs-saas-kpi-card" style={{ borderColor: "rgba(56, 189, 248, 0.2)" }}>
-              <div className="dgs-saas-kpi-title">AI Overview Clicks ({activeWindow}D)</div>
-              <div className="dgs-saas-kpi-value" style={{ color: "#38bdf8" }}>
-                {genAiMetrics.clicks.toLocaleString()}
-              </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
-                Direct referral from citation links
-              </div>
-            </div>
-
-            <div className="dgs-saas-kpi-card" style={{ borderColor: "rgba(40, 199, 111, 0.2)" }}>
-              <div className="dgs-saas-kpi-title">Average Generative CTR ({activeWindow}D)</div>
-              <div className="dgs-saas-kpi-value" style={{ color: "var(--dgs-success)" }}>
-                {genAiMetrics.ctr.toFixed(2)}%
-              </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
-                Higher than standard organic baseline
-              </div>
-            </div>
-
-            <div className="dgs-saas-kpi-card" style={{ borderColor: "rgba(245, 158, 11, 0.2)" }}>
-              <div className="dgs-saas-kpi-title">Average AI Card Position ({activeWindow}D)</div>
-              <div className="dgs-saas-kpi-value" style={{ color: "var(--dgs-warning)" }}>
-                {genAiMetrics.avgPosition.toFixed(1)}
-              </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
-                Top citation ranking inside AI module
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
+                Automated API: Unavailable
               </div>
             </div>
 
             <div className="dgs-saas-kpi-card">
-              <div className="dgs-saas-kpi-title">Queries Triggering AI Overview</div>
-              <div className="dgs-saas-kpi-value">
-                {genAiMetrics.queriesTriggered} / 31
+              <div className="dgs-saas-kpi-title">Supported Dimensions</div>
+              <div className="dgs-saas-kpi-value" style={{ fontSize: "0.95rem", color: "#38bdf8" }}>
+                {OFFICIAL_GENERATIVE_AI_REPORT.supportedDimensions.join(" · ")}
               </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--dgs-success)", marginTop: "4px", fontWeight: 600 }}>
-                100% of tracked clusters active
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
+                Only dimensions documented by Google
               </div>
             </div>
 
             <div className="dgs-saas-kpi-card">
-              <div className="dgs-saas-kpi-title">Direct DGS Citation Cards</div>
-              <div className="dgs-saas-kpi-value">
-                {genAiMetrics.citationsCount} / 31
+              <div className="dgs-saas-kpi-title">Official Ingested Impressions</div>
+              <div className="dgs-saas-kpi-value" style={{ fontSize: "1.1rem", color: "#fff" }}>
+                {OFFICIAL_GENERATIVE_AI_REPORT.totalOfficialAiImpressions}
               </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
-                Verified source link in AI overview
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
+                Pages with impressions: {OFFICIAL_GENERATIVE_AI_REPORT.pagesWithImpressions}
+              </div>
+            </div>
+
+            <div className="dgs-saas-kpi-card">
+              <div className="dgs-saas-kpi-title">Last Sync & Data-Through</div>
+              <div className="dgs-saas-kpi-value" style={{ fontSize: "0.95rem", color: "var(--dgs-text-muted)" }}>
+                {OFFICIAL_GENERATIVE_AI_REPORT.dataThroughDate || "None"}
+              </div>
+              <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)", marginTop: "4px" }}>
+                Sync: {OFFICIAL_GENERATIVE_AI_REPORT.lastSuccessfulSync || "Awaiting manual export"}
               </div>
             </div>
           </div>
 
-          {/* Breakdown: Devices & Geographic Markets */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "16px" }}>
-            {/* Device Distribution */}
-            <div style={{ background: "rgba(255, 255, 255, 0.02)", border: "1px solid var(--dgs-border)", borderRadius: "var(--dgs-radius-sm)", padding: "16px" }}>
-              <h4 style={{ margin: "0 0 12px", fontSize: "0.88rem", color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
-                <Laptop size={15} /> Device Distribution (AI Overview Telemetry)
-              </h4>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", marginBottom: "4px" }}>
-                    <span style={{ color: "#fff" }}>Desktop AI Overviews</span>
-                    <span style={{ fontWeight: 600, color: "#38bdf8" }}>{OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.desktop.pct}% ({OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.desktop.impressions.toLocaleString()} imp &middot; {OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.desktop.clicks} clicks)</span>
-                  </div>
-                  <div style={{ height: "6px", background: "rgba(255,255,255,0.06)", borderRadius: "3px", overflow: "hidden" }}>
-                    <div style={{ width: `${OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.desktop.pct}%`, height: "100%", background: "#38bdf8" }} />
-                  </div>
-                </div>
-
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", marginBottom: "4px" }}>
-                    <span style={{ color: "#fff" }}>Mobile AI Overviews</span>
-                    <span style={{ fontWeight: 600, color: "#a855f7" }}>{OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.mobile.pct}% ({OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.mobile.impressions.toLocaleString()} imp &middot; {OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.mobile.clicks} clicks)</span>
-                  </div>
-                  <div style={{ height: "6px", background: "rgba(255,255,255,0.06)", borderRadius: "3px", overflow: "hidden" }}>
-                    <div style={{ width: `${OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.mobile.pct}%`, height: "100%", background: "#a855f7" }} />
-                  </div>
-                </div>
-
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", marginBottom: "4px" }}>
-                    <span style={{ color: "#fff" }}>Tablet AI Overviews</span>
-                    <span style={{ fontWeight: 600, color: "var(--dgs-text-muted)" }}>{OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.tablet.pct}% ({OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.tablet.impressions.toLocaleString()} imp &middot; {OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.tablet.clicks} clicks)</span>
-                  </div>
-                  <div style={{ height: "6px", background: "rgba(255,255,255,0.06)", borderRadius: "3px", overflow: "hidden" }}>
-                    <div style={{ width: `${OFFICIAL_GENERATIVE_AI_REPORT.deviceBreakdown.tablet.pct}%`, height: "100%", background: "rgba(255,255,255,0.3)" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Geographic Markets */}
-            <div style={{ background: "rgba(255, 255, 255, 0.02)", border: "1px solid var(--dgs-border)", borderRadius: "var(--dgs-radius-sm)", padding: "16px" }}>
-              <h4 style={{ margin: "0 0 12px", fontSize: "0.88rem", color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
-                <Globe size={15} /> Top Geographic AI Markets
-              </h4>
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                {OFFICIAL_GENERATIVE_AI_REPORT.marketBreakdown.map((m) => (
-                  <div key={m.code} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.8rem", padding: "6px 8px", background: "rgba(255,255,255,0.02)", borderRadius: "4px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <span style={{ fontWeight: 700, color: "#fff", width: "24px" }}>{m.code}</span>
-                      <span style={{ color: "var(--dgs-text-primary)" }}>{m.country}</span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span style={{ color: "var(--dgs-text-muted)" }}>{m.impressions.toLocaleString()} imp</span>
-                      <span style={{ color: "var(--dgs-success)", fontWeight: 600 }}>{m.ctr}% CTR</span>
-                      <span className={`dgs-saas-chip ${m.status === "DOMINANT" ? "success" : m.status === "RAPID_GROWTH" ? "primary" : "neutral"}`} style={{ fontSize: "0.68rem", padding: "1px 6px" }}>
-                        {m.status.replace("_", " ")}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Official GSC Disclaimer */}
+          {/* Official GSC Notice */}
           <div style={{ padding: "12px 16px", background: "rgba(255, 255, 255, 0.03)", border: "1px solid var(--dgs-border)", borderRadius: "var(--dgs-radius-sm)", fontSize: "0.8rem", color: "var(--dgs-text-muted)", display: "flex", alignItems: "center", gap: "10px" }}>
             <span>ℹ️</span>
             <span>{OFFICIAL_GENERATIVE_AI_REPORT.officialDisclaimer}</span>
@@ -946,7 +859,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
               <h3 className="dgs-saas-card-title">AI Overview Keyword Tracker (31 Keywords · 6 Clusters)</h3>
             </div>
             <p className="dgs-saas-card-subtitle">
-              Live multi-cluster tracking across AI Video, SEO, AEO, GEO, LLM, and Dubai commercial target routes.
+              Observation standing across AI Video, SEO, AEO, GEO, LLM, and Dubai commercial target routes (Awaiting verified SERP capture).
             </p>
           </div>
           <div style={{ display: "flex", gap: "6px", alignItems: "center", flexWrap: "wrap" }}>
@@ -980,7 +893,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
                 border: "1px solid rgba(239, 68, 68, 0.4)",
               }}
             >
-              ⚠️ MISSED OPPORTUNITIES (8)
+              ⚠️ MISSED OPPORTUNITIES ({missedCount})
             </button>
           </div>
         </div>
@@ -1071,7 +984,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
                 </div>
                 <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border)" }}>
                   <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>Normal Organic Position</div>
-                  <div style={{ fontSize: "0.95rem", color: "#fff", fontWeight: 700, marginTop: "2px" }}>Pos {selectedDiagnostics.normalOrganicPosition.toFixed(1)}</div>
+                  <div style={{ fontSize: "0.95rem", color: "#fff", fontWeight: 700, marginTop: "2px" }}>Pos {selectedDiagnostics.normalOrganicPosition != null ? selectedDiagnostics.normalOrganicPosition.toFixed(1) : "—"}</div>
                 </div>
                 <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "var(--dgs-radius-sm)", border: "1px solid var(--dgs-border)" }}>
                   <div style={{ fontSize: "0.72rem", color: "var(--dgs-text-muted)" }}>Market / Device</div>

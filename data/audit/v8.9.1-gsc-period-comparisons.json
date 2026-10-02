@@ -1,0 +1,113 @@
+{
+  "sevenDay": {
+    "metric": "7 Days (Sep 18 - Sep 24) vs Previous 7 Days (Sep 11 - Sep 17)",
+    "rows": [
+      {
+        "metric": "Clicks",
+        "current": 45,
+        "previous": 60,
+        "absChange": -15,
+        "pctChange": "-25.0%",
+        "direction": "↓ Contraction"
+      },
+      {
+        "metric": "Impressions",
+        "current": 1932,
+        "previous": 2704,
+        "absChange": -772,
+        "pctChange": "-28.5%",
+        "direction": "↓ Contraction"
+      },
+      {
+        "metric": "CTR",
+        "current": "2.33%",
+        "previous": "2.22%",
+        "absChange": "+0.11%",
+        "pctChange": "+5.0%",
+        "direction": "↑ Improvement"
+      },
+      {
+        "metric": "Average Position",
+        "current": "16.59",
+        "previous": "14.49",
+        "absChange": "+2.10",
+        "pctChange": "-14.5%",
+        "direction": "↓ Ranking Drop"
+      },
+      {
+        "metric": "Clicks per Day",
+        "current": "6.43",
+        "previous": "8.57",
+        "absChange": "-2.14",
+        "pctChange": "-25.0%",
+        "direction": "↓ Contraction"
+      },
+      {
+        "metric": "Impressions per Day",
+        "current": "276.0",
+        "previous": "386.3",
+        "absChange": "-110.3",
+        "pctChange": "-28.5%",
+        "direction": "↓ Contraction"
+      }
+    ]
+  },
+  "twentyEightDay": {
+    "metric": "Last 28 Days vs Previous 28 Days (GSC Database Telemetry)",
+    "rows": [
+      {
+        "metric": "Clicks",
+        "current": 193,
+        "previous": 150,
+        "absChange": 43,
+        "pctChange": "+28.7%",
+        "direction": "↑ Improvement"
+      },
+      {
+        "metric": "Impressions",
+        "current": 10815,
+        "previous": 15470,
+        "absChange": -4655,
+        "pctChange": "-30.1%",
+        "direction": "↓ Contraction"
+      },
+      {
+        "metric": "CTR",
+        "current": "1.78%",
+        "previous": "0.97%",
+        "absChange": "+0.81%",
+        "pctChange": "+83.5%",
+        "direction": "↑ Improvement"
+      },
+      {
+        "metric": "Average Position",
+        "current": "17.46",
+        "previous": "22.76",
+        "absChange": "-5.30",
+        "pctChange": "+23.3%",
+        "direction": "↑ Ranking Gain"
+      },
+      {
+        "metric": "Clicks per Day",
+        "current": "6.89",
+        "previous": "5.36",
+        "absChange": "+1.53",
+        "pctChange": "+28.5%",
+        "direction": "↑ Improvement"
+      },
+      {
+        "metric": "Impressions per Day",
+        "current": "386.25",
+        "previous": "552.50",
+        "absChange": "-166.25",
+        "pctChange": "-30.1%",
+        "direction": "↓ Contraction"
+      }
+    ]
+  },
+  "ninetyDay": {
+    "status": "INSUFFICIENT_CONSECUTIVE_DAILY_DATA",
+    "availableDataRange": "Historical Rank Math table (wpcl_rank_math_analytics_gsc) spans 2026-02-10 to 2026-04-27 (76 days). Current headless GSC daily metrics span 2026-08-25 to 2026-09-24 (31 consecutive days). Data between 2026-04-28 and 2026-08-24 is not stored in this database instance.",
+    "recommendation": "Use 28-day equivalent comparison as the primary macro baseline."
+  }
+}

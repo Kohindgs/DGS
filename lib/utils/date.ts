@@ -66,3 +66,22 @@ export function getDaysAgo(value: unknown, referenceTimeMs: number = Date.now())
   if (isNaN(d.getTime())) return null;
   return Math.max(0, Math.floor((referenceTimeMs - d.getTime()) / 86400000));
 }
+
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+export function formatDateUTC(value: unknown, fallback: string = "—"): string {
+  if (value == null || value === "") return fallback;
+  const d = value instanceof Date ? value : new Date(String(value));
+  if (isNaN(d.getTime())) return fallback;
+  return `${d.getUTCDate()} ${MONTH_NAMES[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
+export function formatDateTimeUTC(value: unknown, fallback: string = "—"): string {
+  if (value == null || value === "") return fallback;
+  const d = value instanceof Date ? value : new Date(String(value));
+  if (isNaN(d.getTime())) return fallback;
+  const hours = String(d.getUTCHours()).padStart(2, "0");
+  const mins = String(d.getUTCMinutes()).padStart(2, "0");
+  return `${d.getUTCDate()} ${MONTH_NAMES[d.getUTCMonth()]} ${d.getUTCFullYear()} ${hours}:${mins} UTC`;
+}
+
