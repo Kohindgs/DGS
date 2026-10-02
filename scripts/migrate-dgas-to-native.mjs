@@ -6,7 +6,7 @@ const DB_CONFIG = {
   host: process.env.DGS_MYSQL_HOST || "127.0.0.1",
   port: Number(process.env.DGS_MYSQL_PORT || 3306),
   user: process.env.DGS_MYSQL_USER || "u188101251_nodtii",
-  password: process.env.DGS_MYSQL_PASSWORD || "Yh5_S_6iTd",
+  password: process.env.DGS_MYSQL_PASSWORD || "",
   database: process.env.DGS_MYSQL_DATABASE || "u188101251_nodtii",
 };
 

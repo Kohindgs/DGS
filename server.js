@@ -17,8 +17,12 @@ try {
       const lines = fs.readFileSync(ef, 'utf8').split('\n');
       for (const line of lines) {
         const match = line.match(/^\s*([A-Za-z0-9_]+)\s*=\s*(.*?)\s*$/);
-        if (match && !process.env[match[1]]) {
-          process.env[match[1]] = match[2].trim();
+        if (match) {
+          let val = match[2].trim();
+          if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+            val = val.slice(1, -1);
+          }
+          process.env[match[1]] = val;
         }
       }
     }

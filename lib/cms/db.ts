@@ -4,8 +4,17 @@ declare global {
   var __dgsCmsPool: Pool | undefined;
 }
 
+function cleanVal(v?: string) {
+  if (!v) return "";
+  let val = v.trim();
+  if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+    val = val.slice(1, -1);
+  }
+  return val;
+}
+
 function getConnectionUri() {
-  return process.env.DGS_DATABASE_URL || process.env.DATABASE_URL || "";
+  return cleanVal(process.env.DGS_DATABASE_URL || process.env.DATABASE_URL);
 }
 
 function hasDiscreteConfig() {
@@ -21,11 +30,11 @@ export function getCmsPool() {
   if (!global.__dgsCmsPool) {
     const uri = getConnectionUri();
     global.__dgsCmsPool = uri ? mysql.createPool(uri) : mysql.createPool({
-      host: process.env.DGS_MYSQL_HOST,
-      port: Number(process.env.DGS_MYSQL_PORT || 3306),
-      user: process.env.DGS_MYSQL_USER,
-      password: process.env.DGS_MYSQL_PASSWORD || "",
-      database: process.env.DGS_MYSQL_DATABASE,
+      host: cleanVal(process.env.DGS_MYSQL_HOST) || "127.0.0.1",
+      port: Number(cleanVal(process.env.DGS_MYSQL_PORT) || 3306),
+      user: cleanVal(process.env.DGS_MYSQL_USER),
+      password: cleanVal(process.env.DGS_MYSQL_PASSWORD),
+      database: cleanVal(process.env.DGS_MYSQL_DATABASE),
       waitForConnections: true,
       connectionLimit: 10,
       enableKeepAlive: true,
