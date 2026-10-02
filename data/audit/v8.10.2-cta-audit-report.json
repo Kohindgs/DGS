@@ -1,0 +1,315 @@
+{
+  "timestamp": "2026-10-02T09:48:25.546Z",
+  "totalControlsDiscovered": 1065,
+  "totalTested": 1002,
+  "working": 999,
+  "broken": 3,
+  "notTestedWithReason": 63,
+  "deadCta": 0,
+  "unhandledJsErrors": 2,
+  "applicationErrors": [],
+  "hydrationErrors": [
+    {
+      "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at r1 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:37060)\n    at r2 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:38093)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:132966\n    at sk (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:138128)\n    at sy (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:129378)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124196\n    at so (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124297)\n    at sG (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:150884)\n    at MessagePort.w (https://www.dgeniussolutions.com/_next/static/chunks/3794-fed81a61e06df590.js:1:51388)",
+      "url": "https://www.dgeniussolutions.com/admin/assessment/"
+    },
+    {
+      "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+      "stack": "Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.\n    at r1 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:37060)\n    at r2 (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:38093)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:132966\n    at sk (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:138128)\n    at sy (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:129378)\n    at https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124196\n    at so (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:124297)\n    at sG (https://www.dgeniussolutions.com/_next/static/chunks/4bd1b696-93bf506b236d6248.js:1:150884)\n    at MessagePort.w (https://www.dgeniussolutions.com/_next/static/chunks/3794-fed81a61e06df590.js:1:51388)",
+      "url": "https://www.dgeniussolutions.com/admin/leads/"
+    }
+  ],
+  "extensionErrors": [],
+  "networkErrors": [
+    {
+      "url": "https://www.dgeniussolutions.com/services/seo-company-in-mumbai/?_rsc=fHjBHdrmMPXoOfwP",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/seo-agency-dubai/?_rsc=fHjBHdrmMPXoOfwP",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/performance-marketing-agency/?_rsc=fHjBHdrmMPXoOfwP",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/services/website-design-development/?_rsc=fHjBHdrmMPXoOfwP",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/seo/redirects/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/seo/internal-links/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/seo/canonical-enforcement/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-september-2026-spam-update-what-website-owners-should-know.webp",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads.webp",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-september-2026-spam-update-what-website-owners-should-know.webp",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/cms-media/uploads/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads.webp",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/categories/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/tags/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/authors/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/settings/users/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/settings/system/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/settings/backup/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/integrations/google/ga4/",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://www.dgeniussolutions.com/admin/integrations/pagespeed/",
+      "status": 404,
+      "method": "GET"
+    }
+  ],
+  "inventorySummaryByModule": [
+    {
+      "module": "Dashboard",
+      "path": "/admin/",
+      "total": 45,
+      "working": 43,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "Blogs Manager",
+      "path": "/admin/blogs/",
+      "total": 55,
+      "working": 50,
+      "broken": 0,
+      "notTested": 5
+    },
+    {
+      "module": "SEO Overview",
+      "path": "/admin/seo/",
+      "total": 49,
+      "working": 47,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "SEO Pages",
+      "path": "/admin/seo/pages/",
+      "total": 65,
+      "working": 61,
+      "broken": 2,
+      "notTested": 2
+    },
+    {
+      "module": "Redirects",
+      "path": "/admin/seo/redirects/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Internal Links",
+      "path": "/admin/seo/internal-links/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Canonical Enforcement",
+      "path": "/admin/seo/canonical-enforcement/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Google Search Updates",
+      "path": "/admin/google-updates/",
+      "total": 107,
+      "working": 105,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "Search Console",
+      "path": "/admin/search-console/",
+      "total": 72,
+      "working": 70,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "Media Assets",
+      "path": "/admin/media/",
+      "total": 194,
+      "working": 168,
+      "broken": 0,
+      "notTested": 26
+    },
+    {
+      "module": "Categories",
+      "path": "/admin/categories/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Tags",
+      "path": "/admin/tags/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Authors",
+      "path": "/admin/authors/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Careers",
+      "path": "/admin/careers/",
+      "total": 36,
+      "working": 34,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "Assessments",
+      "path": "/admin/assessment/",
+      "total": 85,
+      "working": 73,
+      "broken": 0,
+      "notTested": 12
+    },
+    {
+      "module": "Leads",
+      "path": "/admin/leads/",
+      "total": 53,
+      "working": 50,
+      "broken": 1,
+      "notTested": 2
+    },
+    {
+      "module": "Portfolio",
+      "path": "/admin/portfolio/",
+      "total": 53,
+      "working": 51,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "Site Audits",
+      "path": "/admin/site-audits/",
+      "total": 204,
+      "working": 202,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "Users",
+      "path": "/admin/settings/users/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "System Health",
+      "path": "/admin/settings/system/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Backup & Restore",
+      "path": "/admin/settings/backup/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "Google GSC Setup",
+      "path": "/admin/integrations/google/setup/",
+      "total": 36,
+      "working": 34,
+      "broken": 0,
+      "notTested": 2
+    },
+    {
+      "module": "Google GA4 Setup",
+      "path": "/admin/integrations/google/ga4/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    },
+    {
+      "module": "PageSpeed Setup",
+      "path": "/admin/integrations/pagespeed/",
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "notTested": 0
+    }
+  ]
+}

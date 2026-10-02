@@ -22,7 +22,7 @@ await loadEnvFile(path.join(process.cwd(), ".env.production"));
 await loadEnvFile(path.join(process.cwd(), ".env.local"));
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.dgeniussolutions.com";
-const adminEmail = process.env.DGS_ADMIN_EMAIL || "admin@dgeniussolutions.com";
+const adminEmail = process.env.DGS_ADMIN_EMAIL || "kohin@dgeniussolutions.com";
 let adminPassword = process.env.DGS_ADMIN_PASSWORD;
 if (adminPassword && ((adminPassword.startsWith('"') && adminPassword.endsWith('"')) || (adminPassword.startsWith("'") && adminPassword.endsWith("'")))) {
   adminPassword = adminPassword.slice(1, -1);
@@ -284,8 +284,9 @@ async function run() {
               lower.includes("diagnos");
 
             if (isTabOrFilter) {
-              const locator = page.locator(`${ctrl.tagName}:has-text("${ctrl.text.slice(0, 20)}")`).first();
-              if (await locator.isVisible()) {
+              const cleanText = ctrl.text.trim().slice(0, 25);
+              const locator = cleanText ? page.locator(ctrl.tagName, { hasText: cleanText }).first() : page.locator(ctrl.tagName).nth(ctrl.index % 10);
+              if (await locator.isVisible().catch(() => false)) {
                 await locator.click({ timeout: 2500 }).catch(() => {});
                 await page.waitForTimeout(200);
                 inventory.push({
@@ -378,6 +379,7 @@ async function run() {
     hydrationErrors,
     extensionErrors,
     networkErrors,
+    brokenItems: inventory.filter((i) => i.status === "BROKEN"),
     inventorySummaryByModule: MODULES.map((m) => {
       const items = inventory.filter((i) => i.module === m.name);
       return {

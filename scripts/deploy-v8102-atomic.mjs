@@ -52,13 +52,18 @@ async function main() {
   // 4. Archive release
   const tarName = `release-${buildId}.tar.gz`;
   const tarPath = path.join(ROOT, tarName);
-  if (fs.existsSync(tarPath)) fs.unlinkSync(tarPath);
-
-  console.log(`Compressing ${tarName}...`);
-  execSync(`tar -czf "${tarPath}" -C "${pkgDir}" .`);
-  console.log(`✓ Created archive: ${tarName} (${(fs.statSync(tarPath).size / 1024 / 1024).toFixed(2)} MB)`);
+  if (fs.existsSync(tarPath) && fs.statSync(tarPath).size > 100 * 1024 * 1024) {
+    console.log(`✓ Using existing valid archive: ${tarName} (${(fs.statSync(tarPath).size / 1024 / 1024).toFixed(2)} MB)`);
+  } else {
+    if (fs.existsSync(tarPath)) fs.unlinkSync(tarPath);
+    console.log(`Compressing ${tarName}...`);
+    execSync(`tar -czf "${tarPath}" -C "${pkgDir}" .`);
+    console.log(`✓ Created archive: ${tarName} (${(fs.statSync(tarPath).size / 1024 / 1024).toFixed(2)} MB)`);
+  }
 
   // 5. Transfer to Hostinger VPS
+  console.log("Ensuring VPS tmp directory exists...");
+  execSync(`ssh -p 65002 u188101251@147.93.100.126 "mkdir -p /home/u188101251/production-app/tmp"`);
   console.log("Uploading release archive to VPS...");
   execSync(`scp -P 65002 "${tarPath}" u188101251@147.93.100.126:/home/u188101251/production-app/tmp/${tarName}`);
   console.log("✓ Uploaded archive to VPS tmp directory");
@@ -66,36 +71,40 @@ async function main() {
   // 6. Execute atomic release extraction, symlinking, and restart
   console.log("Executing atomic release activation on VPS...");
   const releaseId = `${repoSha.slice(0, 7)}-${buildId}`;
-  const remoteCmd = `bash -c '
-    set -euo pipefail
-    NEW_REL="/home/u188101251/production-app/releases/${releaseId}"
-    mkdir -p "$NEW_REL"
-    tar -xzf "/home/u188101251/production-app/tmp/${tarName}" -C "$NEW_REL"
-    
-    # Symlink shared dependencies and mutable persistent data
-    ln -sfn /home/u188101251/production-app/shared/node_modules "$NEW_REL/node_modules"
-    ln -sfn /home/u188101251/production-app/shared/data "$NEW_REL/data"
-    cp /home/u188101251/production-app/shared/.env.production "$NEW_REL/.env.production"
-    
-    # Symlink cms-media
-    mkdir -p "$NEW_REL/public"
-    ln -sfn /home/u188101251/production-app/shared/cms-media "$NEW_REL/public/cms-media"
-    
-    # Atomically switch symlink
-    ln -sfn "$NEW_REL" /home/u188101251/production-app/current
-    
-    # Trigger Passenger restart
-    mkdir -p /home/u188101251/production-app/current/tmp
-    touch /home/u188101251/production-app/current/tmp/restart.txt
-    
-    # Confirm persistent data directories
-    echo "PERSISTENT_DATA_SHARED = YES"
-    echo "DEPLOY_SHA = $(cat $NEW_REL/.release-sha)"
-    echo "PRODUCTION_SHA = $(cat /home/u188101251/production-app/current/.release-sha)"
-    echo "BUILD_ID = $(cat /home/u188101251/production-app/current/.build-id)"
-  '`;
+  const remoteScript = `
+set -euo pipefail
+NEW_REL="/home/u188101251/production-app/releases/${releaseId}"
+mkdir -p "$NEW_REL"
+echo "Extracting release package..."
+tar -xzf "/home/u188101251/production-app/tmp/${tarName}" -C "$NEW_REL"
 
-  const deployOutput = execSync(`ssh -p 65002 u188101251@147.93.100.126 "${remoteCmd.replace(/\n/g, " ")}"`, { encoding: "utf8" });
+echo "Configuring persistent symlinks..."
+ln -sfn /home/u188101251/production-app/shared/node_modules "$NEW_REL/node_modules"
+ln -sfn /home/u188101251/production-app/shared/data "$NEW_REL/data"
+cp /home/u188101251/production-app/shared/.env.production "$NEW_REL/.env.production"
+
+mkdir -p "$NEW_REL/public"
+ln -sfn /home/u188101251/production-app/shared/cms-media "$NEW_REL/public/cms-media"
+
+echo "Switching current symlink atomically..."
+ln -sfn "$NEW_REL" /home/u188101251/production-app/current
+
+echo "Restarting Passenger/Node app..."
+mkdir -p /home/u188101251/production-app/current/tmp
+touch /home/u188101251/production-app/current/tmp/restart.txt
+
+echo "=========================================="
+echo "PERSISTENT_DATA_SHARED = YES"
+echo "DEPLOY_SHA = $(cat $NEW_REL/.release-sha)"
+echo "PRODUCTION_SHA = $(cat /home/u188101251/production-app/current/.release-sha)"
+echo "BUILD_ID = $(cat /home/u188101251/production-app/current/.build-id)"
+echo "=========================================="
+`;
+
+  const deployOutput = execSync(`ssh -p 65002 u188101251@147.93.100.126 "bash -s"`, {
+    input: remoteScript,
+    encoding: "utf8",
+  });
   console.log("\n================ REMOTE DEPLOY RESULT ================");
   console.log(deployOutput);
   console.log("======================================================\n");

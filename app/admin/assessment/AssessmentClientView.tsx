@@ -34,6 +34,28 @@ import {
   ExternalLink,
 } from "lucide-react";
 
+function formatDateUTC(dateStr: string | null | undefined): string {
+  if (!dateStr) return "—";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toISOString().split("T")[0];
+  } catch {
+    return String(dateStr);
+  }
+}
+
+function formatDateTimeUTC(dateStr: string | null | undefined): string {
+  if (!dateStr) return "—";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toISOString().replace("T", " ").replace(/\.\d+Z$/, " UTC");
+  } catch {
+    return String(dateStr);
+  }
+}
+
 type JD = {
   id: string;
   role_title: string;
@@ -750,7 +772,7 @@ export default function AssessmentClientView({
       header: "Created",
       sortable: true,
       width: "130px",
-      render: (j) => new Date(j.created_at).toLocaleDateString(),
+      render: (j) => <span suppressHydrationWarning>{formatDateUTC(j.created_at)}</span>,
     },
   ];
 
@@ -792,7 +814,7 @@ export default function AssessmentClientView({
       header: "Date",
       sortable: true,
       width: "120px",
-      render: (v) => new Date(v.created_at).toLocaleDateString(),
+      render: (v) => <span suppressHydrationWarning>{formatDateUTC(v.created_at)}</span>,
     },
   ];
 
@@ -847,7 +869,7 @@ export default function AssessmentClientView({
       header: "Submitted",
       sortable: true,
       width: "120px",
-      render: (c) => new Date(c.submitted_at).toLocaleDateString(),
+      render: (c) => <span suppressHydrationWarning>{formatDateUTC(c.submitted_at)}</span>,
     },
   ];
 
@@ -2016,7 +2038,7 @@ export default function AssessmentClientView({
                       {(candidateDetail.activity_log || candidateDetail.activity).map((ev: any, evIdx: number) => (
                         <div key={evIdx} style={{ fontSize: "0.75rem", color: "var(--dgs-text-muted)", display: "flex", justifyContent: "space-between" }}>
                           <span>{ev.type || "event"} {ev.detail ? `(${ev.detail})` : ""}</span>
-                          <span style={{ color: "var(--dgs-text-dim)" }}>{ev.at ? new Date(ev.at).toLocaleTimeString() : "—"}</span>
+                          <span style={{ color: "var(--dgs-text-dim)" }} suppressHydrationWarning>{ev.at ? formatDateTimeUTC(ev.at) : "—"}</span>
                         </div>
                       ))}
                     </div>

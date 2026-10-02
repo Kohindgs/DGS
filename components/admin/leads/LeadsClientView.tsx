@@ -34,6 +34,28 @@ function parsePayloadObj(value: unknown): Record<string, any> {
   }
 }
 
+function formatDateUTC(dateStr: string | null | undefined): string {
+  if (!dateStr) return "—";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toISOString().split("T")[0];
+  } catch {
+    return String(dateStr);
+  }
+}
+
+function formatDateTimeUTC(dateStr: string | null | undefined): string {
+  if (!dateStr) return "—";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return String(dateStr);
+    return d.toISOString().replace("T", " ").replace(/\.\d+Z$/, " UTC");
+  } catch {
+    return String(dateStr);
+  }
+}
+
 export default function LeadsClientView({ initialLeads }: Props) {
   const [leads, setLeads] = useState<CmsLead[]>(initialLeads);
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -185,12 +207,8 @@ export default function LeadsClientView({ initialLeads }: Props) {
       sortable: true,
       width: "110px",
       render: (lead) => (
-        <span style={{ fontSize: "12px", color: "var(--dgs-text-muted)", whiteSpace: "nowrap" }}>
-          {new Date(lead.created_at).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}
+        <span style={{ fontSize: "12px", color: "var(--dgs-text-muted)", whiteSpace: "nowrap" }} suppressHydrationWarning>
+          {formatDateUTC(lead.created_at)}
         </span>
       ),
     },
@@ -342,8 +360,8 @@ export default function LeadsClientView({ initialLeads }: Props) {
 
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <span style={{ color: "var(--dgs-text-muted)" }}>Received:</span>
-                  <span style={{ color: "var(--dgs-text-dim)", fontSize: "12px" }}>
-                    {new Date(selectedLead.created_at).toLocaleString()}
+                  <span style={{ color: "var(--dgs-text-dim)", fontSize: "12px" }} suppressHydrationWarning>
+                    {formatDateTimeUTC(selectedLead.created_at)}
                   </span>
                 </div>
               </div>
