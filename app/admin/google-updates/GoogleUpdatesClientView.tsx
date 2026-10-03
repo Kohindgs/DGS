@@ -889,7 +889,7 @@ export default function GoogleUpdatesClientView({ updates: initialUpdates, sched
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ color: "var(--dgs-text-muted)" }}>LIVE SITE AUDIT RUN ID:</span>
               <strong style={{ color: "#a5b4fc", fontFamily: "monospace" }} suppressHydrationWarning>
-                {(updates.find((u) => (u.audit_telemetry as any)?.auditRunId)?.audit_telemetry as any)?.auditRunId || "8d2726b3-aacd-424b-ad24-6bc2c48c0977"}
+                {(updates.find((u) => (u.audit_telemetry as any)?.auditRunId)?.audit_telemetry as any)?.auditRunId || "6cadb55b-e1b5-4b60-b77f-ada25bc357c7"}
               </strong>
             </div>
             <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
