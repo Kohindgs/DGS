@@ -101,6 +101,7 @@ export type CmsPublishedBlog = {
   review_date?: string | null;
   review_status?: ReviewStatus | string;
   source_type?: SourceType | string;
+  featured_image_url?: string | null;
   featured_image_alt?: string | null;
   canonical_url?: string | null;
   redirect_url?: string | null;
@@ -998,7 +999,7 @@ export async function getPublishedCmsBlogBySlug(slug: string): Promise<CmsPublis
   const result = await cmsQuery<CmsPublishedBlog>(
     `SELECT id, slug, title, excerpt, content, status, author_name,
             content_owner, reviewer, review_date, review_status, source_type,
-            featured_image_alt, canonical_url, redirect_url, redirect_status_code,
+            featured_image_url, featured_image_alt, canonical_url, redirect_url, redirect_status_code,
             published_at, updated_at
      FROM blog_posts
      WHERE slug = ? AND status = 'published' AND deleted_at IS NULL
@@ -1178,12 +1179,12 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
     date: datePublished,
     modified: dateModified,
     author: blog.author_name || "D'Genius Solutions Editorial Team",
-    featuredImage: featured
+    featuredImage: (featured?.url || blog.featured_image_url)
       ? {
-          src: featured.url,
-          alt: blog.featured_image_alt || featured.altText || blog.title,
-          width: featured.width || 1200,
-          height: featured.height || 675,
+          src: featured?.url || (blog.featured_image_url as string),
+          alt: blog.featured_image_alt || featured?.altText || blog.title || "Blog post image",
+          width: featured?.width || 1200,
+          height: featured?.height || 675,
         }
       : undefined,
     readingTimeMinutes: Math.max(3, Math.ceil(text.split(/\s+/).filter(Boolean).length / 200)),

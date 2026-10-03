@@ -45,24 +45,26 @@ export async function loadWpExtractedAssets(): Promise<WpExtractedAssets> {
     bootNav,
     bootFooter,
   ] = await Promise.all([
-    readFile(join(EXTRACTED, "nav.html"), "utf8"),
-    readFile(join(EXTRACTED, "nav-styles.css"), "utf8"),
-    readFile(join(EXTRACTED, "footer.html"), "utf8"),
-    readFile(join(EXTRACTED, "footer-styles.css"), "utf8"),
+    readOptional(join(EXTRACTED, "nav.html")),
+    readOptional(join(EXTRACTED, "nav-styles.css")),
+    readOptional(join(EXTRACTED, "footer.html")),
+    readOptional(join(EXTRACTED, "footer-styles.css")),
     readOptional(join(EXTRACTED, "fluentform-styles.css")),
     readOptional(join(EXTRACTED, "home-fluentform-styles.css")),
     readOptional(join(EXTRACTED, "boot-v1215-particles-only.js")).then(
-      (particlesOnly) =>
-        particlesOnly || readFile(join(EXTRACTED, "boot-0.js"), "utf8"),
+      async (particlesOnly) =>
+        particlesOnly || (await readOptional(join(EXTRACTED, "boot-0.js"))),
     ),
-    readFile(join(EXTRACTED, "boot-portfolio-home.js"), "utf8").catch(() =>
-      readFile(join(EXTRACTED, "boot-1.js"), "utf8"),
+    readOptional(join(EXTRACTED, "boot-portfolio-home.js")).then(
+      async (pHome) => pHome || (await readOptional(join(EXTRACTED, "boot-1.js"))),
     ),
-    readFile(join(EXTRACTED, "boot-portfolio-8.js"), "utf8").catch(() =>
-      readFile(join(EXTRACTED, "boot-1.js"), "utf8"),
+    readOptional(join(EXTRACTED, "boot-portfolio-8.js")).then(
+      async (p8) => p8 || (await readOptional(join(EXTRACTED, "boot-1.js"))),
     ),
-    readFile(join(EXTRACTED, "boot-nav.js"), "utf8"),
-    readOptional(join(EXTRACTED, "boot-2.js")),
+    readOptional(join(EXTRACTED, "boot-nav.js")),
+    readOptional(join(EXTRACTED, "boot-footer.js")).then(
+      async (f) => f || (await readOptional(join(EXTRACTED, "boot-2.js"))),
+    ),
   ]);
 
   cached = {

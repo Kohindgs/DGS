@@ -74,9 +74,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
       }
 
-      // Add any remaining published CMS blogs not previously in migratedRoutes
+      // Add any remaining published CMS blogs not previously in migratedRoutes with fail-safe guards
       for (const [_, blog] of cmsPublishedMap) {
-        const url = `${siteConfig.url}/blogs/${blog.slug}/`;
+        if (!blog.slug || typeof blog.slug !== "string" || blog.slug.trim().length === 0) continue;
+        if (blog.status !== "published") continue;
+        if (!blog.published_at) continue;
+
+        const cleanSlug = blog.slug.trim().replace(/^\/+|\/+$/g, "");
+        if (!/^[a-z0-9-_]+$/i.test(cleanSlug)) continue;
+
+        const url = `${siteConfig.url}/blogs/${cleanSlug}/`;
         const entry: MetadataRoute.Sitemap[number] = { url };
         const formatted = formatW3CDate(blog.updated_at || blog.published_at);
         if (formatted) {
