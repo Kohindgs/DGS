@@ -10,6 +10,7 @@ function formatDate(iso: string): string {
       month: "short",
       day: "numeric",
       year: "numeric",
+      timeZone: "UTC",
     });
   } catch {
     return iso.slice(0, 10);
@@ -35,7 +36,7 @@ export function BlogCard({ post }: { post: BlogPostMeta }) {
 
       <div className={styles.cardContent}>
         <div className={styles.tagRow}>
-          {post.date ? <time dateTime={post.date}>{formatDate(post.date)}</time> : null}
+          {post.date ? <time dateTime={post.date} suppressHydrationWarning>{formatDate(post.date)}</time> : null}
           {post.date ? <span>•</span> : null}
           <span>{post.readingTimeMinutes} min read</span>
         </div>

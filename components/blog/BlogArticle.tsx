@@ -11,6 +11,7 @@ function formatDate(iso: string): string {
       month: "long",
       day: "numeric",
       year: "numeric",
+      timeZone: "UTC",
     });
   } catch {
     return iso.slice(0, 10);
@@ -83,7 +84,7 @@ export function BlogArticle({
                 <span>•</span>
                 <div className={styles.metaItem}>
                   <span>Published: </span>
-                  <time dateTime={isoPublished} itemProp="datePublished">
+                  <time dateTime={isoPublished} itemProp="datePublished" suppressHydrationWarning>
                     {formatDate(isoPublished)}
                   </time>
                 </div>
@@ -94,7 +95,7 @@ export function BlogArticle({
                 <span>•</span>
                 <div className={styles.metaItem}>
                   <span>Updated: </span>
-                  <time dateTime={isoModified} itemProp="dateModified">
+                  <time dateTime={isoModified} itemProp="dateModified" suppressHydrationWarning>
                     {formatDate(isoModified)}
                   </time>
                 </div>
@@ -151,6 +152,7 @@ export function BlogArticle({
         <div
           className={styles.prose}
           dangerouslySetInnerHTML={{ __html: article.bodyHtml }}
+          suppressHydrationWarning
         />
 
         {/* Free Consultation CTA */}

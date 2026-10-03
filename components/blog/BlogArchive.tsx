@@ -11,6 +11,7 @@ function formatDate(iso: string): string {
       month: "short",
       day: "numeric",
       year: "numeric",
+      timeZone: "UTC",
     });
   } catch {
     return iso.slice(0, 10);
@@ -56,7 +57,7 @@ export function BlogArchive({ posts }: { posts: BlogPostMeta[] }) {
 
             <div className={styles.featuredMeta}>
               <div className={styles.tagRow}>
-                {featured.date ? <time dateTime={featured.date}>{formatDate(featured.date)}</time> : null}
+                {featured.date ? <time dateTime={featured.date} suppressHydrationWarning>{formatDate(featured.date)}</time> : null}
                 {featured.date ? <span>•</span> : null}
                 <span>{featured.readingTimeMinutes} min read</span>
               </div>

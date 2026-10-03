@@ -10,9 +10,9 @@ export async function BlogWpChrome({ children }: { children: ReactNode }) {
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />
       <style dangerouslySetInnerHTML={{ __html: assets.fluentformStyles }} />
       <style dangerouslySetInnerHTML={{ __html: assets.footerStyles }} />
-      <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: assets.navHtml }} suppressHydrationWarning />
       {children}
-      <div dangerouslySetInnerHTML={{ __html: assets.footerHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: assets.footerHtml }} suppressHydrationWarning />
       <DgsWpBoot
         bootNav={assets.bootNav}
         bootV1215=""
