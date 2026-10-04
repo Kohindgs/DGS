@@ -476,8 +476,10 @@ async function main() {
   console.log("\n[GATE 9] SECTION 42 — PUBLIC SEO REGRESSION AUDIT");
   const publicUrls = [
     "https://www.dgeniussolutions.com/",
-    "https://www.dgeniussolutions.com/services/ai-seo/",
-    "https://www.dgeniussolutions.com/services/ai-video-production/",
+    "https://www.dgeniussolutions.com/our-services/",
+    "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
+    "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+    "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
     "https://www.dgeniussolutions.com/case-studies/",
     "https://www.dgeniussolutions.com/robots.txt",
     "https://www.dgeniussolutions.com/sitemap.xml",
@@ -489,11 +491,17 @@ async function main() {
     try {
       const res = await fetch(url, { headers: { "User-Agent": "DGS-SEO-Verifier/1.0" } });
       const text = await res.text();
-      const hasNoindex = text.includes('content="noindex') || text.includes('content="none');
       const isXmlOrTxt = url.endsWith(".txt") || url.endsWith(".xml");
-      const ok = res.status === 200 && (!hasNoindex || isXmlOrTxt);
+      let hasNoindex = false;
+      if (!isXmlOrTxt) {
+        const robotsMatch = text.match(/<meta[^>]*name=["']robots["'][^>]*>/i);
+        if (robotsMatch && /noindex/i.test(robotsMatch[0])) {
+          hasNoindex = true;
+        }
+      }
+      const ok = res.status === 200 && !hasNoindex;
       if (!ok) seoPassed = false;
-      console.log(` - ${url}: Status ${res.status} | Noindex: ${hasNoindex} | OK: ${ok}`);
+      console.log(` - ${url}: Status ${res.status} | Has Noindex: ${hasNoindex} | PASS: ${ok}`);
       seoAuditDetails.push({ url, status: res.status, has_noindex: hasNoindex, pass: ok });
     } catch (err) {
       console.error(` - Error fetching ${url}:`, err.message);
@@ -505,6 +513,40 @@ async function main() {
     pass: seoPassed,
     pages_tested: seoAuditDetails,
   };
+
+  // ---------------------------------------------------------
+  // GATE 10: Section 33 — Fail-Safe Fallback Verification
+  // ---------------------------------------------------------
+  console.log("\n[GATE 10] SECTION 33 — FAIL-SAFE FALLBACK VERIFICATION");
+  let failsafePass = true;
+  try {
+    // Test that when an impossible index or error is triggered, response returns ok without 500
+    const emptyQueryRes = await reqFn("POST", "/api/search", {
+      index_name: "off-page",
+      query: "",
+      limit: 5,
+    });
+    console.log("Empty Query Fallback:", JSON.stringify(emptyQueryRes));
+
+    // Test deduplicate fallback on empty text
+    const dedupFallback = await reqFn("POST", "/api/deduplicate", {
+      text: "",
+      domain: "fallback-test.com",
+    });
+    console.log("Dedup Fallback:", JSON.stringify(dedupFallback));
+
+    if (!emptyQueryRes.ok || !dedupFallback.ok) {
+      failsafePass = false;
+    }
+  } catch (err) {
+    console.error("Failsafe check error:", err);
+    failsafePass = false;
+  }
+  console.log(`✓ Fail-Safe Fallback: ${failsafePass ? "PASS" : "FAIL"}`);
+  results.failsafe = {
+    pass: failsafePass,
+  };
+
 
   // ---------------------------------------------------------
   // SUMMARY REPORT

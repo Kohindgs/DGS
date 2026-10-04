@@ -23,7 +23,9 @@ import math
 import re
 import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from socketserver import ThreadingMixIn
 from pathlib import Path
+
 import urllib.error
 import urllib.request
 
@@ -277,6 +279,18 @@ class TurboVecManager:
             "total": len(results),
         }
 
+    def _fallback_vectors(self, texts):
+        arr = np.zeros((len(texts), self.dim), dtype=np.float32)
+        for i, t in enumerate(texts):
+            h = hashlib.sha256(str(t).encode("utf-8")).digest()
+            raw = (h * (self.dim // 32 + 1))[:self.dim]
+            v = np.frombuffer(raw, dtype=np.uint8).astype(np.float32) - 128.0
+            norm = np.linalg.norm(v)
+            if norm > 0:
+                v = v / norm
+            arr[i] = v
+        return arr
+
     def index_batch(self, index_name, documents):
         safe_name = index_name.replace("_", "-")
         if safe_name not in self.indexes:
@@ -287,8 +301,13 @@ class TurboVecManager:
             return {"ok": True, "indexed": 0, "message": "No valid documents to index"}
 
         with self.lock:
-            vectors = self.embed([str(d["text"])[:24000] for d in docs])
+            try:
+                vectors = self.embed([str(d["text"])[:24000] for d in docs])
+            except Exception as exc:
+                print(f"[TURBOVEC] Embedding runtime unavailable ({exc}). Using deterministic vector fallback for indexing.", file=sys.stderr)
+                vectors = self._fallback_vectors([str(d["text"]) for d in docs])
             index = self.indexes[safe_name]
+
             meta = self.metadata[safe_name]
             meta_docs = meta.setdefault("documents", {})
 
@@ -640,8 +659,13 @@ def run_server(port=None, socket_path=None, manager=None):
         sock_p.parent.mkdir(parents=True, exist_ok=True)
 
         import socket as sock_mod
-        class UnixHTTPServer(HTTPServer):
+        class UnixHTTPServer(ThreadingMixIn, HTTPServer):
             address_family = sock_mod.AF_UNIX
+            request_queue_size = 128
+            daemon_threads = True
+
+            def address_string(self):
+                return "unix-socket"
 
         server = UnixHTTPServer(str(sock_p), handler)
         try:
@@ -650,8 +674,13 @@ def run_server(port=None, socket_path=None, manager=None):
             pass
         print(f"[TURBOVEC] Service listening on Unix socket: {sock_p}", file=sys.stderr)
     else:
-        server = HTTPServer(("127.0.0.1", port or DEFAULT_PORT), handler)
+        class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+            request_queue_size = 128
+            daemon_threads = True
+
+        server = ThreadedHTTPServer(("127.0.0.1", port or DEFAULT_PORT), handler)
         print(f"[TURBOVEC] Service listening on http://127.0.0.1:{port or DEFAULT_PORT}", file=sys.stderr)
+
 
     try:
         server.serve_forever()
