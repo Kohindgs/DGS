@@ -244,9 +244,8 @@ export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
     `SELECT id, exact_submission_url, status 
      FROM off_page_opportunities 
      WHERE status NOT IN ('ARCHIVED', 'EXPIRED', 'SPAM', 'NOT_FREE')
-     ORDER BY last_verified ASC NULLS FIRST 
-     LIMIT ?`,
-    [limit]
+     ORDER BY (last_verified IS NOT NULL), last_verified ASC 
+     LIMIT ${Number(limit)}`
   );
 
   let healthy = 0;
