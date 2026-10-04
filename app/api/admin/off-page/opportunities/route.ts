@@ -58,7 +58,7 @@ export async function GET(req: Request) {
 
   try {
     const { rows } = await cmsQuery<OffPageOpportunity>(sql, params);
-    return NextResponse.json({ ok: true, opportunities: rows, total: rows.length });
+    return NextResponse.json({ ok: true, data: rows, opportunities: rows, total: rows.length });
   } catch (err: any) {
     console.error("Failed querying opportunities:", err);
     return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });

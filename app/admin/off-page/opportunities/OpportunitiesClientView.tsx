@@ -56,7 +56,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
       const res = await fetch(`/api/admin/off-page/opportunities?${params.toString()}`);
       const json = await res.json();
       if (json.ok) {
-        setOpportunities(json.data);
+        setOpportunities(json.opportunities || json.data || []);
       }
     } catch (err) {
       console.error("Failed to fetch opportunities:", err);
