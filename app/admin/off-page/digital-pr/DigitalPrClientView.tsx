@@ -12,6 +12,7 @@ import {
   MessageSquare,
   ShieldCheck,
   X,
+  AlertCircle,
 } from "lucide-react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
 
@@ -260,6 +261,29 @@ export default function DigitalPrClientView() {
           <span style={{ fontSize: "0.75rem", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
             <ShieldCheck size={14} /> Free Journalist & Contributor Outlets
           </span>
+        </div>
+      </div>
+
+      {/* Provider Truthfulness Banner (Section 31 & 41) */}
+      <div
+        style={{
+          padding: "12px 16px",
+          borderRadius: "8px",
+          background: "rgba(245, 158, 11, 0.08)",
+          border: "1px solid rgba(245, 158, 11, 0.25)",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "10px",
+          fontSize: "0.82rem",
+          color: "#fbbf24",
+        }}
+      >
+        <AlertCircle size={18} style={{ flexShrink: 0, marginTop: "2px" }} />
+        <div>
+          <div style={{ fontWeight: 700 }}>DIGITAL PR LIVE FEED: NOT_CONFIGURED</div>
+          <div style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "0.78rem", marginTop: "2px" }}>
+            Real-time journalist query feeds require Connectively (HARO) or Qwoted API integration. Existing opportunities are authentic editorial and guest contribution portals from our verified directory. TurboVec is active for semantic asset and expertise matching.
+          </div>
         </div>
       </div>
 

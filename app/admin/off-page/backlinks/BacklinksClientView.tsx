@@ -88,7 +88,11 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
       });
       const json = await res.json();
       if (json.ok) {
-        setFeedback("Backlinks batch verified. Refreshing live telemetry...");
+        const live = json.live ?? 0;
+        const lost = json.lost ?? 0;
+        const broken = json.broken ?? 0;
+        const total = json.checked ?? 0;
+        setFeedback(`Batch check complete: ${total} checked (${live} LIVE, ${lost} LOST, ${broken} BROKEN / NOT_FOUND). Telemetry synchronized.`);
         await fetchBacklinks();
       } else {
         setFeedback(`Verification error: ${json.error}`);
@@ -359,7 +363,7 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
             style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}
           >
             <RefreshCw size={14} className={verifyingAll ? "animate-spin" : ""} />
-            {verifyingAll ? "Verifying..." : "Verify Live Links"}
+            {verifyingAll ? "Checking Backlinks..." : "Check Backlinks Now"}
           </button>
         </div>
       </div>

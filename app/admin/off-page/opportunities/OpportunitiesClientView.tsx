@@ -37,10 +37,20 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
   const [loading, setLoading] = useState(!initialOpportunities);
   const [viewMode, setViewMode] = useState<"ALL" | "TODAY" | "QUEUE">("ALL");
   const [selectedRegion, setSelectedRegion] = useState<string>("ALL");
+  const [selectedCountry, setSelectedCountry] = useState<string>("ALL");
+  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [selectedPriority, setSelectedPriority] = useState<string>("ALL");
   const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
+  const [selectedFreeStatus, setSelectedFreeStatus] = useState<string>("ALL");
   const [discovering, setDiscovering] = useState(false);
   const [feedback, setFeedback] = useState<React.ReactNode | null>(null);
+
+  // Discovery Real-Time Progress & Run History State (Sections 12 & 13)
+  const [discoveryProgress, setDiscoveryProgress] = useState<any>(null);
+  const [showDiscoveryModal, setShowDiscoveryModal] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [discoveryRuns, setDiscoveryRuns] = useState<any[]>([]);
+  const [loadingRuns, setLoadingRuns] = useState(false);
 
   // Smart Search State (Section 4.1)
   const [searchMode, setSearchMode] = useState<"STANDARD" | "SMART">("STANDARD");
@@ -84,8 +94,11 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     try {
       const params = new URLSearchParams();
       if (selectedRegion !== "ALL") params.set("region", selectedRegion);
+      if (selectedCountry !== "ALL") params.set("country", selectedCountry);
+      if (selectedCategory !== "ALL") params.set("category", selectedCategory);
       if (selectedPriority !== "ALL") params.set("priority", selectedPriority);
       if (selectedStatus !== "ALL") params.set("status", selectedStatus);
+      if (selectedFreeStatus !== "ALL") params.set("free_status", selectedFreeStatus);
 
       const effectiveQuery = overrideSmartQuery !== undefined ? overrideSmartQuery : smartQuery;
       if (searchMode === "SMART" && effectiveQuery.trim()) {
@@ -106,6 +119,23 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     }
   };
 
+  const clearFilters = () => {
+    setSelectedRegion("ALL");
+    setSelectedCountry("ALL");
+    setSelectedCategory("ALL");
+    setSelectedPriority("ALL");
+    setSelectedStatus("ALL");
+    setSelectedFreeStatus("ALL");
+  };
+
+  const hasActiveFilters =
+    selectedRegion !== "ALL" ||
+    selectedCountry !== "ALL" ||
+    selectedCategory !== "ALL" ||
+    selectedPriority !== "ALL" ||
+    selectedStatus !== "ALL" ||
+    selectedFreeStatus !== "ALL";
+
   const fetchTurboVecHealth = async () => {
     setLoadingHealth(true);
     try {
@@ -123,7 +153,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
 
   useEffect(() => {
     fetchOpportunities();
-  }, [selectedRegion, selectedPriority, selectedStatus]);
+  }, [selectedRegion, selectedCountry, selectedCategory, selectedPriority, selectedStatus, selectedFreeStatus]);
 
   useEffect(() => {
     fetchTurboVecHealth();
@@ -188,8 +218,11 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
       const res = await fetch("/api/admin/off-page/opportunities/discover", { method: "POST" });
       const json = await res.json();
       if (json.ok) {
-        if (json.insertedCount > 0) {
-          setFeedback(`Discovery complete: ${json.insertedCount} new verified opportunities added.`);
+        setDiscoveryProgress(json);
+        setShowDiscoveryModal(true);
+        const added = json.newOpportunitiesAdded ?? json.insertedCount ?? 0;
+        if (added > 0) {
+          setFeedback(`Discovery complete: ${added} net-new verified opportunities added from ${json.provider || "automated feed"}. (${json.duplicatesRejected || 0} duplicates prevented).`);
         } else {
           setFeedback(json.message || "NO NET-NEW VERIFIED OPPORTUNITIES FOUND TODAY");
         }
@@ -201,7 +234,22 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
       setFeedback(`Error running discovery: ${err.message}`);
     } finally {
       setDiscovering(false);
-      setTimeout(() => setFeedback(null), 8000);
+    }
+  };
+
+  const fetchDiscoveryHistory = async () => {
+    setLoadingRuns(true);
+    setShowHistoryModal(true);
+    try {
+      const res = await fetch("/api/admin/off-page/opportunities/discover");
+      const json = await res.json();
+      if (json.ok) {
+        setDiscoveryRuns(json.runs || []);
+      }
+    } catch (err) {
+      console.error("Failed fetching discovery history:", err);
+    } finally {
+      setLoadingRuns(false);
     }
   };
 
@@ -359,8 +407,8 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
   const todayStr = new Date().toISOString().slice(0, 10);
   const displayedOpportunities = opportunities.filter((o) => {
     if (viewMode === "TODAY") {
-      const disc = o.discovered_at ? o.discovered_at.slice(0, 10) : o.created_at ? o.created_at.slice(0, 10) : "";
-      return disc === todayStr || o.status === "NEW";
+      const disc = (o as any).discovered_at ? (o as any).discovered_at.slice(0, 10) : "";
+      return disc === todayStr;
     }
     if (viewMode === "QUEUE") {
       // High-priority opportunities ready for outreach with supporting asset
@@ -652,11 +700,11 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           </button>
 
           <button
-            onClick={() => setShowImportModal(true)}
+            onClick={fetchDiscoveryHistory}
             className="dgs-saas-btn secondary"
             style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
-            <Upload size={14} /> Import Verified Batch
+            <Clock size={14} /> Discovery Runs
           </button>
 
           <button
@@ -665,8 +713,8 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
             className="dgs-saas-btn primary"
             style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}
           >
-            <RefreshCw size={14} className={discovering ? "animate-spin" : ""} />
-            {discovering ? "Checking Discovery Feeds..." : "Run Daily Discovery"}
+            <Compass size={14} className={discovering ? "animate-spin" : ""} />
+            {discovering ? "Discovering Now..." : "Discover Now"}
           </button>
         </div>
       </div>
@@ -938,7 +986,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           className={`dgs-saas-chip ${viewMode === "TODAY" ? "primary" : ""}`}
           style={{ cursor: "pointer", border: "none", fontWeight: 700 }}
         >
-          TODAY&apos;S NEW OPPORTUNITIES ({opportunities.filter((o) => o.status === "NEW").length})
+          TODAY&apos;S NEW OPPORTUNITIES ({opportunities.filter((o) => (o as any).discovered_at?.slice(0, 10) === todayStr).length})
         </button>
         <button
           onClick={() => setViewMode("QUEUE")}
@@ -958,59 +1006,276 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
         </button>
       </div>
 
-      {/* Filter Tabs & Toolbar */}
+      {/* Filter Tabs & Toolbar (Sections 18, 19, 20, 21) */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: "10px",
           flexWrap: "wrap",
-          padding: "10px 16px",
+          padding: "12px 16px",
           background: "rgba(255,255,255,0.02)",
           border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: "var(--dgs-radius-md)",
         }}
       >
-        <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Region:</span>
-        {["ALL", "INDIA", "UAE", "USA", "GLOBAL"].map((r) => (
-          <button
-            key={r}
-            onClick={() => setSelectedRegion(r)}
-            className={`dgs-saas-chip ${selectedRegion === r ? "primary" : ""}`}
-            style={{ cursor: "pointer", border: "none" }}
-          >
-            {r}
-          </button>
-        ))}
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Region:</span>
+          {["ALL", "INDIA", "UAE", "USA", "GLOBAL"].map((r) => (
+            <button
+              key={r}
+              onClick={() => setSelectedRegion(r)}
+              className={`dgs-saas-chip ${selectedRegion === r ? "primary" : ""}`}
+              style={{ cursor: "pointer", border: "none" }}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
 
-        <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600, marginLeft: "14px" }}>
-          Priority:
-        </span>
-        {["ALL", "P0", "P1", "P2", "P3"].map((p) => (
-          <button
-            key={p}
-            onClick={() => setSelectedPriority(p)}
-            className={`dgs-saas-chip ${selectedPriority === p ? "primary" : ""}`}
-            style={{ cursor: "pointer", border: "none" }}
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Country:</span>
+          <select
+            value={selectedCountry}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+            style={{
+              padding: "4px 8px",
+              borderRadius: "4px",
+              background: "#1f2937",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#fff",
+              fontSize: "0.75rem",
+            }}
           >
-            {p}
-          </button>
-        ))}
+            <option value="ALL">All Countries</option>
+            <option value="India">India</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="United States">United States</option>
+            <option value="Global">Global</option>
+          </select>
+        </div>
 
-        <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600, marginLeft: "14px" }}>
-          Status:
-        </span>
-        {["ALL", "NEW", "QUALIFIED", "APPROVED", "OUTREACH", "SUBMITTED", "LIVE"].map((s) => (
-          <button
-            key={s}
-            onClick={() => setSelectedStatus(s)}
-            className={`dgs-saas-chip ${selectedStatus === s ? "primary" : ""}`}
-            style={{ cursor: "pointer", border: "none" }}
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Category:</span>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            style={{
+              padding: "4px 8px",
+              borderRadius: "4px",
+              background: "#1f2937",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#fff",
+              fontSize: "0.75rem",
+            }}
           >
-            {s}
+            <option value="ALL">All Categories</option>
+            <option value="DIRECTORY">Directory</option>
+            <option value="DIGITAL_PR">Digital PR</option>
+            <option value="EXPERT_CONTRIBUTION">Expert Contribution</option>
+            <option value="RESOURCE_PAGE">Resource Page</option>
+            <option value="LOCAL_CITATION">Local Citation</option>
+            <option value="PARTNERSHIP">Partnership</option>
+          </select>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Priority:</span>
+          {["ALL", "P0", "P1", "P2", "P3"].map((p) => (
+            <button
+              key={p}
+              onClick={() => setSelectedPriority(p)}
+              className={`dgs-saas-chip ${selectedPriority === p ? "primary" : ""}`}
+              style={{ cursor: "pointer", border: "none" }}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Free Status:</span>
+          {["ALL", "FREE", "FREEMIUM", "NOT_FREE"].map((fs) => (
+            <button
+              key={fs}
+              onClick={() => setSelectedFreeStatus(fs)}
+              className={`dgs-saas-chip ${selectedFreeStatus === fs ? "primary" : ""}`}
+              style={{ cursor: "pointer", border: "none" }}
+            >
+              {fs}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Status:</span>
+          {["ALL", "NEW", "QUALIFIED", "APPROVED", "OUTREACH", "SUBMITTED", "LIVE"].map((s) => (
+            <button
+              key={s}
+              onClick={() => setSelectedStatus(s)}
+              className={`dgs-saas-chip ${selectedStatus === s ? "primary" : ""}`}
+              style={{ cursor: "pointer", border: "none" }}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+
+        {hasActiveFilters && (
+          <button
+            onClick={clearFilters}
+            className="dgs-saas-btn secondary"
+            style={{
+              fontSize: "0.74rem",
+              padding: "4px 10px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px",
+              color: "#f87171",
+              borderColor: "rgba(239, 68, 68, 0.4)",
+              marginLeft: "auto",
+            }}
+          >
+            <X size={12} /> Clear Filters
           </button>
-        ))}
+        )}
       </div>
+
+      {/* Active Filter Chips & Strict Reconciled Count Display (Section 19 & 21) */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "8px 14px",
+          background: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(255,255,255,0.05)",
+          borderRadius: "var(--dgs-radius-md)",
+          fontSize: "0.78rem",
+          color: "rgba(255,255,255,0.7)",
+          flexWrap: "wrap",
+          gap: "8px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+          <span style={{ fontWeight: 700, color: "#fff" }}>
+            Showing {displayedOpportunities.length} of {opportunities.length} Opportunities
+          </span>
+          {hasActiveFilters && <span style={{ color: "rgba(255,255,255,0.4)" }}>| Active Filters:</span>}
+          {selectedRegion !== "ALL" && (
+            <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>
+              Region: {selectedRegion}{" "}
+              <button
+                onClick={() => setSelectedRegion("ALL")}
+                style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", paddingLeft: "4px" }}
+              >
+                &times;
+              </button>
+            </span>
+          )}
+          {selectedCountry !== "ALL" && (
+            <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>
+              Country: {selectedCountry}{" "}
+              <button
+                onClick={() => setSelectedCountry("ALL")}
+                style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", paddingLeft: "4px" }}
+              >
+                &times;
+              </button>
+            </span>
+          )}
+          {selectedCategory !== "ALL" && (
+            <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>
+              Category: {selectedCategory}{" "}
+              <button
+                onClick={() => setSelectedCategory("ALL")}
+                style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", paddingLeft: "4px" }}
+              >
+                &times;
+              </button>
+            </span>
+          )}
+          {selectedPriority !== "ALL" && (
+            <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>
+              Priority: {selectedPriority}{" "}
+              <button
+                onClick={() => setSelectedPriority("ALL")}
+                style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", paddingLeft: "4px" }}
+              >
+                &times;
+              </button>
+            </span>
+          )}
+          {selectedFreeStatus !== "ALL" && (
+            <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>
+              Free Status: {selectedFreeStatus}{" "}
+              <button
+                onClick={() => setSelectedFreeStatus("ALL")}
+                style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", paddingLeft: "4px" }}
+              >
+                &times;
+              </button>
+            </span>
+          )}
+          {selectedStatus !== "ALL" && (
+            <span className="dgs-saas-chip primary" style={{ fontSize: "0.7rem", padding: "1px 6px" }}>
+              Status: {selectedStatus}{" "}
+              <button
+                onClick={() => setSelectedStatus("ALL")}
+                style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", paddingLeft: "4px" }}
+              >
+                &times;
+              </button>
+            </span>
+          )}
+        </div>
+
+        {hasActiveFilters && (
+          <button
+            onClick={clearFilters}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#f87171",
+              cursor: "pointer",
+              fontSize: "0.74rem",
+              textDecoration: "underline",
+            }}
+          >
+            Reset all
+          </button>
+        )}
+      </div>
+
+      {/* Date-Correct Today View Empty Notice (Section 24) */}
+      {viewMode === "TODAY" && displayedOpportunities.length === 0 && (
+        <div
+          className="dgs-saas-card"
+          style={{
+            padding: "20px",
+            textAlign: "center",
+            background: "rgba(255,255,255,0.02)",
+            border: "1px dashed rgba(255,255,255,0.15)",
+          }}
+        >
+          <Clock size={24} color="var(--dgs-brand-cyan)" style={{ margin: "0 auto 8px auto" }} />
+          <h4 style={{ margin: 0, color: "#fff", fontSize: "0.95rem" }}>
+            NO NET-NEW VERIFIED OPPORTUNITIES FOUND TODAY
+          </h4>
+          <p style={{ margin: "6px 0 14px 0", fontSize: "0.8rem", color: "rgba(255,255,255,0.6)" }}>
+            Click &quot;Discover Now&quot; above to query external search and RSS discovery feeds for net-new qualified opportunities.
+          </p>
+          <button
+            onClick={handleRunDiscovery}
+            disabled={discovering}
+            className="dgs-saas-btn primary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "0.8rem" }}
+          >
+            <Compass size={14} className={discovering ? "animate-spin" : ""} />
+            {discovering ? "Discovering Now..." : "Discover Now"}
+          </button>
+        </div>
+      )}
 
       {/* Main SaaS Table */}
       <div className="dgs-saas-card" style={{ padding: "16px" }}>
@@ -1636,6 +1901,328 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
                   {converting ? "Saving Draft..." : "Save Draft to Outreach CRM"}
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Discovery Real-Time Progress Modal (Section 12) */}
+      {showDiscoveryModal && discoveryProgress && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.75)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            className="dgs-saas-card"
+            style={{
+              width: "100%",
+              maxWidth: "680px",
+              padding: "24px",
+              background: "#111827",
+              border: "1px solid rgba(0, 198, 255, 0.3)",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <Compass size={20} color="var(--dgs-brand-cyan)" />
+                <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem", fontWeight: 700 }}>
+                  Automated Discovery Run Telemetry
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowDiscoveryModal(false)}
+                style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Run Overview Badge */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "8px",
+                padding: "10px 14px",
+                borderRadius: "6px",
+                background: "rgba(0, 198, 255, 0.08)",
+                border: "1px solid rgba(0, 198, 255, 0.2)",
+                marginBottom: "16px",
+                fontSize: "0.8rem",
+              }}
+            >
+              <div>
+                Provider: <strong style={{ color: "var(--dgs-brand-cyan)" }}>{discoveryProgress.provider || "Google News & Industry RSS"}</strong>
+              </div>
+              <div>
+                Run ID: <code style={{ color: "#34d399", fontSize: "0.75rem" }}>{discoveryProgress.runId || "run-auto"}</code>
+              </div>
+            </div>
+
+            {/* Metrics Grid */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "10px",
+                marginBottom: "16px",
+                fontSize: "0.78rem",
+              }}
+            >
+              <div style={{ padding: "10px", background: "#1f2937", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ color: "rgba(255,255,255,0.5)" }}>Queries Run</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                  {discoveryProgress.queriesCompleted ?? 0} / {discoveryProgress.queriesQueued ?? 0}
+                </div>
+              </div>
+
+              <div style={{ padding: "10px", background: "#1f2937", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ color: "rgba(255,255,255,0.5)" }}>Results Returned</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#60a5fa", marginTop: "2px" }}>
+                  {discoveryProgress.resultsReturned ?? 0}
+                </div>
+              </div>
+
+              <div style={{ padding: "10px", background: "#1f2937", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ color: "rgba(255,255,255,0.5)" }}>URLs Validated</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#34d399", marginTop: "2px" }}>
+                  {discoveryProgress.urlsValidated ?? 0}
+                </div>
+              </div>
+
+              <div style={{ padding: "10px", background: "#1f2937", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ color: "rgba(255,255,255,0.5)" }}>Duplicates Rejected</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#fbbf24", marginTop: "2px" }}>
+                  {discoveryProgress.duplicatesRejected ?? 0}
+                </div>
+              </div>
+
+              <div style={{ padding: "10px", background: "#1f2937", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ color: "rgba(255,255,255,0.5)" }}>Spam / Disallowed</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#ef4444", marginTop: "2px" }}>
+                  {(discoveryProgress.spamRejected ?? 0) + (discoveryProgress.paidRejected ?? 0)}
+                </div>
+              </div>
+
+              <div style={{ padding: "10px", background: "#1f2937", borderRadius: "6px", border: "1px solid rgba(16, 185, 129, 0.3)" }}>
+                <div style={{ color: "#34d399", fontWeight: 650 }}>New Opportunities Added</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#10b981", marginTop: "2px" }}>
+                  {discoveryProgress.newOpportunitiesAdded ?? discoveryProgress.insertedCount ?? 0}
+                </div>
+              </div>
+            </div>
+
+            {/* Errors if any */}
+            {discoveryProgress.errors && discoveryProgress.errors.length > 0 && (
+              <div
+                style={{
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  background: "rgba(239, 68, 68, 0.1)",
+                  border: "1px solid rgba(239, 68, 68, 0.25)",
+                  color: "#f87171",
+                  fontSize: "0.75rem",
+                  marginBottom: "14px",
+                  maxHeight: "80px",
+                  overflowY: "auto",
+                }}
+              >
+                <strong>Provider Warnings / Errors:</strong>
+                <ul style={{ margin: "4px 0 0 16px", padding: 0 }}>
+                  {discoveryProgress.errors.map((e: string, idx: number) => (
+                    <li key={idx}>{e}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Inserted opportunities preview */}
+            {discoveryProgress.insertedOpportunities && discoveryProgress.insertedOpportunities.length > 0 && (
+              <div style={{ marginBottom: "16px" }}>
+                <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(255,255,255,0.8)", marginBottom: "6px" }}>
+                  Newly Ingested Candidates:
+                </div>
+                <div style={{ maxHeight: "120px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "6px" }}>
+                  {discoveryProgress.insertedOpportunities.map((c: any, idx: number) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: "6px 10px",
+                        background: "#1f2937",
+                        borderRadius: "4px",
+                        fontSize: "0.74rem",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span style={{ color: "#fff", fontWeight: 600 }}>{c.site_name || c.domain}</span>
+                      <span style={{ color: "rgba(255,255,255,0.5)" }}>{c.region || "GLOBAL"} • {c.category || "EDITORIAL"}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <button
+                onClick={() => setShowDiscoveryModal(false)}
+                className="dgs-saas-btn primary"
+              >
+                Close Telemetry
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Discovery Run History Modal (Section 13) */}
+      {showHistoryModal && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.75)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            className="dgs-saas-card"
+            style={{
+              width: "100%",
+              maxWidth: "840px",
+              maxHeight: "85vh",
+              display: "flex",
+              flexDirection: "column",
+              padding: "24px",
+              background: "#111827",
+              border: "1px solid rgba(255,255,255,0.12)",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <Clock size={20} color="var(--dgs-brand-cyan)" />
+                <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem", fontWeight: 700 }}>
+                  Discovery Runs Audit History (MariaDB Table: off_page_discovery_runs)
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowHistoryModal(false)}
+                style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {loadingRuns ? (
+              <div style={{ padding: "40px", textAlign: "center", color: "rgba(255,255,255,0.6)" }}>
+                <RefreshCw size={24} className="animate-spin" style={{ margin: "0 auto 8px auto" }} />
+                Loading discovery run records...
+              </div>
+            ) : discoveryRuns.length === 0 ? (
+              <div style={{ padding: "40px", textAlign: "center", color: "rgba(255,255,255,0.6)" }}>
+                No automated discovery runs recorded yet. Click &quot;Discover Now&quot; to execute the first run.
+              </div>
+            ) : (
+              <div style={{ overflowY: "auto", flex: 1, border: "1px solid rgba(255,255,255,0.08)", borderRadius: "6px" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.78rem", textAlign: "left" }}>
+                  <thead>
+                    <tr style={{ background: "rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)" }}>Run ID / Provider</th>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)" }}>Time</th>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>Queries</th>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>Results</th>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>Validated</th>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>Duplicates</th>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>Inserted</th>
+                      <th style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {discoveryRuns.map((r: any, idx: number) => {
+                      const statusColor =
+                        r.status === "SUCCESS"
+                          ? "#34d399"
+                          : r.status === "PARTIAL"
+                          ? "#fbbf24"
+                          : r.status === "NOT_CONFIGURED"
+                          ? "#9ca3af"
+                          : "#f87171";
+                      return (
+                        <tr
+                          key={r.run_id || idx}
+                          style={{
+                            borderBottom: "1px solid rgba(255,255,255,0.05)",
+                            background: idx % 2 === 0 ? "transparent" : "rgba(255,255,255,0.01)",
+                          }}
+                        >
+                          <td style={{ padding: "10px 12px" }}>
+                            <div style={{ fontWeight: 650, color: "#fff" }}>{r.provider}</div>
+                            <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>{r.run_id}</div>
+                          </td>
+                          <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.7)" }}>
+                            {r.started_at ? new Date(r.started_at).toLocaleTimeString() : "-"}
+                          </td>
+                          <td style={{ padding: "10px 12px", textAlign: "center", color: "#fff" }}>
+                            {r.queries_run}
+                          </td>
+                          <td style={{ padding: "10px 12px", textAlign: "center", color: "#60a5fa" }}>
+                            {r.results_returned}
+                          </td>
+                          <td style={{ padding: "10px 12px", textAlign: "center", color: "#34d399" }}>
+                            {r.valid_candidates}
+                          </td>
+                          <td style={{ padding: "10px 12px", textAlign: "center", color: "#fbbf24" }}>
+                            {r.duplicates_rejected}
+                          </td>
+                          <td style={{ padding: "10px 12px", textAlign: "center", fontWeight: 700, color: "#10b981" }}>
+                            +{r.inserted_count}
+                          </td>
+                          <td style={{ padding: "10px 12px", textAlign: "center" }}>
+                            <span
+                              style={{
+                                fontSize: "0.68rem",
+                                fontWeight: 700,
+                                padding: "2px 6px",
+                                borderRadius: "4px",
+                                background: `${statusColor}20`,
+                                color: statusColor,
+                              }}
+                            >
+                              {r.status}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+              <button
+                onClick={() => setShowHistoryModal(false)}
+                className="dgs-saas-btn secondary"
+              >
+                Close History
+              </button>
             </div>
           </div>
         </div>

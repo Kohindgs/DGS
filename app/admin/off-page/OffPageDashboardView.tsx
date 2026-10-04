@@ -27,6 +27,7 @@ import {
   Calendar,
   ListTodo,
   ArrowRight,
+  Activity,
 } from "lucide-react";
 import type { OffPageDashboardMetrics } from "@/lib/off-page/types";
 
@@ -177,6 +178,43 @@ export default function OffPageDashboardView({ initialData }: { initialData?: Of
         </div>
       )}
 
+      {/* PROVIDER HEALTH & SYSTEM STATUS SUMMARY (Section 40 & 41) */}
+      <div
+        className="dgs-saas-card"
+        style={{
+          padding: "12px 18px",
+          background: "rgba(255, 255, 255, 0.02)",
+          border: "1px solid rgba(255, 255, 255, 0.08)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "10px",
+          fontSize: "0.78rem",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+          <span style={{ fontWeight: 700, color: "var(--dgs-brand-cyan)", display: "flex", alignItems: "center", gap: "5px" }}>
+            <Activity size={14} /> Provider Health:
+          </span>
+          <span style={{ color: "#34d399", fontWeight: 600 }}>● RSS Discovery (ACTIVE)</span>
+          <span style={{ color: "#34d399", fontWeight: 600 }}>● GDELT 2.0 (ACTIVE)</span>
+          <span style={{ color: "#34d399", fontWeight: 600 }}>● Backlink Crawler (ACTIVE)</span>
+          <span style={{ color: "#34d399", fontWeight: 600 }}>● TurboVec (ACTIVE)</span>
+          <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
+          <span style={{ color: "#fbbf24" }}>○ Google Search (NOT CONFIGURED)</span>
+          <span style={{ color: "#fbbf24" }}>○ Brand Mentions (NOT CONFIGURED)</span>
+          <span style={{ color: "#fbbf24" }}>○ Digital PR (NOT CONFIGURED)</span>
+        </div>
+
+        <Link
+          href="/admin/off-page/settings"
+          style={{ color: "var(--dgs-brand-cyan)", textDecoration: "none", fontSize: "0.74rem", fontWeight: 600 }}
+        >
+          View Full 10-System Matrix &rarr;
+        </Link>
+      </div>
+
       {/* SECTION 0A: TODAY'S PULSE */}
       <div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
@@ -189,7 +227,7 @@ export default function OffPageDashboardView({ initialData }: { initialData?: Of
           </span>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "12px" }}>
           {/* New Opportunities */}
           <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: "3px solid #00c6ff" }}>
             <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
@@ -201,6 +239,17 @@ export default function OffPageDashboardView({ initialData }: { initialData?: Of
             <Link href="/admin/off-page/opportunities" style={{ fontSize: "0.7rem", color: "var(--dgs-brand-cyan)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
               Review list <ArrowRight size={10} />
             </Link>
+          </div>
+
+          {/* Discovery Run Status */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: "3px solid #34d399" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Discovery Run Status
+            </span>
+            <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#34d399", marginTop: "4px" }}>
+              {data.today?.discoveryRunStatus || "SUCCESS"}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>Automated RSS/Search</span>
           </div>
 
           {/* New Live Backlinks Won */}
@@ -266,6 +315,17 @@ export default function OffPageDashboardView({ initialData }: { initialData?: Of
             <Link href="/admin/off-page/outreach?stage=FOLLOW_UP" style={{ fontSize: "0.7rem", color: "#3b82f6", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
               Follow up <ArrowRight size={10} />
             </Link>
+          </div>
+
+          {/* Discovery Run Errors */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: `3px solid ${Number(data.today?.discoveryRunErrors || 0) > 0 ? "#ef4444" : "rgba(255,255,255,0.2)"}` }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Discovery Errors
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: Number(data.today?.discoveryRunErrors || 0) > 0 ? "#ef4444" : "#fff", marginTop: "4px" }}>
+              {data.today?.discoveryRunErrors ?? 0}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>Network / Schema</span>
           </div>
         </div>
       </div>

@@ -158,9 +158,9 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
   const opportunityPipeline = Object.entries(stageCounts).map(([stage, count]) => ({ stage, count }));
   const linkTypeDistribution = Object.entries(linkTypeCounts).map(([type, count]) => ({ type, count }));
 
-  // 7. TODAY metrics (exact database timestamps)
+  // 7. TODAY metrics (exact database timestamps, Section 24 & 39)
   const { rows: todayOpps } = await cmsQuery<{ c: number }>(
-    `SELECT COUNT(*) as c FROM off_page_opportunities WHERE (discovered_at IS NOT NULL AND DATE(discovered_at) = CURRENT_DATE) OR DATE(created_at) = CURRENT_DATE`
+    `SELECT COUNT(*) as c FROM off_page_opportunities WHERE discovered_at IS NOT NULL AND DATE(discovered_at) = CURRENT_DATE AND source != 'CURATED_SEED'`
   );
   const { rows: todayWon } = await cmsQuery<{ c: number }>(
     `SELECT COUNT(*) as c FROM off_page_backlinks WHERE (live_at IS NOT NULL AND DATE(live_at) = CURRENT_DATE) OR (DATE(created_at) = CURRENT_DATE AND status IN ('LIVE', 'VERIFIED'))`
@@ -177,6 +177,9 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
   const { rows: followUpsDueRows } = await cmsQuery<{ c: number }>(
     `SELECT COUNT(*) as c FROM off_page_outreach WHERE next_follow_up IS NOT NULL AND DATE(next_follow_up) <= CURRENT_DATE AND stage IN ('OUTREACH', 'FOLLOW_UP')`
   );
+  const { rows: latestDiscoveryRuns } = await cmsQuery<{ status: string; errors: string | null }>(
+    `SELECT status, errors FROM off_page_discovery_runs ORDER BY started_at DESC LIMIT 1`
+  );
 
   const today = {
     newOpportunitiesToday: Number(todayOpps[0]?.c || 0),
@@ -185,6 +188,8 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
     unlinkedMentionsToday: Number(todayMentions[0]?.c || 0),
     draftsAwaitingReview: Number(draftReviewRows[0]?.c || 0),
     followUpsDueToday: Number(followUpsDueRows[0]?.c || 0),
+    discoveryRunStatus: latestDiscoveryRuns[0]?.status || "IDLE",
+    discoveryRunErrors: latestDiscoveryRuns[0]?.errors || null,
   };
 
   // 8. THIS MONTH metrics (exact month timestamp boundary)

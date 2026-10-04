@@ -434,6 +434,8 @@ export interface OffPageTodayMetrics {
   unlinkedMentionsToday: number;
   draftsAwaitingReview: number;
   followUpsDueToday: number;
+  discoveryRunStatus?: string;
+  discoveryRunErrors?: string | null;
 }
 
 export interface OffPageThisMonthMetrics {

@@ -11,6 +11,7 @@ import {
   Target,
   ShieldCheck,
   X,
+  AlertCircle,
 } from "lucide-react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
 
@@ -340,6 +341,29 @@ export default function CompetitorsClientView({ initialCompetitors, initialGaps 
           >
             <Plus size={14} /> Add Competitor
           </button>
+        </div>
+      </div>
+
+      {/* Provider Truthfulness Banner (Section 32 & 41) */}
+      <div
+        style={{
+          padding: "12px 16px",
+          borderRadius: "8px",
+          background: "rgba(245, 158, 11, 0.08)",
+          border: "1px solid rgba(245, 158, 11, 0.25)",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "10px",
+          fontSize: "0.82rem",
+          color: "#fbbf24",
+        }}
+      >
+        <AlertCircle size={18} style={{ flexShrink: 0, marginTop: "2px" }} />
+        <div>
+          <div style={{ fontWeight: 700 }}>COMPETITOR GAP CRAWLER: NOT_CONFIGURED</div>
+          <div style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "0.78rem", marginTop: "2px" }}>
+            Automated backlink gap crawling requires third-party backlink index credentials (Ahrefs, Semrush, or DataForSEO API). Monitored domains can be tracked manually or via custom audits. TurboVec is active for semantic matching of competitor niches.
+          </div>
         </div>
       </div>
 

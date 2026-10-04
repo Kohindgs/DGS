@@ -259,6 +259,29 @@ export default function MentionsClientView({ initialMentions }: Props) {
         </div>
       </div>
 
+      {/* Provider Truthfulness Banner (Section 29 & 41) */}
+      <div
+        style={{
+          padding: "12px 16px",
+          borderRadius: "8px",
+          background: "rgba(245, 158, 11, 0.08)",
+          border: "1px solid rgba(245, 158, 11, 0.25)",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "10px",
+          fontSize: "0.82rem",
+          color: "#fbbf24",
+        }}
+      >
+        <AlertCircle size={18} style={{ flexShrink: 0, marginTop: "2px" }} />
+        <div>
+          <div style={{ fontWeight: 700 }}>BRAND MENTION DISCOVERY PROVIDER: NOT_CONFIGURED</div>
+          <div style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "0.78rem", marginTop: "2px" }}>
+            Automated brand monitoring stream requires Google Alerts API, Brand24 API, or Mention webhook credentials. Existing records are verified historical citations. TurboVec is active for semantic outreach matching.
+          </div>
+        </div>
+      </div>
+
       {feedback && (
         <div
           style={{

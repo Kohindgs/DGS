@@ -343,6 +343,77 @@ export async function ensureOffPageTablesExist(): Promise<void> {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
+    // Discovery runs history table (Section 13)
+    await cmsExecute(`
+      CREATE TABLE IF NOT EXISTS off_page_discovery_runs (
+        run_id VARCHAR(64) PRIMARY KEY,
+        provider VARCHAR(100) NOT NULL,
+        started_at DATETIME NOT NULL,
+        completed_at DATETIME NULL,
+        queries_run INT NOT NULL DEFAULT 0,
+        results_returned INT NOT NULL DEFAULT 0,
+        valid_candidates INT NOT NULL DEFAULT 0,
+        duplicates_rejected INT NOT NULL DEFAULT 0,
+        spam_rejected INT NOT NULL DEFAULT 0,
+        inserted_count INT NOT NULL DEFAULT 0,
+        errors TEXT NULL,
+        status VARCHAR(50) NOT NULL DEFAULT 'RUNNING',
+        details JSON NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_opdr_started (started_at DESC),
+        INDEX idx_opdr_status (status)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
+    // Column migrations on off_page_opportunities
+    try {
+      const { rows: cols } = await cmsQuery<{ Field: string }>(`SHOW COLUMNS FROM off_page_opportunities`);
+      const colNames = new Set(cols.map(c => c.Field));
+
+      if (!colNames.has("discovery_provider")) {
+        await cmsExecute(`ALTER TABLE off_page_opportunities ADD COLUMN discovery_provider VARCHAR(100) NULL AFTER source`);
+      }
+      if (!colNames.has("discovery_query")) {
+        await cmsExecute(`ALTER TABLE off_page_opportunities ADD COLUMN discovery_query VARCHAR(512) NULL AFTER discovery_provider`);
+      }
+      if (!colNames.has("http_status")) {
+        await cmsExecute(`ALTER TABLE off_page_opportunities ADD COLUMN http_status INT NULL AFTER discovery_query`);
+      }
+      if (!colNames.has("verification_status")) {
+        await cmsExecute(`ALTER TABLE off_page_opportunities ADD COLUMN verification_status VARCHAR(50) NULL AFTER http_status`);
+      }
+      if (!colNames.has("last_verified_at")) {
+        await cmsExecute(`ALTER TABLE off_page_opportunities ADD COLUMN last_verified_at DATETIME NULL AFTER last_verified`);
+      }
+    } catch (colErr) {
+      console.warn("Notice: Column migration warning on off_page_opportunities:", colErr);
+    }
+
+    // Default settings initialization if empty
+    try {
+      const { rows: countSettings } = await cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM off_page_settings`);
+      if (Number(countSettings[0]?.total || 0) === 0) {
+        const defaultSettings = [
+          ["set_daily_discovery_enabled", "daily_discovery_enabled", "true", "Enable daily automated discovery"],
+          ["set_auto_revalidation_enabled", "auto_revalidation_enabled", "true", "Enable automated live URL verification"],
+          ["set_discovery_provider", "discovery_provider", "GOOGLE_NEWS_RSS", "Active automated discovery provider"],
+          ["set_primary_regions", "primary_regions", "INDIA,UAE,USA,GLOBAL", "Active geographic target regions"],
+          ["set_free_only_enforcement", "free_only_enforcement", "true", "Strictly enforce free tier for opportunities"],
+          ["set_spam_risk_threshold", "spam_risk_threshold", "40", "Maximum tolerable spam risk score"],
+          ["set_exact_match_alert_pct", "exact_match_alert_pct", "20", "Penguin exact-match anchor concentration alert %"],
+          ["set_default_outreach_followup_days", "default_outreach_followup_days", "5", "Default outreach follow-up cadence"],
+        ];
+        for (const [id, key, val, desc] of defaultSettings) {
+          await cmsExecute(
+            `INSERT INTO off_page_settings (id, key_name, key_value, description, updated_at) VALUES (?, ?, ?, ?, NOW())`,
+            [id, key, val, desc]
+          );
+        }
+      }
+    } catch (settErr) {
+      console.warn("Notice: Settings initialization warning:", settErr);
+    }
+
     tablesEnsured = true;
   } catch (err) {
     console.error("Failed ensuring off_page tables exist:", err);

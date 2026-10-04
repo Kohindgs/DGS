@@ -20,18 +20,43 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, result: res });
     }
 
-    // Otherwise check top 5 oldest checked links
-    const { rows } = await cmsQuery<{ id: string }>(
-      `SELECT id FROM off_page_backlinks ORDER BY CASE WHEN last_checked_at IS NULL THEN 0 ELSE 1 END, last_checked_at ASC LIMIT 5`
+    // Check all active backlinks (or up to 20 oldest checked links)
+    const { rows } = await cmsQuery<{ id: string; source_url: string }>(
+      `SELECT id, source_url FROM off_page_backlinks
+       WHERE status NOT IN ('REMOVED', 'SPAM', 'IGNORED')
+       ORDER BY CASE WHEN last_checked_at IS NULL THEN 0 ELSE 1 END, last_checked_at ASC
+       LIMIT 20`
     );
 
-    const results = [];
+    const queued = rows.length;
+    let live = 0;
+    let lost = 0;
+    let broken = 0;
+    const batchResults = [];
+
     for (const r of rows) {
       const res = await checkLiveBacklink(r.id);
-      results.push({ id: r.id, ...res });
+      batchResults.push({ id: r.id, source_url: r.source_url, ...res });
+      if (res.status === "LIVE" || res.status === "VERIFIED") {
+        live++;
+      } else if (res.status === "LOST") {
+        lost++;
+      } else {
+        broken++;
+      }
     }
 
-    return NextResponse.json({ ok: true, batchResults: results });
+    return NextResponse.json({
+      ok: true,
+      queued,
+      checked: batchResults.length,
+      live,
+      lost,
+      broken,
+      completed: true,
+      message: `Audited ${batchResults.length} remote backlinks: ${live} LIVE, ${lost} LOST, ${broken} UNREACHABLE/BROKEN.`,
+      batchResults,
+    });
   } catch (err: any) {
     console.error("Backlink check error:", err);
     return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });

@@ -27,10 +27,15 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const region = searchParams.get("region");
+  const country = searchParams.get("country");
   const category = searchParams.get("category");
   const priority = searchParams.get("priority");
   const status = searchParams.get("status");
   const freeStatus = searchParams.get("free_status");
+  const submissionType = searchParams.get("submission_type");
+  const source = searchParams.get("source") || searchParams.get("provider");
+  const todayOnly = searchParams.get("today") === "true";
+  const assignedTo = searchParams.get("assigned_to");
   const query = searchParams.get("q")?.trim();
   const isSmart = searchParams.get("smart") === "true";
 
@@ -40,6 +45,10 @@ export async function GET(req: Request) {
   if (region && region !== "ALL") {
     conditions.push("o.region = ?");
     params.push(region);
+  }
+  if (country && country !== "ALL") {
+    conditions.push("o.country = ?");
+    params.push(country);
   }
   if (category && category !== "ALL") {
     conditions.push("o.category = ?");
@@ -56,6 +65,21 @@ export async function GET(req: Request) {
   if (freeStatus && freeStatus !== "ALL") {
     conditions.push("o.free_status = ?");
     params.push(freeStatus);
+  }
+  if (submissionType && submissionType !== "ALL") {
+    conditions.push("o.submission_type = ?");
+    params.push(submissionType);
+  }
+  if (source && source !== "ALL") {
+    conditions.push("(o.source = ? OR o.discovery_provider = ?)");
+    params.push(source, source);
+  }
+  if (todayOnly) {
+    conditions.push("DATE(o.discovered_at) = CURRENT_DATE");
+  }
+  if (assignedTo && assignedTo !== "ALL") {
+    conditions.push("o.assigned_to = ?");
+    params.push(assignedTo);
   }
 
   // --- SMART SEMANTIC SEARCH (Section 4.1: TurboVec Allowlist Reranking) ---
@@ -136,11 +160,20 @@ export async function GET(req: Request) {
     }
   }
 
-  // --- STANDARD FILTER / LEXICAL SEARCH (Fail-Safe) ---
+  // --- STANDARD FILTER / LEXICAL SEARCH (Fail-Safe, Section 22) ---
   if (query) {
-    conditions.push("(LOWER(o.site_name) LIKE ? OR LOWER(o.domain) LIKE ? OR LOWER(o.recommended_service) LIKE ?)");
+    conditions.push(`(
+      LOWER(o.site_name) LIKE ? OR
+      LOWER(o.domain) LIKE ? OR
+      LOWER(o.exact_submission_url) LIKE ? OR
+      LOWER(o.category) LIKE ? OR
+      LOWER(IFNULL(o.country, '')) LIKE ? OR
+      LOWER(IFNULL(o.notes, '')) LIKE ? OR
+      LOWER(IFNULL(o.evidence, '')) LIKE ? OR
+      LOWER(o.recommended_service) LIKE ?
+    )`);
     const qStr = `%${query.toLowerCase()}%`;
-    params.push(qStr, qStr, qStr);
+    params.push(qStr, qStr, qStr, qStr, qStr, qStr, qStr, qStr);
   }
 
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
@@ -148,7 +181,20 @@ export async function GET(req: Request) {
 
   try {
     const { rows } = await cmsQuery<OffPageOpportunity>(sql, params);
-    return NextResponse.json({ ok: true, data: rows, opportunities: rows, total: rows.length, smart: false });
+    const { rows: countRows } = await cmsQuery<{ total: number }>(
+      `SELECT COUNT(*) as total FROM off_page_opportunities o ${whereClause}`,
+      params
+    );
+    const totalCount = Number(countRows[0]?.total ?? rows.length);
+
+    return NextResponse.json({
+      ok: true,
+      data: rows,
+      opportunities: rows,
+      total: totalCount,
+      count: rows.length,
+      smart: false,
+    });
   } catch (err: any) {
     console.error("Failed querying opportunities:", err);
     return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });

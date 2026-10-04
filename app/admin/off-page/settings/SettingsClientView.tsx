@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Settings,
   ShieldCheck,
@@ -10,7 +10,13 @@ import {
   Sparkles,
   Save,
   CheckCircle2,
+  Activity,
+  RefreshCw,
+  AlertCircle,
+  Cpu,
+  Database,
 } from "lucide-react";
+import type { ProviderHealth } from "@/lib/off-page/providers/types";
 
 interface Props {
   initialSettings?: Record<string, string>;
@@ -30,6 +36,29 @@ export default function SettingsClientView({ initialSettings }: Props) {
   );
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+
+  // Provider Health Matrix State (Section 40 & 41)
+  const [providers, setProviders] = useState<ProviderHealth[]>([]);
+  const [loadingProviders, setLoadingProviders] = useState(true);
+
+  const fetchProviders = async () => {
+    setLoadingProviders(true);
+    try {
+      const res = await fetch("/api/admin/off-page/providers");
+      const json = await res.json();
+      if (json.ok && Array.isArray(json.providers)) {
+        setProviders(json.providers);
+      }
+    } catch (err) {
+      console.error("Failed fetching providers:", err);
+    } finally {
+      setLoadingProviders(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProviders();
+  }, []);
 
   const handleChange = (key: string, val: string) => {
     setSettings((prev) => ({ ...prev, [key]: val }));
@@ -303,7 +332,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
           </div>
         </div>
 
-        {/* Section 5: TurboVec Semantic Intelligence Layer (Section 31 & 32) */}
+        {/* Section 5: Provider Health Matrix & Architecture (Sections 40 & 41) */}
         <div
           className="dgs-saas-card"
           style={{
@@ -314,85 +343,107 @@ export default function SettingsClientView({ initialSettings }: Props) {
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "8px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <Sparkles size={18} color="var(--dgs-brand-cyan)" />
+              <Activity size={18} color="var(--dgs-brand-cyan)" />
               <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-                5. TurboVec Semantic Authority Intelligence Status
+                5. Provider Health Matrix (10 Core Subsystems)
               </h3>
             </div>
-            <span
-              style={{
-                fontSize: "0.72rem",
-                padding: "2px 8px",
-                borderRadius: "4px",
-                background: "rgba(16, 185, 129, 0.15)",
-                color: "#34d399",
-                fontWeight: 700,
-              }}
+            <button
+              type="button"
+              onClick={fetchProviders}
+              disabled={loadingProviders}
+              className="dgs-saas-btn secondary"
+              style={{ fontSize: "0.74rem", padding: "4px 10px", display: "inline-flex", alignItems: "center", gap: "5px" }}
             >
-              ● WORKER ACTIVE
-            </span>
+              <RefreshCw size={12} className={loadingProviders ? "animate-spin" : ""} />
+              Refresh Health Matrix
+            </button>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-              gap: "12px",
-              fontSize: "0.78rem",
-            }}
-          >
-            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
-              <div style={{ color: "rgba(255,255,255,0.5)" }}>Engine &amp; Architecture</div>
-              <div style={{ fontWeight: 700, color: "#fff", marginTop: "2px" }}>TurboVec 1.0.0 (IdMapIndex)</div>
-              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>Bit Width: 4-bit Quantized</div>
-            </div>
+          <p style={{ margin: "0 0 16px 0", fontSize: "0.78rem", color: "rgba(255,255,255,0.6)" }}>
+            Real-time status of all external discovery crawlers, search APIs, databases, and semantic intelligence layers. Unconfigured providers are explicitly declared with zero synthetic mock data.
+          </p>
 
-            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
-              <div style={{ color: "rgba(255,255,255,0.5)" }}>Embedding Model</div>
-              <div style={{ fontWeight: 700, color: "#fff", marginTop: "2px" }}>nomic-embed-text</div>
-              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>Dimension: 768 float32</div>
+          {loadingProviders ? (
+            <div style={{ padding: "20px", textAlign: "center", color: "rgba(255,255,255,0.5)", fontSize: "0.82rem" }}>
+              <RefreshCw size={18} className="animate-spin" style={{ margin: "0 auto 6px auto" }} />
+              Auditing provider connections...
             </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {providers.map((p) => {
+                const isPass = p.status === "ACTIVE";
+                const isWarn = p.status === "DEGRADED" || p.status === "NOT_CONFIGURED";
+                const badgeColor = isPass ? "#34d399" : isWarn ? "#fbbf24" : "#f87171";
+                const badgeBg = isPass ? "rgba(16, 185, 129, 0.15)" : isWarn ? "rgba(245, 158, 11, 0.15)" : "rgba(239, 68, 68, 0.15)";
+                return (
+                  <div
+                    key={p.id}
+                    style={{
+                      padding: "12px 16px",
+                      borderRadius: "6px",
+                      background: "rgba(255, 255, 255, 0.02)",
+                      border: "1px solid rgba(255, 255, 255, 0.06)",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "6px",
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontWeight: 650, color: "#fff", fontSize: "0.86rem" }}>{p.name}</span>
+                        <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>
+                          [{p.type}]
+                        </span>
+                      </div>
+                      <span
+                        style={{
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          padding: "2px 8px",
+                          borderRadius: "4px",
+                          background: badgeBg,
+                          color: badgeColor,
+                        }}
+                      >
+                        {p.status === "ACTIVE" ? "● ACTIVE" : p.status === "NOT_CONFIGURED" ? "○ NOT CONFIGURED" : p.status}
+                      </span>
+                    </div>
 
-            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
-              <div style={{ color: "rgba(255,255,255,0.5)" }}>Indexed Corpora</div>
-              <div style={{ fontWeight: 700, color: "var(--dgs-brand-cyan)", marginTop: "2px" }}>
-                100 Content • 181 Off-Page
-              </div>
-              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>MariaDB Vector Registry</div>
-            </div>
+                    <div style={{ fontSize: "0.76rem", color: "rgba(255,255,255,0.65)", display: "flex", flexWrap: "wrap", gap: "16px" }}>
+                      {p.lastSuccess && (
+                        <span>
+                          Last Success: <strong style={{ color: "#34d399" }}>{new Date(p.lastSuccess).toLocaleTimeString()}</strong>
+                        </span>
+                      )}
+                      {p.lastResultCount !== undefined && (
+                        <span>
+                          Last Result Count: <strong style={{ color: "#fff" }}>{p.lastResultCount}</strong>
+                        </span>
+                      )}
+                      {p.lastError && (
+                        <span>
+                          Last Error: <strong style={{ color: "#f87171" }}>{p.lastError}</strong>
+                        </span>
+                      )}
+                    </div>
 
-            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
-              <div style={{ color: "rgba(255,255,255,0.5)" }}>Worker IPC &amp; Fail-Safe</div>
-              <div style={{ fontWeight: 700, color: "#34d399", marginTop: "2px" }}>Private Unix Socket</div>
-              <div style={{ fontSize: "0.68rem", color: "#10b981" }}>Fail-Safe: READY (No 500s)</div>
-            </div>
-          </div>
+                    {p.reason && (
+                      <div style={{ fontSize: "0.74rem", color: isWarn ? "#fbbf24" : "rgba(255,255,255,0.5)", marginTop: "2px" }}>
+                        {p.reason}
+                      </div>
+                    )}
 
-          {/* Strict Separation from Discovery Provider (Section 32) */}
-          <div
-            style={{
-              marginTop: "16px",
-              padding: "10px 14px",
-              borderRadius: "6px",
-              background: "rgba(245, 158, 11, 0.08)",
-              border: "1px solid rgba(245, 158, 11, 0.25)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "8px",
-            }}
-          >
-            <div>
-              <span style={{ color: "#fbbf24", fontWeight: 700, fontSize: "0.78rem" }}>
-                DISCOVERY PROVIDER STATUS:
-              </span>{" "}
-              <span style={{ color: "#fff", fontSize: "0.78rem" }}>DISCOVERY_PROVIDER_NOT_CONFIGURED</span>
+                    {p.requiredConfig && p.requiredConfig.length > 0 && (
+                      <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>
+                        Required: <code style={{ color: "#60a5fa" }}>{p.requiredConfig.join(", ")}</code>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.72rem" }}>
-              TurboVec does not crawl or discover links. Only verified manual imports and authentic feeds are ingested.
-            </div>
-          </div>
+          )}
         </div>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
