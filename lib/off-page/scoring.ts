@@ -97,8 +97,14 @@ export function calculateDgsAuthorityScore(params: {
 }
 
 /**
- * Smart Priority Engine:
- * Generates Value Score, Difficulty Score, Priority Score and Tier (P0, P1, P2, P3, REJECT)
+ * Smart Priority Engine (DGS V8.12.2):
+ * Computes Value Score, Difficulty Score, Priority Score and Tier (P0, P1, P2, P3, REJECT)
+ *
+ * Scoring Architecture & Invariants:
+ * - Structured Signals dominate (75%): Authority, traffic potential, geo alignment, acceptance probability.
+ * - Semantic Relevance Signals (TurboVec, 25%): Topical Match (10%), Target Page Match (10%), Asset Match (5%).
+ * - Semantic Relevance is strictly labeled SEMANTIC RELEVANCE, never 'SEO Authority' or 'DA'.
+ * - Free status and spam filters are hard invariants: PAID_ONLY and REJECT always yield REJECT tier.
  */
 export function calculatePriority(params: {
   authorityScore: number;
@@ -108,11 +114,18 @@ export function calculatePriority(params: {
   targetPageNeedTier?: "P0" | "P1" | "P2" | "P3";
   isFree: boolean;
   spamStatus: SpamStatus;
+  // TurboVec Semantic Intelligence Signals (V8.12.2)
+  topicalMatchScore?: number; // 0-100 (Semantic topical relevance)
+  targetPageMatchScore?: number; // 0-100 (Semantic target page alignment)
+  contentAssetMatchScore?: number; // 0-100 (Supporting asset match score)
+  isVerified?: boolean;
+  ageDays?: number;
 }): {
   valueScore: number;
   difficultyScore: number;
   priorityScore: number;
   priorityTier: PriorityTier;
+  semanticRelevanceScore: number;
 } {
   const {
     authorityScore,
@@ -122,6 +135,11 @@ export function calculatePriority(params: {
     targetPageNeedTier = "P1",
     isFree,
     spamStatus,
+    topicalMatchScore,
+    targetPageMatchScore,
+    contentAssetMatchScore,
+    isVerified = false,
+    ageDays = 0,
   } = params;
 
   if (spamStatus === "REJECT" || spamStatus === "HIGH_RISK" || !isFree) {
@@ -130,12 +148,30 @@ export function calculatePriority(params: {
       difficultyScore: 100,
       priorityScore: 0,
       priorityTier: "REJECT",
+      semanticRelevanceScore: 0,
     };
   }
 
-  // Value: Authority (40%) + Traffic (30%) + Geo (30%)
-  const valueScore = Math.round(
-    authorityScore * 0.4 + trafficPotential * 0.3 + geoRelevance * 0.3
+  // Calculate composite semantic relevance score if vector signals are provided (0-100)
+  const hasSemanticSignals =
+    topicalMatchScore !== undefined || targetPageMatchScore !== undefined || contentAssetMatchScore !== undefined;
+
+  const semanticRelevanceScore = hasSemanticSignals
+    ? Math.round(
+        (topicalMatchScore ?? 75) * 0.4 +
+        (targetPageMatchScore ?? 70) * 0.4 +
+        (contentAssetMatchScore ?? 60) * 0.2
+      )
+    : 70;
+
+  // Value calculation:
+  // Base structured signals (75%): Authority (35%) + Traffic (20%) + Geo (20%)
+  // Semantic intelligence (25%): Semantic relevance (25%)
+  let valueScore = Math.round(
+    authorityScore * 0.35 +
+    trafficPotential * 0.20 +
+    geoRelevance * 0.20 +
+    semanticRelevanceScore * 0.25
   );
 
   // Difficulty: 100 - Acceptance Probability
@@ -144,15 +180,27 @@ export function calculatePriority(params: {
   // Target page need boost
   const needBoost =
     targetPageNeedTier === "P0"
-      ? 15
+      ? 12
       : targetPageNeedTier === "P1"
-      ? 10
+      ? 8
       : targetPageNeedTier === "P2"
-      ? 5
+      ? 4
       : 0;
 
-  // Priority formula: Value * 0.6 + Acceptance * 0.4 + NeedBoost
-  let rawPriority = valueScore * 0.6 + acceptanceProbability * 0.4 + needBoost;
+  // Verification boost: +5 if verified
+  const verificationBoost = isVerified ? 5 : 0;
+
+  // Stagnation penalty: -1 per 30 days beyond 60 days
+  const agePenalty = ageDays > 60 ? Math.min(8, Math.floor((ageDays - 60) / 30)) : 0;
+
+  // Priority formula: Value * 0.6 + Acceptance * 0.4 + NeedBoost + VerificationBoost - AgePenalty
+  let rawPriority =
+    valueScore * 0.6 +
+    acceptanceProbability * 0.4 +
+    needBoost +
+    verificationBoost -
+    agePenalty;
+
   const priorityScore = Math.max(0, Math.min(100, Math.round(rawPriority)));
 
   let priorityTier: PriorityTier = "P2";
@@ -166,6 +214,7 @@ export function calculatePriority(params: {
     difficultyScore,
     priorityScore,
     priorityTier,
+    semanticRelevanceScore,
   };
 }
 

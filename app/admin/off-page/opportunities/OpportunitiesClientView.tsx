@@ -46,6 +46,11 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
   const [convertingOpp, setConvertingOpp] = useState<OffPageOpportunity | null>(null);
   const [outreachSubject, setOutreachSubject] = useState("");
   const [outreachPitch, setOutreachPitch] = useState("");
+  const [outreachTargetPage, setOutreachTargetPage] = useState("");
+  const [grounding, setGrounding] = useState(false);
+  const [groundedSources, setGroundedSources] = useState<Array<{ title: string; url: string; entity_type: string }>>([]);
+  const [groundedAssets, setGroundedAssets] = useState<Array<{ title: string; url: string; entity_type: string; semantic_relevance: number; why_matches: string }>>([]);
+  const [talkingPoints, setTalkingPoints] = useState<string[]>([]);
   const [converting, setConverting] = useState(false);
 
   // Batch Import Modal State
@@ -160,12 +165,47 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     }
   };
 
-  const handleOpenOutreachModal = (opp: OffPageOpportunity) => {
+  const handleOpenOutreachModal = async (opp: OffPageOpportunity) => {
     setConvertingOpp(opp);
     setOutreachSubject(`Resource Suggestion & Collaboration: D'Genius Solutions x ${opp.site_name}`);
+    setOutreachTargetPage(opp.recommended_dgs_target_page || "https://www.dgeniussolutions.com/");
+    setGroundedSources([]);
+    setGroundedAssets([]);
+    setTalkingPoints([]);
     setOutreachPitch(
       `Hi ${opp.site_name} Editorial Team,\n\nI hope you are having a productive week.\n\nI came across your directory and resource guide at ${opp.domain} and appreciate your thoughtful industry curation.\n\nAt D'Genius Solutions, we produce enterprise AI video campaigns, technical SEO, and generative search optimization (GEO) for clients across India, UAE, and global markets.\n\nI wanted to suggest considering D'Genius Solutions (${opp.recommended_dgs_target_page}) for inclusion in your verified directory.\n\nCould we explore a listing or thought-leadership collaboration?\n\nBest regards,\n\nKohin Bellara\nCEO, D'Genius Solutions\nhttps://www.dgeniussolutions.com/`
     );
+
+    // Dynamic grounding from TurboVec Semantic Intelligence
+    setGrounding(true);
+    try {
+      const res = await fetch("/api/admin/off-page/outreach/ground", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          opportunity_id: opp.id,
+          publication: opp.site_name,
+          category: opp.category,
+          target_page: opp.recommended_dgs_target_page,
+          service: opp.recommended_service,
+          site_name: opp.site_name,
+          domain: opp.domain,
+        }),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        if (json.pitch_subject) setOutreachSubject(json.pitch_subject);
+        if (json.pitch_body) setOutreachPitch(json.pitch_body);
+        if (json.recommended_target_page) setOutreachTargetPage(json.recommended_target_page);
+        if (json.sources_used) setGroundedSources(json.sources_used);
+        if (json.assets) setGroundedAssets(json.assets);
+        if (json.talking_points) setTalkingPoints(json.talking_points);
+      }
+    } catch (err) {
+      console.warn("Failed retrieving grounded draft:", err);
+    } finally {
+      setGrounding(false);
+    }
   };
 
   const handleConfirmOutreach = async () => {
@@ -186,7 +226,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           stage: "DRAFT",
           pitch_subject: outreachSubject,
           pitch_body: outreachPitch,
-          target_page: convertingOpp.recommended_dgs_target_page,
+          target_page: outreachTargetPage || convertingOpp.recommended_dgs_target_page,
           assigned_staff: "Kohin Bellara - CEO D'Genius Solutions",
         }),
       });
@@ -763,7 +803,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
               border: "1px solid rgba(255,255,255,0.12)",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <Send size={18} color="var(--dgs-brand-cyan)" />
                 <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>
@@ -775,10 +815,86 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
               </button>
             </div>
 
-            <div style={{ marginBottom: "10px", fontSize: "0.74rem", color: "rgba(255,255,255,0.7)" }}>
-              Sender: <strong style={{ color: "#fff" }}>Kohin Bellara - CEO D'Genius Solutions</strong>
+            {/* Sender & Grounding Badge */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "8px",
+                padding: "8px 12px",
+                borderRadius: "6px",
+                background: "rgba(0, 198, 255, 0.08)",
+                border: "1px solid rgba(0, 198, 255, 0.2)",
+                marginBottom: "14px",
+                fontSize: "0.75rem",
+              }}
+            >
+              <div>
+                Sender: <strong style={{ color: "#fff" }}>Kohin Bellara - CEO D'Genius Solutions</strong>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "5px", color: "var(--dgs-brand-cyan)", fontWeight: 700 }}>
+                <Sparkles size={13} className={grounding ? "animate-spin" : ""} />
+                {grounding ? "Grounding with TurboVec..." : "TurboVec Grounded Draft"}
+              </div>
             </div>
 
+            {/* Matched Supporting DGS Assets */}
+            {groundedAssets.length > 0 && (
+              <div style={{ marginBottom: "14px" }}>
+                <div style={{ fontSize: "0.74rem", fontWeight: 700, color: "var(--dgs-brand-cyan)", marginBottom: "6px", letterSpacing: "0.5px" }}>
+                  BEST DGS ASSETS TO USE:
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                  {groundedAssets.slice(0, 2).map((a, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "6px",
+                        background: "#1f2937",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        fontSize: "0.72rem",
+                      }}
+                    >
+                      <div style={{ fontWeight: 650, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {a.title}
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px", color: "rgba(255,255,255,0.5)" }}>
+                        <span>{a.entity_type}</span>
+                        <span style={{ color: "#34d399", fontWeight: 700 }}>
+                          {(a.semantic_relevance * 100).toFixed(0)}% Relevance
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Target DGS Page */}
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                Target DGS Landing Page:
+              </label>
+              <input
+                type="text"
+                value={outreachTargetPage}
+                onChange={(e) => setOutreachTargetPage(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.82rem",
+                }}
+              />
+            </div>
+
+            {/* Pitch Subject */}
             <div style={{ marginBottom: "12px" }}>
               <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
                 Pitch Subject:
@@ -795,16 +911,18 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
                   border: "1px solid rgba(255,255,255,0.15)",
                   color: "#fff",
                   fontSize: "0.85rem",
+                  fontWeight: 600,
                 }}
               />
             </div>
 
+            {/* Pitch Content with SOURCES USED */}
             <div style={{ marginBottom: "16px" }}>
               <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
-                Pitch Content:
+                Pitch Content (with Grounded SOURCES USED):
               </label>
               <textarea
-                rows={7}
+                rows={9}
                 value={outreachPitch}
                 onChange={(e) => setOutreachPitch(e.target.value)}
                 style={{
@@ -816,13 +934,14 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
                   color: "#fff",
                   fontSize: "0.8rem",
                   fontFamily: "monospace",
+                  lineHeight: "1.45",
                 }}
               />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ fontSize: "0.72rem", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
-                <ShieldCheck size={14} /> Saves to Outreach CRM Drafts for Review
+                <ShieldCheck size={14} /> Factual DGS Evidence Only • Zero Fabricated Stats
               </span>
               <div style={{ display: "flex", gap: "10px" }}>
                 <button onClick={() => setConvertingOpp(null)} className="dgs-saas-btn secondary">

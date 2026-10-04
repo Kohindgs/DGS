@@ -3,6 +3,14 @@ import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "@/lib/off-page/db";
 import { evaluateSpamRisk, calculateDgsAuthorityScore, calculatePriority } from "@/lib/off-page/scoring";
+import {
+  checkSemanticDuplicate,
+  matchTargetPages,
+  indexTurboVecBatch,
+  recordVectorDocumentInDb,
+  generateVectorId,
+  calculateContentHash,
+} from "@/lib/intelligence/turbovec-client";
 import { randomUUID } from "node:crypto";
 import type { RegionCode, OpportunityCategory } from "@/lib/off-page/types";
 
@@ -201,9 +209,49 @@ export async function POST(req: Request) {
       const rawCat = (r.category || "AGENCY_DIRECTORY").toUpperCase().replace(/\s+/g, "_");
       const category: OpportunityCategory = rawCat as OpportunityCategory;
 
+      // Semantic Deduplication via TurboVec
+      const opportunityText = `${r.site_name.trim()} ${domain} ${actionUrl} ${category} ${r.notes || ""} ${r.evidence || ""}`.trim();
+      let rowNotes = r.notes || "Imported via verified research batch";
+      try {
+        const dedupeResult = await checkSemanticDuplicate({
+          text: opportunityText,
+          domain,
+          url: actionUrl,
+        });
+        if (dedupeResult.ok && dedupeResult.status === "LIKELY_DUPLICATE") {
+          rowNotes = `[SEMANTIC_REVIEW: ${(dedupeResult.similarity * 100).toFixed(1)}% match with '${dedupeResult.nearest[0]?.title || dedupeResult.nearest[0]?.key}'] ${rowNotes}`.trim();
+        }
+      } catch (err) {
+        console.warn("TurboVec deduplication check warning:", err);
+      }
+
+      // Smart Target Page Matching via TurboVec
+      let recommendedService = "AI Video Production & SEO";
+      let topicalScore = 85;
+      let targetPageScore = 75;
+
+      try {
+        const pageMatches = await matchTargetPages({
+          query: opportunityText,
+          region,
+          limit: 1,
+        });
+        if (pageMatches.ok && pageMatches.target_pages.length > 0) {
+          const topMatch = pageMatches.target_pages[0];
+          if (!r.target_page || r.target_page === "https://www.dgeniussolutions.com/") {
+            targetPage = `https://www.dgeniussolutions.com${topMatch.page}`;
+            recommendedService = topMatch.service_match;
+          }
+          targetPageScore = Math.round(topMatch.semantic_relevance * 100);
+          topicalScore = Math.max(topicalScore, Math.round(topMatch.semantic_relevance * 100));
+        }
+      } catch (err) {
+        console.warn("TurboVec target page match warning:", err);
+      }
+
       const id = `opp_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
       const authorityScore = calculateDgsAuthorityScore({
-        topicalRelevance: 85,
+        topicalRelevance: topicalScore,
         editorialQuality: 85,
         geoRelevance: region === "INDIA" ? 95 : region === "UAE" ? 90 : 80,
         referralPotential: 75,
@@ -217,6 +265,10 @@ export async function POST(req: Request) {
         geoRelevance: region === "INDIA" ? 95 : region === "UAE" ? 90 : 80,
         isFree: true,
         spamStatus: spamEval.spamStatus,
+        topicalMatchScore: topicalScore,
+        targetPageMatchScore: targetPageScore,
+        contentAssetMatchScore: 70,
+        isVerified: true,
       });
 
       await cmsExecute(
@@ -230,8 +282,8 @@ export async function POST(req: Request) {
           discovered_at, qualified_at, next_check_at, check_priority, created_at, updated_at
         ) VALUES (
           ?, ?, ?, ?, ?, ?, ?,
-          ?, 'FORM', ?, 'AI Video Production & SEO',
-          'DOFOLLOW', 'HIGH', 85, ?,
+          ?, 'FORM', ?, ?,
+          'DOFOLLOW', 'HIGH', ?, ?,
           75, 85, ?, 80,
           ?, ?, ?, ?, ?,
           ?, CURDATE(), NOW(), 'VERIFIED_BATCH_IMPORT', 'QUALIFIED', ?, ?,
@@ -247,6 +299,8 @@ export async function POST(req: Request) {
           category,
           freeStatus,
           targetPage,
+          recommendedService,
+          topicalScore,
           region === "INDIA" ? 95 : region === "UAE" ? 90 : 80,
           spamEval.spamRiskScore,
           priority.valueScore,
@@ -255,11 +309,53 @@ export async function POST(req: Request) {
           priority.priorityTier,
           authorityScore,
           spamEval.spamStatus,
-          r.notes || "Imported via verified research batch",
+          rowNotes,
           r.evidence || "Verified legitimate authority platform",
           priority.priorityTier,
         ]
       );
+
+      // Vectorize into TurboVec off-page index and MySQL registry
+      try {
+        const vectorId = generateVectorId(`opp:${id}`);
+        const contentHash = calculateContentHash(opportunityText);
+
+        await indexTurboVecBatch({
+          indexName: "off-page",
+          documents: [
+            {
+              key: `opp:${id}`,
+              id,
+              numeric_id: vectorId.toString(),
+              text: opportunityText,
+              title: r.site_name.trim(),
+              site_name: r.site_name.trim(),
+              domain,
+              exact_submission_url: actionUrl,
+              region,
+              category,
+              target_page: targetPage,
+              status: "QUALIFIED",
+              kind: "opportunity",
+              entity_type: "OFF_PAGE_OPPORTUNITY",
+              entity_id: id,
+            },
+          ],
+        });
+
+        await recordVectorDocumentInDb({
+          vector_id: vectorId,
+          entity_type: "OFF_PAGE_OPPORTUNITY",
+          entity_id: id,
+          content_hash: contentHash,
+          index_name: "off-page",
+          region,
+          category,
+          target_page: targetPage,
+        });
+      } catch (err) {
+        console.warn("Failed vectorizing imported opportunity:", err);
+      }
 
       imported++;
     }

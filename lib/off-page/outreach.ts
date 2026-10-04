@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "./db";
+import { groundOutreachDraft } from "@/lib/intelligence/turbovec-client";
 import type {
   OffPageOpportunity,
   OffPageOutreach,
@@ -16,9 +17,9 @@ CEO, D'Genius Solutions
 https://www.dgeniussolutions.com/`;
 
 /**
- * Generates an outreach pitch draft for an opportunity.
- * Uses exact sender identity and factual, conservative messaging without fabricated claims.
- * Strictly requires human approval before sending.
+ * Generates an outreach pitch draft for an opportunity grounded in verified CMS records.
+ * Uses exact sender identity and factual messaging backed by retrieved DGS assets.
+ * Displays mandatory SOURCES USED block below pitch body.
  */
 export function generateOutreachPitchDraft(params: {
   siteName: string;
@@ -28,10 +29,12 @@ export function generateOutreachPitchDraft(params: {
   service: string;
   contactName?: string;
   pitchType?: PitchType;
+  sourcesUsed?: Array<{ title: string; url: string; entity_type: string }>;
 }): {
   pitchType: PitchType;
   pitchSubject: string;
   pitchBody: string;
+  sourcesUsed: Array<{ title: string; url: string; entity_type: string }>;
   suggestedFollowUpDays: number;
 } {
   const {
@@ -42,14 +45,15 @@ export function generateOutreachPitchDraft(params: {
     service,
     contactName = "Editorial Team",
     pitchType = "RESOURCE_SUGGESTION",
+    sourcesUsed = [],
   } = params;
 
   let pitchSubject = "";
-  let pitchBody = "";
+  let baseBody = "";
 
   if (category === "DIGITAL_PR" || category === "EXPERT_CONTRIBUTION" || pitchType === "EXPERT_QUOTE") {
     pitchSubject = `Expert Commentary: Enterprise Generative Search & AI Video Strategy (for ${publication})`;
-    pitchBody = `Hi ${contactName},
+    baseBody = `Hi ${contactName},
 
 I hope you are well.
 
@@ -64,7 +68,7 @@ You can review our verified services and case studies here: ${targetPage}
 ${DGS_STANDARD_SIGNATURE}`;
   } else if (category === "PODCAST" || pitchType === "INTERVIEW") {
     pitchSubject = `Guest Pitch for ${publication}: Generative AI Video Workflows and Modern Search Architecture`;
-    pitchBody = `Hi ${contactName},
+    baseBody = `Hi ${contactName},
 
 I've been following the discussions on ${publication} and appreciate your thoughtful coverage of the industry.
 
@@ -81,7 +85,7 @@ Feel free to review our work at ${targetPage}. If this aligns with your editoria
 ${DGS_STANDARD_SIGNATURE}`;
   } else {
     pitchSubject = `Resource Submission: ${service} for ${publication}`;
-    pitchBody = `Hi ${contactName},
+    baseBody = `Hi ${contactName},
 
 I came across your curated resource section at ${publication} and wanted to thank you for maintaining a helpful guide for businesses and digital leaders.
 
@@ -100,10 +104,20 @@ Thank you for your consideration and editorial curation.
 ${DGS_STANDARD_SIGNATURE}`;
   }
 
+  // Mandatory SOURCES USED grounding block
+  let pitchBody = baseBody;
+  if (sourcesUsed && sourcesUsed.length > 0) {
+    const sourcesLines = sourcesUsed
+      .map((s) => `- [${s.title}](${s.url}) (${s.entity_type})`)
+      .join("\n");
+    pitchBody += `\n\nSOURCES USED:\n${sourcesLines}`;
+  }
+
   return {
     pitchType,
     pitchSubject,
     pitchBody,
+    sourcesUsed,
     suggestedFollowUpDays: 5,
   };
 }
@@ -153,6 +167,21 @@ export async function createOutreachFromOpportunity(params: {
   let pitchBody = params.pitchBody;
 
   if (!pitchSubject || !pitchBody) {
+    let sourcesUsed: Array<{ title: string; url: string; entity_type: string }> = [];
+    try {
+      const oppText = `${publication} ${domain || ""} ${opp?.category || ""} ${opp?.notes || ""} ${opp?.recommended_content || ""}`;
+      const groundRes = await groundOutreachDraft({
+        opportunityText: oppText,
+        publicationName: publication,
+        targetPage,
+      });
+      if (groundRes.ok && groundRes.sources_used.length > 0) {
+        sourcesUsed = groundRes.sources_used;
+      }
+    } catch (err) {
+      console.warn("Failed grounding draft in createOutreachFromOpportunity:", err);
+    }
+
     const draft = generateOutreachPitchDraft({
       siteName: publication,
       publication: domain || publication,
@@ -161,6 +190,7 @@ export async function createOutreachFromOpportunity(params: {
       service: opp?.recommended_service || "AI Video Production & SEO",
       contactName: params.contactName,
       pitchType,
+      sourcesUsed,
     });
     pitchType = draft.pitchType;
     pitchSubject = draft.pitchSubject;

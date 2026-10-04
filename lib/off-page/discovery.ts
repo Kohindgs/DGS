@@ -7,6 +7,14 @@ import {
   calculatePriority,
   evaluateSpamRisk,
 } from "./scoring";
+import {
+  checkSemanticDuplicate,
+  matchTargetPages,
+  indexTurboVecBatch,
+  recordVectorDocumentInDb,
+  generateVectorId,
+  calculateContentHash,
+} from "@/lib/intelligence/turbovec-client";
 import type {
   OffPageOpportunity,
   OpportunityCategory,
@@ -126,7 +134,7 @@ export async function ingestDiscoveredOpportunity(raw: {
   const domain = raw.domain.toLowerCase().trim().replace(/^www\./, "");
   const url = raw.exact_submission_url.trim();
 
-  // Deduplication check: check domain or exact URL
+  // 1. Exact Deduplication check: check domain or exact URL
   const { rows: existingRows } = await cmsQuery<{ id: string }>(
     `SELECT id FROM off_page_opportunities WHERE domain = ? OR exact_submission_url = ? LIMIT 1`,
     [domain, url]
@@ -135,8 +143,26 @@ export async function ingestDiscoveredOpportunity(raw: {
     return { success: false, error: "DUPLICATE: Opportunity with domain or URL already exists" };
   }
 
-  // Spam evaluation
-  const spamResult = evaluateSpamRisk(domain, url, raw.notes);
+  // 2. Semantic Deduplication via TurboVec
+  const opportunityText = `${raw.site_name} ${domain} ${url} ${raw.category} ${raw.notes || ""} ${raw.evidence || ""}`.trim();
+  let semanticNotes = raw.notes || "";
+  try {
+    const dedupeResult = await checkSemanticDuplicate({
+      text: opportunityText,
+      domain,
+      url,
+    });
+    if (dedupeResult.ok && dedupeResult.status === "LIKELY_DUPLICATE") {
+      semanticNotes = `[SEMANTIC_REVIEW: ${(dedupeResult.similarity * 100).toFixed(1)}% match with '${dedupeResult.nearest[0]?.title || dedupeResult.nearest[0]?.key}'] ${semanticNotes}`.trim();
+    } else if (dedupeResult.ok && dedupeResult.status === "POSSIBLE_DUPLICATE") {
+      semanticNotes = `[SEMANTIC_SIMILARITY: ${(dedupeResult.similarity * 100).toFixed(1)}% overlap] ${semanticNotes}`.trim();
+    }
+  } catch (err) {
+    console.warn("TurboVec deduplication check warning:", err);
+  }
+
+  // 3. Spam evaluation
+  const spamResult = evaluateSpamRisk(domain, url, semanticNotes);
   if (spamResult.spamStatus === "REJECT") {
     return {
       success: false,
@@ -144,11 +170,36 @@ export async function ingestDiscoveredOpportunity(raw: {
     };
   }
 
+  // 4. Smart Target Page Matching via TurboVec Content Index
+  let targetPage = raw.recommended_dgs_target_page;
+  let service = raw.recommended_service || "Digital Marketing & AI";
+  let topicalScore = raw.topical_relevance || 80;
+  let targetPageMatchScore = 70;
+
+  try {
+    const pageMatches = await matchTargetPages({
+      query: opportunityText,
+      region: raw.region,
+      limit: 1,
+    });
+    if (pageMatches.ok && pageMatches.target_pages.length > 0) {
+      const topPage = pageMatches.target_pages[0];
+      if (!targetPage || targetPage === "https://www.dgeniussolutions.com/") {
+        targetPage = `https://www.dgeniussolutions.com${topPage.page}`;
+        service = topPage.service_match;
+      }
+      targetPageMatchScore = Math.round(topPage.semantic_relevance * 100);
+      topicalScore = Math.max(topicalScore, Math.round(topPage.semantic_relevance * 100));
+    }
+  } catch (err) {
+    console.warn("TurboVec target page matching warning:", err);
+  }
+
   // Free status enforcement
   const freeStatus = raw.free_status || "FREE";
 
   // Scores
-  const topical = raw.topical_relevance || 80;
+  const topical = topicalScore;
   const geo = raw.geo_relevance || 85;
   const editorial = raw.editorial_quality || 80;
   const traffic = raw.traffic_potential || 70;
@@ -169,6 +220,9 @@ export async function ingestDiscoveredOpportunity(raw: {
     geoRelevance: geo,
     isFree: freeStatus !== "NOT_FREE",
     spamStatus: spamResult.spamStatus,
+    topicalMatchScore: topical,
+    targetPageMatchScore: targetPageMatchScore,
+    contentAssetMatchScore: 70,
   });
 
   const id = `opp_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
@@ -209,8 +263,8 @@ export async function ingestDiscoveredOpportunity(raw: {
       raw.requires_account ? 1 : 0,
       raw.requires_editorial_review ?? 1,
       raw.submission_type || "FORM",
-      raw.recommended_dgs_target_page || "https://www.dgeniussolutions.com/",
-      raw.recommended_service || "Digital Marketing & AI",
+      targetPage || "https://www.dgeniussolutions.com/",
+      service,
       raw.recommended_content || null,
       raw.link_type || "DIRECTORY",
       raw.dofollow_status || "DOFOLLOW",
@@ -227,11 +281,53 @@ export async function ingestDiscoveredOpportunity(raw: {
       authorityScore,
       spamResult.spamStatus,
       status,
-      raw.notes || null,
+      semanticNotes || null,
       raw.evidence || null,
       priorityResult.priorityTier,
     ]
   );
+
+  // Vectorize into TurboVec off-page index and MySQL registry
+  try {
+    const vectorId = generateVectorId(`opp:${id}`);
+    const contentHash = calculateContentHash(opportunityText);
+
+    await indexTurboVecBatch({
+      indexName: "off-page",
+      documents: [
+        {
+          key: `opp:${id}`,
+          id,
+          numeric_id: vectorId.toString(),
+          text: opportunityText,
+          title: raw.site_name,
+          site_name: raw.site_name,
+          domain,
+          exact_submission_url: url,
+          region: raw.region,
+          category: raw.category,
+          target_page: targetPage,
+          status,
+          kind: "opportunity",
+          entity_type: "OFF_PAGE_OPPORTUNITY",
+          entity_id: id,
+        },
+      ],
+    });
+
+    await recordVectorDocumentInDb({
+      vector_id: vectorId,
+      entity_type: "OFF_PAGE_OPPORTUNITY",
+      entity_id: id,
+      content_hash: contentHash,
+      index_name: "off-page",
+      region: raw.region,
+      category: raw.category,
+      target_page: targetPage,
+    });
+  } catch (err) {
+    console.warn("Failed vectorizing opportunity:", err);
+  }
 
   return { success: true, id };
 }

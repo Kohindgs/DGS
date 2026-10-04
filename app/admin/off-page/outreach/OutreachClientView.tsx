@@ -88,6 +88,9 @@ export default function OutreachClientView({ initialOutreach }: Props) {
     fetchOutreach();
   }, []);
 
+  const [grounding, setGrounding] = useState(false);
+  const [groundedAssets, setGroundedAssets] = useState<Array<{ title: string; url: string; entity_type: string; semantic_relevance: number; why_matches: string }>>([]);
+
   const handleOpenEditModal = (item: OffPageOutreach) => {
     setActiveItem(item);
     setEditSubject(item.pitch_subject || "");
@@ -99,6 +102,36 @@ export default function OutreachClientView({ initialOutreach }: Props) {
     setModalStage(item.stage || "DRAFT");
     setModalNotes(item.notes || "");
     setLiveUrl(item.live_url || "");
+    setGroundedAssets([]);
+  };
+
+  const handleRegenerateGrounded = async () => {
+    if (!activeItem) return;
+    setGrounding(true);
+    try {
+      const res = await fetch("/api/admin/off-page/outreach/ground", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          opportunity_id: activeItem.opportunity_id,
+          publication: activeItem.publication,
+          category: activeItem.pitch_type,
+          target_page: editTargetPage || activeItem.target_page,
+          contact_name: editContact || activeItem.contact_name,
+        }),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        if (json.pitch_subject) setEditSubject(json.pitch_subject);
+        if (json.pitch_body) setEditBody(json.pitch_body);
+        if (json.recommended_target_page) setEditTargetPage(json.recommended_target_page);
+        if (json.assets) setGroundedAssets(json.assets);
+      }
+    } catch (err) {
+      console.warn("Failed regenerating draft:", err);
+    } finally {
+      setGrounding(false);
+    }
   };
 
   const handleSaveDraftChanges = async (stageOverride?: OutreachStage) => {
@@ -530,9 +563,14 @@ export default function OutreachClientView({ initialOutreach }: Props) {
               </button>
             </div>
 
-            {/* Sender identity note */}
+            {/* Sender identity note & TurboVec Grounding button */}
             <div
               style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "8px",
                 marginBottom: "14px",
                 padding: "8px 12px",
                 borderRadius: "6px",
@@ -542,8 +580,53 @@ export default function OutreachClientView({ initialOutreach }: Props) {
                 color: "rgba(255,255,255,0.85)",
               }}
             >
-              Sender: <strong style={{ color: "#fff" }}>{editAssignedStaff || "Kohin Bellara - CEO D'Genius Solutions"}</strong>
+              <div>
+                Sender: <strong style={{ color: "#fff" }}>{editAssignedStaff || "Kohin Bellara - CEO D'Genius Solutions"}</strong>
+              </div>
+              <button
+                type="button"
+                onClick={handleRegenerateGrounded}
+                disabled={grounding}
+                className="dgs-saas-btn secondary"
+                style={{ fontSize: "0.72rem", padding: "3px 8px", display: "inline-flex", alignItems: "center", gap: "5px" }}
+              >
+                <Sparkles size={12} className={grounding ? "animate-spin" : ""} color="var(--dgs-brand-cyan)" />
+                {grounding ? "Grounding..." : "Regenerate Grounded Pitch"}
+              </button>
             </div>
+
+            {/* Matched Supporting Assets if retrieved */}
+            {groundedAssets.length > 0 && (
+              <div style={{ marginBottom: "14px" }}>
+                <div style={{ fontSize: "0.74rem", fontWeight: 700, color: "var(--dgs-brand-cyan)", marginBottom: "6px" }}>
+                  SUPPORTING DGS ASSETS RETRIEVED:
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                  {groundedAssets.slice(0, 2).map((a, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "6px",
+                        background: "#1f2937",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        fontSize: "0.72rem",
+                      }}
+                    >
+                      <div style={{ fontWeight: 650, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {a.title}
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px", color: "rgba(255,255,255,0.5)" }}>
+                        <span>{a.entity_type}</span>
+                        <span style={{ color: "#34d399", fontWeight: 700 }}>
+                          {(a.semantic_relevance * 100).toFixed(0)}% Relevance
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Pitch Subject */}
             <div style={{ marginBottom: "12px" }}>
