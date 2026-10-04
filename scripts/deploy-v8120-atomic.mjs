@@ -102,11 +102,13 @@ cp /home/u188101251/production-app/shared/.env.production "$NEW_REL/.env.product
 mkdir -p "$NEW_REL/public"
 ln -sfn /home/u188101251/production-app/shared/cms-media "$NEW_REL/public/cms-media"
 
+cd "$NEW_REL"
+
 echo "Running fail-closed pre-activation environment validation on target release..."
-node "$NEW_REL/scripts/validate-production-env.mjs" "$NEW_REL/.env.production"
+node scripts/validate-production-env.mjs "$NEW_REL/.env.production"
 
 echo "Applying CMS schema migrations..."
-node "$NEW_REL/scripts/apply-cms-schema.mjs"
+node scripts/apply-cms-schema.mjs
 
 echo "Environment and DB validated successfully! Switching current symlink atomically..."
 ln -sfn "$NEW_REL" /home/u188101251/production-app/current
