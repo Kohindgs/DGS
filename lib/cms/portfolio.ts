@@ -13,10 +13,14 @@ export type PortfolioOverride = {
 
 export async function listPortfolioOverrides() {
   if (!isCmsDatabaseConfigured()) return [] as PortfolioOverride[];
-  const { rows } = await cmsQuery<PortfolioOverride>(
-    "SELECT * FROM portfolio_items ORDER BY sort_order ASC, source_item_id ASC",
-  );
-  return rows;
+  try {
+    const { rows } = await cmsQuery<PortfolioOverride>(
+      "SELECT * FROM portfolio_items ORDER BY sort_order ASC, source_item_id ASC",
+    );
+    return rows;
+  } catch {
+    return [] as PortfolioOverride[];
+  }
 }
 
 export async function upsertPortfolioOverride(input: {

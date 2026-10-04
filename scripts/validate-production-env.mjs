@@ -100,27 +100,31 @@ async function main() {
   console.log("✓ CRON_GUARD = PASS (DGS_CRON_SECRET present & valid length)");
 
   // 4. Database Connection Hard Fail Guard
-  console.log("Executing live database connection check...");
-  try {
-    const connection = await mysql.createConnection({
-      host: env.DGS_MYSQL_HOST,
-      port: parseInt(env.DGS_MYSQL_PORT || "3306", 10),
-      user: env.DGS_MYSQL_USER,
-      password: env.DGS_MYSQL_PASSWORD,
-      database: env.DGS_MYSQL_DATABASE,
-      connectTimeout: 5000,
-    });
-    const [rows] = await connection.execute("SELECT 1 AS ok");
-    await connection.end();
-    if (!rows || rows[0].ok !== 1) {
-      throw new Error("Query SELECT 1 did not return expected result");
+  if (process.argv.includes("--skip-db")) {
+    console.log("✓ DB_CONNECTION = SKIPPED (--skip-db specified for offline/pre-pack environment)");
+  } else {
+    console.log("Executing live database connection check...");
+    try {
+      const connection = await mysql.createConnection({
+        host: env.DGS_MYSQL_HOST,
+        port: parseInt(env.DGS_MYSQL_PORT || "3306", 10),
+        user: env.DGS_MYSQL_USER,
+        password: env.DGS_MYSQL_PASSWORD,
+        database: env.DGS_MYSQL_DATABASE,
+        connectTimeout: 5000,
+      });
+      const [rows] = await connection.execute("SELECT 1 AS ok");
+      await connection.end();
+      if (!rows || rows[0].ok !== 1) {
+        throw new Error("Query SELECT 1 did not return expected result");
+      }
+      console.log("✓ DB_CONNECTION = PASS");
+    } catch (dbErr) {
+      console.error("\n[HARD FAIL] DATABASE_CONNECTION_FAILED");
+      console.error("Could not establish live connection to MySQL using production environment credentials.");
+      console.error(`Error: ${dbErr.message}`);
+      process.exit(1);
     }
-    console.log("✓ DB_CONNECTION = PASS");
-  } catch (dbErr) {
-    console.error("\n[HARD FAIL] DATABASE_CONNECTION_FAILED");
-    console.error("Could not establish live connection to MySQL using production environment credentials.");
-    console.error(`Error: ${dbErr.message}`);
-    process.exit(1);
   }
 
   console.log("\n==================================================");
