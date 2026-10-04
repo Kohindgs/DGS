@@ -40,6 +40,8 @@ export function getCmsPool() {
       enableKeepAlive: true,
       charset: "utf8mb4",
       dateStrings: true,
+      supportBigNumbers: true,
+      bigNumberStrings: true,
     });
   }
   return global.__dgsCmsPool;

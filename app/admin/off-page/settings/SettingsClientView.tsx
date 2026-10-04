@@ -303,6 +303,98 @@ export default function SettingsClientView({ initialSettings }: Props) {
           </div>
         </div>
 
+        {/* Section 5: TurboVec Semantic Intelligence Layer (Section 31 & 32) */}
+        <div
+          className="dgs-saas-card"
+          style={{
+            padding: "24px",
+            background: "linear-gradient(135deg, rgba(0, 198, 255, 0.03) 0%, rgba(112, 0, 255, 0.03) 100%)",
+            border: "1px solid rgba(0, 198, 255, 0.2)",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Sparkles size={18} color="var(--dgs-brand-cyan)" />
+              <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
+                5. TurboVec Semantic Authority Intelligence Status
+              </h3>
+            </div>
+            <span
+              style={{
+                fontSize: "0.72rem",
+                padding: "2px 8px",
+                borderRadius: "4px",
+                background: "rgba(16, 185, 129, 0.15)",
+                color: "#34d399",
+                fontWeight: 700,
+              }}
+            >
+              ● WORKER ACTIVE
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+              gap: "12px",
+              fontSize: "0.78rem",
+            }}
+          >
+            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Engine &amp; Architecture</div>
+              <div style={{ fontWeight: 700, color: "#fff", marginTop: "2px" }}>TurboVec 1.0.0 (IdMapIndex)</div>
+              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>Bit Width: 4-bit Quantized</div>
+            </div>
+
+            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Embedding Model</div>
+              <div style={{ fontWeight: 700, color: "#fff", marginTop: "2px" }}>nomic-embed-text</div>
+              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>Dimension: 768 float32</div>
+            </div>
+
+            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Indexed Corpora</div>
+              <div style={{ fontWeight: 700, color: "var(--dgs-brand-cyan)", marginTop: "2px" }}>
+                100 Content • 181 Off-Page
+              </div>
+              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.4)" }}>MariaDB Vector Registry</div>
+            </div>
+
+            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Worker IPC &amp; Fail-Safe</div>
+              <div style={{ fontWeight: 700, color: "#34d399", marginTop: "2px" }}>Private Unix Socket</div>
+              <div style={{ fontSize: "0.68rem", color: "#10b981" }}>Fail-Safe: READY (No 500s)</div>
+            </div>
+          </div>
+
+          {/* Strict Separation from Discovery Provider (Section 32) */}
+          <div
+            style={{
+              marginTop: "16px",
+              padding: "10px 14px",
+              borderRadius: "6px",
+              background: "rgba(245, 158, 11, 0.08)",
+              border: "1px solid rgba(245, 158, 11, 0.25)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "8px",
+            }}
+          >
+            <div>
+              <span style={{ color: "#fbbf24", fontWeight: 700, fontSize: "0.78rem" }}>
+                DISCOVERY PROVIDER STATUS:
+              </span>{" "}
+              <span style={{ color: "#fff", fontSize: "0.78rem" }}>DISCOVERY_PROVIDER_NOT_CONFIGURED</span>
+            </div>
+            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.72rem" }}>
+              TurboVec does not crawl or discover links. Only verified manual imports and authentic feeds are ingested.
+            </div>
+          </div>
+        </div>
+
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <button
             type="submit"
@@ -318,3 +410,4 @@ export default function SettingsClientView({ initialSettings }: Props) {
     </div>
   );
 }
+

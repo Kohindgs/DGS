@@ -19,6 +19,11 @@ import {
   X,
   Upload,
   FileSpreadsheet,
+  Cpu,
+  Layers,
+  Activity,
+  Info,
+  Zap,
 } from "lucide-react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
 import type { OffPageOpportunity, RegionCode, PriorityTier, OpportunityStatus } from "@/lib/off-page/types";
@@ -30,19 +35,25 @@ interface Props {
 export default function OpportunitiesClientView({ initialOpportunities }: Props) {
   const [opportunities, setOpportunities] = useState<OffPageOpportunity[]>(initialOpportunities || []);
   const [loading, setLoading] = useState(!initialOpportunities);
-  const [viewMode, setViewMode] = useState<"ALL" | "TODAY">("ALL");
+  const [viewMode, setViewMode] = useState<"ALL" | "TODAY" | "QUEUE">("ALL");
   const [selectedRegion, setSelectedRegion] = useState<string>("ALL");
   const [selectedPriority, setSelectedPriority] = useState<string>("ALL");
   const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
   const [discovering, setDiscovering] = useState(false);
   const [feedback, setFeedback] = useState<React.ReactNode | null>(null);
 
+  // Smart Search State (Section 4.1)
+  const [searchMode, setSearchMode] = useState<"STANDARD" | "SMART">("STANDARD");
+  const [smartQuery, setSmartQuery] = useState("");
+  const [smartSearching, setSmartSearching] = useState(false);
+  const [isSmartActive, setIsSmartActive] = useState(false);
+
   // Status Edit Modal State
   const [editingOpp, setEditingOpp] = useState<OffPageOpportunity | null>(null);
   const [newStatus, setNewStatus] = useState<OpportunityStatus>("NEW");
   const [savingStatus, setSavingStatus] = useState(false);
 
-  // Outreach Conversion Modal State
+  // Outreach Conversion Modal State (Section 9)
   const [convertingOpp, setConvertingOpp] = useState<OffPageOpportunity | null>(null);
   const [outreachSubject, setOutreachSubject] = useState("");
   const [outreachPitch, setOutreachPitch] = useState("");
@@ -53,12 +64,22 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
   const [talkingPoints, setTalkingPoints] = useState<string[]>([]);
   const [converting, setConverting] = useState(false);
 
+  // Opportunity Detail / Intel Modal State (Sections 5, 6, 7, 8)
+  const [inspectingOpp, setInspectingOpp] = useState<OffPageOpportunity | null>(null);
+  const [loadingIntel, setLoadingIntel] = useState(false);
+  const [intelData, setIntelData] = useState<any>(null);
+
+  // TurboVec Health UI State (Section 31 & 32)
+  const [showHealthCard, setShowHealthCard] = useState(false);
+  const [healthData, setHealthData] = useState<any>(null);
+  const [loadingHealth, setLoadingHealth] = useState(false);
+
   // Batch Import Modal State
   const [showImportModal, setShowImportModal] = useState(false);
   const [importText, setImportText] = useState("");
   const [importing, setImporting] = useState(false);
 
-  const fetchOpportunities = async () => {
+  const fetchOpportunities = async (overrideSmartQuery?: string) => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -66,10 +87,17 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
       if (selectedPriority !== "ALL") params.set("priority", selectedPriority);
       if (selectedStatus !== "ALL") params.set("status", selectedStatus);
 
+      const effectiveQuery = overrideSmartQuery !== undefined ? overrideSmartQuery : smartQuery;
+      if (searchMode === "SMART" && effectiveQuery.trim()) {
+        params.set("smart", "true");
+        params.set("q", effectiveQuery.trim());
+      }
+
       const res = await fetch(`/api/admin/off-page/opportunities?${params.toString()}`);
       const json = await res.json();
       if (json.ok) {
         setOpportunities(json.opportunities || json.data || []);
+        setIsSmartActive(Boolean(json.smart));
       }
     } catch (err) {
       console.error("Failed to fetch opportunities:", err);
@@ -78,9 +106,80 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     }
   };
 
+  const fetchTurboVecHealth = async () => {
+    setLoadingHealth(true);
+    try {
+      const res = await fetch("/api/admin/off-page/turbovec/status");
+      const json = await res.json();
+      if (json.ok) {
+        setHealthData(json);
+      }
+    } catch (err) {
+      console.warn("Could not fetch TurboVec health:", err);
+    } finally {
+      setLoadingHealth(false);
+    }
+  };
+
   useEffect(() => {
     fetchOpportunities();
   }, [selectedRegion, selectedPriority, selectedStatus]);
+
+  useEffect(() => {
+    fetchTurboVecHealth();
+  }, []);
+
+  const handleExecuteSmartSearch = async (queryText?: string) => {
+    const q = queryText !== undefined ? queryText : smartQuery;
+    if (!q.trim()) {
+      setIsSmartActive(false);
+      fetchOpportunities("");
+      return;
+    }
+    setSmartSearching(true);
+    try {
+      const params = new URLSearchParams();
+      if (selectedRegion !== "ALL") params.set("region", selectedRegion);
+      if (selectedPriority !== "ALL") params.set("priority", selectedPriority);
+      if (selectedStatus !== "ALL") params.set("status", selectedStatus);
+      params.set("smart", "true");
+      params.set("q", q.trim());
+
+      const res = await fetch(`/api/admin/off-page/opportunities?${params.toString()}`);
+      const json = await res.json();
+      if (json.ok) {
+        setOpportunities(json.opportunities || json.data || []);
+        setIsSmartActive(true);
+        setFeedback(
+          <span>
+            TurboVec Smart Search matched &amp; reranked{" "}
+            <strong>{json.rerankedCount || json.total}</strong> opportunities for &quot;{q}&quot;.
+          </span>
+        );
+      }
+    } catch (err: any) {
+      console.error("Smart search failed:", err);
+    } finally {
+      setSmartSearching(false);
+    }
+  };
+
+  const handleOpenIntelModal = async (opp: OffPageOpportunity) => {
+    setInspectingOpp(opp);
+    setLoadingIntel(true);
+    setIntelData(null);
+    try {
+      const res = await fetch(`/api/admin/off-page/opportunities/intel?id=${encodeURIComponent(opp.id)}`);
+      const json = await res.json();
+      if (json.ok) {
+        setIntelData(json);
+      }
+    } catch (err) {
+      console.error("Failed fetching opportunity intel:", err);
+    } finally {
+      setLoadingIntel(false);
+    }
+  };
 
   const handleRunDiscovery = async () => {
     setDiscovering(true);
@@ -256,25 +355,59 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     }
   };
 
-  // Filter opportunities for "TODAY'S NEW OPPORTUNITIES"
+  // Filter opportunities for View Modes: ALL | TODAY | QUEUE
   const todayStr = new Date().toISOString().slice(0, 10);
   const displayedOpportunities = opportunities.filter((o) => {
     if (viewMode === "TODAY") {
       const disc = o.discovered_at ? o.discovered_at.slice(0, 10) : o.created_at ? o.created_at.slice(0, 10) : "";
       return disc === todayStr || o.status === "NEW";
     }
+    if (viewMode === "QUEUE") {
+      // High-priority opportunities ready for outreach with supporting asset
+      return (
+        (o.priority_tier === "P0" || o.priority_tier === "P1") &&
+        (o.free_status === "FREE" || o.free_status === "FREEMIUM") &&
+        (o.status === "NEW" || o.status === "QUALIFIED" || o.status === "APPROVED")
+      );
+    }
     return true;
   });
+
+  const sampleSmartQueries = [
+    "free UAE AI video opportunities",
+    "Indian SEO directory opportunities",
+    "US publications for LLM SEO",
+    "AI video unlinked mentions",
+    "GEO broken-link opportunities",
+    "AI production competitor gaps",
+    "drafts using AI case studies",
+  ];
 
   const columns: Column<OffPageOpportunity>[] = [
     {
       key: "site_name",
-      header: "Site & Domain",
+      header: "Opportunity & Site",
       sortable: true,
       render: (opp) => (
         <div>
-          <div style={{ fontWeight: 650, color: "#fff", display: "flex", alignItems: "center", gap: "6px" }}>
-            {opp.site_name}
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <button
+              onClick={() => handleOpenIntelModal(opp)}
+              style={{
+                background: "none",
+                border: "none",
+                padding: 0,
+                color: "#fff",
+                fontWeight: 650,
+                cursor: "pointer",
+                textAlign: "left",
+                textDecoration: "underline",
+                textDecorationColor: "rgba(255,255,255,0.2)",
+              }}
+              title="Click to view TurboVec Semantic Intelligence & Similar Opportunities"
+            >
+              {opp.site_name}
+            </button>
             {opp.exact_submission_url && (
               <a
                 href={opp.exact_submission_url}
@@ -288,6 +421,20 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
             )}
           </div>
           <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>{opp.domain}</div>
+          {/* Smart Search Match Reason */}
+          {(opp as any).why_matches && (
+            <div
+              style={{
+                fontSize: "0.68rem",
+                color: "var(--dgs-brand-cyan)",
+                marginTop: "3px",
+                lineHeight: "1.3",
+                maxWidth: "240px",
+              }}
+            >
+              {(opp as any).why_matches}
+            </div>
+          )}
         </div>
       ),
     },
@@ -331,7 +478,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     },
     {
       key: "category",
-      header: "Opportunity Type",
+      header: "Type",
       sortable: true,
       render: (opp) => (
         <span style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.85)" }}>
@@ -341,7 +488,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     },
     {
       key: "free_status",
-      header: "Cost Tier",
+      header: "Free Status",
       render: (opp) => (
         <span
           style={{
@@ -359,7 +506,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
     },
     {
       key: "priority_tier",
-      header: "Priority & Quality",
+      header: "Priority & Score",
       sortable: true,
       render: (opp) => {
         const colors: Record<string, { bg: string; text: string }> = {
@@ -369,6 +516,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           P3: { bg: "rgba(156, 163, 175, 0.2)", text: "#9ca3af" },
         };
         const c = colors[opp.priority_tier] || colors.P3;
+        const relevance = (opp as any).semantic_relevance;
         return (
           <div>
             <span
@@ -383,32 +531,57 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
             >
               {opp.priority_tier}
             </span>
-            <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.5)", marginTop: "2px" }}>
-              Auth: {opp.authority_score || 85}
-            </div>
+            {relevance !== undefined ? (
+              <div
+                style={{
+                  fontSize: "0.68rem",
+                  color: "#34d399",
+                  fontWeight: 700,
+                  marginTop: "2px",
+                }}
+                title="Semantic Relevance determined by TurboVec vector similarity"
+              >
+                {(relevance * 100).toFixed(0)}% Relevance
+              </div>
+            ) : (
+              <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.5)", marginTop: "2px" }}>
+                Score: {opp.authority_score || 85}
+              </div>
+            )}
           </div>
         );
       },
     },
     {
       key: "recommended_dgs_target_page",
-      header: "Target DGS Page",
-      render: (opp) => (
-        <span
-          style={{
-            fontSize: "0.72rem",
-            color: "rgba(255,255,255,0.7)",
-            maxWidth: "150px",
-            display: "inline-block",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-          title={opp.recommended_dgs_target_page}
-        >
-          {opp.recommended_dgs_target_page.replace("https://www.dgeniussolutions.com", "") || "/"}
-        </span>
-      ),
+      header: "Recommended Target Page",
+      render: (opp) => {
+        const path = opp.recommended_dgs_target_page.replace("https://www.dgeniussolutions.com", "") || "/";
+        return (
+          <div>
+            <span
+              style={{
+                fontSize: "0.72rem",
+                color: "var(--dgs-brand-cyan)",
+                fontFamily: "monospace",
+                maxWidth: "160px",
+                display: "inline-block",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+              title={opp.recommended_dgs_target_page}
+            >
+              {path}
+            </span>
+            {opp.recommended_service && (
+              <div style={{ fontSize: "0.66rem", color: "rgba(255,255,255,0.4)" }}>
+                {opp.recommended_service}
+              </div>
+            )}
+          </div>
+        );
+      },
     },
     {
       key: "status",
@@ -471,6 +644,14 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
           <button
+            onClick={() => setShowHealthCard(!showHealthCard)}
+            className="dgs-saas-btn secondary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+          >
+            <Activity size={14} color="var(--dgs-brand-cyan)" /> TurboVec Status
+          </button>
+
+          <button
             onClick={() => setShowImportModal(true)}
             className="dgs-saas-btn secondary"
             style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
@@ -487,6 +668,229 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
             <RefreshCw size={14} className={discovering ? "animate-spin" : ""} />
             {discovering ? "Checking Discovery Feeds..." : "Run Daily Discovery"}
           </button>
+        </div>
+      </div>
+
+      {/* TurboVec Health & Discovery Separation UI (Section 31 & 32) */}
+      {showHealthCard && healthData && (
+        <div
+          className="dgs-saas-card"
+          style={{
+            padding: "16px 20px",
+            background: "linear-gradient(135deg, rgba(0, 198, 255, 0.05) 0%, rgba(112, 0, 255, 0.05) 100%)",
+            border: "1px solid rgba(0, 198, 255, 0.3)",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Cpu size={18} color="var(--dgs-brand-cyan)" />
+              <h3 style={{ margin: 0, fontSize: "0.95rem", color: "#fff", fontWeight: 700 }}>
+                TURBOVEC STATUS — Private Semantic Authority Intelligence
+              </h3>
+            </div>
+            <button
+              onClick={() => setShowHealthCard(false)}
+              style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+              gap: "10px",
+              fontSize: "0.78rem",
+            }}
+          >
+            <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Engine &amp; Version</div>
+              <div style={{ fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                {healthData.engine} v{healthData.version}
+              </div>
+            </div>
+
+            <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Embedding Model</div>
+              <div style={{ fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                {healthData.model} ({healthData.dimension}d)
+              </div>
+            </div>
+
+            <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Active Content Docs</div>
+              <div style={{ fontWeight: 700, color: "var(--dgs-brand-cyan)", marginTop: "2px" }}>
+                {healthData.active_content_documents} documents
+              </div>
+            </div>
+
+            <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Active Opportunities</div>
+              <div style={{ fontWeight: 700, color: "#34d399", marginTop: "2px" }}>
+                {healthData.active_opportunities} indexed
+              </div>
+            </div>
+
+            <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Worker / Socket</div>
+              <div style={{ fontWeight: 700, color: "#34d399", marginTop: "2px" }}>
+                ● {healthData.worker_status} (Unix Socket)
+              </div>
+            </div>
+
+            <div style={{ padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px" }}>
+              <div style={{ color: "rgba(255,255,255,0.5)" }}>Index Size &amp; Fail-Safe</div>
+              <div style={{ fontWeight: 700, color: "#fff", marginTop: "2px" }}>
+                {healthData.index_size} • {healthData.failsafe_status}
+              </div>
+            </div>
+          </div>
+
+          {/* Explicit Separation from Discovery Status (Section 32) */}
+          <div
+            style={{
+              marginTop: "12px",
+              padding: "8px 12px",
+              borderRadius: "6px",
+              background: "rgba(245, 158, 11, 0.08)",
+              border: "1px solid rgba(245, 158, 11, 0.25)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontSize: "0.75rem",
+              flexWrap: "wrap",
+              gap: "6px",
+            }}
+          >
+            <div>
+              <span style={{ color: "#fbbf24", fontWeight: 700 }}>DISCOVERY STATUS:</span>{" "}
+              <span style={{ color: "#fff" }}>{healthData.discovery_provider_status}</span>
+            </div>
+            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.72rem" }}>
+              {healthData.discovery_note}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SMART SEARCH BAR (Section 4.1) */}
+      <div
+        className="dgs-saas-card"
+        style={{
+          padding: "16px 20px",
+          background: isSmartActive
+            ? "linear-gradient(135deg, rgba(0, 198, 255, 0.08) 0%, rgba(112, 0, 255, 0.08) 100%)"
+            : "rgba(255, 255, 255, 0.02)",
+          border: isSmartActive ? "1px solid var(--dgs-brand-cyan)" : "1px solid rgba(255, 255, 255, 0.08)",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px", flexWrap: "wrap", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Sparkles size={16} color="var(--dgs-brand-cyan)" />
+            <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#fff", letterSpacing: "0.4px" }}>
+              SMART SEARCH (TurboVec Semantic Allowlist Reranking)
+            </span>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {isSmartActive && (
+              <button
+                onClick={() => {
+                  setSmartQuery("");
+                  setIsSmartActive(false);
+                  fetchOpportunities("");
+                }}
+                className="dgs-saas-btn secondary"
+                style={{ fontSize: "0.72rem", padding: "4px 8px" }}
+              >
+                Clear Smart Filter
+              </button>
+            )}
+            <span
+              style={{
+                fontSize: "0.72rem",
+                padding: "2px 8px",
+                borderRadius: "4px",
+                background: "rgba(0, 198, 255, 0.15)",
+                color: "var(--dgs-brand-cyan)",
+                fontWeight: 700,
+              }}
+            >
+              IdMapIndex 4-bit Embeddings
+            </span>
+          </div>
+        </div>
+
+        <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+          <input
+            type="text"
+            value={smartQuery}
+            onChange={(e) => setSmartQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setSearchMode("SMART");
+                handleExecuteSmartSearch();
+              }
+            }}
+            placeholder="e.g. free UAE AI video opportunities, Indian SEO directory opportunities, US publications for LLM SEO..."
+            style={{
+              flex: 1,
+              padding: "10px 14px",
+              borderRadius: "6px",
+              background: "#1f2937",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
+              color: "#fff",
+              fontSize: "0.85rem",
+            }}
+          />
+          <button
+            onClick={() => {
+              setSearchMode("SMART");
+              handleExecuteSmartSearch();
+            }}
+            disabled={smartSearching}
+            className="dgs-saas-btn primary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px", whiteSpace: "nowrap" }}
+          >
+            <Sparkles size={14} className={smartSearching ? "animate-spin" : ""} />
+            {smartSearching ? "Reranking..." : "Smart Search"}
+          </button>
+        </div>
+
+        {/* Query Preset Chips (Section 4.1 Examples) */}
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
+          <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.5)" }}>Sample Queries:</span>
+          {sampleSmartQueries.map((q) => (
+            <button
+              key={q}
+              onClick={() => {
+                setSmartQuery(q);
+                setSearchMode("SMART");
+                handleExecuteSmartSearch(q);
+              }}
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "4px",
+                padding: "3px 8px",
+                color: "rgba(255,255,255,0.8)",
+                fontSize: "0.7rem",
+                cursor: "pointer",
+                transition: "all 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as any).style.borderColor = "var(--dgs-brand-cyan)";
+                (e.currentTarget as any).style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as any).style.borderColor = "rgba(255,255,255,0.1)";
+                (e.currentTarget as any).style.color = "rgba(255,255,255,0.8)";
+              }}
+            >
+              {q}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -509,7 +913,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
         </div>
       )}
 
-      {/* Main View Queue Switcher */}
+      {/* Main View Queue Switcher (Section 12: Team Action Queue) */}
       <div
         style={{
           display: "flex",
@@ -519,6 +923,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           background: "rgba(255,255,255,0.02)",
           border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: "var(--dgs-radius-md)",
+          flexWrap: "wrap",
         }}
       >
         <button
@@ -533,7 +938,23 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           className={`dgs-saas-chip ${viewMode === "TODAY" ? "primary" : ""}`}
           style={{ cursor: "pointer", border: "none", fontWeight: 700 }}
         >
-          TODAY'S NEW OPPORTUNITIES ({displayedOpportunities.length})
+          TODAY&apos;S NEW OPPORTUNITIES ({opportunities.filter((o) => o.status === "NEW").length})
+        </button>
+        <button
+          onClick={() => setViewMode("QUEUE")}
+          className={`dgs-saas-chip ${viewMode === "QUEUE" ? "primary" : ""}`}
+          style={{ cursor: "pointer", border: "none", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "5px" }}
+        >
+          <Zap size={12} color="#fbbf24" /> SEMANTIC OUTREACH QUEUE (
+          {
+            opportunities.filter(
+              (o) =>
+                (o.priority_tier === "P0" || o.priority_tier === "P1") &&
+                (o.free_status === "FREE" || o.free_status === "FREEMIUM") &&
+                (o.status === "NEW" || o.status === "QUALIFIED" || o.status === "APPROVED")
+            ).length
+          }
+          )
         </button>
       </div>
 
@@ -597,7 +1018,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           columns={columns}
           data={displayedOpportunities}
           keyExtractor={(item) => item.id}
-          searchPlaceholder="Search site, domain, category, target page..."
+          searchPlaceholder="Filter current table view..."
           searchFilter={(item, q) =>
             item.site_name.toLowerCase().includes(q) ||
             item.domain.toLowerCase().includes(q) ||
@@ -607,11 +1028,19 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           actions={(item) => (
             <div style={{ display: "flex", gap: "6px" }}>
               <button
+                onClick={() => handleOpenIntelModal(item)}
+                className="dgs-saas-btn secondary"
+                style={{ fontSize: "0.72rem", padding: "4px 8px", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                title="Inspect Similar Opportunities, Duplicate Checks & Target Pages"
+              >
+                <Info size={11} /> Intel
+              </button>
+              <button
                 onClick={() => handleOpenOutreachModal(item)}
                 className="dgs-saas-btn primary"
                 style={{ fontSize: "0.72rem", padding: "4px 8px", display: "inline-flex", alignItems: "center", gap: "4px" }}
               >
-                <Send size={11} /> Create Draft
+                <Send size={11} /> Draft
               </button>
               <button
                 onClick={() => {
@@ -629,10 +1058,266 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
           emptyMessage={
             viewMode === "TODAY"
               ? "NO NET-NEW VERIFIED OPPORTUNITIES FOUND TODAY"
+              : viewMode === "QUEUE"
+              ? "No priority items currently pending in Semantic Outreach Queue."
               : "No opportunities match your filter."
           }
         />
       </div>
+
+      {/* Opportunity Detail & Intelligence Modal (Sections 5, 6, 7, 8, 10, 11) */}
+      {inspectingOpp && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.8)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+            padding: "16px",
+          }}
+        >
+          <div
+            className="dgs-saas-card"
+            style={{
+              width: "100%",
+              maxWidth: "760px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              padding: "24px",
+              background: "#111827",
+              border: "1px solid rgba(255,255,255,0.15)",
+            }}
+          >
+            {/* Header */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Sparkles size={18} color="var(--dgs-brand-cyan)" />
+                  <h3 style={{ margin: 0, color: "#fff", fontSize: "1.15rem", fontWeight: 700 }}>
+                    {inspectingOpp.site_name}
+                  </h3>
+                  <span
+                    style={{
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      background: "rgba(0, 198, 255, 0.15)",
+                      color: "var(--dgs-brand-cyan)",
+                    }}
+                  >
+                    {inspectingOpp.region}
+                  </span>
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)", marginTop: "2px" }}>
+                  {inspectingOpp.domain} • Category: {inspectingOpp.category} • Cost: {inspectingOpp.free_status}
+                </div>
+              </div>
+              <button
+                onClick={() => setInspectingOpp(null)}
+                style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {loadingIntel ? (
+              <div style={{ padding: "40px", textAlign: "center", color: "rgba(255,255,255,0.6)" }}>
+                <RefreshCw size={24} className="animate-spin" style={{ margin: "0 auto 10px auto" }} />
+                Retrieving TurboVec semantic intelligence, duplicate check &amp; similar opportunities...
+              </div>
+            ) : intelData ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {/* Section 6: Semantic Duplicate Check Badge */}
+                <div
+                  style={{
+                    padding: "12px 16px",
+                    borderRadius: "8px",
+                    background:
+                      intelData.duplicate_check?.status === "LIKELY_DUPLICATE"
+                        ? "rgba(239, 68, 68, 0.12)"
+                        : intelData.duplicate_check?.status === "POSSIBLE_DUPLICATE"
+                        ? "rgba(245, 158, 11, 0.12)"
+                        : "rgba(16, 185, 129, 0.12)",
+                    border: `1px solid ${
+                      intelData.duplicate_check?.status === "LIKELY_DUPLICATE"
+                        ? "#ef4444"
+                        : intelData.duplicate_check?.status === "POSSIBLE_DUPLICATE"
+                        ? "#f59e0b"
+                        : "#10b981"
+                    }`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: "8px",
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                      SEMANTIC DUPLICATE CHECK
+                    </div>
+                    <div
+                      style={{
+                        fontWeight: 800,
+                        fontSize: "0.95rem",
+                        marginTop: "2px",
+                        color:
+                          intelData.duplicate_check?.status === "LIKELY_DUPLICATE"
+                            ? "#ef4444"
+                            : intelData.duplicate_check?.status === "POSSIBLE_DUPLICATE"
+                            ? "#fbbf24"
+                            : "#34d399",
+                      }}
+                    >
+                      {intelData.duplicate_check?.status?.replace(/_/g, " ") || "UNIQUE"} (
+                      {((intelData.duplicate_check?.similarity || 0) * 100).toFixed(1)}% Max Similarity)
+                    </div>
+                    <div style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.7)", marginTop: "2px" }}>
+                      {intelData.duplicate_check?.reason || "No high-similarity duplicates found in MariaDB registry."}
+                    </div>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      padding: "4px 8px",
+                      borderRadius: "4px",
+                      background: "rgba(255,255,255,0.08)",
+                      color: "#fff",
+                    }}
+                  >
+                    Action: {intelData.duplicate_check?.recommended_action || "ALLOW"}
+                  </span>
+                </div>
+
+                {/* Section 7 & 10 & 11: Recommended Target Page */}
+                <div style={{ padding: "14px", borderRadius: "8px", background: "#1f2937", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div style={{ fontSize: "0.72rem", color: "var(--dgs-brand-cyan)", fontWeight: 700, letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                    RECOMMENDED TARGET PAGE
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "4px", flexWrap: "wrap", gap: "6px" }}>
+                    <div style={{ fontWeight: 700, color: "#fff", fontSize: "0.9rem" }}>
+                      {intelData.recommended_target_page?.page || inspectingOpp.recommended_dgs_target_page}
+                    </div>
+                    <span style={{ fontSize: "0.72rem", color: "#34d399", fontWeight: 700 }}>
+                      {((intelData.recommended_target_page?.semantic_relevance || 0.85) * 100).toFixed(0)}% Semantic Match
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "0.76rem", color: "rgba(255,255,255,0.65)", marginTop: "6px", lineHeight: "1.4" }}>
+                    <strong>Why It Matches:</strong> {intelData.recommended_target_page?.reason || "Topically matches DGS service capabilities and regional market profile."}
+                  </div>
+                </div>
+
+                {/* Section 8: Best DGS Assets to Cite (Up to 3-4 items) */}
+                <div>
+                  <div style={{ fontSize: "0.74rem", color: "#fff", fontWeight: 700, marginBottom: "8px", letterSpacing: "0.5px" }}>
+                    BEST DGS ASSETS TO CITE (TURBOVEC CONTENT RETRIEVAL)
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "8px" }}>
+                    {intelData.best_assets?.slice(0, 4).map((a: any, idx: number) => (
+                      <div
+                        key={idx}
+                        style={{
+                          padding: "10px 12px",
+                          borderRadius: "6px",
+                          background: "#1f2937",
+                          border: "1px solid rgba(255,255,255,0.08)",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "4px",
+                        }}
+                      >
+                        <div style={{ fontWeight: 650, color: "#fff", fontSize: "0.78rem" }}>
+                          {a.title}
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem", color: "rgba(255,255,255,0.5)" }}>
+                          <span>{a.entity_type || "ARTICLE"}</span>
+                          <span style={{ color: "#34d399", fontWeight: 700 }}>
+                            {((a.semantic_relevance || 0.7) * 100).toFixed(0)}% Relevance
+                          </span>
+                        </div>
+                        <div style={{ fontSize: "0.7rem", color: "var(--dgs-brand-cyan)", marginTop: "2px" }}>
+                          {a.why_matches || a.why_to_cite || "Topical grounding evidence."}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Section 5: Similar Opportunities (Top 5) */}
+                <div>
+                  <div style={{ fontSize: "0.74rem", color: "#fff", fontWeight: 700, marginBottom: "8px", letterSpacing: "0.5px" }}>
+                    SIMILAR OPPORTUNITIES IN PIPELINE (TOP 5)
+                  </div>
+                  {intelData.similar_opportunities && intelData.similar_opportunities.length > 0 ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      {intelData.similar_opportunities.map((sim: any, idx: number) => (
+                        <div
+                          key={idx}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            padding: "8px 12px",
+                            borderRadius: "6px",
+                            background: "rgba(255,255,255,0.03)",
+                            border: "1px solid rgba(255,255,255,0.06)",
+                            fontSize: "0.76rem",
+                          }}
+                        >
+                          <div>
+                            <div style={{ fontWeight: 650, color: "#fff" }}>{sim.site_name}</div>
+                            <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.5)" }}>
+                              {sim.domain} • {sim.region} • {sim.category}
+                            </div>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <span style={{ color: "var(--dgs-brand-cyan)", fontWeight: 700, fontSize: "0.74rem" }}>
+                              {((sim.semantic_similarity || 0.75) * 100).toFixed(1)}% Sim
+                            </span>
+                            <div style={{ fontSize: "0.66rem", color: "rgba(255,255,255,0.4)" }}>
+                              Status: {sim.status}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>
+                      No highly similar records found in pipeline (Distinct opportunity).
+                    </div>
+                  )}
+                </div>
+
+                {/* Modal Footer Actions */}
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "8px" }}>
+                  <button onClick={() => setInspectingOpp(null)} className="dgs-saas-btn secondary">
+                    Close
+                  </button>
+                  <button
+                    onClick={() => {
+                      const opp = inspectingOpp;
+                      setInspectingOpp(null);
+                      handleOpenOutreachModal(opp);
+                    }}
+                    className="dgs-saas-btn primary"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                  >
+                    <Send size={13} /> Create Grounded Outreach Draft
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div style={{ color: "#ef4444", fontSize: "0.82rem" }}>Could not load intelligence data.</div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Import Verified Batch Modal */}
       {showImportModal && (
@@ -779,7 +1464,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
         </div>
       )}
 
-      {/* Convert to Outreach CRM Draft Modal */}
+      {/* Convert to Outreach CRM Draft Modal (Section 9: Grounded Outreach Draft with SOURCES USED) */}
       {convertingOpp && (
         <div
           style={{
@@ -797,7 +1482,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
             className="dgs-saas-card"
             style={{
               width: "100%",
-              maxWidth: "620px",
+              maxWidth: "640px",
               padding: "24px",
               background: "#111827",
               border: "1px solid rgba(255,255,255,0.12)",
@@ -807,7 +1492,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <Send size={18} color="var(--dgs-brand-cyan)" />
                 <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>
-                  Save Outreach Draft: {convertingOpp.site_name}
+                  Save Grounded Outreach Draft: {convertingOpp.site_name}
                 </h3>
               </div>
               <button onClick={() => setConvertingOpp(null)} style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}>
@@ -832,7 +1517,7 @@ export default function OpportunitiesClientView({ initialOpportunities }: Props)
               }}
             >
               <div>
-                Sender: <strong style={{ color: "#fff" }}>Kohin Bellara - CEO D'Genius Solutions</strong>
+                Sender: <strong style={{ color: "#fff" }}>Kohin Bellara - CEO D&apos;Genius Solutions</strong>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "5px", color: "var(--dgs-brand-cyan)", fontWeight: 700 }}>
                 <Sparkles size={13} className={grounding ? "animate-spin" : ""} />
