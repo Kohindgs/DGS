@@ -1,28 +1,14 @@
 import { cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "./db";
-import {
-  seedCompetitorsIfEmpty,
-  seedMentionsAndCitationsIfEmpty,
-  seedTargetPagesIfEmpty,
-} from "./authority-engine";
-import { seedOpportunitiesIfEmpty } from "./discovery";
-import { seedOutreachIfEmpty } from "./outreach";
-import { calculateLinkDecayMetrics, seedBacklinksIfEmpty } from "./backlinks";
+import { calculateLinkDecayMetrics } from "./backlinks";
 import type { OffPageDashboardMetrics, RegionCode } from "./types";
 
 /**
- * Initializes all off-page datasets if empty and compiles full dashboard metrics & charts.
+ * Compiles full dashboard metrics & charts strictly backed by actual MariaDB evidence.
+ * No synthetic fallbacks, no automatic demo re-seeding.
  */
 export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics> {
   await ensureOffPageTablesExist();
-
-  // Run seed initializers if empty (fail-safe)
-  await seedOpportunitiesIfEmpty();
-  await seedBacklinksIfEmpty();
-  await seedCompetitorsIfEmpty();
-  await seedTargetPagesIfEmpty();
-  await seedMentionsAndCitationsIfEmpty();
-  await seedOutreachIfEmpty();
 
   // 1. Opportunities queries
   const { rows: opps } = await cmsQuery<{
@@ -68,7 +54,7 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
     if (o.status === "VERIFIED") verifiedCount++;
 
     if (o.category === "DIGITAL_PR" || o.category === "EXPERT_CONTRIBUTION") prOppsCount++;
-    if (o.category === "PARTNERSHIP" || o.category === "CLIENT_PARTNER") partnershipOppsCount++;
+    if (o.category === "PARTNERSHIP" || o.category === "ASSOCIATION") partnershipOppsCount++;
     if (o.category === "LOCAL_CITATION" || o.category === "BUSINESS_LISTING") citationOppsCount++;
 
     const pKey = o.recommended_dgs_target_page.replace("https://www.dgeniussolutions.com", "") || "/";
@@ -139,8 +125,8 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
       repliesCount += c;
     }
   }
-  const outreachReplyRate = totalPitches > 0 ? Math.round((repliesCount / totalPitches) * 100) : 42;
-  const submissionToLinkConversion = submittedCount > 0 ? Math.round((verifiedCount / submittedCount) * 100) : 38;
+  const outreachReplyRate = totalPitches > 0 ? Math.round((repliesCount / totalPitches) * 100) : 0;
+  const submissionToLinkConversion = submittedCount > 0 ? Math.round((verifiedCount / submittedCount) * 100) : 0;
 
   // 6. Decay metrics
   const decay = await calculateLinkDecayMetrics();
@@ -172,15 +158,86 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
   const opportunityPipeline = Object.entries(stageCounts).map(([stage, count]) => ({ stage, count }));
   const linkTypeDistribution = Object.entries(linkTypeCounts).map(([type, count]) => ({ type, count }));
 
+  // 7. TODAY metrics (exact database timestamps)
+  const { rows: todayOpps } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_opportunities WHERE (discovered_at IS NOT NULL AND DATE(discovered_at) = CURRENT_DATE) OR DATE(created_at) = CURRENT_DATE`
+  );
+  const { rows: todayWon } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_backlinks WHERE (live_at IS NOT NULL AND DATE(live_at) = CURRENT_DATE) OR (DATE(created_at) = CURRENT_DATE AND status IN ('LIVE', 'VERIFIED'))`
+  );
+  const { rows: todayLost } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_backlinks WHERE (lost_at IS NOT NULL AND DATE(lost_at) = CURRENT_DATE) OR (DATE(updated_at) = CURRENT_DATE AND status = 'LOST')`
+  );
+  const { rows: todayMentions } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_brand_mentions WHERE is_linked = 0 AND (DATE(detected_at) = CURRENT_DATE OR DATE(created_at) = CURRENT_DATE)`
+  );
+  const { rows: draftReviewRows } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_outreach WHERE stage = 'DRAFT'`
+  );
+  const { rows: followUpsDueRows } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_outreach WHERE next_follow_up IS NOT NULL AND DATE(next_follow_up) <= CURRENT_DATE AND stage IN ('OUTREACH', 'FOLLOW_UP')`
+  );
+
+  const today = {
+    newOpportunitiesToday: Number(todayOpps[0]?.c || 0),
+    newLiveBacklinksToday: Number(todayWon[0]?.c || 0),
+    lostBacklinksToday: Number(todayLost[0]?.c || 0),
+    unlinkedMentionsToday: Number(todayMentions[0]?.c || 0),
+    draftsAwaitingReview: Number(draftReviewRows[0]?.c || 0),
+    followUpsDueToday: Number(followUpsDueRows[0]?.c || 0),
+  };
+
+  // 8. THIS MONTH metrics (exact month timestamp boundary)
+  const { rows: monthSubmissions } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_outreach WHERE submitted_at IS NOT NULL AND submitted_at >= DATE_FORMAT(NOW(), '%Y-%m-01')`
+  );
+  const { rows: monthLiveWon } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_backlinks WHERE (live_at IS NOT NULL AND live_at >= DATE_FORMAT(NOW(), '%Y-%m-01')) OR (created_at >= DATE_FORMAT(NOW(), '%Y-%m-01') AND status IN ('LIVE', 'VERIFIED'))`
+  );
+  const { rows: monthVerified } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_backlinks WHERE (verified_at IS NOT NULL AND verified_at >= DATE_FORMAT(NOW(), '%Y-%m-01')) OR (status = 'VERIFIED' AND updated_at >= DATE_FORMAT(NOW(), '%Y-%m-01'))`
+  );
+  const { rows: monthDomains } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(DISTINCT source_domain) as c FROM off_page_backlinks WHERE (live_at IS NOT NULL AND live_at >= DATE_FORMAT(NOW(), '%Y-%m-01')) OR (created_at >= DATE_FORMAT(NOW(), '%Y-%m-01') AND status IN ('LIVE', 'VERIFIED'))`
+  );
+
+  const thisMonth = {
+    submissionsMade: Number(monthSubmissions[0]?.c || 0),
+    liveLinksWon: Number(monthLiveWon[0]?.c || 0),
+    verifiedLinks: Number(monthVerified[0]?.c || 0),
+    referringDomainsAdded: Number(monthDomains[0]?.c || 0),
+    referralSessions: totalRefSessions > 0 ? totalRefSessions : ("DATA_UNAVAILABLE" as const),
+    referralLeads: totalRefLeads > 0 ? totalRefLeads : ("DATA_UNAVAILABLE" as const),
+  };
+
+  // 9. TEAM ACTION QUEUE
+  const { rows: newOppsCountRows } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_opportunities WHERE status = 'NEW'`
+  );
+  const { rows: submittedOutreachRows } = await cmsQuery<{ c: number }>(
+    `SELECT COUNT(*) as c FROM off_page_outreach WHERE stage IN ('SUBMITTED', 'FOLLOW_UP')`
+  );
+
+  const actionQueue = {
+    reviewOpportunities: Number(newOppsCountRows[0]?.c || 0),
+    reviewDrafts: today.draftsAwaitingReview,
+    followUpPitches: Number(submittedOutreachRows[0]?.c || 0),
+    reclaimLost: lostCount + brokenCount,
+    convertMentions: unlinkedBrandMentions,
+  };
+
   return {
-    totalReferringDomains: uniqueDomains.size || 12,
-    liveBacklinks: liveCount || 18,
-    newBacklinks7d: decay.window7d.newLinks || 2,
-    newBacklinks30d: decay.window30d.newLinks || 6,
-    lostBacklinks: lostCount || 0,
-    brokenBacklinks: brokenCount || 0,
-    recoveredBacklinks: recoveredCount || 1,
-    unlinkedBrandMentions: unlinkedBrandMentions || 3,
+    today,
+    thisMonth,
+    actionQueue,
+    totalReferringDomains: uniqueDomains.size,
+    liveBacklinks: liveCount,
+    newBacklinks7d: decay.window7d.newLinks,
+    newBacklinks30d: decay.window30d.newLinks,
+    lostBacklinks: lostCount,
+    brokenBacklinks: brokenCount,
+    recoveredBacklinks: recoveredCount,
+    unlinkedBrandMentions,
     authorityOpportunities,
     competitorGapOpportunities,
     digitalPrOpportunities: prOppsCount,
@@ -190,8 +247,8 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
     verifiedLinks: verifiedCount,
     outreachReplyRate,
     submissionToLinkConversion,
-    referralSessions: totalRefSessions || 940,
-    referralLeads: totalRefLeads || 47,
+    referralSessions: totalRefSessions,
+    referralLeads: totalRefLeads,
     regionalBreakdown: {
       india: indiaCount,
       uae: uaeCount,
@@ -200,46 +257,21 @@ export async function getOffPageDashboardData(): Promise<OffPageDashboardMetrics
     },
     linkRetentionRate: decay.linkRetentionRate,
     charts: {
-      newVsLost: [
-        { date: "2026-09-07", newLinks: 1, lostLinks: 0 },
-        { date: "2026-09-14", newLinks: 2, lostLinks: 0 },
-        { date: "2026-09-21", newLinks: 3, lostLinks: 0 },
-        { date: "2026-09-28", newLinks: 2, lostLinks: 0 },
-        { date: "2026-10-04", newLinks: 1, lostLinks: 0 },
-      ],
-      domainGrowth: [
-        { month: "2026-06", domains: 6 },
-        { month: "2026-07", domains: 8 },
-        { month: "2026-08", domains: 10 },
-        { month: "2026-09", domains: 12 },
-        { month: "2026-10", domains: 14 },
-      ],
+      newVsLost: [],
+      domainGrowth: [],
       regionDistribution,
       targetPageDistribution,
       opportunityPipeline,
       linkTypeDistribution,
       anchorDistribution,
-      referralTrafficTrend: [
-        { date: "2026-09-07", sessions: 180, leads: 9 },
-        { date: "2026-09-14", sessions: 210, leads: 11 },
-        { date: "2026-09-21", sessions: 240, leads: 12 },
-        { date: "2026-09-28", sessions: 260, leads: 13 },
-        { date: "2026-10-04", sessions: 285, leads: 15 },
-      ],
+      referralTrafficTrend: [],
       outreachConversion: [
-        { stage: "Pitched", count: totalPitches || 16 },
-        { stage: "Replied", count: repliesCount || 7 },
-        { stage: "Negotiating", count: 3 },
-        { stage: "Submitted", count: submittedCount || 4 },
-        { stage: "Verified Live", count: verifiedCount || 2 },
+        { stage: "Pitched", count: totalPitches },
+        { stage: "Replied", count: repliesCount },
+        { stage: "Submitted", count: submittedCount },
+        { stage: "Verified Live", count: verifiedCount },
       ],
-      authorityScoreTrend: [
-        { month: "2026-06", score: 72 },
-        { month: "2026-07", score: 76 },
-        { month: "2026-08", score: 81 },
-        { month: "2026-09", score: 85 },
-        { month: "2026-10", score: 88 },
-      ],
+      authorityScoreTrend: [],
     },
   };
 }

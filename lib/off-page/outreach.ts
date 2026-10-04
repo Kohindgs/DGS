@@ -8,9 +8,16 @@ import type {
   PitchType,
 } from "./types";
 
+export const DGS_STANDARD_SENDER = "Kohin Bellara - CEO D'Genius Solutions";
+export const DGS_STANDARD_SIGNATURE = `Best regards,
+
+Kohin Bellara
+CEO, D'Genius Solutions
+https://www.dgeniussolutions.com/`;
+
 /**
- * Generates an AI outreach pitch draft for an opportunity.
- * Tailors pitch subject, body, value proposition, and evidence.
+ * Generates an outreach pitch draft for an opportunity.
+ * Uses exact sender identity and factual, conservative messaging without fabricated claims.
  * Strictly requires human approval before sending.
  */
 export function generateOutreachPitchDraft(params: {
@@ -41,65 +48,56 @@ export function generateOutreachPitchDraft(params: {
   let pitchBody = "";
 
   if (category === "DIGITAL_PR" || category === "EXPERT_CONTRIBUTION" || pitchType === "EXPERT_QUOTE") {
-    pitchSubject = `Expert Commentary: Enterprise Generative Search & AI Video Benchmarks (for ${publication})`;
+    pitchSubject = `Expert Commentary: Enterprise Generative Search & AI Video Strategy (for ${publication})`;
     pitchBody = `Hi ${contactName},
 
-I hope you're having a productive week.
+I hope you are well.
 
-I noticed your recent coverage on digital marketing transformation and AI technology at ${publication}. As enterprises rapidly adopt AI Overviews and neural video production, several notable shifts in organic visibility and engagement are emerging.
+I noticed your recent coverage on digital marketing transformation and AI technology at ${publication}. As enterprises adapt to AI Overviews and modern video workflows, notable shifts in organic visibility and multi-modal discovery are taking shape.
 
-Our technical team at D'Genius Solutions recently benchmarked 500+ commercial video campaigns and generative engine search trends across India, the GCC, and North America. Key findings include:
-- A 3.8x increase in audience retention for hybrid AI-assisted video commercials versus traditional stock pipelines.
-- Measurable shifts in AI Overview citation share when structured entity data is coupled with video schema.
+At D'Genius Solutions, our team focuses on technical SEO, generative engine optimization (GEO), and enterprise AI video production for clients across India, UAE, and global markets.
 
-We'd love to offer commentary, proprietary benchmark charts, or an executive quote from our creative leadership if you're working on any upcoming features on AI marketing or commercial production.
+We would be glad to share practical commentary, technical perspectives, or an executive quote if you are working on any upcoming stories on AI marketing, search evolutions, or commercial video workflows.
 
-You can review our verified case studies and work here: ${targetPage}
+You can review our verified services and case studies here: ${targetPage}
 
-Best regards,
-DGS Editorial & Outreach Team
-D'Genius Solutions | Khar West, Mumbai | Dubai | Global`;
+${DGS_STANDARD_SIGNATURE}`;
   } else if (category === "PODCAST" || pitchType === "INTERVIEW") {
-    pitchSubject = `Guest Pitch for ${publication}: How AI Video Production is Disrupting Commercial Advertising`;
+    pitchSubject = `Guest Pitch for ${publication}: Generative AI Video Workflows and Modern Search Architecture`;
     pitchBody = `Hi ${contactName},
 
-Huge fan of the insightful conversations on ${publication}.
+I've been following the discussions on ${publication} and appreciate your thoughtful coverage of the industry.
 
-I'm reaching out to propose an interview topic that your listeners in tech, marketing, and media would find compelling:
-"From Storyboard to 4K Broadcast: How AI Video Pipelines Deliver Agency Quality at 10x Speed"
+I would like to propose a timely discussion topic that could provide genuine practical value for your audience of founders, marketers, and technology leaders:
+"Practical Generative AI Video Production & Search Visibility in the Era of AI Engines"
 
-Our leadership at D'Genius Solutions operates at the bleeding edge of AI commercial production and generative engine optimization. In this conversation, we can break down:
-1. Practical generative AI video workflows that enterprise brands are actually using today.
-2. The myth vs reality of replacing camera crews with neural rendering.
-3. How to optimize digital video assets for Google AI Overviews and multi-modal search engines.
+In this conversation, we can break down:
+1. Real-world generative AI video production pipelines that brands are deploying today.
+2. How video schema and entity structuring impact AI Overview citations.
+3. Realistic workflows that blend human creative direction with automated neural rendering.
 
-Feel free to check out our work at ${targetPage}. Would love to jump on a quick 10-minute prep call if this aligns with your editorial calendar!
+Feel free to review our work at ${targetPage}. If this aligns with your editorial calendar, I would be glad to coordinate a brief introductory conversation.
 
-Warm regards,
-DGS Creative Leadership
-D'Genius Solutions`;
+${DGS_STANDARD_SIGNATURE}`;
   } else {
     pitchSubject = `Resource Submission: ${service} for ${publication}`;
     pitchBody = `Hi ${contactName},
 
-I came across your curated resource directory at ${publication} and wanted to thank you for maintaining such a valuable guide for founders and marketing leaders.
+I came across your curated resource section at ${publication} and wanted to thank you for maintaining a helpful guide for businesses and digital leaders.
 
-I noticed your section on digital marketing and video production. I wanted to suggest including D'Genius Solutions (${targetPage}), an agency specializing in AI video production, technical SEO, and generative search intelligence.
+I noticed your directory covers digital agency services and tech innovation. I would like to suggest considering D'Genius Solutions (${targetPage}) for inclusion.
 
-We provide comprehensive audits, enterprise video case studies, and transparent service packages for growing businesses.
+D'Genius Solutions is a Mumbai-headquartered digital agency delivering AI video production, technical SEO, and generative search intelligence for clients across India, the UAE, and global markets.
 
-Would you be open to considering us for inclusion in your verified directory?
-
-Details:
+Details for your editorial team:
 - Company: D'Genius Solutions
 - URL: ${targetPage}
-- Core Focus: ${service}
-- Headquarters: Khar West, Mumbai with GCC operations in Dubai
+- Primary Focus: ${service}
+- Headquarters: Mumbai, India (serving global and regional markets)
 
-Thanks for your time and continued editorial curation!
+Thank you for your consideration and editorial curation.
 
-Best,
-DGS Operations Team`;
+${DGS_STANDARD_SIGNATURE}`;
   }
 
   return {
@@ -111,70 +109,107 @@ DGS Operations Team`;
 }
 
 /**
- * Creates an outreach CRM pipeline entry from an opportunity.
+ * Creates an outreach CRM pipeline entry from an opportunity or custom input.
+ * Default stage is DRAFT.
  */
 export async function createOutreachFromOpportunity(params: {
-  opportunityId: string;
+  opportunityId?: string;
   assignedStaff?: string;
   contactName?: string;
   email?: string;
   linkedin?: string;
   pitchType?: PitchType;
+  pitchSubject?: string;
+  pitchBody?: string;
+  stage?: OutreachStage;
+  sourceModule?: string;
+  sourceRecordId?: string;
+  targetDomain?: string;
+  targetUrl?: string;
+  targetPage?: string;
+  publication?: string;
+  createdBy?: string;
+  notes?: string;
 }): Promise<{ success: boolean; id: string }> {
   await ensureOffPageTablesExist();
 
-  const { rows } = await cmsQuery<OffPageOpportunity>(
-    `SELECT * FROM off_page_opportunities WHERE id = ? LIMIT 1`,
-    [params.opportunityId]
-  );
-  if (!rows[0]) throw new Error("Opportunity not found");
+  let opp: OffPageOpportunity | null = null;
+  if (params.opportunityId) {
+    const { rows } = await cmsQuery<OffPageOpportunity>(
+      `SELECT * FROM off_page_opportunities WHERE id = ? LIMIT 1`,
+      [params.opportunityId]
+    );
+    if (rows[0]) opp = rows[0];
+  }
 
-  const opp = rows[0];
-  const draft = generateOutreachPitchDraft({
-    siteName: opp.site_name,
-    publication: opp.domain,
-    category: opp.category,
-    targetPage: opp.recommended_dgs_target_page,
-    service: opp.recommended_service,
-    contactName: params.contactName,
-    pitchType: params.pitchType,
-  });
+  const publication = params.publication || opp?.site_name || params.targetDomain || "Unknown Publication";
+  const domain = params.targetDomain || opp?.domain || null;
+  const targetPage = params.targetPage || opp?.recommended_dgs_target_page || "https://www.dgeniussolutions.com/";
+  const submissionUrl = params.targetUrl || opp?.exact_submission_url || null;
+  const stage = params.stage || "DRAFT";
+
+  let pitchType = params.pitchType || "RESOURCE_SUGGESTION";
+  let pitchSubject = params.pitchSubject;
+  let pitchBody = params.pitchBody;
+
+  if (!pitchSubject || !pitchBody) {
+    const draft = generateOutreachPitchDraft({
+      siteName: publication,
+      publication: domain || publication,
+      category: opp?.category || "AGENCY_DIRECTORY",
+      targetPage,
+      service: opp?.recommended_service || "AI Video Production & SEO",
+      contactName: params.contactName,
+      pitchType,
+    });
+    pitchType = draft.pitchType;
+    pitchSubject = draft.pitchSubject;
+    pitchBody = draft.pitchBody;
+  }
 
   const id = `out_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
   await cmsExecute(
     `INSERT INTO off_page_outreach (
-      id, opportunity_id, contact_name, publication, email, linkedin, contact_url,
+      id, opportunity_id, source_module, source_record_id, target_domain,
+      contact_name, publication, email, linkedin, contact_url,
       assigned_staff, stage, pitch_type, pitch_subject, pitch_body, target_page,
-      submission_url, created_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'QUALIFIED', ?, ?, ?, ?, ?, NOW(), NOW())`,
+      submission_url, notes, created_by, drafted_at, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW())`,
     [
       id,
-      opp.id,
+      opp?.id || null,
+      params.sourceModule || (opp ? "OPPORTUNITIES" : "MANUAL"),
+      params.sourceRecordId || opp?.id || null,
+      domain,
       params.contactName || null,
-      opp.site_name,
+      publication,
       params.email || null,
       params.linkedin || null,
-      opp.exact_submission_url,
-      params.assignedStaff || "DGS Outreach Specialist",
-      draft.pitchType,
-      draft.pitchSubject,
-      draft.pitchBody,
-      opp.recommended_dgs_target_page,
-      opp.exact_submission_url,
+      submissionUrl,
+      params.assignedStaff || DGS_STANDARD_SENDER,
+      stage,
+      pitchType,
+      pitchSubject,
+      pitchBody,
+      targetPage,
+      submissionUrl,
+      params.notes || null,
+      params.createdBy || DGS_STANDARD_SENDER,
     ]
   );
 
-  // Update opportunity status to OUTREACH
-  await cmsExecute(
-    `UPDATE off_page_opportunities SET status = 'OUTREACH', assigned_to = ? WHERE id = ?`,
-    [params.assignedStaff || "DGS Outreach Specialist", opp.id]
-  );
+  if (opp?.id) {
+    await cmsExecute(
+      `UPDATE off_page_opportunities SET status = 'OUTREACH', assigned_to = ? WHERE id = ?`,
+      [params.assignedStaff || DGS_STANDARD_SENDER, opp.id]
+    );
+  }
 
   return { success: true, id };
 }
 
 /**
- * Updates outreach stage with audit logging and human approval guards.
+ * Updates outreach stage with audit logging and timestamp tracking.
  */
 export async function updateOutreachStage(
   outreachId: string,
@@ -195,10 +230,19 @@ export async function updateOutreachStage(
     updates.push("live_url = ?");
     values.push(liveUrl);
   }
-  if (newStage === "OUTREACH") {
-    updates.push("first_contact = IFNULL(first_contact, NOW())", "last_contact = NOW()");
+
+  if (newStage === "APPROVED") {
+    updates.push("approved_at = IFNULL(approved_at, NOW())");
+  } else if (newStage === "OUTREACH") {
+    updates.push("sent_at = IFNULL(sent_at, NOW())", "first_contact = IFNULL(first_contact, NOW())", "last_contact = NOW()");
   } else if (newStage === "FOLLOW_UP") {
     updates.push("last_contact = NOW()");
+  } else if (newStage === "SUBMITTED") {
+    updates.push("submitted_at = IFNULL(submitted_at, NOW())");
+  } else if (newStage === "LIVE") {
+    updates.push("live_at = IFNULL(live_at, NOW())");
+  } else if (newStage === "VERIFIED") {
+    updates.push("verified_at = IFNULL(verified_at, NOW())");
   }
 
   values.push(outreachId);
@@ -207,97 +251,124 @@ export async function updateOutreachStage(
     values
   );
 
-  // If marked VERIFIED or LIVE with a liveUrl, reflect in opportunity
-  if (newStage === "VERIFIED" || newStage === "LIVE") {
-    const { rows } = await cmsQuery<{ opportunity_id: string }>(
-      `SELECT opportunity_id FROM off_page_outreach WHERE id = ?`,
+  // If marked LIVE or VERIFIED with a live URL, link opportunity and create backlink if not exists
+  if ((newStage === "LIVE" || newStage === "VERIFIED") && liveUrl) {
+    const { rows } = await cmsQuery<OffPageOutreach>(
+      `SELECT * FROM off_page_outreach WHERE id = ? LIMIT 1`,
       [outreachId]
     );
-    if (rows[0]?.opportunity_id) {
+    const outreachRecord = rows[0];
+
+    if (outreachRecord?.opportunity_id) {
       await cmsExecute(
         `UPDATE off_page_opportunities SET status = 'VERIFIED', evidence = ? WHERE id = ?`,
-        [liveUrl || "Verified live link", rows[0].opportunity_id]
+        [liveUrl, outreachRecord.opportunity_id]
       );
+    }
+
+    // Auto-create or link into off_page_backlinks for monitoring
+    try {
+      const sourceDomain = new URL(liveUrl).hostname;
+      const { rows: existingLinks } = await cmsQuery<{ id: string }>(
+        `SELECT id FROM off_page_backlinks WHERE source_url = ? LIMIT 1`,
+        [liveUrl]
+      );
+
+      if (existingLinks.length === 0) {
+        const linkId = `lnk_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
+        await cmsExecute(
+          `INSERT INTO off_page_backlinks (
+            id, source_domain, source_url, target_url, target_page_type,
+            anchor_text, anchor_classification, link_rel, dofollow, nofollow,
+            first_seen_at, last_seen_at, status, http_status, source_country,
+            source_region, source_language, topical_category, authority_score,
+            outreach_id, notes, discovered_at, live_at, next_check_at, check_priority,
+            created_at, updated_at
+          ) VALUES (?, ?, ?, ?, 'SERVICE_PAGE', 'D\\'Genius Solutions', 'BRANDED', 'dofollow', 1, 0, NOW(), NOW(), 'NEW', 200, 'Global', 'GLOBAL', 'en', 'Outreach Win', 85, ?, ?, NOW(), NOW(), NOW(), 'P0', NOW(), NOW())`,
+          [
+            linkId,
+            sourceDomain,
+            liveUrl,
+            outreachRecord?.target_page || "https://www.dgeniussolutions.com/",
+            outreachId,
+            notes || "Won via outreach CRM",
+          ]
+        );
+      }
+    } catch (linkErr) {
+      console.warn("Could not auto-create backlink record from live URL:", linkErr);
     }
   }
 }
 
 /**
- * Seeds sample outreach pipeline items if empty.
+ * Updates full outreach draft fields (subject, body, contact, email, etc.)
  */
-export async function seedOutreachIfEmpty(): Promise<number> {
+export async function updateOutreachDraft(params: {
+  id: string;
+  pitchSubject?: string;
+  pitchBody?: string;
+  contactName?: string;
+  email?: string;
+  linkedin?: string;
+  targetPage?: string;
+  assignedStaff?: string;
+  notes?: string;
+  stage?: OutreachStage;
+}): Promise<void> {
   await ensureOffPageTablesExist();
 
-  const { rows: countRows } = await cmsQuery<{ total: number }>(
-    `SELECT COUNT(*) as total FROM off_page_outreach`
-  );
-  if (Number(countRows[0]?.total || 0) > 0) return 0;
+  const updates: string[] = ["updated_at = NOW()"];
+  const values: any[] = [];
 
-  const SAMPLE_OUTREACH = [
-    {
-      publication: "Featured.com (Terkel)",
-      contactName: "Brett Farmiloe",
-      email: "editors@featured.com",
-      stage: "SUBMITTED" as OutreachStage,
-      pitchType: "EXPERT_QUOTE" as PitchType,
-      targetPage: "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
-      subject: "Expert Quote: Generative AI Video ROI in 2026",
-      notes: "Answer submitted for Fast Company syndicate prompt #4928.",
-    },
-    {
-      publication: "Connectively (HARO)",
-      contactName: "Sarah Jenkins (Tech Journalist)",
-      email: "query-4019@connectively.us",
-      stage: "OUTREACH" as OutreachStage,
-      pitchType: "GUEST_POST" as PitchType,
-      targetPage: "https://www.dgeniussolutions.com/services/llm-seo-service/",
-      subject: "Pitch: How AI Overviews Rewrote the SEO Playbook",
-      notes: "Pitched commentary for upcoming Q4 search trends report.",
-    },
-    {
-      publication: "Arabian Business Dubai",
-      contactName: "Editorial Tech Desk",
-      email: "editorial@arabianbusiness.com",
-      stage: "NEGOTIATING" as OutreachStage,
-      pitchType: "INTERVIEW" as PitchType,
-      targetPage: "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
-      subject: "Interview Pitch: The Dubai Creative AI Revolution",
-      notes: "Editor requested executive headshot and office background information.",
-    },
-    {
-      publication: "NASSCOM Community",
-      contactName: "Community Editors",
-      email: "community@nasscom.in",
-      stage: "VERIFIED" as OutreachStage,
-      pitchType: "RESOURCE_SUGGESTION" as PitchType,
-      targetPage: "https://www.dgeniussolutions.com/services/geo/",
-      subject: "Technical Article: Generative Engine Optimization Standards",
-      liveUrl: "https://community.nasscom.in/post/future-of-enterprise-geo",
-      notes: "Article approved and published live with DoFollow backlink.",
-    },
-  ];
-
-  for (const o of SAMPLE_OUTREACH) {
-    const id = `out_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
-    await cmsExecute(
-      `INSERT INTO off_page_outreach (
-        id, contact_name, publication, email, stage, pitch_type, pitch_subject,
-        target_page, live_url, notes, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-      [
-        id,
-        o.contactName,
-        o.publication,
-        o.email,
-        o.stage,
-        o.pitchType,
-        o.subject,
-        o.targetPage,
-        o.liveUrl || null,
-        o.notes,
-      ]
-    );
+  if (params.pitchSubject !== undefined) {
+    updates.push("pitch_subject = ?");
+    values.push(params.pitchSubject);
+  }
+  if (params.pitchBody !== undefined) {
+    updates.push("pitch_body = ?");
+    values.push(params.pitchBody);
+  }
+  if (params.contactName !== undefined) {
+    updates.push("contact_name = ?");
+    values.push(params.contactName);
+  }
+  if (params.email !== undefined) {
+    updates.push("email = ?");
+    values.push(params.email);
+  }
+  if (params.linkedin !== undefined) {
+    updates.push("linkedin = ?");
+    values.push(params.linkedin);
+  }
+  if (params.targetPage !== undefined) {
+    updates.push("target_page = ?");
+    values.push(params.targetPage);
+  }
+  if (params.assignedStaff !== undefined) {
+    updates.push("assigned_staff = ?");
+    values.push(params.assignedStaff);
+  }
+  if (params.notes !== undefined) {
+    updates.push("notes = ?");
+    values.push(params.notes);
+  }
+  if (params.stage !== undefined) {
+    updates.push("stage = ?");
+    values.push(params.stage);
   }
 
-  return SAMPLE_OUTREACH.length;
+  values.push(params.id);
+  await cmsExecute(
+    `UPDATE off_page_outreach SET ${updates.join(", ")} WHERE id = ?`,
+    values
+  );
+}
+
+/**
+ * Zero-seeding: sample outreach records are permanently removed from production code.
+ * Preserved as a safe no-op for backward compatibility.
+ */
+export async function seedOutreachIfEmpty(): Promise<number> {
+  return 0;
 }

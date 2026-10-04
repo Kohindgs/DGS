@@ -25,12 +25,19 @@ export async function POST(request: Request) {
     );
   }
 
+  const githubRunId = request.headers.get("x-github-run-id") || null;
+
   try {
     const result = await runDailyOffPageAutomation("cron");
+    const newOpps = result.summary?.newOpportunitiesAdded || 0;
 
     return NextResponse.json({
       ok: true,
-      message: `Off-page SEO automated check completed (${result.runId}). Status: ${result.status}`,
+      github_workflow_run_id: githubRunId,
+      http_result: 200,
+      db_automation_run_id: result.runId,
+      new_opportunities_added: newOpps,
+      message: `Off-page SEO automated check completed (${result.runId}). Status: ${result.status}. Net-new opportunities added: ${newOpps}`,
       result,
     });
   } catch (err: any) {

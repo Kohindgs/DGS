@@ -28,7 +28,7 @@ export default function AuthorityClientView({ initialOpportunities }: Props) {
   const [selectedType, setSelectedType] = useState<string>("ALL");
   const [selectedRegion, setSelectedRegion] = useState<string>("ALL");
   const [selectedTier, setSelectedTier] = useState<string>("ALL");
-  const [feedback, setFeedback] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<React.ReactNode | null>(null);
 
   // Pitch Modal State
   const [activeModalOpp, setActiveModalOpp] = useState<OffPageAuthorityOpportunity | null>(null);
@@ -64,7 +64,7 @@ export default function AuthorityClientView({ initialOpportunities }: Props) {
     setActiveModalOpp(opp);
     setSubject(`Editorial Collaboration / Resource Update: D'Genius Solutions & ${opp.source_name}`);
     setPitchBody(
-      `Hello ${opp.source_name} Editorial Team,\n\nI am contacting you regarding your featured coverage on "${opp.title}".\n\nAt D'Genius Solutions, we produce enterprise AI video production and strategic growth campaigns across Mumbai, Dubai, and New York. We noticed an opportunity to expand your guide with our proprietary performance data and verified client case studies.\n\nTarget Resource: ${opp.target_page}\n\nCould we contribute an authoritative quote or case study for your readers?\n\nSincerely,\nEditorial Director\nD'Genius Solutions`
+      `Hello ${opp.source_name} Editorial Team,\n\nI am contacting you regarding your coverage on "${opp.title}".\n\nAt D'Genius Solutions, we produce enterprise AI video production and strategic growth campaigns across India, UAE, and global markets. We noticed an opportunity to expand your guide with verified practical insights and case studies.\n\nTarget Resource: ${opp.target_page}\n\nCould we contribute an authoritative quote or technical case study for your readers?\n\nBest regards,\n\nKohin Bellara\nCEO, D'Genius Solutions\nhttps://www.dgeniussolutions.com/`
     );
   };
 
@@ -76,28 +76,40 @@ export default function AuthorityClientView({ initialOpportunities }: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          opportunity_id: activeModalOpp.id,
+          opportunity_id: activeModalOpp.opportunity_id || activeModalOpp.id,
+          source_module: "AUTHORITY_ENGINE",
+          source_record_id: activeModalOpp.id,
           target_domain: activeModalOpp.source_name,
           target_url: activeModalOpp.source_url,
-          campaign_type: activeModalOpp.type,
-          stage: "INTERNAL_APPROVED",
+          target_page: activeModalOpp.target_page,
+          publication: activeModalOpp.source_name,
+          pitch_type: activeModalOpp.type === "EXPERT_QUOTE" ? "EXPERT_QUOTE" : "RESOURCE_SUGGESTION",
+          stage: "DRAFT",
           pitch_subject: subject,
           pitch_body: pitchBody,
-          recommended_dgs_target_page: activeModalOpp.target_page,
-          target_anchor: "D'Genius Solutions",
-          approval_status: "approved",
+          assigned_staff: "Kohin Bellara - CEO D'Genius Solutions",
         }),
       });
       const json = await res.json();
       if (json.ok) {
         setActiveModalOpp(null);
-        setFeedback(`Authority opportunity queued into Outreach CRM.`);
+        setFeedback(
+          <span>
+            Draft saved successfully.{" "}
+            <a
+              href="/admin/off-page/outreach?stage=DRAFT"
+              style={{ color: "var(--dgs-brand-cyan)", textDecoration: "underline", fontWeight: 700 }}
+            >
+              View in Outreach CRM (Drafts) &rarr;
+            </a>
+          </span>
+        );
       }
     } catch (err) {
       console.error("Queue outreach error:", err);
     } finally {
       setConverting(false);
-      setTimeout(() => setFeedback(null), 5000);
+      setTimeout(() => setFeedback(null), 8000);
     }
   };
 

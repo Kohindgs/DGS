@@ -4,7 +4,7 @@ import { cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "@/lib/off-page/db";
 import {
   createOutreachFromOpportunity,
-  seedOutreachIfEmpty,
+  updateOutreachDraft,
   updateOutreachStage,
 } from "@/lib/off-page/outreach";
 import type { OffPageOutreach } from "@/lib/off-page/types";
@@ -18,14 +18,13 @@ export async function GET(req: Request) {
   }
 
   await ensureOffPageTablesExist();
-  await seedOutreachIfEmpty();
 
   const { searchParams } = new URL(req.url);
   const stage = searchParams.get("stage");
 
   const sql = stage && stage !== "ALL"
-    ? `SELECT * FROM off_page_outreach WHERE stage = ? ORDER BY updated_at DESC LIMIT 150`
-    : `SELECT * FROM off_page_outreach ORDER BY updated_at DESC LIMIT 150`;
+    ? `SELECT * FROM off_page_outreach WHERE stage = ? ORDER BY updated_at DESC LIMIT 200`
+    : `SELECT * FROM off_page_outreach ORDER BY updated_at DESC LIMIT 200`;
 
   try {
     const { rows } = await cmsQuery<OffPageOutreach>(sql, stage && stage !== "ALL" ? [stage] : []);
@@ -44,13 +43,25 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
+
     const result = await createOutreachFromOpportunity({
       opportunityId: body.opportunity_id,
-      assignedStaff: body.assigned_staff || currentUser.email,
+      assignedStaff: body.assigned_staff || "Kohin Bellara - CEO D'Genius Solutions",
       contactName: body.contact_name,
       email: body.email,
       linkedin: body.linkedin,
       pitchType: body.pitch_type,
+      pitchSubject: body.pitch_subject,
+      pitchBody: body.pitch_body,
+      stage: body.stage || "DRAFT",
+      sourceModule: body.source_module || "OPPORTUNITIES",
+      sourceRecordId: body.source_record_id || body.opportunity_id,
+      targetDomain: body.target_domain,
+      targetUrl: body.target_url || body.submission_url,
+      targetPage: body.target_page || body.recommended_dgs_target_page,
+      publication: body.publication,
+      createdBy: currentUser.email,
+      notes: body.notes,
     });
 
     await logAuditEvent({
@@ -59,13 +70,13 @@ export async function POST(req: Request) {
       action: "create",
       resource: "off_page_outreach",
       resource_id: result.id,
-      summary: `Created outreach CRM task for opportunity ${body.opportunity_id}`,
+      summary: `Created outreach draft for ${body.publication || body.target_domain || "opportunity"}`,
       status: "success",
     });
 
-    return NextResponse.json({ ok: true, id: result.id });
+    return NextResponse.json({ ok: true, id: result.id, stage: body.stage || "DRAFT" });
   } catch (err: any) {
-    console.error("Failed creating outreach:", err);
+    console.error("Failed creating outreach draft:", err);
     return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });
   }
 }
@@ -77,10 +88,28 @@ export async function PUT(req: Request) {
   }
 
   try {
-    const { id, stage, notes, live_url } = await req.json();
-    if (!id || !stage) return NextResponse.json({ error: "ID and stage required" }, { status: 400 });
+    const body = await req.json();
+    const { id, stage, notes, live_url } = body;
+    if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
-    await updateOutreachStage(id, stage, notes, live_url);
+    // Update draft content fields if supplied
+    await updateOutreachDraft({
+      id,
+      pitchSubject: body.pitch_subject,
+      pitchBody: body.pitch_body,
+      contactName: body.contact_name,
+      email: body.email,
+      linkedin: body.linkedin,
+      targetPage: body.target_page,
+      assignedStaff: body.assigned_staff,
+      notes: body.notes,
+      stage: stage,
+    });
+
+    // Advance stage and handle stage-specific transitions (e.g. creating backlinks for LIVE)
+    if (stage) {
+      await updateOutreachStage(id, stage, notes, live_url);
+    }
 
     await logAuditEvent({
       actor_email: currentUser.email,
@@ -88,13 +117,13 @@ export async function PUT(req: Request) {
       action: "edit",
       resource: "off_page_outreach",
       resource_id: id,
-      summary: `Advanced outreach ${id} to stage=${stage}`,
+      summary: `Updated outreach ${id} (stage=${stage || "unchanged"})`,
       status: "success",
     });
 
     return NextResponse.json({ ok: true });
   } catch (err: any) {
-    console.error("Failed updating outreach stage:", err);
+    console.error("Failed updating outreach stage/draft:", err);
     return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });
   }
 }

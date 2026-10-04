@@ -84,6 +84,12 @@ export interface OffPageOpportunity {
   assigned_to: string | null;
   notes: string | null;
   evidence: string | null;
+  discovered_at?: string | null;
+  qualified_at?: string | null;
+  assigned_at?: string | null;
+  next_check_at?: string | null;
+  last_checked_at?: string | null;
+  check_priority?: PriorityTier;
   created_at: string;
   updated_at: string;
 }
@@ -149,6 +155,13 @@ export interface OffPageBacklink {
   evidence_url: string | null;
   screenshot_path: string | null;
   notes: string | null;
+  discovered_at?: string | null;
+  live_at?: string | null;
+  verified_at?: string | null;
+  lost_at?: string | null;
+  reclaimed_at?: string | null;
+  next_check_at?: string | null;
+  check_priority?: PriorityTier;
   created_at: string;
   updated_at: string;
 }
@@ -249,6 +262,7 @@ export interface OffPageBrandMention {
 }
 
 export type OutreachStage =
+  | "DRAFT"
   | "NEW"
   | "QUALIFIED"
   | "APPROVED"
@@ -299,6 +313,16 @@ export interface OffPageOutreach {
   result: string | null;
   proof: string | null;
   notes: string | null;
+  source_module?: string;
+  source_record_id?: string | null;
+  target_domain?: string | null;
+  created_by?: string | null;
+  drafted_at?: string | null;
+  approved_at?: string | null;
+  sent_at?: string | null;
+  submitted_at?: string | null;
+  live_at?: string | null;
+  verified_at?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -403,7 +427,36 @@ export interface OffPageAlert {
   created_at: string;
 }
 
+export interface OffPageTodayMetrics {
+  newOpportunitiesToday: number;
+  newLiveBacklinksToday: number;
+  lostBacklinksToday: number;
+  unlinkedMentionsToday: number;
+  draftsAwaitingReview: number;
+  followUpsDueToday: number;
+}
+
+export interface OffPageThisMonthMetrics {
+  submissionsMade: number;
+  liveLinksWon: number;
+  verifiedLinks: number;
+  referringDomainsAdded: number;
+  referralSessions: number | "DATA_UNAVAILABLE";
+  referralLeads: number | "DATA_UNAVAILABLE";
+}
+
+export interface OffPageActionQueue {
+  reviewOpportunities: number;
+  reviewDrafts: number;
+  followUpPitches: number;
+  reclaimLost: number;
+  convertMentions: number;
+}
+
 export interface OffPageDashboardMetrics {
+  today?: OffPageTodayMetrics;
+  thisMonth?: OffPageThisMonthMetrics;
+  actionQueue?: OffPageActionQueue;
   totalReferringDomains: number;
   liveBacklinks: number;
   newBacklinks7d: number;

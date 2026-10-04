@@ -23,6 +23,10 @@ import {
   Sparkles,
   ExternalLink,
   ShieldCheck,
+  Clock,
+  Calendar,
+  ListTodo,
+  ArrowRight,
 } from "lucide-react";
 import type { OffPageDashboardMetrics } from "@/lib/off-page/types";
 
@@ -172,6 +176,369 @@ export default function OffPageDashboardView({ initialData }: { initialData?: Of
           {feedback}
         </div>
       )}
+
+      {/* SECTION 0A: TODAY'S PULSE */}
+      <div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+            <Clock size={18} style={{ color: "var(--dgs-brand-cyan)" }} />
+            Today&apos;s Activity &amp; Live Detection
+          </h2>
+          <span className="dgs-saas-chip primary" style={{ fontSize: "0.72rem" }}>
+            Current Calendar Day
+          </span>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
+          {/* New Opportunities */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: "3px solid #00c6ff" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              New Opportunities Today
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", marginTop: "4px" }}>
+              {data.today?.newOpportunitiesToday ?? 0}
+            </div>
+            <Link href="/admin/off-page/opportunities" style={{ fontSize: "0.7rem", color: "var(--dgs-brand-cyan)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
+              Review list <ArrowRight size={10} />
+            </Link>
+          </div>
+
+          {/* New Live Backlinks Won */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: "3px solid #10b981" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              New Live Won Today
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#10b981", marginTop: "4px" }}>
+              {data.today?.newLiveBacklinksToday ?? 0}
+            </div>
+            <Link href="/admin/off-page/backlinks" style={{ fontSize: "0.7rem", color: "#10b981", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
+              View backlinks <ArrowRight size={10} />
+            </Link>
+          </div>
+
+          {/* Lost Backlinks */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: `3px solid ${(data.today?.lostBacklinksToday ?? 0) > 0 ? "#ef4444" : "rgba(255,255,255,0.2)"}` }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Lost Backlinks Today
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: (data.today?.lostBacklinksToday ?? 0) > 0 ? "#ef4444" : "#fff", marginTop: "4px" }}>
+              {data.today?.lostBacklinksToday ?? 0}
+            </div>
+            <Link href="/admin/off-page/reclamation" style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.7)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
+              Reclaim queue <ArrowRight size={10} />
+            </Link>
+          </div>
+
+          {/* Unlinked Brand Mentions */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: "3px solid #d946ef" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Unlinked Mentions Today
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--dgs-brand-magenta)", marginTop: "4px" }}>
+              {data.today?.unlinkedMentionsToday ?? 0}
+            </div>
+            <Link href="/admin/off-page/mentions" style={{ fontSize: "0.7rem", color: "var(--dgs-brand-magenta)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
+              Claim links <ArrowRight size={10} />
+            </Link>
+          </div>
+
+          {/* Drafts Awaiting Review */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: "3px solid #f59e0b" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Drafts Awaiting Review
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#f59e0b", marginTop: "4px" }}>
+              {data.today?.draftsAwaitingReview ?? 0}
+            </div>
+            <Link href="/admin/off-page/outreach?stage=DRAFT" style={{ fontSize: "0.7rem", color: "#f59e0b", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
+              Review in CRM <ArrowRight size={10} />
+            </Link>
+          </div>
+
+          {/* Follow-ups Due Today */}
+          <div className="dgs-saas-card" style={{ padding: "14px 16px", borderLeft: "3px solid #3b82f6" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Follow-ups Due Today
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#3b82f6", marginTop: "4px" }}>
+              {data.today?.followUpsDueToday ?? 0}
+            </div>
+            <Link href="/admin/off-page/outreach?stage=FOLLOW_UP" style={{ fontSize: "0.7rem", color: "#3b82f6", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", marginTop: "4px" }}>
+              Follow up <ArrowRight size={10} />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION 0B: THIS MONTH */}
+      <div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+            <Calendar size={18} style={{ color: "#10b981" }} />
+            This Month&apos;s Verified Milestones (Strict Data Evidence)
+          </h2>
+          <span className="dgs-saas-chip success" style={{ fontSize: "0.72rem" }}>
+            Zero Synthetic Inflation
+          </span>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
+          <div className="dgs-saas-card" style={{ padding: "14px 16px" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Submissions Made
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", marginTop: "4px" }}>
+              {data.thisMonth?.submissionsMade ?? 0}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>Logged in month</span>
+          </div>
+
+          <div className="dgs-saas-card" style={{ padding: "14px 16px" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Live Links Won
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#10b981", marginTop: "4px" }}>
+              {data.thisMonth?.liveLinksWon ?? 0}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "#10b981" }}>Live DOM verified</span>
+          </div>
+
+          <div className="dgs-saas-card" style={{ padding: "14px 16px" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Verified Links
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--dgs-brand-cyan)", marginTop: "4px" }}>
+              {data.thisMonth?.verifiedLinks ?? 0}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>Human approved</span>
+          </div>
+
+          <div className="dgs-saas-card" style={{ padding: "14px 16px" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Referring Domains Added
+            </span>
+            <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", marginTop: "4px" }}>
+              {data.thisMonth?.referringDomainsAdded ?? 0}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>Net unique hosts</span>
+          </div>
+
+          <div className="dgs-saas-card" style={{ padding: "14px 16px" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Referral Sessions
+            </span>
+            <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff", marginTop: "4px" }}>
+              {data.thisMonth?.referralSessions === "DATA_UNAVAILABLE" ? (
+                <span className="dgs-saas-chip warning" style={{ fontSize: "0.72rem" }}>DATA_UNAVAILABLE</span>
+              ) : (
+                data.thisMonth?.referralSessions ?? 0
+              )}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>GA4 integration</span>
+          </div>
+
+          <div className="dgs-saas-card" style={{ padding: "14px 16px" }}>
+            <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Referral Leads
+            </span>
+            <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff", marginTop: "4px" }}>
+              {data.thisMonth?.referralLeads === "DATA_UNAVAILABLE" ? (
+                <span className="dgs-saas-chip warning" style={{ fontSize: "0.72rem" }}>DATA_UNAVAILABLE</span>
+              ) : (
+                data.thisMonth?.referralLeads ?? 0
+              )}
+            </div>
+            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>Direct goal hits</span>
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION 0C: TEAM ACTION QUEUE */}
+      <div
+        className="dgs-saas-card"
+        style={{
+          padding: "20px 24px",
+          background: "linear-gradient(135deg, rgba(0, 198, 255, 0.04) 0%, rgba(112, 0, 255, 0.04) 100%)",
+          border: "1px solid rgba(0, 198, 255, 0.2)",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "10px" }}>
+          <div>
+            <h2 style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+              <ListTodo size={20} style={{ color: "var(--dgs-brand-cyan)" }} />
+              What Your Team Should Do Today (Priority Action Queue)
+            </h2>
+            <p style={{ margin: "4px 0 0 0", fontSize: "0.8rem", color: "rgba(255,255,255,0.6)" }}>
+              Sorted operational queue for high-impact manual review, outreach execution, and link safety
+            </p>
+          </div>
+          <span className="dgs-saas-chip primary" style={{ fontWeight: 600 }}>
+            Human-in-the-Loop Enforced
+          </span>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          {/* Action 1: Opportunities */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 16px",
+              background: "rgba(255, 255, 255, 0.02)",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.06)",
+              flexWrap: "wrap",
+              gap: "10px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <span style={{ width: "24px", height: "24px", borderRadius: "50%", background: "var(--dgs-brand-cyan)", color: "#000", fontWeight: 700, fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                1
+              </span>
+              <div>
+                <div style={{ color: "#fff", fontSize: "0.88rem", fontWeight: 600 }}>
+                  Review {data.actionQueue?.reviewOpportunities ?? 0} new opportunities
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>
+                  Qualify free/freemium status, target DGS service page, and generate outreach drafts.
+                </div>
+              </div>
+            </div>
+            <Link href="/admin/off-page/opportunities" className="dgs-saas-btn" style={{ fontSize: "0.78rem", textDecoration: "none" }}>
+              Open Opportunities Queue &rarr;
+            </Link>
+          </div>
+
+          {/* Action 2: Draft Pitches */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 16px",
+              background: "rgba(255, 255, 255, 0.02)",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.06)",
+              flexWrap: "wrap",
+              gap: "10px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <span style={{ width: "24px", height: "24px", borderRadius: "50%", background: "#f59e0b", color: "#000", fontWeight: 700, fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                2
+              </span>
+              <div>
+                <div style={{ color: "#fff", fontSize: "0.88rem", fontWeight: 600 }}>
+                  Review and send {data.actionQueue?.reviewDrafts ?? 0} drafted pitches
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>
+                  Sender identity: Kohin Bellara - CEO D&apos;Genius Solutions. Human review required before outreach.
+                </div>
+              </div>
+            </div>
+            <Link href="/admin/off-page/outreach?stage=DRAFT" className="dgs-saas-btn" style={{ fontSize: "0.78rem", textDecoration: "none" }}>
+              Open Drafts CRM &rarr;
+            </Link>
+          </div>
+
+          {/* Action 3: Follow Up Pitches */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 16px",
+              background: "rgba(255, 255, 255, 0.02)",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.06)",
+              flexWrap: "wrap",
+              gap: "10px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <span style={{ width: "24px", height: "24px", borderRadius: "50%", background: "#3b82f6", color: "#fff", fontWeight: 700, fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                3
+              </span>
+              <div>
+                <div style={{ color: "#fff", fontSize: "0.88rem", fontWeight: 600 }}>
+                  Follow up on {data.actionQueue?.followUpPitches ?? 0} submitted pitches
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>
+                  Track editorial acceptance, requested revisions, and publication schedules.
+                </div>
+              </div>
+            </div>
+            <Link href="/admin/off-page/outreach?stage=SUBMITTED" className="dgs-saas-btn" style={{ fontSize: "0.78rem", textDecoration: "none" }}>
+              View Submitted Pitches &rarr;
+            </Link>
+          </div>
+
+          {/* Action 4: Reclaim Lost */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 16px",
+              background: "rgba(255, 255, 255, 0.02)",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.06)",
+              flexWrap: "wrap",
+              gap: "10px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <span style={{ width: "24px", height: "24px", borderRadius: "50%", background: "#ef4444", color: "#fff", fontWeight: 700, fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                4
+              </span>
+              <div>
+                <div style={{ color: "#fff", fontSize: "0.88rem", fontWeight: 600 }}>
+                  Reclaim {data.actionQueue?.reclaimLost ?? 0} lost or broken backlinks
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>
+                  Fix target 404s, reclaim dropped links, and restore valuable referring authority.
+                </div>
+              </div>
+            </div>
+            <Link href="/admin/off-page/reclamation" className="dgs-saas-btn" style={{ fontSize: "0.78rem", textDecoration: "none" }}>
+              Reclaim Backlinks &rarr;
+            </Link>
+          </div>
+
+          {/* Action 5: Mentions */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "12px 16px",
+              background: "rgba(255, 255, 255, 0.02)",
+              borderRadius: "8px",
+              border: "1px solid rgba(255, 255, 255, 0.06)",
+              flexWrap: "wrap",
+              gap: "10px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <span style={{ width: "24px", height: "24px", borderRadius: "50%", background: "#d946ef", color: "#fff", fontWeight: 700, fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                5
+              </span>
+              <div>
+                <div style={{ color: "#fff", fontSize: "0.88rem", fontWeight: 600 }}>
+                  Convert {data.actionQueue?.convertMentions ?? 0} unlinked brand mentions
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>
+                  Reach out to publications already discussing DGS to add a live anchor link.
+                </div>
+              </div>
+            </div>
+            <Link href="/admin/off-page/mentions" className="dgs-saas-btn" style={{ fontSize: "0.78rem", textDecoration: "none" }}>
+              View Mentions &rarr;
+            </Link>
+          </div>
+        </div>
+      </div>
 
       {/* SECTION 1: 22 METRIC CARDS */}
       <div>

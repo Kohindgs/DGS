@@ -14,7 +14,6 @@ export async function GET(req: Request) {
   }
 
   await ensureOffPageTablesExist();
-  await seedMentionsAndCitationsIfEmpty();
 
   const { searchParams } = new URL(req.url);
   const type = searchParams.get("type");

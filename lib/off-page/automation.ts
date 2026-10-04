@@ -1,17 +1,19 @@
 import { randomUUID } from "node:crypto";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "./db";
-import { revalidateOpportunityUrls } from "./discovery";
+import { revalidateOpportunityUrls, runOpportunityDiscoverySuite } from "./discovery";
 import { checkLiveBacklink } from "./backlinks";
 import { generateMonthlyOffPageReport } from "./reports";
 import type { OffPageBacklink } from "./types";
 
 /**
  * Runs the daily automated off-page maintenance suite:
- * 1. Revalidates opportunities (checks dead submission pages, updates expired).
- * 2. Checks active backlinks (verifies presence, anchor, rel, source indexability).
- * 3. On 1st of month, generates previous month's executive report.
- * 4. Logs run to off_page_automation_runs.
+ * 1. Checks persisted off_page_settings to respect enabled modules.
+ * 2. Runs net-new opportunity discovery.
+ * 3. Revalidates opportunities via priority rotating queue.
+ * 4. Checks live backlinks via priority rotating queue.
+ * 5. On 1st of month (or if no report exists for previous month), generates monthly executive report.
+ * 6. Logs run to off_page_automation_runs.
  */
 export async function runDailyOffPageAutomation(runType: string = "FULL_AUTOMATION"): Promise<{
   runId: string;
@@ -30,40 +32,81 @@ export async function runDailyOffPageAutomation(runType: string = "FULL_AUTOMATI
     [runId, runType, startedAt]
   );
 
+  // Read settings from key-value table
+  const { rows: settingsRows } = await cmsQuery<{
+    key_name: string;
+    key_value: string;
+  }>(`SELECT key_name, key_value FROM off_page_settings`);
+
+  const settingsMap: Record<string, string> = {
+    daily_discovery_enabled: "true",
+    auto_revalidation_enabled: "true",
+    auto_check_backlinks: "true",
+    discovery_provider: "NONE",
+  };
+  for (const r of settingsRows) {
+    settingsMap[r.key_name] = r.key_value;
+  }
+
+  const discoveryEnabled = settingsMap.daily_discovery_enabled !== "false";
+  const revalidationEnabled = settingsMap.auto_revalidation_enabled !== "false";
+  const backlinksEnabled = settingsMap.auto_check_backlinks !== "false";
+
   const summary: any = {
+    discovery: {
+      provider_status: "DISCOVERY_PROVIDER_NOT_CONFIGURED",
+      new_records_added: 0,
+      message: "Discovery disabled or not configured",
+    },
     revalidatedOpportunities: { checked: 0, healthy: 0, dead: 0 },
     backlinksChecked: { checked: 0, live: 0, lost: 0, broken: 0 },
     monthlyReportGenerated: false,
+    newOpportunitiesAdded: 0,
   };
 
   try {
-    // 1. Revalidate active opportunities
-    const reval = await revalidateOpportunityUrls(15);
-    summary.revalidatedOpportunities = reval;
-
-    // 2. Check active backlinks
-    const { rows: links } = await cmsQuery<OffPageBacklink>(
-      `SELECT id FROM off_page_backlinks WHERE status IN ('LIVE', 'VERIFIED') LIMIT 10`
-    );
-
-    let liveCount = 0;
-    let lostCount = 0;
-    let brokenCount = 0;
-
-    for (const l of links) {
-      const res = await checkLiveBacklink(l.id);
-      if (res.status === "LIVE" || res.status === "VERIFIED") liveCount++;
-      else if (res.status === "LOST") lostCount++;
-      else brokenCount++;
+    // 1. Run Opportunity Discovery
+    if (discoveryEnabled) {
+      const disc = await runOpportunityDiscoverySuite();
+      summary.discovery = disc;
+      summary.newOpportunitiesAdded = disc.new_records_added;
     }
-    summary.backlinksChecked = {
-      checked: links.length,
-      live: liveCount,
-      lost: lostCount,
-      broken: brokenCount,
-    };
 
-    // 3. On 1st day of month (or if no report exists for previous month), generate monthly report
+    // 2. Revalidate active opportunities via rotating queue
+    if (revalidationEnabled) {
+      const reval = await revalidateOpportunityUrls(25);
+      summary.revalidatedOpportunities = reval;
+    }
+
+    // 3. Check active backlinks via rotating queue (where next_check_at IS NULL or <= NOW())
+    if (backlinksEnabled) {
+      const { rows: links } = await cmsQuery<OffPageBacklink>(
+        `SELECT id FROM off_page_backlinks 
+         WHERE status NOT IN ('REMOVED', 'SPAM', 'IGNORED')
+           AND (next_check_at IS NULL OR next_check_at <= NOW())
+         ORDER BY CASE WHEN next_check_at IS NULL THEN 0 ELSE 1 END, next_check_at ASC 
+         LIMIT 15`
+      );
+
+      let liveCount = 0;
+      let lostCount = 0;
+      let brokenCount = 0;
+
+      for (const l of links) {
+        const res = await checkLiveBacklink(l.id);
+        if (res.status === "LIVE" || res.status === "VERIFIED") liveCount++;
+        else if (res.status === "LOST") lostCount++;
+        else brokenCount++;
+      }
+      summary.backlinksChecked = {
+        checked: links.length,
+        live: liveCount,
+        lost: lostCount,
+        broken: brokenCount,
+      };
+    }
+
+    // 4. On 1st day of month (or if no report exists for previous month), generate monthly report
     const today = new Date();
     const prevMonthDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1));
     const prevMonthStr = prevMonthDate.toISOString().slice(0, 7);

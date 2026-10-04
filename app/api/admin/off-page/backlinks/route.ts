@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-db";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "@/lib/off-page/db";
-import { calculateLinkDecayMetrics, seedBacklinksIfEmpty } from "@/lib/off-page/backlinks";
+import { calculateLinkDecayMetrics, checkLiveBacklink } from "@/lib/off-page/backlinks";
 import { classifyAnchorText } from "@/lib/off-page/scoring";
 import type { OffPageBacklink } from "@/lib/off-page/types";
 import { randomUUID } from "node:crypto";
@@ -16,7 +16,6 @@ export async function GET(req: Request) {
   }
 
   await ensureOffPageTablesExist();
-  await seedBacklinksIfEmpty();
 
   const { searchParams } = new URL(req.url);
   const status = searchParams.get("status");
@@ -66,8 +65,8 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const sourceDomain = new URL(body.source_url).hostname;
-    const anchorClass = classifyAnchorText(body.anchor_text, body.target_url);
+    const sourceDomain = new URL(body.source_url).hostname.replace(/^www\./, "");
+    const anchorClass = classifyAnchorText(body.anchor_text || "", body.target_url);
 
     const id = `lnk_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
     await cmsExecute(
@@ -75,8 +74,9 @@ export async function POST(req: Request) {
         id, source_domain, source_url, source_page_title, target_url, target_page_type,
         anchor_text, anchor_classification, link_rel, dofollow, nofollow, first_seen_at,
         last_seen_at, last_checked_at, status, http_status, source_country, source_region,
-        source_language, topical_category, authority_score, notes, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW(), 'LIVE', 200, ?, ?, 'en', ?, ?, ?, NOW(), NOW())`,
+        source_language, topical_category, authority_score, outreach_id, notes,
+        discovered_at, live_at, next_check_at, check_priority, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW(), 'NEW', 200, ?, ?, 'en', ?, ?, ?, ?, NOW(), NOW(), NOW(), 'P0', NOW(), NOW())`,
       [
         id,
         sourceDomain,
@@ -84,18 +84,35 @@ export async function POST(req: Request) {
         body.source_page_title || null,
         body.target_url,
         body.target_page_type || "SERVICE_PAGE",
-        body.anchor_text,
+        body.anchor_text || "",
         anchorClass,
-        body.link_rel || "dofollow",
-        body.link_rel !== "nofollow" ? 1 : 0,
-        body.link_rel === "nofollow" ? 1 : 0,
+        body.link_rel || body.rel_type || "dofollow",
+        (body.link_rel || body.rel_type) !== "nofollow" ? 1 : 0,
+        (body.link_rel || body.rel_type) === "nofollow" ? 1 : 0,
         body.source_country || "India",
         body.source_region || "INDIA",
-        body.topical_category || "Agency Directory",
+        body.topical_category || "Verified Backlink",
         body.authority_score || 85,
+        body.outreach_id || null,
         body.notes || null,
       ]
     );
+
+    // If linked to an outreach ID, update outreach stage to LIVE
+    if (body.outreach_id) {
+      await cmsExecute(
+        `UPDATE off_page_outreach SET stage = 'LIVE', live_url = ?, live_at = IFNULL(live_at, NOW()), updated_at = NOW() WHERE id = ?`,
+        [body.source_url, body.outreach_id]
+      );
+    }
+
+    // Proactively verify the link
+    let verificationResult = null;
+    try {
+      verificationResult = await checkLiveBacklink(id);
+    } catch (checkErr) {
+      console.warn("Immediate check failed, queued for background verification:", checkErr);
+    }
 
     await logAuditEvent({
       actor_email: currentUser.email,
@@ -107,7 +124,7 @@ export async function POST(req: Request) {
       status: "success",
     });
 
-    return NextResponse.json({ ok: true, id });
+    return NextResponse.json({ ok: true, id, verification: verificationResult });
   } catch (err: any) {
     console.error("Failed adding backlink:", err);
     return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });

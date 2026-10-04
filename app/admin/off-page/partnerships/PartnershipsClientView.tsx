@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Handshake,
   ExternalLink,
@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   Users,
   Award,
+  Plus,
   X,
 } from "lucide-react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
@@ -20,96 +21,68 @@ interface PartnershipLead {
   domain: string;
   category: "AI_TECH_VENDOR" | "AGENCY_ECOSYSTEM" | "CLIENT_CASE_STUDY" | "MEDIA_PARTNER";
   region: "INDIA" | "UAE" | "USA" | "GLOBAL";
-  potential_link_type: "Partner Page Listing" | "Co-Authored Case Study" | "Certified Agency Badge";
+  potential_link_type: string;
   authority_score: number;
   status: "IDENTIFIED" | "PITCHED" | "CONFIRMED" | "LIVE";
   website_url: string;
 }
 
-const SAMPLE_PARTNERSHIPS: PartnershipLead[] = [
-  {
-    id: "part_1",
-    partner_name: "Runway ML AI Partners Ecosystem",
-    domain: "runwayml.com",
-    category: "AI_TECH_VENDOR",
-    region: "GLOBAL",
-    potential_link_type: "Certified Agency Badge",
-    authority_score: 91,
-    status: "IDENTIFIED",
-    website_url: "https://runwayml.com",
-  },
-  {
-    id: "part_2",
-    partner_name: "ElevenLabs Enterprise Partners",
-    domain: "elevenlabs.io",
-    category: "AI_TECH_VENDOR",
-    region: "GLOBAL",
-    potential_link_type: "Partner Page Listing",
-    authority_score: 89,
-    status: "IDENTIFIED",
-    website_url: "https://elevenlabs.io",
-  },
-  {
-    id: "part_3",
-    partner_name: "Dubai Internet City Community Directory",
-    domain: "dic.ae",
-    category: "AGENCY_ECOSYSTEM",
-    region: "UAE",
-    potential_link_type: "Partner Page Listing",
-    authority_score: 83,
-    status: "CONFIRMED",
-    website_url: "https://dic.ae",
-  },
-  {
-    id: "part_4",
-    partner_name: "NASSCOM Startup Partner Network",
-    domain: "nasscom.in",
-    category: "AGENCY_ECOSYSTEM",
-    region: "INDIA",
-    potential_link_type: "Partner Page Listing",
-    authority_score: 87,
-    status: "CONFIRMED",
-    website_url: "https://nasscom.in",
-  },
-  {
-    id: "part_5",
-    partner_name: "Enterprise Client Case Study: Real Estate AI Walkthroughs",
-    domain: "damacproperties.com",
-    category: "CLIENT_CASE_STUDY",
-    region: "UAE",
-    potential_link_type: "Co-Authored Case Study",
-    authority_score: 85,
-    status: "IDENTIFIED",
-    website_url: "https://damacproperties.com",
-  },
-  {
-    id: "part_6",
-    partner_name: "Midjourney Commercial Showcase",
-    domain: "midjourney.com",
-    category: "AI_TECH_VENDOR",
-    region: "USA",
-    potential_link_type: "Certified Agency Badge",
-    authority_score: 93,
-    status: "IDENTIFIED",
-    website_url: "https://midjourney.com",
-  },
-];
-
 export default function PartnershipsClientView() {
-  const [partnerships, setPartnerships] = useState<PartnershipLead[]>(SAMPLE_PARTNERSHIPS);
-  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
+  const [partnerships, setPartnerships] = useState<PartnershipLead[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState<string>("ALL");
   const [activePartner, setActivePartner] = useState<PartnershipLead | null>(null);
   const [pitchSubject, setPitchSubject] = useState("");
   const [pitchBody, setPitchBody] = useState("");
   const [queuing, setQueuing] = useState(false);
-  const [feedback, setFeedback] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<React.ReactNode | null>(null);
+
+  // Add Partner Lead modal
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newPartnerName, setNewPartnerName] = useState("");
+  const [newDomain, setNewDomain] = useState("");
+  const [newUrl, setNewUrl] = useState("");
+  const [newRegion, setNewRegion] = useState<"INDIA" | "UAE" | "USA" | "GLOBAL">("GLOBAL");
+  const [newLinkType, setNewLinkType] = useState("Partner Directory Listing");
+  const [addingLead, setAddingLead] = useState(false);
+
+  const fetchPartnerships = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/off-page/opportunities?status=ALL");
+      const json = await res.json();
+      if (json.ok && Array.isArray(json.opportunities)) {
+        const partnerItems = json.opportunities
+          .filter((o: any) => o.category === "PARTNERSHIP" || o.category === "ASSOCIATION")
+          .map((o: any) => ({
+            id: o.id,
+            partner_name: o.site_name || o.domain,
+            domain: o.domain,
+            category: "AGENCY_ECOSYSTEM" as any,
+            region: o.region || "GLOBAL",
+            potential_link_type: o.submission_type || "Partner Directory Listing",
+            authority_score: o.authority_score || 85,
+            status: (o.status === "OUTREACH" ? "PITCHED" : o.status === "LIVE" ? "LIVE" : "IDENTIFIED") as any,
+            website_url: o.exact_submission_url || `https://${o.domain}`,
+          }));
+        setPartnerships(partnerItems);
+      }
+    } catch (err) {
+      console.error("Failed to load partnerships:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPartnerships();
+  }, []);
 
   const handleOpenPitch = (p: PartnershipLead) => {
     setActivePartner(p);
     setPitchSubject(`Agency Partnership & Technology Integration: D'Genius Solutions x ${p.partner_name}`);
     setPitchBody(
-      `Hello ${p.partner_name} Partner Team,\n\nI am contacting you from D'Genius Solutions, an enterprise AI video production and strategic growth agency.\n\nWe actively deploy your technologies in high-velocity commercial campaigns for major clients in Mumbai, Dubai, and the US.\n\nWe'd like to explore being listed in your official partner network or co-authoring a technical case study detailing our production pipeline benchmarks.\n\nBest regards,\nPartnerships Director\nD'Genius Solutions (https://www.dgeniussolutions.com)`
+      `Hello ${p.partner_name} Partner Team,\n\nI am contacting you from D'Genius Solutions, an enterprise AI video production and strategic search agency.\n\nWe deliver technical SEO, generative search optimization (GEO), and enterprise commercial video campaigns for clients across India, UAE, and global markets.\n\nWe would welcome exploring inclusion in your official partner network or co-authoring a technical case study detailing our production workflows and client results.\n\nBest regards,\n\nKohin Bellara\nCEO, D'Genius Solutions\nhttps://www.dgeniussolutions.com/`
     );
   };
 
@@ -122,15 +95,17 @@ export default function PartnershipsClientView() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           opportunity_id: activePartner.id,
+          source_module: "PARTNERSHIPS",
+          source_record_id: activePartner.id,
           target_domain: activePartner.domain,
           target_url: activePartner.website_url,
+          publication: activePartner.partner_name,
           campaign_type: "PARTNERSHIP",
-          stage: "INTERNAL_APPROVED",
+          stage: "DRAFT",
           pitch_subject: pitchSubject,
           pitch_body: pitchBody,
-          recommended_dgs_target_page: "/services/ai-video-production-agency/",
-          target_anchor: "D'Genius Solutions",
-          approval_status: "approved",
+          target_page: "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+          assigned_staff: "Kohin Bellara - CEO D'Genius Solutions",
         }),
       });
       const json = await res.json();
@@ -139,18 +114,71 @@ export default function PartnershipsClientView() {
           prev.map((item) => (item.id === activePartner.id ? { ...item, status: "PITCHED" } : item))
         );
         setActivePartner(null);
-        setFeedback("Partnership proposal queued into Outreach CRM.");
+        setFeedback(
+          <span>
+            Partnership proposal draft saved.{" "}
+            <a
+              href="/admin/off-page/outreach?stage=DRAFT"
+              style={{ color: "var(--dgs-brand-cyan)", textDecoration: "underline", fontWeight: 700 }}
+            >
+              View in Outreach CRM (Drafts) &rarr;
+            </a>
+          </span>
+        );
       }
     } catch (err) {
       console.error(err);
     } finally {
       setQueuing(false);
-      setTimeout(() => setFeedback(null), 5000);
+      setTimeout(() => setFeedback(null), 8000);
+    }
+  };
+
+  const handleCreatePartnerLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPartnerName || !newDomain) return;
+    setAddingLead(true);
+    try {
+      const cleanDomain = newDomain.toLowerCase().trim().replace(/^https?:\/\//, "").replace(/^www\./, "");
+      const res = await fetch("/api/admin/off-page/opportunities/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          records: [
+            {
+              site_name: newPartnerName,
+              domain: cleanDomain,
+              exact_action_url: newUrl || `https://${cleanDomain}`,
+              region: newRegion,
+              category: "PARTNERSHIP",
+              free_status: "FREE",
+              target_page: "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+              verification_status: "QUALIFIED",
+              evidence: "Manually registered partner lead",
+            },
+          ],
+        }),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        setShowAddModal(false);
+        setNewPartnerName("");
+        setNewDomain("");
+        setNewUrl("");
+        setFeedback("Partnership lead registered successfully.");
+        await fetchPartnerships();
+      } else {
+        setFeedback(`Failed: ${json.error || json.errors?.join("; ")}`);
+      }
+    } catch (err: any) {
+      setFeedback(`Error: ${err.message}`);
+    } finally {
+      setAddingLead(false);
+      setTimeout(() => setFeedback(null), 6000);
     }
   };
 
   const filtered = partnerships.filter((p) => {
-    if (selectedCategory !== "ALL" && p.category !== selectedCategory) return false;
     if (selectedRegion !== "ALL" && p.region !== selectedRegion) return false;
     return true;
   });
@@ -158,39 +186,29 @@ export default function PartnershipsClientView() {
   const columns: Column<PartnershipLead>[] = [
     {
       key: "partner_name",
-      header: "Partner & Ecosystem",
+      header: "Partner & Ecosystem Domain",
       sortable: true,
       render: (p) => (
         <div>
           <div style={{ fontWeight: 650, color: "#fff", display: "flex", alignItems: "center", gap: "6px" }}>
             {p.partner_name}
-            <a
-              href={p.website_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "var(--dgs-brand-cyan)", display: "inline-flex" }}
-            >
-              <ExternalLink size={13} />
-            </a>
+            {p.website_url && (
+              <a
+                href={p.website_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Open Website"
+                style={{ color: "var(--dgs-brand-cyan)", display: "inline-flex" }}
+              >
+                <ExternalLink size={13} />
+              </a>
+            )}
           </div>
-          <div style={{ fontSize: "0.74rem", color: "var(--dgs-brand-cyan)" }}>{p.domain}</div>
+          <div style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.4)", marginTop: "2px" }}>
+            {p.domain}
+          </div>
         </div>
       ),
-    },
-    {
-      key: "category",
-      header: "Partnership Type",
-      render: (p) => {
-        const labels: Record<string, string> = {
-          AI_TECH_VENDOR: "AI Tech Vendor",
-          AGENCY_ECOSYSTEM: "Agency Ecosystem",
-          CLIENT_CASE_STUDY: "Client Case Study",
-          MEDIA_PARTNER: "Media Partner",
-        };
-        return (
-          <span style={{ fontSize: "0.75rem", color: "#e2e8f0" }}>{labels[p.category] || p.category}</span>
-        );
-      },
     },
     {
       key: "region",
@@ -212,9 +230,9 @@ export default function PartnershipsClientView() {
     },
     {
       key: "potential_link_type",
-      header: "Link Asset Opportunity",
+      header: "Link Asset Type",
       render: (p) => (
-        <span style={{ fontSize: "0.76rem", color: "#34d399", fontWeight: 600 }}>
+        <span style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.85)" }}>
           {p.potential_link_type}
         </span>
       ),
@@ -224,28 +242,38 @@ export default function PartnershipsClientView() {
       header: "Authority",
       sortable: true,
       render: (p) => (
-        <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#10b981" }}>
-          {p.authority_score} DA
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#10b981" }}>{p.authority_score}</span>
+          <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>DA</span>
+        </div>
       ),
     },
     {
       key: "status",
       header: "Status",
-      render: (p) => (
-        <span
-          style={{
-            fontSize: "0.7rem",
-            fontWeight: 700,
-            padding: "2px 6px",
-            borderRadius: "4px",
-            background: p.status === "CONFIRMED" ? "rgba(16,185,129,0.15)" : "rgba(255,255,255,0.08)",
-            color: p.status === "CONFIRMED" ? "#34d399" : "#e2e8f0",
-          }}
-        >
-          {p.status}
-        </span>
-      ),
+      render: (p) => {
+        const badgeColors: Record<string, { bg: string; color: string }> = {
+          IDENTIFIED: { bg: "rgba(59,130,246,0.15)", color: "#60a5fa" },
+          PITCHED: { bg: "rgba(245,158,11,0.15)", color: "#f59e0b" },
+          CONFIRMED: { bg: "rgba(16,185,129,0.15)", color: "#34d399" },
+          LIVE: { bg: "rgba(16,185,129,0.25)", color: "#10b981" },
+        };
+        const c = badgeColors[p.status] || { bg: "rgba(255,255,255,0.08)", color: "#fff" };
+        return (
+          <span
+            style={{
+              fontSize: "0.7rem",
+              fontWeight: 700,
+              padding: "2px 7px",
+              borderRadius: "4px",
+              background: c.bg,
+              color: c.color,
+            }}
+          >
+            {p.status}
+          </span>
+        );
+      },
     },
   ];
 
@@ -265,18 +293,20 @@ export default function PartnershipsClientView() {
       >
         <div>
           <h2 style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, color: "#fff" }}>
-            Strategic Agency & Technology Partnerships
+            Ecosystem Partnerships & Directory Collaborations
           </h2>
           <p style={{ margin: "4px 0 0 0", fontSize: "0.82rem", color: "rgba(255,255,255,0.6)" }}>
-            Earns ultra-high authority, editorial backlinks through certified technology vendor badges, enterprise client case studies, and industry trade bodies.
+            Genuine agency partner directories, software integrations, and ecosystem badges. Pitch identity: Kohin Bellara - CEO D'Genius Solutions.
           </p>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "0.75rem", color: "var(--dgs-brand-cyan)", display: "flex", alignItems: "center", gap: "4px" }}>
-            <Award size={14} /> 100% Free Legit Authority Assets
-          </span>
-        </div>
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="dgs-saas-btn primary"
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+        >
+          <Plus size={14} /> Add Partnership Lead
+        </button>
       </div>
 
       {feedback && (
@@ -298,12 +328,12 @@ export default function PartnershipsClientView() {
         </div>
       )}
 
-      {/* Filter Tabs */}
+      {/* Region Filter */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "10px",
+          gap: "8px",
           flexWrap: "wrap",
           padding: "10px 16px",
           background: "rgba(255,255,255,0.02)",
@@ -311,26 +341,7 @@ export default function PartnershipsClientView() {
           borderRadius: "var(--dgs-radius-md)",
         }}
       >
-        <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Category:</span>
-        {[
-          { id: "ALL", label: "All Categories" },
-          { id: "AI_TECH_VENDOR", label: "AI Tech Vendors" },
-          { id: "AGENCY_ECOSYSTEM", label: "Agency Ecosystem" },
-          { id: "CLIENT_CASE_STUDY", label: "Client Case Studies" },
-        ].map((c) => (
-          <button
-            key={c.id}
-            onClick={() => setSelectedCategory(c.id)}
-            className={`dgs-saas-chip ${selectedCategory === c.id ? "primary" : ""}`}
-            style={{ cursor: "pointer", border: "none" }}
-          >
-            {c.label}
-          </button>
-        ))}
-
-        <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600, marginLeft: "14px" }}>
-          Region:
-        </span>
+        <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Region:</span>
         {["ALL", "INDIA", "UAE", "USA", "GLOBAL"].map((r) => (
           <button
             key={r}
@@ -357,17 +368,17 @@ export default function PartnershipsClientView() {
             <button
               onClick={() => handleOpenPitch(item)}
               className="dgs-saas-btn primary"
-              style={{ fontSize: "0.72rem", padding: "4px 8px" }}
+              style={{ fontSize: "0.72rem", padding: "4px 8px", display: "inline-flex", alignItems: "center", gap: "4px" }}
             >
-              Draft Proposal
+              <Send size={11} /> Create Draft
             </button>
           )}
           initialPageSize={10}
-          emptyMessage="No partnerships matching filters."
+          emptyMessage="No active partnership leads registered yet."
         />
       </div>
 
-      {/* Proposal Modal */}
+      {/* Pitch Modal */}
       {activePartner && (
         <div
           style={{
@@ -394,7 +405,9 @@ export default function PartnershipsClientView() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <Handshake size={18} color="var(--dgs-brand-cyan)" />
-                <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>Draft Partnership Proposal</h3>
+                <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>
+                  Draft Partnership Proposal: {activePartner.partner_name}
+                </h3>
               </div>
               <button onClick={() => setActivePartner(null)} style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}>
                 <X size={18} />
@@ -402,13 +415,8 @@ export default function PartnershipsClientView() {
             </div>
 
             <div style={{ marginBottom: "12px" }}>
-              <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)" }}>Partner:</span>
-              <div style={{ fontWeight: 650, color: "#fff" }}>{activePartner.partner_name} ({activePartner.domain})</div>
-            </div>
-
-            <div style={{ marginBottom: "12px" }}>
               <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
-                Proposal Subject:
+                Pitch Subject:
               </label>
               <input
                 type="text"
@@ -421,13 +429,14 @@ export default function PartnershipsClientView() {
                   background: "#1f2937",
                   border: "1px solid rgba(255,255,255,0.15)",
                   color: "#fff",
+                  fontSize: "0.85rem",
                 }}
               />
             </div>
 
             <div style={{ marginBottom: "16px" }}>
               <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
-                Collaboration Pitch:
+                Proposal Content:
               </label>
               <textarea
                 rows={7}
@@ -448,18 +457,159 @@ export default function PartnershipsClientView() {
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ fontSize: "0.75rem", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
-                <ShieldCheck size={14} /> Ready for executive review
+                <ShieldCheck size={14} /> Saves to Outreach CRM Drafts for Review
               </span>
               <div style={{ display: "flex", gap: "10px" }}>
                 <button onClick={() => setActivePartner(null)} className="dgs-saas-btn secondary">
                   Cancel
                 </button>
                 <button onClick={handleQueuePartnership} disabled={queuing} className="dgs-saas-btn primary">
-                  {queuing ? "Queuing..." : "Queue in Outreach CRM"}
+                  {queuing ? "Saving Draft..." : "Save Draft to Outreach CRM"}
                 </button>
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Add Partner Modal */}
+      {showAddModal && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.75)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <form
+            onSubmit={handleCreatePartnerLead}
+            className="dgs-saas-card"
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              padding: "24px",
+              background: "#111827",
+              border: "1px solid rgba(255,255,255,0.12)",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+              <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>Register Partnership Opportunity</h3>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(false)}
+                style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                Partner Entity Name:
+              </label>
+              <input
+                type="text"
+                required
+                value={newPartnerName}
+                onChange={(e) => setNewPartnerName(e.target.value)}
+                placeholder="e.g. HubSpot Ecosystem Partner"
+                style={{
+                  width: "100%",
+                  padding: "8px 10px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                Partner Domain:
+              </label>
+              <input
+                type="text"
+                required
+                value={newDomain}
+                onChange={(e) => setNewDomain(e.target.value)}
+                placeholder="hubspot.com"
+                style={{
+                  width: "100%",
+                  padding: "8px 10px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "12px" }}>
+              <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                Action / Listing URL:
+              </label>
+              <input
+                type="url"
+                value={newUrl}
+                onChange={(e) => setNewUrl(e.target.value)}
+                placeholder="https://hubspot.com/partners"
+                style={{
+                  width: "100%",
+                  padding: "8px 10px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "16px" }}>
+              <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                Region:
+              </label>
+              <select
+                value={newRegion}
+                onChange={(e) => setNewRegion(e.target.value as any)}
+                style={{
+                  width: "100%",
+                  padding: "8px 10px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                }}
+              >
+                <option value="INDIA">INDIA</option>
+                <option value="UAE">UAE</option>
+                <option value="USA">USA</option>
+                <option value="GLOBAL">GLOBAL</option>
+              </select>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(false)}
+                className="dgs-saas-btn secondary"
+              >
+                Cancel
+              </button>
+              <button type="submit" disabled={addingLead} className="dgs-saas-btn primary">
+                {addingLead ? "Saving..." : "Register Lead"}
+              </button>
+            </div>
+          </form>
         </div>
       )}
     </div>

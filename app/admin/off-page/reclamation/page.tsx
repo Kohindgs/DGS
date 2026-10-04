@@ -22,7 +22,6 @@ export default async function AdminOffPageReclamationPage() {
   if (isCmsDatabaseConfigured()) {
     try {
       await ensureOffPageTablesExist();
-      await seedBacklinksIfEmpty();
       const { rows } = await cmsQuery<OffPageBacklink>(
         "SELECT * FROM off_page_backlinks WHERE status IN ('LOST', 'REL_CHANGED', 'NOINDEX_SOURCE', 'ANCHOR_CHANGED') ORDER BY authority_score DESC"
       );

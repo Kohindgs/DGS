@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     // Otherwise check top 5 oldest checked links
     const { rows } = await cmsQuery<{ id: string }>(
-      `SELECT id FROM off_page_backlinks ORDER BY last_checked_at ASC NULLS FIRST LIMIT 5`
+      `SELECT id FROM off_page_backlinks ORDER BY CASE WHEN last_checked_at IS NULL THEN 0 ELSE 1 END, last_checked_at ASC LIMIT 5`
     );
 
     const results = [];

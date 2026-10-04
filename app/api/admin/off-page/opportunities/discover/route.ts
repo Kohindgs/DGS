@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
-import { revalidateOpportunityUrls, seedOpportunitiesIfEmpty } from "@/lib/off-page/discovery";
+import {
+  revalidateOpportunityUrls,
+  runOpportunityDiscoverySuite,
+} from "@/lib/off-page/discovery";
 
 export const dynamic = "force-dynamic";
 
@@ -11,12 +14,14 @@ export async function POST() {
   }
 
   try {
-    const seedRes = await seedOpportunitiesIfEmpty();
+    const discovery = await runOpportunityDiscoverySuite();
     const revalRes = await revalidateOpportunityUrls(25);
 
     return NextResponse.json({
       ok: true,
-      seeded: seedRes.seeded,
+      discovery,
+      insertedCount: discovery.new_records_added,
+      message: discovery.message,
       revalidation: revalRes,
       timestamp: new Date().toISOString(),
     });

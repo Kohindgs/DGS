@@ -135,6 +135,9 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
     const ugc = foundRel.includes("ugc");
     const sponsored = foundRel.includes("sponsored");
 
+    const priority = link.check_priority || "P1";
+    const nextIntervalDays = newStatus === "LOST" ? 3 : priority === "P0" ? 3 : priority === "P1" ? 7 : priority === "P2" ? 14 : 30;
+
     await cmsExecute(
       `UPDATE off_page_backlinks SET 
         status = ?, 
@@ -148,7 +151,11 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
         source_indexable = ?,
         source_canonical = ?,
         last_checked_at = NOW(),
-        last_seen_at = IF(? = 'LIVE', NOW(), last_seen_at)
+        last_seen_at = IF(? IN ('LIVE', 'VERIFIED'), NOW(), last_seen_at),
+        verified_at = IF(? IN ('LIVE', 'VERIFIED'), IFNULL(verified_at, NOW()), verified_at),
+        live_at = IF(? IN ('LIVE', 'VERIFIED'), IFNULL(live_at, NOW()), live_at),
+        lost_at = IF(? = 'LOST', IFNULL(lost_at, NOW()), lost_at),
+        next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
        WHERE id = ?`,
       [
         newStatus,
@@ -163,6 +170,10 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
         sourceIndexable ? 1 : 0,
         sourceCanonical,
         newStatus,
+        newStatus,
+        newStatus,
+        newStatus,
+        nextIntervalDays,
         backlinkId,
       ]
     );
@@ -316,181 +327,9 @@ export async function calculateLinkDecayMetrics(): Promise<{
 }
 
 /**
- * Seeds authentic initial backlinks if table is empty.
+ * Zero-demo: sample backlinks are permanently eliminated from production code.
+ * Safe no-op preserved for backward compatibility.
  */
 export async function seedBacklinksIfEmpty(): Promise<number> {
-  await ensureOffPageTablesExist();
-
-  const { rows: countRows } = await cmsQuery<{ total: number }>(
-    `SELECT COUNT(*) as total FROM off_page_backlinks`
-  );
-  if (Number(countRows[0]?.total || 0) > 0) return 0;
-
-  const INITIAL_BACKLINKS = [
-    {
-      source_domain: "clutch.co",
-      source_url: "https://clutch.co/profile/d-genius-solutions",
-      source_page_title: "Top Digital Marketing Agencies in Mumbai - Clutch",
-      target_url: "https://www.dgeniussolutions.com/",
-      target_page_type: "HOMEPAGE",
-      anchor_text: "D'Genius Solutions",
-      anchor_classification: "BRANDED",
-      link_rel: "dofollow",
-      dofollow: true,
-      nofollow: false,
-      source_country: "India",
-      source_region: "INDIA" as RegionCode,
-      source_language: "en",
-      topical_category: "Agency Directory",
-      topical_relevance_score: 95,
-      editorial_quality_score: 90,
-      geo_relevance_score: 95,
-      spam_risk_score: 0,
-      authority_score: 94,
-      status: "LIVE" as BacklinkStatus,
-      referral_sessions: 142,
-      referral_leads: 8,
-    },
-    {
-      source_domain: "goodfirms.co",
-      source_url: "https://www.goodfirms.co/company/d-genius-solutions",
-      source_page_title: "D'Genius Solutions Reviews & Services - GoodFirms",
-      target_url: "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
-      target_page_type: "SERVICE_PAGE",
-      anchor_text: "Visit Website",
-      anchor_classification: "GENERIC",
-      link_rel: "dofollow",
-      dofollow: true,
-      nofollow: false,
-      source_country: "India",
-      source_region: "INDIA" as RegionCode,
-      source_language: "en",
-      topical_category: "B2B Reviews",
-      topical_relevance_score: 90,
-      editorial_quality_score: 85,
-      geo_relevance_score: 90,
-      spam_risk_score: 0,
-      authority_score: 89,
-      status: "LIVE" as BacklinkStatus,
-      referral_sessions: 98,
-      referral_leads: 5,
-    },
-    {
-      source_domain: "github.com",
-      source_url: "https://github.com/dgeniussolutions/geo-benchmarks",
-      source_page_title: "dgeniussolutions/geo-benchmarks: Generative Engine Optimization Testing",
-      target_url: "https://www.dgeniussolutions.com/services/geo/",
-      target_page_type: "SERVICE_PAGE",
-      anchor_text: "https://www.dgeniussolutions.com/services/geo/",
-      anchor_classification: "NAKED_URL",
-      link_rel: "dofollow",
-      dofollow: true,
-      nofollow: false,
-      source_country: "Global",
-      source_region: "GLOBAL" as RegionCode,
-      source_language: "en",
-      topical_category: "Open Source Tech",
-      topical_relevance_score: 98,
-      editorial_quality_score: 98,
-      geo_relevance_score: 85,
-      spam_risk_score: 0,
-      authority_score: 98,
-      status: "LIVE" as BacklinkStatus,
-      referral_sessions: 215,
-      referral_leads: 12,
-    },
-    {
-      source_domain: "producthunt.com",
-      source_url: "https://www.producthunt.com/products/dgs-ai-video-studio",
-      source_page_title: "DGS AI Video Studio on Product Hunt",
-      target_url: "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
-      target_page_type: "SERVICE_PAGE",
-      anchor_text: "DGS AI Video Production",
-      anchor_classification: "PARTIAL_MATCH",
-      link_rel: "dofollow",
-      dofollow: true,
-      nofollow: false,
-      source_country: "United States",
-      source_region: "USA" as RegionCode,
-      source_language: "en",
-      topical_category: "Tech Product Launch",
-      topical_relevance_score: 95,
-      editorial_quality_score: 92,
-      geo_relevance_score: 85,
-      spam_risk_score: 0,
-      authority_score: 94,
-      status: "LIVE" as BacklinkStatus,
-      referral_sessions: 320,
-      referral_leads: 18,
-    },
-    {
-      source_domain: "dmc.ae",
-      source_url: "https://dmc.ae/partners/d-genius-solutions",
-      source_page_title: "Media Production Partners - Dubai Media City",
-      target_url: "https://www.dgeniussolutions.com/services/ai-production-dubai-page/",
-      target_page_type: "SERVICE_PAGE",
-      anchor_text: "D'Genius Solutions Dubai",
-      anchor_classification: "BRANDED",
-      link_rel: "dofollow",
-      dofollow: true,
-      nofollow: false,
-      source_country: "United Arab Emirates",
-      source_region: "UAE" as RegionCode,
-      source_language: "en",
-      topical_category: "Free Zone Media Hub",
-      topical_relevance_score: 98,
-      editorial_quality_score: 95,
-      geo_relevance_score: 100,
-      spam_risk_score: 0,
-      authority_score: 96,
-      status: "LIVE" as BacklinkStatus,
-      referral_sessions: 165,
-      referral_leads: 14,
-    },
-  ];
-
-  let seeded = 0;
-  for (const b of INITIAL_BACKLINKS) {
-    const id = `lnk_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
-    await cmsExecute(
-      `INSERT INTO off_page_backlinks (
-        id, source_domain, source_url, source_page_title, target_url, target_page_type,
-        anchor_text, anchor_classification, link_rel, dofollow, nofollow, ugc, sponsored,
-        unknown_link_type, first_seen_at, last_seen_at, last_checked_at, status, http_status,
-        source_indexable, source_canonical, source_country, source_region, source_language,
-        topical_category, topical_relevance_score, editorial_quality_score, geo_relevance_score,
-        spam_risk_score, authority_score, placement_type, link_location, referral_sessions,
-        referral_leads, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, NOW(), NOW(), NOW(), ?, 200, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'CONTENT', 'BODY', ?, ?, NOW(), NOW())`,
-      [
-        id,
-        b.source_domain,
-        b.source_url,
-        b.source_page_title,
-        b.target_url,
-        b.target_page_type,
-        b.anchor_text,
-        b.anchor_classification,
-        b.link_rel,
-        b.dofollow ? 1 : 0,
-        b.nofollow ? 1 : 0,
-        b.status,
-        b.source_url,
-        b.source_country,
-        b.source_region,
-        b.source_language,
-        b.topical_category,
-        b.topical_relevance_score,
-        b.editorial_quality_score,
-        b.geo_relevance_score,
-        b.spam_risk_score,
-        b.authority_score,
-        b.referral_sessions,
-        b.referral_leads,
-      ]
-    );
-    seeded++;
-  }
-
-  return seeded;
+  return 0;
 }

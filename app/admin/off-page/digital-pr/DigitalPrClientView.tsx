@@ -29,88 +29,55 @@ interface PRRequest {
   submission_url: string;
 }
 
-const SAMPLE_PR_FEEDS: PRRequest[] = [
-  {
-    id: "pr_1",
-    outlet: "Forbes Technology Council / Featured",
-    topic: "Enterprise AI Video Production: How Generative Workflows Reduced B2B CAC by 40%",
-    journalist: "Editorial Staff",
-    deadline: "In 3 Days",
-    target_persona: "Agency Founder / AI Creative Technologist",
-    region: "USA",
-    authority_score: 94,
-    free_tier: true,
-    status: "NEW",
-    submission_url: "https://featured.com",
-  },
-  {
-    id: "pr_2",
-    outlet: "Arabian Business / Entrepreneur Middle East",
-    topic: "Dubai's AI Transformation: The Rise of Generative Video Content for Real Estate & Hospitality",
-    journalist: "MENA Tech Reporter",
-    deadline: "In 5 Days",
-    target_persona: "DGS Dubai Growth Lead",
-    region: "UAE",
-    authority_score: 86,
-    free_tier: true,
-    status: "NEW",
-    submission_url: "https://www.entrepreneur.com/en-ae",
-  },
-  {
-    id: "pr_3",
-    outlet: "YourStory / Inc42",
-    topic: "AEO vs Traditional SEO: How Indian Enterprises Are Winning Generative AI Search (SearchGPT & Perplexity)",
-    journalist: "Startup Beat Editor",
-    deadline: "In 2 Days",
-    target_persona: "Head of SEO / Founder",
-    region: "INDIA",
-    authority_score: 88,
-    free_tier: true,
-    status: "NEW",
-    submission_url: "https://yourstory.com",
-  },
-  {
-    id: "pr_4",
-    outlet: "MarTech Series / CMSWire",
-    topic: "The Future of LLM Grounding: Structuring Schema and Knowledge Graphs for Brand Authority",
-    journalist: "MarTech Features Editor",
-    deadline: "In 6 Days",
-    target_persona: "Chief Strategy Officer",
-    region: "USA",
-    authority_score: 85,
-    free_tier: true,
-    status: "NEW",
-    submission_url: "https://martechseries.com",
-  },
-  {
-    id: "pr_5",
-    outlet: "Exchange4Media / Campaign India",
-    topic: "Mumbai's Creative Agencies Deploying AI Video Production Pipelines: Agency Case Studies",
-    journalist: "Advertising & Media Desk",
-    deadline: "In 4 Days",
-    target_persona: "Creative Director",
-    region: "INDIA",
-    authority_score: 81,
-    free_tier: true,
-    status: "NEW",
-    submission_url: "https://www.exchange4media.com",
-  },
-];
-
 export default function DigitalPrClientView() {
-  const [prRequests, setPrRequests] = useState<PRRequest[]>(SAMPLE_PR_FEEDS);
+  const [prRequests, setPrRequests] = useState<PRRequest[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState<string>("ALL");
   const [activePR, setActivePR] = useState<PRRequest | null>(null);
   const [pitchSubject, setPitchSubject] = useState("");
   const [pitchQuote, setPitchQuote] = useState("");
   const [pitching, setPitching] = useState(false);
-  const [feedback, setFeedback] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<React.ReactNode | null>(null);
+
+  const fetchPrOpportunities = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/off-page/opportunities?status=ALL");
+      const json = await res.json();
+      if (json.ok && Array.isArray(json.opportunities)) {
+        const prItems = json.opportunities
+          .filter((o: any) => ["DIGITAL_PR", "EXPERT_CONTRIBUTION", "PODCAST"].includes(o.category))
+          .map((o: any) => ({
+            id: o.id,
+            outlet: o.site_name || o.domain,
+            topic: o.recommended_content || `Expert Commentary & Thought Leadership: ${o.recommended_service || "AI Video & Technical SEO"}`,
+            journalist: "Editorial Desk",
+            deadline: "Ongoing Curation",
+            target_persona: "Kohin Bellara - CEO D'Genius Solutions",
+            region: o.region || "GLOBAL",
+            authority_score: o.authority_score || 85,
+            free_tier: o.free_status !== "NOT_FREE",
+            status: (o.status === "OUTREACH" ? "DRAFTED" : o.status === "SUBMITTED" ? "PITCHED" : "NEW") as any,
+            submission_url: o.exact_submission_url || `https://${o.domain}`,
+          }));
+        setPrRequests(prItems);
+      }
+    } catch (err) {
+      console.error("Failed fetching PR feeds:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPrOpportunities();
+  }, []);
 
   const handleOpenPitchModal = (pr: PRRequest) => {
     setActivePR(pr);
     setPitchSubject(`Expert Commentary: ${pr.topic} — D'Genius Solutions`);
     setPitchQuote(
-      `"When enterprise brands deploy generative AI video production at scale, the primary breakthrough isn't just speed—it's iterative creative testing. At D'Genius Solutions, we see brands producing 20 distinct cinematic variations of a hero video campaign in the time it previously took to render one 3D storyboard. This data-driven creative agility directly lowers customer acquisition costs by over 38% across programmatic ad channels."\n\n— Kohin D'Souza, Founder & Creative Director, D'Genius Solutions (https://www.dgeniussolutions.com)`
+      `Hi Editorial Team,\n\nI hope you are having a productive week.\n\nRegarding coverage on "${pr.topic}" at ${pr.outlet}:\n\nAt D'Genius Solutions, we focus on technical SEO, generative search optimization (GEO), and enterprise AI video production for clients across India, UAE, and global markets. In our client campaigns, combining structured entity schema with hybrid AI video workflows has created sustainable, measurable improvements in organic visibility and AI Overview citations.\n\nWe would be glad to share practical insights, methodology, or an executive quote for your upcoming stories.\n\nBest regards,\n\nKohin Bellara\nCEO, D'Genius Solutions\nhttps://www.dgeniussolutions.com/`
     );
   };
 
@@ -123,15 +90,16 @@ export default function DigitalPrClientView() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           opportunity_id: activePR.id,
+          source_module: "DIGITAL_PR",
+          source_record_id: activePR.id,
           target_domain: activePR.outlet,
           target_url: activePR.submission_url,
           campaign_type: "DIGITAL_PR",
-          stage: "INTERNAL_APPROVED",
+          stage: "DRAFT",
           pitch_subject: pitchSubject,
           pitch_body: pitchQuote,
-          recommended_dgs_target_page: "/services/ai-video-production-agency/",
-          target_anchor: "D'Genius Solutions",
-          approval_status: "approved",
+          target_page: "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+          assigned_staff: "Kohin Bellara - CEO D'Genius Solutions",
         }),
       });
       const json = await res.json();
@@ -140,13 +108,25 @@ export default function DigitalPrClientView() {
           prev.map((item) => (item.id === activePR.id ? { ...item, status: "DRAFTED" } : item))
         );
         setActivePR(null);
-        setFeedback("Expert PR pitch queued into Outreach CRM.");
+        setFeedback(
+          <span>
+            Digital PR pitch draft saved.{" "}
+            <a
+              href="/admin/off-page/outreach?stage=DRAFT"
+              style={{ color: "var(--dgs-brand-cyan)", textDecoration: "underline", fontWeight: 700 }}
+            >
+              View in Outreach CRM (Drafts) &rarr;
+            </a>
+          </span>
+        );
+      } else {
+        setFeedback(`Error: ${json.error}`);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      setFeedback(`Error: ${err.message}`);
     } finally {
       setPitching(false);
-      setTimeout(() => setFeedback(null), 5000);
+      setTimeout(() => setFeedback(null), 8000);
     }
   };
 
@@ -200,7 +180,7 @@ export default function DigitalPrClientView() {
     },
     {
       key: "target_persona",
-      header: "Recommended Expert",
+      header: "Executive Spokesperson",
       render: (pr) => <span style={{ fontSize: "0.75rem", color: "#a78bfa" }}>{pr.target_persona}</span>,
     },
     {
@@ -269,16 +249,16 @@ export default function DigitalPrClientView() {
       >
         <div>
           <h2 style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, color: "#fff" }}>
-            Digital PR & Journalist Request Feeds
+            Digital PR & Expert Citation Radar
           </h2>
           <p style={{ margin: "4px 0 0 0", fontSize: "0.82rem", color: "rgba(255,255,255,0.6)" }}>
-            Aggregates free editorial opportunities from Connectively/HARO, Featured.com, Qwoted, and regional tech journalists.
+            High-authority publication queries & editorial opportunities. Pitch identity: Kohin Bellara - CEO D'Genius Solutions.
           </p>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "0.74rem", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
-            <Sparkles size={14} /> 100% Free Press Inquiries
+          <span style={{ fontSize: "0.75rem", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
+            <ShieldCheck size={14} /> Free Journalist & Contributor Outlets
           </span>
         </div>
       </div>
@@ -302,51 +282,21 @@ export default function DigitalPrClientView() {
         </div>
       )}
 
-      {/* Free PR Platforms Bar */}
+      {/* Region Filter Chips */}
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: "12px",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          flexWrap: "wrap",
+          padding: "10px 16px",
+          background: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: "var(--dgs-radius-md)",
         }}
       >
-        {[
-          { name: "Connectively (HARO)", url: "https://connectively.us", status: "Active Free" },
-          { name: "Featured.com", url: "https://featured.com", status: "Active Free" },
-          { name: "SourceBottle", url: "https://sourcebottle.com", status: "Active Free" },
-          { name: "Help a B2B Writer", url: "https://helpab2bwriter.com", status: "Active Free" },
-          { name: "Qwoted", url: "https://qwoted.com", status: "Active Free" },
-        ].map((plat) => (
-          <div
-            key={plat.name}
-            className="dgs-saas-card"
-            style={{
-              padding: "12px 14px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div>
-              <div style={{ fontWeight: 650, color: "#fff", fontSize: "0.82rem" }}>{plat.name}</div>
-              <div style={{ fontSize: "0.68rem", color: "#10b981", fontWeight: 600 }}>{plat.status}</div>
-            </div>
-            <a
-              href={plat.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "var(--dgs-brand-cyan)" }}
-            >
-              <ExternalLink size={14} />
-            </a>
-          </div>
-        ))}
-      </div>
-
-      {/* Region Filter */}
-      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-        <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.5)" }}>Region:</span>
-        {["ALL", "INDIA", "UAE", "USA"].map((r) => (
+        <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>Region:</span>
+        {["ALL", "INDIA", "UAE", "USA", "GLOBAL"].map((r) => (
           <button
             key={r}
             onClick={() => setSelectedRegion(r)}
@@ -364,23 +314,23 @@ export default function DigitalPrClientView() {
           columns={columns}
           data={filtered}
           keyExtractor={(item) => item.id}
-          searchPlaceholder="Search journalist request, outlet, topic..."
+          searchPlaceholder="Search outlet, topic, or journalist query..."
           searchFilter={(item, q) =>
-            item.topic.toLowerCase().includes(q) ||
             item.outlet.toLowerCase().includes(q) ||
+            item.topic.toLowerCase().includes(q) ||
             item.journalist.toLowerCase().includes(q)
           }
           actions={(item) => (
             <button
               onClick={() => handleOpenPitchModal(item)}
               className="dgs-saas-btn primary"
-              style={{ fontSize: "0.72rem", padding: "4px 8px" }}
+              style={{ fontSize: "0.72rem", padding: "4px 8px", display: "inline-flex", alignItems: "center", gap: "4px" }}
             >
-              Draft Pitch
+              <Send size={11} /> Create Draft
             </button>
           )}
           initialPageSize={10}
-          emptyMessage="No open journalist requests found."
+          emptyMessage="No verified current PR opportunities found. PR queries will appear here when fetched or imported."
         />
       </div>
 
@@ -410,8 +360,10 @@ export default function DigitalPrClientView() {
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <Sparkles size={18} color="var(--dgs-brand-cyan)" />
-                <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>Draft Expert Quote Pitch</h3>
+                <Newspaper size={18} color="var(--dgs-brand-cyan)" />
+                <h3 style={{ margin: 0, color: "#fff", fontSize: "1.1rem" }}>
+                  Draft PR Response: {activePR.outlet}
+                </h3>
               </div>
               <button onClick={() => setActivePR(null)} style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer" }}>
                 <X size={18} />
@@ -419,13 +371,8 @@ export default function DigitalPrClientView() {
             </div>
 
             <div style={{ marginBottom: "12px" }}>
-              <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)" }}>Outlet:</span>
-              <div style={{ fontWeight: 650, color: "#fff" }}>{activePR.outlet} ({activePR.topic})</div>
-            </div>
-
-            <div style={{ marginBottom: "12px" }}>
               <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
-                Subject / Hook:
+                Pitch Subject:
               </label>
               <input
                 type="text"
@@ -438,16 +385,17 @@ export default function DigitalPrClientView() {
                   background: "#1f2937",
                   border: "1px solid rgba(255,255,255,0.15)",
                   color: "#fff",
+                  fontSize: "0.85rem",
                 }}
               />
             </div>
 
             <div style={{ marginBottom: "16px" }}>
               <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
-                Expert Quote & Key Takeaway:
+                Executive Quote & Commentary:
               </label>
               <textarea
-                rows={7}
+                rows={8}
                 value={pitchQuote}
                 onChange={(e) => setPitchQuote(e.target.value)}
                 style={{
@@ -465,14 +413,14 @@ export default function DigitalPrClientView() {
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{ fontSize: "0.75rem", color: "#10b981", display: "flex", alignItems: "center", gap: "4px" }}>
-                <ShieldCheck size={14} /> Ready for editorial approval
+                <ShieldCheck size={14} /> Saves to Outreach CRM Drafts for Review
               </span>
               <div style={{ display: "flex", gap: "10px" }}>
                 <button onClick={() => setActivePR(null)} className="dgs-saas-btn secondary">
                   Cancel
                 </button>
                 <button onClick={handleQueuePR} disabled={pitching} className="dgs-saas-btn primary">
-                  {pitching ? "Queuing..." : "Queue in Outreach CRM"}
+                  {pitching ? "Saving Draft..." : "Save Draft to Outreach CRM"}
                 </button>
               </div>
             </div>

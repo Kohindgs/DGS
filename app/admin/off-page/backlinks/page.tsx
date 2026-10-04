@@ -24,7 +24,6 @@ export default async function AdminOffPageBacklinksPage() {
   if (isCmsDatabaseConfigured()) {
     try {
       await ensureOffPageTablesExist();
-      await seedBacklinksIfEmpty();
       const { rows } = await cmsQuery<OffPageBacklink>(
         "SELECT * FROM off_page_backlinks ORDER BY authority_score DESC, created_at DESC LIMIT 200"
       );

@@ -1,0 +1,51 @@
+name: DGS Off-Page SEO Daily Monitor & Discovery
+
+on:
+  schedule:
+    # Run daily at 03:30 UTC
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  off-page-daily-suite:
+    name: Execute Off-Page Discovery, Revalidation & Monitoring
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trigger Internal Off-Page Check Endpoint
+        env:
+          ENDPOINT_URL: "https://www.dgeniussolutions.com/api/internal/off-page/check"
+          AUTH_SECRET: ${{ secrets.DGS_CRON_SECRET }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          echo "=========================================================="
+          echo "Triggering DGS Off-Page SEO Daily Automation Suite"
+          echo "GitHub Workflow Run ID: $GITHUB_RUN_ID"
+          echo "Target Endpoint: $ENDPOINT_URL"
+          echo "=========================================================="
+
+          HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" -X POST "$ENDPOINT_URL" \
+            -H "Authorization: Bearer $AUTH_SECRET" \
+            -H "x-github-run-id: $GITHUB_RUN_ID" \
+            -H "Content-Type: application/json" || echo "000")
+          
+          echo "HTTP Response Status: $HTTP_STATUS"
+          if [ -f response.json ]; then
+            cat response.json
+            echo ""
+          fi
+
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "ERROR: Daily off-page monitor failed with HTTP $HTTP_STATUS. Only HTTP 200 is acceptable."
+            exit 1
+          fi
+
+          echo "=========================================================="
+          echo "Off-page daily automation completed successfully (HTTP 200)."
+          echo "=========================================================="

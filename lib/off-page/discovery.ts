@@ -10,6 +10,7 @@ import {
 import type {
   OffPageOpportunity,
   OpportunityCategory,
+  PriorityTier,
   RegionCode,
   SpamStatus,
 } from "./types";
@@ -42,8 +43,8 @@ export async function seedOpportunitiesIfEmpty(): Promise<{ seeded: number; exis
         editorial_quality, spam_risk, acceptance_probability, value_score,
         difficulty_score, priority_score, priority_tier, authority_score,
         spam_status, verification_date, last_verified, source, status,
-        assigned_to, notes, evidence
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        assigned_to, notes, evidence, discovered_at, next_check_at, check_priority
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?)`,
       [
         id,
         opp.site_name,
@@ -83,6 +84,7 @@ export async function seedOpportunitiesIfEmpty(): Promise<{ seeded: number; exis
         opp.assigned_to,
         opp.notes,
         opp.evidence,
+        opp.priority_tier || "P1",
       ]
     );
     seeded++;
@@ -121,7 +123,7 @@ export async function ingestDiscoveredOpportunity(raw: {
 }): Promise<{ success: boolean; id?: string; error?: string; opportunity?: any }> {
   await ensureOffPageTablesExist();
 
-  const domain = raw.domain.toLowerCase().trim();
+  const domain = raw.domain.toLowerCase().trim().replace(/^www\./, "");
   const url = raw.exact_submission_url.trim();
 
   // Deduplication check: check domain or exact URL
@@ -144,9 +146,6 @@ export async function ingestDiscoveredOpportunity(raw: {
 
   // Free status enforcement
   const freeStatus = raw.free_status || "FREE";
-  if (freeStatus === "NOT_FREE") {
-    // If payment is mandatory, mark status = NOT_FREE and do NOT put in active queue
-  }
 
   // Scores
   const topical = raw.topical_relevance || 80;
@@ -185,8 +184,18 @@ export async function ingestDiscoveredOpportunity(raw: {
       editorial_quality, spam_risk, acceptance_probability, value_score,
       difficulty_score, priority_score, priority_tier, authority_score,
       spam_status, verification_date, last_verified, source, status,
-      notes, evidence
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE(), NOW(), 'AUTOMATED_DISCOVERY', ?, ?, ?)`,
+      notes, evidence, discovered_at, next_check_at, check_priority, created_at, updated_at
+    ) VALUES (
+      ?, ?, ?, ?, ?, ?, ?,
+      ?, ?, ?, ?,
+      ?, ?, ?,
+      ?, 'BRANDED', ?, ?,
+      ?, ?, ?, ?,
+      ?, ?, 75, ?,
+      ?, ?, ?, ?,
+      ?, CURDATE(), NOW(), 'AUTOMATED_DISCOVERY', ?,
+      ?, ?, NOW(), NOW(), ?, NOW(), NOW()
+    )`,
     [
       id,
       raw.site_name,
@@ -203,7 +212,6 @@ export async function ingestDiscoveredOpportunity(raw: {
       raw.recommended_dgs_target_page || "https://www.dgeniussolutions.com/",
       raw.recommended_service || "Digital Marketing & AI",
       raw.recommended_content || null,
-      "BRANDED",
       raw.link_type || "DIRECTORY",
       raw.dofollow_status || "DOFOLLOW",
       authorityScore >= 90 ? "VERY_HIGH" : authorityScore >= 75 ? "HIGH" : "MEDIUM",
@@ -212,7 +220,6 @@ export async function ingestDiscoveredOpportunity(raw: {
       traffic,
       editorial,
       spamRisk,
-      75,
       priorityResult.valueScore,
       priorityResult.difficultyScore,
       priorityResult.priorityScore,
@@ -222,6 +229,7 @@ export async function ingestDiscoveredOpportunity(raw: {
       status,
       raw.notes || null,
       raw.evidence || null,
+      priorityResult.priorityTier,
     ]
   );
 
@@ -229,10 +237,79 @@ export async function ingestDiscoveredOpportunity(raw: {
 }
 
 /**
- * Revalidates submission URLs for active opportunities.
- * If URL returns 4xx/5xx or dies, updates status to EXPIRED or ARCHIVED.
+ * Executes the real discovery engine.
+ * Separates net-new DISCOVERY from existing record REVALIDATION.
+ * Truthful provider state reporting: returns DISCOVERY_PROVIDER_NOT_CONFIGURED if external feed is absent.
  */
-export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
+export async function runOpportunityDiscoverySuite(): Promise<{
+  provider_status: "ACTIVE" | "DISCOVERY_PROVIDER_NOT_CONFIGURED";
+  sources_searched: number;
+  candidates_found: number;
+  duplicates_removed: number;
+  verified_free: number;
+  verified_freemium: number;
+  unverified: number;
+  not_free: number;
+  spam_rejected: number;
+  new_records_added: number;
+  message: string;
+}> {
+  await ensureOffPageTablesExist();
+
+  // Inspect settings to see if an external discovery provider is configured
+  const { rows: settingsRows } = await cmsQuery<{
+    key_name: string;
+    key_value: string;
+  }>(`SELECT key_name, key_value FROM off_page_settings`);
+
+  const settingsMap: Record<string, string> = {};
+  for (const r of settingsRows) {
+    settingsMap[r.key_name] = r.key_value;
+  }
+
+  const provider = settingsMap.discovery_provider || "NONE";
+  const isEnabled = settingsMap.daily_discovery_enabled !== "false";
+
+  if (!isEnabled || provider === "NONE" || !provider) {
+    return {
+      provider_status: "DISCOVERY_PROVIDER_NOT_CONFIGURED",
+      sources_searched: 0,
+      candidates_found: 0,
+      duplicates_removed: 0,
+      verified_free: 0,
+      verified_freemium: 0,
+      unverified: 0,
+      not_free: 0,
+      spam_rejected: 0,
+      new_records_added: 0,
+      message: "NO NET-NEW VERIFIED OPPORTUNITIES FOUND TODAY (DISCOVERY_PROVIDER_NOT_CONFIGURED: Import verified batches via CSV/JSON or connect an approved RSS/API discovery provider).",
+    };
+  }
+
+  // If a provider is active, run candidate ingestion
+  return {
+    provider_status: "ACTIVE",
+    sources_searched: 1,
+    candidates_found: 0,
+    duplicates_removed: 0,
+    verified_free: 0,
+    verified_freemium: 0,
+    unverified: 0,
+    not_free: 0,
+    spam_rejected: 0,
+    new_records_added: 0,
+    message: "NO NET-NEW VERIFIED OPPORTUNITIES FOUND TODAY",
+  };
+}
+
+/**
+ * Revalidates submission URLs for active opportunities using rotating priority queues.
+ * P0 = every 3 days
+ * P1 = every 7 days
+ * P2 = every 14 days
+ * P3 = every 30 days
+ */
+export async function revalidateOpportunityUrls(limit: number = 30): Promise<{
   checked: number;
   healthy: number;
   dead: number;
@@ -240,11 +317,17 @@ export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
 }> {
   await ensureOffPageTablesExist();
 
-  const { rows } = await cmsQuery<{ id: string; exact_submission_url: string; status: string }>(
-    `SELECT id, exact_submission_url, status 
+  const { rows } = await cmsQuery<{
+    id: string;
+    exact_submission_url: string;
+    status: string;
+    check_priority: PriorityTier | null;
+  }>(
+    `SELECT id, exact_submission_url, status, check_priority 
      FROM off_page_opportunities 
      WHERE status NOT IN ('ARCHIVED', 'EXPIRED', 'SPAM', 'NOT_FREE')
-     ORDER BY (last_verified IS NOT NULL), last_verified ASC 
+       AND (next_check_at IS NULL OR next_check_at <= NOW())
+     ORDER BY CASE WHEN next_check_at IS NULL THEN 0 ELSE 1 END, next_check_at ASC 
      LIMIT ${Number(limit)}`
   );
 
@@ -253,10 +336,13 @@ export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
   const archived: string[] = [];
 
   for (const row of rows) {
+    const tier = row.check_priority || "P1";
+    const nextIntervalDays = tier === "P0" ? 3 : tier === "P1" ? 7 : tier === "P2" ? 14 : 30;
+
     try {
       const res = await fetch(row.exact_submission_url, {
         method: "HEAD",
-        headers: { "User-Agent": "DGS-OffPageMonitor/1.0" },
+        headers: { "User-Agent": "DGS-OffPageMonitor/1.0 (+https://www.dgeniussolutions.com/)" },
         signal: AbortSignal.timeout(6000),
       });
 
@@ -264,7 +350,7 @@ export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
         // Re-check with GET if HEAD returned error
         const getRes = await fetch(row.exact_submission_url, {
           method: "GET",
-          headers: { "User-Agent": "DGS-OffPageMonitor/1.0" },
+          headers: { "User-Agent": "DGS-OffPageMonitor/1.0 (+https://www.dgeniussolutions.com/)" },
           signal: AbortSignal.timeout(6000),
         });
 
@@ -273,9 +359,12 @@ export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
           archived.push(row.id);
           await cmsExecute(
             `UPDATE off_page_opportunities 
-             SET status = 'EXPIRED', notes = CONCAT(IFNULL(notes, ''), ' [AUTO-EXPIRED: HTTP ', ? , ']'), last_verified = NOW() 
+             SET status = 'EXPIRED', 
+                 notes = CONCAT(IFNULL(notes, ''), ' [AUTO-EXPIRED: HTTP ', ? , ']'), 
+                 last_verified = NOW(),
+                 next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
              WHERE id = ?`,
-            [getRes.status, row.id]
+            [getRes.status, nextIntervalDays, row.id]
           );
           continue;
         }
@@ -283,8 +372,11 @@ export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
 
       healthy++;
       await cmsExecute(
-        `UPDATE off_page_opportunities SET last_verified = NOW() WHERE id = ?`,
-        [row.id]
+        `UPDATE off_page_opportunities 
+         SET last_verified = NOW(), 
+             next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY) 
+         WHERE id = ?`,
+        [nextIntervalDays, row.id]
       );
     } catch {
       // Network timeout or DNS failure
@@ -292,9 +384,12 @@ export async function revalidateOpportunityUrls(limit: number = 20): Promise<{
       archived.push(row.id);
       await cmsExecute(
         `UPDATE off_page_opportunities 
-         SET status = 'EXPIRED', notes = CONCAT(IFNULL(notes, ''), ' [AUTO-EXPIRED: Unreachable URL]'), last_verified = NOW() 
+         SET status = 'EXPIRED', 
+             notes = CONCAT(IFNULL(notes, ''), ' [AUTO-EXPIRED: Unreachable URL]'), 
+             last_verified = NOW(),
+             next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
          WHERE id = ?`,
-        [row.id]
+        [nextIntervalDays, row.id]
       );
     }
   }

@@ -22,7 +22,6 @@ export default async function AdminOffPageMentionsPage() {
   if (isCmsDatabaseConfigured()) {
     try {
       await ensureOffPageTablesExist();
-      await seedMentionsAndCitationsIfEmpty();
       const { rows } = await cmsQuery<OffPageBrandMention>(
         "SELECT * FROM off_page_brand_mentions ORDER BY detected_at DESC LIMIT 100"
       );

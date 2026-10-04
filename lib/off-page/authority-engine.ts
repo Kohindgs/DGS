@@ -262,24 +262,6 @@ export async function seedCompetitorsIfEmpty(): Promise<number> {
     );
   }
 
-  // Seed sample gaps
-  const SAMPLE_GAPS = [
-    { compDomain: "schbang.com", srcDomain: "afaqs.com", srcUrl: "https://www.afaqs.com/agencies/schbang", pageType: "HOMEPAGE", gapType: "COMPETITOR_LINK_GAP", region: "INDIA" as RegionCode, quality: 90 },
-    { compDomain: "foxymoron.in", srcDomain: "campaignindia.in", srcUrl: "https://www.campaignindia.in/article/foxymoron-expands/450212", pageType: "SERVICE_PAGE", gapType: "COMPETITOR_LINK_GAP", region: "INDIA" as RegionCode, quality: 88 },
-    { compDomain: "chainreaction.ae", srcDomain: "campaignme.com", srcUrl: "https://campaignme.com/agencies/chain-reaction", pageType: "SERVICE_PAGE", gapType: "COMPETITOR_LINK_GAP", region: "UAE" as RegionCode, quality: 92 },
-    { compDomain: "tishtash.com", srcDomain: "arabianbusiness.com", srcUrl: "https://www.arabianbusiness.com/agencies/tishtash", pageType: "HOMEPAGE", gapType: "COMPETITOR_LINK_GAP", region: "UAE" as RegionCode, quality: 94 },
-    { compDomain: "singlegrain.com", srcDomain: "searchenginejournal.com", srcUrl: "https://www.searchenginejournal.com/contributor/single-grain", pageType: "SERVICE_PAGE", gapType: "COMPETITOR_LINK_GAP", region: "USA" as RegionCode, quality: 96 },
-  ];
-
-  for (const g of SAMPLE_GAPS) {
-    const id = `gap_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
-    await cmsExecute(
-      `INSERT INTO off_page_competitor_gaps (id, competitor_id, competitor_domain, source_domain, source_url, target_page_type, gap_type, region, relevance_score, quality_score, difficulty_score, status, created_at)
-       VALUES (?, 'cmp_ref', ?, ?, ?, ?, ?, ?, 90, ?, 35, 'IDENTIFIED', NOW())`,
-      [id, g.compDomain, g.srcDomain, g.srcUrl, g.pageType, g.gapType, g.region, g.quality]
-    );
-  }
-
   return COMPETITORS.length;
 }
 
@@ -321,53 +303,10 @@ export async function seedTargetPagesIfEmpty(): Promise<number> {
 
 /**
  * Seeds initial brand mentions and citation records if empty.
+ * Zero-demo: synthetic brand mentions are permanently removed.
  */
 export async function seedMentionsAndCitationsIfEmpty(): Promise<void> {
   await ensureOffPageTablesExist();
-
-  const { rows: mentionCount } = await cmsQuery<{ total: number }>(
-    `SELECT COUNT(*) as total FROM off_page_brand_mentions`
-  );
-  if (Number(mentionCount[0]?.total || 0) === 0) {
-    const MENTIONS = [
-      {
-        query: "D'Genius Solutions",
-        url: "https://yourstory.com/2026/08/ai-creative-agencies-india",
-        title: "Top AI Creative Studios Redefining Indian Advertising",
-        snippet: "...agencies like D'Genius Solutions in Mumbai have pioneered neural video rendering for commercial broadcast...",
-        linked: false,
-        type: "UNLINKED_MENTION",
-        signals: { seo_authority: true, aeo_authority: true, geo_authority: true, llm_entity_authority: true },
-      },
-      {
-        query: "DGS",
-        url: "https://clutch.co/profile/d-genius-solutions",
-        title: "D'Genius Solutions Client Reviews",
-        snippet: "DGS delivered our brand commercial with 4K AI video pipelines ahead of deadline.",
-        linked: true,
-        type: "LINKED_MENTION",
-        signals: { brand_authority: true, service_authority: true },
-      },
-      {
-        query: "D Genius Solutions",
-        url: "https://community.nasscom.in/post/future-of-enterprise-geo",
-        title: "Generative Search Optimization Benchmarks",
-        snippet: "As documented in research by D Genius Solutions, semantic clustering increases AI Overview inclusion by 40%...",
-        linked: false,
-        type: "UNLINKED_MENTION",
-        signals: { seo_authority: true, aeo_authority: true, llm_entity_authority: true },
-      },
-    ];
-
-    for (const m of MENTIONS) {
-      const id = `men_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
-      await cmsExecute(
-        `INSERT INTO off_page_brand_mentions (id, brand_query, mention_url, mention_title, snippet, is_linked, mention_type, sentiment, authority_signals, status, detected_at, created_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, 'POSITIVE', ?, 'NEW', NOW(), NOW())`,
-        [id, m.query, m.url, m.title, m.snippet, m.linked ? 1 : 0, m.type, JSON.stringify(m.signals)]
-      );
-    }
-  }
 
   const { rows: citationCount } = await cmsQuery<{ total: number }>(
     `SELECT COUNT(*) as total FROM off_page_citations`
