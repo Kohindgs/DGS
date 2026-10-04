@@ -22,3 +22,7 @@ scratch/
 data/cms-media/
 qa-artifacts/
 data/audit/
+
+# Local semantic intelligence runtime
+.venv-turbovec/
+data/semantic/

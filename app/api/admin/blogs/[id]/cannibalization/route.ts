@@ -3,6 +3,7 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { getCmsBlogById } from "@/lib/cms/blogs";
 import { checkBlogCannibalizationRisk, checkCanonicalCollision } from "@/lib/seo/cannibalization";
+import { semanticCannibalizationForBlog } from "@/lib/intelligence/semantic-engine";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,11 +38,14 @@ export async function GET(
     canonicalPath,
   });
 
-  const canonicalCollision = await checkCanonicalCollision({
-    targetCanonical: `https://www.dgeniussolutions.com${canonicalPath}`,
-    currentEntityId: blog.id,
-    currentEntityType: "blog_post",
-  });
+  const [canonicalCollision, semantic] = await Promise.all([
+    checkCanonicalCollision({
+      targetCanonical: `https://www.dgeniussolutions.com${canonicalPath}`,
+      currentEntityId: blog.id,
+      currentEntityType: "blog_post",
+    }),
+    semanticCannibalizationForBlog(blog),
+  ]);
 
-  return NextResponse.json({ ok: true, blogId: id, report, canonicalCollision });
+  return NextResponse.json({ ok: true, blogId: id, report, semantic, canonicalCollision });
 }

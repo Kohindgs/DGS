@@ -2,6 +2,10 @@ import registryData from "@/data/migration/nextjs-route-registry.generated.json"
 import { CmsBlogDetail, CmsBlogSummary } from "./blogs";
 import { siteConfig } from "@/lib/seo/site";
 import { cmsQuery } from "./db";
+import {
+  semanticCannibalizationForBlog,
+  semanticInternalLinksForBlog,
+} from "@/lib/intelligence/semantic-engine";
 
 export type PrePublishCheckStatus = "PASS" | "WARNING" | "ERROR";
 export type ReadinessStatus = "READY" | "NEEDS IMPROVEMENT" | "NOT APPLICABLE";
@@ -59,6 +63,18 @@ export type PrePublishGateResult = {
     reason: string;
     suggestedAnchor: string;
   }>;
+  semanticIntelligence: {
+    available: boolean;
+    model?: string;
+    cannibalizationRisk: "HIGH_OVERLAP" | "REVIEW" | "LOW";
+    highestSimilarity: number;
+    competingContent: Array<{
+      path: string;
+      title: string;
+      kind: string;
+      score: number;
+    }>;
+  };
   indexabilityStatus: {
     isPublished: boolean;
     isCrawlable: boolean;
@@ -515,6 +531,69 @@ export async function evaluatePrePublishGate(
     }
   }
 
+  // Optional local semantic intelligence. TurboVec/Ollama failures must not
+  // become publishing failures; existing deterministic checks remain authoritative.
+  let semanticIntelligence: PrePublishGateResult["semanticIntelligence"] = {
+    available: false,
+    cannibalizationRisk: "LOW",
+    highestSimilarity: 0,
+    competingContent: [],
+  };
+
+  try {
+    const [semanticLinks, semanticCannibalization] = await Promise.all([
+      semanticInternalLinksForBlog(blog, 5),
+      semanticCannibalizationForBlog(blog),
+    ]);
+
+    semanticIntelligence = {
+      available: semanticCannibalization.available || semanticLinks.available,
+      model: semanticCannibalization.model || semanticLinks.model,
+      cannibalizationRisk: semanticCannibalization.risk,
+      highestSimilarity: semanticCannibalization.highestScore,
+      competingContent: semanticCannibalization.competitors.map((item) => ({
+        path: item.path,
+        title: item.title,
+        kind: item.kind,
+        score: item.score,
+      })),
+    };
+
+    for (const item of semanticLinks.results) {
+      if (internalLinkingSuggestions.some((link) => link.targetPath === item.path)) continue;
+      internalLinkingSuggestions.push({
+        targetPath: item.path,
+        targetTitle: item.title,
+        category: item.category || item.kind || "Related",
+        reason: `Semantic relevance ${Math.round(item.score * 100)}% via TurboVec`,
+        suggestedAnchor: item.title,
+      });
+    }
+
+    if (semanticCannibalization.available && semanticCannibalization.risk === "HIGH_OVERLAP") {
+      const top = semanticCannibalization.competitors[0];
+      if (top) {
+        seoIssues.push({
+          severity: "WARNING",
+          code: "SEO_SEMANTIC_CANNIBALIZATION",
+          message: `High semantic overlap with "${top.title}" (${Math.round(top.score * 100)}%). Review search intent before publishing.`,
+          field: "focus_keyword",
+        });
+      }
+    } else if (semanticCannibalization.available && semanticCannibalization.risk === "REVIEW") {
+      const top = semanticCannibalization.competitors[0];
+      if (top) {
+        seoIssues.push({
+          severity: "INFO",
+          code: "SEO_SEMANTIC_OVERLAP_REVIEW",
+          message: `Related content detected: "${top.title}" (${Math.round(top.score * 100)}% semantic similarity).`,
+        });
+      }
+    }
+  } catch (error) {
+    console.warn("[semantic-intelligence] Pre-publish semantic analysis skipped:", error);
+  }
+
   // Helper to compile dimension status
   const getDimensionStatus = (issues: PrePublishDimensionIssue[]): PrePublishCheckStatus => {
     if (issues.some((i) => i.severity === "ERROR")) return "ERROR";
@@ -625,6 +704,7 @@ export async function evaluatePrePublishGate(
       twitterImage: ogImage,
     },
     internalLinkingSuggestions: internalLinkingSuggestions.slice(0, 5),
+    semanticIntelligence,
     indexabilityStatus: {
       isPublished: blog.status === "published",
       isCrawlable,
