@@ -29,20 +29,31 @@ export function getCmsPool() {
   if (!isCmsDatabaseConfigured()) throw new Error("DGS CMS database is not configured");
   if (!global.__dgsCmsPool) {
     const uri = getConnectionUri();
-    global.__dgsCmsPool = uri ? mysql.createPool(uri) : mysql.createPool({
-      host: cleanVal(process.env.DGS_MYSQL_HOST) || "127.0.0.1",
-      port: Number(cleanVal(process.env.DGS_MYSQL_PORT) || 3306),
-      user: cleanVal(process.env.DGS_MYSQL_USER),
-      password: cleanVal(process.env.DGS_MYSQL_PASSWORD),
-      database: cleanVal(process.env.DGS_MYSQL_DATABASE),
-      waitForConnections: true,
-      connectionLimit: 10,
-      enableKeepAlive: true,
-      charset: "utf8mb4",
-      dateStrings: true,
-      supportBigNumbers: true,
-      bigNumberStrings: true,
-    });
+    global.__dgsCmsPool = uri
+      ? mysql.createPool({
+          uri,
+          waitForConnections: true,
+          connectionLimit: 10,
+          enableKeepAlive: true,
+          charset: "utf8mb4",
+          dateStrings: true,
+          supportBigNumbers: true,
+          bigNumberStrings: true,
+        })
+      : mysql.createPool({
+          host: cleanVal(process.env.DGS_MYSQL_HOST) || "127.0.0.1",
+          port: Number(cleanVal(process.env.DGS_MYSQL_PORT) || 3306),
+          user: cleanVal(process.env.DGS_MYSQL_USER),
+          password: cleanVal(process.env.DGS_MYSQL_PASSWORD),
+          database: cleanVal(process.env.DGS_MYSQL_DATABASE),
+          waitForConnections: true,
+          connectionLimit: 10,
+          enableKeepAlive: true,
+          charset: "utf8mb4",
+          dateStrings: true,
+          supportBigNumbers: true,
+          bigNumberStrings: true,
+        });
   }
   return global.__dgsCmsPool;
 }

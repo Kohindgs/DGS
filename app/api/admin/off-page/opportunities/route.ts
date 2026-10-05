@@ -87,7 +87,7 @@ export async function GET(req: Request) {
     try {
       const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
       const candidateSql = `
-        SELECT o.*, v.vector_id 
+        SELECT o.*, CAST(v.vector_id AS CHAR) as vector_id 
         FROM off_page_opportunities o
         LEFT JOIN off_page_vector_documents v 
           ON v.entity_id = o.id AND v.index_name = 'off-page'
@@ -102,7 +102,7 @@ export async function GET(req: Request) {
       );
 
       const candidateVectorIds = candidates
-        .map((c) => (c.vector_id != null ? String(c.vector_id) : null))
+        .map((c) => (c.vector_id != null ? String(c.vector_id) : c.id))
         .filter((vid): vid is string => Boolean(vid));
 
       if (candidateVectorIds.length > 0) {

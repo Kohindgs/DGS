@@ -68,6 +68,7 @@ async function main() {
   fs.copyFileSync(path.join(ROOT, "scripts", "migrate-v8123-discovery-tables.mjs"), path.join(pkgScripts, "migrate-v8123-discovery-tables.mjs"));
   fs.copyFileSync(path.join(ROOT, "scripts", "turbovec-service.py"), path.join(pkgScripts, "turbovec-service.py"));
   fs.copyFileSync(path.join(ROOT, "scripts", "turbovec-daemon.sh"), path.join(pkgScripts, "turbovec-daemon.sh"));
+  fs.copyFileSync(path.join(ROOT, "scripts", "remote-sql-check.mjs"), path.join(pkgScripts, "remote-sql-check.mjs"));
 
   // Write SHA metadata
   fs.writeFileSync(path.join(pkgDir, ".release-sha"), repoSha, "utf8");

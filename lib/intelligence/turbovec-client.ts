@@ -134,7 +134,7 @@ export function getTurboVecSocketPath(): string | null {
   }
   // Hostinger VPS production shared path
   const defaultProdSocket = "/home/u188101251/production-app/shared/turbovec/turbovec.sock";
-  if (process.platform !== "win32" && fs.existsSync(defaultProdSocket)) {
+  if (process.platform === "linux" || (process.platform !== "win32" && fs.existsSync(defaultProdSocket))) {
     return defaultProdSocket;
   }
   return null;

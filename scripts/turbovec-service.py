@@ -173,11 +173,25 @@ class TurboVecManager:
         scored = []
         kinds_set = {str(x).lower() for x in (kinds or []) if str(x).strip()}
         exclude_set = {str(x) for x in (exclude_keys or [])}
-        allow_set = {str(int(x)) for x in (allowlist or [])} if allowlist else None
+        allow_set = None
+        if allowlist:
+            allow_set = set()
+            for x in allowlist:
+                sx = str(x).strip()
+                if sx:
+                    allow_set.add(sx)
+                    try:
+                        allow_set.add(str(int(sx)))
+                    except (ValueError, TypeError):
+                        pass
 
         for doc_id, doc in docs.items():
-            if allow_set is not None and str(doc_id) not in allow_set:
-                continue
+            if allow_set is not None:
+                doc_key = str(doc.get("key") or "")
+                doc_nid = str(doc.get("numeric_id") or doc_id)
+                entity_id = str(doc.get("entity_id") or doc.get("id") or "")
+                if str(doc_id) not in allow_set and doc_nid not in allow_set and doc_key not in allow_set and entity_id not in allow_set:
+                    continue
             if doc.get("key") in exclude_set or str(doc_id) in exclude_set:
                 continue
             if kinds_set and str(doc.get("kind") or doc.get("entity_type") or "").lower() not in kinds_set:
@@ -234,7 +248,7 @@ class TurboVecManager:
         # Allowlist preparation if specified
         allow_arr = None
         if allowlist and len(allowlist) > 0:
-            valid_ids = [np.uint64(x) for x in allowlist if index.contains(int(x))]
+            valid_ids = [np.uint64(int(x)) for x in allowlist if str(x).isdigit() and index.contains(int(x))]
             if valid_ids:
                 allow_arr = np.array(valid_ids, dtype=np.uint64)
                 effective_k = min(effective_k, len(valid_ids))
@@ -555,7 +569,7 @@ def make_handler(manager):
 
         def do_GET(self):
             path = self.path.split("?")[0]
-            if path in ["/health", "/api/health"]:
+            if path in ["/health", "/api/health", "/api/status", "/status"]:
                 self._send_json(200, {
                     "ok": True,
                     "status": "healthy",
@@ -563,6 +577,7 @@ def make_handler(manager):
                     "version": "1.0.0",
                     "model": manager.model,
                     "dimension": manager.dim,
+                    "indexes": manager.status()["indexes"],
                     "stats": manager.status()["indexes"],
                 })
             else:
@@ -632,6 +647,17 @@ def make_handler(manager):
                 elif path in ["/api/reindex", "/reindex"]:
                     index_name = data.get("index_name") or "dgs-content"
                     res = manager.index_batch(index_name=index_name, documents=data.get("documents") or [])
+                elif path in ["/api/status", "/status", "/health", "/api/health"]:
+                    res = {
+                        "ok": True,
+                        "status": "healthy",
+                        "engine": "TurboVec",
+                        "version": "1.0.0",
+                        "model": manager.model,
+                        "dimension": manager.dim,
+                        "indexes": manager.status()["indexes"],
+                        "stats": manager.status()["indexes"],
+                    }
                 else:
                     return self._send_json(404, {"error": f"Unknown endpoint '{path}'"})
 
