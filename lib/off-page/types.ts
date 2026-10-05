@@ -32,13 +32,21 @@ export type PriorityTier = "P0" | "P1" | "P2" | "P3" | "REJECT";
 export type SpamStatus = "SAFE" | "REVIEW" | "HIGH_RISK" | "REJECT";
 
 export type OpportunityStatus =
-  | "NEW"
+  | "DISCOVERED"
+  | "VERIFYING"
   | "QUALIFIED"
-  | "APPROVED"
+  | "MANAGER_REVIEW"
   | "ASSIGNED"
-  | "OUTREACH"
+  | "IN_PROGRESS"
   | "SUBMITTED"
+  | "FOLLOW_UP"
   | "LIVE"
+  | "MONITORING"
+  | "REJECTED"
+  | "SNOOZED"
+  | "NEW"
+  | "APPROVED"
+  | "OUTREACH"
   | "VERIFIED"
   | "NOT_FREE"
   | "SPAM"
@@ -80,9 +88,23 @@ export interface OffPageOpportunity {
   verification_date: string | null;
   last_verified: string | null;
   source: string;
+  source_type?: string;
+  discovery_provider?: string | null;
+  discovery_query?: string | null;
+  http_status?: number | null;
+  verification_status?: string;
+  last_verified_at?: string | null;
   status: OpportunityStatus;
   assigned_to: string | null;
+  owner?: string | null;
   notes: string | null;
+  next_action?: string | null;
+  due_date?: string | null;
+  internal_note?: string | null;
+  rejection_reason?: string | null;
+  snoozed_until?: string | null;
+  proof_url?: string | null;
+  submission_date?: string | null;
   evidence: string | null;
   discovered_at?: string | null;
   qualified_at?: string | null;
@@ -133,6 +155,23 @@ export interface OffPageBacklink {
   last_seen_at: string;
   last_checked_at: string | null;
   status: BacklinkStatus;
+  team_status?: string;
+  verified_status?: string;
+  mismatch_status?: "MATCH" | "MISMATCH" | "RESOLVED";
+  mismatch_reason?: string | null;
+  mismatch_detected_at?: string | null;
+  mismatch_resolved_at?: string | null;
+  mismatch_resolution?: "ACCEPTED_VERIFIED" | "KEPT_TEAM" | "RECHECKED" | "ASSIGNED_REVIEW" | null;
+  source_type?: string;
+  owner?: string | null;
+  cost?: number;
+  cost_currency?: string;
+  contact_name?: string | null;
+  contact_email?: string | null;
+  proof_url?: string | null;
+  submitted_date?: string | null;
+  original_sheet_row_id?: string | null;
+  sheet_connection_id?: string | null;
   http_status: number;
   redirect_chain: string | null;
   source_indexable: boolean;
@@ -164,6 +203,62 @@ export interface OffPageBacklink {
   check_priority?: PriorityTier;
   created_at: string;
   updated_at: string;
+}
+
+export interface OffPageSheetConnection {
+  id: string;
+  name: string;
+  source_type: "GOOGLE_SHEETS" | "EXCEL" | "CSV";
+  sheet_url: string | null;
+  sheet_id: string | null;
+  tab_name: string | null;
+  column_mapping: Record<string, string>;
+  auto_sync_enabled: boolean;
+  sync_interval_hours: number;
+  last_synced_at: string | null;
+  last_sync_status: "SUCCESS" | "ERROR" | "PARTIAL" | null;
+  last_sync_error: string | null;
+  total_rows_synced: number;
+  auto_verify_on_sync: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OffPageSyncHistory {
+  id: string;
+  connection_id: string | null;
+  source_type: "GOOGLE_SHEETS" | "EXCEL" | "CSV";
+  file_name: string | null;
+  tab_name: string | null;
+  started_at: string;
+  completed_at: string | null;
+  total_rows: number;
+  inserted_count: number;
+  updated_count: number;
+  duplicates_skipped: number;
+  invalid_rows: number;
+  mismatches_detected: number;
+  verified_count: number;
+  status: "RUNNING" | "COMPLETED" | "FAILED" | "PARTIAL";
+  error_log: string | null;
+  created_by: string | null;
+  created_at: string;
+}
+
+export interface BacklinkDiscoveryRun {
+  run_id: string;
+  provider: string;
+  started_at: string;
+  completed_at: string | null;
+  queries_run: number;
+  candidates_found: number;
+  links_verified_live: number;
+  duplicates_skipped: number;
+  inserted_count: number;
+  status: "RUNNING" | "COMPLETED" | "FAILED";
+  errors: string | null;
+  details?: any;
+  created_at: string;
 }
 
 export type AuthorityOpportunityType =

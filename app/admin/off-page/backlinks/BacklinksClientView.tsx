@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Link2,
   ExternalLink,
@@ -14,6 +15,10 @@ import {
   TrendingDown,
   Clock,
   X,
+  Upload,
+  FileSpreadsheet,
+  Compass,
+  ShieldAlert,
 } from "lucide-react";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
 import type { OffPageBacklink, BacklinkStatus, AnchorClassification } from "@/lib/off-page/types";
@@ -47,6 +52,19 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
   const [newRelType, setNewRelType] = useState<"dofollow" | "nofollow" | "ugc" | "sponsored">("dofollow");
   const [newRegion, setNewRegion] = useState<"INDIA" | "UAE" | "USA" | "GLOBAL">("INDIA");
   const [addingBacklink, setAddingBacklink] = useState(false);
+
+  // Import Excel / CSV Modal State
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [importPreview, setImportPreview] = useState<any | null>(null);
+  const [importLoading, setImportLoading] = useState(false);
+  const [importingCommit, setImportingCommit] = useState(false);
+  const [autoVerifyOnImport, setAutoVerifyOnImport] = useState(true);
+  const [availableTabs, setAvailableTabs] = useState<string[]>([]);
+  const [selectedTab, setSelectedTab] = useState<string>("");
+
+  // Live Backlink Discovery state
+  const [discoveringBacklinks, setDiscoveringBacklinks] = useState(false);
 
   const fetchBacklinks = async () => {
     setLoading(true);
@@ -160,6 +178,105 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
     }
   };
 
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSelectedFile(file);
+    setImportLoading(true);
+    setImportPreview(null);
+    setFeedback(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("mode", "preview");
+      if (selectedTab) formData.append("tabName", selectedTab);
+
+      const res = await fetch("/api/admin/off-page/import/excel", {
+        method: "POST",
+        body: formData,
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        setImportPreview(json.preview);
+        setAvailableTabs(json.availableTabs || []);
+        if (json.activeTab) setSelectedTab(json.activeTab);
+      } else {
+        setFeedback(`Import preview error: ${json.error}`);
+      }
+    } catch (err: any) {
+      setFeedback(`File error: ${err.message}`);
+    } finally {
+      setImportLoading(false);
+    }
+  };
+
+  const handleCommitImport = async () => {
+    if (!selectedFile) return;
+    setImportingCommit(true);
+    setFeedback(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("mode", "commit");
+      formData.append("autoVerify", String(autoVerifyOnImport));
+      if (selectedTab) formData.append("tabName", selectedTab);
+
+      const res = await fetch("/api/admin/off-page/import/excel", {
+        method: "POST",
+        body: formData,
+      });
+
+      const json = await res.json();
+      if (json.success && json.result) {
+        const r = json.result;
+        setFeedback(
+          `Import successful: ${r.insertedCount} inserted, ${r.updatedCount} updated, ${r.mismatchesDetected} mismatches found, ${r.verifiedCount} verified live.`
+        );
+        setShowImportModal(false);
+        setSelectedFile(null);
+        setImportPreview(null);
+        await fetchBacklinks();
+      } else {
+        setFeedback(`Import commit failed: ${json.error}`);
+      }
+    } catch (err: any) {
+      setFeedback(`Import error: ${err.message}`);
+    } finally {
+      setImportingCommit(false);
+    }
+  };
+
+  const handleDiscoverBacklinks = async () => {
+    setDiscoveringBacklinks(true);
+    setFeedback("Running live backlink discovery: scanning external brand mentions and crawling candidates...");
+
+    try {
+      const res = await fetch("/api/admin/off-page/backlinks/discover", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ provider: "google_news" }),
+      });
+
+      const json = await res.json();
+      if (json.success && json.result) {
+        const r = json.result;
+        setFeedback(
+          `Discovery run complete: ${r.candidatesFound} candidates crawled, ${r.linksVerifiedLive} new backlinks verified live, ${r.duplicatesSkipped} duplicates skipped.`
+        );
+        await fetchBacklinks();
+      } else {
+        setFeedback(`Discovery error: ${json.error}`);
+      }
+    } catch (err: any) {
+      setFeedback(`Discovery error: ${err.message}`);
+    } finally {
+      setDiscoveringBacklinks(false);
+    }
+  };
+
   const columns: Column<OffPageBacklink>[] = [
     {
       key: "source_domain",
@@ -270,47 +387,83 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
       ),
     },
     {
-      key: "authority_score",
-      header: "Authority",
-      sortable: true,
+      key: "team_status",
+      header: "Team Claim",
       render: (b) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#fff" }}>{b.authority_score}</span>
-          <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>DA</span>
-        </div>
+        <span
+          className={`dgs-saas-chip ${
+            b.team_status === "LIVE" ? "success" : b.team_status === "SUBMITTED" ? "primary" : "warning"
+          }`}
+          style={{ fontSize: "0.72rem", fontWeight: 700 }}
+        >
+          {b.team_status || b.status}
+        </span>
       ),
     },
     {
-      key: "status",
-      header: "Status",
-      sortable: true,
+      key: "verified_status",
+      header: "Crawler Truth",
       render: (b) => {
-        const statusConfig: Record<string, { bg: string; color: string; icon: any }> = {
-          LIVE: { bg: "rgba(16, 185, 129, 0.15)", color: "#10b981", icon: CheckCircle2 },
-          LOST: { bg: "rgba(239, 68, 68, 0.15)", color: "#ef4444", icon: XCircle },
-          REL_CHANGED: { bg: "rgba(245, 158, 11, 0.15)", color: "#f59e0b", icon: AlertTriangle },
-          NOINDEX_SOURCE: { bg: "rgba(249, 115, 22, 0.15)", color: "#f97316", icon: AlertTriangle },
-          ANCHOR_CHANGED: { bg: "rgba(168, 85, 247, 0.15)", color: "#a855f7", icon: AlertTriangle },
-        };
-        const cfg = statusConfig[b.status] || { bg: "rgba(255,255,255,0.1)", color: "#fff", icon: Clock };
-        const Icon = cfg.icon;
+        const isMismatch = b.mismatch_status === "MISMATCH";
         return (
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "4px",
-              padding: "3px 8px",
-              borderRadius: "6px",
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              background: cfg.bg,
-              color: cfg.color,
-            }}
-          >
-            <Icon size={12} />
-            {b.status}
-          </span>
+          <div>
+            <span
+              className={`dgs-saas-chip ${
+                b.verified_status === "LIVE" ? "success" : b.verified_status === "NOT_VERIFIED" ? "neutral" : "danger"
+              }`}
+              style={{ fontSize: "0.72rem", fontWeight: 700 }}
+            >
+              {b.verified_status || b.status || "NOT_VERIFIED"}
+            </span>
+            {isMismatch && (
+              <Link
+                href="/admin/off-page/mismatches"
+                className="dgs-saas-chip danger"
+                style={{ fontSize: "0.65rem", padding: "1px 4px", marginLeft: "4px", fontWeight: 800, textDecoration: "none" }}
+                title={b.mismatch_reason || "Status mismatch detected! Click to reconcile."}
+              >
+                MISMATCH
+              </Link>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      key: "source_type",
+      header: "Provenance & Freshness",
+      render: (b) => {
+        const now = Date.now();
+        const lastChecked = b.last_checked_at ? new Date(b.last_checked_at).getTime() : 0;
+        const diffDays = lastChecked ? Math.floor((now - lastChecked) / (1000 * 60 * 60 * 24)) : 999;
+
+        let freshnessLabel = "UNVERIFIED";
+        let freshnessColor = "rgba(255,255,255,0.4)";
+        if (lastChecked > 0) {
+          if (diffDays === 0) {
+            freshnessLabel = "VERIFIED TODAY";
+            freshnessColor = "#10b981";
+          } else if (diffDays < 7) {
+            freshnessLabel = `VERIFIED <7D`;
+            freshnessColor = "#3b82f6";
+          } else if (diffDays < 30) {
+            freshnessLabel = `VERIFIED ${diffDays}D AGO`;
+            freshnessColor = "#f59e0b";
+          } else {
+            freshnessLabel = "STALE (>30D)";
+            freshnessColor = "#ef4444";
+          }
+        }
+
+        return (
+          <div>
+            <span className="dgs-saas-chip neutral" style={{ fontSize: "0.68rem" }}>
+              {b.source_type || "manual"}
+            </span>
+            <div style={{ fontSize: "0.68rem", color: freshnessColor, marginTop: "2px", fontWeight: 600 }}>
+              {freshnessLabel}
+            </div>
+          </div>
         );
       },
     },
@@ -348,7 +501,23 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
           </p>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+          <button
+            onClick={() => setShowImportModal(true)}
+            className="dgs-saas-btn secondary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+          >
+            <FileSpreadsheet size={14} /> Import Excel / CSV
+          </button>
+          <button
+            onClick={handleDiscoverBacklinks}
+            disabled={discoveringBacklinks}
+            className="dgs-saas-btn secondary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+          >
+            <Compass size={14} className={discoveringBacklinks ? "animate-spin" : ""} />
+            {discoveringBacklinks ? "Discovering..." : "Discover Backlinks"}
+          </button>
           <button
             onClick={() => setShowAddModal(true)}
             className="dgs-saas-btn secondary"
@@ -682,6 +851,223 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {/* IMPORT EXCEL / CSV MODAL */}
+      {showImportModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+            padding: "20px",
+          }}
+        >
+          <div
+            className="dgs-saas-card"
+            style={{
+              width: "100%",
+              maxWidth: "680px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              padding: "24px",
+              background: "#111827",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              borderRadius: "12px",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <FileSpreadsheet size={20} style={{ color: "#10b981" }} />
+                <h3 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 700, color: "#fff" }}>
+                  Import Backlinks from Excel (.xlsx, .xls) or CSV
+                </h3>
+              </div>
+              <button
+                onClick={() => {
+                  setShowImportModal(false);
+                  setSelectedFile(null);
+                  setImportPreview(null);
+                }}
+                style={{ background: "transparent", border: "none", color: "#fff", cursor: "pointer", fontSize: "1.2rem" }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ marginBottom: "16px" }}>
+              <label style={{ display: "block", fontSize: "0.82rem", color: "rgba(255, 255, 255, 0.7)", marginBottom: "6px" }}>
+                Select Spreadsheet or CSV file:
+              </label>
+              <input
+                type="file"
+                accept=".xlsx, .xls, .csv"
+                onChange={handleFileSelect}
+                className="dgs-saas-input"
+                style={{ width: "100%", padding: "10px" }}
+              />
+            </div>
+
+            {importLoading && (
+              <div style={{ padding: "30px", textAlign: "center", color: "rgba(255, 255, 255, 0.6)" }}>
+                <RefreshCw size={24} className="animate-spin" style={{ margin: "0 auto 8px auto" }} />
+                <div>Reading and analyzing columns with intelligent alias detection...</div>
+              </div>
+            )}
+
+            {importPreview && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                {/* Available Tabs */}
+                {availableTabs.length > 1 && (
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255, 255, 255, 0.7)", marginBottom: "4px" }}>
+                      Sheet Tab:
+                    </label>
+                    <select
+                      value={selectedTab}
+                      onChange={(e) => {
+                        setSelectedTab(e.target.value);
+                      }}
+                      className="dgs-saas-input"
+                      style={{ width: "100%" }}
+                    >
+                      {availableTabs.map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                {/* Telemetry Summary */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr 1fr",
+                    gap: "10px",
+                    background: "rgba(255, 255, 255, 0.04)",
+                    padding: "12px",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: "0.72rem", color: "rgba(255, 255, 255, 0.5)" }}>Total Rows</div>
+                    <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#fff" }}>{importPreview.totalRows}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "0.72rem", color: "rgba(255, 255, 255, 0.5)" }}>Valid URL Rows</div>
+                    <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#10b981" }}>{importPreview.validRowsCount}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "0.72rem", color: "rgba(255, 255, 255, 0.5)" }}>Invalid Rows</div>
+                    <div style={{ fontSize: "1.2rem", fontWeight: 700, color: importPreview.invalidRowsCount > 0 ? "#f87171" : "#fff" }}>
+                      {importPreview.invalidRowsCount}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Auto Mapped Columns */}
+                <div>
+                  <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "6px" }}>
+                    Detected Column Aliases:
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                    {Object.entries(importPreview.suggestedMapping).map(([k, v]) => (
+                      <span key={k} className="dgs-saas-chip neutral" style={{ fontSize: "0.72rem" }}>
+                        <b style={{ color: "#3b82f6" }}>{k}</b>: {String(v)}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sample Parsed Rows */}
+                {importPreview.sampleRows && importPreview.sampleRows.length > 0 && (
+                  <div>
+                    <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "6px" }}>
+                      Sample Parsed Rows Preview:
+                    </div>
+                    <div style={{ overflowX: "auto", maxHeight: "180px" }}>
+                      <table className="dgs-saas-table" style={{ width: "100%", fontSize: "0.75rem" }}>
+                        <thead>
+                          <tr style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.1)" }}>
+                            <th style={{ padding: "6px" }}>Source URL</th>
+                            <th style={{ padding: "6px" }}>Anchor</th>
+                            <th style={{ padding: "6px" }}>Rel</th>
+                            <th style={{ padding: "6px" }}>Claim Status</th>
+                            <th style={{ padding: "6px" }}>Owner</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {importPreview.sampleRows.slice(0, 5).map((r: any, idx: number) => (
+                            <tr key={idx} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                              <td style={{ padding: "6px", maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                {r.source_url}
+                              </td>
+                              <td style={{ padding: "6px" }}>{r.anchor_text}</td>
+                              <td style={{ padding: "6px" }}>{r.link_rel}</td>
+                              <td style={{ padding: "6px" }}>
+                                <span className="dgs-saas-chip primary" style={{ fontSize: "0.68rem" }}>
+                                  {r.team_status}
+                                </span>
+                              </td>
+                              <td style={{ padding: "6px" }}>{r.owner || "—"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* Auto Verify Checkbox */}
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
+                  <input
+                    type="checkbox"
+                    id="autoVerify"
+                    checked={autoVerifyOnImport}
+                    onChange={(e) => setAutoVerifyOnImport(e.target.checked)}
+                    style={{ width: "16px", height: "16px", accentColor: "#10b981", cursor: "pointer" }}
+                  />
+                  <label htmlFor="autoVerify" style={{ fontSize: "0.82rem", color: "#e2e8f0", cursor: "pointer" }}>
+                    Run Live Crawler Verification immediately on imported rows (checks HTTP status, link tag, and anchors)
+                  </label>
+                </div>
+
+                {/* Actions */}
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowImportModal(false);
+                      setSelectedFile(null);
+                      setImportPreview(null);
+                    }}
+                    className="dgs-saas-btn secondary"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCommitImport}
+                    disabled={importingCommit || importPreview.validRowsCount === 0}
+                    className="dgs-saas-btn primary"
+                  >
+                    {importingCommit ? "Ingesting & Verifying..." : `Commit & Ingest ${importPreview.validRowsCount} Rows`}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

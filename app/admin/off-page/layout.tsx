@@ -19,10 +19,13 @@ import {
   BellRing,
   FileText,
   Settings,
+  ShieldAlert,
 } from "lucide-react";
 
 const OFF_PAGE_TABS = [
   { href: "/admin/off-page", label: "Dashboard", icon: Share2 },
+  { href: "/admin/off-page/action-center", label: "Action Center", icon: Target, badge: "Daily" },
+  { href: "/admin/off-page/mismatches", label: "Mismatches", icon: ShieldAlert, badge: "Audit" },
   { href: "/admin/off-page/opportunities", label: "Opportunities", icon: Compass, badge: "Free" },
   { href: "/admin/off-page/backlinks", label: "Backlinks", icon: Link2 },
   { href: "/admin/off-page/authority", label: "Authority Engine", icon: Award },

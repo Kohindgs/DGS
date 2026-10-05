@@ -154,9 +154,33 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
     const lostAt = isLost ? (link.lost_at ? new Date(link.lost_at) : now) : (link.lost_at ? new Date(link.lost_at) : null);
     const reclaimedAt = isReclaimed ? now : (link.reclaimed_at ? new Date(link.reclaimed_at) : null);
 
+    // Two-status reconciliation
+    const teamStatus = (link.team_status || link.status || "LIVE").toUpperCase();
+    let mismatchStatus: "MATCH" | "MISMATCH" | "RESOLVED" = "MATCH";
+    let mismatchReason: string | null = null;
+    let mismatchDetectedAt: string | null = null;
+
+    if (newStatus === "LOST" || newStatus === "BROKEN") {
+      if (teamStatus === "LIVE") {
+        mismatchStatus = "MISMATCH";
+        mismatchReason = `Team recorded LIVE but crawler verified link is ${newStatus} (HTTP ${httpStatus})`;
+        mismatchDetectedAt = now.toISOString().slice(0, 19).replace("T", " ");
+      }
+    } else if (newStatus === "LIVE") {
+      if (teamStatus === "SUBMITTED" || teamStatus === "PENDING" || teamStatus === "IN_PROGRESS") {
+        mismatchStatus = "MISMATCH";
+        mismatchReason = `Team recorded ${teamStatus} but link was found active and LIVE on source page!`;
+        mismatchDetectedAt = now.toISOString().slice(0, 19).replace("T", " ");
+      }
+    }
+
     await cmsExecute(
       `UPDATE off_page_backlinks SET 
         status = ?, 
+        verified_status = ?,
+        mismatch_status = ?,
+        mismatch_reason = ?,
+        mismatch_detected_at = COALESCE(?, mismatch_detected_at),
         http_status = ?, 
         anchor_text = ?,
         link_rel = ?,
@@ -176,6 +200,10 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
        WHERE id = ?`,
       [
         newStatus,
+        newStatus,
+        mismatchStatus,
+        mismatchReason,
+        mismatchDetectedAt,
         httpStatus,
         finalAnchor,
         foundRel || "dofollow",
@@ -350,3 +378,172 @@ export async function calculateLinkDecayMetrics(): Promise<{
 export async function seedBacklinksIfEmpty(): Promise<number> {
   return 0;
 }
+
+/**
+ * Retrieves all backlinks currently flagged with a status mismatch between human claim and crawler reality.
+ */
+export async function getMismatchedBacklinks(params?: {
+  status?: string;
+  limit?: number;
+  offset?: number;
+}): Promise<{ items: OffPageBacklink[]; total: number }> {
+  await ensureOffPageTablesExist();
+
+  const statusFilter = params?.status || "MISMATCH";
+  const limit = Math.min(Math.max(params?.limit || 50, 1), 200);
+  const offset = Math.max(params?.offset || 0, 0);
+
+  const whereClause = statusFilter === "ALL" 
+    ? "WHERE mismatch_status IN ('MISMATCH', 'RESOLVED')" 
+    : "WHERE mismatch_status = ?";
+  const queryParams = statusFilter === "ALL" ? [] : [statusFilter];
+
+  const { rows: countRows } = await cmsQuery<{ count: number }>(
+    `SELECT COUNT(*) as count FROM off_page_backlinks ${whereClause}`,
+    queryParams
+  );
+  const total = countRows[0]?.count || 0;
+
+  const { rows: items } = await cmsQuery<OffPageBacklink>(
+    `SELECT * FROM off_page_backlinks ${whereClause} 
+     ORDER BY mismatch_detected_at DESC, updated_at DESC 
+     LIMIT ? OFFSET ?`,
+    [...queryParams, limit, offset]
+  );
+
+  return { items, total };
+}
+
+/**
+ * Resolves a backlink status mismatch with manager decision.
+ */
+export async function resolveMismatch(
+  backlinkId: string,
+  resolution: "ACCEPTED_VERIFIED" | "KEPT_TEAM" | "RECHECKED" | "ASSIGNED_REVIEW",
+  note?: string,
+  assignee?: string
+): Promise<{ success: boolean; backlink: OffPageBacklink | null; message: string }> {
+  await ensureOffPageTablesExist();
+
+  const { rows } = await cmsQuery<OffPageBacklink>(
+    `SELECT * FROM off_page_backlinks WHERE id = ? LIMIT 1`,
+    [backlinkId]
+  );
+  if (!rows[0]) {
+    return { success: false, backlink: null, message: "Backlink not found" };
+  }
+
+  const bl = rows[0];
+
+  if (resolution === "RECHECKED") {
+    const recheckResult = await checkLiveBacklink(backlinkId);
+    const { rows: updated } = await cmsQuery<OffPageBacklink>(
+      `SELECT * FROM off_page_backlinks WHERE id = ? LIMIT 1`,
+      [backlinkId]
+    );
+    return {
+      success: true,
+      backlink: updated[0] || null,
+      message: `Rechecked live: status is ${recheckResult.status}, linkFound=${recheckResult.linkFound}`,
+    };
+  }
+
+  if (resolution === "ACCEPTED_VERIFIED") {
+    // Update team status to reflect verified truth
+    const verifiedStatus = bl.verified_status || bl.status || "LOST";
+    await cmsExecute(
+      `UPDATE off_page_backlinks SET
+        team_status = ?,
+        status = ?,
+        mismatch_status = 'RESOLVED',
+        mismatch_resolution = 'ACCEPTED_VERIFIED',
+        mismatch_resolved_at = NOW(),
+        notes = CONCAT(IFNULL(notes, ''), ?),
+        updated_at = NOW()
+       WHERE id = ?`,
+      [
+        verifiedStatus,
+        verifiedStatus,
+        note ? ` [Manager accepted verified status ${verifiedStatus}: ${note}]` : ` [Manager accepted verified status ${verifiedStatus}]`,
+        backlinkId,
+      ]
+    );
+  } else if (resolution === "KEPT_TEAM") {
+    // Keep team status with manager justification
+    await cmsExecute(
+      `UPDATE off_page_backlinks SET
+        mismatch_status = 'RESOLVED',
+        mismatch_resolution = 'KEPT_TEAM',
+        mismatch_resolved_at = NOW(),
+        notes = CONCAT(IFNULL(notes, ''), ?),
+        updated_at = NOW()
+       WHERE id = ?`,
+      [
+        note ? ` [Manager retained team status ${bl.team_status}: ${note}]` : ` [Manager retained team status ${bl.team_status}]`,
+        backlinkId,
+      ]
+    );
+  } else if (resolution === "ASSIGNED_REVIEW") {
+    // Assign review task to executive
+    await cmsExecute(
+      `UPDATE off_page_backlinks SET
+        owner = COALESCE(?, owner),
+        mismatch_status = 'MISMATCH',
+        mismatch_resolution = 'ASSIGNED_REVIEW',
+        notes = CONCAT(IFNULL(notes, ''), ?),
+        updated_at = NOW()
+       WHERE id = ?`,
+      [
+        assignee || null,
+        note ? ` [Assigned for review to ${assignee || "executive"}: ${note}]` : ` [Assigned for review to ${assignee || "executive"}]`,
+        backlinkId,
+      ]
+    );
+  }
+
+  const { rows: finalRows } = await cmsQuery<OffPageBacklink>(
+    `SELECT * FROM off_page_backlinks WHERE id = ? LIMIT 1`,
+    [backlinkId]
+  );
+
+  return {
+    success: true,
+    backlink: finalRows[0] || null,
+    message: `Mismatch resolved with action ${resolution}`,
+  };
+}
+
+/**
+ * Returns summary count of mismatches by type.
+ */
+export async function getMismatchSummary(): Promise<{
+  activeMismatches: number;
+  resolvedMismatches: number;
+  teamLiveCrawlerLost: number;
+  teamSubmittedCrawlerLive: number;
+}> {
+  await ensureOffPageTablesExist();
+
+  const { rows: active } = await cmsQuery<{ count: number }>(
+    `SELECT COUNT(*) as count FROM off_page_backlinks WHERE mismatch_status = 'MISMATCH'`
+  );
+  const { rows: resolved } = await cmsQuery<{ count: number }>(
+    `SELECT COUNT(*) as count FROM off_page_backlinks WHERE mismatch_status = 'RESOLVED'`
+  );
+  const { rows: lostMismatches } = await cmsQuery<{ count: number }>(
+    `SELECT COUNT(*) as count FROM off_page_backlinks 
+     WHERE mismatch_status = 'MISMATCH' AND team_status = 'LIVE' AND verified_status IN ('LOST', 'BROKEN', 'NOT_FOUND')`
+  );
+  const { rows: prematureMismatches } = await cmsQuery<{ count: number }>(
+    `SELECT COUNT(*) as count FROM off_page_backlinks 
+     WHERE mismatch_status = 'MISMATCH' AND team_status IN ('SUBMITTED', 'PENDING', 'IN_PROGRESS') AND verified_status = 'LIVE'`
+  );
+
+  return {
+    activeMismatches: active[0]?.count || 0,
+    resolvedMismatches: resolved[0]?.count || 0,
+    teamLiveCrawlerLost: lostMismatches[0]?.count || 0,
+    teamSubmittedCrawlerLive: prematureMismatches[0]?.count || 0,
+  };
+}
+

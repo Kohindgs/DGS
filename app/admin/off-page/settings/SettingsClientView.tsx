@@ -15,6 +15,10 @@ import {
   AlertCircle,
   Cpu,
   Database,
+  FileSpreadsheet,
+  Plus,
+  Trash2,
+  ExternalLink,
 } from "lucide-react";
 import type { ProviderHealth } from "@/lib/off-page/providers/types";
 
@@ -56,8 +60,122 @@ export default function SettingsClientView({ initialSettings }: Props) {
     }
   };
 
+  // Google Sheets Integration State
+  const [sheetConnections, setSheetConnections] = useState<any[]>([]);
+  const [syncHistory, setSyncHistory] = useState<any[]>([]);
+  const [loadingSheets, setLoadingSheets] = useState(false);
+  const [showAddSheetModal, setShowAddSheetModal] = useState(false);
+  const [newSheetName, setNewSheetName] = useState("");
+  const [newSheetUrl, setNewSheetUrl] = useState("");
+  const [newSheetTab, setNewSheetTab] = useState("");
+  const [newSheetAutoSync, setNewSheetAutoSync] = useState(true);
+  const [addingSheet, setAddingSheet] = useState(false);
+  const [syncingId, setSyncingId] = useState<string | null>(null);
+
+  const fetchSheetConnections = async () => {
+    setLoadingSheets(true);
+    try {
+      const res = await fetch("/api/admin/off-page/integrations/google-sheets");
+      const json = await res.json();
+      if (json.success) {
+        setSheetConnections(json.connections || []);
+        setSyncHistory(json.history || []);
+      }
+    } catch (err) {
+      console.error("Failed fetching sheet connections:", err);
+    } finally {
+      setLoadingSheets(false);
+    }
+  };
+
+  const handleAddSheet = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newSheetName || !newSheetUrl) return;
+    setAddingSheet(true);
+    setFeedback(null);
+
+    try {
+      const res = await fetch("/api/admin/off-page/integrations/google-sheets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "create",
+          name: newSheetName,
+          sheetUrl: newSheetUrl,
+          tabName: newSheetTab || undefined,
+          autoSyncEnabled: newSheetAutoSync,
+          syncIntervalHours: 24,
+          autoVerify: true,
+        }),
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        setFeedback("Google Sheet connection registered successfully.");
+        setShowAddSheetModal(false);
+        setNewSheetName("");
+        setNewSheetUrl("");
+        setNewSheetTab("");
+        await fetchSheetConnections();
+      } else {
+        setFeedback(`Failed to connect sheet: ${json.error}`);
+      }
+    } catch (err: any) {
+      setFeedback(`Error: ${err.message}`);
+    } finally {
+      setAddingSheet(false);
+    }
+  };
+
+  const handleSyncSheet = async (connectionId: string) => {
+    setSyncingId(connectionId);
+    setFeedback(null);
+
+    try {
+      const res = await fetch("/api/admin/off-page/integrations/google-sheets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "sync", connectionId }),
+      });
+
+      const json = await res.json();
+      if (json.success && json.result) {
+        const r = json.result;
+        setFeedback(
+          `Sheet synced successfully: ${r.insertedCount} inserted, ${r.updatedCount} updated, ${r.mismatchesDetected} mismatches found.`
+        );
+        await fetchSheetConnections();
+      } else {
+        setFeedback(`Sync failed: ${json.error}`);
+      }
+    } catch (err: any) {
+      setFeedback(`Sync error: ${err.message}`);
+    } finally {
+      setSyncingId(null);
+    }
+  };
+
+  const handleDeleteSheet = async (connectionId: string) => {
+    if (!confirm("Are you sure you want to delete this sheet connection?")) return;
+    try {
+      const res = await fetch("/api/admin/off-page/integrations/google-sheets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "delete", connectionId }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setFeedback("Sheet connection removed.");
+        await fetchSheetConnections();
+      }
+    } catch (err) {
+      console.error("Delete sheet error:", err);
+    }
+  };
+
   useEffect(() => {
     fetchProviders();
+    fetchSheetConnections();
   }, []);
 
   const handleChange = (key: string, val: string) => {
@@ -332,7 +450,112 @@ export default function SettingsClientView({ initialSettings }: Props) {
           </div>
         </div>
 
-        {/* Section 5: Provider Health Matrix & Architecture (Sections 40 & 41) */}
+        {/* Section 5: Google Sheets & Live Spreadsheet Sync Connections */}
+        <div
+          className="dgs-saas-card"
+          style={{
+            padding: "24px",
+            background: "rgba(16, 185, 129, 0.03)",
+            border: "1px solid rgba(16, 185, 129, 0.2)",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <FileSpreadsheet size={18} style={{ color: "#10b981" }} />
+              <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
+                5. Google Sheets Sync & Live Internal Data Ingestion
+              </h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowAddSheetModal(true)}
+              className="dgs-saas-btn primary"
+              style={{ fontSize: "0.78rem", padding: "6px 12px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+            >
+              <Plus size={14} /> Connect Google Sheet
+            </button>
+          </div>
+
+          <p style={{ margin: "0 0 16px 0", fontSize: "0.8rem", color: "rgba(255,255,255,0.65)" }}>
+            Connect Google Spreadsheets containing team backlinks, guest post trackers, or agency link records. Changes are ingested non-destructively, preserving human notes while evaluating live crawler status.
+          </p>
+
+          {loadingSheets ? (
+            <div style={{ padding: "20px", textAlign: "center", color: "rgba(255,255,255,0.5)", fontSize: "0.82rem" }}>
+              <RefreshCw size={16} className="animate-spin" style={{ margin: "0 auto 6px auto" }} />
+              Loading sheet connections...
+            </div>
+          ) : sheetConnections.length === 0 ? (
+            <div style={{ padding: "24px", textAlign: "center", background: "rgba(255, 255, 255, 0.02)", borderRadius: "8px", color: "rgba(255, 255, 255, 0.5)", fontSize: "0.84rem" }}>
+              No Google Sheet connections configured yet. Click &ldquo;Connect Google Sheet&rdquo; above to link your first spreadsheet.
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {sheetConnections.map((conn) => (
+                <div
+                  key={conn.id}
+                  style={{
+                    padding: "14px 18px",
+                    borderRadius: "8px",
+                    background: "rgba(255, 255, 255, 0.02)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: "10px",
+                  }}
+                >
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{ fontWeight: 650, color: "#fff", fontSize: "0.9rem" }}>{conn.name}</span>
+                      <span className="dgs-saas-chip primary" style={{ fontSize: "0.68rem" }}>
+                        {conn.tab_name || "Sheet1"}
+                      </span>
+                      {conn.last_sync_status && (
+                        <span
+                          className={`dgs-saas-chip ${
+                            conn.last_sync_status === "SUCCESS" ? "success" : "warning"
+                          }`}
+                          style={{ fontSize: "0.68rem" }}
+                        >
+                          {conn.last_sync_status}
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: "0.75rem", color: "rgba(255, 255, 255, 0.5)", marginTop: "4px" }}>
+                      Last Synced: {conn.last_synced_at ? new Date(conn.last_synced_at).toLocaleString() : "Never"} • Rows: {conn.total_rows_synced}
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <button
+                      type="button"
+                      onClick={() => handleSyncSheet(conn.id)}
+                      disabled={syncingId === conn.id}
+                      className="dgs-saas-btn secondary"
+                      style={{ fontSize: "0.75rem", padding: "4px 10px", display: "inline-flex", alignItems: "center", gap: "5px" }}
+                    >
+                      <RefreshCw size={12} className={syncingId === conn.id ? "animate-spin" : ""} />
+                      {syncingId === conn.id ? "Syncing..." : "Sync Now"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteSheet(conn.id)}
+                      className="dgs-saas-btn danger"
+                      style={{ fontSize: "0.75rem", padding: "4px 8px" }}
+                      title="Delete connection"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Section 6: Provider Health Matrix & Architecture (Sections 40 & 41) */}
         <div
           className="dgs-saas-card"
           style={{
@@ -458,6 +681,132 @@ export default function SettingsClientView({ initialSettings }: Props) {
           </button>
         </div>
       </form>
+
+      {/* ADD GOOGLE SHEET MODAL */}
+      {showAddSheetModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            backdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+            padding: "20px",
+          }}
+        >
+          <div
+            className="dgs-saas-card"
+            style={{
+              width: "100%",
+              maxWidth: "520px",
+              padding: "24px",
+              background: "#111827",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              borderRadius: "12px",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <FileSpreadsheet size={20} style={{ color: "#10b981" }} />
+                <h3 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 700, color: "#fff" }}>
+                  Connect Google Spreadsheet
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowAddSheetModal(false)}
+                style={{ background: "transparent", border: "none", color: "#fff", cursor: "pointer", fontSize: "1.2rem" }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleAddSheet} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255, 255, 255, 0.7)", marginBottom: "4px" }}>
+                  Connection Name:
+                </label>
+                <input
+                  type="text"
+                  className="dgs-saas-input"
+                  placeholder="e.g. Master Backlinks Tracker 2026"
+                  value={newSheetName}
+                  onChange={(e) => setNewSheetName(e.target.value)}
+                  required
+                  style={{ width: "100%" }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255, 255, 255, 0.7)", marginBottom: "4px" }}>
+                  Google Spreadsheet URL:
+                </label>
+                <input
+                  type="url"
+                  className="dgs-saas-input"
+                  placeholder="https://docs.google.com/spreadsheets/d/.../edit#gid=0"
+                  value={newSheetUrl}
+                  onChange={(e) => setNewSheetUrl(e.target.value)}
+                  required
+                  style={{ width: "100%" }}
+                />
+                <span style={{ fontSize: "0.72rem", color: "rgba(255, 255, 255, 0.5)", marginTop: "2px", display: "block" }}>
+                  Ensure sheet is shared with link or published to web for automated CSV extraction.
+                </span>
+              </div>
+
+              <div>
+                <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255, 255, 255, 0.7)", marginBottom: "4px" }}>
+                  Tab Name (Optional):
+                </label>
+                <input
+                  type="text"
+                  className="dgs-saas-input"
+                  placeholder="e.g. Live Links (defaults to first tab)"
+                  value={newSheetTab}
+                  onChange={(e) => setNewSheetTab(e.target.value)}
+                  style={{ width: "100%" }}
+                />
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <input
+                  type="checkbox"
+                  id="sheetAutoSync"
+                  checked={newSheetAutoSync}
+                  onChange={(e) => setNewSheetAutoSync(e.target.checked)}
+                  style={{ width: "16px", height: "16px", accentColor: "#10b981", cursor: "pointer" }}
+                />
+                <label htmlFor="sheetAutoSync" style={{ fontSize: "0.82rem", color: "#e2e8f0", cursor: "pointer" }}>
+                  Enable Daily Automated Sync (Runs during scheduled off-page cron)
+                </label>
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "8px" }}>
+                <button
+                  type="button"
+                  onClick={() => setShowAddSheetModal(false)}
+                  className="dgs-saas-btn secondary"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={addingSheet}
+                  className="dgs-saas-btn primary"
+                >
+                  {addingSheet ? "Connecting..." : "Connect Sheet"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
