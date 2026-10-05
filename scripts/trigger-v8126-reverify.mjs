@@ -62,7 +62,7 @@ const c = await mysql.createConnection({
   password: env.DGS_MYSQL_PASSWORD,
   database: env.DGS_MYSQL_DATABASE
 });
-const [rows] = await c.query("SELECT run_id, provider, status, started_at, completed_at, results_returned, valid_candidates, inserted_count, spam_rejected, error_message FROM off_page_discovery_runs WHERE provider = 'REVERIFY:EXISTING' ORDER BY started_at DESC LIMIT 1");
+const [rows] = await c.query("SELECT run_id, provider, status, started_at, completed_at, results_returned, valid_candidates, inserted_count, spam_rejected, details FROM off_page_discovery_runs WHERE provider = 'REVERIFY:EXISTING' ORDER BY started_at DESC LIMIT 1");
 console.log("__POLL__" + JSON.stringify(rows[0] || {}));
 await c.end();
 `;
