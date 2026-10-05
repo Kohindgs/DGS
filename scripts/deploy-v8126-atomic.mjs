@@ -88,10 +88,10 @@ async function main() {
 
   // 7. Transfer files to Hostinger VPS
   console.log("Ensuring VPS directories exist...");
-  execSync(`ssh -p 65002 u188101251@147.93.100.126 "mkdir -p /home/u188101251/production-app/tmp /home/u188101251/production-app/shared/turbovec"`);
+  execSync(`ssh -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -p 65002 u188101251@147.93.100.126 "mkdir -p /home/u188101251/production-app/tmp /home/u188101251/production-app/shared/turbovec"`);
 
   console.log("Uploading release archive to VPS...");
-  execSync(`scp -P 65002 "${tarPath}" u188101251@147.93.100.126:/home/u188101251/production-app/tmp/${tarName}`);
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 "${tarPath}" u188101251@147.93.100.126:/home/u188101251/production-app/tmp/${tarName}`);
   console.log("✓ Uploaded archive to VPS tmp directory");
 
   // 8. Execute atomic release extraction, fail-closed validation, schema migration, symlinking, daemon restart
@@ -162,7 +162,7 @@ echo "TurboVec Daemon Status:"
 bash /home/u188101251/production-app/shared/turbovec-daemon.sh status || true
 `;
 
-  const deployOutput = execSync(`ssh -p 65002 u188101251@147.93.100.126 "bash -s"`, {
+  const deployOutput = execSync(`ssh -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -p 65002 u188101251@147.93.100.126 "bash -s"`, {
     input: remoteScript,
     encoding: "utf8",
   });
