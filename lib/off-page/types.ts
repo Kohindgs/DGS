@@ -1,5 +1,23 @@
 export type RegionCode = "INDIA" | "UAE" | "USA" | "GLOBAL";
 
+export const MANDATORY_NEXT_ACTIONS = [
+  "VERIFY",
+  "SUBMIT LISTING",
+  "CREATE PROFILE",
+  "PITCH ARTICLE",
+  "SEND OUTREACH",
+  "CONTACT JOURNALIST",
+  "REQUEST BACKLINK",
+  "RECLAIM LINK",
+  "FIX CITATION",
+  "FOLLOW UP",
+  "CHECK STATUS",
+  "MONITOR",
+  "NO ACTION",
+] as const;
+
+export type MandatoryNextAction = (typeof MANDATORY_NEXT_ACTIONS)[number];
+
 export type OpportunityCategory =
   | "BUSINESS_LISTING"
   | "LOCAL_CITATION"

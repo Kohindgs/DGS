@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   getActionCenterKpis,
   getTodayTasks,
+  getNeedsReviewItems,
+  getResultsAndLostLinks,
   approveOpportunity,
   rejectOpportunity,
   assignOpportunity,
@@ -15,15 +17,19 @@ export async function GET(req: NextRequest) {
     const owner = searchParams.get("owner") || undefined;
     const limit = parseInt(searchParams.get("limit") || "50", 10);
 
-    const [kpis, todayTasks] = await Promise.all([
+    const [kpis, todayTasks, needsReviewItems, resultsAndLostLinks] = await Promise.all([
       getActionCenterKpis(),
       getTodayTasks({ owner, limit }),
+      getNeedsReviewItems({ limit }),
+      getResultsAndLostLinks({ limit }),
     ]);
 
     return NextResponse.json({
       success: true,
       kpis,
       todayTasks,
+      needsReviewItems,
+      resultsAndLostLinks,
     });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

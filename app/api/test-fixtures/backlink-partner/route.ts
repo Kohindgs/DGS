@@ -15,6 +15,16 @@ export const dynamic = "force-dynamic";
  * Headers include "X-Robots-Tag: noindex, nofollow" so it never impacts public SEO.
  */
 export async function GET(req: Request) {
+  // Production Security Guard (Section 58)
+  if (process.env.NODE_ENV === "production") {
+    const authHeader = req.headers.get("authorization") || "";
+    const { searchParams: authParams } = new URL(req.url);
+    const token = authParams.get("token") || authHeader.replace(/^Bearer\s+/i, "");
+    if (!token || token !== process.env.DGS_CRON_SECRET) {
+      return new NextResponse("Endpoint not found", { status: 404 });
+    }
+  }
+
   const { searchParams } = new URL(req.url);
   const mode = searchParams.get("mode") || "live";
   const customAnchor = searchParams.get("anchor") || "D'Genius Solutions Official";

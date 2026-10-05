@@ -88,9 +88,9 @@ async function main() {
   console.log("\n--- Testing In-Memory Excel Ingestion & Smart Aliases ---");
   const wsData = [
     ["Live Link", "Target Page", "Anchor Text", "Status", "Owner", "Cost", "Date Added"],
-    ["https://example.com/test-backlink-1", "https://digitalgrowthschool.com", "SEO Course Mumbai", "Live", "Aakash", "$50", "2026-10-01"],
-    ["https://example.org/test-backlink-2", "https://digitalgrowthschool.com/services/seo", "Digital Growth School", "Submitted", "Pooja", "$0", "2026-10-02"],
-    ["https://invalid-domain", "https://digitalgrowthschool.com", "Bad Link", "Live", "Rohan", "0", "2026-10-03"],
+    ["https://example.com/test-backlink-1", "https://www.dgeniussolutions.com/", "SEO Agency Mumbai", "Live", "Aakash", "50 USD", "2026-10-01"],
+    ["https://example.org/test-backlink-2", "https://www.dgeniussolutions.com/services/seo", "D'Genius Solutions", "Submitted", "Pooja", "0", "2026-10-02"],
+    ["https://invalid-domain", "https://www.dgeniussolutions.com/", "Bad Link", "Live", "Rohan", "0", "2026-10-03"],
   ];
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(wsData);

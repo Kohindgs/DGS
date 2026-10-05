@@ -36,6 +36,9 @@ export default function SettingsClientView({ initialSettings }: Props) {
       default_outreach_followup_days: "5",
       primary_regions: "INDIA,UAE,USA",
       free_only_enforcement: "true",
+      primary_monitored_domain: "dgeniussolutions.com",
+      monitored_domain_aliases: "www.dgeniussolutions.com",
+      monitored_brand_name: "D'Genius Solutions",
     }
   );
   const [saving, setSaving] = useState(false);
@@ -261,12 +264,99 @@ export default function SettingsClientView({ initialSettings }: Props) {
 
       {/* Settings Form Grid */}
       <form onSubmit={handleSave} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-        {/* Section 1: Strict Free Tier & Policy Guard */}
+        {/* Section 1: Monitored Domains & Target Brand Governance (Sections 13 & 14) */}
+        <div className="dgs-saas-card" style={{ padding: "24px", border: "1px solid rgba(16, 185, 129, 0.3)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
+            <Globe size={18} color="#10b981" />
+            <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
+              1. Monitored Domains & Target Brand Governance
+            </h3>
+            <span className="dgs-saas-chip success" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
+              CANONICAL
+            </span>
+          </div>
+          <p style={{ margin: "0 0 16px 0", fontSize: "0.82rem", color: "rgba(255,255,255,0.6)" }}>
+            Configure default monitored domains for automated backlink candidate discovery and live crawler verification. All crawler checks strictly target these hostnames.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "0.82rem", color: "rgba(255,255,255,0.8)", marginBottom: "6px" }}>
+                Primary Monitored Domain:
+              </label>
+              <input
+                type="text"
+                value={settings.primary_monitored_domain || "dgeniussolutions.com"}
+                onChange={(e) => handleChange("primary_monitored_domain", e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                }}
+              />
+              <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", display: "block", marginTop: "4px" }}>
+                Canonical target for live backlink verification and health crawls.
+              </span>
+            </div>
+
+            <div>
+              <label style={{ display: "block", fontSize: "0.82rem", color: "rgba(255,255,255,0.8)", marginBottom: "6px" }}>
+                Allowed Hostname Aliases:
+              </label>
+              <input
+                type="text"
+                value={settings.monitored_domain_aliases || "www.dgeniussolutions.com"}
+                onChange={(e) => handleChange("monitored_domain_aliases", e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                }}
+              />
+              <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", display: "block", marginTop: "4px" }}>
+                Comma-separated secondary hostnames.
+              </span>
+            </div>
+
+            <div>
+              <label style={{ display: "block", fontSize: "0.82rem", color: "rgba(255,255,255,0.8)", marginBottom: "6px" }}>
+                Brand & Agency Name:
+              </label>
+              <input
+                type="text"
+                value={settings.monitored_brand_name || "D'Genius Solutions"}
+                onChange={(e) => handleChange("monitored_brand_name", e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  background: "#1f2937",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#fff",
+                  fontSize: "0.85rem",
+                }}
+              />
+              <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", display: "block", marginTop: "4px" }}>
+                Brand keywords monitored in PR feeds and news mention queries.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 2: Strict Free Tier & Policy Guard */}
         <div className="dgs-saas-card" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
             <ShieldCheck size={18} color="#10b981" />
             <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-              1. Free-Tier Safeguards & Policy Enforcement
+              2. Free-Tier Safeguards & Policy Enforcement
             </h3>
           </div>
 
@@ -295,7 +385,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
             <Globe size={18} color="var(--dgs-brand-cyan)" />
             <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-              2. Regional Market Targeting
+              3. Regional Market Targeting
             </h3>
           </div>
 
@@ -350,12 +440,12 @@ export default function SettingsClientView({ initialSettings }: Props) {
           </div>
         </div>
 
-        {/* Section 3: Risk Thresholds & Penguin Safeguards */}
+        {/* Section 4: Risk Thresholds & Penguin Safeguards */}
         <div className="dgs-saas-card" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
             <Sliders size={18} color="#f59e0b" />
             <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-              3. Algorithm Safeguards & Risk Thresholds
+              4. Algorithm Safeguards & Risk Thresholds
             </h3>
           </div>
 
@@ -368,7 +458,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
                 <input
                   type="number"
                   min="5"
-                  max="50"
+                  max="100"
                   value={settings.exact_match_alert_pct || "20"}
                   onChange={(e) => handleChange("exact_match_alert_pct", e.target.value)}
                   style={{
@@ -394,8 +484,8 @@ export default function SettingsClientView({ initialSettings }: Props) {
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <input
                   type="number"
-                  min="10"
-                  max="80"
+                  min="0"
+                  max="100"
                   value={settings.spam_risk_threshold || "40"}
                   onChange={(e) => handleChange("spam_risk_threshold", e.target.value)}
                   style={{
@@ -416,12 +506,12 @@ export default function SettingsClientView({ initialSettings }: Props) {
           </div>
         </div>
 
-        {/* Section 4: Automation Schedulers */}
+        {/* Section 5: Automation Schedulers */}
         <div className="dgs-saas-card" style={{ padding: "24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
             <BellRing size={18} color="#c084fc" />
             <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-              4. Automation & Daily Crawler Tasks
+              5. Automation & Daily Crawler Tasks
             </h3>
           </div>
 
@@ -450,7 +540,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
           </div>
         </div>
 
-        {/* Section 5: Google Sheets & Live Spreadsheet Sync Connections */}
+        {/* Section 6: Google Sheets & Live Spreadsheet Sync Connections */}
         <div
           className="dgs-saas-card"
           style={{
@@ -463,7 +553,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <FileSpreadsheet size={18} style={{ color: "#10b981" }} />
               <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-                5. Google Sheets Sync & Live Internal Data Ingestion
+                6. Google Sheets Sync & Live Internal Data Ingestion
               </h3>
             </div>
             <button
@@ -555,7 +645,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
           )}
         </div>
 
-        {/* Section 6: Provider Health Matrix & Architecture (Sections 40 & 41) */}
+        {/* Section 7: Provider Health Matrix & Architecture (Sections 40 & 41) */}
         <div
           className="dgs-saas-card"
           style={{
@@ -568,7 +658,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <Activity size={18} color="var(--dgs-brand-cyan)" />
               <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-                6. Provider Health Matrix (10 Core Subsystems)
+                7. Provider Health Matrix (10 Core Subsystems)
               </h3>
             </div>
             <button

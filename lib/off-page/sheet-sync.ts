@@ -229,12 +229,12 @@ export function normalizeRow(
     validationError = "Malformed Source URL";
   }
 
-  let targetUrl = getVal(mapping.target_url) || "https://digitalgrowthschool.com";
+  let targetUrl = getVal(mapping.target_url) || "https://www.dgeniussolutions.com";
   if (!targetUrl.startsWith("http://") && !targetUrl.startsWith("https://")) {
     targetUrl = "https://" + targetUrl;
   }
 
-  const anchor = getVal(mapping.anchor_text) || "Digital Growth School";
+  const anchor = getVal(mapping.anchor_text) || "D'Genius Solutions";
 
   // Team status mapping
   let rawStatus = getVal(mapping.team_status).toUpperCase();

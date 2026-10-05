@@ -25,6 +25,9 @@ export async function GET() {
     default_outreach_followup_days: "5",
     primary_regions: "INDIA,UAE,USA",
     free_only_enforcement: "true",
+    primary_monitored_domain: "dgeniussolutions.com",
+    monitored_domain_aliases: "www.dgeniussolutions.com",
+    monitored_brand_name: "D'Genius Solutions",
   };
 
   const settingsMap: Record<string, string> = { ...defaults };

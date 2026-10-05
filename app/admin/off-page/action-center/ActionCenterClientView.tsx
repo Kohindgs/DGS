@@ -19,21 +19,37 @@ import {
   RefreshCw,
   Plus,
   FileCheck,
+  CheckCircle,
+  Link2,
 } from "lucide-react";
-import type { ActionCenterKpis, TodayTaskItem } from "@/lib/off-page/action-center";
-import type { OpportunityStatus, PriorityTier } from "@/lib/off-page/types";
+import type { ActionCenterKpis, TodayTaskItem, ResultBacklinkItem } from "@/lib/off-page/action-center";
+import {
+  MANDATORY_NEXT_ACTIONS,
+  type MandatoryNextAction,
+  type OpportunityStatus,
+  type PriorityTier,
+} from "@/lib/off-page/types";
 
 interface Props {
   initialKpis?: ActionCenterKpis;
   initialTodayTasks?: TodayTaskItem[];
+  initialNeedsReviewItems?: TodayTaskItem[];
+  initialResultsAndLostLinks?: ResultBacklinkItem[];
 }
 
-export default function ActionCenterClientView({ initialKpis, initialTodayTasks }: Props) {
+export default function ActionCenterClientView({
+  initialKpis,
+  initialTodayTasks,
+  initialNeedsReviewItems,
+  initialResultsAndLostLinks,
+}: Props) {
   const [kpis, setKpis] = useState<ActionCenterKpis | undefined>(initialKpis);
   const [todayTasks, setTodayTasks] = useState<TodayTaskItem[]>(initialTodayTasks || []);
+  const [needsReviewItems, setNeedsReviewItems] = useState<TodayTaskItem[]>(initialNeedsReviewItems || []);
+  const [resultsAndLostLinks, setResultsAndLostLinks] = useState<ResultBacklinkItem[]>(initialResultsAndLostLinks || []);
   const [loading, setLoading] = useState(!initialKpis);
   const [selectedOwner, setSelectedOwner] = useState<string>("ALL");
-  const [activeTab, setActiveTab] = useState<"TODAY" | "PIPELINE">("TODAY");
+  const [activeTab, setActiveTab] = useState<"REVIEW" | "TEAM" | "RESULTS" | "PIPELINE">("REVIEW");
   const [selectedStage, setSelectedStage] = useState<string>("ALL");
   const [pipelineOpps, setPipelineOpps] = useState<any[]>([]);
   const [pipelineLoading, setPipelineLoading] = useState(false);
@@ -44,7 +60,7 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
   const [modalMode, setModalMode] = useState<"APPROVE" | "ASSIGN" | "REJECT" | "SNOOZE" | "COMPLETE">("ASSIGN");
   const [activeItem, setActiveItem] = useState<any | null>(null);
   const [formOwner, setFormOwner] = useState("");
-  const [formNextAction, setFormNextAction] = useState("");
+  const [formNextAction, setFormNextAction] = useState<string>(MANDATORY_NEXT_ACTIONS[0]);
   const [formDueDate, setFormDueDate] = useState("");
   const [formNote, setFormNote] = useState("");
   const [formReason, setFormReason] = useState("");
@@ -60,7 +76,9 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
       const json = await res.json();
       if (json.success) {
         setKpis(json.kpis);
-        setTodayTasks(json.todayTasks);
+        setTodayTasks(json.todayTasks || []);
+        setNeedsReviewItems(json.needsReviewItems || []);
+        setResultsAndLostLinks(json.resultsAndLostLinks || []);
       }
     } catch (err) {
       console.error("Failed to load action center data:", err);
@@ -104,7 +122,10 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
     setActiveItem(item);
     setModalMode(mode);
     setFormOwner(item.owner || "");
-    setFormNextAction(item.next_action || (mode === "ASSIGN" ? "Pitch high-authority guest post or listing" : ""));
+    const matchingAction = MANDATORY_NEXT_ACTIONS.find(
+      (a) => a === item.next_action
+    );
+    setFormNextAction(matchingAction || (mode === "ASSIGN" ? "PITCH ARTICLE" : MANDATORY_NEXT_ACTIONS[0]));
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     setFormDueDate(item.due_date || tomorrow.toISOString().slice(0, 10));
@@ -337,14 +358,32 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
       </div>
 
       {/* Main View Tabs */}
-      <div style={{ display: "flex", gap: "10px", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", paddingBottom: "10px" }}>
+      <div style={{ display: "flex", gap: "10px", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", paddingBottom: "10px", flexWrap: "wrap" }}>
         <button
-          onClick={() => setActiveTab("TODAY")}
-          className={`dgs-saas-btn ${activeTab === "TODAY" ? "primary" : "secondary"}`}
+          onClick={() => setActiveTab("REVIEW")}
+          className={`dgs-saas-btn ${activeTab === "REVIEW" ? "primary" : "secondary"}`}
+          style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
+        >
+          <Clock size={16} />
+          Needs My Review ({needsReviewItems.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab("TEAM")}
+          className={`dgs-saas-btn ${activeTab === "TEAM" ? "primary" : "secondary"}`}
           style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
         >
           <Calendar size={16} />
-          What Your Team Should Do Today ({todayTasks.length})
+          My Team's Work ({todayTasks.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab("RESULTS")}
+          className={`dgs-saas-btn ${activeTab === "RESULTS" ? "primary" : "secondary"}`}
+          style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
+        >
+          <CheckCircle size={16} />
+          Results / Lost Links ({resultsAndLostLinks.length})
         </button>
 
         <button
@@ -353,20 +392,147 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
           style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
         >
           <Filter size={16} />
-          Full Pipeline Stage Manager
+          Full Pipeline ({kpis?.totalInPipeline || 0})
         </button>
       </div>
 
-      {/* TAB 1: WHAT YOUR TEAM SHOULD DO TODAY */}
-      {activeTab === "TODAY" && (
+      {/* TAB 1: NEEDS MY REVIEW */}
+      {activeTab === "REVIEW" && (
         <div className="dgs-saas-card" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "12px" }}>
             <div>
               <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>
-                Priority Daily Task Queue
+                Opportunities Needing Manager Decision
               </h3>
               <p style={{ margin: "2px 0 0 0", fontSize: "0.82rem", color: "rgba(255, 255, 255, 0.6)" }}>
-                Ordered by urgency: Overdue tasks first, then tasks due today, prioritized by Tier 0 and Tier 1 targets.
+                Unassigned qualified opportunities requiring strategic allocation, rejection, or scheduling.
+              </p>
+            </div>
+            <span className="dgs-saas-chip warning" style={{ fontWeight: 700 }}>
+              {needsReviewItems.length} Awaiting Decision
+            </span>
+          </div>
+
+          {needsReviewItems.length === 0 ? (
+            <div style={{ padding: "40px", textAlign: "center", color: "rgba(255, 255, 255, 0.5)" }}>
+              <CheckCircle2 size={36} style={{ color: "#10b981", margin: "0 auto 12px auto" }} />
+              <div style={{ fontSize: "1.05rem", fontWeight: 600, color: "#fff" }}>Review Queue Clear!</div>
+              <p style={{ fontSize: "0.85rem", marginTop: "4px" }}>
+                All incoming opportunities have been processed or assigned.
+              </p>
+            </div>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table className="dgs-saas-table" style={{ width: "100%", textAlign: "left", fontSize: "0.85rem" }}>
+                <thead>
+                  <tr style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}>
+                    <th style={{ padding: "12px 10px" }}>Priority & Site</th>
+                    <th style={{ padding: "12px 10px" }}>Category</th>
+                    <th style={{ padding: "12px 10px" }}>Target Page</th>
+                    <th style={{ padding: "12px 10px" }}>Source Type</th>
+                    <th style={{ padding: "12px 10px", textAlign: "right" }}>Manager Decisions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {needsReviewItems.map((item) => (
+                    <tr key={item.id} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <td style={{ padding: "12px 10px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <span
+                            className={`dgs-saas-chip ${
+                              item.priority_tier === "P0" ? "danger" : item.priority_tier === "P1" ? "warning" : "primary"
+                            }`}
+                            style={{ fontSize: "0.7rem", fontWeight: 700 }}
+                          >
+                            {item.priority_tier}
+                          </span>
+                          <div>
+                            <div style={{ fontWeight: 600, color: "#fff" }}>{item.site_name}</div>
+                            <a
+                              href={item.exact_submission_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: "#3b82f6", fontSize: "0.78rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px" }}
+                            >
+                              {item.domain} <ExternalLink size={11} />
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td style={{ padding: "12px 10px" }}>
+                        <span className="dgs-saas-chip neutral" style={{ fontSize: "0.72rem" }}>
+                          {item.category.replace(/_/g, " ")}
+                        </span>
+                      </td>
+
+                      <td style={{ padding: "12px 10px", maxWidth: "240px" }}>
+                        <div style={{ fontSize: "0.8rem", color: "#93c5fd", wordBreak: "break-all" }}>
+                          {item.recommended_dgs_target_page}
+                        </div>
+                      </td>
+
+                      <td style={{ padding: "12px 10px" }}>
+                        <span className="dgs-saas-chip neutral" style={{ fontSize: "0.7rem" }}>
+                          {item.source_type}
+                        </span>
+                      </td>
+
+                      <td style={{ padding: "12px 10px", textAlign: "right" }}>
+                        <div style={{ display: "flex", justifyContent: "flex-end", gap: "6px" }}>
+                          <button
+                            onClick={() => openDecisionModal(item, "APPROVE")}
+                            className="dgs-saas-btn primary"
+                            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+                            title="Approve opportunity"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => openDecisionModal(item, "ASSIGN")}
+                            className="dgs-saas-btn success"
+                            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+                            title="Assign to executive"
+                          >
+                            Assign
+                          </button>
+                          <button
+                            onClick={() => openDecisionModal(item, "REJECT")}
+                            className="dgs-saas-btn danger"
+                            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+                            title="Reject opportunity"
+                          >
+                            Reject
+                          </button>
+                          <button
+                            onClick={() => openDecisionModal(item, "SNOOZE")}
+                            className="dgs-saas-btn neutral"
+                            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+                            title="Snooze"
+                          >
+                            Snooze
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 2: MY TEAM'S WORK */}
+      {activeTab === "TEAM" && (
+        <div className="dgs-saas-card" style={{ padding: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "12px" }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>
+                Team Execution Queue
+              </h3>
+              <p style={{ margin: "2px 0 0 0", fontSize: "0.82rem", color: "rgba(255, 255, 255, 0.6)" }}>
+                Active tasks assigned to executives with mandatory next actions and target due dates.
               </p>
             </div>
 
@@ -390,9 +556,9 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
           {todayTasks.length === 0 ? (
             <div style={{ padding: "40px", textAlign: "center", color: "rgba(255, 255, 255, 0.5)" }}>
               <CheckCircle2 size={36} style={{ color: "#10b981", margin: "0 auto 12px auto" }} />
-              <div style={{ fontSize: "1.05rem", fontWeight: 600, color: "#fff" }}>All Clear! No urgent tasks pending.</div>
+              <div style={{ fontSize: "1.05rem", fontWeight: 600, color: "#fff" }}>No assigned tasks in this view.</div>
               <p style={{ fontSize: "0.85rem", marginTop: "4px" }}>
-                Use the Full Pipeline tab to review and assign new qualified opportunities.
+                Use the Needs My Review tab to assign opportunities to your team.
               </p>
             </div>
           ) : (
@@ -405,7 +571,7 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
                     <th style={{ padding: "12px 10px" }}>Assigned Executive</th>
                     <th style={{ padding: "12px 10px" }}>Mandatory Next Action</th>
                     <th style={{ padding: "12px 10px" }}>Due Date & Urgency</th>
-                    <th style={{ padding: "12px 10px", textAlign: "right" }}>Manager Actions</th>
+                    <th style={{ padding: "12px 10px", textAlign: "right" }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -512,7 +678,130 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
         </div>
       )}
 
-      {/* TAB 2: FULL PIPELINE STAGE MANAGER */}
+      {/* TAB 3: RESULTS / LOST LINKS */}
+      {activeTab === "RESULTS" && (
+        <div className="dgs-saas-card" style={{ padding: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "12px" }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>
+                Confirmed Results, Lost Links & Status Reconciliation
+              </h3>
+              <p style={{ margin: "2px 0 0 0", fontSize: "0.82rem", color: "rgba(255, 255, 255, 0.6)" }}>
+                Live external crawler telemetry against claimed team statuses. Two-status governance ensures zero false positives.
+              </p>
+            </div>
+            <Link
+              href="/admin/off-page/mismatches"
+              className="dgs-saas-btn warning"
+              style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.82rem", textDecoration: "none" }}
+            >
+              <ShieldAlert size={14} />
+              Reconciliation Dashboard
+            </Link>
+          </div>
+
+          {resultsAndLostLinks.length === 0 ? (
+            <div style={{ padding: "40px", textAlign: "center", color: "rgba(255, 255, 255, 0.5)" }}>
+              <CheckCircle2 size={36} style={{ color: "#10b981", margin: "0 auto 12px auto" }} />
+              <div style={{ fontSize: "1.05rem", fontWeight: 600, color: "#fff" }}>No active backlink results recorded yet.</div>
+              <p style={{ fontSize: "0.85rem", marginTop: "4px" }}>
+                Submit proof of publication or import backlink records to initiate live automated monitoring.
+              </p>
+            </div>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table className="dgs-saas-table" style={{ width: "100%", textAlign: "left", fontSize: "0.85rem" }}>
+                <thead>
+                  <tr style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}>
+                    <th style={{ padding: "12px 10px" }}>Source Domain & URL</th>
+                    <th style={{ padding: "12px 10px" }}>Target URL & Anchor</th>
+                    <th style={{ padding: "12px 10px" }}>Team Claim</th>
+                    <th style={{ padding: "12px 10px" }}>Crawler Reality</th>
+                    <th style={{ padding: "12px 10px" }}>Status Match</th>
+                    <th style={{ padding: "12px 10px" }}>Last Crawled</th>
+                    <th style={{ padding: "12px 10px", textAlign: "right" }}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {resultsAndLostLinks.map((item) => (
+                    <tr key={item.id} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <td style={{ padding: "12px 10px", maxWidth: "260px" }}>
+                        <div style={{ fontWeight: 600, color: "#fff" }}>{item.source_domain}</div>
+                        <a
+                          href={item.source_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: "#3b82f6", fontSize: "0.78rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px", wordBreak: "break-all" }}
+                        >
+                          {item.source_url} <ExternalLink size={11} />
+                        </a>
+                      </td>
+
+                      <td style={{ padding: "12px 10px", maxWidth: "240px" }}>
+                        <div style={{ fontSize: "0.8rem", color: "#93c5fd", wordBreak: "break-all" }}>{item.target_url}</div>
+                        <div style={{ fontSize: "0.74rem", color: "rgba(255, 255, 255, 0.6)", marginTop: "2px" }}>
+                          Anchor: &ldquo;{item.anchor_text || "—"}&rdquo; ({item.link_rel || "dofollow"})
+                        </div>
+                      </td>
+
+                      <td style={{ padding: "12px 10px" }}>
+                        <span className="dgs-saas-chip neutral" style={{ fontSize: "0.72rem", fontWeight: 600 }}>
+                          {item.team_status}
+                        </span>
+                      </td>
+
+                      <td style={{ padding: "12px 10px" }}>
+                        <span
+                          className={`dgs-saas-chip ${
+                            item.crawler_status === "LIVE" ? "success" : item.crawler_status === "LOST" ? "danger" : "warning"
+                          }`}
+                          style={{ fontSize: "0.72rem", fontWeight: 700 }}
+                        >
+                          {item.crawler_status} {item.http_status ? `(${item.http_status})` : ""}
+                        </span>
+                      </td>
+
+                      <td style={{ padding: "12px 10px" }}>
+                        {item.status_mismatch ? (
+                          <span className="dgs-saas-chip danger" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
+                            MISMATCH
+                          </span>
+                        ) : (
+                          <span className="dgs-saas-chip success" style={{ fontSize: "0.7rem" }}>
+                            MATCH
+                          </span>
+                        )}
+                      </td>
+
+                      <td style={{ padding: "12px 10px" }}>
+                        <span style={{ fontSize: "0.78rem", color: "rgba(255, 255, 255, 0.6)" }}>
+                          {item.last_checked_at || "Pending"}
+                        </span>
+                      </td>
+
+                      <td style={{ padding: "12px 10px", textAlign: "right" }}>
+                        {item.status_mismatch ? (
+                          <Link
+                            href="/admin/off-page/mismatches"
+                            className="dgs-saas-btn warning"
+                            style={{ padding: "4px 8px", fontSize: "0.75rem", textDecoration: "none", display: "inline-block" }}
+                          >
+                            Reconcile
+                          </Link>
+                        ) : (
+                          <span style={{ fontSize: "0.75rem", color: "#10b981" }}>Verified</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 4: FULL PIPELINE STAGE MANAGER */}
       {activeTab === "PIPELINE" && (
         <div className="dgs-saas-card" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "12px" }}>
@@ -718,17 +1007,21 @@ export default function ActionCenterClientView({ initialKpis, initialTodayTasks 
 
                   <div>
                     <label style={{ display: "block", fontSize: "0.8rem", color: "rgba(255, 255, 255, 0.7)", marginBottom: "4px" }}>
-                      Mandatory Next Action:
+                      Mandatory Next Action (Governance Standard):
                     </label>
-                    <input
-                      type="text"
+                    <select
                       className="dgs-saas-input"
-                      placeholder="e.g. Formulate personalized email pitch using grounded assets"
                       value={formNextAction}
                       onChange={(e) => setFormNextAction(e.target.value)}
                       required
-                      style={{ width: "100%" }}
-                    />
+                      style={{ width: "100%", background: "#1f2937", color: "#fff" }}
+                    >
+                      {MANDATORY_NEXT_ACTIONS.map((action) => (
+                        <option key={action} value={action}>
+                          {action}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div>

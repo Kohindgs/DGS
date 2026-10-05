@@ -20,7 +20,7 @@ export interface BacklinkDiscoveryResult {
 /**
  * Executes a live backlink discovery run.
  * Searches external providers for brand mentions, fetches each candidate page,
- * scans HTML for actual outbound <a> tags pointing to digitalgrowthschool.com.
+ * scans HTML for actual outbound <a> tags pointing to dgeniussolutions.com.
  * Newly proven backlinks are saved directly into off_page_backlinks.
  */
 export async function executeBacklinkDiscovery(options?: {
@@ -43,9 +43,9 @@ export async function executeBacklinkDiscovery(options?: {
   );
 
   const defaultQueries = [
-    `"digitalgrowthschool.com"`,
-    `"digital growth school"`,
-    `digital growth school seo training`,
+    `"dgeniussolutions.com"`,
+    `"dgenius solutions"`,
+    `"d'genius solutions"`,
   ];
   const activeQueries = options?.queries && options.queries.length > 0 ? options.queries : defaultQueries;
 
@@ -131,7 +131,7 @@ export async function executeBacklinkDiscovery(options?: {
       if (!res.ok) continue;
       const html = await res.text();
 
-      // Look for <a> tags pointing to digitalgrowthschool.com or dgeniussolutions.com
+      // Look for <a> tags pointing to dgeniussolutions.com
       const aTagRegex = /<a\b[^>]*href=['"]([^'"]+)['"][^>]*>([\s\S]*?)<\/a>/gi;
       let match;
       let backlinkFound = false;
@@ -141,13 +141,10 @@ export async function executeBacklinkDiscovery(options?: {
 
       while ((match = aTagRegex.exec(html)) !== null) {
         const href = match[1].trim();
-        if (
-          href.includes("digitalgrowthschool.com") ||
-          href.includes("dgeniussolutions.com")
-        ) {
+        if (href.includes("dgeniussolutions.com")) {
           backlinkFound = true;
           targetUrl = href;
-          anchorText = match[2].replace(/<[^>]+>/g, "").trim() || "Digital Growth School";
+          anchorText = match[2].replace(/<[^>]+>/g, "").trim() || "D'Genius Solutions";
           const relMatch = match[0].match(/rel=['"]([^'"]+)['"]/i);
           rel = relMatch ? relMatch[1].toLowerCase() : "dofollow";
           break;
@@ -182,7 +179,7 @@ export async function executeBacklinkDiscovery(options?: {
             sourceDomain,
             candidate.url,
             candidate.title.slice(0, 500),
-            targetUrl || "https://digitalgrowthschool.com",
+            targetUrl || "https://www.dgeniussolutions.com/",
             anchorText.slice(0, 500),
             rel,
             isDofollow ? 1 : 0,
