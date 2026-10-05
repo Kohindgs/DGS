@@ -102,31 +102,11 @@ async function main() {
   console.log(`  - Candidates Crawled: ${discData.candidatesCrawled || discData.candidates_found || 0}`);
   console.log(`  - New Unknown Backlinks Discovered: ${discData.newBacklinksDiscovered || discData.inserted_count || 0}`);
 
-  // 5. Manager Action Test with Mandatory Next Action Dropdown Value
-  console.log("\n5. Testing Manager Action Center Decision (/api/admin/off-page/action-center)...");
-  const testItem = acData.needsReviewItems?.[0];
-  if (testItem) {
-    const actRes = await fetch(`${BASE_URL}/api/admin/off-page/action-center`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        id: testItem.id,
-        action: "assign",
-        owner: "Aakash",
-        nextAction: "PITCH ARTICLE",
-        dueDate: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
-        note: "Assigned high-priority strategic guest post pitch via V8.12.5A action center",
-      }),
-    });
-    const actData = await actRes.json();
-    console.log(`✓ Manager Action Execution: ${actData.success ? "SUCCESS" : "FAILED"}`);
-    if (actData.opportunity) {
-      console.log(`  - Opportunity ID: ${actData.opportunity.id}`);
-      console.log(`  - Updated Status: ${actData.opportunity.status}`);
-      console.log(`  - Assigned Owner: ${actData.opportunity.owner || actData.opportunity.assigned_to}`);
-      console.log(`  - Next Action: ${actData.opportunity.next_action}`);
-    }
-  }
+  // 5. Manager Action Center — READ-ONLY check.
+  // Never POST decisions against production records from a verifier: it mutates live operational data.
+  console.log("\n5. Verifying Manager queues are readable (read-only, no mutation)...");
+  console.log(`  - Needs Review queue items returned: ${acData.needsReviewItems?.length ?? 0}`);
+  console.log(`  - Team queue items returned: ${acData.todayTasks?.length ?? 0}`);
 
   // 6. Public SEO Invariants
   console.log("\n6. Auditing Public SEO Invariants...");
