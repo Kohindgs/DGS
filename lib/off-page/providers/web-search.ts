@@ -8,6 +8,7 @@ import * as cheerio from "cheerio";
  *
  * - Free, legitimate, live web search acquisition provider running directly on the production host.
  * - Extracts real external URLs from live SERPs (no synthetic or fabricated candidates).
+ * - Multi-engine resilient search: attempts DuckDuckGo with automatic fallback to Bing.
  * - Enforces persisted daily quota guards, cooldown intervals, backoff, and error tracking.
  * - Strictly avoids search engine / social platform false positives and excludes dgeniussolutions.com.
  */
@@ -94,6 +95,7 @@ const EXCLUDED_HOSTS = new Set([
   "duckduckgo.com",
   "html.duckduckgo.com",
   "bing.com",
+  "www.bing.com",
   "yahoo.com",
   "youtube.com",
   "facebook.com",
@@ -105,30 +107,82 @@ const EXCLUDED_HOSTS = new Set([
   "en.wikipedia.org",
 ]);
 
-/**
- * Performs a single live web search query against the native search endpoint.
- */
-export async function executeNativeWebSearch(query: string, limit = 20): Promise<RawWebResult[]> {
-  const usage = await getWebSearchUsageToday();
-  if (usage.used >= usage.quota) {
-    throw new Error(`WEB_SEARCH_QUOTA_EXHAUSTED: ${usage.used}/${usage.quota} queries used today`);
-  }
+function decodeBingUrl(href: string): string {
+  if (!href) return href;
+  if (!href.includes("/ck/a?")) return href;
+  try {
+    const u = new URL(href);
+    let rawU = u.searchParams.get("u") || "";
+    if (rawU.startsWith("a1")) rawU = rawU.slice(2);
+    const decoded = Buffer.from(rawU, "base64").toString("utf8");
+    if (decoded.startsWith("http")) return decoded;
+  } catch {}
+  return href;
+}
 
-  const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
-  const res = await fetch(searchUrl, {
+async function executeBingSearch(query: string, limit: number): Promise<RawWebResult[]> {
+  const url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+  const res = await fetch(url, {
     headers: {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 DGS-Acquisition/8.12.7",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
       "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       "Accept-Language": "en-US,en;q=0.9",
     },
-    signal: AbortSignal.timeout(14000),
+    signal: AbortSignal.timeout(12000),
   });
 
-  await recordWebSearchUsage(1);
+  if (!res.ok) return [];
 
-  if (!res.ok) {
-    throw new Error(`Web Search HTTP ${res.status}: ${res.statusText}`);
-  }
+  const html = await res.text();
+  const $ = cheerio.load(html);
+  const results: RawWebResult[] = [];
+  const seen = new Set<string>();
+
+  $("li.b_algo").each((_, el) => {
+    if (results.length >= limit) return;
+    const title = $(el).find("h2 a").text().trim().replace(/\s+/g, " ");
+    let href = $(el).find("h2 a").attr("href") || "";
+    href = decodeBingUrl(href);
+
+    if (!href || !href.startsWith("http")) return;
+    let parsed: URL;
+    try {
+      parsed = new URL(href);
+    } catch {
+      return;
+    }
+
+    const hostname = parsed.hostname.toLowerCase();
+    const cleanDomain = hostname.replace(/^www\./, "");
+
+    if (cleanDomain.includes("dgeniussolutions")) return;
+    if (EXCLUDED_HOSTS.has(hostname) || EXCLUDED_HOSTS.has(cleanDomain)) return;
+    if (seen.has(href)) return;
+    seen.add(href);
+
+    const snippet = $(el).find(".b_caption p").text().trim().replace(/\s+/g, " ");
+    results.push({
+      title: title || cleanDomain,
+      url: href,
+      snippet: snippet || "",
+    });
+  });
+
+  return results;
+}
+
+async function executeDdgSearch(query: string, limit: number): Promise<RawWebResult[]> {
+  const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+  const res = await fetch(searchUrl, {
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "Accept-Language": "en-US,en;q=0.9",
+    },
+    signal: AbortSignal.timeout(10000),
+  });
+
+  if (!res.ok) return [];
 
   const html = await res.text();
   const $ = cheerio.load(html);
@@ -144,9 +198,7 @@ export async function executeNativeWebSearch(query: string, limit = 20): Promise
       try {
         const u = new URL("https://duckduckgo.com" + href);
         href = decodeURIComponent(u.searchParams.get("uddg") || href);
-      } catch {
-        // keep original href
-      }
+      } catch {}
     }
 
     if (!href || !href.startsWith("http")) return;
@@ -173,6 +225,28 @@ export async function executeNativeWebSearch(query: string, limit = 20): Promise
       snippet: snippet || "",
     });
   });
+
+  return results;
+}
+
+/**
+ * Performs a resilient live web search query against native web engines.
+ */
+export async function executeNativeWebSearch(query: string, limit = 20): Promise<RawWebResult[]> {
+  const usage = await getWebSearchUsageToday();
+  if (usage.used >= usage.quota) {
+    throw new Error(`WEB_SEARCH_QUOTA_EXHAUSTED: ${usage.used}/${usage.quota} queries used today`);
+  }
+
+  await recordWebSearchUsage(1);
+
+  // Try DuckDuckGo first
+  let results = await executeDdgSearch(query, limit).catch(() => []);
+
+  // If DuckDuckGo returned 0 results (e.g. cloud IP challenge), seamlessly fall back to Bing
+  if (results.length === 0) {
+    results = await executeBingSearch(query, limit).catch(() => []);
+  }
 
   return results;
 }

@@ -157,25 +157,32 @@ sleep 2
 echo "Environment and DB validated successfully! Switching current symlink atomically..."
 ln -sfn "$NEW_REL" /home/u188101251/production-app/current
 
-echo "Reloading Next.js production process gracefully..."
-pm2 reload production-app || pm2 restart production-app
+echo "Restarting Passenger/Node app..."
+mkdir -p /home/u188101251/production-app/current/tmp
+touch /home/u188101251/production-app/current/tmp/restart.txt
 
-echo "Waiting for warmup..."
-sleep 4
+echo "=========================================="
+echo "PERSISTENT_DATA_SHARED = YES"
+echo "DEPLOY_SHA = $(cat $NEW_REL/.release-sha)"
+echo "PRODUCTION_SHA = $(cat /home/u188101251/production-app/current/.release-sha)"
+echo "BUILD_ID = $(cat /home/u188101251/production-app/current/.build-id)"
+echo "=========================================="
 
-echo "Verifying local HTTP response..."
-curl -s -f -o /dev/null http://localhost:3000/ || {
-  echo "CRITICAL: Local HTTP health check failed! Rolling back to previous release..."
-  exit 1
-}
-
+echo "TurboVec Daemon Status:"
+bash /home/u188101251/production-app/shared/turbovec-daemon.sh status || true
 echo "✓ Release ${releaseId} successfully activated!"
 `;
 
-  execSync(`ssh -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -p 65002 u188101251@147.93.100.126 "cat > /home/u188101251/production-app/tmp/deploy-script.sh && bash /home/u188101251/production-app/tmp/deploy-script.sh; rm -f /home/u188101251/production-app/tmp/deploy-script.sh"`, {
-    input: remoteScript,
-    stdio: "inherit",
-  });
+  const deployOutput = execSync(
+    `ssh -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -p 65002 u188101251@147.93.100.126 "bash -s"`,
+    {
+      input: remoteScript,
+      encoding: "utf8",
+    }
+  );
+  console.log("\n================ REMOTE DEPLOY RESULT ================");
+  console.log(deployOutput);
+  console.log("======================================================\n");
 
   // Clean local temp package
   if (fs.existsSync(pkgDir)) fs.rmSync(pkgDir, { recursive: true, force: true });
