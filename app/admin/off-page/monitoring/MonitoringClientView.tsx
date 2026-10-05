@@ -78,18 +78,21 @@ export default function MonitoringClientView({ initialAlerts, initialRuns }: Pro
     setRunningManual(true);
     setFeedback(null);
     try {
-      const res = await fetch("/api/admin/off-page/backlinks/check", {
+      const res = await fetch("/api/admin/off-page/automation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ runType: "MANUAL_CMS_TRIGGER" }),
       });
       const json = await res.json();
       if (json.ok) {
-        setFeedback("Live monitor audit complete. All alert streams updated.");
+        setFeedback("Daily automation executed successfully. All crawler queues, discoveries, and audit runs updated.");
         await fetchData();
+      } else {
+        setFeedback(`Automation completed with note: ${json.error || json.message || "Audit logged"}`);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setFeedback(`Error triggering automation: ${err.message}`);
     } finally {
       setRunningManual(false);
       setTimeout(() => setFeedback(null), 5000);

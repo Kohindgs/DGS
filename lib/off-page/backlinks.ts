@@ -106,6 +106,10 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
       changesDetected.push("LINK_NOT_FOUND: Target URL was not found in source HTML");
       alertTriggered = "LINK_LOST";
     } else {
+      if (link.status === "LOST") {
+        changesDetected.push("LINK_RESTORED: Target URL was re-discovered in source HTML");
+        alertTriggered = "LINK_RESTORED";
+      }
       newStatus = "LIVE";
 
       // Check anchor changes
@@ -155,6 +159,7 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
         verified_at = IF(? IN ('LIVE', 'VERIFIED'), IFNULL(verified_at, NOW()), verified_at),
         live_at = IF(? IN ('LIVE', 'VERIFIED'), IFNULL(live_at, NOW()), live_at),
         lost_at = IF(? = 'LOST', IFNULL(lost_at, NOW()), lost_at),
+        reclaimed_at = IF(? = 'LIVE' AND status = 'LOST', NOW(), reclaimed_at),
         next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
        WHERE id = ?`,
       [
@@ -169,6 +174,7 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
         sponsored ? 1 : 0,
         sourceIndexable ? 1 : 0,
         sourceCanonical,
+        newStatus,
         newStatus,
         newStatus,
         newStatus,
