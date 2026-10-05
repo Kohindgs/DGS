@@ -568,7 +568,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <Activity size={18} color="var(--dgs-brand-cyan)" />
               <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
-                5. Provider Health Matrix (10 Core Subsystems)
+                6. Provider Health Matrix (10 Core Subsystems)
               </h3>
             </div>
             <button

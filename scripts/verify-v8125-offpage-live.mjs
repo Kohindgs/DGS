@@ -3,7 +3,7 @@ import path from "node:path";
 import mysql from "mysql2/promise";
 import * as XLSX from "xlsx";
 
-const BASE_URL = process.env.BASE_URL || "https://digitalgrowthschool.com";
+const BASE_URL = process.env.BASE_URL || "https://www.dgeniussolutions.com";
 
 async function main() {
   console.log("==================================================");
