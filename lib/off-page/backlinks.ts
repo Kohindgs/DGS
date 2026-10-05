@@ -143,7 +143,7 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
     const nextIntervalDays = newStatus === "LOST" ? 3 : priority === "P0" ? 3 : priority === "P1" ? 7 : priority === "P2" ? 14 : 30;
 
     const finalAnchor = foundAnchor || link.anchor_text || "";
-    const isLive = newStatus === "LIVE" || newStatus === "VERIFIED";
+    const isLive = newStatus === "LIVE";
     const isLost = newStatus === "LOST";
     const isReclaimed = newStatus === "LIVE" && link.status === "LOST";
 
