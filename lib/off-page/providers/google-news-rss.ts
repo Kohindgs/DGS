@@ -124,39 +124,26 @@ export class GoogleNewsRssDiscoveryProvider implements DiscoveryProvider {
           const sourceName = sourceMatch ? sourceMatch[1].trim() : "";
           const sourceUrl = sourceUrlMatch ? sourceUrlMatch[1].trim() : "";
 
-          // Resolve publisher domain
+          // Resolve publisher domain ONLY from the feed's real <source url="..."> attribute.
+          // Never synthesize a domain/URL from the source name or title (V8.12.6 live-data rule).
           let domain = "";
-          let finalCandidateUrl = link;
+          let finalCandidateUrl = "";
 
           if (sourceUrl) {
             try {
-              domain = new URL(sourceUrl).hostname.replace(/^www\./, "").toLowerCase();
-              finalCandidateUrl = sourceUrl;
+              const parsed = new URL(sourceUrl);
+              if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+                domain = parsed.hostname.replace(/^www\./, "").toLowerCase();
+                finalCandidateUrl = parsed.toString();
+              }
             } catch {
               // Ignore invalid url
             }
           }
 
-          if (!domain && sourceName) {
-            domain = sourceName.toLowerCase().replace(/[^a-z0-9.-]/g, "").replace(/^www\./, "");
-            if (!domain.includes(".")) domain += ".com";
-            if (!sourceUrl) finalCandidateUrl = `https://${domain}`;
+          if (!domain || !finalCandidateUrl) {
+            continue; // no verifiable URL -> skip, do not fabricate
           }
-
-          if (!domain) {
-            // Extract from title suffix (e.g., "Headline - domain.com")
-            const dashIdx = title.lastIndexOf(" - ");
-            if (dashIdx > 0) {
-              const suffix = title.substring(dashIdx + 3).trim().toLowerCase();
-              if (suffix.includes(".")) {
-                domain = suffix.replace(/^www\./, "");
-                if (!sourceUrl) finalCandidateUrl = `https://${domain}`;
-              }
-            }
-          }
-
-          // Fallback domain extraction
-          if (!domain) domain = "industry-news-portal.com";
 
           // Exclude Google itself or DGS self-citations
           if (domain.includes("google") || domain.includes("dgeniussolutions") || domain.includes("youtube")) {
@@ -171,20 +158,20 @@ export class GoogleNewsRssDiscoveryProvider implements DiscoveryProvider {
           seenUrls.add(finalCandidateUrl);
 
           // Clean title
-          const cleanTitle = title.replace(/\s*-\s*[^-]+$/, "").trim() || `${domain} Editorial Publication`;
+          const cleanTitle = title.replace(/\s*-\s*[^-]+$/, "").trim() || title;
 
           candidates.push({
-            site_name: sourceName || cleanTitle.slice(0, 80),
+            site_name: sourceName || domain,
             domain,
             url: finalCandidateUrl,
             category: item.category,
             region: item.region,
             country: item.region === "INDIA" ? "India" : item.region === "UAE" ? "United Arab Emirates" : item.region === "USA" ? "United States" : "Global",
-            free_status: "FREE",
-            free_tier_details: "Public editorial coverage, contributor opportunity, or organic PR citation",
+            free_tier_details: undefined,
             discovery_provider: "GOOGLE_NEWS_RSS",
             discovery_query: item.query,
-            evidence: `Editorial item: "${cleanTitle}". Published: ${pubDate || "Recent"}. Source: ${sourceName || domain}.`,
+            title: cleanTitle,
+            evidence: `Google News item: "${cleanTitle}". Published: ${pubDate || "n/a"}. Publisher: ${sourceName || domain} (${finalCandidateUrl}). Article link: ${link}`,
             notes: `Discovered from Google News RSS feed for query: "${item.query}" in region ${item.region}.`,
             pubDate,
           });

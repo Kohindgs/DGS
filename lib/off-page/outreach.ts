@@ -314,7 +314,7 @@ export async function updateOutreachStage(
             source_region, source_language, topical_category, authority_score,
             outreach_id, notes, discovered_at, live_at, next_check_at, check_priority,
             created_at, updated_at
-          ) VALUES (?, ?, ?, ?, 'SERVICE_PAGE', 'D\\'Genius Solutions', 'BRANDED', 'dofollow', 1, 0, NOW(), NOW(), 'NEW', 200, 'Global', 'GLOBAL', 'en', 'Outreach Win', 85, ?, ?, NOW(), NOW(), NOW(), 'P0', NOW(), NOW())`,
+          ) VALUES (?, ?, ?, ?, 'SERVICE_PAGE', 'D\\'Genius Solutions', 'BRANDED', 'unknown', 0, 0, NOW(), NOW(), 'NEW', NULL, 'Global', 'GLOBAL', 'en', 'Outreach Win', 85, ?, ?, NOW(), NOW(), NOW(), 'P0', NOW(), NOW())`,
           [
             linkId,
             sourceDomain,

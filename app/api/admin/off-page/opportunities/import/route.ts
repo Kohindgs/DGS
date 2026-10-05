@@ -13,6 +13,7 @@ import {
 } from "@/lib/intelligence/turbovec-client";
 import { randomUUID } from "node:crypto";
 import type { RegionCode, OpportunityCategory } from "@/lib/off-page/types";
+import { normalizeLinkType } from "@/lib/off-page/types";
 
 export const dynamic = "force-dynamic";
 
@@ -283,11 +284,11 @@ export async function POST(req: Request) {
         ) VALUES (
           ?, ?, ?, ?, ?, ?, ?,
           ?, 'FORM', ?, ?,
-          'DOFOLLOW', 'HIGH', ?, ?,
+          ?, 'HIGH', ?, ?,
           75, 85, ?, 80,
           ?, ?, ?, ?, ?,
-          ?, CURDATE(), NOW(), 'VERIFIED_BATCH_IMPORT', 'QUALIFIED', ?, ?,
-          NOW(), NOW(), NOW(), ?, NOW(), NOW()
+          ?, NULL, NULL, 'BATCH_IMPORT', 'DISCOVERED', ?, ?,
+          NOW(), NULL, NOW(), ?, NOW(), NOW()
         )`,
         [
           id,
@@ -300,6 +301,8 @@ export async function POST(req: Request) {
           freeStatus,
           targetPage,
           recommendedService,
+          // V8.12.6: link type only as stated by the row; otherwise UNKNOWN (N/A for citations)
+          normalizeLinkType((r as any).dofollow_status ?? (r as any).link_type, category),
           topicalScore,
           region === "INDIA" ? 95 : region === "UAE" ? 90 : 80,
           spamEval.spamRiskScore,
@@ -310,7 +313,7 @@ export async function POST(req: Request) {
           authorityScore,
           spamEval.spamStatus,
           rowNotes,
-          r.evidence || "Verified legitimate authority platform",
+          r.evidence || "Imported row — not yet live-verified (run lane validation / revalidation).",
           priority.priorityTier,
         ]
       );

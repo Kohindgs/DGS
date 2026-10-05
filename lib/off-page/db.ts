@@ -25,7 +25,7 @@ export async function ensureOffPageTablesExist(): Promise<void> {
         recommended_content TEXT NULL,
         recommended_anchor_strategy VARCHAR(255) NOT NULL DEFAULT 'BRANDED',
         link_type VARCHAR(50) NOT NULL DEFAULT 'EDITORIAL',
-        dofollow_status VARCHAR(50) NOT NULL DEFAULT 'DOFOLLOW',
+        dofollow_status VARCHAR(50) NOT NULL DEFAULT 'UNKNOWN',
         estimated_quality VARCHAR(30) NOT NULL DEFAULT 'HIGH',
         topical_relevance INT NOT NULL DEFAULT 80,
         geo_relevance INT NOT NULL DEFAULT 85,
@@ -68,12 +68,12 @@ export async function ensureOffPageTablesExist(): Promise<void> {
         target_page_type VARCHAR(100) NOT NULL,
         anchor_text VARCHAR(512) NOT NULL,
         anchor_classification VARCHAR(50) NOT NULL DEFAULT 'BRANDED',
-        link_rel VARCHAR(255) NOT NULL DEFAULT 'dofollow',
-        dofollow BOOLEAN NOT NULL DEFAULT TRUE,
+        link_rel VARCHAR(255) NOT NULL DEFAULT 'unknown',
+        dofollow BOOLEAN NOT NULL DEFAULT FALSE,
         nofollow BOOLEAN NOT NULL DEFAULT FALSE,
         ugc BOOLEAN NOT NULL DEFAULT FALSE,
         sponsored BOOLEAN NOT NULL DEFAULT FALSE,
-        unknown_link_type BOOLEAN NOT NULL DEFAULT FALSE,
+        unknown_link_type BOOLEAN NOT NULL DEFAULT TRUE,
         first_seen_at DATETIME NOT NULL,
         last_seen_at DATETIME NOT NULL,
         last_checked_at DATETIME NULL,
@@ -385,6 +385,22 @@ export async function ensureOffPageTablesExist(): Promise<void> {
       if (!colNames.has("last_verified_at")) {
         await cmsExecute(`ALTER TABLE off_page_opportunities ADD COLUMN last_verified_at DATETIME NULL AFTER last_verified`);
       }
+      // V8.12.6 provenance + qualification columns
+      const v8126Cols: Array<[string, string]> = [
+        ["source_type", "VARCHAR(64) NULL"],
+        ["discovery_lane", "VARCHAR(64) NULL"],
+        ["semantic_status", "VARCHAR(32) NULL"],
+        ["qualification_reason", "TEXT NULL"],
+        ["page_title", "VARCHAR(512) NULL"],
+        ["last_checked_at", "DATETIME NULL"],
+      ];
+      for (const [name, def] of v8126Cols) {
+        if (!colNames.has(name)) {
+          await cmsExecute(`ALTER TABLE off_page_opportunities ADD COLUMN ${name} ${def}`);
+        }
+      }
+      // Never default to a guessed link type
+      await cmsExecute(`ALTER TABLE off_page_opportunities ALTER COLUMN dofollow_status SET DEFAULT 'UNKNOWN'`).catch(() => {});
     } catch (colErr) {
       console.warn("Notice: Column migration warning on off_page_opportunities:", colErr);
     }

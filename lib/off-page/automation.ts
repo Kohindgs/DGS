@@ -70,6 +70,24 @@ export async function runDailyOffPageAutomation(runType: string = "FULL_AUTOMATI
       const disc = await runOpportunityDiscoverySuite();
       summary.discovery = disc;
       summary.newOpportunitiesAdded = disc.new_records_added;
+
+      // 1b. V8.12.6 discovery lanes (only lanes with a usable live provider)
+      try {
+        const { getLaneOverview, runDiscoveryLane } = await import("./lanes/runner");
+        const lanes = await getLaneOverview();
+        summary.lanes = [];
+        for (const lane of lanes) {
+          if (!lane.ready) {
+            summary.lanes.push({ lane: lane.id, status: "SKIPPED", reason: lane.readiness });
+            continue;
+          }
+          const r = await runDiscoveryLane(lane.id, { maxQueries: 2, perQuery: 10, maxValidate: 20 });
+          summary.lanes.push({ lane: lane.id, status: r.status, qualified: r.qualified_inserted, discovered: r.discovered_inserted, rejected: r.rejected });
+          summary.newOpportunitiesAdded += r.qualified_inserted + r.discovered_inserted;
+        }
+      } catch (laneErr: any) {
+        summary.lanesError = laneErr?.message || String(laneErr);
+      }
     }
 
     // 2. Revalidate active opportunities via rotating queue

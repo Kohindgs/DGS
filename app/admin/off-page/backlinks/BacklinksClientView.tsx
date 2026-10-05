@@ -49,7 +49,7 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
   const [newSourceUrl, setNewSourceUrl] = useState("");
   const [newTargetPage, setNewTargetPage] = useState("/");
   const [newAnchorText, setNewAnchorText] = useState("");
-  const [newRelType, setNewRelType] = useState<"dofollow" | "nofollow" | "ugc" | "sponsored">("dofollow");
+  const [newRelType, setNewRelType] = useState<"unknown" | "dofollow" | "nofollow" | "ugc" | "sponsored">("unknown");
   const [newRegion, setNewRegion] = useState<"INDIA" | "UAE" | "USA" | "GLOBAL">("INDIA");
   const [addingBacklink, setAddingBacklink] = useState(false);
 
@@ -382,7 +382,7 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
             color: b.dofollow ? "#34d399" : "rgba(255, 255, 255, 0.6)",
           }}
         >
-          {b.link_rel || (b.dofollow ? "dofollow" : "nofollow")}
+          {b.link_rel || "unknown"}
         </span>
       ),
     },
@@ -811,7 +811,8 @@ export default function BacklinksClientView({ initialBacklinks, initialDecay }: 
                     color: "#fff",
                   }}
                 >
-                  <option value="dofollow">dofollow</option>
+                  <option value="unknown">unknown (crawler will verify)</option>
+                    <option value="dofollow">dofollow</option>
                   <option value="nofollow">nofollow</option>
                   <option value="ugc">ugc</option>
                   <option value="sponsored">sponsored</option>

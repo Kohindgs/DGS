@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { guardOffPage } from "@/lib/off-page/route-auth";
 import { randomUUID } from "node:crypto";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "@/lib/off-page/db";
@@ -12,6 +13,9 @@ import {
 import type { OffPageSheetConnection, OffPageSyncHistory } from "@/lib/off-page/types";
 
 export async function GET(req: NextRequest) {
+  const denied = await guardOffPage("view");
+  if (denied) return denied;
+
   try {
     await ensureOffPageTablesExist();
 
@@ -37,6 +41,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = await guardOffPage("create");
+  if (denied) return denied;
+
   try {
     await ensureOffPageTablesExist();
     const body = await req.json();

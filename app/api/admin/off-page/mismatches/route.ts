@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { guardOffPage } from "@/lib/off-page/route-auth";
 import { getMismatchedBacklinks, resolveMismatch, getMismatchSummary } from "@/lib/off-page/backlinks";
 
 export async function GET(req: NextRequest) {
+  const denied = await guardOffPage("view");
+  if (denied) return denied;
+
   try {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get("status") || "MISMATCH";
@@ -25,6 +29,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = await guardOffPage("edit");
+  if (denied) return denied;
+
   try {
     const body = await req.json();
     const { backlinkId, resolution, note, assignee } = body;

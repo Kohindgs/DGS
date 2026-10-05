@@ -1,6 +1,7 @@
 import { GoogleSearchDiscoveryProvider } from "./google-search";
 import { GoogleNewsRssDiscoveryProvider } from "./google-news-rss";
 import { GdeltDiscoveryProvider } from "./gdelt";
+import { BraveSearchDiscoveryProvider } from "./brave";
 import type { DiscoveryProvider, ProviderHealth } from "./types";
 import { getTurboVecStatus } from "@/lib/intelligence/turbovec-client";
 import { cmsQuery } from "@/lib/cms/db";
@@ -8,11 +9,13 @@ import { cmsQuery } from "@/lib/cms/db";
 const googleSearch = new GoogleSearchDiscoveryProvider();
 const googleNewsRss = new GoogleNewsRssDiscoveryProvider();
 const gdelt = new GdeltDiscoveryProvider();
+const brave = new BraveSearchDiscoveryProvider();
 
 const providers: Record<string, DiscoveryProvider> = {
   [googleSearch.id]: googleSearch,
   [googleNewsRss.id]: googleNewsRss,
   [gdelt.id]: gdelt,
+  [brave.id]: brave,
 };
 
 export function getProvider(id?: string): DiscoveryProvider {
@@ -24,7 +27,7 @@ export function getProvider(id?: string): DiscoveryProvider {
 }
 
 export function getAllDiscoveryProviders(): DiscoveryProvider[] {
-  return [googleNewsRss, googleSearch, gdelt];
+  return [brave, googleNewsRss, googleSearch, gdelt];
 }
 
 /**
@@ -32,6 +35,13 @@ export function getAllDiscoveryProviders(): DiscoveryProvider[] {
  */
 export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
   const matrix: ProviderHealth[] = [];
+
+  // 0. Brave Search API (V8.12.6 primary web search)
+  try {
+    matrix.push(await brave.health());
+  } catch (err: any) {
+    matrix.push({ id: "brave-search", name: "Web Search (Brave Search API)", type: "SEARCH", status: "ERROR", reason: err?.message });
+  }
 
   // 1. Google Search / SERP API
   try {

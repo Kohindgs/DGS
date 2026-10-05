@@ -740,7 +740,7 @@ export default function ActionCenterClientView({
                       <td style={{ padding: "12px 10px", maxWidth: "240px" }}>
                         <div style={{ fontSize: "0.8rem", color: "#93c5fd", wordBreak: "break-all" }}>{item.target_url}</div>
                         <div style={{ fontSize: "0.74rem", color: "rgba(255, 255, 255, 0.6)", marginTop: "2px" }}>
-                          Anchor: &ldquo;{item.anchor_text || "—"}&rdquo; ({item.link_rel || "dofollow"})
+                          Anchor: &ldquo;{item.anchor_text || "—"}&rdquo; ({item.link_rel || "unknown"})
                         </div>
                       </td>
 

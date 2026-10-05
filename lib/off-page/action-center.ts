@@ -103,10 +103,11 @@ export async function getActionCenterKpis(): Promise<ActionCenterKpis> {
     }
   }
 
-  // Needs Review: Unassigned opportunities in actionable stages awaiting manager allocation
+  // Needs Review: unassigned QUALIFIED/approved records only. Raw DISCOVERED/NEW candidates never
+  // enter the manager queue (V8.12.6 qualification gate).
   const { rows: reviewRows } = await cmsQuery<{ count: any }>(
     `SELECT COUNT(*) as count FROM off_page_opportunities 
-     WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED', 'NEW', 'DISCOVERED'))
+     WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED'))
        AND (owner IS NULL OR owner = '')
        AND status NOT IN ('REJECTED', 'ARCHIVED', 'EXPIRED', 'SPAM')`
   );
@@ -239,7 +240,7 @@ export async function getNeedsReviewItems(params?: { limit?: number }): Promise<
       exact_submission_url,
       COALESCE(source_type, 'curated') as source_type
     FROM off_page_opportunities
-    WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED', 'NEW', 'DISCOVERED'))
+    WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED'))
       AND (owner IS NULL OR owner = '')
       AND status NOT IN ('REJECTED', 'ARCHIVED', 'EXPIRED', 'SPAM')
     ORDER BY 

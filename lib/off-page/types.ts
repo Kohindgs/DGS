@@ -18,6 +18,56 @@ export const MANDATORY_NEXT_ACTIONS = [
 
 export type MandatoryNextAction = (typeof MANDATORY_NEXT_ACTIONS)[number];
 
+/**
+ * Canonical link-type values (V8.12.6). Never guess: if the type was not observed on a
+ * live page, the value is UNKNOWN. N/A is for citations where hyperlink status does not apply.
+ */
+export const LINK_TYPE_VALUES = ["DOFOLLOW", "NOFOLLOW", "UGC", "SPONSORED", "MIXED", "UNKNOWN", "N/A"] as const;
+export type LinkTypeStatus = (typeof LINK_TYPE_VALUES)[number];
+
+/** Categories where a hyperlink is not the point of the record (NAP citations). */
+export const LINK_NOT_APPLICABLE_CATEGORIES = new Set<string>(["LOCAL_CITATION"]);
+
+/**
+ * Normalizes an untrusted link-type input. Unrecognized/empty input -> UNKNOWN (never DOFOLLOW).
+ */
+export function normalizeLinkType(input: unknown, category?: string): LinkTypeStatus {
+  const raw = String(input ?? "").trim().toUpperCase().replace(/[\s_-]+/g, "");
+  const map: Record<string, LinkTypeStatus> = {
+    DOFOLLOW: "DOFOLLOW",
+    FOLLOW: "DOFOLLOW",
+    NOFOLLOW: "NOFOLLOW",
+    UGC: "UGC",
+    SPONSORED: "SPONSORED",
+    MIXED: "MIXED",
+    UNKNOWN: "UNKNOWN",
+    NA: "N/A",
+    "N/A": "N/A",
+  };
+  const v = map[raw] ?? map[String(input ?? "").trim().toUpperCase()];
+  if (v) return v;
+  if (category && LINK_NOT_APPLICABLE_CATEGORIES.has(category)) return "N/A";
+  return "UNKNOWN";
+}
+
+/**
+ * Derives a verified link type from rel attributes actually observed on a live page.
+ * An <a> with no rel attribute is followed by HTML semantics -> DOFOLLOW (this is an observation, not a guess).
+ */
+export function linkTypeFromObservedRels(rels: string[]): LinkTypeStatus {
+  if (rels.length === 0) return "UNKNOWN";
+  const types = new Set(
+    rels.map((r) => {
+      const v = r.toLowerCase();
+      if (v.includes("sponsored")) return "SPONSORED";
+      if (v.includes("ugc")) return "UGC";
+      if (v.includes("nofollow")) return "NOFOLLOW";
+      return "DOFOLLOW";
+    })
+  );
+  return types.size > 1 ? "MIXED" : (Array.from(types)[0] as LinkTypeStatus);
+}
+
 export type OpportunityCategory =
   | "BUSINESS_LISTING"
   | "LOCAL_CITATION"
@@ -89,7 +139,7 @@ export interface OffPageOpportunity {
   recommended_content: string | null;
   recommended_anchor_strategy: string;
   link_type: string;
-  dofollow_status: "DOFOLLOW" | "NOFOLLOW" | "UGC" | "UNKNOWN";
+  dofollow_status: LinkTypeStatus;
   estimated_quality: "VERY_HIGH" | "HIGH" | "MEDIUM" | "LOW" | "REJECT";
   topical_relevance: number; // 0-100
   geo_relevance: number; // 0-100

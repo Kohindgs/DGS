@@ -102,7 +102,7 @@ export class GdeltDiscoveryProvider implements DiscoveryProvider {
           category: "DIGITAL_PR",
           region: (request.regions?.[0] as RegionCode) || "GLOBAL",
           country: art.sourcecountry || "Global",
-          free_status: "FREE",
+          free_status: "UNKNOWN",
           discovery_provider: "GDELT_2.0",
           discovery_query: query,
           evidence: `GDELT Record: ${art.title} (Published: ${art.seendate || "Recent"}). Domain: ${domain}`,

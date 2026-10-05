@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "./db";
 import { classifyAnchorText, checkAnchorConcentration } from "./scoring";
+import { extractLinks, isMonitoredHost } from "./lanes/page-analyzer";
 import type {
   AnchorClassification,
   BacklinkStatus,
@@ -67,36 +68,29 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
     const canonicalMatch = html.match(/<link[^>]+rel=['\"]canonical['\"][^>]+href=['\"]([^'\"]+)['\"]/i);
     const sourceCanonical = canonicalMatch ? canonicalMatch[1] : null;
 
-    // Search for link pointing to target_url
-    // Extract domain or path of target_url
-    const targetUrlClean = link.target_url.replace(/\/$/, "");
-    const targetPath = new URL(link.target_url).pathname.replace(/\/$/, "");
-
-    // Regex to find <a> tags pointing to target
-    const aTagRegex = /<a\b[^>]*href=['"]([^'"]+)['"][^>]*>([\s\S]*?)<\/a>/gi;
-    let match;
-    let foundAnchor = "";
-    let foundRel = "";
-    let linkFound = false;
-
-    while ((match = aTagRegex.exec(html)) !== null) {
-      const href = match[1].trim();
-      const hrefClean = href.replace(/\/$/, "");
-
-      if (
-        hrefClean === targetUrlClean ||
-        hrefClean.endsWith(targetPath) ||
-        (hrefClean.includes("dgeniussolutions.com") && (targetPath === "" || hrefClean.includes(targetPath)))
-      ) {
-        linkFound = true;
-        // Strip nested tags from anchor text
-        foundAnchor = match[2].replace(/<[^>]+>/g, "").trim();
-
-        // Extract rel
-        const relMatch = match[0].match(/rel=['"]([^'"]+)['"]/i);
-        foundRel = relMatch ? relMatch[1].toLowerCase() : "dofollow";
-        break;
+    // Search for a real <a href> whose host is the monitored domain and whose path matches the target
+    const targetPath = (() => {
+      try {
+        return new URL(link.target_url).pathname.replace(/\/$/, "");
+      } catch {
+        return "";
       }
+    })();
+    const observed = extractLinks(html, finalUrl || link.source_url).filter((l) => isMonitoredHost(l.host));
+    const exact = observed.find((l) => {
+      try {
+        return new URL(l.href).pathname.replace(/\/$/, "") === targetPath;
+      } catch {
+        return false;
+      }
+    });
+    const hit = exact || (targetPath === "" ? observed[0] : undefined) || observed[0];
+    const linkFound = !!hit;
+    const foundAnchor = hit?.anchor || "";
+    // Observed rel; a real <a> without rel is followed by HTML semantics.
+    const foundRel = hit ? hit.rel || "none" : "";
+    if (hit && !exact && targetPath !== "") {
+      changesDetected.push(`TARGET_PATH_DIFFERS: expected ${targetPath || "/"}, found ${hit.href}`);
     }
 
     let newStatus: BacklinkStatus = link.status;
@@ -133,11 +127,11 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
       alertTriggered = "TARGET_ERROR";
     }
 
-    // Update database
-    const dofollow = !foundRel.includes("nofollow") && !foundRel.includes("sponsored") && !foundRel.includes("ugc");
-    const nofollow = foundRel.includes("nofollow");
-    const ugc = foundRel.includes("ugc");
-    const sponsored = foundRel.includes("sponsored");
+    // Update database (rel flags are only changed when the link was actually observed)
+    const dofollow = linkFound ? !foundRel.includes("nofollow") && !foundRel.includes("sponsored") && !foundRel.includes("ugc") : !!link.dofollow;
+    const nofollow = linkFound ? foundRel.includes("nofollow") : !!link.nofollow;
+    const ugc = linkFound ? foundRel.includes("ugc") : !!link.ugc;
+    const sponsored = linkFound ? foundRel.includes("sponsored") : !!link.sponsored;
 
     const priority = link.check_priority || "P1";
     const nextIntervalDays = newStatus === "LOST" ? 3 : priority === "P0" ? 3 : priority === "P1" ? 7 : priority === "P2" ? 14 : 30;
@@ -206,7 +200,7 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
         mismatchDetectedAt,
         httpStatus,
         finalAnchor,
-        foundRel || "dofollow",
+        linkFound ? foundRel : link.link_rel || "unknown",
         dofollow ? 1 : 0,
         nofollow ? 1 : 0,
         ugc ? 1 : 0,

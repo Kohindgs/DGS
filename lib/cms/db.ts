@@ -35,7 +35,9 @@ export function getCmsPool() {
           waitForConnections: true,
           connectionLimit: 10,
           enableKeepAlive: true,
-          charset: "utf8mb4",
+          // mysql2 "charset" selects the connection collation; match the utf8mb4_unicode_ci tables
+          // to avoid "Illegal mix of collations" between coercible values (V8.12.6).
+          charset: "UTF8MB4_UNICODE_CI",
           dateStrings: true,
           supportBigNumbers: true,
           bigNumberStrings: true,
@@ -49,7 +51,9 @@ export function getCmsPool() {
           waitForConnections: true,
           connectionLimit: 10,
           enableKeepAlive: true,
-          charset: "utf8mb4",
+          // mysql2 "charset" selects the connection collation; match the utf8mb4_unicode_ci tables
+          // to avoid "Illegal mix of collations" between coercible values (V8.12.6).
+          charset: "UTF8MB4_UNICODE_CI",
           dateStrings: true,
           supportBigNumbers: true,
           bigNumberStrings: true,

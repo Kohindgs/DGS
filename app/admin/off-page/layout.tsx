@@ -20,6 +20,7 @@ import {
   FileText,
   Settings,
   ShieldAlert,
+  Radar,
 } from "lucide-react";
 
 const OFF_PAGE_TABS = [
@@ -27,6 +28,7 @@ const OFF_PAGE_TABS = [
   { href: "/admin/off-page/action-center", label: "Action Center", icon: Target, badge: "Daily" },
   { href: "/admin/off-page/mismatches", label: "Mismatches", icon: ShieldAlert, badge: "Audit" },
   { href: "/admin/off-page/opportunities", label: "Opportunities", icon: Compass, badge: "Free" },
+  { href: "/admin/off-page/discovery-lanes", label: "Discovery Lanes", icon: Radar, badge: "Live" },
   { href: "/admin/off-page/backlinks", label: "Backlinks", icon: Link2 },
   { href: "/admin/off-page/authority", label: "Authority Engine", icon: Award },
   { href: "/admin/off-page/competitors", label: "Competitor Gap", icon: GitCompare },
@@ -72,10 +74,10 @@ export default function OffPageLayout({ children }: { children: React.ReactNode 
                 OFF-PAGE SEO AUTHORITY ENGINE
               </h1>
               <span className="dgs-saas-chip primary" style={{ fontSize: "0.72rem", fontWeight: 700 }}>
-                V8.12
+                V8.12.6
               </span>
               <span className="dgs-saas-chip success" style={{ fontSize: "0.72rem", fontWeight: 600 }}>
-                100% FREE TIER VETTED
+                LIVE DATA ONLY
               </span>
             </div>
             <p style={{ margin: "4px 0 0 0", fontSize: "0.84rem", color: "rgba(255, 255, 255, 0.6)" }}>

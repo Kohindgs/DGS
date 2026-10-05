@@ -359,7 +359,7 @@ export default function ReportsClientView({ initialReport }: Props) {
                     <td style={{ padding: "10px 14px", color: "var(--dgs-brand-cyan)" }}>{link.target_url || link.targetPage || "/"}</td>
                     <td style={{ padding: "10px 14px" }}>&ldquo;{link.anchor_text || link.anchor || "D'Genius Solutions"}&rdquo;</td>
                     <td style={{ padding: "10px 14px", textAlign: "center", color: "#10b981", fontWeight: 700 }}>
-                      {link.rel_type || link.rel || "dofollow"}
+                      {link.rel_type || link.rel || "unknown"}
                     </td>
                     <td style={{ padding: "10px 14px", textAlign: "right", fontWeight: 700 }}>{link.authority_score || link.authority || 85} DA</td>
                   </tr>

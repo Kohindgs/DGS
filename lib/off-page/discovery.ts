@@ -16,12 +16,35 @@ import {
   calculateContentHash,
 } from "@/lib/intelligence/turbovec-client";
 import type {
+  FreeStatus,
+  LinkTypeStatus,
   OffPageOpportunity,
   OpportunityCategory,
   PriorityTier,
   RegionCode,
   SpamStatus,
 } from "./types";
+import { normalizeLinkType } from "./types";
+
+/**
+ * Normalizes a URL for exact dedupe: lowercase host without www, no hash, no tracking params,
+ * no trailing slash.
+ */
+export function normalizeOpportunityUrl(input: string): string {
+  try {
+    const u = new URL(String(input || "").trim());
+    u.hash = "";
+    u.hostname = u.hostname.toLowerCase().replace(/^www\./, "");
+    for (const k of Array.from(u.searchParams.keys())) {
+      if (/^(utm_|gclid|fbclid|ref$|mc_)/i.test(k)) u.searchParams.delete(k);
+    }
+    let s = `${u.hostname}${u.pathname}${u.search}`;
+    if (s.endsWith("/")) s = s.slice(0, -1);
+    return s;
+  } catch {
+    return String(input || "").trim().toLowerCase();
+  }
+}
 
 /**
  * Initializes the opportunities table with verified seed opportunities if empty.
@@ -112,7 +135,7 @@ export async function ingestDiscoveredOpportunity(raw: {
   region: RegionCode;
   country?: string;
   category: OpportunityCategory;
-  free_status?: "FREE" | "NOT_FREE" | "FREEMIUM";
+  free_status?: FreeStatus;
   free_tier_details?: string;
   requires_account?: boolean;
   requires_editorial_review?: boolean;
@@ -121,7 +144,7 @@ export async function ingestDiscoveredOpportunity(raw: {
   recommended_service?: string;
   recommended_content?: string;
   link_type?: string;
-  dofollow_status?: "DOFOLLOW" | "NOFOLLOW" | "UGC" | "UNKNOWN";
+  dofollow_status?: LinkTypeStatus | string;
   topical_relevance?: number;
   geo_relevance?: number;
   traffic_potential?: number;
@@ -130,32 +153,45 @@ export async function ingestDiscoveredOpportunity(raw: {
   evidence?: string;
   discovery_provider?: string;
   discovery_query?: string;
-  http_status?: number;
+  http_status?: number | null;
   verification_status?: string;
+  /** Machine source type, e.g. 'brave_search', 'google_news_rss', 'reddit', 'gdelt'. */
+  source_type?: string;
+  /** Explicit pipeline status chosen by the qualification gate (e.g. QUALIFIED / DISCOVERED / REJECTED). */
+  status?: string;
+  /** Lane identifier that produced the candidate (V8.12.6). */
+  discovery_lane?: string;
+  /** Live page title observed during validation. */
+  page_title?: string;
+  /** Qualification gate reasons + observed signals. */
+  qualification_reason?: string;
 }): Promise<{ success: boolean; id?: string; error?: string; opportunity?: any }> {
   await ensureOffPageTablesExist();
 
   const domain = raw.domain.toLowerCase().trim().replace(/^www\./, "");
   const url = raw.exact_submission_url.trim();
+  const normalizedUrl = normalizeOpportunityUrl(url);
 
-  // 1. Exact Deduplication check: check domain or exact URL
-  const { rows: existingRows } = await cmsQuery<{ id: string }>(
-    `SELECT id FROM off_page_opportunities WHERE domain = ? OR exact_submission_url = ? LIMIT 1`,
+  // 1. Exact Deduplication check: same URL (normalized) already tracked
+  const { rows: existingRows } = await cmsQuery<{ id: string; exact_submission_url: string }>(
+    `SELECT id, exact_submission_url FROM off_page_opportunities WHERE domain = ? OR exact_submission_url = ?`,
     [domain, url]
   );
-  if (existingRows.length > 0) {
-    return { success: false, error: "DUPLICATE: Opportunity with domain or URL already exists" };
+  if (existingRows.some((r) => normalizeOpportunityUrl(r.exact_submission_url) === normalizedUrl)) {
+    return { success: false, error: "DUPLICATE: Opportunity with this URL already exists" };
   }
 
   // 2. Semantic Deduplication via TurboVec
   const opportunityText = `${raw.site_name} ${domain} ${url} ${raw.category} ${raw.notes || ""} ${raw.evidence || ""}`.trim();
   let semanticNotes = raw.notes || "";
+  let semanticStatus = "UNCHECKED" as "UNIQUE" | "POSSIBLE_DUPLICATE" | "LIKELY_DUPLICATE" | "UNCHECKED";
   try {
     const dedupeResult = await checkSemanticDuplicate({
       text: opportunityText,
       domain,
       url,
     });
+    if (dedupeResult.ok) semanticStatus = dedupeResult.status as typeof semanticStatus;
     if (dedupeResult.ok && dedupeResult.status === "LIKELY_DUPLICATE") {
       semanticNotes = `[SEMANTIC_REVIEW: ${(dedupeResult.similarity * 100).toFixed(1)}% match with '${dedupeResult.nearest[0]?.title || dedupeResult.nearest[0]?.key}'] ${semanticNotes}`.trim();
     } else if (dedupeResult.ok && dedupeResult.status === "POSSIBLE_DUPLICATE") {
@@ -199,8 +235,8 @@ export async function ingestDiscoveredOpportunity(raw: {
     console.warn("TurboVec target page matching warning:", err);
   }
 
-  // Free status enforcement
-  const freeStatus = raw.free_status || "FREE";
+  // Free status: never assume FREE. Unverified -> UNKNOWN.
+  const freeStatus: FreeStatus = raw.free_status || "UNKNOWN";
 
   // Scores
   const topical = topicalScore;
@@ -230,11 +266,16 @@ export async function ingestDiscoveredOpportunity(raw: {
   });
 
   const id = `opp_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
-  const status = freeStatus === "NOT_FREE" ? "NOT_FREE" : "NEW";
+  let status = raw.status || (freeStatus === "NOT_FREE" ? "NOT_FREE" : "DISCOVERED");
+  if (status === "QUALIFIED" && semanticStatus === "LIKELY_DUPLICATE") {
+    status = "DISCOVERED"; // quarantined for human dedupe review, not the manager queue
+  }
   const discoveryProvider = raw.discovery_provider || "AUTOMATED_DISCOVERY";
   const discoveryQuery = raw.discovery_query || null;
-  const httpStatus = raw.http_status || 200;
-  const verificationStatus = raw.verification_status || "VERIFIED_ACTIVE";
+  const httpStatus = typeof raw.http_status === "number" ? raw.http_status : null;
+  const verificationStatus = raw.verification_status || "UNVERIFIED";
+  const linkType = normalizeLinkType(raw.dofollow_status, raw.category);
+  const sourceType = raw.source_type || discoveryProvider.toLowerCase();
 
   await cmsExecute(
     `INSERT INTO off_page_opportunities (
@@ -247,7 +288,8 @@ export async function ingestDiscoveredOpportunity(raw: {
       difficulty_score, priority_score, priority_tier, authority_score,
       spam_status, verification_date, last_verified, source, status,
       notes, evidence, discovered_at, next_check_at, check_priority, created_at, updated_at,
-      discovery_provider, discovery_query, http_status, verification_status, last_verified_at
+      discovery_provider, discovery_query, http_status, verification_status, last_verified_at,
+      source_type, discovery_lane, semantic_status, page_title, qualification_reason, last_checked_at
     ) VALUES (
       ?, ?, ?, ?, ?, ?, ?,
       ?, ?, ?, ?,
@@ -256,9 +298,10 @@ export async function ingestDiscoveredOpportunity(raw: {
       ?, ?, ?, ?,
       ?, ?, 75, ?,
       ?, ?, ?, ?,
-      ?, CURDATE(), NOW(), ?, ?,
+      ?, ?, ?, ?, ?,
       ?, ?, NOW(), NOW(), ?, NOW(), NOW(),
-      ?, ?, ?, ?, NOW()
+      ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?
     )`,
     [
       id,
@@ -277,7 +320,7 @@ export async function ingestDiscoveredOpportunity(raw: {
       service,
       raw.recommended_content || null,
       raw.link_type || "DIRECTORY",
-      raw.dofollow_status || "DOFOLLOW",
+      linkType,
       authorityScore >= 90 ? "VERY_HIGH" : authorityScore >= 75 ? "HIGH" : "MEDIUM",
       topical,
       geo,
@@ -290,6 +333,8 @@ export async function ingestDiscoveredOpportunity(raw: {
       priorityResult.priorityTier,
       authorityScore,
       spamResult.spamStatus,
+      httpStatus !== null ? new Date() : null,
+      httpStatus !== null ? new Date() : null,
       discoveryProvider,
       status,
       semanticNotes || null,
@@ -299,6 +344,13 @@ export async function ingestDiscoveredOpportunity(raw: {
       discoveryQuery,
       httpStatus,
       verificationStatus,
+      httpStatus !== null ? new Date() : null,
+      sourceType,
+      raw.discovery_lane || null,
+      semanticStatus,
+      raw.page_title ? raw.page_title.slice(0, 500) : null,
+      raw.qualification_reason || null,
+      httpStatus !== null ? new Date() : null,
     ]
   );
 
@@ -392,7 +444,9 @@ export async function runOpportunityDiscoverySuite(options?: {
 
   // Map to concrete provider
   const { getProvider } = await import("./providers/registry");
-  const provider = requestedProviderId === "GOOGLE_SEARCH"
+  const provider = requestedProviderId === "BRAVE_SEARCH"
+    ? getProvider("brave-search")
+    : requestedProviderId === "GOOGLE_SEARCH"
     ? getProvider("google-search")
     : requestedProviderId === "GDELT"
     ? getProvider("gdelt-doc")
@@ -458,7 +512,7 @@ export async function runOpportunityDiscoverySuite(options?: {
     console.warn("Notice: Run logging started with warning:", logErr);
   }
 
-  const queriesQueued = options?.queries?.length || 6;
+  let queriesQueued = options?.queries?.length || 0;
   let queriesCompleted = 0;
   let resultsReturned = 0;
   let urlsValidated = 0;
@@ -468,91 +522,70 @@ export async function runOpportunityDiscoverySuite(options?: {
   let newRecordsAdded = 0;
 
   try {
+    const { analyzePage } = await import("./lanes/page-analyzer");
+    const { validateForLane } = await import("./lanes/validator");
+    const { LANES, getLane } = await import("./lanes/config");
+
     // 1. Fetch raw external candidate opportunities
     const candidates = await provider.discover({
       queries: options?.queries,
       limit: options?.limit || 10,
     });
-    queriesCompleted = queriesQueued;
+    // Measured: distinct queries that actually produced results
+    queriesCompleted = new Set(candidates.map((c) => c.discovery_query)).size;
+    if (!queriesQueued) queriesQueued = queriesCompleted;
     resultsReturned = candidates.length;
 
-    // 2. Validate, deduplicate, and ingest each candidate
+    // 2. Live fetch -> lane validator -> qualification gate -> ingest
     for (const cand of candidates) {
       const candUrl = cand.url.trim();
       const domain = cand.domain.toLowerCase().trim().replace(/^www\./, "");
 
-      // 2.1 Live URL validation (Section 15)
-      let httpStatus = 200;
-      let isReachable = true;
-      try {
-        const checkRes = await fetch(candUrl, {
-          method: "HEAD",
-          headers: { "User-Agent": "Mozilla/5.0 (compatible; DGS-DiscoveryValidator/1.0; +https://www.dgeniussolutions.com/)" },
-          redirect: "follow",
-          signal: AbortSignal.timeout(6000),
-        });
-        httpStatus = checkRes.status;
-        if (checkRes.status >= 400 && checkRes.status !== 403) {
-          isReachable = false;
-        }
-      } catch {
-        // Fallback GET check with shorter timeout
-        try {
-          const getRes = await fetch(candUrl, {
-            method: "GET",
-            headers: { "User-Agent": "Mozilla/5.0 (compatible; DGS-DiscoveryValidator/1.0; +https://www.dgeniussolutions.com/)" },
-            redirect: "follow",
-            signal: AbortSignal.timeout(4000),
-          });
-          httpStatus = getRes.status;
-          if (getRes.status >= 400 && getRes.status !== 403) {
-            isReachable = false;
-          }
-        } catch {
-          isReachable = false;
-          httpStatus = 0;
-        }
-      }
-
-      urlsValidated++;
-
-      if (!isReachable) {
-        errors.push(`URL unreachable: ${candUrl} (HTTP ${httpStatus})`);
-        continue;
-      }
-
-      // 2.2 Free check
-      if (cand.free_status === "NOT_FREE") {
-        paidDisallowedRejected++;
-        continue;
-      }
-
-      // 2.3 Check exact database duplicate
-      const { rows: dupRows } = await cmsQuery<{ id: string }>(
-        `SELECT id FROM off_page_opportunities WHERE domain = ? OR exact_submission_url = ? LIMIT 1`,
-        [domain, candUrl]
+      // 2.1 Exact duplicate (normalized URL) before spending a fetch
+      const { rows: dupRows } = await cmsQuery<{ exact_submission_url: string }>(
+        `SELECT exact_submission_url FROM off_page_opportunities WHERE domain = ?`,
+        [domain]
       );
-      if (dupRows.length > 0) {
+      const norm = normalizeOpportunityUrl(candUrl);
+      if (dupRows.some((r) => normalizeOpportunityUrl(r.exact_submission_url) === norm)) {
         duplicatesRejected++;
         continue;
       }
 
-      // 2.4 Ingest with full evidence and verification
+      // 2.2 Live page fetch (GET) + lane validation
+      const lane = LANES.find((l) => l.category === cand.category) || getLane("DIGITAL_PR")!;
+      const analysis = await analyzePage(candUrl, 12000);
+      urlsValidated++;
+      const verdict = await validateForLane(analysis, lane, { queryRegion: cand.region });
+
+      if (verdict.decision === "REJECTED") {
+        if (verdict.reasons.includes("PAID_ONLY")) paidDisallowedRejected++;
+        else if (verdict.reasons.some((r) => r.startsWith("SPAM") || r.startsWith("BLOCKED"))) spamRejected++;
+        else errors.push(`Rejected ${candUrl}: ${verdict.reasons.join(", ")}`);
+        continue;
+      }
+
+      // 2.3 Ingest with measured evidence only
       const ingestRes = await ingestDiscoveredOpportunity({
-        site_name: cand.site_name,
+        site_name: analysis.title || cand.site_name,
         domain: cand.domain,
-        exact_submission_url: candUrl,
-        region: cand.region,
+        exact_submission_url: analysis.finalUrl || candUrl,
+        region: verdict.region,
         country: cand.country,
         category: cand.category,
-        free_status: cand.free_status || "FREE",
-        free_tier_details: cand.free_tier_details,
+        free_status: verdict.freeStatus,
+        dofollow_status: verdict.linkType,
         discovery_provider: cand.discovery_provider,
         discovery_query: cand.discovery_query,
-        evidence: cand.evidence,
+        evidence: `${cand.evidence || ""} Live check: HTTP ${analysis.httpStatus}. Signals: ${verdict.signals.slice(0, 10).join(", ")}`.trim(),
         notes: cand.notes,
-        http_status: httpStatus,
-        verification_status: "VERIFIED_ACTIVE",
+        http_status: analysis.httpStatus,
+        verification_status: verdict.decision === "QUALIFIED" ? "VERIFIED_ACTIVE" : "REACHABLE_UNQUALIFIED",
+        source_type: cand.source_type || cand.discovery_provider.toLowerCase(),
+        status: verdict.decision,
+        discovery_lane: lane.id,
+        page_title: analysis.title,
+        qualification_reason: verdict.reasons.join("; "),
       });
 
       if (ingestRes.success) {
@@ -600,8 +633,8 @@ export async function runOpportunityDiscoverySuite(options?: {
     }
 
     const message = newRecordsAdded > 0
-      ? `Discovery completed successfully: ${newRecordsAdded} net-new verified opportunities added from ${provider.name}. (${duplicatesRejected} duplicates prevented).`
-      : `Discovery sweep completed: ${resultsReturned} candidates reviewed from ${provider.name}. All existing candidates were already indexed (${duplicatesRejected} duplicates prevented).`;
+      ? `Discovery completed: ${newRecordsAdded} new record(s) from ${provider.name} after live validation (${duplicatesRejected} duplicates, ${paidDisallowedRejected} paid-only, ${spamRejected} spam/geo rejected).`
+      : `Discovery sweep completed: ${resultsReturned} candidate(s) from ${provider.name}; ${urlsValidated} fetched live; none qualified for insertion (${duplicatesRejected} duplicates).`;
 
     return {
       run_id: runId,
@@ -695,61 +728,47 @@ export async function revalidateOpportunityUrls(limit: number = 30): Promise<{
   let dead = 0;
   const archived: string[] = [];
 
+  const { checkUrlStatus } = await import("./lanes/page-analyzer");
+  // Only unassigned pipeline records may be auto-expired; in-flight team work is never auto-closed.
+  const AUTO_EXPIRABLE = new Set(["NEW", "DISCOVERED", "QUALIFIED", "MANAGER_REVIEW", "APPROVED", "VERIFYING"]);
+
   for (const row of rows) {
     const tier = row.check_priority || "P1";
     const nextIntervalDays = tier === "P0" ? 3 : tier === "P1" ? 7 : tier === "P2" ? 14 : 30;
 
-    try {
-      const res = await fetch(row.exact_submission_url, {
-        method: "HEAD",
-        headers: { "User-Agent": "DGS-OffPageMonitor/1.0 (+https://www.dgeniussolutions.com/)" },
-        signal: AbortSignal.timeout(6000),
-      });
+    const status = await checkUrlStatus(row.exact_submission_url, 8000);
+    const ok = status >= 200 && status < 400;
+    const blocked = status === 401 || status === 403 || status === 429; // bot-protected: unknown, not dead
+    const isDead = status === 0 || status === 404 || status === 410 || status >= 500;
 
-      if (res.status >= 400 && res.status !== 403 && res.status !== 401) {
-        // Re-check with GET if HEAD returned error
-        const getRes = await fetch(row.exact_submission_url, {
-          method: "GET",
-          headers: { "User-Agent": "DGS-OffPageMonitor/1.0 (+https://www.dgeniussolutions.com/)" },
-          signal: AbortSignal.timeout(6000),
-        });
-
-        if (getRes.status >= 400 && getRes.status !== 403) {
-          dead++;
-          archived.push(row.id);
-          await cmsExecute(
-            `UPDATE off_page_opportunities 
-             SET status = 'EXPIRED', 
-                 notes = CONCAT(IFNULL(notes, ''), ' [AUTO-EXPIRED: HTTP ', ? , ']'), 
-                 last_verified = NOW(),
-                 next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
-             WHERE id = ?`,
-            [getRes.status, nextIntervalDays, row.id]
-          );
-          continue;
-        }
-      }
-
-      healthy++;
+    if (ok || blocked) {
+      if (ok) healthy++;
       await cmsExecute(
-        `UPDATE off_page_opportunities 
-         SET last_verified = NOW(), 
-             next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY) 
-         WHERE id = ?`,
-        [nextIntervalDays, row.id]
-      );
-    } catch {
-      // Network timeout or DNS failure
-      dead++;
-      archived.push(row.id);
-      await cmsExecute(
-        `UPDATE off_page_opportunities 
-         SET status = 'EXPIRED', 
-             notes = CONCAT(IFNULL(notes, ''), ' [AUTO-EXPIRED: Unreachable URL]'), 
-             last_verified = NOW(),
+        `UPDATE off_page_opportunities
+         SET http_status = ?, last_checked_at = NOW(),
+             last_verified = IF(?, NOW(), last_verified),
              next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
          WHERE id = ?`,
-        [nextIntervalDays, row.id]
+        [status, ok ? 1 : 0, nextIntervalDays, row.id]
+      );
+      continue;
+    }
+
+    dead++;
+    if (isDead && AUTO_EXPIRABLE.has(String(row.status || "").toUpperCase())) {
+      archived.push(row.id);
+      await cmsExecute(
+        `UPDATE off_page_opportunities
+         SET status = 'EXPIRED', http_status = ?, verification_status = 'DEAD', last_checked_at = NOW(),
+             qualification_reason = CONCAT('AUTO-EXPIRED: HTTP ', ?, ' at ', NOW()),
+             next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
+         WHERE id = ?`,
+        [status, String(status || "unreachable"), nextIntervalDays, row.id]
+      );
+    } else {
+      await cmsExecute(
+        `UPDATE off_page_opportunities SET http_status = ?, last_checked_at = NOW(), next_check_at = DATE_ADD(NOW(), INTERVAL 3 DAY) WHERE id = ?`,
+        [status, row.id]
       );
     }
   }

@@ -2,247 +2,245 @@ import { randomUUID } from "node:crypto";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "./db";
 import { getProvider } from "./providers/registry";
-import type { BacklinkDiscoveryRun, OffPageBacklink } from "./types";
+import { BraveSearchDiscoveryProvider, getBraveApiKey } from "./providers/brave";
+import { analyzePage, mapLimit, type PageAnalysis } from "./lanes/page-analyzer";
+import type { OffPageBacklink } from "./types";
 
 export interface BacklinkDiscoveryResult {
   runId: string;
   provider: string;
   queriesRun: number;
   candidatesFound: number;
+  candidatesCrawled: number;
   linksVerifiedLive: number;
   duplicatesSkipped: number;
   insertedCount: number;
   newBacklinks: Partial<OffPageBacklink>[];
+  providerStatus: Record<string, string>;
   status: "COMPLETED" | "FAILED";
   errors: string[];
+  message: string;
+}
+
+/**
+ * Records a backlink that was OBSERVED on a live page (real <a href> to the monitored domain).
+ * Link type is derived from the observed rel attribute only. Returns null when already tracked.
+ */
+export async function recordVerifiedBacklink(params: {
+  analysis: PageAnalysis;
+  sourceTitle?: string;
+  sourceType: string;
+  note: string;
+}): Promise<Partial<OffPageBacklink> | null> {
+  const a = params.analysis;
+  const sourceUrl = a.finalUrl || a.url;
+  if (a.dgsLinks.length === 0) return null;
+
+  const { rows: existing } = await cmsQuery<{ id: string }>(
+    `SELECT id FROM off_page_backlinks WHERE source_url = ? OR source_url = ? LIMIT 1`,
+    [sourceUrl, a.url]
+  );
+  if (existing[0]) return null;
+
+  const link = a.dgsLinks[0];
+  const rel = link.rel || "";
+  const isNofollow = /nofollow/.test(rel);
+  const isSponsored = /sponsored/.test(rel);
+  const isUgc = /ugc/.test(rel);
+  const isDofollow = !isNofollow && !isSponsored && !isUgc; // observed: no restricting rel on a real <a>
+  const sourceDomain = new URL(sourceUrl).hostname.replace(/^www\./, "");
+  const id = randomUUID();
+
+  await cmsExecute(
+    `INSERT INTO off_page_backlinks (
+      id, source_domain, source_url, source_page_title, target_url, target_page_type,
+      anchor_text, anchor_classification, link_rel, dofollow, nofollow, ugc, sponsored, unknown_link_type,
+      first_seen_at, last_seen_at, last_checked_at, status, team_status, verified_status,
+      mismatch_status, http_status, source_indexable, source_region, topical_category,
+      source_type, notes, created_at, updated_at
+    ) VALUES (
+      ?, ?, ?, ?, ?, 'TARGET_LANDING',
+      ?, 'BRANDED', ?, ?, ?, ?, ?, 0,
+      NOW(), NOW(), NOW(), 'LIVE', 'NOT_REPORTED', 'LIVE',
+      'MATCH', ?, ?, 'GLOBAL', 'Digital Marketing',
+      ?, ?, NOW(), NOW()
+    )`,
+    [
+      id,
+      sourceDomain,
+      sourceUrl,
+      (params.sourceTitle || a.title || sourceDomain).slice(0, 500),
+      link.href,
+      (link.anchor || "(no anchor text)").slice(0, 500),
+      rel || "none",
+      isDofollow ? 1 : 0,
+      isNofollow ? 1 : 0,
+      isUgc ? 1 : 0,
+      isSponsored ? 1 : 0,
+      a.httpStatus ?? 200,
+      a.noindex ? 0 : 1,
+      params.sourceType,
+      `${params.note} | Observed <a href="${link.href}" rel="${rel || "(none)"}"> on live page.`.slice(0, 2000),
+    ]
+  );
+
+  return {
+    id,
+    source_domain: sourceDomain,
+    source_url: sourceUrl,
+    target_url: link.href,
+    anchor_text: link.anchor,
+    status: "LIVE",
+    verified_status: "LIVE",
+  } as Partial<OffPageBacklink>;
 }
 
 /**
  * Executes a live backlink discovery run.
- * Searches external providers for brand mentions, fetches each candidate page,
- * scans HTML for actual outbound <a> tags pointing to dgeniussolutions.com.
- * Newly proven backlinks are saved directly into off_page_backlinks.
+ * Searches real providers (Brave web search when configured, Google News RSS, GDELT) for brand
+ * mentions, fetches each candidate page, and records a backlink ONLY when the live HTML contains an
+ * <a href> whose host is dgeniussolutions.com / www.dgeniussolutions.com.
  */
 export async function executeBacklinkDiscovery(options?: {
-  provider?: "google_news" | "gdelt" | "all";
+  provider?: "google_news" | "gdelt" | "brave" | "all";
   queries?: string[];
 }): Promise<BacklinkDiscoveryResult> {
   await ensureOffPageTablesExist();
 
   const runId = randomUUID();
-  const provider = options?.provider || "google_news";
-  const startedAt = new Date();
+  const provider = options?.provider || "all";
   const errors: string[] = [];
+  const providerStatus: Record<string, string> = {};
 
-  // Log start of discovery run
   await cmsExecute(
-    `INSERT INTO off_page_backlink_discovery_runs (
-      run_id, provider, started_at, status
-    ) VALUES (?, ?, NOW(), 'RUNNING')`,
+    `INSERT INTO off_page_backlink_discovery_runs (run_id, provider, started_at, status) VALUES (?, ?, NOW(), 'RUNNING')`,
     [runId, provider]
   );
 
-  const defaultQueries = [
-    `"dgeniussolutions.com"`,
-    `"dgenius solutions"`,
-    `"d'genius solutions"`,
-  ];
+  const defaultQueries = [`"dgeniussolutions.com"`, `"D'Genius Solutions"`, `"D Genius Solutions"`, `"Kohin Bellara"`, `"Sneha Bellara"`];
   const activeQueries = options?.queries && options.queries.length > 0 ? options.queries : defaultQueries;
 
-  let candidates: Array<{ url: string; title: string; query: string }> = [];
+  const candidates: Array<{ url: string; title: string; query: string; source: string }> = [];
+  let queriesRun = 0;
 
-  try {
-    if (provider === "google_news" || provider === "all") {
-      const p = getProvider("google-news-rss");
-      for (const q of activeQueries) {
-        try {
-          const items = await p.discover({
-            queries: [q],
-            categories: ["DIGITAL_PR"],
-            regions: ["GLOBAL"],
-            limit: 10,
-          });
-          for (const item of items) {
-            candidates.push({ url: item.url, title: item.site_name, query: q });
-          }
-        } catch (e: any) {
-          errors.push(`Google News RSS query '${q}' error: ${e.message}`);
-        }
-      }
+  if (provider === "brave" || provider === "all") {
+    if (!getBraveApiKey()) {
+      providerStatus.BRAVE_SEARCH = "NOT_CONFIGURED";
+    } else {
+      const brave = new BraveSearchDiscoveryProvider();
+      const res = await brave.discoverQueries(
+        activeQueries.map((q) => ({ query: `${q} -site:dgeniussolutions.com`, region: "GLOBAL" as const, category: "UNLINKED_MENTION" as const })),
+        20
+      );
+      queriesRun += res.queriesRun;
+      errors.push(...res.errors);
+      providerStatus.BRAVE_SEARCH = res.errors.length && !res.queriesRun ? "ERROR" : "ACTIVE";
+      for (const c of res.candidates) candidates.push({ url: c.url, title: c.title || c.site_name, query: c.discovery_query, source: "brave_search" });
     }
+  }
 
-    if (provider === "gdelt" || provider === "all") {
-      const p = getProvider("gdelt");
+  if (provider === "google_news" || provider === "all") {
+    const p = getProvider("google-news-rss");
+    for (const q of activeQueries) {
       try {
-        const items = await p.discover({
-          categories: ["DIGITAL_PR"],
-          regions: ["GLOBAL"],
-          limit: 10,
-        });
-        for (const item of items) {
-          candidates.push({ url: item.url, title: item.site_name, query: "gdelt_pr" });
-        }
+        const items = await p.discover({ queries: [q], categories: ["DIGITAL_PR"], regions: ["GLOBAL"], limit: 10 });
+        queriesRun++;
+        for (const item of items) candidates.push({ url: item.url, title: item.title || item.site_name, query: q, source: "google_news_rss" });
       } catch (e: any) {
-        errors.push(`GDELT discovery error: ${e.message}`);
+        errors.push(`Google News RSS '${q}': ${e.message}`);
       }
     }
-  } catch (err: any) {
-    errors.push(`Discovery provider fetch failed: ${err.message}`);
+    providerStatus.GOOGLE_NEWS_RSS = "ACTIVE";
   }
 
-  // Dedupe candidates list
-  const uniqueCandidateUrls = new Map<string, { url: string; title: string; query: string }>();
-  for (const c of candidates) {
-    if (c.url && !uniqueCandidateUrls.has(c.url)) {
-      uniqueCandidateUrls.set(c.url, c);
+  if (provider === "gdelt" || provider === "all") {
+    const p = getProvider("gdelt-doc");
+    for (const q of activeQueries) {
+      try {
+        const items = await p.discover({ queries: [q], categories: ["DIGITAL_PR"], regions: ["GLOBAL"], limit: 10 });
+        queriesRun++;
+        for (const item of items) candidates.push({ url: item.url, title: item.site_name, query: q, source: "gdelt" });
+      } catch (e: any) {
+        errors.push(`GDELT '${q}': ${e.message}`);
+      }
     }
+    providerStatus.GDELT = "ACTIVE";
   }
 
-  const candidateList = Array.from(uniqueCandidateUrls.values());
+  const unique = new Map<string, (typeof candidates)[number]>();
+  for (const c of candidates) {
+    try {
+      const host = new URL(c.url).hostname.toLowerCase();
+      if (host.endsWith("dgeniussolutions.com")) continue;
+    } catch {
+      continue;
+    }
+    if (!unique.has(c.url)) unique.set(c.url, c);
+  }
+  const candidateList = Array.from(unique.values()).slice(0, 40);
+
   let linksVerifiedLive = 0;
   let duplicatesSkipped = 0;
   let insertedCount = 0;
+  let crawled = 0;
   const newBacklinks: Partial<OffPageBacklink>[] = [];
 
-  // Crawl each candidate URL live to inspect HTML for real backlink to DGS
-  for (const candidate of candidateList.slice(0, 15)) {
+  await mapLimit(candidateList, 5, async (candidate) => {
     try {
-      // Check if already in off_page_backlinks
-      const { rows: existing } = await cmsQuery<{ id: string }>(
-        `SELECT id FROM off_page_backlinks WHERE source_url = ? LIMIT 1`,
-        [candidate.url]
-      );
+      const { rows: existing } = await cmsQuery<{ id: string }>(`SELECT id FROM off_page_backlinks WHERE source_url = ? LIMIT 1`, [candidate.url]);
       if (existing[0]) {
         duplicatesSkipped++;
-        continue;
+        return;
       }
-
-      // Fetch live candidate HTML
-      const res = await fetch(candidate.url, {
-        method: "GET",
-        headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; DGS-BacklinkDiscovery/1.0; +https://www.dgeniussolutions.com/)",
-          Accept: "text/html,application/xhtml+xml",
-        },
-        redirect: "follow",
-        signal: AbortSignal.timeout(8000),
+      const analysis = await analyzePage(candidate.url, 10000);
+      crawled++;
+      if (analysis.dgsLinks.length === 0) return;
+      linksVerifiedLive++;
+      const rec = await recordVerifiedBacklink({
+        analysis,
+        sourceTitle: candidate.title,
+        sourceType: "backlink_discovery",
+        note: `Discovered via ${candidate.source} query: ${candidate.query}`,
       });
-
-      if (!res.ok) continue;
-      const html = await res.text();
-
-      // Look for <a> tags pointing to dgeniussolutions.com
-      const aTagRegex = /<a\b[^>]*href=['"]([^'"]+)['"][^>]*>([\s\S]*?)<\/a>/gi;
-      let match;
-      let backlinkFound = false;
-      let targetUrl = "";
-      let anchorText = "";
-      let rel = "dofollow";
-
-      while ((match = aTagRegex.exec(html)) !== null) {
-        const href = match[1].trim();
-        if (href.includes("dgeniussolutions.com")) {
-          backlinkFound = true;
-          targetUrl = href;
-          anchorText = match[2].replace(/<[^>]+>/g, "").trim() || "D'Genius Solutions";
-          const relMatch = match[0].match(/rel=['"]([^'"]+)['"]/i);
-          rel = relMatch ? relMatch[1].toLowerCase() : "dofollow";
-          break;
-        }
-      }
-
-      if (backlinkFound) {
-        linksVerifiedLive++;
-        const newBlId = randomUUID();
-        const sourceDomain = new URL(candidate.url).hostname.replace(/^www\./, "");
-        const isDofollow = !rel.includes("nofollow") && !rel.includes("sponsored") && !rel.includes("ugc");
-        const isNofollow = rel.includes("nofollow");
-        const isSponsored = rel.includes("sponsored");
-        const isUgc = rel.includes("ugc");
-
-        await cmsExecute(
-          `INSERT INTO off_page_backlinks (
-            id, source_domain, source_url, source_page_title, target_url, target_page_type,
-            anchor_text, anchor_classification, link_rel, dofollow, nofollow, ugc, sponsored,
-            first_seen_at, last_seen_at, last_checked_at, status, team_status, verified_status,
-            mismatch_status, http_status, source_indexable, source_region, topical_category,
-            source_type, notes, created_at, updated_at
-          ) VALUES (
-            ?, ?, ?, ?, ?, 'TARGET_LANDING',
-            ?, 'BRANDED', ?, ?, ?, ?, ?,
-            NOW(), NOW(), NOW(), 'LIVE', 'LIVE', 'LIVE',
-            'MATCH', 200, 1, 'GLOBAL', 'Digital Marketing',
-            'backlink_discovery', ?, NOW(), NOW()
-          )`,
-          [
-            newBlId,
-            sourceDomain,
-            candidate.url,
-            candidate.title.slice(0, 500),
-            targetUrl || "https://www.dgeniussolutions.com/",
-            anchorText.slice(0, 500),
-            rel,
-            isDofollow ? 1 : 0,
-            isNofollow ? 1 : 0,
-            isUgc ? 1 : 0,
-            isSponsored ? 1 : 0,
-            `Discovered via query: ${candidate.query}`,
-          ]
-        );
-
+      if (rec) {
         insertedCount++;
-        newBacklinks.push({
-          id: newBlId,
-          source_domain: sourceDomain,
-          source_url: candidate.url,
-          target_url: targetUrl,
-          anchor_text: anchorText,
-          status: "LIVE",
-          verified_status: "LIVE",
-          team_status: "LIVE",
-        });
+        newBacklinks.push(rec);
+      } else {
+        duplicatesSkipped++;
       }
-    } catch (crawlErr: any) {
-      // Continue next candidate on crawl error
+    } catch (e: any) {
+      errors.push(`crawl ${candidate.url}: ${String(e?.message || e).slice(0, 120)}`);
     }
-  }
+  });
 
-  const finalStatus: "COMPLETED" | "FAILED" = errors.length > 0 && candidateList.length === 0 ? "FAILED" : "COMPLETED";
+  const finalStatus: "COMPLETED" | "FAILED" = candidateList.length === 0 && errors.length > 0 ? "FAILED" : "COMPLETED";
 
-  // Update run log
   await cmsExecute(
     `UPDATE off_page_backlink_discovery_runs SET
-      completed_at = NOW(),
-      queries_run = ?,
-      candidates_found = ?,
-      links_verified_live = ?,
-      duplicates_skipped = ?,
-      inserted_count = ?,
-      status = ?,
-      errors = ?
+      completed_at = NOW(), queries_run = ?, candidates_found = ?, links_verified_live = ?,
+      duplicates_skipped = ?, inserted_count = ?, status = ?, errors = ?
      WHERE run_id = ?`,
-    [
-      activeQueries.length,
-      candidateList.length,
-      linksVerifiedLive,
-      duplicatesSkipped,
-      insertedCount,
-      finalStatus,
-      errors.slice(0, 5).join("; ") || null,
-      runId,
-    ]
+    [queriesRun, candidateList.length, linksVerifiedLive, duplicatesSkipped, insertedCount, finalStatus, errors.slice(0, 5).join("; ") || null, runId]
   );
+
+  const message =
+    insertedCount > 0
+      ? `${insertedCount} new backlink(s) verified live (real <a href> to dgeniussolutions.com observed).`
+      : `Crawled ${crawled} live candidate page(s); no new pages linking to dgeniussolutions.com were found.`;
 
   return {
     runId,
     provider,
-    queriesRun: activeQueries.length,
+    queriesRun,
     candidatesFound: candidateList.length,
+    candidatesCrawled: crawled,
     linksVerifiedLive,
     duplicatesSkipped,
     insertedCount,
     newBacklinks,
+    providerStatus,
     status: finalStatus,
     errors,
+    message,
   };
 }

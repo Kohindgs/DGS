@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { guardOffPage } from "@/lib/off-page/route-auth";
 import { executeBacklinkDiscovery } from "@/lib/off-page/backlink-discovery";
 
 export async function POST(req: NextRequest) {
+  const denied = await guardOffPage("create");
+  if (denied) return denied;
+
   try {
     const body = await req.json().catch(() => ({}));
     const { provider, queries } = body;

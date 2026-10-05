@@ -253,13 +253,15 @@ export function normalizeRow(
 
   // Rel mapping
   let rawRel = getVal(mapping.link_rel).toLowerCase();
-  let linkRel = "dofollow";
-  if (rawRel.includes("no") || rawRel.includes("nofollow")) {
+  let linkRel = "unknown";
+  if (rawRel.includes("nofollow") || rawRel === "no" || rawRel === "no follow") {
     linkRel = "nofollow";
-  } else if (rawRel.includes("spon") || rawRel.includes("sponsored")) {
+  } else if (rawRel.includes("spon")) {
     linkRel = "sponsored";
   } else if (rawRel.includes("ugc")) {
     linkRel = "ugc";
+  } else if (rawRel === "dofollow" || rawRel === "do follow" || rawRel === "follow" || rawRel === "do-follow") {
+    linkRel = "dofollow";
   }
 
   // Cost parsing
@@ -476,9 +478,9 @@ export async function commitSpreadsheetRows(
             original_sheet_row_id, sheet_connection_id, notes, created_at, updated_at
           ) VALUES (
             ?, ?, ?, ?, 'TARGET_LANDING', ?, 'BRANDED',
-            ?, ?, ?, ?, ?, 0,
+            ?, ?, ?, ?, ?, ?,
             NOW(), NOW(), ?, ?, 'NOT_VERIFIED', 'MATCH',
-            200, 1, ?, ?, ?,
+            NULL, 1, ?, ?, ?,
             ?, ?, ?, ?, ?, ?,
             ?, ?, ?, NOW(), NOW()
           )`,
@@ -493,6 +495,7 @@ export async function commitSpreadsheetRows(
             isNofollow ? 1 : 0,
             isUgc ? 1 : 0,
             isSponsored ? 1 : 0,
+            normalized.link_rel === "unknown" ? 1 : 0,
             initialStatus,
             normalized.team_status,
             normalized.region,
