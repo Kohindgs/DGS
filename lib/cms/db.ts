@@ -68,6 +68,6 @@ export async function cmsQuery<T>(text: string, values: any[] = []) {
 }
 
 export async function cmsExecute(text: string, values: any[] = []) {
-  const [result] = await getCmsPool().execute(text, values);
+  const [result] = await getCmsPool().query(text, values);
   return result;
 }

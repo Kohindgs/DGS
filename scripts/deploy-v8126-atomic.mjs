@@ -59,6 +59,7 @@ async function main() {
   fs.copyFileSync(path.join(ROOT, "package.json"), path.join(pkgDir, "package.json"));
   fs.copyFileSync(path.join(ROOT, "package-lock.json"), path.join(pkgDir, "package-lock.json"));
   fs.copyFileSync(path.join(ROOT, "next.config.ts"), path.join(pkgDir, "next.config.ts"));
+  fs.copyFileSync(path.join(ROOT, "tsconfig.json"), path.join(pkgDir, "tsconfig.json"));
 
   // Copy validator and schema scripts into release
   const pkgScripts = path.join(pkgDir, "scripts");

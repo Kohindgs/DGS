@@ -174,11 +174,11 @@ export async function reverifyExistingOpportunities(opts?: { limit?: number }): 
 
     const linkType = analysis.dgsLinks.length > 0 ? verdict.linkType : LINK_NOT_APPLICABLE_CATEGORIES.has(row.category) ? "N/A" : "UNKNOWN";
 
+    const isVerified = verification === "VERIFIED_ACTIVE";
     await cmsExecute(
       `UPDATE off_page_opportunities SET
          status = ?, verification_status = ?, http_status = ?, last_checked_at = NOW(),
-         last_verified_at = IF(? = 'VERIFIED_ACTIVE', NOW(), last_verified_at),
-         last_verified = IF(? = 'VERIFIED_ACTIVE', NOW(), last_verified),
+         ${isVerified ? "last_verified_at = NOW(), last_verified = NOW()," : ""}
          free_status = ?, dofollow_status = ?, discovery_lane = COALESCE(discovery_lane, ?),
          page_title = COALESCE(?, page_title), qualification_reason = ?, updated_at = NOW()
        WHERE id = ? AND (owner IS NULL OR owner = '') AND (assigned_to IS NULL OR assigned_to = '')`,
@@ -186,8 +186,6 @@ export async function reverifyExistingOpportunities(opts?: { limit?: number }): 
         newStatus,
         verification,
         http,
-        verification,
-        verification,
         verdict.freeStatus,
         linkType,
         lane.id,

@@ -101,7 +101,7 @@ async function main() {
 
   // ---- DB reconciliation (SELECT only) ----
   const raw = execSync(
-    `ssh -p 65002 u188101251@147.93.100.126 "cat > /home/u188101251/production-app/current/tmp/v8126verify.mjs && cd /home/u188101251/production-app/current && node tmp/v8126verify.mjs; rm -f tmp/v8126verify.mjs"`,
+    `ssh -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -p 65002 u188101251@147.93.100.126 "cat > /home/u188101251/production-app/current/tmp/v8126verify.mjs && cd /home/u188101251/production-app/current && node tmp/v8126verify.mjs; rm -f tmp/v8126verify.mjs"`,
     { input: REMOTE_DB_SCRIPT, encoding: "utf8" }
   );
   const db = JSON.parse(raw.slice(raw.indexOf("__DB__") + 6).trim());
