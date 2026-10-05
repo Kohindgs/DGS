@@ -19,13 +19,8 @@ async function main() {
     database: cfg.DGS_MYSQL_DATABASE,
   });
 
-  const [tables] = await conn.query("SHOW TABLES LIKE 'off_page_automation_runs'");
-  console.log("AUTOMATION TABLE:", tables);
-  if (tables.length > 0) {
-    const [runs] = await conn.query("SELECT * FROM off_page_automation_runs ORDER BY started_at DESC LIMIT 5");
-    console.log("RECENT RUNS (" + runs.length + "):", runs);
-  }
-
+  const [rows] = await conn.query("SELECT id, source_url, status, http_status, notes FROM off_page_backlinks");
+  console.log("BACKLINK NOTES:", rows);
   await conn.end();
 }
 

@@ -142,11 +142,23 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
     const priority = link.check_priority || "P1";
     const nextIntervalDays = newStatus === "LOST" ? 3 : priority === "P0" ? 3 : priority === "P1" ? 7 : priority === "P2" ? 14 : 30;
 
+    const finalAnchor = foundAnchor || link.anchor_text || "";
+    const isLive = newStatus === "LIVE" || newStatus === "VERIFIED";
+    const isLost = newStatus === "LOST";
+    const isReclaimed = newStatus === "LIVE" && link.status === "LOST";
+
+    const now = new Date();
+    const lastSeenAt = isLive ? now : (link.last_seen_at ? new Date(link.last_seen_at) : now);
+    const verifiedAt = isLive ? (link.verified_at ? new Date(link.verified_at) : now) : (link.verified_at ? new Date(link.verified_at) : null);
+    const liveAt = isLive ? (link.live_at ? new Date(link.live_at) : now) : (link.live_at ? new Date(link.live_at) : null);
+    const lostAt = isLost ? (link.lost_at ? new Date(link.lost_at) : now) : (link.lost_at ? new Date(link.lost_at) : null);
+    const reclaimedAt = isReclaimed ? now : (link.reclaimed_at ? new Date(link.reclaimed_at) : null);
+
     await cmsExecute(
       `UPDATE off_page_backlinks SET 
         status = ?, 
         http_status = ?, 
-        anchor_text = IF(? != '', ?, anchor_text),
+        anchor_text = ?,
         link_rel = ?,
         dofollow = ?,
         nofollow = ?,
@@ -155,18 +167,17 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
         source_indexable = ?,
         source_canonical = ?,
         last_checked_at = NOW(),
-        last_seen_at = IF(? IN ('LIVE', 'VERIFIED'), NOW(), last_seen_at),
-        verified_at = IF(? IN ('LIVE', 'VERIFIED'), IFNULL(verified_at, NOW()), verified_at),
-        live_at = IF(? IN ('LIVE', 'VERIFIED'), IFNULL(live_at, NOW()), live_at),
-        lost_at = IF(? = 'LOST', IFNULL(lost_at, NOW()), lost_at),
-        reclaimed_at = IF(? = 'LIVE' AND status = 'LOST', NOW(), reclaimed_at),
+        last_seen_at = ?,
+        verified_at = ?,
+        live_at = ?,
+        lost_at = ?,
+        reclaimed_at = ?,
         next_check_at = DATE_ADD(NOW(), INTERVAL ? DAY)
        WHERE id = ?`,
       [
         newStatus,
         httpStatus,
-        foundAnchor,
-        foundAnchor,
+        finalAnchor,
         foundRel || "dofollow",
         dofollow ? 1 : 0,
         nofollow ? 1 : 0,
@@ -174,11 +185,11 @@ export async function checkLiveBacklink(backlinkId: string): Promise<{
         sponsored ? 1 : 0,
         sourceIndexable ? 1 : 0,
         sourceCanonical,
-        newStatus,
-        newStatus,
-        newStatus,
-        newStatus,
-        newStatus,
+        lastSeenAt,
+        verifiedAt,
+        liveAt,
+        lostAt,
+        reclaimedAt,
         nextIntervalDays,
         backlinkId,
       ]
