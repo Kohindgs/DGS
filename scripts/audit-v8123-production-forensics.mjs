@@ -31,8 +31,14 @@ async function run() {
   const backupFile = \`/home/u188101251/production-app/shared/backups/backup_v8123_pre_\${timestamp}.sql\`;
   try {
     execSync(\`mkdir -p /home/u188101251/production-app/shared/backups\`);
-    execSync(\`mysqldump -h \${env.DGS_MYSQL_HOST} -u \${env.DGS_MYSQL_USER} -p'\${env.DGS_MYSQL_PASSWORD}' \${env.DGS_MYSQL_DATABASE} > \${backupFile}\`);
-    console.log(\`✓ Database backup created successfully at: \${backupFile}\`);
+    const cnfTmp = \`/home/u188101251/production-app/shared/backups/.tmp_my_\${Date.now()}.cnf\`;
+    fs.writeFileSync(cnfTmp, \`[client]\\nhost=\${env.DGS_MYSQL_HOST}\\nport=\${env.DGS_MYSQL_PORT || 3306}\\nuser=\${env.DGS_MYSQL_USER}\\npassword="\${(env.DGS_MYSQL_PASSWORD || "").replace(/["\\\\\\\\]/g, "\\\\\\\\$&")}"\\n\`, { mode: 0o600 });
+    try {
+      execSync(\`mysqldump --defaults-extra-file="\${cnfTmp}" --no-tablespaces \${env.DGS_MYSQL_DATABASE} > \${backupFile}\`);
+      console.log(\`✓ Database backup created successfully at: \${backupFile}\`);
+    } finally {
+      try { fs.unlinkSync(cnfTmp); } catch {}
+    }
   } catch (err) {
     console.warn("Notice during mysqldump backup:", err.message);
   }

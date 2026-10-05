@@ -13,6 +13,7 @@ import {
   setSetting,
 } from "@/lib/off-page/lanes/runner";
 import { BraveSearchDiscoveryProvider, getBraveUsageToday } from "@/lib/off-page/providers/brave";
+import { WebSearchDiscoveryProvider, getWebSearchUsageToday } from "@/lib/off-page/providers/web-search";
 
 export const dynamic = "force-dynamic";
 
@@ -26,10 +27,12 @@ export async function GET() {
   const denied = await guardOffPage("view");
   if (denied) return denied;
   try {
-    const [lanes, braveHealth, usage, competitors] = await Promise.all([
+    const [lanes, braveHealth, braveUsage, webSearchHealth, webSearchUsage, competitors] = await Promise.all([
       getLaneOverview(),
       new BraveSearchDiscoveryProvider().health(),
       getBraveUsageToday(),
+      new WebSearchDiscoveryProvider().health(),
+      getWebSearchUsageToday(),
       getCompetitorDomains(),
     ]);
     const { rows: recentRuns } = await cmsQuery<any>(
@@ -40,7 +43,8 @@ export async function GET() {
     return NextResponse.json({
       ok: true,
       lanes,
-      brave: { health: braveHealth, usage },
+      brave: { health: braveHealth, usage: braveUsage },
+      webSearch: { health: webSearchHealth, usage: webSearchUsage },
       competitors,
       running: Array.from(jobs.entries()).map(([lane, j]) => ({ lane, ...j })),
       recentRuns,

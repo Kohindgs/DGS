@@ -1,5 +1,5 @@
 /**
- * V8.12.6 discovery lane configuration.
+ * V8.12.7 discovery lane configuration.
  *
  * Each lane fetches live external data independently through real providers and validates
  * every candidate page with its own validator. Default queries can be overridden by admins
@@ -22,7 +22,7 @@ export type LaneId =
   | "REVIEW_PLATFORMS"
   | "COMPETITOR_LINK_GAP";
 
-export type LaneProvider = "BRAVE_SEARCH" | "GOOGLE_NEWS_RSS" | "GDELT";
+export type LaneProvider = "WEB_SEARCH" | "BRAVE_SEARCH" | "GOOGLE_NEWS_RSS" | "GDELT";
 
 /** Which page-level rule the validator applies. */
 export type ValidatorKind =
@@ -61,7 +61,7 @@ export const LANES: LaneDefinition[] = [
     label: "Business Citations",
     category: "BUSINESS_LISTING",
     validator: "SUBMISSION",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     linkNotApplicable: true,
     description: "Free business listing / citation sites that accept company profiles.",
     defaultQueries: [
@@ -75,7 +75,7 @@ export const LANES: LaneDefinition[] = [
     label: "Local Listings",
     category: "LOCAL_CITATION",
     validator: "SUBMISSION",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     linkNotApplicable: true,
     description: "City / local directories (Mumbai, Bengaluru, Dubai, etc.).",
     defaultQueries: [
@@ -88,7 +88,7 @@ export const LANES: LaneDefinition[] = [
     label: "Agency Directories",
     category: "AGENCY_DIRECTORY",
     validator: "SUBMISSION",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Marketing / SEO / AI video / web development agency directories.",
     defaultQueries: [
       q("SEO agency directory India", "INDIA"),
@@ -109,7 +109,7 @@ export const LANES: LaneDefinition[] = [
     label: "Article / Content Contributions",
     category: "ARTICLE_SUBMISSION",
     validator: "CONTRIBUTION",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Write-for-us / guest article pages in DGS topics.",
     defaultQueries: [
       q("digital marketing write for us India", "INDIA"),
@@ -124,7 +124,7 @@ export const LANES: LaneDefinition[] = [
     label: "Expert Contributions",
     category: "EXPERT_CONTRIBUTION",
     validator: "CONTRIBUTION",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Expert roundups / contributor programmes / expert quotes.",
     defaultQueries: [
       q("SEO expert contribute article", "GLOBAL"),
@@ -139,7 +139,7 @@ export const LANES: LaneDefinition[] = [
     label: "Digital PR / Journalist Requests",
     category: "DIGITAL_PR",
     validator: "PR_REQUEST",
-    providers: ["BRAVE_SEARCH", "GOOGLE_NEWS_RSS"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH", "GOOGLE_NEWS_RSS"],
     description: "Journalist source requests and expert-source platforms.",
     defaultQueries: [
       q("SEO expert journalist query", "USA"),
@@ -152,7 +152,7 @@ export const LANES: LaneDefinition[] = [
     label: "Communities / Q&A",
     category: "COMMUNITY",
     validator: "COMMUNITY",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Active forums and Q&A threads where DGS expertise is relevant (UGC links).",
     defaultQueries: [
       q("generative engine optimization forum discussion", "GLOBAL"),
@@ -165,7 +165,7 @@ export const LANES: LaneDefinition[] = [
     label: "Partnership Opportunities",
     category: "PARTNERSHIP",
     validator: "PARTNERSHIP",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Agency / technology partner programmes and partner directories.",
     defaultQueries: [
       q("agency partner program marketing tools", "GLOBAL"),
@@ -178,7 +178,7 @@ export const LANES: LaneDefinition[] = [
     label: "Resource Page Opportunities",
     category: "RESOURCE_PAGE",
     validator: "RESOURCE",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Curated resource lists relevant to SEO / AEO / GEO / AI marketing.",
     defaultQueries: [
       q("SEO resources", "GLOBAL"),
@@ -193,7 +193,7 @@ export const LANES: LaneDefinition[] = [
     label: "Broken Link Opportunities",
     category: "BROKEN_LINK",
     validator: "BROKEN_LINK",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Resource pages with dead outbound links DGS content can replace.",
     defaultQueries: [
       q("SEO resources useful links", "GLOBAL"),
@@ -206,7 +206,7 @@ export const LANES: LaneDefinition[] = [
     label: "Unlinked Brand Mentions",
     category: "UNLINKED_MENTION",
     validator: "UNLINKED_MENTION",
-    providers: ["BRAVE_SEARCH", "GOOGLE_NEWS_RSS", "GDELT"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH", "GOOGLE_NEWS_RSS", "GDELT"],
     description: "Pages mentioning D'Genius Solutions / founders without linking to dgeniussolutions.com.",
     defaultQueries: [
       q('"D\'Genius Solutions"', "GLOBAL"),
@@ -221,7 +221,7 @@ export const LANES: LaneDefinition[] = [
     label: "Reviews / Client Review Platforms",
     category: "REVIEW_PLATFORM",
     validator: "SUBMISSION",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Client review platforms where agencies can create a free profile.",
     defaultQueries: [
       q("agency reviews platform create free profile", "GLOBAL"),
@@ -233,7 +233,7 @@ export const LANES: LaneDefinition[] = [
     label: "Competitor Link Gap",
     category: "OTHER",
     validator: "COMPETITOR_GAP",
-    providers: ["BRAVE_SEARCH"],
+    providers: ["WEB_SEARCH", "BRAVE_SEARCH"],
     description: "Pages linking to configured competitors but not DGS. Requires competitor domains in settings.",
     defaultQueries: [],
   },

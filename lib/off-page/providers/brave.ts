@@ -3,16 +3,18 @@ import type { RegionCode, OpportunityCategory } from "@/lib/off-page/types";
 import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 
 /**
- * Brave Search API discovery provider (V8.12.6).
+ * Brave Search API discovery provider (V8.12.7).
  *
- * - Requires BRAVE_SEARCH_API_KEY in the server environment. Without it the provider reports
- *   NOT_CONFIGURED and returns zero candidates (never fabricated results).
+ * - Reads BRAVE_SEARCH_API_KEY from process.env or off_page_settings (admin UI configurable).
+ * - Reports NOT_CONFIGURED when no key is present, returning zero candidates (never fabricated results).
  * - Every candidate is a real URL returned by the Brave web search API.
  * - A persisted daily quota guard (BRAVE_SEARCH_DAILY_QUOTA, default 60 queries/day) protects the plan.
  */
 
 const BRAVE_ENDPOINT = "https://api.search.brave.com/res/v1/web/search";
 const USAGE_KEY = "brave_search_daily_usage";
+const QUOTA_KEY = "brave_search_daily_quota";
+const SETTINGS_KEY_API = "brave_search_api_key";
 
 const REGION_COUNTRY: Record<string, string | null> = {
   INDIA: "IN",
@@ -25,6 +27,8 @@ let lastSuccessTime: string | undefined;
 let lastErrorTime: string | undefined;
 let lastErrorMessage: string | undefined;
 let lastCount = 0;
+let cachedBraveKey: string | null = null;
+let lastKeyCheck = 0;
 
 export interface BraveQuery {
   query: string;
@@ -33,12 +37,47 @@ export interface BraveQuery {
   lane?: string;
 }
 
-export function getBraveApiKey(): string | null {
-  const k = (process.env.BRAVE_SEARCH_API_KEY || "").trim();
-  return k.length > 0 ? k : null;
+export async function resolveBraveApiKey(): Promise<string | null> {
+  const envKey = (process.env.BRAVE_SEARCH_API_KEY || "").trim();
+  if (envKey.length > 0) return envKey;
+
+  const now = Date.now();
+  if (cachedBraveKey !== null && now - lastKeyCheck < 30000) {
+    return cachedBraveKey.length > 0 ? cachedBraveKey : null;
+  }
+
+  try {
+    const { rows } = await cmsQuery<{ key_value: string }>(
+      `SELECT key_value FROM off_page_settings WHERE key_name = ? LIMIT 1`,
+      [SETTINGS_KEY_API]
+    );
+    cachedBraveKey = (rows[0]?.key_value || "").trim();
+    lastKeyCheck = now;
+    return cachedBraveKey.length > 0 ? cachedBraveKey : null;
+  } catch {
+    return null;
+  }
 }
 
-function dailyQuota(): number {
+export function getBraveApiKey(): string | null {
+  const envKey = (process.env.BRAVE_SEARCH_API_KEY || "").trim();
+  if (envKey.length > 0) return envKey;
+  return cachedBraveKey && cachedBraveKey.length > 0 ? cachedBraveKey : null;
+}
+
+export async function dailyQuota(): Promise<number> {
+  try {
+    const { rows } = await cmsQuery<{ key_value: string }>(
+      `SELECT key_value FROM off_page_settings WHERE key_name = ? LIMIT 1`,
+      [QUOTA_KEY]
+    );
+    if (rows.length > 0) {
+      const n = Number(rows[0].key_value);
+      if (Number.isFinite(n) && n > 0) return Math.floor(n);
+    }
+  } catch {
+    // fallback
+  }
   const n = Number(process.env.BRAVE_SEARCH_DAILY_QUOTA || 60);
   return Number.isFinite(n) && n > 0 ? Math.floor(n) : 60;
 }
@@ -48,7 +87,7 @@ function todayKey(): string {
 }
 
 export async function getBraveUsageToday(): Promise<{ date: string; used: number; quota: number }> {
-  const quota = dailyQuota();
+  const quota = await dailyQuota();
   try {
     const { rows } = await cmsQuery<{ key_value: string }>(
       `SELECT key_value FROM off_page_settings WHERE key_name = ? LIMIT 1`,
@@ -92,7 +131,7 @@ interface BraveWebResult {
 
 /** Executes one Brave web search. Throws on HTTP/network errors. */
 export async function braveWebSearch(query: string, region: RegionCode, count = 20): Promise<BraveWebResult[]> {
-  const key = getBraveApiKey();
+  const key = await resolveBraveApiKey();
   if (!key) throw new Error("BRAVE_SEARCH_API_KEY not configured");
 
   const usage = await getBraveUsageToday();
@@ -135,14 +174,14 @@ export class BraveSearchDiscoveryProvider implements DiscoveryProvider {
   name = "Web Search (Brave Search API)";
 
   async health(): Promise<ProviderHealth> {
-    const key = getBraveApiKey();
+    const key = await resolveBraveApiKey();
     if (!key) {
       return {
         id: this.id,
         name: this.name,
         type: "SEARCH",
         status: "NOT_CONFIGURED",
-        reason: "WEB SEARCH (BRAVE) — NOT CONFIGURED. Add BRAVE_SEARCH_API_KEY to the server environment.",
+        reason: "WEB SEARCH (BRAVE) — NOT CONFIGURED. Add BRAVE_SEARCH_API_KEY to server environment or configure in Off-Page Settings.",
         requiredConfig: ["BRAVE_SEARCH_API_KEY"],
       };
     }
@@ -166,7 +205,8 @@ export class BraveSearchDiscoveryProvider implements DiscoveryProvider {
     let queriesRun = 0;
     const seen = new Set<string>();
 
-    if (!getBraveApiKey()) {
+    const key = await resolveBraveApiKey();
+    if (!key) {
       return { candidates, errors: ["WEB SEARCH (BRAVE) — NOT CONFIGURED"], queriesRun };
     }
 

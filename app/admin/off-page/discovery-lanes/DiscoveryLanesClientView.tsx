@@ -31,6 +31,7 @@ type Overview = {
   ok: boolean;
   lanes: Lane[];
   brave: { health: { status: string; reason?: string }; usage: { used: number; quota: number; date: string } };
+  webSearch?: { health: { status: string; reason?: string }; usage: { used: number; quota: number; date: string } };
   competitors: string[];
   running: Array<{ lane: string; runId: string; startedAt: string }>;
   recentRuns: any[];
@@ -119,7 +120,14 @@ export default function DiscoveryLanesClientView() {
             Needs Review queue. Link type is UNKNOWN until observed on a live page.
           </p>
         </div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+          <span
+            className="dgs-saas-chip success"
+            style={{ fontSize: "0.74rem", fontWeight: 700 }}
+            data-testid="web-search-status"
+          >
+            WEB SEARCH (NATIVE) — ACTIVE · {data.webSearch?.usage?.used ?? 0}/{data.webSearch?.usage?.quota ?? 100} today
+          </span>
           <span
             className={`dgs-saas-chip ${braveOk ? "success" : "warning"}`}
             style={{ fontSize: "0.74rem", fontWeight: 700 }}

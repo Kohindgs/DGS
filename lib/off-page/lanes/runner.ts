@@ -1,8 +1,10 @@
 /**
- * V8.12.6 lane runner.
+ * V8.12.7 lane runner.
  *
- * Provider results -> normalize URL -> exact dedupe -> live fetch -> lane validator
- * -> spam/paid/geo -> relevance -> (semantic dedupe at ingest) -> QUALIFIED | DISCOVERED | REJECTED.
+ * Provider results -> stage in off_page_raw_candidates -> normalize URL -> exact dedupe
+ * -> live fetch -> lane validator -> spam/paid/geo -> relevance -> (semantic dedupe at ingest)
+ * -> QUALIFIED -> off_page_opportunities + TurboVec.
+ * Unqualified/raw candidates remain safely staged in off_page_raw_candidates (no 58,931 problem).
  * Only QUALIFIED records enter the manager "Needs Review" queue. Every count returned is measured.
  */
 import { randomUUID } from "node:crypto";
@@ -10,7 +12,8 @@ import { cmsExecute, cmsQuery } from "@/lib/cms/db";
 import { ensureOffPageTablesExist } from "../db";
 import { ingestDiscoveredOpportunity, normalizeOpportunityUrl } from "../discovery";
 import { getProvider } from "../providers/registry";
-import { BraveSearchDiscoveryProvider, getBraveApiKey, getBraveUsageToday } from "../providers/brave";
+import { BraveSearchDiscoveryProvider, resolveBraveApiKey, getBraveUsageToday } from "../providers/brave";
+import { WebSearchDiscoveryProvider } from "../providers/web-search";
 import type { CandidateOpportunity } from "../providers/types";
 import type { RegionCode } from "../types";
 import { recordVerifiedBacklink } from "../backlink-discovery";
@@ -176,8 +179,19 @@ export async function runDiscoveryLane(
   // ---- 1. Collect provider results (live) ----
   const candidates: CandidateOpportunity[] = [];
   for (const p of lane.providers) {
-    if (p === "BRAVE_SEARCH") {
-      if (!getBraveApiKey()) {
+    if (p === "WEB_SEARCH") {
+      const ws = new WebSearchDiscoveryProvider();
+      const res = await ws.discoverQueries(
+        queries.map((q) => ({ query: q.query, region: q.region, category: lane.category, lane: lane.id })),
+        perQuery
+      );
+      result.queries_run += res.queriesRun;
+      errors.push(...res.errors);
+      providerStatus.WEB_SEARCH = res.queriesRun > 0 ? "ACTIVE" : res.errors.length ? "ERROR" : "NO_QUERIES";
+      candidates.push(...res.candidates);
+    } else if (p === "BRAVE_SEARCH") {
+      const braveKey = await resolveBraveApiKey();
+      if (!braveKey) {
         providerStatus.BRAVE_SEARCH = "NOT_CONFIGURED";
         continue;
       }
@@ -231,7 +245,34 @@ export async function runDiscoveryLane(
     return result;
   }
 
-  // ---- 2. Normalize + in-run dedupe ----
+  // ---- 2. Stage raw provider candidates in off_page_raw_candidates ----
+  const rawIdByNorm = new Map<string, string>();
+  for (const c of candidates) {
+    const n = normalizeOpportunityUrl(c.url);
+    if (!rawIdByNorm.has(n)) {
+      const rawId = `raw_${randomUUID().replace(/-/g, "").slice(0, 16)}`;
+      rawIdByNorm.set(n, rawId);
+      await cmsExecute(
+        `INSERT INTO off_page_raw_candidates (
+          id, run_id, provider, query, lane, url, domain, title, snippet, region, validation_status, qualification_status, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', 'UNQUALIFIED', NOW())`,
+        [
+          rawId,
+          runId,
+          c.discovery_provider || "WEB_SEARCH",
+          (c.discovery_query || "").slice(0, 500),
+          lane.id,
+          c.url.slice(0, 2048),
+          c.domain.slice(0, 255),
+          (c.title || "").slice(0, 500),
+          (c.snippet || "").slice(0, 4000),
+          c.region || "GLOBAL",
+        ]
+      ).catch((err) => console.warn("[runner] staging notice:", err?.message));
+    }
+  }
+
+  // ---- 3. In-run dedupe by normalized URL ----
   const byNorm = new Map<string, CandidateOpportunity>();
   for (const c of candidates) {
     const n = normalizeOpportunityUrl(c.url);
@@ -239,7 +280,7 @@ export async function runDiscoveryLane(
   }
   result.unique_candidates = byNorm.size;
 
-  // ---- 3. Exact dedupe against DB ----
+  // ---- 4. Exact dedupe against DB ----
   const fresh: Array<{ norm: string; cand: CandidateOpportunity }> = [];
   for (const [norm, cand] of byNorm) {
     const { rows } = await cmsQuery<{ exact_submission_url: string }>(
@@ -248,12 +289,19 @@ export async function runDiscoveryLane(
     );
     if (rows.some((r) => normalizeOpportunityUrl(r.exact_submission_url) === norm)) {
       result.already_tracked++;
+      const rawId = rawIdByNorm.get(norm);
+      if (rawId) {
+        await cmsExecute(
+          `UPDATE off_page_raw_candidates SET validation_status = 'DUPLICATE', qualification_status = 'DUPLICATE', updated_at = NOW() WHERE id = ?`,
+          [rawId]
+        ).catch(() => {});
+      }
       continue;
     }
     fresh.push({ norm, cand });
   }
 
-  // ---- 4. Live fetch + lane validation (bounded) ----
+  // ---- 5. Live fetch + lane validation (bounded) ----
   const toValidate = fresh.slice(0, maxValidate);
   const verdicts = await mapLimit(toValidate, 5, async ({ cand }) => {
     const analysis = await analyzePage(cand.url, 12000);
@@ -266,8 +314,18 @@ export async function runDiscoveryLane(
   });
   result.pages_fetched = verdicts.filter((v) => v.analysis.fetched).length;
 
-  // ---- 5. Persist ----
+  // ---- 6. Persist: Only strictly QUALIFIED candidates enter off_page_opportunities ----
   for (const { cand, analysis, verdict } of verdicts) {
+    const norm = normalizeOpportunityUrl(cand.url);
+    const rawId = rawIdByNorm.get(norm);
+
+    if (rawId) {
+      await cmsExecute(
+        `UPDATE off_page_raw_candidates SET http_status = ?, fetched_at = NOW(), updated_at = NOW() WHERE id = ?`,
+        [analysis.httpStatus ?? null, rawId]
+      ).catch(() => {});
+    }
+
     // A page that already links to DGS is a backlink, not an opportunity -> backlink pipeline.
     if (analysis.dgsLinks.length > 0) {
       try {
@@ -278,6 +336,12 @@ export async function runDiscoveryLane(
           note: `Observed during lane ${lane.id} (query: ${cand.discovery_query})`,
         });
         if (rec) result.backlinks_found++;
+        if (rawId) {
+          await cmsExecute(
+            `UPDATE off_page_raw_candidates SET validation_status = 'BACKLINK_OBSERVED', qualification_status = 'BACKLINK_OBSERVED', updated_at = NOW() WHERE id = ?`,
+            [rawId]
+          ).catch(() => {});
+        }
       } catch (e: any) {
         errors.push(`backlink record ${cand.url}: ${e?.message}`);
       }
@@ -290,59 +354,97 @@ export async function runDiscoveryLane(
         const key = r.split(":")[0];
         rejectionReasons[key] = (rejectionReasons[key] || 0) + 1;
       }
+      if (rawId) {
+        await cmsExecute(
+          `UPDATE off_page_raw_candidates SET validation_status = ?, qualification_status = 'REJECTED', qualification_reasons = ?, updated_at = NOW() WHERE id = ?`,
+          [analysis.fetched ? "VALID_URL" : "UNREACHABLE", verdict.reasons.join("; ").slice(0, 1000), rawId]
+        ).catch(() => {});
+      }
       continue;
     }
 
-    const evidenceParts = [
-      cand.evidence || "",
-      `Live check: HTTP ${analysis.httpStatus} at ${new Date().toISOString()} (final URL ${analysis.finalUrl}).`,
-      analysis.title ? `Page title: "${analysis.title}".` : "",
-      verdict.signals.length ? `Signals: ${verdict.signals.slice(0, 12).join(", ")}.` : "",
-      verdict.brokenLinks?.length
-        ? `Dead outbound links: ${verdict.brokenLinks.slice(0, 5).map((b) => `${b.href} [${b.status || "unreachable"}]`).join("; ")}.`
-        : "",
-      verdict.competitorLinks?.length ? `Competitor links: ${verdict.competitorLinks.slice(0, 5).join("; ")}.` : "",
-    ].filter(Boolean);
+    // Reachable but unqualified candidates stay staged in off_page_raw_candidates (no 58,931 problem)
+    if (verdict.decision === "DISCOVERED") {
+      result.discovered_inserted++;
+      if (rawId) {
+        await cmsExecute(
+          `UPDATE off_page_raw_candidates SET validation_status = 'REACHABLE', qualification_status = 'DISCOVERED', qualification_reasons = ?, updated_at = NOW() WHERE id = ?`,
+          [verdict.reasons.join("; ").slice(0, 1000), rawId]
+        ).catch(() => {});
+      }
+      continue;
+    }
 
-    let siteName = analysis.title || cand.site_name || cand.domain;
-    siteName = siteName.replace(/\s+/g, " ").slice(0, 200);
+    // Only QUALIFIED proceeds to off_page_opportunities and TurboVec
+    if (verdict.decision === "QUALIFIED") {
+      const evidenceParts = [
+        cand.evidence || "",
+        `Live check: HTTP ${analysis.httpStatus} at ${new Date().toISOString()} (final URL ${analysis.finalUrl}).`,
+        analysis.title ? `Page title: "${analysis.title}".` : "",
+        verdict.signals.length ? `Signals: ${verdict.signals.slice(0, 12).join(", ")}.` : "",
+        verdict.brokenLinks?.length
+          ? `Dead outbound links: ${verdict.brokenLinks.slice(0, 5).map((b) => `${b.href} [${b.status || "unreachable"}]`).join("; ")}.`
+          : "",
+        verdict.competitorLinks?.length ? `Competitor links: ${verdict.competitorLinks.slice(0, 5).join("; ")}.` : "",
+      ].filter(Boolean);
 
-    const ing = await ingestDiscoveredOpportunity({
-      site_name: siteName,
-      domain: cand.domain,
-      exact_submission_url: analysis.finalUrl || cand.url,
-      region: verdict.region,
-      country: verdict.region === "INDIA" ? "India" : verdict.region === "UAE" ? "United Arab Emirates" : verdict.region === "USA" ? "United States" : "Global",
-      category: lane.category,
-      free_status: verdict.freeStatus,
-      dofollow_status: verdict.linkType,
-      link_type: lane.category,
-      submission_type: lane.validator,
-      topical_relevance: Math.max(40, verdict.relevance),
-      notes: `Lane ${lane.label}.`,
-      evidence: evidenceParts.join(" ").slice(0, 4000),
-      discovery_provider: cand.discovery_provider,
-      discovery_query: cand.discovery_query,
-      http_status: analysis.httpStatus,
-      verification_status: verdict.decision === "QUALIFIED" ? "VERIFIED_ACTIVE" : "REACHABLE_UNQUALIFIED",
-      source_type: cand.source_type || cand.discovery_provider.toLowerCase(),
-      status: verdict.decision,
-      discovery_lane: lane.id,
-      page_title: analysis.title,
-      qualification_reason: verdict.reasons.join("; ").slice(0, 1000),
-    });
+      let siteName = analysis.title || cand.site_name || cand.domain;
+      siteName = siteName.replace(/\s+/g, " ").slice(0, 200);
 
-    if (ing.success && ing.id) {
-      insertedIds.push(ing.id);
-      if (verdict.decision === "QUALIFIED") result.qualified_inserted++;
-      else result.discovered_inserted++;
-    } else if (ing.error?.includes("DUPLICATE")) {
-      result.semantic_or_exact_duplicates++;
-    } else if (ing.error?.includes("SPAM")) {
-      result.rejected++;
-      rejectionReasons.SPAM_FILTER = (rejectionReasons.SPAM_FILTER || 0) + 1;
-    } else if (ing.error) {
-      errors.push(ing.error);
+      const ing = await ingestDiscoveredOpportunity({
+        site_name: siteName,
+        domain: cand.domain,
+        exact_submission_url: analysis.finalUrl || cand.url,
+        region: verdict.region,
+        country: verdict.region === "INDIA" ? "India" : verdict.region === "UAE" ? "United Arab Emirates" : verdict.region === "USA" ? "United States" : "Global",
+        category: lane.category,
+        free_status: verdict.freeStatus,
+        dofollow_status: verdict.linkType,
+        link_type: lane.category,
+        submission_type: lane.validator,
+        topical_relevance: Math.max(40, verdict.relevance),
+        notes: `Lane ${lane.label}.`,
+        evidence: evidenceParts.join(" ").slice(0, 4000),
+        discovery_provider: cand.discovery_provider,
+        discovery_query: cand.discovery_query,
+        http_status: analysis.httpStatus,
+        verification_status: "VERIFIED_ACTIVE",
+        source_type: cand.source_type || cand.discovery_provider.toLowerCase(),
+        status: "QUALIFIED",
+        discovery_lane: lane.id,
+        page_title: analysis.title,
+        qualification_reason: verdict.reasons.join("; ").slice(0, 1000),
+      });
+
+      if (ing.success && ing.id) {
+        insertedIds.push(ing.id);
+        result.qualified_inserted++;
+        if (rawId) {
+          await cmsExecute(
+            `UPDATE off_page_raw_candidates SET opportunity_id = ?, validation_status = 'QUALIFIED', qualification_status = 'QUALIFIED', qualification_reasons = ?, updated_at = NOW() WHERE id = ?`,
+            [ing.id, verdict.reasons.join("; ").slice(0, 1000), rawId]
+          ).catch(() => {});
+        }
+      } else if (ing.error?.includes("DUPLICATE")) {
+        result.semantic_or_exact_duplicates++;
+        if (rawId) {
+          await cmsExecute(
+            `UPDATE off_page_raw_candidates SET validation_status = 'SEMANTIC_DUPLICATE', qualification_status = 'DUPLICATE', updated_at = NOW() WHERE id = ?`,
+            [rawId]
+          ).catch(() => {});
+        }
+      } else if (ing.error?.includes("SPAM")) {
+        result.rejected++;
+        rejectionReasons.SPAM_FILTER = (rejectionReasons.SPAM_FILTER || 0) + 1;
+        if (rawId) {
+          await cmsExecute(
+            `UPDATE off_page_raw_candidates SET validation_status = 'SPAM_REJECTED', qualification_status = 'REJECTED', qualification_reasons = 'SPAM_FILTER', updated_at = NOW() WHERE id = ?`,
+            [rawId]
+          ).catch(() => {});
+        }
+      } else if (ing.error) {
+        errors.push(ing.error);
+      }
     }
   }
 
@@ -354,14 +456,13 @@ export async function runDiscoveryLane(
       insertedIds
     );
     result.qualified_inserted = Number(rows.find((r) => r.status === "QUALIFIED")?.c || 0);
-    result.discovered_inserted = Number(rows.find((r) => r.status === "DISCOVERED")?.c || 0);
   }
 
   result.status = errors.length > 0 && result.pages_fetched === 0 ? "PARTIAL" : "COMPLETED";
   result.message =
-    `${lane.label}: ${result.results_returned} provider results, ${result.unique_candidates} unique, ` +
-    `${result.already_tracked} already tracked, ${result.pages_fetched} pages fetched live, ` +
-    `${result.qualified_inserted} QUALIFIED → Needs Review, ${result.discovered_inserted} raw (DISCOVERED), ` +
+    `${lane.label}: ${result.results_returned} provider results staged in raw_candidates, ` +
+    `${result.unique_candidates} unique, ${result.already_tracked} already tracked, ${result.pages_fetched} pages fetched live, ` +
+    `${result.qualified_inserted} QUALIFIED → Needs Review, ${result.discovered_inserted} raw staged, ` +
     `${result.rejected} rejected, ${result.backlinks_found} existing backlinks recorded.`;
   await finishRun(result);
   return result;
@@ -381,7 +482,7 @@ async function finishRun(result: LaneRunResult): Promise<void> {
         result.qualified_inserted,
         result.already_tracked + result.semantic_or_exact_duplicates,
         result.rejected,
-        result.qualified_inserted + result.discovered_inserted,
+        result.qualified_inserted,
         result.errors.length ? result.errors.slice(0, 5).join("; ").slice(0, 2000) : null,
         result.status,
         JSON.stringify({ ...result, inserted_ids: result.inserted_ids.slice(0, 200) }),
@@ -411,7 +512,7 @@ export async function getLaneOverview(): Promise<
   await ensureOffPageTablesExist();
   const cfg = await getLaneQueryConfig();
   const competitors = await getCompetitorDomains();
-  const braveOk = !!getBraveApiKey();
+  const braveOk = !!(await resolveBraveApiKey());
   const { rows: runs } = await cmsQuery<any>(
     `SELECT r.* FROM off_page_discovery_runs r
      JOIN (SELECT provider, MAX(started_at) AS m FROM off_page_discovery_runs WHERE provider LIKE 'LANE:%' GROUP BY provider) x
@@ -421,9 +522,13 @@ export async function getLaneOverview(): Promise<
   for (const r of runs) lastBy[String(r.provider).replace(/^LANE:/, "")] = r;
 
   return LANES.map((l: LaneDefinition) => {
-    const usable = l.providers.filter((p) => (p === "BRAVE_SEARCH" ? braveOk : true));
+    const usable = l.providers.filter((p) => {
+      if (p === "BRAVE_SEARCH") return braveOk;
+      if (p === "WEB_SEARCH") return true;
+      return true;
+    });
     let ready = usable.length > 0;
-    let readiness = ready ? `Ready via ${usable.join(", ")}` : "WEB SEARCH (BRAVE) — NOT CONFIGURED";
+    let readiness = ready ? `Ready via ${usable.join(", ")}` : "NO PROVIDER CONFIGURED";
     if (l.validator === "COMPETITOR_GAP" && competitors.length === 0) {
       ready = false;
       readiness = "NOT CONFIGURED — add competitor domains";

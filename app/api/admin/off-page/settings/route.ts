@@ -49,12 +49,15 @@ export async function PUT(req: Request) {
   try {
     const body = await req.json();
     for (const [key, value] of Object.entries(body)) {
-      await cmsExecute(
-        `INSERT INTO off_page_settings (id, key_name, key_value, updated_at)
-         VALUES (?, ?, ?, NOW())
-         ON DUPLICATE KEY UPDATE key_value = VALUES(key_value), updated_at = NOW()`,
-        [`set_${key}`, key, String(value)]
-      );
+      const { rows } = await cmsQuery<{ id: string }>(`SELECT id FROM off_page_settings WHERE key_name = ? LIMIT 1`, [key]);
+      if (rows.length > 0) {
+        await cmsExecute(`UPDATE off_page_settings SET key_value = ?, updated_at = NOW() WHERE key_name = ?`, [String(value), key]);
+      } else {
+        await cmsExecute(
+          `INSERT INTO off_page_settings (id, key_name, key_value, updated_at) VALUES (?, ?, ?, NOW())`,
+          [`set_${key}`.slice(0, 64), key, String(value)]
+        );
+      }
     }
 
     return NextResponse.json({ ok: true });

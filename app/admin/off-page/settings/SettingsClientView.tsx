@@ -43,6 +43,7 @@ export default function SettingsClientView({ initialSettings }: Props) {
   );
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [showBraveKey, setShowBraveKey] = useState(false);
 
   // Provider Health Matrix State (Section 40 & 41)
   const [providers, setProviders] = useState<ProviderHealth[]>([]);
@@ -537,6 +538,116 @@ export default function SettingsClientView({ initialSettings }: Props) {
                 Enable Automated Live HTTP Backlink Status Verification
               </span>
             </label>
+          </div>
+        </div>
+
+        {/* Section 5b: General Search Providers & Quota Governance */}
+        <div className="dgs-saas-card" style={{ padding: "24px", border: "1px solid rgba(0, 198, 255, 0.3)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
+            <Cpu size={18} color="var(--dgs-brand-cyan)" />
+            <h3 style={{ margin: 0, color: "#fff", fontSize: "1rem" }}>
+              5b. General Live Search Providers & Quota Governance
+            </h3>
+            <span className="dgs-saas-chip success" style={{ fontSize: "0.7rem", fontWeight: 700 }}>
+              LIVE ACQUISITION
+            </span>
+          </div>
+          <p style={{ margin: "0 0 16px 0", fontSize: "0.82rem", color: "rgba(255,255,255,0.6)" }}>
+            Configure live general web search engines and API credentials. Credentials entered here are saved securely to database settings and never exposed in command lines or public repositories.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
+            {/* Native Web Search */}
+            <div style={{ background: "rgba(255,255,255,0.02)", padding: "14px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                <strong style={{ color: "#fff", fontSize: "0.88rem" }}>Native Web Search Engine</strong>
+                <span className="dgs-saas-chip success" style={{ fontSize: "0.68rem" }}>ACTIVE · FREE</span>
+              </div>
+              <p style={{ margin: "0 0 10px 0", fontSize: "0.76rem", color: "rgba(255,255,255,0.5)" }}>
+                Built-in, zero-cost search engine running with rate limiting, cooldown, and multi-region parsing.
+              </p>
+              <div>
+                <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                  Daily Query Quota Guard:
+                </label>
+                <input
+                  type="number"
+                  value={settings.web_search_daily_quota || "100"}
+                  onChange={(e) => handleChange("web_search_daily_quota", e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "8px 12px",
+                    borderRadius: "6px",
+                    background: "#1f2937",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    color: "#fff",
+                    fontSize: "0.85rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Brave Search API */}
+            <div style={{ background: "rgba(255,255,255,0.02)", padding: "14px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+                <strong style={{ color: "#fff", fontSize: "0.88rem" }}>Brave Search API</strong>
+                <span className={`dgs-saas-chip ${settings.brave_search_api_key?.trim() ? "success" : "warning"}`} style={{ fontSize: "0.68rem" }}>
+                  {settings.brave_search_api_key?.trim() ? "CONFIGURED" : "OPTIONAL API KEY"}
+                </span>
+              </div>
+              <p style={{ margin: "0 0 10px 0", fontSize: "0.76rem", color: "rgba(255,255,255,0.5)" }}>
+                Official Brave Search API (2,000 queries/month free tier). Enter key below or set in environment.
+              </p>
+              <div style={{ marginBottom: "10px" }}>
+                <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                  Brave Search API Key:
+                </label>
+                <div style={{ display: "flex", gap: "6px" }}>
+                  <input
+                    type={showBraveKey ? "text" : "password"}
+                    value={settings.brave_search_api_key || ""}
+                    onChange={(e) => handleChange("brave_search_api_key", e.target.value)}
+                    placeholder="Enter Brave Search API key"
+                    style={{
+                      flex: 1,
+                      padding: "8px 12px",
+                      borderRadius: "6px",
+                      background: "#1f2937",
+                      border: "1px solid rgba(255,255,255,0.15)",
+                      color: "#fff",
+                      fontSize: "0.85rem",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowBraveKey(!showBraveKey)}
+                    className="dgs-saas-btn secondary"
+                    style={{ fontSize: "0.74rem", padding: "6px 10px" }}
+                  >
+                    {showBraveKey ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "0.78rem", color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>
+                  Daily Query Quota Guard:
+                </label>
+                <input
+                  type="number"
+                  value={settings.brave_search_daily_quota || "60"}
+                  onChange={(e) => handleChange("brave_search_daily_quota", e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "8px 12px",
+                    borderRadius: "6px",
+                    background: "#1f2937",
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    color: "#fff",
+                    fontSize: "0.85rem",
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
 

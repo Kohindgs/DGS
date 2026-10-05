@@ -2,48 +2,58 @@ import { GoogleSearchDiscoveryProvider } from "./google-search";
 import { GoogleNewsRssDiscoveryProvider } from "./google-news-rss";
 import { GdeltDiscoveryProvider } from "./gdelt";
 import { BraveSearchDiscoveryProvider } from "./brave";
+import { WebSearchDiscoveryProvider } from "./web-search";
 import type { DiscoveryProvider, ProviderHealth } from "./types";
 import { getTurboVecStatus } from "@/lib/intelligence/turbovec-client";
 import { cmsQuery } from "@/lib/cms/db";
 
+const webSearch = new WebSearchDiscoveryProvider();
+const brave = new BraveSearchDiscoveryProvider();
 const googleSearch = new GoogleSearchDiscoveryProvider();
 const googleNewsRss = new GoogleNewsRssDiscoveryProvider();
 const gdelt = new GdeltDiscoveryProvider();
-const brave = new BraveSearchDiscoveryProvider();
 
 const providers: Record<string, DiscoveryProvider> = {
+  [webSearch.id]: webSearch,
+  [brave.id]: brave,
   [googleSearch.id]: googleSearch,
   [googleNewsRss.id]: googleNewsRss,
   [gdelt.id]: gdelt,
-  [brave.id]: brave,
 };
 
 export function getProvider(id?: string): DiscoveryProvider {
   if (id && providers[id]) {
     return providers[id];
   }
-  // Default to active Google News RSS provider
-  return googleNewsRss;
+  // Default to active native web search provider
+  return webSearch;
 }
 
 export function getAllDiscoveryProviders(): DiscoveryProvider[] {
-  return [brave, googleNewsRss, googleSearch, gdelt];
+  return [webSearch, brave, googleNewsRss, googleSearch, gdelt];
 }
 
 /**
- * Returns comprehensive health status across all 10 Off-Page systems (Section 40)
+ * Returns comprehensive health status across all Off-Page systems (V8.12.7)
  */
 export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
   const matrix: ProviderHealth[] = [];
 
-  // 0. Brave Search API (V8.12.6 primary web search)
+  // 0. Native Web Search Engine (V8.12.7 Active General Search Provider)
+  try {
+    matrix.push(await webSearch.health());
+  } catch (err: any) {
+    matrix.push({ id: "web-search", name: "Web Search (Native Search Engine)", type: "SEARCH", status: "ERROR", reason: err?.message });
+  }
+
+  // 1. Brave Search API (V8.12.7 Configurable Search API)
   try {
     matrix.push(await brave.health());
   } catch (err: any) {
     matrix.push({ id: "brave-search", name: "Web Search (Brave Search API)", type: "SEARCH", status: "ERROR", reason: err?.message });
   }
 
-  // 1. Google Search / SERP API
+  // 2. Google Search / SERP API
   try {
     matrix.push(await googleSearch.health());
   } catch (err: any) {
@@ -56,7 +66,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 2. Google News & RSS Discovery
+  // 3. Google News & RSS Discovery
   try {
     matrix.push(await googleNewsRss.health());
   } catch (err: any) {
@@ -69,7 +79,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 3. GDELT 2.0 Global Media
+  // 4. GDELT 2.0 Global Media
   try {
     matrix.push(await gdelt.health());
   } catch (err: any) {
@@ -82,7 +92,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 4. Brand Mention Discovery (Section 29)
+  // 5. Brand Mention Discovery (Section 29)
   const brandMentionKey = process.env.BRAND_MENTIONS_API_KEY || process.env.TALKWALKER_API_KEY;
   if (!brandMentionKey) {
     matrix.push({
@@ -103,7 +113,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 5. Digital PR Provider (Section 31)
+  // 6. Digital PR Provider (Section 31)
   const prKey = process.env.HARO_API_KEY || process.env.QWOTED_API_KEY;
   if (!prKey) {
     matrix.push({
@@ -124,7 +134,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 6. Competitor Gap Data Provider (Section 32)
+  // 7. Competitor Gap Data Provider (Section 32)
   const compKey = process.env.AHREFS_API_KEY || process.env.SEMRUSH_API_KEY || process.env.DATAFORSEO_API_KEY;
   if (!compKey) {
     matrix.push({
@@ -145,7 +155,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 7. Backlink Crawler (Section 25)
+  // 8. Backlink Crawler (Section 25)
   matrix.push({
     id: "backlink-crawler",
     name: "Real Remote Backlink Crawler & Verifier",
@@ -155,7 +165,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     lastSuccess: new Date().toISOString(),
   });
 
-  // 8. TurboVec Semantic Authority Intelligence (Section 1 & 52)
+  // 9. TurboVec Semantic Authority Intelligence (Section 1 & 52)
   try {
     const tvHealth = await getTurboVecStatus();
     matrix.push({
@@ -178,7 +188,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 9. MariaDB Database (Section 6)
+  // 10. MariaDB Database (Section 6)
   try {
     const { rows: testRows } = await cmsQuery<{ c: number }>("SELECT 1 as c");
     matrix.push({
@@ -199,7 +209,7 @@ export async function getProviderHealthMatrix(): Promise<ProviderHealth[]> {
     });
   }
 
-  // 10. Daily Automation (Section 42)
+  // 11. Daily Automation (Section 42)
   try {
     const { rows: lastRun } = await cmsQuery<{ status: string; completed_at: string }>(
       "SELECT status, completed_at FROM off_page_automation_runs ORDER BY started_at DESC LIMIT 1"
