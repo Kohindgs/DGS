@@ -101,6 +101,13 @@ async function run() {
   await page.screenshot({ path: path.join(OUT_DIR, "07_offpage_mentions_truthful.png"), fullPage: false });
   console.log("✓ Saved 07_offpage_mentions_truthful.png");
 
+  // 9. Monitoring & Daily Automation Runs
+  console.log("[STEP 9] Monitoring & Daily Automation Runs...");
+  await page.goto(`${BASE}/admin/off-page/monitoring/`, { waitUntil: "networkidle" });
+  await page.waitForTimeout(1500);
+  await page.screenshot({ path: path.join(OUT_DIR, "08_offpage_monitoring_automation.png"), fullPage: false });
+  console.log("✓ Saved 08_offpage_monitoring_automation.png");
+
   await browser.close();
   console.log("\n================================================================================");
   console.log("✓ ALL PLAYWRIGHT ACCEPTANCE SCREENSHOTS CAPTURED SUCCESSFULLY!");
