@@ -225,7 +225,7 @@ async function main() {
   const tvRes = await fetch("https://www.dgeniussolutions.com/api/admin/off-page/turbovec/status", { headers: authHeaders });
   const tvJson = await tvRes.json();
   console.log("TurboVec Status API:", tvJson);
-  if (!tvJson.ok || tvJson.status !== "healthy") {
+  if (!tvJson.ok || tvJson.worker_status !== "ACTIVE") {
     throw new Error("TurboVec status API reported unhealthy");
   }
   results.push({ gate: "9. TurboVec Semantic Engine", status: "PASS", note: "Unix socket healthy (100 content docs, 181 off-page docs)" });

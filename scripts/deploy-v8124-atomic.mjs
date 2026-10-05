@@ -100,6 +100,7 @@ NEW_REL="/home/u188101251/production-app/releases/${releaseId}"
 mkdir -p "$NEW_REL"
 echo "Extracting release package..."
 tar -xzf "/home/u188101251/production-app/tmp/${tarName}" -C "$NEW_REL"
+rm -f "/home/u188101251/production-app/tmp/${tarName}"
 
 echo "Configuring persistent symlinks..."
 ln -sfn /home/u188101251/production-app/shared/node_modules "$NEW_REL/node_modules"
