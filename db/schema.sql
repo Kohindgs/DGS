@@ -195,6 +195,9 @@ CREATE TABLE IF NOT EXISTS assessment_assignments (
   notice_period VARCHAR(255),
   expires_at DATETIME NULL,
   used_at DATETIME NULL,
+  psychometric_enabled TINYINT(1) NOT NULL DEFAULT 1,
+  assignment_snapshot LONGTEXT NULL,
+  duration_minutes INT NOT NULL DEFAULT 60,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_assessment_assignments_key (assessment_key)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -212,6 +215,11 @@ CREATE TABLE IF NOT EXISTS assessment_attempts (
   objective_total INT NOT NULL DEFAULT 0,
   answers JSON NOT NULL,
   activity JSON NOT NULL,
+  technical_answers LONGTEXT NULL,
+  psychometric_answers LONGTEXT NULL,
+  psychometric_profile VARCHAR(100) NULL,
+  psychometric_score_data LONGTEXT NULL,
+  practical_submission LONGTEXT NULL,
   review_status VARCHAR(50) NOT NULL DEFAULT 'pending',
   reviewer_notes TEXT,
   started_at DATETIME NOT NULL,

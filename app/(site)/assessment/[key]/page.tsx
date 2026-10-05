@@ -28,7 +28,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const { key } = await params;
   const { token } = await searchParams;
 
-  const definition = await resolveAssessmentDefinition(key);
+  const definition = await resolveAssessmentDefinition(key, token);
   if (!definition) {
     notFound();
   }
@@ -57,6 +57,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
         summary={definition.summary}
         durationMinutes={definition.durationMinutes}
         questions={publicQuestions}
+        practicalTask={definition.practicalTask || null}
       />
     </main>
   );

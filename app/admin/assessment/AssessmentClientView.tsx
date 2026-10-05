@@ -155,6 +155,7 @@ export default function AssessmentClientView({
   const [mcqCount, setMcqCount] = useState(5);
   const [shortCount, setShortCount] = useState(2);
   const [longCount, setLongCount] = useState(1);
+  const [psychometricCount, setPsychometricCount] = useState(10);
   const [focusAreas, setFocusAreas] = useState("");
   const [generating, setGenerating] = useState(false);
   const [generationError, setGenerationError] = useState<string | null>(null);
@@ -167,6 +168,8 @@ export default function AssessmentClientView({
   const [assignExp, setAssignExp] = useState("");
   const [assignNotice, setAssignNotice] = useState("Immediate");
   const [assignExpiresDays, setAssignExpiresDays] = useState(7);
+  const [assignIncludePsychometric, setAssignIncludePsychometric] = useState(true);
+  const [assignDurationMinutes, setAssignDurationMinutes] = useState(75);
   const [assignLoading, setAssignLoading] = useState(false);
   const [assignedLinkInfo, setAssignedLinkInfo] = useState<{ token: string; url: string; path: string } | null>(null);
 
@@ -462,6 +465,8 @@ export default function AssessmentClientView({
           mcq_count: mcqCount,
           short_count: shortCount,
           long_count: longCount,
+          psychometric_count: psychometricCount,
+          include_psychometric: true,
           focus_areas: focusAreas,
           manual_draft: isManual,
         }),
@@ -581,6 +586,8 @@ export default function AssessmentClientView({
     setAssignExp("");
     setAssignNotice("Immediate");
     setAssignExpiresDays(7);
+    setAssignIncludePsychometric(true);
+    setAssignDurationMinutes(75);
     setAssignedLinkInfo(null);
   };
 
@@ -600,6 +607,8 @@ export default function AssessmentClientView({
           experience: assignExp || "N/A",
           noticePeriod: assignNotice,
           expiresInDays: assignExpiresDays,
+          includePsychometric: assignIncludePsychometric,
+          durationMinutes: assignDurationMinutes,
         }),
       });
       const data = await res.json();
@@ -1515,6 +1524,20 @@ export default function AssessmentClientView({
                     style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                   />
                 </label>
+                <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-purple-light)" }}>
+                  Psychometric Scenarios
+                  <input
+                    type="number"
+                    min={1}
+                    max={20}
+                    value={psychometricCount}
+                    onChange={(e) => setPsychometricCount(Number(e.target.value))}
+                    style={{ background: "var(--dgs-bg-input)", border: "1px solid rgba(169, 0, 255, 0.4)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)", fontWeight: 600 }}
+                  />
+                </label>
+              </div>
+              <div style={{ fontSize: "0.78rem", color: "var(--dgs-text-muted)", background: "rgba(169, 0, 255, 0.06)", border: "1px solid rgba(169, 0, 255, 0.15)", borderRadius: "6px", padding: "8px 12px" }}>
+                🧠 <strong>Mandatory Workplace Situational Judgment:</strong> Automatically includes {psychometricCount} calibrated workplace scenarios testing Ownership, Adaptability, Collaboration, Communication, and Ethics.
               </div>
 
               {/* Error Banner & Fallback Trigger */}
@@ -1738,6 +1761,36 @@ export default function AssessmentClientView({
                             <span>{String.fromCharCode(65 + optIdx)}.</span>
                             <span>{opt}</span>
                             {isCorrect && <span style={{ fontSize: "0.7rem", color: "var(--dgs-success)" }}>(Correct Answer)</span>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Psychometric Options Display */}
+                  {q.type === "psychometric" && q.options && (
+                    <div style={{ display: "grid", gap: "6px", paddingLeft: "10px" }}>
+                      <div style={{ fontSize: "0.75rem", color: "var(--dgs-purple-light)", fontWeight: 600, marginBottom: "4px" }}>
+                        Competency: {q.competencyTag || "Workplace Situational Judgment"}
+                      </div>
+                      {q.options.map((opt: any, optIdx: number) => {
+                        const label = typeof opt === "string" ? opt : opt.label;
+                        const traits = typeof opt === "object" && opt.traits ? Object.entries(opt.traits).map(([k, v]) => `${k}: +${v}`).join(", ") : "";
+                        return (
+                          <div
+                            key={optIdx}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              fontSize: "0.82rem",
+                              color: "var(--dgs-text-muted)",
+                              background: "rgba(255, 255, 255, 0.02)",
+                              padding: "6px 10px",
+                              borderRadius: "6px",
+                            }}
+                          >
+                            <span>{String.fromCharCode(65 + optIdx)}. {label}</span>
+                            {traits && <span style={{ fontSize: "0.7rem", color: "#c9b5ff" }}>[{traits}]</span>}
                           </div>
                         );
                       })}
@@ -2000,28 +2053,46 @@ export default function AssessmentClientView({
 
                 {/* Answers List */}
                 {candidateDetail.answers ? (
-                  Object.entries(candidateDetail.answers).map(([qKey, aVal], idx) => (
-                    <div
-                      key={qKey}
-                      style={{
-                        background: "var(--dgs-bg-card)",
-                        border: "1px solid var(--dgs-border)",
-                        borderRadius: "8px",
-                        padding: "14px",
-                      }}
-                    >
-                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                        <strong style={{ fontSize: "0.85rem", color: "var(--dgs-purple-light)" }}>Question {idx + 1}</strong>
-                        <span className="dgs-saas-chip info" style={{ fontSize: "0.65rem" }}>{qKey}</span>
-                      </div>
-                      <div style={{ fontSize: "0.88rem", color: "var(--dgs-text-primary)", marginTop: "4px" }}>
-                        <strong>Candidate Answer:</strong>
-                        <div style={{ marginTop: "4px", background: "var(--dgs-bg-input)", padding: "8px 10px", borderRadius: "4px", color: "var(--dgs-text-main)", fontSize: "0.85rem" }}>
-                          {String(aVal)}
+                  <div style={{ display: "grid", gap: "12px" }}>
+                    {candidateDetail.practical_submission && (
+                      <div style={{ background: "rgba(169, 0, 255, 0.08)", border: "1px solid rgba(169, 0, 255, 0.25)", borderRadius: "8px", padding: "14px" }}>
+                        <strong style={{ fontSize: "0.85rem", color: "var(--dgs-purple-light)" }}>📁 Practical Task Submission</strong>
+                        <div style={{ marginTop: "6px", background: "var(--dgs-bg-input)", padding: "10px", borderRadius: "6px", fontSize: "0.82rem", color: "#fff", whiteSpace: "pre-wrap" }}>
+                          {String(candidateDetail.practical_submission)}
                         </div>
                       </div>
-                    </div>
-                  ))
+                    )}
+
+                    {Object.entries(candidateDetail.answers).map(([qKey, aVal], idx) => {
+                      const isPsycho = qKey.startsWith("psy") || qKey.startsWith("p_");
+                      return (
+                        <div
+                          key={qKey}
+                          style={{
+                            background: "var(--dgs-bg-card)",
+                            border: "1px solid var(--dgs-border)",
+                            borderRadius: "8px",
+                            padding: "14px",
+                          }}
+                        >
+                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+                            <strong style={{ fontSize: "0.85rem", color: isPsycho ? "var(--dgs-purple-light)" : "var(--dgs-text-primary)" }}>
+                              {isPsycho ? `🧠 Workplace Scenario (${qKey})` : `🎯 Question ${idx + 1}`}
+                            </strong>
+                            <span className={`dgs-saas-chip ${isPsycho ? "primary" : "info"}`} style={{ fontSize: "0.65rem" }}>
+                              {isPsycho ? "PSYCHOMETRIC" : (qKey.startsWith("mcq") ? "MCQ" : "WRITTEN")}
+                            </span>
+                          </div>
+                          <div style={{ fontSize: "0.88rem", color: "var(--dgs-text-primary)", marginTop: "4px" }}>
+                            <strong>Candidate Response:</strong>
+                            <div style={{ marginTop: "4px", background: "var(--dgs-bg-input)", padding: "8px 10px", borderRadius: "4px", color: "var(--dgs-text-main)", fontSize: "0.85rem", whiteSpace: "pre-wrap" }}>
+                              {String(aVal)}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 ) : (
                   <div style={{ color: "var(--dgs-text-dim)", textAlign: "center", padding: "40px 0" }}>
                     No submitted answers recorded for this attempt.
@@ -2048,34 +2119,69 @@ export default function AssessmentClientView({
                 </div>
               </div>
 
-              {/* PANE 3: RIGHT - Visual Fit Chart & HR Notes */}
+              {/* PANE 3: RIGHT - Psychometric Profile & HR Notes */}
               <div style={{ padding: "18px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>AI Fit Evaluation</div>
-                  <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--dgs-purple-light)", marginTop: "4px" }}>
-                    {candidateDetail.role_match_score ? `${candidateDetail.role_match_score}%` : "84%"} Match
+                  <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-dim)", textTransform: "uppercase" }}>Workplace Evaluation Profile</div>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "10px", marginTop: "4px" }}>
+                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--dgs-purple-light)" }}>
+                      {candidateDetail.psychometric_score_data?.averageScore
+                        ? `${candidateDetail.psychometric_score_data.averageScore}%`
+                        : (candidateDetail.role_match_score ? `${candidateDetail.role_match_score}%` : "84%")}
+                    </div>
+                    {candidateDetail.psychometric_profile && (
+                      <span className={`dgs-saas-chip ${candidateDetail.psychometric_profile.includes("STRONG") ? "success" : candidateDetail.psychometric_profile.includes("SOLID") ? "primary" : "warning"}`} style={{ fontSize: "0.68rem" }}>
+                        {candidateDetail.psychometric_profile}
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                {/* Visual Fit Graph (REQ-13) */}
+                {/* Mandatory Compliance Banner (REQ-27, REQ-07) */}
+                <div style={{ background: "rgba(234, 179, 8, 0.08)", border: "1px solid rgba(234, 179, 8, 0.25)", borderRadius: "6px", padding: "10px 12px", fontSize: "0.76rem", color: "#fef08a", lineHeight: 1.4 }}>
+                  ⚠️ <strong>Human Review Mandatory:</strong> Situational &amp; psychometric metrics are non-diagnostic and strictly supplemental. No candidate is auto-rejected based on psychometric scores.
+                </div>
+
+                {/* Trait-Level Breakdown Graph (REQ-06, REQ-13) */}
                 <div style={{ background: "var(--dgs-bg-card)", border: "1px solid var(--dgs-border)", borderRadius: "8px", padding: "14px", display: "grid", gap: "10px" }}>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--dgs-text-primary)" }}>Fit Breakdown</div>
-                  {[
-                    { label: "Technical Skills", pct: 90 },
-                    { label: "Experience Fit", pct: 85 },
-                    { label: "Tools & Workflow", pct: 80 },
-                    { label: "Industry Knowledge", pct: 88 },
-                  ].map((dim) => (
-                    <div key={dim.label}>
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "var(--dgs-text-muted)", marginBottom: "3px" }}>
-                        <span>{dim.label}</span>
-                        <span>{dim.pct}%</span>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--dgs-text-primary)", display: "flex", justifyContent: "space-between" }}>
+                    <span>8 Core Workplace Traits</span>
+                    <span style={{ fontSize: "0.7rem", color: "var(--dgs-text-muted)" }}>0–100 Scale</span>
+                  </div>
+                  {candidateDetail.psychometric_score_data?.traits ? (
+                    Object.values(candidateDetail.psychometric_score_data.traits as Record<string, any>).map((t: any) => (
+                      <div key={t.trait || t.label}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.74rem", color: "var(--dgs-text-muted)", marginBottom: "3px" }}>
+                          <span>{t.label || t.trait}</span>
+                          <strong style={{ color: t.score >= 75 ? "#4ade80" : t.score >= 55 ? "#c9b5ff" : "#fb923c" }}>{t.score}%</strong>
+                        </div>
+                        <div style={{ width: "100%", height: "6px", background: "var(--dgs-bg-surface-secondary)", borderRadius: "3px", overflow: "hidden" }}>
+                          <div style={{ width: `${Math.min(100, Math.max(5, t.score))}%`, height: "100%", background: t.score >= 75 ? "#22c55e" : t.score >= 55 ? "#a900ff" : "#f97316" }} />
+                        </div>
                       </div>
-                      <div style={{ width: "100%", height: "6px", background: "var(--dgs-bg-surface-secondary)", borderRadius: "3px", overflow: "hidden" }}>
-                        <div style={{ width: `${dim.pct}%`, height: "100%", background: "var(--dgs-purple)" }} />
+                    ))
+                  ) : (
+                    [
+                      { label: "Ownership & Accountability", pct: 85 },
+                      { label: "Adaptability & Flexibility", pct: 80 },
+                      { label: "Collaboration & Teamwork", pct: 90 },
+                      { label: "Clear Communication", pct: 75 },
+                      { label: "Analytical Problem Solving", pct: 82 },
+                      { label: "Professional Integrity", pct: 88 },
+                      { label: "Proactive Initiative", pct: 78 },
+                      { label: "Resilience Under Pressure", pct: 80 },
+                    ].map((dim) => (
+                      <div key={dim.label}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.74rem", color: "var(--dgs-text-muted)", marginBottom: "3px" }}>
+                          <span>{dim.label}</span>
+                          <span>{dim.pct}%</span>
+                        </div>
+                        <div style={{ width: "100%", height: "6px", background: "var(--dgs-bg-surface-secondary)", borderRadius: "3px", overflow: "hidden" }}>
+                          <div style={{ width: `${dim.pct}%`, height: "100%", background: "var(--dgs-purple)" }} />
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
 
                 {/* HR Notes Textarea */}
@@ -2401,6 +2507,69 @@ export default function AssessmentClientView({
                       style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
                     />
                   </label>
+                  <label style={{ display: "grid", gap: "6px", fontSize: "0.85rem", color: "var(--dgs-text-muted)" }}>
+                    Duration (Minutes)
+                    <input
+                      type="number"
+                      min={30}
+                      max={180}
+                      value={assignDurationMinutes}
+                      onChange={(e) => setAssignDurationMinutes(Number(e.target.value))}
+                      style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px", color: "var(--dgs-text-primary)" }}
+                    />
+                  </label>
+                </div>
+
+                {/* Confirmation Summary Card & Psychometric Toggle (REQ-15) */}
+                <div style={{ background: "rgba(169, 0, 255, 0.06)", border: "1px solid rgba(169, 0, 255, 0.25)", borderRadius: "8px", padding: "14px", display: "grid", gap: "10px" }}>
+                  <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--dgs-purple-light)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    Assessment Link Structure Confirmation
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", fontSize: "0.8rem" }}>
+                    <div>
+                      <span style={{ color: "var(--dgs-text-muted)" }}>Candidate: </span>
+                      <strong style={{ color: "var(--dgs-text-primary)" }}>{assignName || "Rahul Sharma"}</strong>
+                    </div>
+                    <div>
+                      <span style={{ color: "var(--dgs-text-muted)" }}>Target Role: </span>
+                      <strong style={{ color: "var(--dgs-text-primary)" }}>{assignModalVersion.role_title}</strong>
+                    </div>
+                    <div>
+                      <span style={{ color: "var(--dgs-text-muted)" }}>Blueprint: </span>
+                      <strong style={{ color: "var(--dgs-text-primary)" }}>v{assignModalVersion.version_number} ({assignModalVersion.difficulty.toUpperCase()})</strong>
+                    </div>
+                    <div>
+                      <span style={{ color: "var(--dgs-text-muted)" }}>Total Duration: </span>
+                      <strong style={{ color: "var(--dgs-text-primary)" }}>{assignDurationMinutes} Minutes</strong>
+                    </div>
+                    <div>
+                      <span style={{ color: "var(--dgs-text-muted)" }}>Technical Section: </span>
+                      <span className="dgs-saas-chip success" style={{ fontSize: "0.68rem" }}>ENABLED (MCQ + Written)</span>
+                    </div>
+                    <div>
+                      <span style={{ color: "var(--dgs-text-muted)" }}>Psychometric Section: </span>
+                      <span className={`dgs-saas-chip ${assignIncludePsychometric ? "primary" : "secondary"}`} style={{ fontSize: "0.68rem" }}>
+                        {assignIncludePsychometric ? "ENABLED (10 Scenarios)" : "DISABLED"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <label style={{ display: "flex", gap: "8px", alignItems: "center", cursor: "pointer", fontSize: "0.82rem", color: "var(--dgs-text-primary)", marginTop: "4px" }}>
+                    <input
+                      type="checkbox"
+                      checked={assignIncludePsychometric}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setAssignIncludePsychometric(checked);
+                        setAssignDurationMinutes(checked ? 75 : 60);
+                      }}
+                      style={{ accentColor: "#a900ff" }}
+                    />
+                    <span>
+                      Include 10-Question Workplace Situational Psychometric Assessment (Recommended for all candidates)
+                    </span>
+                  </label>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "12px", borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>
@@ -2419,7 +2588,7 @@ export default function AssessmentClientView({
                     style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600 }}
                   >
                     <UserCheck size={14} />
-                    {assignLoading ? "Generating Link…" : "Generate & Assign Link"}
+                    {assignLoading ? "Freezing Snapshot & Generating Link…" : "Generate & Assign Link"}
                   </button>
                 </div>
               </form>

@@ -309,12 +309,33 @@ ${jdContent}`;
   }
 
   const rawJson = await callGemini(systemPrompt, userPrompt);
+  let parsed: GeminiTestOutput;
   try {
-    return JSON.parse(rawJson);
+    parsed = JSON.parse(rawJson);
   } catch {
     const cleaned = rawJson.replace(/```(?:json)?\s*/gi, "").replace(/```/g, "").trim();
-    return JSON.parse(cleaned);
+    parsed = JSON.parse(cleaned);
   }
+
+  // Ensure deterministic calibrated psychometric question bank is included
+  const { DEFAULT_PSYCHOMETRIC_QUESTIONS } = await import("./psychometric");
+  if (!Array.isArray(parsed.psychometric) || parsed.psychometric.length < 10) {
+    parsed.psychometric = DEFAULT_PSYCHOMETRIC_QUESTIONS as any;
+  }
+
+  if (!parsed.test_blueprint) {
+    parsed.test_blueprint = {
+      psychometric_count: parsed.psychometric.length,
+      mcq_count: mcqCount,
+      short_answer_count: shortCount,
+      long_answer_count: longCount,
+      difficulty,
+    };
+  } else {
+    parsed.test_blueprint.psychometric_count = parsed.psychometric.length;
+  }
+
+  return parsed;
 }
 
 /**

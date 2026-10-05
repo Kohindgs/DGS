@@ -10,7 +10,7 @@ export async function POST(request:Request) {
     const input=await request.json() as { token?:string; assessmentKey?:string };
     const token=String(input.token||"");
     const assessmentKey=String(input.assessmentKey||"");
-    const definition=await resolveAssessmentDefinition(assessmentKey);
+    const definition=await resolveAssessmentDefinition(assessmentKey, token);
     if(!definition || !token) return NextResponse.json({ok:false,message:"Invalid assessment link."},{status:400});
     const attempt=await startAssessmentAttempt(token,assessmentKey);
     return NextResponse.json({

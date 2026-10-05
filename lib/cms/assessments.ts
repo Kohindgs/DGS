@@ -16,6 +16,9 @@ export type AssessmentAssignment = {
   expires_at: string | null;
   used_at: string | null;
   created_at: string;
+  psychometric_enabled?: number | boolean;
+  assignment_snapshot?: string | any | null;
+  duration_minutes?: number;
 };
 
 export type AssessmentAttempt = {
@@ -30,6 +33,11 @@ export type AssessmentAttempt = {
   objective_score: number;
   objective_total: number;
   answers: string | Record<string, unknown>;
+  technical_answers?: string | Record<string, unknown> | null;
+  psychometric_answers?: string | Record<string, unknown> | null;
+  psychometric_profile?: string | null;
+  psychometric_score_data?: string | Record<string, unknown> | null;
+  practical_submission?: string | Record<string, unknown> | null;
   activity: string | Record<string, unknown>;
   review_status: string;
   reviewer_notes: string | null;
@@ -77,8 +85,9 @@ export type CandidateRecord = {
   appointment_details: any;
   created_at: string | Date;
   updated_at: string | Date;
-  // Joined fields from assessment_candidates
+  // Joined fields from assessment_candidates and assessment_attempts
   assessment_id?: string;
+  assignment_id?: string;
   objective_score?: number;
   objective_total?: number;
   role_match_score?: number;
@@ -89,6 +98,11 @@ export type CandidateRecord = {
   reviewer_notes?: string;
   submitted_at?: string | Date | null;
   role_title?: string;
+  psychometric_profile?: string | null;
+  psychometric_score_data?: any;
+  technical_answers?: any;
+  psychometric_answers?: any;
+  practical_submission?: any;
 };
 
 const tokenHash = (token: string) => createHash("sha256").update(token).digest("hex");
@@ -477,13 +491,63 @@ export async function getCandidateDetails(id: string): Promise<CandidateRecord |
 
   if (!rows[0]) return null;
   const r = rows[0];
+  const evalNotes = typeof r.evaluation_notes === "string" ? JSON.parse(r.evaluation_notes) : r.evaluation_notes;
+
+  let psychometricProfile = evalNotes?.psychometric_profile || null;
+  let psychometricScoreData = evalNotes?.psychometric_score_data || null;
+  let technicalAnswers = null;
+  let psychometricAnswers = null;
+  let practicalSubmission = null;
+
+  try {
+    const targetId = r.assessment_id || r.assignment_id || r.id;
+    const { rows: attRows } = await cmsQuery<any>(
+      "SELECT technical_answers, psychometric_answers, psychometric_profile, psychometric_score_data, practical_submission FROM assessment_attempts WHERE id = ? OR assignment_id = ? LIMIT 1",
+      [targetId, targetId]
+    );
+    if (attRows[0]) {
+      if (attRows[0].psychometric_profile) psychometricProfile = attRows[0].psychometric_profile;
+      if (attRows[0].psychometric_score_data) {
+        psychometricScoreData =
+          typeof attRows[0].psychometric_score_data === "string"
+            ? JSON.parse(attRows[0].psychometric_score_data)
+            : attRows[0].psychometric_score_data;
+      }
+      if (attRows[0].technical_answers) {
+        technicalAnswers =
+          typeof attRows[0].technical_answers === "string"
+            ? JSON.parse(attRows[0].technical_answers)
+            : attRows[0].technical_answers;
+      }
+      if (attRows[0].psychometric_answers) {
+        psychometricAnswers =
+          typeof attRows[0].psychometric_answers === "string"
+            ? JSON.parse(attRows[0].psychometric_answers)
+            : attRows[0].psychometric_answers;
+      }
+      if (attRows[0].practical_submission) {
+        practicalSubmission =
+          typeof attRows[0].practical_submission === "string"
+            ? JSON.parse(attRows[0].practical_submission)
+            : attRows[0].practical_submission;
+      }
+    }
+  } catch (attErr) {
+    console.warn("Failed querying attempt psychometrics in getCandidateDetails:", attErr);
+  }
+
   return {
     ...r,
     offer_details: typeof r.offer_details === "string" ? JSON.parse(r.offer_details) : r.offer_details,
     appointment_details: typeof r.appointment_details === "string" ? JSON.parse(r.appointment_details) : r.appointment_details,
-    evaluation_notes: typeof r.evaluation_notes === "string" ? JSON.parse(r.evaluation_notes) : r.evaluation_notes,
+    evaluation_notes: evalNotes,
     answers: typeof r.answers === "string" ? JSON.parse(r.answers) : r.answers,
     activity_log: typeof r.activity_log === "string" ? JSON.parse(r.activity_log) : r.activity_log,
+    psychometric_profile: psychometricProfile,
+    psychometric_score_data: psychometricScoreData,
+    technical_answers: technicalAnswers,
+    psychometric_answers: psychometricAnswers,
+    practical_submission: practicalSubmission,
   };
 }
 
@@ -572,11 +636,45 @@ export async function createAssessmentAssignment(input: {
   experience?: string;
   noticePeriod?: string;
   expiresAt?: string | null;
+  psychometricEnabled?: boolean;
+  durationMinutes?: number;
+  assignmentSnapshot?: any;
 }) {
   const token = randomBytes(32).toString("hex");
   const id = randomUUID();
+
+  let snapshot = input.assignmentSnapshot;
+  if (!snapshot) {
+    try {
+      const { resolveAssessmentDefinition } = await import("@/lib/assessments/definitions");
+      const def = await resolveAssessmentDefinition(input.assessmentKey);
+      if (def) {
+        snapshot = {
+          assessment_version_id: def.key,
+          title: def.title,
+          summary: def.summary,
+          role_questions_snapshot: def.roleQuestions || def.questions.filter((q) => q.type !== "psychometric" && q.type !== "practical"),
+          psychometric_questions_snapshot: def.psychometricQuestions || def.questions.filter((q) => q.type === "psychometric"),
+          practical_task_snapshot: def.practicalTask || null,
+          duration_minutes: input.durationMinutes || def.durationMinutes || 75,
+          psychometric_enabled: input.psychometricEnabled !== false,
+          created_at: new Date().toISOString(),
+        };
+      }
+    } catch (snapErr) {
+      console.warn("Failed creating snapshot for assignment:", snapErr);
+    }
+  }
+
+  const psychoEnabled = input.psychometricEnabled !== false ? 1 : 0;
+  const snapshotStr = snapshot ? (typeof snapshot === "string" ? snapshot : JSON.stringify(snapshot)) : null;
+  const durationMin = input.durationMinutes || snapshot?.duration_minutes || 75;
+
   await cmsExecute(
-    "INSERT INTO assessment_assignments (id,assessment_key,token_hash,candidate_name,candidate_email,candidate_phone,experience,notice_period,expires_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    `INSERT INTO assessment_assignments (
+      id, assessment_key, token_hash, candidate_name, candidate_email, candidate_phone,
+      experience, notice_period, expires_at, psychometric_enabled, assignment_snapshot, duration_minutes
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       id,
       input.assessmentKey,
@@ -587,9 +685,12 @@ export async function createAssessmentAssignment(input: {
       input.experience || null,
       input.noticePeriod || null,
       input.expiresAt || null,
+      psychoEnabled,
+      snapshotStr,
+      durationMin,
     ]
   );
-  return { id, token };
+  return { id, token, snapshot, durationMinutes: durationMin, psychometricEnabled: psychoEnabled === 1 };
 }
 
 export async function getAssignmentByToken(token: string) {
@@ -661,14 +762,42 @@ export async function getAttempt(id: string) {
 export async function submitAssessmentAttempt(input: {
   id: string;
   answers: Record<string, unknown>;
+  technical_answers?: Record<string, unknown>;
+  psychometric_answers?: Record<string, unknown>;
+  psychometric_profile?: string | null;
+  psychometric_score_data?: unknown;
+  practical_submission?: unknown;
   activity: unknown[];
   score: number;
   total: number;
 }) {
   const submittedAt = new Date().toISOString().slice(0, 19).replace("T", " ");
   await cmsExecute(
-    "UPDATE assessment_attempts SET answers=?,activity=?,objective_score=?,objective_total=?,submitted_at=? WHERE id=? AND submitted_at IS NULL",
-    [JSON.stringify(input.answers), JSON.stringify(input.activity), input.score, input.total, submittedAt, input.id]
+    `UPDATE assessment_attempts
+     SET answers=?,
+         technical_answers=?,
+         psychometric_answers=?,
+         psychometric_profile=?,
+         psychometric_score_data=?,
+         practical_submission=?,
+         activity=?,
+         objective_score=?,
+         objective_total=?,
+         submitted_at=?
+     WHERE id=? AND submitted_at IS NULL`,
+    [
+      JSON.stringify(input.answers),
+      input.technical_answers ? JSON.stringify(input.technical_answers) : null,
+      input.psychometric_answers ? JSON.stringify(input.psychometric_answers) : null,
+      input.psychometric_profile || null,
+      input.psychometric_score_data ? JSON.stringify(input.psychometric_score_data) : null,
+      input.practical_submission ? JSON.stringify(input.practical_submission) : null,
+      JSON.stringify(input.activity),
+      input.score,
+      input.total,
+      submittedAt,
+      input.id,
+    ]
   );
 
   try {
@@ -676,17 +805,37 @@ export async function submitAssessmentAttempt(input: {
     if (rows[0]) {
       const att = rows[0];
       const matchScore = input.total > 0 ? Math.round((input.score / input.total) * 100) : 0;
+      const evaluationNotes = {
+        objective_score: input.score,
+        objective_total: input.total,
+        psychometric_profile: input.psychometric_profile,
+        psychometric_score_data: input.psychometric_score_data,
+        submitted_at: submittedAt,
+      };
+
       await cmsExecute(
-        `INSERT INTO assessment_candidates (id, assignment_id, answers, objective_score, objective_total, role_match_score, activity_log, started_at, submitted_at, review_status)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+        `INSERT INTO assessment_candidates (id, assignment_id, answers, objective_score, objective_total, role_match_score, evaluation_notes, activity_log, started_at, submitted_at, review_status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
          ON DUPLICATE KEY UPDATE
            answers=VALUES(answers),
            objective_score=VALUES(objective_score),
            objective_total=VALUES(objective_total),
            role_match_score=VALUES(role_match_score),
+           evaluation_notes=VALUES(evaluation_notes),
            activity_log=VALUES(activity_log),
            submitted_at=VALUES(submitted_at)`,
-        [att.id, att.assignment_id, JSON.stringify(input.answers), input.score, input.total, matchScore, JSON.stringify(input.activity), att.started_at, submittedAt]
+        [
+          att.id,
+          att.assignment_id,
+          JSON.stringify(input.answers),
+          input.score,
+          input.total,
+          matchScore,
+          JSON.stringify(evaluationNotes),
+          JSON.stringify(input.activity),
+          att.started_at,
+          submittedAt,
+        ]
       );
     }
   } catch (syncErr) {

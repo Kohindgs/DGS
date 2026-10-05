@@ -3,6 +3,7 @@ import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-
 import { generateTestFromJD } from "@/lib/assessments/gemini-engine";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { randomUUID } from "node:crypto";
+import { DEFAULT_PSYCHOMETRIC_QUESTIONS, PsychometricQuestion } from "@/lib/assessments/psychometric";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,9 @@ function buildManualDraftTestData(
   mcqCount: number,
   shortCount: number,
   longCount: number,
-  focusAreas?: string
+  focusAreas?: string,
+  includePsychometric = true,
+  psychometricCount = 10
 ) {
   const mcqs = [];
   for (let i = 1; i <= mcqCount; i++) {
@@ -60,20 +63,34 @@ function buildManualDraftTestData(
     });
   }
 
+  const psychometric: PsychometricQuestion[] = includePsychometric
+    ? DEFAULT_PSYCHOMETRIC_QUESTIONS.slice(0, Math.max(1, psychometricCount))
+    : [];
+
+  const roleQuestions = [
+    ...mcqs.map((m) => ({ id: m.id, type: "mcq", prompt: m.question, options: m.options, correctIndex: m.correctIndex, explanation: m.explanation, competencyTag: m.competencyTag })),
+    ...shortAnswers.map((s) => ({ id: s.id, type: "short", prompt: s.question, rubric: s.rubric, minWords: 30, competencyTag: s.competencyTag })),
+    ...longAnswers.map((l) => ({ id: l.id, type: "long", prompt: l.question, rubric: Array.isArray(l.evaluationCriteria) ? l.evaluationCriteria.join("; ") : "", minWords: l.minWords || 80, competencyTag: l.competencyTag })),
+  ];
+
+  const allQuestions = [...roleQuestions, ...psychometric];
+
   return {
     role_title: roleTitle,
     role_level: difficulty,
+    durationMinutes: 75,
     test_blueprint: {
-      psychometric_count: 0,
+      psychometric_count: psychometric.length,
       mcq_count: mcqCount,
       short_answer_count: shortCount,
       long_answer_count: longCount,
       difficulty,
     },
-    psychometric: [],
+    psychometric,
     mcqs,
     shortAnswers,
     longAnswers,
+    questions: allQuestions,
   };
 }
 
@@ -97,6 +114,8 @@ export async function POST(request: NextRequest) {
     const focusAreas = String(body.focus_areas || "");
     const customPrompt = String(body.custom_prompt || "");
     const isManualDraft = Boolean(body.manual_draft || body.isManualDraft);
+    const includePsychometric = body.include_psychometric !== false && body.psychometric_enabled !== false;
+    const psychometricCount = Math.max(1, Number(body.psychometric_count || 10));
 
     // If no JD selected, check if user provided quick role title to auto-create a JD
     let roleTitle = String(body.role_title || "").trim();
@@ -142,12 +161,33 @@ export async function POST(request: NextRequest) {
         generationMode = "gemini_ai";
       } catch (aiErr: any) {
         console.warn("Gemini generation failed, falling back to structured template:", aiErr.message);
-        testData = buildManualDraftTestData(roleTitle, difficulty, mcqCount, shortCount, longCount, focusAreas);
+        testData = buildManualDraftTestData(roleTitle, difficulty, mcqCount, shortCount, longCount, focusAreas, includePsychometric, psychometricCount);
         generationMode = "fallback_manual_draft";
       }
     } else {
-      testData = buildManualDraftTestData(roleTitle, difficulty, mcqCount, shortCount, longCount, focusAreas);
+      testData = buildManualDraftTestData(roleTitle, difficulty, mcqCount, shortCount, longCount, focusAreas, includePsychometric, psychometricCount);
       generationMode = "manual_draft";
+    }
+
+    // Ensure psychometric section is always safely populated and deterministic
+    if (includePsychometric) {
+      if (!Array.isArray(testData.psychometric) || testData.psychometric.length === 0) {
+        testData.psychometric = DEFAULT_PSYCHOMETRIC_QUESTIONS.slice(0, psychometricCount);
+      }
+      if (!testData.test_blueprint) {
+        testData.test_blueprint = {};
+      }
+      testData.test_blueprint.psychometric_count = testData.psychometric.length;
+    } else {
+      testData.psychometric = [];
+      if (testData.test_blueprint) {
+        testData.test_blueprint.psychometric_count = 0;
+      }
+    }
+
+    // Ensure duration accounts for psychometric section (75 min default)
+    if (!testData.durationMinutes || testData.durationMinutes < 60) {
+      testData.durationMinutes = includePsychometric ? 75 : 60;
     }
 
     // Determine next version number
@@ -168,7 +208,7 @@ export async function POST(request: NextRequest) {
         nextVersion,
         difficulty,
         JSON.stringify(focusAreas),
-        JSON.stringify({ difficulty, mcq_count: mcqCount, short_count: shortCount, long_count: longCount, custom_prompt: customPrompt, generationMode }),
+        JSON.stringify({ difficulty, mcq_count: mcqCount, short_count: shortCount, long_count: longCount, psychometric_count: psychometricCount, custom_prompt: customPrompt, generationMode }),
         JSON.stringify(testData),
       ]
     );
@@ -180,7 +220,7 @@ export async function POST(request: NextRequest) {
       action: "assessment.generate",
       resource: "assessment",
       resource_id: versionId,
-      summary: `Generated draft assessment version #${nextVersion} for ${jd.role_title} (${generationMode})`,
+      summary: `Generated draft assessment version #${nextVersion} for ${jd.role_title} (${generationMode}, psychometric: ${includePsychometric ? "enabled" : "disabled"})`,
     });
 
     return NextResponse.json({

@@ -66,6 +66,9 @@ export async function POST(request: NextRequest) {
       .slice(0, 19)
       .replace("T", " ");
 
+    const psychometricEnabled = body.includePsychometric !== false && body.psychometric_enabled !== false && body.include_psychometric !== false;
+    const durationMinutes = body.durationMinutes ? Number(body.durationMinutes) : undefined;
+
     const assignment = await createAssessmentAssignment({
       assessmentKey,
       name,
@@ -74,6 +77,8 @@ export async function POST(request: NextRequest) {
       experience: experience || undefined,
       noticePeriod: noticePeriod || undefined,
       expiresAt,
+      psychometricEnabled,
+      durationMinutes,
     });
 
     await logAuditEvent({
@@ -83,8 +88,8 @@ export async function POST(request: NextRequest) {
       action: "assessment.assignment.create",
       resource: "assessment_assignment",
       resource_id: assignment.id,
-      summary: `Created assessment assignment for candidate ${name} (${email})`,
-      after_state: { candidate_name: name, candidate_email: email, assessment_key: assessmentKey },
+      summary: `Created assessment assignment for candidate ${name} (${email}, psychometric: ${psychometricEnabled ? "enabled" : "disabled"}, duration: ${assignment.durationMinutes}m)`,
+      after_state: { candidate_name: name, candidate_email: email, assessment_key: assessmentKey, psychometric_enabled: psychometricEnabled, duration_minutes: assignment.durationMinutes },
     });
 
     const assessmentPath = `/assessment/${assessmentKey}?token=${assignment.token}`;
@@ -95,6 +100,16 @@ export async function POST(request: NextRequest) {
       token: assignment.token,
       assessmentPath,
       assessmentUrl: `https://www.dgeniussolutions.com${assessmentPath}`,
+      durationMinutes: assignment.durationMinutes,
+      psychometricEnabled: assignment.psychometricEnabled,
+      snapshotSummary: assignment.snapshot
+        ? {
+            roleQuestionsCount: (assignment.snapshot.role_questions_snapshot || []).length,
+            psychometricQuestionsCount: (assignment.snapshot.psychometric_questions_snapshot || []).length,
+            hasPractical: Boolean(assignment.snapshot.practical_task_snapshot),
+            durationMinutes: assignment.snapshot.duration_minutes,
+          }
+        : null,
     });
   } catch (err: any) {
     return NextResponse.json({ error: err.message || "Failed to create assessment assignment" }, { status: 500 });
