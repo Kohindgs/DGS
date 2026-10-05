@@ -356,8 +356,22 @@ export async function runDiscoveryLane(
       }
       if (rawId) {
         await cmsExecute(
-          `UPDATE off_page_raw_candidates SET validation_status = ?, qualification_status = 'REJECTED', qualification_reasons = ?, updated_at = NOW() WHERE id = ?`,
-          [analysis.fetched ? "VALID_URL" : "UNREACHABLE", verdict.reasons.join("; ").slice(0, 1000), rawId]
+          `UPDATE off_page_raw_candidates SET 
+             validation_status = ?, qualification_status = 'REJECTED', qualification_reasons = ?,
+             page_intent = ?, confidence = ?, action_required = ?, action_destination = ?,
+             actionability_score = ?, actionable_evidence = ?, updated_at = NOW() 
+           WHERE id = ?`,
+          [
+            analysis.fetched ? "VALID_URL" : "UNREACHABLE",
+            verdict.reasons.join("; ").slice(0, 1000),
+            verdict.pageIntent || null,
+            verdict.confidence || "LOW",
+            verdict.actionRequired || "NO_ACTION",
+            verdict.actionDestination || cand.url,
+            verdict.actionabilityScore || 0,
+            verdict.actionableEvidence ? JSON.stringify(verdict.actionableEvidence) : null,
+            rawId,
+          ]
         ).catch(() => {});
       }
       continue;
@@ -366,10 +380,25 @@ export async function runDiscoveryLane(
     // Reachable but unqualified candidates stay staged in off_page_raw_candidates (no 58,931 problem)
     if (verdict.decision === "DISCOVERED") {
       result.discovered_inserted++;
+      const qStatus = verdict.needsVerification ? "NEEDS_VERIFICATION" : "DISCOVERED";
       if (rawId) {
         await cmsExecute(
-          `UPDATE off_page_raw_candidates SET validation_status = 'REACHABLE', qualification_status = 'DISCOVERED', qualification_reasons = ?, updated_at = NOW() WHERE id = ?`,
-          [verdict.reasons.join("; ").slice(0, 1000), rawId]
+          `UPDATE off_page_raw_candidates SET 
+             validation_status = 'REACHABLE', qualification_status = ?, qualification_reasons = ?,
+             page_intent = ?, confidence = ?, action_required = ?, action_destination = ?,
+             actionability_score = ?, actionable_evidence = ?, updated_at = NOW() 
+           WHERE id = ?`,
+          [
+            qStatus,
+            verdict.reasons.join("; ").slice(0, 1000),
+            verdict.pageIntent || null,
+            verdict.confidence || "LOW",
+            verdict.actionRequired || "NO_ACTION",
+            verdict.actionDestination || cand.url,
+            verdict.actionabilityScore || 0,
+            verdict.actionableEvidence ? JSON.stringify(verdict.actionableEvidence) : null,
+            rawId,
+          ]
         ).catch(() => {});
       }
       continue;
@@ -414,6 +443,12 @@ export async function runDiscoveryLane(
         discovery_lane: lane.id,
         page_title: analysis.title,
         qualification_reason: verdict.reasons.join("; ").slice(0, 1000),
+        page_intent: verdict.pageIntent,
+        confidence: verdict.confidence,
+        action_required: verdict.actionRequired,
+        action_destination: verdict.actionDestination,
+        actionability_score: verdict.actionabilityScore,
+        actionable_evidence: verdict.actionableEvidence,
       });
 
       if (ing.success && ing.id) {
@@ -421,8 +456,22 @@ export async function runDiscoveryLane(
         result.qualified_inserted++;
         if (rawId) {
           await cmsExecute(
-            `UPDATE off_page_raw_candidates SET opportunity_id = ?, validation_status = 'QUALIFIED', qualification_status = 'QUALIFIED', qualification_reasons = ?, updated_at = NOW() WHERE id = ?`,
-            [ing.id, verdict.reasons.join("; ").slice(0, 1000), rawId]
+            `UPDATE off_page_raw_candidates SET 
+               opportunity_id = ?, validation_status = 'QUALIFIED', qualification_status = 'QUALIFIED', qualification_reasons = ?,
+               page_intent = ?, confidence = ?, action_required = ?, action_destination = ?,
+               actionability_score = ?, actionable_evidence = ?, updated_at = NOW() 
+             WHERE id = ?`,
+            [
+              ing.id,
+              verdict.reasons.join("; ").slice(0, 1000),
+              verdict.pageIntent || null,
+              verdict.confidence || "MEDIUM",
+              verdict.actionRequired || null,
+              verdict.actionDestination || cand.url,
+              verdict.actionabilityScore || 0,
+              verdict.actionableEvidence ? JSON.stringify(verdict.actionableEvidence) : null,
+              rawId,
+            ]
           ).catch(() => {});
         }
       } else if (ing.error?.includes("DUPLICATE")) {

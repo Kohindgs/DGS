@@ -180,7 +180,9 @@ export async function reverifyExistingOpportunities(opts?: { limit?: number }): 
          status = ?, verification_status = ?, http_status = ?, last_checked_at = NOW(),
          ${isVerified ? "last_verified_at = NOW(), last_verified = NOW()," : ""}
          free_status = ?, dofollow_status = ?, discovery_lane = COALESCE(discovery_lane, ?),
-         page_title = COALESCE(?, page_title), qualification_reason = ?, updated_at = NOW()
+         page_title = COALESCE(?, page_title), qualification_reason = ?,
+         page_intent = ?, confidence = ?, action_required = ?, action_destination = ?,
+         actionability_score = ?, actionable_evidence = ?, updated_at = NOW()
        WHERE id = ? AND (owner IS NULL OR owner = '') AND (assigned_to IS NULL OR assigned_to = '')`,
       [
         newStatus,
@@ -191,19 +193,38 @@ export async function reverifyExistingOpportunities(opts?: { limit?: number }): 
         lane.id,
         analysis.title || null,
         reasonText,
+        verdict.pageIntent || null,
+        verdict.confidence || "LOW",
+        verdict.actionRequired || "NO_ACTION",
+        verdict.actionDestination || row.exact_submission_url,
+        verdict.actionabilityScore || 0,
+        verdict.actionableEvidence ? JSON.stringify(verdict.actionableEvidence) : null,
         row.id,
       ]
     );
+
+    // If an opportunity is no longer qualified, remove its TurboVec vector!
+    if (newStatus !== "QUALIFIED" && newStatus !== "APPROVED") {
+      const { removeVectorDocumentFromDbAndIndex } = await import("@/lib/intelligence/turbovec-client");
+      await removeVectorDocumentFromDbAndIndex({
+        indexName: "off-page",
+        entityType: "OFF_PAGE_OPPORTUNITY",
+        entityId: row.id,
+      }).catch(() => {});
+    }
 
     if (analysis.dgsLinks.length > 0) {
       const rec = await recordVerifiedBacklink({
         analysis,
         sourceTitle: analysis.title || row.site_name,
         sourceType: "reverify_existing",
-        note: `Observed during V8.12.6 re-verification of ${row.id}`,
+        note: `Observed during V8.12.7A re-verification of ${row.id}`,
       }).catch(() => null);
       if (rec) result.backlinks_found++;
     }
+
+    const posEvidence = verdict.signals.filter((s) => !s.startsWith("intent:") && !s.startsWith("search_engine_submit:")).slice(0, 5).join(", ");
+    const negEvidence = verdict.reasons.filter((r) => r.includes("NEGATIVE") || r.includes("MISMATCH") || r.includes("SUBMIT")).join("; ") || "None";
 
     result.per_record.push({
       id: row.id,
@@ -212,6 +233,18 @@ export async function reverifyExistingOpportunities(opts?: { limit?: number }): 
       http,
       decision: `${newStatus}/${verification}`,
       reasons: verdict.reasons.join("; ").slice(0, 300),
+      // @ts-ignore
+      page_intent: verdict.pageIntent,
+      // @ts-ignore
+      positive_evidence: posEvidence || "None observed",
+      // @ts-ignore
+      negative_evidence: negEvidence,
+      // @ts-ignore
+      actionable_by_dgs: newStatus === "QUALIFIED" ? "YES" : "NO",
+      // @ts-ignore
+      correct_classification: lane.category,
+      // @ts-ignore
+      final_status: newStatus,
     });
   }
 

@@ -22,7 +22,7 @@ import {
   CheckCircle,
   Link2,
 } from "lucide-react";
-import type { ActionCenterKpis, TodayTaskItem, ResultBacklinkItem } from "@/lib/off-page/action-center";
+import type { ActionCenterKpis, TodayTaskItem, ResultBacklinkItem, RawCandidateItem } from "@/lib/off-page/action-center";
 import {
   MANDATORY_NEXT_ACTIONS,
   type MandatoryNextAction,
@@ -30,10 +30,43 @@ import {
   type PriorityTier,
 } from "@/lib/off-page/types";
 
+function getDefaultNextAction(category: string): MandatoryNextAction {
+  switch (category) {
+    case "AGENCY_DIRECTORY":
+    case "TOOL_DIRECTORY":
+      return "SUBMIT LISTING";
+    case "BUSINESS_LISTING":
+    case "LOCAL_CITATION":
+    case "REVIEW_PLATFORM":
+    case "COMMUNITY":
+      return "CREATE PROFILE";
+    case "EXPERT_CONTRIBUTION":
+    case "ARTICLE_SUBMISSION":
+    case "CASE_STUDY_DISTRIBUTION":
+      return "PITCH ARTICLE";
+    case "DIGITAL_PR":
+    case "NEWS_SOURCE":
+      return "CONTACT JOURNALIST";
+    case "UNLINKED_MENTION":
+      return "REQUEST BACKLINK";
+    case "BROKEN_LINK":
+      return "RECLAIM LINK";
+    case "PARTNERSHIP":
+    case "CLIENT_PARTNER":
+    case "ASSOCIATION":
+      return "SEND OUTREACH";
+    case "AWARD":
+      return "APPLY";
+    default:
+      return "SUBMIT LISTING";
+  }
+}
+
 interface Props {
   initialKpis?: ActionCenterKpis;
   initialTodayTasks?: TodayTaskItem[];
   initialNeedsReviewItems?: TodayTaskItem[];
+  initialNeedsVerificationItems?: RawCandidateItem[];
   initialResultsAndLostLinks?: ResultBacklinkItem[];
 }
 
@@ -41,15 +74,17 @@ export default function ActionCenterClientView({
   initialKpis,
   initialTodayTasks,
   initialNeedsReviewItems,
+  initialNeedsVerificationItems,
   initialResultsAndLostLinks,
 }: Props) {
   const [kpis, setKpis] = useState<ActionCenterKpis | undefined>(initialKpis);
   const [todayTasks, setTodayTasks] = useState<TodayTaskItem[]>(initialTodayTasks || []);
   const [needsReviewItems, setNeedsReviewItems] = useState<TodayTaskItem[]>(initialNeedsReviewItems || []);
+  const [needsVerificationItems, setNeedsVerificationItems] = useState<RawCandidateItem[]>(initialNeedsVerificationItems || []);
   const [resultsAndLostLinks, setResultsAndLostLinks] = useState<ResultBacklinkItem[]>(initialResultsAndLostLinks || []);
   const [loading, setLoading] = useState(!initialKpis);
   const [selectedOwner, setSelectedOwner] = useState<string>("ALL");
-  const [activeTab, setActiveTab] = useState<"REVIEW" | "TEAM" | "RESULTS" | "PIPELINE">("REVIEW");
+  const [activeTab, setActiveTab] = useState<"REVIEW" | "VERIFICATION" | "TEAM" | "RESULTS" | "PIPELINE">("REVIEW");
   const [selectedStage, setSelectedStage] = useState<string>("ALL");
   const [pipelineOpps, setPipelineOpps] = useState<any[]>([]);
   const [pipelineLoading, setPipelineLoading] = useState(false);
@@ -78,12 +113,32 @@ export default function ActionCenterClientView({
         setKpis(json.kpis);
         setTodayTasks(json.todayTasks || []);
         setNeedsReviewItems(json.needsReviewItems || []);
+        setNeedsVerificationItems(json.needsVerificationItems || []);
         setResultsAndLostLinks(json.resultsAndLostLinks || []);
       }
     } catch (err) {
       console.error("Failed to load action center data:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleVerifyCandidate = async (candidateId: string, action: "verify_qualify" | "verify_reject", reason?: string) => {
+    try {
+      const res = await fetch("/api/admin/off-page/action-center", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: candidateId, action, reason }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setFeedback(action === "verify_qualify" ? "Candidate qualified and promoted to Manager Review queue." : "Candidate rejected.");
+        await fetchActionCenterData();
+      } else {
+        setFeedback(`Action failed: ${json.error}`);
+      }
+    } catch (err: any) {
+      setFeedback(`Error: ${err.message}`);
     }
   };
 
@@ -125,7 +180,7 @@ export default function ActionCenterClientView({
     const matchingAction = MANDATORY_NEXT_ACTIONS.find(
       (a) => a === item.next_action
     );
-    setFormNextAction(matchingAction || (mode === "ASSIGN" ? "PITCH ARTICLE" : MANDATORY_NEXT_ACTIONS[0]));
+    setFormNextAction(matchingAction || getDefaultNextAction(item.category));
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     setFormDueDate(item.due_date || tomorrow.toISOString().slice(0, 10));
@@ -369,6 +424,15 @@ export default function ActionCenterClientView({
         </button>
 
         <button
+          onClick={() => setActiveTab("VERIFICATION")}
+          className={`dgs-saas-btn ${activeTab === "VERIFICATION" ? "primary" : "secondary"}`}
+          style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
+        >
+          <UserCheck size={16} />
+          Needs Verification ({kpis?.needsVerificationCount || needsVerificationItems.length})
+        </button>
+
+        <button
           onClick={() => setActiveTab("TEAM")}
           className={`dgs-saas-btn ${activeTab === "TEAM" ? "primary" : "secondary"}`}
           style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
@@ -413,6 +477,38 @@ export default function ActionCenterClientView({
             </span>
           </div>
 
+          {/* Actionability & Manager Flow Guidance */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "12px",
+              padding: "14px 16px",
+              marginBottom: "16px",
+              background: "rgba(16, 185, 129, 0.04)",
+              border: "1px solid rgba(16, 185, 129, 0.18)",
+              borderRadius: "8px",
+              fontSize: "0.8rem",
+            }}
+          >
+            <div>
+              <div style={{ fontWeight: 700, color: "#10b981", marginBottom: "3px" }}>1. WHAT IS THIS?</div>
+              <div style={{ color: "rgba(255,255,255,0.75)" }}>Verified actionable off-page opportunities with genuine external page intent.</div>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, color: "#3b82f6", marginBottom: "3px" }}>2. WHAT CAN DGS DO?</div>
+              <div style={{ color: "rgba(255,255,255,0.75)" }}>Execute lane-matched submission: directory listing, profile, guest contribution, or PR.</div>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, color: "#f59e0b", marginBottom: "3px" }}>3. WHERE DO WE DO IT?</div>
+              <div style={{ color: "rgba(255,255,255,0.75)" }}>On the verified submission destination URL, bypassing generic contact forms.</div>
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, color: "#a855f7", marginBottom: "3px" }}>4. RECOMMENDED ACTION</div>
+              <div style={{ color: "rgba(255,255,255,0.75)" }}>Assign owner + mandatory next action + due date. System automatically monitors outcomes.</div>
+            </div>
+          </div>
+
           {needsReviewItems.length === 0 ? (
             <div style={{ padding: "40px", textAlign: "center", color: "rgba(255, 255, 255, 0.5)" }}>
               <CheckCircle2 size={36} style={{ color: "#10b981", margin: "0 auto 12px auto" }} />
@@ -427,7 +523,8 @@ export default function ActionCenterClientView({
                 <thead>
                   <tr style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}>
                     <th style={{ padding: "12px 10px" }}>Priority & Site</th>
-                    <th style={{ padding: "12px 10px" }}>Category</th>
+                    <th style={{ padding: "12px 10px" }}>Category & Intent</th>
+                    <th style={{ padding: "12px 10px" }}>Action Required</th>
                     <th style={{ padding: "12px 10px" }}>Target Page</th>
                     <th style={{ padding: "12px 10px" }}>Source Type</th>
                     <th style={{ padding: "12px 10px", textAlign: "right" }}>Manager Decisions</th>
@@ -464,9 +561,30 @@ export default function ActionCenterClientView({
                         <span className="dgs-saas-chip neutral" style={{ fontSize: "0.72rem" }}>
                           {item.category.replace(/_/g, " ")}
                         </span>
+                        {item.page_intent && (
+                          <div style={{ fontSize: "0.72rem", color: "#93c5fd", marginTop: "3px" }}>
+                            Intent: {item.page_intent}
+                          </div>
+                        )}
                       </td>
 
-                      <td style={{ padding: "12px 10px", maxWidth: "240px" }}>
+                      <td style={{ padding: "12px 10px" }}>
+                        <div style={{ fontWeight: 600, color: "#34d399", fontSize: "0.78rem" }}>
+                          {item.action_required || "SUBMIT_LISTING"}
+                        </div>
+                        {item.confidence && (
+                          <span
+                            className={`dgs-saas-chip ${
+                              item.confidence === "HIGH" ? "success" : item.confidence === "MEDIUM" ? "warning" : "neutral"
+                            }`}
+                            style={{ fontSize: "0.68rem", marginTop: "3px", display: "inline-block" }}
+                          >
+                            {item.confidence} CONF ({item.actionability_score || 80}/100)
+                          </span>
+                        )}
+                      </td>
+
+                      <td style={{ padding: "12px 10px", maxWidth: "220px" }}>
                         <div style={{ fontSize: "0.8rem", color: "#93c5fd", wordBreak: "break-all" }}>
                           {item.recommended_dgs_target_page}
                         </div>
@@ -511,6 +629,99 @@ export default function ActionCenterClientView({
                             title="Snooze"
                           >
                             Snooze
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 1B: NEEDS VERIFICATION (ANALYST QUEUE) */}
+      {activeTab === "VERIFICATION" && (
+        <div className="dgs-saas-card" style={{ padding: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "12px" }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>
+                SEO Analyst Verification Queue
+              </h3>
+              <p style={{ margin: "2px 0 0 0", fontSize: "0.82rem", color: "rgba(255, 255, 255, 0.6)" }}>
+                Quarantined raw candidates with ambiguous submission intent awaiting human SEO analyst verification before manager review.
+              </p>
+            </div>
+            <span className="dgs-saas-chip warning" style={{ fontWeight: 700 }}>
+              {needsVerificationItems.length} Awaiting Analyst Check
+            </span>
+          </div>
+
+          {needsVerificationItems.length === 0 ? (
+            <div style={{ padding: "40px", textAlign: "center", color: "rgba(255, 255, 255, 0.5)" }}>
+              <CheckCircle2 size={36} style={{ color: "#10b981", margin: "0 auto 12px auto" }} />
+              <div style={{ fontSize: "1.05rem", fontWeight: 600, color: "#fff" }}>Analyst Verification Queue Clear!</div>
+              <p style={{ fontSize: "0.85rem", marginTop: "4px" }}>
+                All staged search candidates have been verified, qualified, or rejected by automated intent filters.
+              </p>
+            </div>
+          ) : (
+            <div style={{ overflowX: "auto" }}>
+              <table className="dgs-saas-table" style={{ width: "100%", textAlign: "left", fontSize: "0.85rem" }}>
+                <thead>
+                  <tr style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}>
+                    <th style={{ padding: "12px 10px" }}>Candidate & Domain</th>
+                    <th style={{ padding: "12px 10px" }}>Discovery Lane</th>
+                    <th style={{ padding: "12px 10px" }}>Measured Intent</th>
+                    <th style={{ padding: "12px 10px" }}>Score & Reason</th>
+                    <th style={{ padding: "12px 10px", textAlign: "right" }}>Analyst Decision</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {needsVerificationItems.map((cand) => (
+                    <tr key={cand.id} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                      <td style={{ padding: "12px 10px" }}>
+                        <div style={{ fontWeight: 600, color: "#fff" }}>{cand.domain}</div>
+                        <a
+                          href={cand.page_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: "#3b82f6", fontSize: "0.78rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "3px" }}
+                        >
+                          {cand.page_url.slice(0, 45)}... <ExternalLink size={11} />
+                        </a>
+                      </td>
+                      <td style={{ padding: "12px 10px" }}>
+                        <span className="dgs-saas-chip neutral" style={{ fontSize: "0.72rem" }}>
+                          {cand.discovery_lane || "GENERAL"}
+                        </span>
+                      </td>
+                      <td style={{ padding: "12px 10px" }}>
+                        <span className="dgs-saas-chip warning" style={{ fontSize: "0.72rem" }}>
+                          {cand.page_intent || "UNKNOWN"}
+                        </span>
+                      </td>
+                      <td style={{ padding: "12px 10px", maxWidth: "260px" }}>
+                        <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.7)" }}>
+                          Score: {cand.actionability_score ?? 0} | {cand.qualification_reason || "Ambiguous intent"}
+                        </div>
+                      </td>
+                      <td style={{ padding: "12px 10px", textAlign: "right" }}>
+                        <div style={{ display: "flex", justifyContent: "flex-end", gap: "6px" }}>
+                          <button
+                            onClick={() => handleVerifyCandidate(cand.id, "verify_qualify")}
+                            className="dgs-saas-btn success"
+                            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+                          >
+                            Qualify
+                          </button>
+                          <button
+                            onClick={() => handleVerifyCandidate(cand.id, "verify_reject")}
+                            className="dgs-saas-btn danger"
+                            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+                          >
+                            Reject
                           </button>
                         </div>
                       </td>

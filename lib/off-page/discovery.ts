@@ -165,6 +165,18 @@ export async function ingestDiscoveredOpportunity(raw: {
   page_title?: string;
   /** Qualification gate reasons + observed signals. */
   qualification_reason?: string;
+  /** Page intent classification (V8.12.7A). */
+  page_intent?: string;
+  /** Actionability confidence (HIGH | MEDIUM | LOW). */
+  confidence?: string;
+  /** Specific action required by DGS. */
+  action_required?: string;
+  /** Exact URL or destination for action. */
+  action_destination?: string;
+  /** Explainable actionability score (0-100). */
+  actionability_score?: number;
+  /** Structured actionable evidence payload. */
+  actionable_evidence?: any;
 }): Promise<{ success: boolean; id?: string; error?: string; opportunity?: any }> {
   await ensureOffPageTablesExist();
 
@@ -289,7 +301,8 @@ export async function ingestDiscoveredOpportunity(raw: {
       spam_status, verification_date, last_verified, source, status,
       notes, evidence, discovered_at, next_check_at, check_priority, created_at, updated_at,
       discovery_provider, discovery_query, http_status, verification_status, last_verified_at,
-      source_type, discovery_lane, semantic_status, page_title, qualification_reason, last_checked_at
+      source_type, discovery_lane, semantic_status, page_title, qualification_reason, last_checked_at,
+      page_intent, confidence, action_required, action_destination, actionability_score, actionable_evidence
     ) VALUES (
       ?, ?, ?, ?, ?, ?, ?,
       ?, ?, ?, ?,
@@ -301,6 +314,7 @@ export async function ingestDiscoveredOpportunity(raw: {
       ?, ?, ?, ?, ?,
       ?, ?, NOW(), NOW(), ?, NOW(), NOW(),
       ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?,
       ?, ?, ?, ?, ?, ?
     )`,
     [
@@ -351,6 +365,12 @@ export async function ingestDiscoveredOpportunity(raw: {
       raw.page_title ? raw.page_title.slice(0, 500) : null,
       raw.qualification_reason || null,
       httpStatus !== null ? new Date() : null,
+      raw.page_intent || null,
+      raw.confidence || "MEDIUM",
+      raw.action_required || null,
+      raw.action_destination || null,
+      raw.actionability_score ?? 0,
+      raw.actionable_evidence ? JSON.stringify(raw.actionable_evidence) : null,
     ]
   );
 

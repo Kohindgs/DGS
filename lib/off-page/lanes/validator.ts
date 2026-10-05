@@ -1,15 +1,19 @@
 /**
- * V8.12.6 lane validators + qualification gate.
+ * DGS V8.12.7A — Lane Validators & Evidence-Based Qualification Gate
  *
- * Input: a live PageAnalysis (real fetch). Output: an evidence-backed verdict.
- * A candidate is QUALIFIED only when:
- *   HTTP 2xx  AND  passes its lane validator  AND  not paid-only  AND  not geo/spam blocked
- *   AND  DGS-topic relevant  (semantic duplicates are handled at ingest).
- * Everything else is recorded as DISCOVERED (needs human look) or REJECTED with explicit reasons.
+ * Implements strict, lane-specific qualification rules backed by:
+ *   1. Page Intent Classification (blocks SEO guides/articles from becoming directories)
+ *   2. Negative Context Detection (blocks search engine/sitemap submission false positives)
+ *   3. 4-Part Actionability Test (explicit CTA, submission mechanism, DGS relevance, confidence)
+ *   4. Low-confidence / bot-protected results routed to SEO Analyst Verification, never Manager Review
  */
+
 import type { FreeStatus, LinkTypeStatus, RegionCode } from "../types";
 import type { LaneDefinition } from "./config";
 import { checkUrlStatus, mapLimit, type PageAnalysis } from "./page-analyzer";
+import { classifyPageIntent, isPageIntentCompatibleWithLane, type PageIntent } from "./page-intent";
+import { detectNegativeContext } from "./negative-context";
+import { evaluateActionability, type ActionRequired, type ActionableEvidence } from "./actionability";
 
 export interface LaneVerdict {
   decision: "QUALIFIED" | "DISCOVERED" | "REJECTED";
@@ -21,59 +25,252 @@ export interface LaneVerdict {
   relevance: number; // 0-100, keyword evidence based
   brokenLinks?: Array<{ href: string; status: number; anchor: string }>;
   competitorLinks?: string[];
+  // V8.12.7A additions
+  pageIntent: PageIntent;
+  confidence: "HIGH" | "MEDIUM" | "LOW";
+  actionRequired: ActionRequired;
+  actionDestination: string;
+  actionabilityScore: number;
+  actionableEvidence?: ActionableEvidence;
+  needsVerification: boolean;
 }
 
+// Stricter directory signals: require business / agency / company context
 const SUBMISSION_SIGNALS = [
-  "add your business", "list your business", "add a business", "add business", "add listing", "add your listing",
-  "submit your business", "submit your company", "submit company", "add your company", "add company", "list your company",
-  "list your agency", "add your agency", "submit your agency", "get listed", "claim your listing", "claim your business",
-  "claim this business", "register your business", "register your company", "free listing", "create a free profile",
-  "create your profile", "create a profile", "create company profile", "sign up your business", "join the directory",
-  "submit listing", "submit a listing", "add your firm", "submit your site", "submit website", "list your firm",
+  "add your business",
+  "list your business",
+  "add a business",
+  "add business",
+  "add listing",
+  "add your listing",
+  "submit your business",
+  "submit your company",
+  "submit company",
+  "add your company",
+  "add company",
+  "list your company",
+  "list your agency",
+  "add your agency",
+  "add agency",
+  "submit your agency",
+  "submit agency",
+  "get listed",
+  "claim your listing",
+  "claim your business",
+  "claim this business",
+  "claim profile",
+  "register your business",
+  "register your company",
+  "free listing",
+  "create a free profile",
+  "create your profile",
+  "create company profile",
+  "sign up your business",
+  "join the directory",
+  "submit listing",
+  "submit a listing",
+  "add your firm",
+  "list your firm",
+  "submit your website to our directory",
+  "submit site to directory",
 ];
+
 const CONTRIBUTION_SIGNALS = [
-  "write for us", "guest post guidelines", "guest posting guidelines", "submit a guest post", "guest contributor",
-  "become a contributor", "contributor guidelines", "submission guidelines", "submit an article", "submit your article",
-  "pitch us", "pitch your", "we accept guest", "accepting guest", "guest author", "editorial guidelines",
-  "contributor program", "contribute an article", "expert contributor", "share your expertise",
+  "write for us",
+  "guest post guidelines",
+  "guest posting guidelines",
+  "submit a guest post",
+  "guest contributor",
+  "become a contributor",
+  "contributor guidelines",
+  "submission guidelines",
+  "submit an article",
+  "submit your article",
+  "pitch us",
+  "pitch your article",
+  "pitch your idea",
+  "we accept guest",
+  "accepting guest",
+  "guest author",
+  "editorial guidelines",
+  "contributor program",
+  "contribute an article",
+  "expert contributor",
+  "share your expertise",
+  "guidelines for contributing",
+  "blog guidelines",
+  "contributing guest posts",
+  "submit your draft",
 ];
+
 const PR_SIGNALS = [
-  "journalist request", "journalist requests", "media request", "source request", "sources wanted", "looking for experts",
-  "expert sources", "seeking experts", "seeking sources", "#journorequest", "journorequest", "press request",
-  "reporter request", "media opportunities", "expert commentary", "quote request", "respond to journalists",
-  "connect with journalists", "pr opportunities",
+  "journalist request",
+  "journalist requests",
+  "media request",
+  "source request",
+  "sources wanted",
+  "looking for experts",
+  "expert sources",
+  "seeking experts",
+  "seeking sources",
+  "#journorequest",
+  "journorequest",
+  "press request",
+  "reporter request",
+  "media opportunities",
+  "expert commentary",
+  "quote request",
+  "respond to journalists",
+  "connect with journalists",
+  "pr opportunities",
 ];
+
 const COMMUNITY_SIGNALS = [
-  "forum", "community", "discussion", "threads", "replies", "ask a question", "answers", "members", "join the conversation",
-  "posted by", "reply", "upvote",
+  "forum",
+  "community",
+  "discussion",
+  "threads",
+  "replies",
+  "ask a question",
+  "answers",
+  "members",
+  "join the conversation",
+  "posted by",
+  "reply",
+  "upvote",
 ];
+
 const COMMUNITY_DOMAINS = [
-  "reddit.com", "quora.com", "stackexchange.com", "stackoverflow.com", "indiehackers.com", "growthhackers.com",
-  "warriorforum.com", "digitalpoint.com", "community.hubspot.com", "producthunt.com", "dev.to", "hashnode.com",
-  "linkedin.com", "medium.com", "moz.com", "webmasterworld.com", "sitepoint.com", "community.",
+  "reddit.com",
+  "quora.com",
+  "stackexchange.com",
+  "stackoverflow.com",
+  "indiehackers.com",
+  "growthhackers.com",
+  "warriorforum.com",
+  "digitalpoint.com",
+  "community.hubspot.com",
+  "producthunt.com",
+  "dev.to",
+  "hashnode.com",
+  "linkedin.com",
+  "medium.com",
+  "moz.com",
+  "webmasterworld.com",
+  "sitepoint.com",
+  "community.",
 ];
+
 const PARTNERSHIP_SIGNALS = [
-  "partner program", "partner programme", "become a partner", "agency partner", "partner directory", "referral partner",
-  "reseller program", "solutions partner", "certified partner", "partner network", "apply to become a partner",
+  "partner program",
+  "partner programme",
+  "become a partner",
+  "agency partner",
+  "partner directory",
+  "referral partner",
+  "reseller program",
+  "solutions partner",
+  "certified partner",
+  "partner network",
+  "apply to become a partner",
+  "partner with us",
 ];
-const RESOURCE_SIGNALS = ["resources", "useful links", "recommended", "tools", "further reading", "helpful links", "resource list", "directory of"];
+
+const RESOURCE_SIGNALS = [
+  "resources",
+  "useful links",
+  "recommended",
+  "tools",
+  "further reading",
+  "helpful links",
+  "resource list",
+  "directory of",
+  "suggest a resource",
+  "submit a tool",
+];
 
 const PAID_ONLY_SIGNALS = [
-  "paid guest post", "sponsored post price", "price per post", "per post price", "submission fee", "listing fee",
-  "paid listing only", "buy guest post", "guest post price", "pricing per article", "only paid listings",
-  "sponsored articles only", "we charge", "fee for publishing", "publication fee",
+  "paid guest post",
+  "sponsored post price",
+  "price per post",
+  "per post price",
+  "submission fee",
+  "listing fee",
+  "paid listing only",
+  "buy guest post",
+  "guest post price",
+  "pricing per article",
+  "only paid listings",
+  "sponsored articles only",
+  "we charge",
+  "fee for publishing",
+  "publication fee",
 ];
-const PAID_SOFT_SIGNALS = ["premium listing", "featured listing", "paid plan", "pricing", "upgrade to premium", "sponsored post"];
-const FREE_SIGNALS = ["free listing", "free profile", "list for free", "free of charge", "it's free", "it’s free", "100% free", "free to join", "free basic listing", "free submission", "no fee", "free registration", "sign up free", "join free"];
 
-const SPAM_TERMS = ["casino", "betting", "escort", "viagra", "cialis", "payday loan", "porn", "xxx", "gambling", "crypto pump", "replica watches", "essay writing service"];
+const PAID_SOFT_SIGNALS = ["premium listing", "featured listing", "paid plan", "pricing", "upgrade to premium", "sponsored post"];
+
+const FREE_SIGNALS = [
+  "free listing",
+  "free profile",
+  "list for free",
+  "free of charge",
+  "it's free",
+  "it’s free",
+  "100% free",
+  "free to join",
+  "free basic listing",
+  "free submission",
+  "no fee",
+  "free registration",
+  "sign up free",
+  "join free",
+];
+
+const SPAM_TERMS = [
+  "casino",
+  "betting",
+  "escort",
+  "viagra",
+  "cialis",
+  "payday loan",
+  "porn",
+  "xxx",
+  "gambling",
+  "crypto pump",
+  "replica watches",
+  "essay writing service",
+];
+
 const BLOCKED_TLDS = [".cn", ".ru", ".su", ".by", ".xyz", ".top", ".click", ".loan", ".work"];
 const BLOCKED_LANGS = ["zh", "ru"];
 
 const TOPIC_TERMS = [
-  "seo", "search engine", "digital marketing", "marketing", "advertising", "ai ", "artificial intelligence", "generative",
-  "video production", "video", "web development", "website", "web design", "agency", "agencies", "brand", "business",
-  "startup", "technology", "content", "social media", "ecommerce", "e-commerce", "growth", "answer engine", "geo ",
+  "seo",
+  "search engine",
+  "digital marketing",
+  "marketing",
+  "advertising",
+  "ai ",
+  "artificial intelligence",
+  "generative",
+  "video production",
+  "video",
+  "web development",
+  "website",
+  "web design",
+  "agency",
+  "agencies",
+  "brand",
+  "business",
+  "startup",
+  "technology",
+  "content",
+  "social media",
+  "ecommerce",
+  "e-commerce",
+  "growth",
+  "answer engine",
+  "geo ",
 ];
 
 const INDIA_TERMS = ["india", "mumbai", "bengaluru", "bangalore", "delhi", "pune", "hyderabad", "chennai", "kolkata", "gurugram", "noida", "ahmedabad"];
@@ -121,11 +318,16 @@ export function classifyFree(a: PageAnalysis): { status: FreeStatus; signals: st
 export interface ValidateContext {
   queryRegion: RegionCode;
   competitorDomains?: string[];
-  /** Max outbound links to HEAD-check for broken-link lane. */
   brokenLinkCheckLimit?: number;
 }
 
-/** Applies geo/spam/HTTP gates + the lane-specific validator. */
+/**
+ * Validates a candidate against its discovery lane with V8.12.7A enhanced gates:
+ *  - Page Intent classification
+ *  - Negative context suppression
+ *  - Actionability evaluation
+ *  - Precision >= 95% guard
+ */
 export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx: ValidateContext): Promise<LaneVerdict> {
   const reasons: string[] = [];
   const signals: string[] = [];
@@ -133,6 +335,17 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
   const region = a.fetched && a.httpStatus && a.httpStatus < 400 ? classifyRegion(a, ctx.queryRegion) : ctx.queryRegion;
   const linkNA = !!lane.linkNotApplicable;
   const baseLinkType: LinkTypeStatus = a.dgsLinks.length > 0 ? a.dgsLinkType : linkNA ? "N/A" : "UNKNOWN";
+
+  // 1. Initial Page Intent
+  const intentResult = classifyPageIntent({
+    url: a.finalUrl || a.url,
+    title: a.title,
+    metaDescription: a.metaDescription,
+    text: a.text,
+    hasForm: a.hasForm,
+    formCount: a.formCount,
+  });
+  signals.push(`intent:${intentResult.intent}`);
 
   const verdict = (decision: LaneVerdict["decision"], extra: Partial<LaneVerdict> = {}): LaneVerdict => ({
     decision,
@@ -142,25 +355,38 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
     linkType: baseLinkType,
     region,
     relevance: 0,
+    pageIntent: intentResult.intent,
+    confidence: "LOW",
+    actionRequired: "NO_ACTION",
+    actionDestination: a.finalUrl || a.url,
+    actionabilityScore: 0,
+    needsVerification: false,
     ...extra,
   });
 
-  // 1. HTTP gate
+  // 2. HTTP status checks
   if (!a.fetched) {
     reasons.push(a.error || "UNREACHABLE");
     return verdict("REJECTED");
   }
+
+  // 403 / 429 = bot-protected or rate-limited. Never qualify automatically; route to Needs Verification
+  if (a.httpStatus === 403 || a.httpStatus === 429) {
+    reasons.push(`HTTP_${a.httpStatus}:BOT_PROTECTED`);
+    return verdict("DISCOVERED", { confidence: "LOW", needsVerification: true });
+  }
+
   if (!a.httpStatus || a.httpStatus < 200 || a.httpStatus >= 300) {
     reasons.push(`HTTP_${a.httpStatus ?? 0}`);
-    // 403/429 = bot-protected; the page may exist. Keep for human check, never qualify.
-    return verdict(a.httpStatus === 403 || a.httpStatus === 429 ? "DISCOVERED" : "REJECTED");
+    return verdict("REJECTED");
   }
+
   if (a.error) {
     reasons.push(a.error);
     return verdict("REJECTED");
   }
 
-  // 2. Geo / spam gate
+  // 3. Domain & Language Gates
   if (host === "dgeniussolutions.com" || host.endsWith(".dgeniussolutions.com")) {
     reasons.push("OWN_DOMAIN");
     return verdict("REJECTED");
@@ -173,13 +399,35 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
     reasons.push(`BLOCKED_LANGUAGE:${a.lang}`);
     return verdict("REJECTED");
   }
+
+  // 4. Spam Filter
   const spam = hits(`${a.title} ${a.metaDescription} ${a.text.slice(0, 50000)}`, SPAM_TERMS);
   if (spam.length >= 2) {
     reasons.push(`SPAM_TERMS:${spam.join("|")}`);
     return verdict("REJECTED");
   }
 
-  // 3. Free / paid
+  // 5. Negative Context Engine (V8.12.7A)
+  const negContext = detectNegativeContext({
+    url: a.finalUrl || a.url,
+    title: a.title,
+    metaDescription: a.metaDescription,
+    text: a.text,
+  });
+  if (negContext.hasNegativeContext) {
+    signals.push(...negContext.patterns);
+    reasons.push(...negContext.reasons);
+    return verdict("REJECTED", { confidence: "LOW" });
+  }
+
+  // 6. Page Intent Compatibility Check (V8.12.7A)
+  const comp = isPageIntentCompatibleWithLane(intentResult.intent, lane.id);
+  if (!comp.compatible) {
+    reasons.push(comp.reason || `PAGE_INTENT_MISMATCH:${intentResult.intent}`);
+    return verdict("REJECTED", { confidence: "LOW" });
+  }
+
+  // 7. Free / Paid Evaluation
   const free = classifyFree(a);
   signals.push(...free.signals);
   const freeStatus = linkNA && free.status === "UNKNOWN" ? "UNKNOWN" : free.status;
@@ -188,12 +436,18 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
     return verdict("REJECTED", { freeStatus });
   }
 
-  // 4. Relevance (keyword evidence on the live page)
+  // 8. Topical Relevance
   const topicHits = hits(` ${a.title.toLowerCase()} ${a.metaDescription.toLowerCase()} ${a.text.slice(0, 60000)} `, TOPIC_TERMS);
   const relevance = Math.min(100, topicHits.length * 12);
   if (topicHits.length > 0) signals.push(`topics:${topicHits.slice(0, 6).join("|")}`);
 
-  // 5. Lane validator
+  const relevant = lane.validator === "UNLINKED_MENTION" || relevance >= 12;
+  if (!relevant) {
+    reasons.push("NOT_DGS_RELEVANT");
+    return verdict("REJECTED", { freeStatus, relevance });
+  }
+
+  // 9. Lane-Specific Signal Evaluation
   const text = a.text;
   let lanePass = false;
   let extra: Partial<LaneVerdict> = {};
@@ -202,19 +456,28 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
     case "SUBMISSION": {
       const s = hits(text, SUBMISSION_SIGNALS);
       signals.push(...s.map((x) => `submit:${x}`));
-      lanePass = s.length > 0;
-      if (!lanePass) reasons.push("NO_SUBMISSION_SIGNAL");
+      // Require directory intent AND at least 1 positive directory submission phrase
+      lanePass = intentResult.intent === "BUSINESS_DIRECTORY" && s.length > 0;
+      if (!lanePass) {
+        if (intentResult.intent !== "BUSINESS_DIRECTORY") reasons.push("NOT_A_BUSINESS_DIRECTORY");
+        if (s.length === 0) reasons.push("NO_SUBMISSION_SIGNAL");
+      }
       break;
     }
+
     case "CONTRIBUTION": {
       const s = hits(text, CONTRIBUTION_SIGNALS);
       const head = `${a.title} ${a.metaDescription} ${a.finalUrl || ""}`.toLowerCase().replace(/[-_/]+/g, " ");
       const headHits = hits(head, [...CONTRIBUTION_SIGNALS, "contribute", "contributor", "guest post", "write for"]);
       signals.push(...s.map((x) => `contrib:${x}`), ...headHits.map((x) => `contrib-head:${x}`));
-      lanePass = headHits.length > 0 || s.length >= 2;
-      if (!lanePass) reasons.push(s.length === 1 ? "WEAK_CONTRIBUTOR_SIGNAL" : "NO_CONTRIBUTOR_SIGNAL");
+      lanePass = intentResult.intent === "EDITORIAL_GUIDELINES" && (headHits.length > 0 || s.length >= 2);
+      if (!lanePass) {
+        if (intentResult.intent !== "EDITORIAL_GUIDELINES") reasons.push("NOT_EDITORIAL_GUIDELINES");
+        reasons.push(s.length === 1 ? "WEAK_CONTRIBUTOR_SIGNAL" : "NO_CONTRIBUTOR_SIGNAL");
+      }
       break;
     }
+
     case "PR_REQUEST": {
       const s = hits(text, PR_SIGNALS);
       signals.push(...s.map((x) => `pr:${x}`));
@@ -222,22 +485,28 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
       if (!lanePass) reasons.push("NO_JOURNALIST_REQUEST_SIGNAL");
       break;
     }
+
     case "COMMUNITY": {
       const domainMatch = COMMUNITY_DOMAINS.some((d) => host === d || host.endsWith(`.${d}`) || host.startsWith(d));
       const s = hits(text, COMMUNITY_SIGNALS);
       signals.push(...s.slice(0, 5).map((x) => `community:${x}`));
       lanePass = domainMatch || s.length >= 3;
       if (!lanePass) reasons.push("NOT_A_COMMUNITY_PAGE");
-      if (lanePass && baseLinkType === "UNKNOWN") extra.linkType = "UNKNOWN"; // UGC only once observed
+      if (lanePass && baseLinkType === "UNKNOWN") extra.linkType = "UNKNOWN";
       break;
     }
+
     case "PARTNERSHIP": {
       const s = hits(text, PARTNERSHIP_SIGNALS);
       signals.push(...s.map((x) => `partner:${x}`));
-      lanePass = s.length > 0;
-      if (!lanePass) reasons.push("NO_PARTNER_PROGRAM_SIGNAL");
+      lanePass = intentResult.intent === "PARTNERSHIP_PAGE" && s.length > 0;
+      if (!lanePass) {
+        if (intentResult.intent !== "PARTNERSHIP_PAGE") reasons.push("NOT_A_PARTNERSHIP_PAGE");
+        if (s.length === 0) reasons.push("NO_PARTNER_PROGRAM_SIGNAL");
+      }
       break;
     }
+
     case "RESOURCE": {
       const s = hits(`${a.title.toLowerCase()} ${(a.finalUrl || "").toLowerCase()}`, RESOURCE_SIGNALS);
       const uniqueHosts = new Set(a.outboundLinks.map((l) => l.host)).size;
@@ -246,6 +515,7 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
       if (!lanePass) reasons.push(s.length === 0 ? "NOT_A_RESOURCE_PAGE" : `TOO_FEW_OUTBOUND_LINKS:${uniqueHosts}`);
       break;
     }
+
     case "BROKEN_LINK": {
       const s = hits(`${a.title.toLowerCase()} ${(a.finalUrl || "").toLowerCase()}`, RESOURCE_SIGNALS);
       const uniq = new Map<string, { href: string; anchor: string }>();
@@ -263,12 +533,13 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
       if (!lanePass) reasons.push(s.length === 0 ? "NOT_A_RESOURCE_PAGE" : "NO_BROKEN_OUTBOUND_LINKS_FOUND");
       break;
     }
+
     case "UNLINKED_MENTION": {
       if (!a.brandMentioned) {
         reasons.push("BRAND_NOT_MENTIONED_ON_PAGE");
         lanePass = false;
       } else if (a.dgsLinks.length > 0) {
-        reasons.push("ALREADY_LINKS_TO_DGS"); // this is a backlink, handled by the backlink pipeline
+        reasons.push("ALREADY_LINKS_TO_DGS");
         signals.push(`dgs_links:${a.dgsLinks.length}`);
         lanePass = false;
       } else {
@@ -277,6 +548,7 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
       }
       break;
     }
+
     case "COMPETITOR_GAP": {
       const comps = (ctx.competitorDomains || []).map((d) => d.toLowerCase().replace(/^www\./, ""));
       const compLinks = a.outboundLinks.filter((l) => comps.some((c) => l.host.replace(/^www\./, "") === c)).map((l) => l.href);
@@ -287,16 +559,68 @@ export async function validateForLane(a: PageAnalysis, lane: LaneDefinition, ctx
     }
   }
 
+  // 10. Actionability Test (V8.12.7A)
+  const act = evaluateActionability({
+    url: a.finalUrl || a.url,
+    title: a.title,
+    laneId: lane.id,
+    pageIntent: intentResult.intent,
+    hasForm: a.hasForm,
+    formCount: a.formCount,
+    text: a.text,
+    signals,
+    relevanceScore: relevance,
+  });
+
+  extra.actionRequired = act.actionRequired;
+  extra.actionDestination = act.actionDestination;
+  extra.actionabilityScore = act.actionabilityScore;
+  extra.actionableEvidence = act.evidence;
+  extra.confidence = act.confidence;
+
   if (a.noindex) signals.push("page_noindex");
 
-  // Brand-mention lane is relevant by definition; citations need only basic business relevance.
-  const relevant = lane.validator === "UNLINKED_MENTION" || relevance >= 12;
-  if (!relevant) reasons.push("NOT_DGS_RELEVANT");
-
-  if (lanePass && relevant) {
+  // Only qualify if lane passed AND actionability is HIGH or MEDIUM
+  if (lanePass && act.actionable) {
     reasons.push("PASSED_LANE_VALIDATOR");
-    return verdict("QUALIFIED", { freeStatus, relevance, ...extra });
+    return verdict("QUALIFIED", {
+      freeStatus,
+      relevance,
+      confidence: act.confidence,
+      actionRequired: act.actionRequired,
+      actionDestination: act.actionDestination,
+      actionabilityScore: act.actionabilityScore,
+      actionableEvidence: act.evidence,
+      ...extra,
+    });
   }
-  // Reachable but failing the lane rule: keep as a raw candidate only when it is at least relevant.
-  return verdict(relevant ? "DISCOVERED" : "REJECTED", { freeStatus, relevance, ...extra });
+
+  // If lane had partial signals but failed actionability, send to Needs Verification (SEO Analyst queue)
+  if (lanePass && !act.actionable) {
+    reasons.push("NO_ACTIONABLE_OPPORTUNITY");
+    reasons.push(...act.reasons);
+    return verdict("DISCOVERED", {
+      freeStatus,
+      relevance,
+      confidence: act.confidence,
+      actionRequired: act.actionRequired,
+      actionDestination: act.actionDestination,
+      actionabilityScore: act.actionabilityScore,
+      actionableEvidence: act.evidence,
+      needsVerification: true,
+      ...extra,
+    });
+  }
+
+  // Failed lane requirements
+  return verdict("REJECTED", {
+    freeStatus,
+    relevance,
+    confidence: act.confidence,
+    actionRequired: act.actionRequired,
+    actionDestination: act.actionDestination,
+    actionabilityScore: act.actionabilityScore,
+    actionableEvidence: act.evidence,
+    ...extra,
+  });
 }

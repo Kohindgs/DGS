@@ -32,11 +32,30 @@ export interface ActionCenterKpis {
   rawCandidatesCount: number;
   qualifiedCount: number;
   needsReviewCount: number;
+  needsVerificationCount: number;
   assignedActiveCount: number;
   dueTodayCount: number;
   overdueCount: number;
   mismatchesCount: number;
   recentlyVerifiedLive: number;
+}
+
+export interface RawCandidateItem {
+  id: string;
+  source_provider: string;
+  source_query: string | null;
+  discovery_lane: string | null;
+  page_url: string;
+  domain: string;
+  page_title: string | null;
+  page_intent: string | null;
+  confidence: string | null;
+  action_required: string | null;
+  action_destination: string | null;
+  actionability_score: number | null;
+  qualification_status: string;
+  qualification_reason: string | null;
+  created_at: string;
 }
 
 export interface TodayTaskItem {
@@ -55,6 +74,11 @@ export interface TodayTaskItem {
   recommended_dgs_target_page: string;
   exact_submission_url: string;
   source_type: string;
+  page_intent?: string | null;
+  confidence?: string | null;
+  action_required?: string | null;
+  action_destination?: string | null;
+  actionability_score?: number | null;
 }
 
 /**
@@ -103,15 +127,23 @@ export async function getActionCenterKpis(): Promise<ActionCenterKpis> {
     }
   }
 
-  // Needs Review: unassigned QUALIFIED/approved records only. Raw DISCOVERED/NEW candidates never
-  // enter the manager queue (V8.12.6 qualification gate).
+  // Needs Review: unassigned QUALIFIED/approved records with VERIFIED_ACTIVE status only.
+  // Raw DISCOVERED/NEW candidates never enter the manager queue.
   const { rows: reviewRows } = await cmsQuery<{ count: any }>(
     `SELECT COUNT(*) as count FROM off_page_opportunities 
      WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED'))
        AND (COALESCE(owner, assigned_to) IS NULL OR COALESCE(owner, assigned_to) = '')
-       AND status NOT IN ('REJECTED', 'ARCHIVED', 'EXPIRED', 'SPAM')`
+       AND status NOT IN ('REJECTED', 'ARCHIVED', 'EXPIRED', 'SPAM')
+       AND (COALESCE(verification_status, '') = 'VERIFIED_ACTIVE' OR status = 'APPROVED')`
   );
   const needsReviewCount = Number(reviewRows[0]?.count) || 0;
+
+  // Needs Verification: raw candidates quarantined for SEO Analyst human check (V8.12.7A)
+  const { rows: verifRows } = await cmsQuery<{ count: any }>(
+    `SELECT COUNT(*) as count FROM off_page_raw_candidates 
+     WHERE qualification_status = 'NEEDS_VERIFICATION'`
+  ).catch(() => ({ rows: [{ count: 0 }] }));
+  const needsVerificationCount = Number(verifRows[0]?.count) || 0;
 
   // Active Assigned (Allocated to an owner and actively in flight)
   const { rows: activeAssignedRows } = await cmsQuery<{ count: any }>(
@@ -154,6 +186,7 @@ export async function getActionCenterKpis(): Promise<ActionCenterKpis> {
     rawCandidatesCount: Number(pipelineCounts.DISCOVERED) || 0,
     qualifiedCount: Number(pipelineCounts.QUALIFIED) || 0,
     needsReviewCount,
+    needsVerificationCount,
     assignedActiveCount,
     dueTodayCount,
     overdueCount,
@@ -193,7 +226,12 @@ export async function getTodayTasks(params?: {
       internal_note,
       recommended_dgs_target_page,
       exact_submission_url,
-      COALESCE(source_type, 'curated') as source_type
+      COALESCE(source_type, 'curated') as source_type,
+      page_intent,
+      confidence,
+      action_required,
+      action_destination,
+      actionability_score
     FROM off_page_opportunities
     WHERE ${whereClauses.join(" AND ")}
     ORDER BY 
@@ -222,6 +260,7 @@ export async function getTodayTasks(params?: {
 
 /**
  * Returns opportunities awaiting manager review (unassigned in actionable stages).
+ * Only VERIFIED_ACTIVE or explicitly APPROVED opportunities enter this queue.
  */
 export async function getNeedsReviewItems(params?: { limit?: number }): Promise<TodayTaskItem[]> {
   await ensureOffPageTablesExist();
@@ -238,11 +277,17 @@ export async function getNeedsReviewItems(params?: { limit?: number }): Promise<
       internal_note,
       recommended_dgs_target_page,
       exact_submission_url,
-      COALESCE(source_type, 'curated') as source_type
+      COALESCE(source_type, 'curated') as source_type,
+      page_intent,
+      confidence,
+      action_required,
+      action_destination,
+      actionability_score
     FROM off_page_opportunities
     WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED'))
       AND (COALESCE(owner, assigned_to) IS NULL OR COALESCE(owner, assigned_to) = '')
       AND status NOT IN ('REJECTED', 'ARCHIVED', 'EXPIRED', 'SPAM')
+      AND (COALESCE(verification_status, '') = 'VERIFIED_ACTIVE' OR status = 'APPROVED')
     ORDER BY 
       CASE priority_tier
         WHEN 'P0' THEN 1
@@ -261,6 +306,27 @@ export async function getNeedsReviewItems(params?: { limit?: number }): Promise<
     is_overdue: Boolean(r.is_overdue),
     is_due_today: Boolean(r.is_due_today),
   }));
+}
+
+/**
+ * Returns raw candidates awaiting SEO Analyst verification (V8.12.7A human check queue).
+ */
+export async function getNeedsVerificationItems(params?: { limit?: number }): Promise<RawCandidateItem[]> {
+  await ensureOffPageTablesExist();
+  const limit = Math.min(Math.max(params?.limit || 50, 1), 200);
+
+  const { rows } = await cmsQuery<RawCandidateItem>(
+    `SELECT id, source_provider, source_query, discovery_lane, page_url, domain, page_title,
+            page_intent, confidence, action_required, action_destination, actionability_score,
+            qualification_status, qualification_reason, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') as created_at
+       FROM off_page_raw_candidates
+      WHERE qualification_status = 'NEEDS_VERIFICATION'
+      ORDER BY created_at DESC
+      LIMIT ?`,
+    [limit]
+  ).catch(() => ({ rows: [] }));
+
+  return rows;
 }
 
 /**
