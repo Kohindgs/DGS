@@ -108,7 +108,7 @@ export async function getActionCenterKpis(): Promise<ActionCenterKpis> {
   const { rows: reviewRows } = await cmsQuery<{ count: any }>(
     `SELECT COUNT(*) as count FROM off_page_opportunities 
      WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED'))
-       AND (owner IS NULL OR owner = '')
+       AND (COALESCE(owner, assigned_to) IS NULL OR COALESCE(owner, assigned_to) = '')
        AND status NOT IN ('REJECTED', 'ARCHIVED', 'EXPIRED', 'SPAM')`
   );
   const needsReviewCount = Number(reviewRows[0]?.count) || 0;
@@ -116,8 +116,8 @@ export async function getActionCenterKpis(): Promise<ActionCenterKpis> {
   // Active Assigned (Allocated to an owner and actively in flight)
   const { rows: activeAssignedRows } = await cmsQuery<{ count: any }>(
     `SELECT COUNT(*) as count FROM off_page_opportunities 
-     WHERE owner IS NOT NULL AND owner != ''
-       AND status IN ('ASSIGNED', 'IN_PROGRESS', 'SUBMITTED', 'FOLLOW_UP')`
+     WHERE COALESCE(owner, assigned_to) IS NOT NULL AND COALESCE(owner, assigned_to) != ''
+       AND status IN ('ASSIGNED', 'IN_PROGRESS', 'SUBMITTED', 'FOLLOW_UP', 'APPROVED')`
   );
   const assignedActiveCount = Number(activeAssignedRows[0]?.count) || 0;
 
@@ -241,7 +241,7 @@ export async function getNeedsReviewItems(params?: { limit?: number }): Promise<
       COALESCE(source_type, 'curated') as source_type
     FROM off_page_opportunities
     WHERE (status IN ('MANAGER_REVIEW', 'QUALIFIED', 'APPROVED'))
-      AND (owner IS NULL OR owner = '')
+      AND (COALESCE(owner, assigned_to) IS NULL OR COALESCE(owner, assigned_to) = '')
       AND status NOT IN ('REJECTED', 'ARCHIVED', 'EXPIRED', 'SPAM')
     ORDER BY 
       CASE priority_tier
