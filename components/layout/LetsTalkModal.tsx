@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useChrome } from "@/components/layout/ChromeProvider";
 import { useBodyScrollLock, useFocusTrap } from "@/components/layout/useFocusTrap";
 import { PublicLeadForm } from "@/components/forms/PublicLeadForm";
@@ -9,6 +10,13 @@ export function LetsTalkModal() {
   const { letsTalkOpen, closeLetsTalk } = useChrome();
   const trapRef = useFocusTrap(letsTalkOpen, closeLetsTalk);
   useBodyScrollLock(letsTalkOpen);
+  const [currentRoute, setCurrentRoute] = useState("/");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentRoute(window.location.pathname || "/");
+    }
+  }, [letsTalkOpen]);
 
   if (!letsTalkOpen) return null;
 
@@ -30,7 +38,7 @@ export function LetsTalkModal() {
         <p className={styles.lead}>
           Tell us what you want to build, improve, or scale. Our team will get back with the next best step.
         </p>
-        <PublicLeadForm id="lets-talk-form" route="/" />
+        <PublicLeadForm id="lets-talk-form" route={currentRoute} className={styles.modalForm} />
       </div>
     </div>
   );

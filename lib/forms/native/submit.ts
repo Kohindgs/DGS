@@ -49,8 +49,10 @@ export async function submitNativeLeadForm(options: {
   sanitizedFields: Record<string, string>;
   captchaToken?: string;
   skipCaptcha?: boolean;
+  pageUrl?: string;
+  utm?: Record<string, string>;
 }): Promise<FormSubmissionResult> {
-  const { definition, route, sanitizedFields, captchaToken, skipCaptcha } = options;
+  const { definition, route, sanitizedFields, captchaToken, skipCaptcha, pageUrl, utm } = options;
 
   if (definition.captcha?.enabled && !skipCaptcha) {
     if (definition.captcha.provider !== "recaptcha") {
@@ -65,6 +67,8 @@ export async function submitNativeLeadForm(options: {
     formTitle: definition.title,
     route,
     fields: sanitizedFields,
+    pageUrl: pageUrl || undefined,
+    utm: utm || undefined,
   };
 
   const contact = extractLeadContactFields(definition, sanitizedFields);

@@ -27,7 +27,7 @@ export function HomeFinalCta({ blocks }: HomeFinalCtaProps) {
           {lead?.type === "paragraph" ? <p className={styles.lead}>{blockText(lead)}</p> : null}
         </div>
         <div className={styles.formWrap}>
-          <PublicLeadForm id="home-growth-audit-form" route="/" />
+          <PublicLeadForm id="home-growth-audit-form" route="/" className={styles.homeCtaForm} />
           <Link href="/contact-us/" className={styles.cta}>
             Start With A Growth Audit →
           </Link>

@@ -1,79 +1,31 @@
 "use client";
 
-import styles from "./PublicLeadForm.module.css";
-
-const FIELD_LABELS: Record<string, string> = {
-  "names[first_name]": "Full Name",
-  email: "Email",
-  phone: "Phone/Mobile",
-  input_text: "Company Name",
-  dropdown_1: "How did you hear about us ?",
-  subject: "Subject",
-  dropdown: "Service",
-  message: "Your Message",
-};
-
-const PLACEHOLDERS: Record<string, string> = {
-  "names[first_name]": "Enter Your First Name",
-  email: "Email Address",
-  phone: "Mobile Number",
-};
-
-const HOMEPAGE_FIELDS = [
-  "names[first_name]",
-  "email",
-  "phone",
-  "input_text",
-  "dropdown_1",
-  "subject",
-  "dropdown",
-  "message",
-] as const;
+import { useMemo } from "react";
+import { FluentLeadForm } from "./FluentLeadForm";
+import { getFormDefinitionById } from "@/lib/forms/registry";
 
 type PublicLeadFormProps = {
   id?: string;
-  route: "/" | "/contact-us/";
+  route?: string;
+  className?: string;
 };
 
-export function PublicLeadForm({ id = "contact-form", route }: PublicLeadFormProps) {
+export function PublicLeadForm({ id = "contact-form", route = "/", className }: PublicLeadFormProps) {
+  const definition = useMemo(() => getFormDefinitionById(1), []);
+  if (!definition) {
+    return (
+      <div data-migration-form data-submission="disabled">
+        <p>Form configuration error.</p>
+      </div>
+    );
+  }
+
   return (
-    <form
+    <FluentLeadForm
       id={id}
-      className={styles.form}
-      data-migration-form
-      data-wordpress-form="1"
-      data-route={route}
-      data-submission="disabled"
-      onSubmit={(event) => event.preventDefault()}
-    >
-      {HOMEPAGE_FIELDS.map((name) => {
-        const label = FIELD_LABELS[name] || name;
-        const isTextarea = name === "message";
-        const isSelect = name === "dropdown_1" || name === "dropdown";
-
-        return (
-          <label key={name} className={styles.field} data-migration-field={name}>
-            <span className={styles.label}>{label}</span>
-            {isTextarea ? (
-              <textarea name={name} rows={5} placeholder={label} />
-            ) : isSelect ? (
-              <select name={name} defaultValue="">
-                <option value="">{label}</option>
-              </select>
-            ) : (
-              <input
-                type={name === "email" ? "email" : name === "phone" ? "tel" : "text"}
-                name={name}
-                placeholder={PLACEHOLDERS[name] || label}
-              />
-            )}
-          </label>
-        );
-      })}
-
-      <button type="submit" className={styles.submit} disabled aria-disabled="true">
-        Submit Form
-      </button>
-    </form>
+      route={route}
+      definition={definition}
+      className={className}
+    />
   );
 }

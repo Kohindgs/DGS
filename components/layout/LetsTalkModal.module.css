@@ -47,3 +47,23 @@
   margin-bottom: var(--space-6);
   max-width: var(--text-max);
 }
+
+.modalForm {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-block: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: var(--space-3);
+  }
+  .dialog {
+    padding: var(--space-5);
+    max-height: 94vh;
+  }
+}
+

@@ -15,7 +15,7 @@ import { DGS_LOGO } from "@/lib/site/brand";
 import styles from "./SiteMenu.module.css";
 
 export function SiteMenu() {
-  const { menuOpen, closeMenu } = useChrome();
+  const { menuOpen, closeMenu, openLetsTalk } = useChrome();
   const trapRef = useFocusTrap(menuOpen, closeMenu);
   useBodyScrollLock(menuOpen);
 
@@ -107,12 +107,19 @@ export function SiteMenu() {
               ))}
             </ul>
 
-            <Link href="/contact-us/" className={styles.ctaBtn} onClick={closeMenu}>
-              <span>Start a Project</span>
+            <button
+              type="button"
+              className={styles.ctaBtn}
+              onClick={() => {
+                closeMenu();
+                openLetsTalk();
+              }}
+            >
+              <span>Let&apos;s Talk</span>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M1 13L13 1M13 1H4M13 1V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </Link>
+            </button>
           </div>
         </div>
 

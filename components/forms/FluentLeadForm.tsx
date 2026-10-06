@@ -4,6 +4,10 @@ import { type ChangeEvent, type FormEvent, useEffect, useMemo, useRef, useState 
 import styles from "./FluentLeadForm.module.css";
 import type { FormDefinition, FormFieldDefinition } from "@/lib/forms/types";
 import { obtainTurnstileToken, renderRecaptchaV2, type RecaptchaV2Widget } from "./captcha-client";
+import { extractUtmParams, fireFormConversionAnalytics, getFormEventName } from "@/lib/forms/analytics";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^[+0-9\s\-()]{7,20}$/;
 
 type FluentLeadFormProps = {
   id?: string;
@@ -34,6 +38,7 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
     const initial: Record<string, string> = {};
     for (const field of definition.fields) {
       if (field.defaultValue) initial[field.name] = field.defaultValue;
+      else if (field.name === "subject") initial[field.name] = "Growth Consultation Enquiry";
     }
     return initial;
   });
@@ -79,6 +84,29 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
     setMessage("");
     setFieldErrors({});
 
+    // 1. Client-side field validation
+    const errors: Record<string, string> = {};
+    for (const field of fields) {
+      const val = (values[field.name] || "").trim();
+      if (field.required && !val) {
+        errors[field.name] = field.validationMessages?.required || `${field.label} is required`;
+      } else if (val) {
+        if (field.type === "email" && !EMAIL_RE.test(val)) {
+          errors[field.name] = field.validationMessages?.email || "Please enter a valid email address";
+        } else if (field.type === "tel" && !PHONE_RE.test(val)) {
+          errors[field.name] = field.validationMessages?.valid_phone_number || "Please enter a valid phone number";
+        }
+      }
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setStatus("backend-error");
+      setMessage("Please complete all required fields correctly.");
+      submittingRef.current = false;
+      return;
+    }
+
     try {
       let captchaToken: string | undefined;
       if (recaptchaEnabled) {
@@ -106,6 +134,8 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
           route,
           fields: payloadFields,
           captchaToken,
+          pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
+          utm: extractUtmParams(),
         }),
       });
 
@@ -113,6 +143,8 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
         ok?: boolean;
         message?: string;
         fieldErrors?: Record<string, string>;
+        leadId?: string;
+        submissionId?: string;
       } = {};
       try {
         result = (await response.json()) as typeof result;
@@ -131,11 +163,23 @@ export function FluentLeadForm({ id = "contact-form", route, definition, classNa
       }
 
       setStatus("success");
-      setMessage(result.message || definition.confirmation?.message || "Thank you for your submission.");
+      setMessage(result.message || definition.confirmation?.message || "Thank you for your message. We will get in touch with you shortly");
       setValues((current) => {
         const next = { ...current };
         for (const field of fields) next[field.name] = "";
         return next;
+      });
+
+      const utm = extractUtmParams();
+      fireFormConversionAnalytics({
+        eventName: getFormEventName(definition.fluentFormId, route),
+        formId: definition.fluentFormId,
+        formTitle: definition.title,
+        route,
+        leadId: result.leadId ? String(result.leadId) : undefined,
+        submissionId: result.submissionId ? String(result.submissionId) : undefined,
+        service: payloadFields["dropdown"] || undefined,
+        utm,
       });
     } catch {
       setStatus("network-error");

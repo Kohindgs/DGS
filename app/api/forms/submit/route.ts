@@ -26,11 +26,14 @@ export async function POST(request: Request) {
   }
 
   try {
+    const bodyObj = body as { route: string; pageUrl?: string; utm?: Record<string, string> };
     const options = {
       definition: validated.definition,
-      route: (body as { route: string }).route,
+      route: bodyObj.route,
       sanitizedFields: validated.sanitizedFields,
       captchaToken: validated.captchaToken,
+      pageUrl: bodyObj.pageUrl,
+      utm: bodyObj.utm,
     };
 
     const result = await submitNativeLeadForm(options);

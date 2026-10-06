@@ -24,6 +24,13 @@ export function getByRoute(route) {
 }
 
 function assertRouteFormMapping(route, fluentFormId) {
+  if (Number(fluentFormId) === 1) {
+    const form1 = getById(1);
+    if (!form1 || !form1.activationEnabled || form1.approvalState !== "APPROVED_FOR_IMPLEMENTATION") {
+      throw new Error("Form 1 is not approved for activation");
+    }
+    return form1;
+  }
   const definition = getByRoute(route);
   if (!definition) throw new Error(`No approved form mapped to route ${route}`);
   if (Number(definition.fluentFormId) !== Number(fluentFormId)) {

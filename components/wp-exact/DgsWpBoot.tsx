@@ -48,7 +48,7 @@ export function DgsWpBoot({
     }
 
     const onTalkClick = (event: MouseEvent) => {
-      const target = (event.target as HTMLElement | null)?.closest(".dgs-talk-trigger");
+      const target = (event.target as HTMLElement | null)?.closest(".dgs-talk-trigger, [data-lets-talk], a[href='#lets-talk']");
       if (!target) return;
       event.preventDefault();
       openLetsTalk();
