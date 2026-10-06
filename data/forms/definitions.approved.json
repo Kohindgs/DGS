@@ -2928,6 +2928,10 @@
           "defaultValue": "",
           "options": [
             {
+              "label": "₹50,000 to ₹1 lakh",
+              "value": "₹50,000 to ₹1 lakh"
+            },
+            {
               "label": "₹75,000 to ₹1 lakh",
               "value": "₹75,000 to ₹1 lakh"
             },
@@ -4087,6 +4091,10 @@
           "defaultValue": "",
           "options": [
             {
+              "label": "₹50,000 to ₹1 lakh",
+              "value": "₹50,000 to ₹1 lakh"
+            },
+            {
               "label": "₹75,000 to ₹1 lakh",
               "value": "₹75,000 to ₹1 lakh"
             },
@@ -4660,6 +4668,10 @@
           "placeholder": "Select your budget",
           "defaultValue": "",
           "options": [
+            {
+              "label": "₹50,000 to ₹1 lakh",
+              "value": "₹50,000 to ₹1 lakh"
+            },
             {
               "label": "₹75,000 to ₹1 lakh",
               "value": "₹75,000 to ₹1 lakh"
@@ -5235,6 +5247,10 @@
           "defaultValue": "",
           "options": [
             {
+              "label": "₹50,000 to ₹1 lakh",
+              "value": "₹50,000 to ₹1 lakh"
+            },
+            {
               "label": "₹75,000 to ₹1 lakh",
               "value": "₹75,000 to ₹1 lakh"
             },
@@ -5808,6 +5824,10 @@
           "placeholder": "Select your budget",
           "defaultValue": "",
           "options": [
+            {
+              "label": "₹50,000 to ₹1 lakh",
+              "value": "₹50,000 to ₹1 lakh"
+            },
             {
               "label": "₹75,000 to ₹1 lakh",
               "value": "₹75,000 to ₹1 lakh"
