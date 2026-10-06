@@ -1,6 +1,6 @@
 import type { FormDefinition, FormSubmissionResult } from "../types.ts";
 import { isApprovedFormId } from "../registry.ts";
-import { createCmsLead, createCmsSubmission } from "../../cms/leads.ts";
+import { createCmsLead, createCmsSubmission, updateSubmissionNotificationStatus } from "../../cms/leads.ts";
 import { sendNativeFormNotification } from "../../notifications/form-email.ts";
 import { publishNotificationEvent } from "../../notifications/engine.ts";
 import { extractLeadContactFields } from "../contact-fields.ts";
@@ -96,16 +96,34 @@ export async function submitNativeLeadForm(options: {
     route,
     fields: sanitizedFields,
     leadId,
+    submissionId,
     contact,
+    pageUrl,
+    utm,
   }).catch((error) => {
-    console.error("Native form notification failed", error);
-    return { sent: false };
+    const errMsg = error instanceof Error ? error.message : String(error);
+    console.error("Native form notification failed", errMsg);
+    return {
+      sent: false,
+      reason: "send-failed",
+      error: errMsg,
+    } as import("../../notifications/form-email.ts").NativeFormNotificationResult;
+  });
+
+  // Track notification status on submission record in DB (Section 14)
+  await updateSubmissionNotificationStatus(submissionId, {
+    status: notification.sent ? "sent" : "failed",
+    attemptedAt: new Date(),
+    recipient: notification.recipient,
+    messageId: notification.messageId,
+    error: notification.error || (!notification.sent ? notification.reason : undefined),
   });
 
   if (!notification.sent) {
     console.warn("Native form submission saved but notification was not sent", {
       formKey: definition.key,
       submissionId,
+      reason: notification.reason,
     });
   }
 
@@ -126,5 +144,7 @@ export async function submitNativeLeadForm(options: {
     message: definition.confirmation?.message || "Thank you for your submission.",
     submissionId,
     leadId,
+    notificationSent: notification.sent,
+    recipient: notification.recipient,
   };
 }

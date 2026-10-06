@@ -1,6 +1,7 @@
 import { cmsQuery, isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { listApprovedForms, getFormDefinitionById } from "./registry";
 import { getFormEventName } from "./analytics";
+import { getGlobalFormNotificationRecipient } from "../notifications/config";
 
 export type FormHealthMetric = {
   key: string;
@@ -38,8 +39,7 @@ export async function runFormHealthProbe(): Promise<FormHealthProbeResult> {
   const smtpConfigured = Boolean(
     process.env.DGS_SMTP_HOST && process.env.DGS_SMTP_USER && process.env.DGS_SMTP_PASS,
   );
-  const defaultRecipient =
-    process.env.DGS_FORM_NOTIFICATION_TO || "business@dgeniussolutions.com";
+  const defaultRecipient = getGlobalFormNotificationRecipient();
 
   // Fetch submission stats per form key from database if available
   const statsMap = new Map<
@@ -112,10 +112,7 @@ export async function runFormHealthProbe(): Promise<FormHealthProbeResult> {
     }
 
     const primaryRoute = routes[0] || "/";
-    const notificationDest =
-      form.key === "fluentform-15" || primaryRoute.includes("/career")
-        ? process.env.DGS_CAREER_NOTIFICATION_TO || "hr@dgeniussolutions.com"
-        : defaultRecipient;
+    const notificationDest = defaultRecipient;
 
     results.push({
       key: form.key,

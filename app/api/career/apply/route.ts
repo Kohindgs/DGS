@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import { createCmsLead, createCmsSubmission } from "@/lib/cms/leads";
+import { createCmsLead, createCmsSubmission, updateSubmissionNotificationStatus } from "@/lib/cms/leads";
 import { sendCareerApplicationEmail } from "@/lib/notifications/career-email";
 import { loadActiveCareerJobs } from "@/lib/careers/jobs";
 import { publishNotificationEvent } from "@/lib/notifications/engine";
@@ -235,7 +235,7 @@ export async function POST(request: Request) {
       provider: "native",
     });
 
-    // Send DGS Branded Email Notification with file attachments
+    // Send DGS Branded Email Notification with file attachments (to Kohin only, zero CC/BCC)
     const notification = await sendCareerApplicationEmail({
       name,
       email,
@@ -256,9 +256,25 @@ export async function POST(request: Request) {
       portfolioBuffer,
       portfolioMimeType,
       leadId,
+      submissionId,
+      route: "/career/",
     }).catch((err) => {
-      console.error("Failed to send career application email notification:", err);
-      return { sent: false, reason: "send-failed" };
+      const errMsg = err instanceof Error ? err.message : String(err);
+      console.error("Failed to send career application email notification:", errMsg);
+      return {
+        sent: false,
+        reason: "send-failed",
+        error: errMsg,
+      } as import("@/lib/notifications/career-email").CareerApplicationNotificationResult;
+    });
+
+    // Track notification status on submission record in DB (Section 14)
+    await updateSubmissionNotificationStatus(submissionId, {
+      status: notification.sent ? "sent" : "failed",
+      attemptedAt: new Date(),
+      recipient: notification.recipient,
+      messageId: notification.messageId,
+      error: notification.error || (!notification.sent ? notification.reason : undefined),
     });
 
     await publishNotificationEvent({
@@ -278,6 +294,7 @@ export async function POST(request: Request) {
       leadId,
       message: "Thank you. Your application has been received.",
       notificationSent: notification.sent,
+      recipient: notification.recipient,
     });
   } catch (error) {
     console.error("Career application failed:", error);

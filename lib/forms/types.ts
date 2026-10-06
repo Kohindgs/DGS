@@ -101,6 +101,8 @@ export type FormSubmissionResult = {
   fieldErrors?: Record<string, string>;
   submissionId?: string | number;
   leadId?: string | number;
+  notificationSent?: boolean;
+  recipient?: string;
 };
 
 export interface FormBackendAdapter {

@@ -61,3 +61,38 @@ export async function updateLeadStatus(id: string, status: string) {
   if (!allowed.has(status)) throw new Error("Invalid lead status");
   await cmsExecute("UPDATE leads SET status = ? WHERE id = ?", [status,id]);
 }
+
+export async function updateSubmissionNotificationStatus(
+  submissionId: string,
+  data: {
+    status: "sent" | "failed" | "skipped";
+    attemptedAt?: Date;
+    recipient?: string;
+    messageId?: string;
+    error?: string;
+  },
+) {
+  if (!isCmsDatabaseConfigured()) return;
+  try {
+    await cmsExecute(
+      `UPDATE form_submissions SET 
+        notification_status = ?,
+        notification_attempted_at = ?,
+        notification_recipient = ?,
+        notification_message_id = ?,
+        notification_error = ?
+      WHERE id = ?`,
+      [
+        data.status,
+        data.attemptedAt || new Date(),
+        data.recipient || null,
+        data.messageId || null,
+        data.error || null,
+        submissionId,
+      ],
+    );
+  } catch (err) {
+    console.warn("Could not update submission notification status:", err);
+  }
+}
+

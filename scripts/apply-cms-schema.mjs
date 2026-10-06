@@ -77,6 +77,27 @@ try {
     console.log("Applied column migration: career_jobs.creative_requirements");
   }
 
+  // Column migration for form_submissions (P0 Notification Tracking)
+  try {
+    const [subCols] = await connection.query("DESCRIBE form_submissions");
+    const subExistingCols = new Set(subCols.map((c) => c.Field));
+    const subMigrations = [
+      { col: "notification_status", sql: "ALTER TABLE form_submissions ADD COLUMN notification_status VARCHAR(50) DEFAULT 'pending'" },
+      { col: "notification_attempted_at", sql: "ALTER TABLE form_submissions ADD COLUMN notification_attempted_at DATETIME NULL" },
+      { col: "notification_recipient", sql: "ALTER TABLE form_submissions ADD COLUMN notification_recipient VARCHAR(255) NULL" },
+      { col: "notification_message_id", sql: "ALTER TABLE form_submissions ADD COLUMN notification_message_id VARCHAR(255) NULL" },
+      { col: "notification_error", sql: "ALTER TABLE form_submissions ADD COLUMN notification_error TEXT NULL" },
+    ];
+    for (const m of subMigrations) {
+      if (!subExistingCols.has(m.col)) {
+        await connection.query(m.sql);
+        console.log(`Applied column migration: form_submissions.${m.col}`);
+      }
+    }
+  } catch (err) {
+    console.warn("form_submissions notification column migration notice:", err.message);
+  }
+
   // Column migration for google_search_updates
   const [gsuCols] = await connection.query("DESCRIBE google_search_updates");
   const gsuExistingCols = new Set(gsuCols.map((c) => c.Field));

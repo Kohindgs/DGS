@@ -1,6 +1,7 @@
 import path from "node:path";
 import nodemailer from "nodemailer";
 import { renderDgsEmailHtml, type EmailSection } from "./email-template.ts";
+import { getGlobalFormNotificationRecipient } from "./config.ts";
 
 function smtpConfigured() {
   return Boolean(
@@ -30,6 +31,20 @@ export type CareerApplicationNotificationInput = {
   portfolioBuffer?: Buffer;
   portfolioMimeType?: string;
   leadId?: string;
+  submissionId?: string;
+  route?: string;
+};
+
+export type CareerApplicationNotificationResult = {
+  sent: boolean;
+  recipient?: string;
+  messageId?: string;
+  accepted?: string[];
+  rejected?: string[];
+  attachmentsCount?: number;
+  combinedSizeBytes?: number;
+  reason?: string;
+  error?: string;
 };
 
 function safeFileNamePart(name: string): string {
@@ -44,8 +59,17 @@ function formatBytes(bytes: number): string {
 
 export async function sendCareerApplicationEmail(
   input: CareerApplicationNotificationInput,
-) {
-  if (!smtpConfigured()) return { sent: false, reason: "smtp-not-configured" };
+): Promise<CareerApplicationNotificationResult> {
+  const recipient = getGlobalFormNotificationRecipient();
+
+  if (!smtpConfigured()) {
+    return {
+      sent: false,
+      recipient,
+      reason: "smtp-not-configured",
+      error: "SMTP environment variables are not configured",
+    };
+  }
 
   const transporter = nodemailer.createTransport({
     host: process.env.DGS_SMTP_HOST,
@@ -57,14 +81,12 @@ export async function sendCareerApplicationEmail(
     },
   });
 
-  const to =
-    process.env.DGS_CAREER_NOTIFICATION_TO || "hr@dgeniussolutions.com";
   const from = process.env.DGS_SMTP_FROM || process.env.DGS_SMTP_USER!;
   const candidatePrefix = safeFileNamePart(input.name);
 
-  // Dynamic Subject: [DGS Careers] Generative AI Artist — Priya Shah — 2 Years Experience
-  const expSnippet = input.experience ? ` — ${input.experience}` : "";
-  const subject = `[DGS Careers] ${input.position} — ${input.name}${expSnippet}`;
+  // Dynamic Subject: [DGS Career] Job Application — Priya Shah — Generative AI Artist (Section 10)
+  const expSnippet = input.experience ? ` (${input.experience})` : "";
+  const subject = `[DGS Career] Job Application — ${input.name} — ${input.position}${expSnippet}`;
 
   // Attachment sizing & strategy (10 MB safe gateway limit)
   const MAX_COMBINED_ATTACH_BYTES = 10 * 1024 * 1024;
@@ -114,13 +136,20 @@ export async function sendCareerApplicationEmail(
 
   const siteOrigin =
     process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://www.dgeniussolutions.com";
-  const cmsLeadUrl = `${siteOrigin}/admin/leads/`;
+  const cmsLeadUrl = `${siteOrigin}/admin/hr-pipeline/`;
   const resumeDownloadUrl = input.leadId
     ? `${siteOrigin}/api/admin/leads/${input.leadId}/resume`
     : undefined;
   const portfolioDownloadUrl = input.leadId && input.portfolioName
     ? `${siteOrigin}/api/admin/leads/${input.leadId}/portfolio`
     : undefined;
+
+  const submissionDateIso = new Date().toISOString();
+  const submissionDateFormatted = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+    dateStyle: "medium",
+    timeStyle: "medium",
+  });
 
   // Build structured sections for the DGS branded email template
   const sections: EmailSection[] = [
@@ -212,6 +241,19 @@ export async function sendCareerApplicationEmail(
     fields: attachmentFields,
   });
 
+  // Source Metadata Section (Section 11)
+  sections.push({
+    title: "Application & Source Metadata",
+    fields: [
+      { label: "Form Title", value: "Career Job Application", isBadge: true, badgeColor: "#7928ca" },
+      ...(input.submissionId ? [{ label: "Submission ID", value: input.submissionId }] : []),
+      ...(input.leadId ? [{ label: "Lead ID", value: input.leadId }] : []),
+      { label: "Source Route", value: input.route || "/career/" },
+      { label: "Submission Date (IST)", value: `${submissionDateFormatted} (${submissionDateIso})` },
+      { label: "Recipient Inbox", value: recipient, isBadge: true, badgeColor: "#059669" },
+    ],
+  });
+
   const html = renderDgsEmailHtml({
     kicker: "NEW CAREER APPLICATION",
     title: input.position,
@@ -228,12 +270,15 @@ export async function sendCareerApplicationEmail(
     secondaryCtaUrl: resumeDownloadUrl,
     note:
       largeFileNotice ||
-      "Confidential candidate submission. Candidate documents are stored in private protected storage.",
+      "Confidential candidate submission. Candidate documents are stored in private protected storage. Recipient routed exclusively to Kohin.",
   });
 
   const plainText = [
     `D'GENIUS SOLUTIONS — NEW CAREER APPLICATION`,
     `=============================================`,
+    `Subject: ${subject}`,
+    `Recipient: ${recipient} (KOHIN ONLY - ZERO CC/BCC)`,
+    `Date: ${submissionDateFormatted} IST`,
     `Position: ${input.position}`,
     `Candidate: ${input.name}`,
     `Email: ${input.email}`,
@@ -250,6 +295,8 @@ export async function sendCareerApplicationEmail(
     input.portfolioName ? `Portfolio File: ${input.portfolioName} (${formatBytes(portfolioSize)})` : "",
     `Resume File: ${input.resumeName} (${formatBytes(resumeSize)})`,
     "",
+    input.submissionId ? `Submission ID: ${input.submissionId}` : "",
+    input.leadId ? `Lead ID: ${input.leadId}` : "",
     `CMS Lead Inbox: ${cmsLeadUrl}`,
     resumeDownloadUrl ? `Download CV: ${resumeDownloadUrl}` : "",
     portfolioDownloadUrl ? `Download Portfolio: ${portfolioDownloadUrl}` : "",
@@ -258,19 +305,39 @@ export async function sendCareerApplicationEmail(
     .filter(Boolean)
     .join("\n");
 
-  await transporter.sendMail({
-    from,
-    to,
-    replyTo: input.email,
-    subject,
-    text: plainText,
-    html,
-    attachments,
-  });
+  try {
+    const info = await transporter.sendMail({
+      from,
+      to: recipient,
+      // Strictly zero CC and zero BCC per P0 requirement
+      cc: undefined,
+      bcc: undefined,
+      replyTo: input.email,
+      subject,
+      text: plainText,
+      html,
+      attachments,
+    });
 
-  return {
-    sent: true,
-    attachmentsCount: attachments.length,
-    combinedSizeBytes: combinedSize,
-  };
+    return {
+      sent: true,
+      recipient,
+      messageId: info.messageId,
+      accepted: Array.isArray(info.accepted) ? info.accepted.map(String) : [recipient],
+      rejected: Array.isArray(info.rejected) ? info.rejected.map(String) : [],
+      attachmentsCount: attachments.length,
+      combinedSizeBytes: combinedSize,
+    };
+  } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err);
+    console.error(`[career-email] Failed to dispatch career application email to ${recipient}:`, errMsg);
+    return {
+      sent: false,
+      recipient,
+      reason: "smtp-send-error",
+      error: errMsg,
+      attachmentsCount: attachments.length,
+      combinedSizeBytes: combinedSize,
+    };
+  }
 }
