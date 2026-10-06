@@ -34,6 +34,7 @@ async function main() {
   execSync(`robocopy "${path.join(ROOT, "public")}" "${path.join(pkgDir, "public")}" /E /XF *.tar.gz /NFL /NDL /NJH /NJS /nc /ns /np || exit 0`, { shell: "cmd.exe" });
   execSync(`robocopy "${path.join(ROOT, "lib")}" "${path.join(pkgDir, "lib")}" /E /NFL /NDL /NJH /NJS /nc /ns /np || exit 0`, { shell: "cmd.exe" });
   execSync(`robocopy "${path.join(ROOT, "db")}" "${path.join(pkgDir, "db")}" /E /NFL /NDL /NJH /NJS /nc /ns /np || exit 0`, { shell: "cmd.exe" });
+  execSync(`robocopy "${path.join(ROOT, "data")}" "${path.join(pkgDir, "data")}" /E /NFL /NDL /NJH /NJS /nc /ns /np || exit 0`, { shell: "cmd.exe" });
 
   fs.copyFileSync(path.join(ROOT, "server.js"), path.join(pkgDir, "server.js"));
   fs.copyFileSync(path.join(ROOT, "package.json"), path.join(pkgDir, "package.json"));
@@ -56,6 +57,7 @@ async function main() {
   fs.copyFileSync(path.join(ROOT, "scripts", "turbovec-service.py"), path.join(pkgScripts, "turbovec-service.py"));
   fs.copyFileSync(path.join(ROOT, "scripts", "turbovec-daemon.sh"), path.join(pkgScripts, "turbovec-daemon.sh"));
   fs.copyFileSync(path.join(ROOT, "scripts", "remote-sql-check.mjs"), path.join(pkgScripts, "remote-sql-check.mjs"));
+  fs.copyFileSync(path.join(ROOT, "scripts", "remote-check-lead.mjs"), path.join(pkgScripts, "remote-check-lead.mjs"));
   fs.copyFileSync(path.join(ROOT, "scripts", "remote-backup.sh"), path.join(pkgScripts, "remote-backup.sh"));
 
   // Write SHA metadata

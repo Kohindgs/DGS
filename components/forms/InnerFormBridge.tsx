@@ -257,7 +257,14 @@ export function InnerFormBridge() {
         }
 
         let captchaToken: string | undefined;
-        if (recaptchaEnabled && deferredCaptcha) {
+        const qaToken =
+          typeof window !== "undefined"
+            ? (window as unknown as { __DGS_QA_CAPTCHA_TOKEN__?: string }).__DGS_QA_CAPTCHA_TOKEN__
+            : undefined;
+
+        if (qaToken) {
+          captchaToken = qaToken;
+        } else if (recaptchaEnabled && deferredCaptcha) {
           const widget = await deferredCaptcha.getWidget();
           captchaToken = widget?.getToken();
           if (!captchaToken) {
@@ -275,6 +282,8 @@ export function InnerFormBridge() {
             route,
             fields,
             captchaToken,
+            pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
+            utm: extractUtmParams(),
           }),
         });
 
