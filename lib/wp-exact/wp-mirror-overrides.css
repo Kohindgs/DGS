@@ -299,3 +299,34 @@
   }
 }
 
+/* 6. Mobile Let's Talk CTA button visibility in nav bar */
+@media (max-width: 768px) {
+  #dgsBar #dgsRight {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  #dgsBar #dgsPill {
+    display: inline-flex !important;
+    visibility: visible !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    min-height: 36px !important;
+    padding: 6px 14px !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    pointer-events: auto !important;
+    border-radius: 999px !important;
+    text-transform: uppercase !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  #dgsBar #dgsPill svg {
+    width: 11px !important;
+    height: 11px !important;
+    display: inline-block !important;
+  }
+}
+
