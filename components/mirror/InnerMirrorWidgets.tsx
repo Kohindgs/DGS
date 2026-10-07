@@ -450,6 +450,98 @@ export function InnerMirrorWidgets() {
       }
     }
 
+    // 6. SEO Pricing Page Modals (#m-fm, #m-wg, #m-wv) and openForm / openM
+    let cleanupPricingModals: (() => void) | undefined;
+    const mFm = document.getElementById("m-fm");
+    const hasPricingModals = Boolean(mFm || root.querySelector("#m-fm, #m-wg, #m-wv"));
+
+    if (hasPricingModals) {
+      const openModal = (id: string) => {
+        const modal = document.getElementById(`m-${id}`);
+        if (!modal) return;
+        modal.classList.add("on");
+        document.body.style.overflow = "hidden";
+      };
+
+      const closeModal = (id: string) => {
+        const modal = document.getElementById(`m-${id}`);
+        if (!modal) return;
+        modal.classList.remove("on");
+        document.body.style.overflow = "";
+      };
+
+      const openPricingForm = (plan?: string) => {
+        const fpPlan = document.getElementById("fp-plan");
+        if (fpPlan && plan) {
+          fpPlan.textContent = plan;
+        }
+        openModal("fm");
+      };
+
+      // Expose globally so inline onclick="openForm(...)" and onclick="openM(...)" work seamlessly
+      (window as unknown as Record<string, unknown>).openM = openModal;
+      (window as unknown as Record<string, unknown>).closeM = closeModal;
+      (window as unknown as Record<string, unknown>).openForm = openPricingForm;
+
+      const modalIds = ["fm", "wg", "wv"];
+      const cleanups: (() => void)[] = [];
+
+      modalIds.forEach((id) => {
+        const closeBtn = document.getElementById(`x-${id}`);
+        const modal = document.getElementById(`m-${id}`);
+
+        if (closeBtn) {
+          const onCloseClick = (e: MouseEvent) => {
+            e.preventDefault();
+            closeModal(id);
+          };
+          closeBtn.addEventListener("click", onCloseClick);
+          cleanups.push(() => closeBtn.removeEventListener("click", onCloseClick));
+        }
+
+        if (modal) {
+          const onBackdropClick = (e: MouseEvent) => {
+            if (e.target === modal) {
+              closeModal(id);
+            }
+          };
+          modal.addEventListener("click", onBackdropClick);
+          cleanups.push(() => modal.removeEventListener("click", onBackdropClick));
+        }
+      });
+
+      // Wire up visible CTA buttons
+      const pricingButtons = Array.from(
+        root.querySelectorAll<HTMLElement>("button[onclick*='openForm'], .b1, .dgs-m-btn-1, .dgs-m-btn-2, .dgs-m-btn-3")
+      );
+      pricingButtons.forEach((btn) => {
+        const onBtnClick = (e: MouseEvent) => {
+          const onclickAttr = btn.getAttribute("onclick") || "";
+          const match = onclickAttr.match(/openForm\(['"]([^'"]+)['"]\)/);
+          const plan = match ? match[1] : (btn.closest(".pc")?.querySelector(".pname")?.textContent || "Selected Plan");
+          e.preventDefault();
+          openPricingForm(plan);
+        };
+        btn.addEventListener("click", onBtnClick);
+        cleanups.push(() => btn.removeEventListener("click", onBtnClick));
+      });
+
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          modalIds.forEach((id) => closeModal(id));
+        }
+      };
+      document.addEventListener("keydown", onKey);
+
+      cleanupPricingModals = () => {
+        cleanups.forEach((fn) => fn());
+        document.removeEventListener("keydown", onKey);
+        delete (window as unknown as Record<string, unknown>).openM;
+        delete (window as unknown as Record<string, unknown>).closeM;
+        delete (window as unknown as Record<string, unknown>).openForm;
+      };
+    }
+
     return () => {
       if (onFaqClick) {
         root.removeEventListener("click", onFaqClick);
@@ -458,6 +550,7 @@ export function InnerMirrorWidgets() {
       cleanupSeoLb?.();
       cleanupLlmLb?.();
       cleanupBpModal?.();
+      cleanupPricingModals?.();
     };
   }, []);
 
