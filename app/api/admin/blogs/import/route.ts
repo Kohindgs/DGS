@@ -3,7 +3,13 @@ import { hasAdminSession } from "@/lib/cms/auth";
 import { logAuditEvent, getCurrentCmsUser, hasPermission } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { parseBlogDocx, evaluateMediaMatch, type MediaMatchConfidence, type BlogImportImage } from "@/lib/cms/blog-import";
-import { attachImportedBlogPackage, createCmsBlog, deleteCmsDraftBlog } from "@/lib/cms/blogs";
+import {
+  attachImportedBlogPackage,
+  createCmsBlog,
+  deleteCmsDraftBlog,
+  checkBlogSlugAvailability,
+  permanentlyDeleteCmsBlog,
+} from "@/lib/cms/blogs";
 import { processUploadedImage } from "@/lib/cms/media-processor";
 import { calculateBufferChecksum } from "@/lib/cms/media-storage";
 import { createMediaAssetFromProcessed, getMediaAssetByChecksum, recordMediaUsage, updateMediaAssetMetadata, type MediaAsset } from "@/lib/cms/media";
@@ -82,10 +88,62 @@ export async function POST(request: Request) {
     );
   }
 
+  const replaceTrashed =
+    form.get("replaceTrashed") === "true" ||
+    form.get("replaceTrashed") === "1" ||
+    form.get("forceReupload") === "true";
+  const isPreview = form.get("previewOnly") === "true" || new URL(request.url).searchParams.get("preview") === "true";
+
   // Extract all uploaded images
   const imageFiles = form
     .getAll("images")
     .filter((item): item is File => item instanceof File && isImageFile(item));
+
+  // Preview-only mode for Single Upload modal / preview card
+  if (isPreview && documents.length === 1) {
+    const document = documents[0];
+    try {
+      const docBuffer = Buffer.from(await document.arrayBuffer());
+      const parsed = await parseBlogDocx(docBuffer, document.name);
+      const slugCheck = await checkBlogSlugAvailability(parsed.slug);
+
+      const previewMatchedImages: Array<{ filename: string; confidence: string; score: number }> = [];
+      for (const img of imageFiles) {
+        const evalResult = evaluateMediaMatch(img.name, parsed.slug, parsed.title);
+        if (evalResult.matched) {
+          previewMatchedImages.push({
+            filename: img.name,
+            confidence: evalResult.confidence,
+            score: evalResult.score,
+          });
+        }
+      }
+
+      return NextResponse.json({
+        ok: true,
+        preview: true,
+        parsed: {
+          title: parsed.title,
+          slug: parsed.slug,
+          excerpt: parsed.excerpt,
+          wordCount: parsed.wordCount,
+          readingTimeMinutes: parsed.readingTimeMinutes,
+          seoTitle: parsed.optimization.seo.title,
+          seoDescription: parsed.optimization.seo.description,
+          focusKeyword: parsed.optimization.seo.focusKeyword,
+          matchedImagesCount: previewMatchedImages.length,
+          matchedImages: previewMatchedImages,
+        },
+        slugStatus: slugCheck.status, // "none" | "active" | "trashed"
+        existingBlog: slugCheck.existingBlog || null,
+      });
+    } catch (err: any) {
+      return NextResponse.json(
+        { ok: false, message: `Failed to parse document: ${err?.message || "Invalid Word file"}` },
+        { status: 400 }
+      );
+    }
+  }
 
   // 1. Process all uploaded images through native Media CMS
   const processedMediaByOriginalName = new Map<string, MediaAsset>();
@@ -120,7 +178,15 @@ export async function POST(request: Request) {
 
   // 2. Parse Word documents, match images, and create draft/review posts
   const results: Array<Record<string, unknown>> = [];
-  const failed: Array<{ filename: string; message: string }> = [];
+  const failed: Array<{
+    filename: string;
+    message: string;
+    code?: string;
+    slug?: string;
+    existingBlogId?: string;
+    existingBlogTitle?: string;
+    existingStatus?: string;
+  }> = [];
 
   for (const document of documents) {
     let blogId: string | null = null;
@@ -128,6 +194,61 @@ export async function POST(request: Request) {
     try {
       const docBuffer = Buffer.from(await document.arrayBuffer());
       const parsed = await parseBlogDocx(docBuffer, document.name);
+
+      // Pre-flight check slug collision against active and trashed records
+      const slugCheck = await checkBlogSlugAvailability(parsed.slug);
+      if (!slugCheck.available && slugCheck.existingBlog) {
+        if (slugCheck.status === "active") {
+          failed.push({
+            filename: document.name,
+            code: "ACTIVE_SLUG_EXISTS",
+            message: `A blog with this slug already exists (Status: ${slugCheck.existingBlog.status.toUpperCase()}). Open the existing blog to edit it, or change the title/slug in the document before uploading.`,
+            slug: parsed.slug,
+            existingBlogId: slugCheck.existingBlog.id,
+            existingBlogTitle: slugCheck.existingBlog.title,
+            existingStatus: slugCheck.existingBlog.status,
+          });
+          continue;
+        }
+
+        if (slugCheck.status === "trashed") {
+          if (replaceTrashed) {
+            if (!hasPermission(currentUser.role, "blogs", "delete")) {
+              failed.push({
+                filename: document.name,
+                code: "FORBIDDEN_DELETE",
+                message: "Forbidden: Superadmin permissions required to permanently delete and replace a trashed blog.",
+                slug: parsed.slug,
+              });
+              continue;
+            }
+
+            // Permanently erase the trashed blog inside transaction
+            await permanentlyDeleteCmsBlog(slugCheck.existingBlog.id, slugCheck.existingBlog.slug);
+            await logAuditEvent({
+              user_id: currentUser.id,
+              actor_email: currentUser.email,
+              role: currentUser.role,
+              action: "BLOG_PERMANENTLY_DELETED_FOR_REUPLOAD",
+              resource: "blog_post",
+              resource_id: slugCheck.existingBlog.id,
+              summary: `Permanently deleted trashed blog "${slugCheck.existingBlog.title}" (${slugCheck.existingBlog.slug}) to allow clean re-upload from "${document.name}"`,
+              status: "success",
+            });
+          } else {
+            failed.push({
+              filename: document.name,
+              code: "TRASHED_SLUG_EXISTS",
+              message: `A trashed blog with slug "${parsed.slug}" already exists in the Trash bin. You can restore it or permanently delete it to re-upload.`,
+              slug: parsed.slug,
+              existingBlogId: slugCheck.existingBlog.id,
+              existingBlogTitle: slugCheck.existingBlog.title,
+              existingStatus: "trashed",
+            });
+            continue;
+          }
+        }
+      }
 
       // Create draft in blog_posts
       const blog = await createCmsBlog({
@@ -355,10 +476,16 @@ export async function POST(request: Request) {
   }
 
   if (!results.length) {
+    const firstFail = failed[0];
     return NextResponse.json(
       {
         ok: false,
-        message: failed[0]?.message || "No blogs were imported",
+        code: firstFail?.code || "IMPORT_FAILED",
+        message: firstFail?.message || "No blogs were imported",
+        slug: firstFail?.slug,
+        existingBlogId: firstFail?.existingBlogId,
+        existingBlogTitle: firstFail?.existingBlogTitle,
+        existingStatus: firstFail?.existingStatus,
         results,
         failed,
       },

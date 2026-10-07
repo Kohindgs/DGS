@@ -1,4 +1,5 @@
-import mysql, { type Pool } from "mysql2/promise";
+import mysql, { type Pool, type PoolConnection } from "mysql2/promise";
+
 
 declare global {
   var __dgsCmsPool: Pool | undefined;
@@ -71,3 +72,24 @@ export async function cmsExecute(text: string, values: any[] = []) {
   const [result] = await getCmsPool().query(text, values);
   return result;
 }
+
+export async function withCmsTransaction<T>(callback: (conn: PoolConnection) => Promise<T>): Promise<T> {
+  const pool = getCmsPool();
+  const conn = await pool.getConnection();
+  try {
+    await conn.beginTransaction();
+    const result = await callback(conn);
+    await conn.commit();
+    return result;
+  } catch (error) {
+    try {
+      await conn.rollback();
+    } catch (rbErr) {
+      console.error("Failed to rollback CMS transaction:", rbErr);
+    }
+    throw error;
+  } finally {
+    conn.release();
+  }
+}
+

@@ -85,3 +85,50 @@ export function formatDateTimeUTC(value: unknown, fallback: string = "—"): str
   return `${d.getUTCDate()} ${MONTH_NAMES[d.getUTCMonth()]} ${d.getUTCFullYear()} ${hours}:${mins} UTC`;
 }
 
+export function formatDateTimeIST(value: unknown, fallback: string = "—"): string {
+  if (value == null || value === "") return fallback;
+  const d = value instanceof Date ? value : new Date(String(value));
+  if (isNaN(d.getTime())) return fallback;
+
+  try {
+    const formatter = new Intl.DateTimeFormat("en-IN", {
+      timeZone: "Asia/Kolkata",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    const parts = formatter.formatToParts(d);
+    let day = "";
+    let month = "";
+    let year = "";
+    let hour = "";
+    let minute = "";
+    let dayPeriod = "";
+
+    for (const part of parts) {
+      if (part.type === "day") day = part.value;
+      else if (part.type === "month") month = part.value;
+      else if (part.type === "year") year = part.value;
+      else if (part.type === "hour") hour = part.value;
+      else if (part.type === "minute") minute = part.value;
+      else if (part.type === "dayPeriod") dayPeriod = part.value.toUpperCase();
+    }
+
+    return `${day} ${month} ${year} · ${hour}:${minute} ${dayPeriod} IST`;
+  } catch {
+    const istMs = d.getTime() + 5.5 * 60 * 60 * 1000;
+    const istDate = new Date(istMs);
+    const day = istDate.getUTCDate();
+    const month = MONTH_NAMES[istDate.getUTCMonth()];
+    const year = istDate.getUTCFullYear();
+    let hours = istDate.getUTCHours();
+    const mins = String(istDate.getUTCMinutes()).padStart(2, "0");
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    return `${day} ${month} ${year} · ${hours}:${mins} ${ampm} IST`;
+  }
+}
+

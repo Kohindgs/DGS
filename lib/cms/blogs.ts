@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { cmsExecute, cmsQuery } from "./db.ts";
+import { cmsExecute, cmsQuery, withCmsTransaction } from "./db.ts";
 import type { BlogOptimizationPackage } from "./blog-import.ts";
 import { recordMediaUsage } from "./media.ts";
 import {
@@ -727,9 +727,14 @@ export async function attachImportedBlogPackage(input: {
 
 // 7. Delete Draft/Review Blog
 export async function deleteCmsDraftBlog(id: string) {
-  await cmsExecute(`DELETE FROM seo_metadata WHERE entity_type='blog_post' AND entity_id=?`, [id]);
-  await cmsExecute(`DELETE FROM media_usage WHERE entity_type='blog_post' AND entity_id=?`, [id]);
-  await cmsExecute(`DELETE FROM blog_posts WHERE id=? AND status IN ('draft', 'review')`, [id]);
+  await withCmsTransaction(async (conn) => {
+    await conn.query(`DELETE FROM blog_post_tags WHERE blog_post_id = ?`, [id]);
+    await conn.query(`DELETE FROM blog_post_categories WHERE blog_post_id = ?`, [id]);
+    await conn.query(`DELETE FROM blog_revisions WHERE blog_post_id = ?`, [id]);
+    await conn.query(`DELETE FROM media_usage WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
+    await conn.query(`DELETE FROM seo_metadata WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
+    await conn.query(`DELETE FROM blog_posts WHERE id = ? AND status IN ('draft', 'review')`, [id]);
+  });
 }
 
 // 8. Pre-flight QA Validation before Publishing
@@ -1264,12 +1269,81 @@ export async function permanentlyDeleteCmsBlog(id: string, confirmedSlug: string
     throw new Error(`Confirmation mismatch: expected "${blog.slug}", got "${confirmedSlug}".`);
   }
 
-  await cmsExecute(`DELETE FROM blog_revisions WHERE blog_post_id = ?`, [id]);
-  await cmsExecute(`DELETE FROM media_usage WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
-  await cmsExecute(`DELETE FROM seo_metadata WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
-  await cmsExecute(`DELETE FROM blog_posts WHERE id = ?`, [id]);
+  await withCmsTransaction(async (conn) => {
+    // 1. Delete dependent tags & categories
+    await conn.query(`DELETE FROM blog_post_tags WHERE blog_post_id = ?`, [id]);
+    await conn.query(`DELETE FROM blog_post_categories WHERE blog_post_id = ?`, [id]);
+    // 2. Delete revisions
+    await conn.query(`DELETE FROM blog_revisions WHERE blog_post_id = ?`, [id]);
+    // 3. Delete media usage tracking
+    await conn.query(`DELETE FROM media_usage WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
+    // 4. Delete SEO metadata
+    await conn.query(`DELETE FROM seo_metadata WHERE entity_type = 'blog_post' AND entity_id = ?`, [id]);
+    // 5. Delete the blog post record itself
+    await conn.query(`DELETE FROM blog_posts WHERE id = ?`, [id]);
+
+    // 6. Post-delete verification queries to guarantee row count = 0
+    const [idRows]: any = await conn.query(`SELECT COUNT(*) as count FROM blog_posts WHERE id = ?`, [id]);
+    if (idRows[0]?.count > 0) {
+      throw new Error(`Permanent deletion failed: blog id "${id}" still exists in database.`);
+    }
+
+    const [slugRows]: any = await conn.query(`SELECT COUNT(*) as count FROM blog_posts WHERE slug = ?`, [blog.slug]);
+    if (slugRows[0]?.count > 0) {
+      throw new Error(`Permanent deletion failed: slug "${blog.slug}" still occupied in database.`);
+    }
+  });
 
   return { ok: true, deletedSlug: blog.slug };
+}
+
+export type SlugAvailability = {
+  available: boolean;
+  status: "none" | "active" | "trashed";
+  existingBlog?: {
+    id: string;
+    title: string;
+    slug: string;
+    status: string;
+    published_at: string | null;
+    deleted_at: string | null;
+  };
+};
+
+export async function checkBlogSlugAvailability(slug: string, excludeId?: string): Promise<SlugAvailability> {
+  const cleanSlug = slug.trim().toLowerCase();
+  const query = excludeId
+    ? `SELECT id, title, slug, status, published_at, deleted_at FROM blog_posts WHERE slug = ? AND id != ? LIMIT 1`
+    : `SELECT id, title, slug, status, published_at, deleted_at FROM blog_posts WHERE slug = ? LIMIT 1`;
+  const params = excludeId ? [cleanSlug, excludeId] : [cleanSlug];
+
+  const result = await cmsQuery<{
+    id: string;
+    title: string;
+    slug: string;
+    status: string;
+    published_at: string | null;
+    deleted_at: string | null;
+  }>(query, params);
+
+  if (result.rows.length === 0) {
+    return { available: true, status: "none" };
+  }
+
+  const existing = result.rows[0];
+  if (existing.status === "trashed") {
+    return {
+      available: false,
+      status: "trashed",
+      existingBlog: existing,
+    };
+  }
+
+  return {
+    available: false,
+    status: "active",
+    existingBlog: existing,
+  };
 }
 
 // 18. Check Inbound Internal Links to Blog

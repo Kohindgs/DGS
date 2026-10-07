@@ -14,7 +14,8 @@ import type {
 } from "@/lib/cms/blogs";
 import { imageMatchesSlug } from "@/lib/cms/blog-media-match";
 import type { PrePublishGateResult } from "@/lib/cms/pre-publish-gate";
-import { formatDateUTC, formatDateTimeUTC } from "@/lib/utils/date";
+import { formatDateUTC, formatDateTimeUTC, formatDateTimeIST } from "@/lib/utils/date";
+
 
 interface BlogsManagerViewProps {
   initialData: {
@@ -28,7 +29,7 @@ interface BlogsManagerViewProps {
 
 export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
   // Navigation & View state
-  const [activeTab, setActiveTab] = useState<"list" | "import" | "new" | "edit">("list");
+  const [activeTab, setActiveTab] = useState<"list" | "single_upload" | "import" | "new" | "edit">("list");
   const [filterView, setFilterView] = useState<BlogFilterView>("all");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(initialData.page || 1);
@@ -76,14 +77,56 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [mediaPickerTarget, setMediaPickerTarget] = useState<"featured" | "inline">("featured");
 
+  // Single Upload state
+  const [singleDoc, setSingleDoc] = useState<File | null>(null);
+  const [singleImages, setSingleImages] = useState<File[]>([]);
+  const [singlePreviewBusy, setSinglePreviewBusy] = useState(false);
+  const [singlePreviewData, setSinglePreviewData] = useState<{
+    parsed?: {
+      title: string;
+      slug: string;
+      excerpt: string;
+      wordCount: number;
+      readingTimeMinutes: number;
+      seoTitle: string;
+      seoDescription: string;
+      focusKeyword: string;
+      matchedImagesCount: number;
+      matchedImages: Array<{ filename: string; confidence: string; score: number }>;
+    };
+    slugStatus?: "none" | "active" | "trashed";
+    existingBlog?: {
+      id: string;
+      title: string;
+      slug: string;
+      status: string;
+      published_at: string | null;
+      deleted_at: string | null;
+    } | null;
+  } | null>(null);
+  const [singleUploadBusy, setSingleUploadBusy] = useState(false);
+  const singleDocInputRef = useRef<HTMLInputElement>(null);
+  const singleImageInputRef = useRef<HTMLInputElement>(null);
+
   // Bulk Import state
   const [importDocs, setImportDocs] = useState<File[]>([]);
   const [importImages, setImportImages] = useState<File[]>([]);
   const [importBusy, setImportBusy] = useState(false);
   const [importResults, setImportResults] = useState<Array<Record<string, unknown>>>([]);
-  const [importFailures, setImportFailures] = useState<Array<{ filename: string; message: string }>>([]);
+  const [importFailures, setImportFailures] = useState<
+    Array<{
+      filename: string;
+      message: string;
+      code?: string;
+      slug?: string;
+      existingBlogId?: string;
+      existingBlogTitle?: string;
+      existingStatus?: string;
+    }>
+  >([]);
   const docxInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+
 
   // New Blog form state
   const [newBlogForm, setNewBlogForm] = useState<CreateCmsBlogInput>({
@@ -206,6 +249,102 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
     }
   };
 
+  // Single Document Preview & Upload Handlers
+  const runSingleDocPreview = async (docFile: File, imgFiles: File[]) => {
+    setSinglePreviewBusy(true);
+    setSinglePreviewData(null);
+    try {
+      const fd = new FormData();
+      fd.append("documents", docFile);
+      for (const img of imgFiles) fd.append("images", img);
+      fd.append("previewOnly", "true");
+
+      const res = await fetch("/api/admin/blogs/import?preview=true", {
+        method: "POST",
+        body: fd,
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setSinglePreviewData(data);
+      } else {
+        setNotice({ type: "error", message: data.message || "Failed to preview document" });
+      }
+    } catch (err) {
+      console.error("Single doc preview failed:", err);
+      setNotice({ type: "error", message: "Failed to parse document for preview" });
+    } finally {
+      setSinglePreviewBusy(false);
+    }
+  };
+
+  const handleSingleDocChange = (file: File | null) => {
+    setSingleDoc(file);
+    if (file) {
+      runSingleDocPreview(file, singleImages);
+    } else {
+      setSinglePreviewData(null);
+    }
+  };
+
+  const handleSingleUpload = async (replaceTrashed = false) => {
+    if (!singleDoc) return;
+    setSingleUploadBusy(true);
+    setNotice(null);
+
+    try {
+      const fd = new FormData();
+      fd.append("documents", singleDoc);
+      for (const img of singleImages) fd.append("images", img);
+      if (replaceTrashed) {
+        fd.append("replaceTrashed", "true");
+      }
+
+      const res = await fetch("/api/admin/blogs/import", {
+        method: "POST",
+        body: fd,
+      });
+      const data = await res.json();
+
+      if (res.ok && data.ok && data.results?.[0]?.blog) {
+        const createdBlog = data.results[0].blog as CmsBlogSummary;
+        setNotice({
+          type: "success",
+          message: `Uploaded "${createdBlog.title}" successfully. Draft opened for review.`,
+        });
+        setSingleDoc(null);
+        setSingleImages([]);
+        setSinglePreviewData(null);
+        await fetchBlogs();
+        await startEditing(createdBlog.id);
+      } else {
+        if (data.code === "TRASHED_SLUG_EXISTS" && data.existingBlogId) {
+          setSinglePreviewData((prev) =>
+            prev
+              ? {
+                  ...prev,
+                  slugStatus: "trashed",
+                  existingBlog: {
+                    id: data.existingBlogId,
+                    title: data.existingBlogTitle || "Trashed Post",
+                    slug: data.slug || "",
+                    status: "trashed",
+                    published_at: null,
+                    deleted_at: null,
+                  },
+                }
+              : null
+          );
+        }
+        setNotice({ type: "error", message: data.message || "Failed to upload document" });
+      }
+    } catch (err) {
+      console.error("Single doc upload error:", err);
+      setNotice({ type: "error", message: "Failed to upload Word document" });
+    } finally {
+      setSingleUploadBusy(false);
+    }
+  };
+
   // Save changes to editing blog
   const handleSaveEdit = async (publishImmediate = false, scheduleTime?: string) => {
     if (!editingBlog) return;
@@ -231,9 +370,9 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
     if (scheduleTime) {
       payload.status = "scheduled";
       payload.scheduled_for = scheduleTime;
-    } else if (publishImmediate) {
-      payload.status = "published";
     }
+    // When publishImmediate is true, do not pre-mark status as published here;
+    // let POST /api/admin/blogs/[id]/publish evaluate the pre-publish gate authoritatively.
 
     try {
       const res = await fetch(`/api/admin/blogs/${editingBlog.id}`, {
@@ -254,7 +393,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       if (data.gate) setEditGate(data.gate);
 
       if (publishImmediate) {
-        // Trigger publish endpoint
+        // Trigger authoritative publish endpoint
         const pubRes = await fetch(`/api/admin/blogs/${editingBlog.id}/publish`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -267,6 +406,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
           setNotice({ type: "success", message: `Published live at /blogs/${pubData.blog.slug}/` });
         } else {
           if (pubData.gate) setEditGate(pubData.gate);
+          setShowGateDetails(true);
           setNotice({ type: "error", message: pubData.message || "Publish readiness check blocked" });
         }
       } else if (scheduleTime) {
@@ -289,7 +429,11 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
 
   // Move blog to trash
   const handleTrash = async (blog: CmsBlogSummary) => {
-    if (!window.confirm(`Move blog "${blog.title}" to Trash? It will be removed from search engines, sitemap, and the public blog archive.`)) {
+    if (
+      !window.confirm(
+        `Move blog "${blog.title}" to Trash?\n\nThis removes the blog from the public website but keeps the database record. You can restore it later from Trash.`
+      )
+    ) {
       return;
     }
     setLoading(true);
@@ -313,6 +457,8 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       setLoading(false);
     }
   };
+
+
 
   // Restore blog from trash
   const handleRestore = async (id: string) => {
@@ -559,6 +705,13 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <button
               type="button"
+              className={`dgs-saas-btn sm ${activeTab === "single_upload" ? "primary" : "secondary"}`}
+              onClick={() => setActiveTab("single_upload")}
+            >
+              Single Upload (.docx)
+            </button>
+            <button
+              type="button"
               className={`dgs-saas-btn sm ${activeTab === "import" ? "primary" : "secondary"}`}
               onClick={() => setActiveTab("import")}
             >
@@ -594,6 +747,13 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
             onClick={() => setActiveTab("list")}
           >
             Blog List ({counts.all})
+          </button>
+          <button
+            type="button"
+            className={`dgs-nav-tab ${activeTab === "single_upload" ? "active" : ""}`}
+            onClick={() => setActiveTab("single_upload")}
+          >
+            Single Upload (.docx)
           </button>
           <button
             type="button"
@@ -824,15 +984,23 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
 
                       {/* Date */}
                       <td>
-                        <span className="dgs-meta-text" suppressHydrationWarning>
-                          {b.status === "scheduled" && b.scheduled_for ? (
-                            <span className="dgs-sched-time">
-                              📅 {formatDateUTC(b.scheduled_for)}
+                        <span className="dgs-meta-text" suppressHydrationWarning style={{ whiteSpace: "nowrap" }}>
+                          {b.status === "published" && b.published_at ? (
+                            <span title={`Published: ${formatDateTimeIST(b.published_at)}`}>
+                              Published {formatDateTimeIST(b.published_at)}
                             </span>
-                          ) : b.published_at ? (
-                            formatDateUTC(b.published_at)
+                          ) : b.status === "scheduled" && b.scheduled_for ? (
+                            <span className="dgs-sched-time" title={`Scheduled: ${formatDateTimeIST(b.scheduled_for)}`}>
+                              📅 Scheduled {formatDateTimeIST(b.scheduled_for)}
+                            </span>
+                          ) : b.status === "trashed" && b.deleted_at ? (
+                            <span title={`Trashed: ${formatDateTimeIST(b.deleted_at)}`} style={{ color: "#ef4444" }}>
+                              🗑️ Trashed {formatDateTimeIST(b.deleted_at)}
+                            </span>
                           ) : (
-                            formatDateUTC(b.updated_at)
+                            <span title={`Last updated: ${formatDateTimeIST(b.updated_at)}`}>
+                              Last updated {formatDateTimeIST(b.updated_at)}
+                            </span>
                           )}
                         </span>
                       </td>
@@ -924,6 +1092,233 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* VIEW: SINGLE WORD (.DOCX) UPLOAD WITH PREVIEW & DUPLICATE CHECK           */}
+      {/* ========================================================================= */}
+      {activeTab === "single_upload" && (
+        <div className="dgs-admin-bulk-import-view">
+          <div className="dgs-import-header">
+            <h2>Single Blog Upload (.docx)</h2>
+            <p>
+              Upload a single Word document (<code>.docx</code>) with live duplicate detection, metadata preview,
+              and optional image matching before creating a review draft.
+            </p>
+          </div>
+
+          <div className="dgs-bulk-import-form">
+            <div className="dgs-import-grid">
+              {/* Single Docx Dropzone */}
+              <div
+                className="dgs-dropzone"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const files = Array.from(e.dataTransfer.files).filter((f) =>
+                    f.name.toLowerCase().endsWith(".docx")
+                  );
+                  if (files.length > 0) handleSingleDocChange(files[0]);
+                }}
+                onClick={() => singleDocInputRef.current?.click()}
+                style={{ borderColor: singleDoc ? "#10b981" : undefined }}
+              >
+                <input
+                  ref={singleDocInputRef}
+                  type="file"
+                  accept=".docx"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0] || null;
+                    handleSingleDocChange(f);
+                  }}
+                />
+                <span className="dgs-dropzone-icon">📄</span>
+                <strong>{singleDoc ? singleDoc.name : "1. Select or Drop Word Document (.docx)"}</strong>
+                <p>{singleDoc ? `${(singleDoc.size / 1024).toFixed(0)} KB · Click to change` : "Upload 1 Word file (.docx)"}</p>
+                {singleDoc && <div className="dgs-file-count-badge" style={{ background: "#10b981" }}>✓ Document Selected</div>}
+              </div>
+
+              {/* Single Supporting Images Dropzone */}
+              <div
+                className="dgs-dropzone"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const files = Array.from(e.dataTransfer.files).filter((f) =>
+                    f.type.startsWith("image/") || /\.(jpe?g|png|webp|gif)$/i.test(f.name)
+                  );
+                  setSingleImages((prev) => [...prev, ...files]);
+                  if (singleDoc) runSingleDocPreview(singleDoc, [...singleImages, ...files]);
+                }}
+                onClick={() => singleImageInputRef.current?.click()}
+              >
+                <input
+                  ref={singleImageInputRef}
+                  type="file"
+                  multiple
+                  accept="image/jpeg,image/png,image/webp"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files || []);
+                    setSingleImages((prev) => [...prev, ...files]);
+                    if (singleDoc) runSingleDocPreview(singleDoc, [...singleImages, ...files]);
+                  }}
+                />
+                <span className="dgs-dropzone-icon">🖼️</span>
+                <strong>2. Select Supporting Images (Optional)</strong>
+                <p>Ingested into Media CMS and auto-matched to article</p>
+                <div className="dgs-file-count-badge">{singleImages.length} image{singleImages.length === 1 ? "" : "s"} selected</div>
+              </div>
+            </div>
+
+            {/* Parsing spinner */}
+            {singlePreviewBusy && (
+              <div className="dgs-loading-box" style={{ margin: "20px 0" }}>
+                ⏳ Parsing Word document and checking database slug availability...
+              </div>
+            )}
+
+            {/* Document Preview & Duplicate Resolution Card */}
+            {singlePreviewData?.parsed && !singlePreviewBusy && (
+              <div className="dgs-import-results-card" style={{ marginTop: "24px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "16px", marginBottom: "16px" }}>
+                  <div>
+                    <h3 style={{ margin: 0, fontSize: "1.25rem", color: "#fff" }}>{singlePreviewData.parsed.title}</h3>
+                    <p style={{ margin: "4px 0 0", color: "#9ca3af", fontSize: "0.88rem" }}>
+                      Target Route: <code style={{ color: "#38bdf8" }}>/blogs/{singlePreviewData.parsed.slug}/</code> · {singlePreviewData.parsed.wordCount} words · {singlePreviewData.parsed.readingTimeMinutes} min read
+                    </p>
+                  </div>
+                  <div>
+                    {singlePreviewData.slugStatus === "none" && (
+                      <span className="dgs-badge dgs-badge-green" style={{ padding: "6px 12px", fontSize: "0.85rem" }}>
+                        ✓ Slug Available for New Post
+                      </span>
+                    )}
+                    {singlePreviewData.slugStatus === "trashed" && (
+                      <span className="dgs-badge dgs-badge-amber" style={{ padding: "6px 12px", fontSize: "0.85rem" }}>
+                        ⚠️ Slug Currently In Trash
+                      </span>
+                    )}
+                    {singlePreviewData.slugStatus === "active" && (
+                      <span className="dgs-badge" style={{ background: "rgba(239,68,68,0.2)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.4)", padding: "6px 12px", fontSize: "0.85rem" }}>
+                        ⛔ Active Blog Conflict ({singlePreviewData.existingBlog?.status.toUpperCase()})
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Duplicate Notification & Action Prompts */}
+                {singlePreviewData.slugStatus === "trashed" && singlePreviewData.existingBlog && (
+                  <div style={{ background: "rgba(245, 158, 11, 0.12)", border: "1px solid rgba(245, 158, 11, 0.4)", borderRadius: "8px", padding: "14px 18px", marginBottom: "20px" }}>
+                    <h4 style={{ margin: "0 0 6px", color: "#fbbf24", fontSize: "1rem" }}>
+                      A blog with this slug already exists in Trash
+                    </h4>
+                    <p style={{ margin: "0 0 12px", fontSize: "0.9rem", color: "#e5e7eb" }}>
+                      Blog: <strong>&quot;{singlePreviewData.existingBlog.title}&quot;</strong> is currently in the Trash bin.
+                      You can restore the existing record or permanently delete it to re-upload this new document.
+                    </p>
+                    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                      <button
+                        type="button"
+                        className="dgs-btn-edit"
+                        style={{ padding: "8px 14px" }}
+                        onClick={async () => {
+                          await handleRestore(singlePreviewData.existingBlog!.id);
+                          startEditing(singlePreviewData.existingBlog!.id);
+                        }}
+                      >
+                        Restore Existing Blog from Trash →
+                      </button>
+                      <button
+                        type="button"
+                        className="dgs-btn-delete"
+                        style={{ padding: "8px 14px" }}
+                        disabled={singleUploadBusy}
+                        onClick={() => {
+                          if (window.confirm(`Permanently erase trashed blog "${singlePreviewData.existingBlog?.title}" and upload this new file into Review status?`)) {
+                            handleSingleUpload(true);
+                          }
+                        }}
+                      >
+                        {singleUploadBusy ? "Replacing..." : "Delete Permanently & Re-upload"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {singlePreviewData.slugStatus === "active" && singlePreviewData.existingBlog && (
+                  <div style={{ background: "rgba(239, 68, 68, 0.12)", border: "1px solid rgba(239, 68, 68, 0.4)", borderRadius: "8px", padding: "14px 18px", marginBottom: "20px" }}>
+                    <h4 style={{ margin: "0 0 6px", color: "#ef4444", fontSize: "1rem" }}>
+                      Cannot Upload: Active Blog Exists with this Slug
+                    </h4>
+                    <p style={{ margin: "0 0 12px", fontSize: "0.9rem", color: "#e5e7eb" }}>
+                      An active blog with slug <code>/blogs/{singlePreviewData.parsed.slug}/</code> already exists (Title: <strong>&quot;{singlePreviewData.existingBlog.title}&quot;</strong>, Status: <strong>{singlePreviewData.existingBlog.status.toUpperCase()}</strong>).
+                      To update it, open the existing blog. Otherwise, modify the Title in your Word document to generate a unique slug.
+                    </p>
+                    <button
+                      type="button"
+                      className="dgs-btn-edit"
+                      style={{ padding: "8px 14px" }}
+                      onClick={() => startEditing(singlePreviewData.existingBlog!.id)}
+                    >
+                      Open Existing Blog ({singlePreviewData.existingBlog.status.toUpperCase()}) →
+                    </button>
+                  </div>
+                )}
+
+                {/* Metadata Details */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px", marginBottom: "20px" }}>
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "12px 16px", borderRadius: "8px" }}>
+                    <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#9ca3af", letterSpacing: "0.5px" }}>SEO Meta Title</span>
+                    <p style={{ margin: "4px 0 0", color: "#e5e7eb", fontSize: "0.9rem" }}>{singlePreviewData.parsed.seoTitle || singlePreviewData.parsed.title}</p>
+                  </div>
+                  <div style={{ background: "rgba(255,255,255,0.03)", padding: "12px 16px", borderRadius: "8px" }}>
+                    <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#9ca3af", letterSpacing: "0.5px" }}>Focus Keyword</span>
+                    <p style={{ margin: "4px 0 0", color: "#e5e7eb", fontSize: "0.9rem" }}>{singlePreviewData.parsed.focusKeyword || "—"}</p>
+                  </div>
+                </div>
+
+                {/* Matched Images */}
+                {singlePreviewData.parsed.matchedImages && singlePreviewData.parsed.matchedImages.length > 0 && (
+                  <div style={{ marginBottom: "20px" }}>
+                    <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#9ca3af", letterSpacing: "0.5px" }}>Matched Images ({singlePreviewData.parsed.matchedImages.length})</span>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "6px" }}>
+                      {singlePreviewData.parsed.matchedImages.map((m, i) => (
+                        <span key={i} className="dgs-matched-tag">🖼️ {m.filename}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Action buttons */}
+                <div style={{ display: "flex", gap: "12px", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "16px" }}>
+                  {singlePreviewData.slugStatus === "none" && (
+                    <button
+                      type="button"
+                      className="dgs-btn-primary dgs-btn-large"
+                      disabled={singleUploadBusy}
+                      onClick={() => handleSingleUpload(false)}
+                    >
+                      {singleUploadBusy ? "Importing & Ingesting Media..." : "Upload & Open in Editor →"}
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="dgs-btn-secondary"
+                    onClick={() => {
+                      setSingleDoc(null);
+                      setSingleImages([]);
+                      setSinglePreviewData(null);
+                    }}
+                  >
+                    Clear & Choose Different File
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -1088,10 +1483,62 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
           {importFailures.length > 0 && (
             <div className="dgs-import-failures-card">
               <h3>Issues Detected ({importFailures.length})</h3>
-              <ul>
+              <ul style={{ listStyle: "none", padding: 0 }}>
                 {importFailures.map((f, i) => (
-                  <li key={i}>
-                    <strong>{f.filename}</strong>: {f.message}
+                  <li
+                    key={i}
+                    style={{
+                      marginBottom: "14px",
+                      padding: "12px",
+                      background: "rgba(239, 68, 68, 0.08)",
+                      border: "1px solid rgba(239, 68, 68, 0.2)",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <div>
+                      <strong>📄 {f.filename}</strong>: {f.message}
+                    </div>
+                    {f.code === "TRASHED_SLUG_EXISTS" && f.existingBlogId && (
+                      <div style={{ marginTop: "8px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                        <button
+                          type="button"
+                          className="dgs-btn-edit"
+                          style={{ fontSize: "12px", padding: "4px 10px" }}
+                          onClick={async () => {
+                            await handleRestore(f.existingBlogId!);
+                            startEditing(f.existingBlogId!);
+                          }}
+                        >
+                          Restore Trashed Blog →
+                        </button>
+                        <button
+                          type="button"
+                          className="dgs-btn-delete"
+                          style={{ fontSize: "12px", padding: "4px 10px" }}
+                          onClick={() => {
+                            setActiveTab("single_upload");
+                            const matchedDoc = importDocs.find((d) => d.name === f.filename);
+                            if (matchedDoc) {
+                              handleSingleDocChange(matchedDoc);
+                            }
+                          }}
+                        >
+                          Resolve in Single Upload Mode →
+                        </button>
+                      </div>
+                    )}
+                    {f.code === "ACTIVE_SLUG_EXISTS" && f.existingBlogId && (
+                      <div style={{ marginTop: "8px" }}>
+                        <button
+                          type="button"
+                          className="dgs-btn-edit"
+                          style={{ fontSize: "12px", padding: "4px 10px" }}
+                          onClick={() => startEditing(f.existingBlogId!)}
+                        >
+                          Open Existing Blog ({f.existingStatus?.toUpperCase()}) →
+                        </button>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -1262,9 +1709,18 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                 Editing Blog · {editingBlog.status.toUpperCase()}
               </p>
               <h2>{editingBlog.title}</h2>
-              <p className="dgs-meta-text">
+              <p className="dgs-meta-text" suppressHydrationWarning>
                 URL: <code>/blogs/{editingBlog.slug}/</code> · Word Count: {editingBlog.word_count || 0} ·{" "}
                 {editingBlog.reading_time_minutes || 1} min read
+                {editingBlog.status === "published" && editingBlog.published_at && (
+                  <> · <strong style={{ color: "#10b981" }}>Published: {formatDateTimeIST(editingBlog.published_at)}</strong></>
+                )}
+                {editingBlog.status === "scheduled" && editingBlog.scheduled_for && (
+                  <> · <strong style={{ color: "#38bdf8" }}>Scheduled: {formatDateTimeIST(editingBlog.scheduled_for)}</strong></>
+                )}
+                {editingBlog.status !== "published" && editingBlog.status !== "scheduled" && (
+                  <> · <span>Last updated: {formatDateTimeIST(editingBlog.updated_at)}</span></>
+                )}
               </p>
             </div>
             <div className="dgs-edit-actions-top">
