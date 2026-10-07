@@ -345,11 +345,39 @@ export async function getCmsBlogById(id: string): Promise<CmsBlogDetail | null> 
     images: [],
   };
 
+  // Ensure optimization and seo objects exist
+  if (!content.optimization) {
+    content.optimization = {
+      seo: {
+        title: blog.seo_title || blog.title,
+        description: blog.seo_description || blog.excerpt || "",
+        h1: blog.title,
+        canonicalPath: `/blogs/${blog.slug}/`,
+        focusKeyword: blog.focus_keyword || "",
+        secondaryKeywords: [],
+      },
+      aeo: { conciseAnswer: "", questions: [] },
+      geo: { entities: [], topics: [], keyFacts: [] },
+      llm: { answerSummary: "", citableFacts: [], semanticHeadings: [] },
+      schemas: [],
+      internalLinks: [],
+    };
+  } else if (!content.optimization.seo) {
+    content.optimization.seo = {
+      title: blog.seo_title || blog.title,
+      description: blog.seo_description || blog.excerpt || "",
+      h1: blog.title,
+      canonicalPath: `/blogs/${blog.slug}/`,
+      focusKeyword: blog.focus_keyword || "",
+      secondaryKeywords: [],
+    };
+  }
+
   // Merge seo_metadata into optimization if available
   const seo = seoRows.rows[0];
   if (seo) {
-    if (seo.title) content.optimization.seo.title = seo.title;
-    if (seo.description) content.optimization.seo.description = seo.description;
+    if (seo.title && content.optimization.seo) content.optimization.seo.title = seo.title;
+    if (seo.description && content.optimization.seo) content.optimization.seo.description = seo.description;
     if (seo.schema_json) {
       const parsed = typeof seo.schema_json === "string" ? JSON.parse(seo.schema_json) : seo.schema_json;
       if (Array.isArray(parsed)) content.optimization.schemas = parsed;
