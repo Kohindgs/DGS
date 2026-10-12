@@ -32,56 +32,60 @@ const hasHumanReadableTitle = (title: string) => {
 };
 
 // ZERO-CROP JUSTIFIED EDITORIAL ROW GROUPING ALGORITHM
-// Groups items so that when each item's width is proportional to its REAL aspect ratio,
-// all items in that row share the exact same natural visual row height without 1px of crop.
+// Balanced mixed-aspect rows:
+// - Landscape items: maximum 2 per row (wide enough to appreciate details, min width 560-620px+)
+// - Portrait items: maximum 3 per row (tall, full vertical frame)
+// - Feature paired row: 1 landscape + 1 portrait (max 2 items)
 function buildEditorialRows(items: PortfolioItem[]): PortfolioItem[][] {
   const rows: PortfolioItem[][] = [];
   let currentRow: PortfolioItem[] = [];
-  let currentRatioSum = 0;
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-    const r = item.ratio;
+    const isLand = item.ratio >= 1.2;
 
     // Standalone ultra-wides (panoramic >= 2.4)
-    if (r >= 2.4) {
+    if (item.ratio >= 2.4) {
       if (currentRow.length > 0) {
         rows.push(currentRow);
         currentRow = [];
-        currentRatioSum = 0;
       }
       rows.push([item]);
       continue;
     }
 
-    const nextSum = currentRatioSum + r;
-    const nextCount = currentRow.length + 1;
-
-    // Flush row when comfortable combined ratio reached (2.4 - 3.7) or max 4 items
-    const shouldFlush =
-      currentRow.length >= 2 &&
-      (nextCount > 4 || nextSum > 3.7 || (currentRatioSum >= 3.0 && nextCount >= 3));
-
-    if (shouldFlush) {
-      rows.push(currentRow);
-      currentRow = [item];
-      currentRatioSum = r;
-    } else {
+    if (currentRow.length === 0) {
       currentRow.push(item);
-      currentRatioSum = nextSum;
+      continue;
+    }
+
+    const currentHasLand = currentRow.some((it) => it.ratio >= 1.2);
+
+    if (isLand) {
+      // Adding a landscape item:
+      // If current row already has a landscape item: max 2 landscape items per row
+      // If current row has portrait items: can pair 1 portrait + 1 landscape (max 2 items)
+      if (currentRow.length >= 2 || (currentHasLand && currentRow.length >= 1)) {
+        rows.push(currentRow);
+        currentRow = [item];
+      } else {
+        currentRow.push(item);
+      }
+    } else {
+      // Adding a portrait item:
+      // If current row has landscape: max 2 items (1 landscape + 1 portrait)
+      // If current row only has portraits: max 3 items per row
+      if ((currentHasLand && currentRow.length >= 2) || (!currentHasLand && currentRow.length >= 3)) {
+        rows.push(currentRow);
+        currentRow = [item];
+      } else {
+        currentRow.push(item);
+      }
     }
   }
 
-  // Balance trailing item
   if (currentRow.length > 0) {
-    if (currentRow.length === 1 && rows.length > 0) {
-      const prev = rows[rows.length - 1];
-      if (prev.length < 4 && prev[0].ratio < 2.4) {
-        prev.push(currentRow[0]);
-        currentRow = [];
-      }
-    }
-    if (currentRow.length > 0) rows.push(currentRow);
+    rows.push(currentRow);
   }
 
   return rows;
@@ -167,7 +171,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
       <section className={styles.workSection} aria-label="Portfolio gallery">
         <div className={styles.workContainer}>
           {rows.map((row, rowIdx) => (
-            <div key={`row-${rowIdx}`} className={styles.editorialRow}>
+            <div key={`row-${rowIdx}`} className={styles.editorialRow} data-items={row.length}>
               {row.map((item) => {
                 const itemIndex = globalIndex++;
                 const isVideo = item.type === "video";

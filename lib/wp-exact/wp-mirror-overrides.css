@@ -332,35 +332,161 @@
 
 
 /* =====================================================
-   DGS ZERO-CROP PORTFOLIO & RESPONSIVE ASPECT RATIO RULES
+   DGS ZERO-CROP PORTFOLIO — 12-COLUMN MIXED-ASPECT GRID & FULLSCREEN RULES
    Source frame is authority: object-fit: contain, no forced crop
 ===================================================== */
-.gallery-item,
-.case-study-item {
-  background: #050505 !important;
-  overflow: hidden !important;
+
+/* 1. Grid Container Override — Replaces legacy CSS column layouts */
+#portfolio-gallery,
+#mascot-gallery,
+#festival-gallery,
+#mythological-gallery,
+#product-gallery,
+#jewellery-gallery,
+#concept-gallery,
+#tvc-gallery,
+.dgs-ai-portfolio-grid,
+#dgs-ai-portfolio-grid,
+#homepage-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  gap: clamp(16px, 1.8vw, 24px) !important;
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin-inline: auto !important;
+  columns: auto !important;
+  column-count: auto !important;
 }
 
-.gallery-item:not(.wide-item),
-.case-study-item:not(.wide-item) {
-  aspect-ratio: 9/16 !important;
+/* 2. Card Presentation & Zero-Crop Containers */
+.gallery-item,
+.case-study-item,
+.dgs-ai-portfolio-item {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #050505 !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  break-inside: avoid !important;
+  margin: 0 !important;
+}
+
+/* Card Aspect Ratio Defaults (natural source metadata overrides via inline style) */
+.gallery-item:not(.wide-item):not(.portfolio-item--landscape),
+.case-study-item:not(.wide-item):not(.portfolio-item--landscape),
+.dgs-ai-portfolio-item:not(.is-landscape):not(.portfolio-item--landscape) {
+  aspect-ratio: 9/16;
 }
 
 .gallery-item.wide-item,
-.case-study-item.wide-item {
-  aspect-ratio: 16/9 !important;
+.gallery-item.portfolio-item--landscape,
+.case-study-item.wide-item,
+.case-study-item.portfolio-item--landscape,
+.dgs-ai-portfolio-item.is-landscape,
+.dgs-ai-portfolio-item.portfolio-item--landscape {
+  aspect-ratio: 16/9;
 }
 
+/* 3. Media Element Zero-Crop Rule */
 .gallery-item video,
+.gallery-item img,
+.gallery-item picture,
 .case-study-item video,
-.thumb-video {
+.case-study-item img,
+.case-study-item picture,
+.thumb-video,
+.thumb-fallback,
+.dgs-ai-portfolio-item video,
+.dgs-ai-portfolio-item img,
+.dgs-ai-portfolio-item picture {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
   object-position: center !important;
   background: #050505 !important;
+  display: block !important;
 }
 
+/* 4. Desktop Orientation-Aware Spanning (min-width: 1024px) */
+@media (min-width: 1024px) {
+  /* Landscape 16:9 — MAXIMUM 2 per row (min width 560-620px+) */
+  .gallery-item.wide-item,
+  .gallery-item.portfolio-item--landscape,
+  .case-study-item.wide-item,
+  .case-study-item.portfolio-item--landscape,
+  .dgs-ai-portfolio-item.is-landscape,
+  .dgs-ai-portfolio-item.portfolio-item--landscape,
+  .portfolio-item--landscape {
+    grid-column: span 6 !important;
+  }
+
+  /* Portrait 9:16 — MAXIMUM 3 per row */
+  .gallery-item:not(.wide-item):not(.portfolio-item--landscape),
+  .case-study-item:not(.wide-item):not(.portfolio-item--landscape),
+  .dgs-ai-portfolio-item:not(.is-landscape):not(.portfolio-item--landscape),
+  .portfolio-item--portrait {
+    grid-column: span 4 !important;
+  }
+
+  /* Feature row overrides when explicitly assigned */
+  .portfolio-item--feature-landscape {
+    grid-column: span 8 !important;
+  }
+}
+
+/* 5. Tablet Responsive Spanning (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Landscape: 1 per row (full width) */
+  .gallery-item.wide-item,
+  .gallery-item.portfolio-item--landscape,
+  .case-study-item.wide-item,
+  .case-study-item.portfolio-item--landscape,
+  .dgs-ai-portfolio-item.is-landscape,
+  .dgs-ai-portfolio-item.portfolio-item--landscape,
+  .portfolio-item--landscape {
+    grid-column: span 12 !important;
+  }
+
+  /* Portrait: 2 per row */
+  .gallery-item:not(.wide-item):not(.portfolio-item--landscape),
+  .case-study-item:not(.wide-item):not(.portfolio-item--landscape),
+  .dgs-ai-portfolio-item:not(.is-landscape):not(.portfolio-item--landscape),
+  .portfolio-item--portrait {
+    grid-column: span 6 !important;
+  }
+}
+
+/* 6. Mobile Responsive Spanning (< 768px) */
+@media (max-width: 767px) {
+  #portfolio-gallery,
+  #mascot-gallery,
+  #festival-gallery,
+  #mythological-gallery,
+  #product-gallery,
+  #jewellery-gallery,
+  #concept-gallery,
+  #tvc-gallery,
+  .dgs-ai-portfolio-grid,
+  #dgs-ai-portfolio-grid,
+  #homepage-gallery {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .gallery-item,
+  .case-study-item,
+  .dgs-ai-portfolio-item {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: min(100%, 460px) !important;
+    margin-inline: auto !important;
+  }
+}
+
+/* 7. Lightbox Modal Dialog Rules (Non-Fullscreen) */
 .portfolio-lightbox-content {
   width: min(92vw, 1440px) !important;
   max-width: 92vw !important;
@@ -374,25 +500,47 @@
 }
 
 #lightbox-player {
-  max-width: 92vw !important;
-  max-height: 88vh !important;
+  max-width: min(92vw, calc(100vw - 32px)) !important;
+  max-height: min(88vh, calc(100dvh - 80px)) !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
-  object-position: center !important;
+  object-position: center center !important;
   background: #000 !important;
 }
 
+/* Note: Forced aspect-ratio removed from player! Natural source dimensions control video. */
 #lightbox-player.is-portrait {
-  max-height: 88vh !important;
+  max-height: min(88vh, calc(100dvh - 80px)) !important;
   height: auto !important;
   width: auto !important;
-  aspect-ratio: 9 / 16 !important;
 }
 
 #lightbox-player.is-landscape {
-  max-width: 92vw !important;
+  max-width: min(92vw, calc(100vw - 32px)) !important;
   width: auto !important;
   height: auto !important;
-  aspect-ratio: 16 / 9 !important;
 }
+
+/* 8. Native Browser Fullscreen Zero-Crop Rules */
+#lightbox-player:fullscreen,
+#lightbox-player:-webkit-full-screen,
+video.viewerImage:fullscreen,
+video.viewerImage:-webkit-full-screen,
+#dgs-ai-lightbox-video:fullscreen,
+#dgs-ai-lightbox-video:-webkit-full-screen,
+.thumb-video:fullscreen,
+.thumb-video:-webkit-full-screen,
+video:fullscreen,
+video:-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: #000 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
