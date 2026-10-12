@@ -77,12 +77,111 @@ function buildEditorialRows(items: PortfolioItem[]): PortfolioItem[][] {
   return rows;
 }
 
-export function PortfolioPreviewA({ title, industries, items, previewMode = true }: Props) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const activeItem = activeIndex === null ? null : items[activeIndex];
-  const itemCountLabel = useMemo(() => pad(items.length), [items.length]);
+const FILTER_TABS = [
+  { key: "all", label: "ALL PORTFOLIO" },
+  { key: "automobile", label: "AUTOMOBILE AI" },
+  { key: "edtech", label: "EDTECH AI" },
+  { key: "fmcg", label: "FMCG AI" },
+  { key: "commercial-film", label: "COMMERCIAL AI FILM" },
+  { key: "campaign", label: "CAMPAIGN AI" },
+  { key: "mythological", label: "MYTHOLOGICAL AI" },
+  { key: "festival", label: "FESTIVAL VIDEOS" },
+  { key: "product", label: "PRODUCT AI" },
+  { key: "jewellery", label: "JEWELLERY AI" },
+  { key: "concept", label: "CONCEPT AI" },
+  { key: "tvc", label: "TVC AI" },
+] as const;
 
-  const rows = useMemo(() => buildEditorialRows(items), [items]);
+function matchesCategory(item: PortfolioItem, filterKey: string): boolean {
+  if (filterKey === "all") return true;
+  const id = item.id.toLowerCase();
+  const title = (item.title || "").toLowerCase();
+  const alt = (item.alt || "").toLowerCase();
+
+  switch (filterKey) {
+    case "automobile":
+      return id.includes("hyundai") || title.includes("hyundai") || alt.includes("automobile");
+    case "edtech":
+      return id.includes("sundaram") || title.includes("sundaram") || alt.includes("edtech");
+    case "fmcg":
+      return id.includes("clarion") || title.includes("clarion") || alt.includes("fmcg");
+    case "commercial-film":
+      return (
+        id.includes("hyundai") ||
+        title.includes("hyundai") ||
+        id.includes("home-credit") ||
+        title.includes("home credit") ||
+        id.startsWith("media")
+      );
+    case "campaign":
+      return id.includes("better-ceasons") || title.includes("better ceasons") || alt.includes("campaign");
+    case "mythological":
+      return (
+        id.startsWith("shirdi-sai") ||
+        title.includes("sai") ||
+        title.includes("vachaan") ||
+        alt.includes("mythological")
+      );
+    case "festival":
+      return (
+        title.includes("festival") ||
+        title.includes("holi") ||
+        title.includes("diwali") ||
+        title.includes("baisakhi") ||
+        title.includes("easter") ||
+        title.includes("sankranti") ||
+        title.includes("navratri") ||
+        title.includes("lohri") ||
+        title.includes("jayanti") ||
+        alt.includes("festival")
+      );
+    case "product":
+      return (
+        title.includes("mango") ||
+        title.includes("lava") ||
+        title.includes("ice cream") ||
+        title.includes("soya") ||
+        title.includes("chilli") ||
+        alt.includes("product")
+      );
+    case "jewellery":
+      return (
+        title.includes("jewel") ||
+        title.includes("gold") ||
+        title.includes("baanganga") ||
+        alt.includes("jewel")
+      );
+    case "concept":
+      return (
+        id.includes("sundaram") ||
+        title.includes("horse") ||
+        title.includes("magic") ||
+        alt.includes("concept")
+      );
+    case "tvc":
+      return (
+        id.includes("home-credit") ||
+        title.includes("home credit") ||
+        id.includes("clarion") ||
+        id.includes("better-ceasons")
+      );
+    default:
+      return true;
+  }
+}
+
+export function PortfolioPreviewA({ title, industries, items, previewMode = true }: Props) {
+  const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const filteredItems = useMemo(() => {
+    if (activeFilter === "all") return items;
+    return items.filter((item) => matchesCategory(item, activeFilter));
+  }, [items, activeFilter]);
+
+  const activeItem = activeIndex === null ? null : filteredItems[activeIndex];
+  const itemCountLabel = useMemo(() => pad(filteredItems.length), [filteredItems.length]);
+  const rows = useMemo(() => buildEditorialRows(filteredItems), [filteredItems]);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -94,12 +193,12 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
       if (event.key === "Escape") setActiveIndex(null);
       if (event.key === "ArrowLeft") {
         setActiveIndex((current) =>
-          current === null ? null : (current - 1 + items.length) % items.length,
+          current === null ? null : (current - 1 + filteredItems.length) % filteredItems.length,
         );
       }
       if (event.key === "ArrowRight") {
         setActiveIndex((current) =>
-          current === null ? null : (current + 1) % items.length,
+          current === null ? null : (current + 1) % filteredItems.length,
         );
       }
     };
@@ -109,7 +208,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [activeIndex, items.length]);
+  }, [activeIndex, filteredItems.length]);
 
   const moveMedia = (event: PointerEvent<HTMLButtonElement>) => {
     if (event.pointerType === "touch") return;
@@ -153,6 +252,25 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
           </p>
         </div>
       </section>
+
+      <nav className={styles.filterBar} role="navigation" aria-label="Portfolio category filters">
+        <div className={styles.filterScroll}>
+          {FILTER_TABS.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              className={`${styles.filterPill} ${activeFilter === tab.key ? styles.filterPillActive : ""}`}
+              onClick={() => {
+                setActiveFilter(tab.key);
+                setActiveIndex(null);
+              }}
+              aria-pressed={activeFilter === tab.key}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </nav>
 
       <section className={styles.workSection} aria-label="Portfolio gallery">
         <div className={styles.workContainer}>
@@ -301,7 +419,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
             <button
               type="button"
               className={`${styles.viewerNav} ${styles.viewerPrev}`}
-              onClick={() => setActiveIndex((activeIndex - 1 + items.length) % items.length)}
+              onClick={() => setActiveIndex((activeIndex - 1 + filteredItems.length) % filteredItems.length)}
               aria-label="Previous portfolio media"
             >
               ←
@@ -349,7 +467,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
             <button
               type="button"
               className={`${styles.viewerNav} ${styles.viewerNext}`}
-              onClick={() => setActiveIndex((activeIndex + 1) % items.length)}
+              onClick={() => setActiveIndex((activeIndex + 1) % filteredItems.length)}
               aria-label="Next portfolio media"
             >
               →

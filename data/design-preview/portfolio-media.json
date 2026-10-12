@@ -6443,6 +6443,30 @@
         "webm": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Sai-Dham-Introductionfinal-New.mp4",
         "mp4": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Sai-Dham-Introductionfinal-New.mp4"
       }
+    },
+    {
+      "id": "home-credit-diwali",
+      "type": "video",
+      "title": "Home Credit Diwali Campaign",
+      "alt": "Home Credit Diwali Campaign Commercial AI Film",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 45,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/hyundai_creta_1_poster.avif",
+        "webp": "/media/portfolio/posters/hyundai_creta_1_poster.webp",
+        "fallback": "/media/portfolio/posters/hyundai_creta_1_poster.webp"
+      },
+      "sources": {
+        "webm": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-Campaign-Home-Credit11.mp4",
+        "mp4": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-Campaign-Home-Credit11.mp4"
+      }
     }
   ]
 }

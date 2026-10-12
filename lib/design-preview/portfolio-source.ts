@@ -113,22 +113,27 @@ function orderPortfolioMedia(items: PortfolioItem[]) {
     if (v) orderedSaiVideos.push(v);
   }
 
-  // 3: Existing video work (media1..media6)
+  // 3: Home Credit Commercial AI Film
+  const homeCredit = itemMap.get("home-credit-diwali");
+  const homeCreditList = homeCredit ? [homeCredit] : [];
+
+  // 4: Existing video work (media1..media6)
   const existingVideos = items.filter((item) => /^media\d+$/i.test(item.id));
 
-  // 4: Other new visual media (picture\d+)
+  // 5: Other new visual media (picture\d+)
   const newPictures = items.filter((item) => /^picture\d+$/i.test(item.id));
 
-  // 5: Remaining legacy portfolio items
+  // 6: Remaining legacy portfolio items
   const processedIds = new Set([
     ...NEW_AI_VIDEO_IDS,
     ...SAI_VIDEO_IDS,
+    "home-credit-diwali",
     ...existingVideos.map((i) => i.id),
     ...newPictures.map((i) => i.id),
   ]);
   const remaining = items.filter((item) => !processedIds.has(item.id));
 
-  return [...orderedAiVideos, ...orderedSaiVideos, ...existingVideos, ...newPictures, ...remaining];
+  return [...orderedAiVideos, ...orderedSaiVideos, ...homeCreditList, ...existingVideos, ...newPictures, ...remaining];
 }
 
 function readPortfolioHero() {

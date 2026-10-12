@@ -336,24 +336,91 @@
    Source frame is authority: object-fit: contain, no forced crop
 ===================================================== */
 
+/* Full-Width Canvas - No 1440px/1480px Narrow Island Constraints */
+#portfolio,
+#ai-production-portfolio {
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+#portfolio .dgs-wrap,
+#ai-production-portfolio .dgs-ai-wrap,
+.dgs-ai-portfolio-frame {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  padding-inline: clamp(18px, 2vw, 36px) !important;
+}
+
+@media (min-width: 2560px) {
+  #portfolio .dgs-wrap,
+  #ai-production-portfolio .dgs-ai-wrap,
+  .dgs-ai-portfolio-frame {
+    padding-inline: clamp(24px, 2vw, 56px) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #portfolio .dgs-wrap,
+  #ai-production-portfolio .dgs-ai-wrap,
+  .dgs-ai-portfolio-frame {
+    padding-inline: clamp(12px, 3.5vw, 16px) !important;
+  }
+}
+
+/* Ensure the text header stays readable and nicely aligned */
+#portfolio .dgs-narrow,
+#ai-production-portfolio .dgs-ai-section-head {
+  max-width: 900px !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  text-align: left !important;
+}
+
+.portfolio-filters,
+.dgs-ai-portfolio-tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px 12px !important;
+  margin-bottom: clamp(24px, 3vw, 40px) !important;
+  max-width: 100% !important;
+}
+
+.portfolio-filter-tab,
+.dgs-ai-tab {
+  white-space: nowrap !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+}
+
 /* 1. Grid Container Override — Replaces legacy CSS column layouts */
 #portfolio-gallery,
-#mascot-gallery,
-#festival-gallery,
+#automobile-gallery,
+#edtech-gallery,
+#fmcg-gallery,
+#commercial-film-gallery,
+#campaign-gallery,
 #mythological-gallery,
+#festival-gallery,
 #product-gallery,
 #jewellery-gallery,
 #concept-gallery,
 #tvc-gallery,
+#mascot-gallery,
 .dgs-ai-portfolio-grid,
 #dgs-ai-portfolio-grid,
 #homepage-gallery {
   display: grid !important;
   grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  grid-auto-flow: dense !important;
   gap: clamp(16px, 1.8vw, 24px) !important;
   width: 100% !important;
-  max-width: 1440px !important;
-  margin-inline: auto !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
   columns: auto !important;
   column-count: auto !important;
 }
@@ -377,7 +444,8 @@
 /* Card Aspect Ratio Defaults (natural source metadata overrides via inline style) */
 .gallery-item:not(.wide-item):not(.portfolio-item--landscape),
 .case-study-item:not(.wide-item):not(.portfolio-item--landscape),
-.dgs-ai-portfolio-item:not(.is-landscape):not(.portfolio-item--landscape) {
+.dgs-ai-portfolio-item:not(.is-landscape):not(.portfolio-item--landscape),
+.portfolio-item--portrait {
   aspect-ratio: 9/16;
 }
 
@@ -386,7 +454,8 @@
 .case-study-item.wide-item,
 .case-study-item.portfolio-item--landscape,
 .dgs-ai-portfolio-item.is-landscape,
-.dgs-ai-portfolio-item.portfolio-item--landscape {
+.dgs-ai-portfolio-item.portfolio-item--landscape,
+.portfolio-item--landscape {
   aspect-ratio: 16/9;
 }
 
@@ -412,7 +481,7 @@
 
 /* 4. Desktop Orientation-Aware Spanning (min-width: 1024px) */
 @media (min-width: 1024px) {
-  /* Landscape 16:9 — MAXIMUM 2 per row (min width 560-620px+) */
+  /* Landscape 16:9 — MAXIMUM 2 per row (min width 560-620px+, span 6 of 12) */
   .gallery-item.wide-item,
   .gallery-item.portfolio-item--landscape,
   .case-study-item.wide-item,
@@ -423,7 +492,7 @@
     grid-column: span 6 !important;
   }
 
-  /* Portrait 9:16 — MAXIMUM 3 per row */
+  /* Portrait 9:16 — MAXIMUM 3 per row (span 4 of 12) */
   .gallery-item:not(.wide-item):not(.portfolio-item--landscape),
   .case-study-item:not(.wide-item):not(.portfolio-item--landscape),
   .dgs-ai-portfolio-item:not(.is-landscape):not(.portfolio-item--landscape),
@@ -434,6 +503,28 @@
   /* Feature row overrides when explicitly assigned */
   .portfolio-item--feature-landscape {
     grid-column: span 8 !important;
+  }
+}
+
+/* 4b. Wide & 4K Wall Spanning (min-width: 1800px) */
+@media (min-width: 1800px) {
+  /* Retain 2 large landscape cards per row (span 6 of 12) */
+  .gallery-item.wide-item,
+  .gallery-item.portfolio-item--landscape,
+  .case-study-item.wide-item,
+  .case-study-item.portfolio-item--landscape,
+  .dgs-ai-portfolio-item.is-landscape,
+  .dgs-ai-portfolio-item.portfolio-item--landscape,
+  .portfolio-item--landscape {
+    grid-column: span 6 !important;
+  }
+
+  /* Portrait tiles display up to 4 per row on wide/4K (span 3 of 12), flush with span 6 landscapes */
+  .gallery-item:not(.wide-item):not(.portfolio-item--landscape),
+  .case-study-item:not(.wide-item):not(.portfolio-item--landscape),
+  .dgs-ai-portfolio-item:not(.is-landscape):not(.portfolio-item--landscape),
+  .portfolio-item--portrait {
+    grid-column: span 3 !important;
   }
 }
 
@@ -462,13 +553,18 @@
 /* 6. Mobile Responsive Spanning (< 768px) */
 @media (max-width: 767px) {
   #portfolio-gallery,
-  #mascot-gallery,
-  #festival-gallery,
+  #automobile-gallery,
+  #edtech-gallery,
+  #fmcg-gallery,
+  #commercial-film-gallery,
+  #campaign-gallery,
   #mythological-gallery,
+  #festival-gallery,
   #product-gallery,
   #jewellery-gallery,
   #concept-gallery,
   #tvc-gallery,
+  #mascot-gallery,
   .dgs-ai-portfolio-grid,
   #dgs-ai-portfolio-grid,
   #homepage-gallery {
