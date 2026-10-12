@@ -15,6 +15,13 @@ async function main() {
   console.log(`Git Branch: ${branch}, HEAD SHA: ${repoSha}`);
 
   // 2. Pre-flight typecheck & build validation
+  console.log("Cleaning any residual archive files from root...");
+  for (const f of fs.readdirSync(ROOT)) {
+    if (f.endsWith(".tar.gz")) {
+      try { fs.unlinkSync(path.join(ROOT, f)); } catch {}
+    }
+  }
+
   console.log("Verifying clean TypeScript compilation...");
   execSync("npm run typecheck", { stdio: "inherit" });
   console.log("✓ TypeScript verification passed");
