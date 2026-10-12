@@ -155,7 +155,7 @@ export function areQueriesSearchEqual(queryA: unknown, queryB: unknown): boolean
 export function getNonOverlapping28DayWindows(referenceDate: Date = new Date()) {
   const msPerDay = 86400000;
   const now = referenceDate;
-  const gscLatencyDays = 2; // GSC has ~2-3 days reporting latency
+  const gscLatencyDays = 3; // GSC has ~2-3 days reporting latency
   const endDateObj = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - gscLatencyDays));
   const startDateObj = new Date(endDateObj.getTime() - 27 * msPerDay);
   const prevEndDateObj = new Date(startDateObj.getTime() - 1 * msPerDay);
@@ -166,5 +166,39 @@ export function getNonOverlapping28DayWindows(referenceDate: Date = new Date()) 
     currentEnd: endDateObj.toISOString().slice(0, 10),
     previousStart: prevStartDateObj.toISOString().slice(0, 10),
     previousEnd: prevEndDateObj.toISOString().slice(0, 10),
+  };
+}
+
+/**
+ * Calculates exact, non-overlapping 7D, 15D, and 28D evaluation windows
+ * taking into account Google Search Console's reporting latency.
+ */
+export function getGscEvaluationWindows(referenceDate: Date = new Date(), latencyDays = 3) {
+  const msPerDay = 86400000;
+  const now = referenceDate;
+  const endDateObj = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - latencyDays));
+  const curEnd = endDateObj.toISOString().slice(0, 10);
+
+  // 28D Window
+  const w28CurStart = new Date(endDateObj.getTime() - 27 * msPerDay).toISOString().slice(0, 10);
+  const w28PrevEnd = new Date(endDateObj.getTime() - 28 * msPerDay).toISOString().slice(0, 10);
+  const w28PrevStart = new Date(endDateObj.getTime() - 55 * msPerDay).toISOString().slice(0, 10);
+
+  // 15D Window
+  const w15CurStart = new Date(endDateObj.getTime() - 14 * msPerDay).toISOString().slice(0, 10);
+  const w15PrevEnd = new Date(endDateObj.getTime() - 15 * msPerDay).toISOString().slice(0, 10);
+  const w15PrevStart = new Date(endDateObj.getTime() - 29 * msPerDay).toISOString().slice(0, 10);
+
+  // 7D Window
+  const w7CurStart = new Date(endDateObj.getTime() - 6 * msPerDay).toISOString().slice(0, 10);
+  const w7PrevEnd = new Date(endDateObj.getTime() - 7 * msPerDay).toISOString().slice(0, 10);
+  const w7PrevStart = new Date(endDateObj.getTime() - 13 * msPerDay).toISOString().slice(0, 10);
+
+  return {
+    w28: { curStart: w28CurStart, curEnd, prevStart: w28PrevStart, prevEnd: w28PrevEnd },
+    w15: { curStart: w15CurStart, curEnd, prevStart: w15PrevStart, prevEnd: w15PrevEnd },
+    w7:  { curStart: w7CurStart,  curEnd, prevStart: w7PrevStart,  prevEnd: w7PrevEnd },
+    dataThroughDate: curEnd,
+    latencyDays,
   };
 }

@@ -146,6 +146,13 @@ export default function SearchConsoleClientView({ standingData }: Props) {
             </span>
           );
         }
+        if (k.standing === "LOST") {
+          return (
+            <span className="dgs-saas-chip danger" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.72rem", fontWeight: 700 }}>
+              <X size={12} /> LOST
+            </span>
+          );
+        }
         return (
           <span className="dgs-saas-chip neutral" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.72rem" }}>
             <Minus size={12} /> STABLE
@@ -209,6 +216,7 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       width: "130px",
       render: (p) => {
         if (p.currentPosition == null) return <span style={{ color: "var(--dgs-text-muted)" }}>Emerging</span>;
+        if (p.delta == null) return <span style={{ color: "var(--dgs-text-muted)" }}>No Prev Data</span>;
         if (p.delta > 0) {
           return (
             <span style={{ color: "var(--dgs-success)", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "2px" }}>
@@ -235,33 +243,42 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       header: "7D Trend",
       sortable: true,
       width: "95px",
-      render: (p) => (
-        <span style={{ color: p.movement7d > 0 ? "var(--dgs-success)" : p.movement7d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
-          {p.movement7d > 0 ? `↑ +${p.movement7d}` : p.movement7d < 0 ? `↓ ${p.movement7d}` : "→ 0.0"}
-        </span>
-      ),
+      render: (p) => {
+        if (p.movement7d == null) return <span style={{ color: "var(--dgs-text-muted)" }}>—</span>;
+        return (
+          <span style={{ color: p.movement7d > 0 ? "var(--dgs-success)" : p.movement7d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
+            {p.movement7d > 0 ? `↑ +${p.movement7d}` : p.movement7d < 0 ? `↓ ${p.movement7d}` : "→ 0.0"}
+          </span>
+        );
+      },
     },
     {
       key: "movement15d",
       header: "15D Trend",
       sortable: true,
       width: "95px",
-      render: (p) => (
-        <span style={{ color: p.movement15d > 0 ? "var(--dgs-success)" : p.movement15d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
-          {p.movement15d > 0 ? `↑ +${p.movement15d}` : p.movement15d < 0 ? `↓ ${p.movement15d}` : "→ 0.0"}
-        </span>
-      ),
+      render: (p) => {
+        if (p.movement15d == null) return <span style={{ color: "var(--dgs-text-muted)" }}>—</span>;
+        return (
+          <span style={{ color: p.movement15d > 0 ? "var(--dgs-success)" : p.movement15d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
+            {p.movement15d > 0 ? `↑ +${p.movement15d}` : p.movement15d < 0 ? `↓ ${p.movement15d}` : "→ 0.0"}
+          </span>
+        );
+      },
     },
     {
       key: "movement28d",
       header: "28D Trend",
       sortable: true,
       width: "95px",
-      render: (p) => (
-        <span style={{ color: p.movement28d > 0 ? "var(--dgs-success)" : p.movement28d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
-          {p.movement28d > 0 ? `↑ +${p.movement28d}` : p.movement28d < 0 ? `↓ ${p.movement28d}` : "→ 0.0"}
-        </span>
-      ),
+      render: (p) => {
+        if (p.movement28d == null) return <span style={{ color: "var(--dgs-text-muted)" }}>—</span>;
+        return (
+          <span style={{ color: p.movement28d > 0 ? "var(--dgs-success)" : p.movement28d < 0 ? "var(--dgs-error)" : "var(--dgs-text-muted)", fontSize: "0.82rem", fontWeight: 600 }}>
+            {p.movement28d > 0 ? `↑ +${p.movement28d}` : p.movement28d < 0 ? `↓ ${p.movement28d}` : "→ 0.0"}
+          </span>
+        );
+      },
     },
     {
       key: "clicks",
@@ -270,7 +287,9 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       width: "90px",
       render: (p) => (
         <span>
-          {p.clicks} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem" }}>({p.previousClicks})</span>
+          {p.clicks} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem" }}>
+            ({p.previousClicks != null ? p.previousClicks : "N/A"})
+          </span>
         </span>
       ),
     },
@@ -281,7 +300,9 @@ export default function SearchConsoleClientView({ standingData }: Props) {
       width: "110px",
       render: (p) => (
         <span>
-          {p.impressions.toLocaleString()} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem" }}>({p.previousImpressions.toLocaleString()})</span>
+          {p.impressions.toLocaleString()} <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem" }}>
+            ({p.previousImpressions != null ? p.previousImpressions.toLocaleString() : "N/A"})
+          </span>
         </span>
       ),
     },
@@ -604,6 +625,14 @@ export default function SearchConsoleClientView({ standingData }: Props) {
               {win} DAYS
             </button>
           ))}
+          {windowData.isPartial && (
+            <span
+              className="dgs-saas-chip warning"
+              style={{ fontSize: "0.72rem", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "4px" }}
+            >
+              <AlertTriangle size={12} /> PARTIAL DATA ({windowData.partialDays} DAYS)
+            </span>
+          )}
         </div>
         <div style={{ fontSize: "0.82rem", color: "var(--dgs-text-muted)" }}>
           Strict equivalent comparison: <strong>{activeWindow}D Current</strong> ({windowData.currentRange.start} → {windowData.currentRange.end}) vs <strong>{activeWindow}D Previous</strong> ({windowData.previousRange.start} → {windowData.previousRange.end})

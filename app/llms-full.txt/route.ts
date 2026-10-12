@@ -1,45 +1,60 @@
-import { siteConfig } from "@/lib/seo/site";
-import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
+import { getPublicRouteManifest } from "@/lib/seo/public-route-manifest";
 import { verifiedOrganization } from "@/lib/schema/entity";
+import { siteConfig } from "@/lib/seo/site";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  let cmsBlogLines: string[] = [];
-  if (isCmsDatabaseConfigured()) {
-    try {
-      cmsBlogLines = (await listPublishedCmsBlogs(50)).map((blog) => `- ${blog.title}: ${siteConfig.url}/blogs/${blog.slug}/`);
-    } catch {
-      cmsBlogLines = [];
-    }
-  }
+  const routes = await getPublicRouteManifest();
+
+  const services = routes.filter((r) => r.contentType === "service" && r.includeInSitemap);
+  const locations = routes.filter((r) => r.contentType === "location" && r.includeInSitemap);
+  const international = routes.filter((r) => r.contentType === "international" && r.includeInSitemap);
+  const caseStudies = routes.filter((r) => r.contentType === "case-study" && r.includeInSitemap);
+  const blogs = routes.filter((r) => r.contentType === "blog" && r.includeInSitemap);
+  const careers = routes.filter((r) => r.contentType === "career" && r.includeInSitemap);
 
   const body = [
-    `# ${verifiedOrganization.name}`,
+    `# ${verifiedOrganization.name} — Full Entity & Service Index (Plaintext)`,
     "",
-    `Website: ${verifiedOrganization.url}/`,
+    `Website: ${siteConfig.url}/`,
+    `Legal Name: ${verifiedOrganization.legalName}`,
     `Email: ${verifiedOrganization.email}`,
     `Phone: ${verifiedOrganization.telephone.join(", ")}`,
+    `Headquarters: ${verifiedOrganization.address.streetAddress}, ${verifiedOrganization.address.addressLocality} ${verifiedOrganization.address.postalCode}`,
     "",
-    "Primary services:",
-    `- SEO: ${verifiedOrganization.url}/services/seo-services-in-mumbai/`,
-    `- AEO: ${verifiedOrganization.url}/services/aeo-services-in-mumbai/`,
-    `- GEO: ${verifiedOrganization.url}/services/geo/`,
-    `- LLM SEO: ${verifiedOrganization.url}/services/llm-seo-service/`,
-    `- AI Video: ${verifiedOrganization.url}/services/ai-video-production-agency/`,
+    "## Core Services:",
+    ...services.map((s) => `- ${s.title}: ${s.canonical}`),
     "",
-    "Published insights:",
-    ...(cmsBlogLines.length ? cmsBlogLines : ["See sitemap for published blog URLs."]),
+    "## Regional Location Desks:",
+    ...locations.map((l) => `- ${l.title}: ${l.canonical}`),
     "",
-    `Sitemap: ${siteConfig.url}/sitemap.xml`,
+    "## International Desks & Markets:",
+    ...international.map((m) => `- ${m.title}: ${m.canonical}`),
+    "",
+    "## Case Studies & Portfolio:",
+    `- Client Portfolio: ${siteConfig.url}/portfolio/`,
+    ...caseStudies.map((c) => `- ${c.title}: ${c.canonical}`),
+    "",
+    "## Active Careers:",
+    `- Careers Portal: ${siteConfig.url}/career/`,
+    ...careers.map((c) => `- ${c.title}: ${c.canonical}`),
+    "",
+    "## Complete Published Insights Inventory:",
+    ...blogs.map((b) => `- ${b.title}: ${b.canonical}`),
+    "",
+    "## Machine-Readable Manifests:",
+    `XML Sitemap: ${siteConfig.url}/sitemap.xml`,
     `Short Markdown: ${siteConfig.url}/llms.md`,
-    `Full Markdown: ${siteConfig.url}/llms-full.md`,
     `Short Plaintext: ${siteConfig.url}/llms.txt`,
+    `Full Markdown: ${siteConfig.url}/llms-full.md`,
     "",
   ].join("\n");
 
   return new Response(body, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "public, max-age=3600, stale-while-revalidate=3600",
     },
   });
 }

@@ -7,9 +7,11 @@ import {
   normalizeSearchQuery,
   normalizeSitePageUrl,
   getNonOverlapping28DayWindows,
+  getGscEvaluationWindows,
 } from "@/lib/seo/search-normalization";
+import { getPublicRouteManifest } from "@/lib/seo/public-route-manifest";
 import { getLatestMonitorRun } from "@/lib/google-updates/monitor";
-export { getNonOverlapping28DayWindows };
+export { getNonOverlapping28DayWindows, getGscEvaluationWindows };
 
 
 const ALGORITHM = "aes-256-gcm";
@@ -109,9 +111,13 @@ export async function ensureGoogleTablesExist(): Promise<void> {
         impressions INT DEFAULT 0,
         ctr DECIMAL(5,4) DEFAULT 0,
         position DECIMAL(5,2) DEFAULT 0,
+        prev_position DECIMAL(5,2) NULL,
+        prev_clicks INT DEFAULT 0,
+        prev_impressions INT DEFAULT 0,
         period_type VARCHAR(50) DEFAULT '28d',
         updated_at DATETIME NOT NULL,
-        INDEX idx_gsc_qm_clicks (clicks DESC)
+        INDEX idx_gsc_qm_clicks (clicks DESC),
+        INDEX idx_gsc_qm_period (period_type)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
@@ -123,11 +129,25 @@ export async function ensureGoogleTablesExist(): Promise<void> {
         impressions INT DEFAULT 0,
         ctr DECIMAL(5,4) DEFAULT 0,
         position DECIMAL(5,2) DEFAULT 0,
+        prev_position DECIMAL(5,2) NULL,
+        prev_clicks INT DEFAULT 0,
+        prev_impressions INT DEFAULT 0,
         period_type VARCHAR(50) DEFAULT '28d',
         updated_at DATETIME NOT NULL,
-        INDEX idx_gsc_pm_clicks (clicks DESC)
+        INDEX idx_gsc_pm_clicks (clicks DESC),
+        INDEX idx_gsc_pm_period (period_type)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+
+    // Ensure columns exist on older tables
+    try {
+      await cmsExecute("ALTER TABLE gsc_page_metrics ADD COLUMN IF NOT EXISTS prev_position DECIMAL(5,2) NULL");
+      await cmsExecute("ALTER TABLE gsc_page_metrics ADD COLUMN IF NOT EXISTS prev_clicks INT DEFAULT 0");
+      await cmsExecute("ALTER TABLE gsc_page_metrics ADD COLUMN IF NOT EXISTS prev_impressions INT DEFAULT 0");
+      await cmsExecute("ALTER TABLE gsc_query_metrics ADD COLUMN IF NOT EXISTS prev_position DECIMAL(5,2) NULL");
+      await cmsExecute("ALTER TABLE gsc_query_metrics ADD COLUMN IF NOT EXISTS prev_clicks INT DEFAULT 0");
+      await cmsExecute("ALTER TABLE gsc_query_metrics ADD COLUMN IF NOT EXISTS prev_impressions INT DEFAULT 0");
+    } catch {}
 
     await cmsExecute(`
       CREATE TABLE IF NOT EXISTS gsc_page_query_metrics (
@@ -629,7 +649,13 @@ export async function syncGoogleData(): Promise<{
     return { success: false, error: "No valid Google OAuth token available. Please reconnect Google." };
   }
 
-  const windows = getNonOverlapping28DayWindows();
+  const evalWindows = getGscEvaluationWindows();
+  const windows = {
+    currentStart: evalWindows.w28.curStart,
+    currentEnd: evalWindows.w28.curEnd,
+    previousStart: evalWindows.w28.prevStart,
+    previousEnd: evalWindows.w28.prevEnd,
+  };
   const syncStartTime = new Date();
   const todayStr = syncStartTime.toISOString().slice(0, 10);
 
@@ -682,7 +708,8 @@ export async function syncGoogleData(): Promise<{
       console.warn("GSC dimensionless summary query warning:", sumErr);
     }
 
-    // 1b. Daily metrics for trend charts
+    // 1b. Daily metrics spanning both current and previous windows (56 days total)
+    // Ensures genuine historical comparison windows without synthetic scaling
     const dailyRes = await fetch(
       `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
       {
@@ -692,10 +719,10 @@ export async function syncGoogleData(): Promise<{
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          startDate: windows.currentStart,
+          startDate: windows.previousStart,
           endDate: windows.currentEnd,
           dimensions: ["date"],
-          rowLimit: 35,
+          rowLimit: 70,
         }),
       }
     );
@@ -713,8 +740,10 @@ export async function syncGoogleData(): Promise<{
         const ctr = Number(row.ctr || 0);
         const position = Number(row.position || 0);
 
-        sumDailyClicks += clicks;
-        sumDailyImpressions += impressions;
+        if (date >= windows.currentStart && date <= windows.currentEnd) {
+          sumDailyClicks += clicks;
+          sumDailyImpressions += impressions;
+        }
 
         await cmsExecute(
           `INSERT INTO gsc_daily_metrics (id, metric_date, clicks, impressions, ctr, position)
@@ -734,11 +763,8 @@ export async function syncGoogleData(): Promise<{
       }
     }
 
-    // 1c. Historical comparison window (Previous 28 days, non-overlapping)
+    // 1c. Historical comparison window for Queries (Previous 28 days vs Current 28 days)
     const prevQueryMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
-    const prevPageMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
-    const prevPqMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
-
     try {
       const prevQueryData = await fetchGscSearchAnalyticsPaginated(
         siteUrl,
@@ -759,52 +785,11 @@ export async function syncGoogleData(): Promise<{
           position: Number(r.position || 0),
         });
       }
-
-      const prevPageData = await fetchGscSearchAnalyticsPaginated(
-        siteUrl,
-        accessToken,
-        {
-          startDate: windows.previousStart,
-          endDate: windows.previousEnd,
-          dimensions: ["page"],
-        },
-        1000
-      );
-      for (const r of prevPageData.rows) {
-        const pUrl = (r.keys[0] || "").slice(0, 500);
-        prevPageMap.set(canonicalPageKey(pUrl), {
-          clicks: Math.round(r.clicks || 0),
-          impressions: Math.round(r.impressions || 0),
-          ctr: Number(r.ctr || 0),
-          position: Number(r.position || 0),
-        });
-      }
-
-      const prevPqData = await fetchGscSearchAnalyticsPaginated(
-        siteUrl,
-        accessToken,
-        {
-          startDate: windows.previousStart,
-          endDate: windows.previousEnd,
-          dimensions: ["page", "query"],
-        },
-        2000
-      );
-      for (const r of prevPqData.rows) {
-        const pUrl = (r.keys[0] || "").slice(0, 500);
-        const qText = (r.keys[1] || "").slice(0, 500);
-        prevPqMap.set(`${canonicalPageKey(pUrl)}|||${normalizeSearchQuery(qText)}`, {
-          clicks: Math.round(r.clicks || 0),
-          impressions: Math.round(r.impressions || 0),
-          ctr: Number(r.ctr || 0),
-          position: Number(r.position || 0),
-        });
-      }
     } catch (prevErr) {
-      console.warn("Could not fetch previous 28d GSC window for comparison:", prevErr);
+      console.warn("Could not fetch previous 28d GSC query window for comparison:", prevErr);
     }
 
-    // 1d. Top Queries (Current 28d)
+    // 1d. Top Queries (Current 28d) + Lost Keywords Detection
     const currentQueryData = await fetchGscSearchAnalyticsPaginated(
       siteUrl,
       accessToken,
@@ -816,9 +801,12 @@ export async function syncGoogleData(): Promise<{
       1000
     );
 
+    const seenQueries = new Set<string>();
+
     for (const row of currentQueryData.rows) {
       const queryText = (row.keys[0] || "").slice(0, 500);
       const normQ = normalizeSearchQuery(queryText);
+      seenQueries.add(normQ);
       const clicks = Math.round(row.clicks || 0);
       const impressions = Math.round(row.impressions || 0);
       const ctr = Number(row.ctr || 0);
@@ -847,50 +835,140 @@ export async function syncGoogleData(): Promise<{
       );
     }
 
-    // 1e. Top Pages (Current 28d)
-    const currentPageData = await fetchGscSearchAnalyticsPaginated(
-      siteUrl,
-      accessToken,
-      {
-        startDate: windows.currentStart,
-        endDate: windows.currentEnd,
-        dimensions: ["page"],
-      },
-      1000
-    );
-
-    for (const row of currentPageData.rows) {
-      const pageUrl = (row.keys[0] || "").slice(0, 500);
-      const canonKey = canonicalPageKey(pageUrl);
-      const clicks = Math.round(row.clicks || 0);
-      const impressions = Math.round(row.impressions || 0);
-      const ctr = Number(row.ctr || 0);
-      const position = Number(row.position || 0);
-      const prev = prevPageMap.get(canonKey);
-      const prevPosition = prev ? prev.position : null;
-      const prevClicks = prev ? prev.clicks : 0;
-      const prevImpressions = prev ? prev.impressions : 0;
-
-      const rowId = createHash("md5").update(`p_${canonKey}`).digest("hex");
-
-      await cmsExecute(
-        `INSERT INTO gsc_page_metrics (id, page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '28d', NOW())
-         ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
-        [rowId, pageUrl, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions]
-      );
-
-      // Snapshot record
-      const snapId = createHash("md5").update(`snap_p_${todayStr}_${canonKey}`).digest("hex");
-      await cmsExecute(
-        `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, period_type, clicks, impressions, ctr, position, created_at)
-         VALUES (?, ?, 'page', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
-         ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
-        [snapId, todayStr, pageUrl, pageUrl, clicks, impressions, ctr, position]
-      );
+    // Persist LOST queries from previous window (queries that had ranking/impressions before but 0 in current)
+    for (const [normQ, prev] of prevQueryMap.entries()) {
+      if (!seenQueries.has(normQ)) {
+        const rowId = createHash("md5").update(`q_${normQ}`).digest("hex");
+        await cmsExecute(
+          `INSERT INTO gsc_query_metrics (id, query_text, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
+           VALUES (?, ?, 0, 0, 0, 0, ?, ?, ?, '28d', NOW())
+           ON DUPLICATE KEY UPDATE clicks = 0, impressions = 0, ctr = 0, position = 0, prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+          [rowId, normQ, prev.position, prev.clicks, prev.impressions]
+        );
+      }
     }
 
-    // 1f. Page + Query Matrix (Current 28d, paginated up to 5000 rows)
+    // 1e. True Multi-Period Page Metrics (7D, 15D, 28D evaluation windows)
+    const periodsToSync = [
+      { type: "28d" as const, curStart: evalWindows.w28.curStart, curEnd: evalWindows.w28.curEnd, prevStart: evalWindows.w28.prevStart, prevEnd: evalWindows.w28.prevEnd },
+      { type: "15d" as const, curStart: evalWindows.w15.curStart, curEnd: evalWindows.w15.curEnd, prevStart: evalWindows.w15.prevStart, prevEnd: evalWindows.w15.prevEnd },
+      { type: "7d" as const,  curStart: evalWindows.w7.curStart,  curEnd: evalWindows.w7.curEnd,  prevStart: evalWindows.w7.prevStart,  prevEnd: evalWindows.w7.prevEnd },
+    ];
+
+    for (const pDef of periodsToSync) {
+      const pPrevMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
+      try {
+        const prevPData = await fetchGscSearchAnalyticsPaginated(
+          siteUrl,
+          accessToken,
+          {
+            startDate: pDef.prevStart,
+            endDate: pDef.prevEnd,
+            dimensions: ["page"],
+          },
+          1000
+        );
+        for (const r of prevPData.rows) {
+          const pUrl = (r.keys[0] || "").slice(0, 500);
+          pPrevMap.set(canonicalPageKey(pUrl), {
+            clicks: Math.round(r.clicks || 0),
+            impressions: Math.round(r.impressions || 0),
+            ctr: Number(r.ctr || 0),
+            position: Number(r.position || 0),
+          });
+        }
+      } catch (err) {
+        console.warn(`GSC prev ${pDef.type} page query warning:`, err);
+      }
+
+      const curPData = await fetchGscSearchAnalyticsPaginated(
+        siteUrl,
+        accessToken,
+        {
+          startDate: pDef.curStart,
+          endDate: pDef.curEnd,
+          dimensions: ["page"],
+        },
+        1000
+      );
+
+      const seenPages = new Set<string>();
+
+      for (const row of curPData.rows) {
+        const pageUrl = (row.keys[0] || "").slice(0, 500);
+        const canonKey = canonicalPageKey(pageUrl);
+        seenPages.add(canonKey);
+        const clicks = Math.round(row.clicks || 0);
+        const impressions = Math.round(row.impressions || 0);
+        const ctr = Number(row.ctr || 0);
+        const position = Number(row.position || 0);
+        const prev = pPrevMap.get(canonKey);
+        const prevPosition = prev ? prev.position : null;
+        const prevClicks = prev ? prev.clicks : 0;
+        const prevImpressions = prev ? prev.impressions : 0;
+
+        const rowId = createHash("md5").update(`p_${pDef.type}_${canonKey}`).digest("hex");
+
+        await cmsExecute(
+          `INSERT INTO gsc_page_metrics (id, page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+           ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+          [rowId, pageUrl, clicks, impressions, ctr, position, prevPosition, prevClicks, prevImpressions, pDef.type]
+        );
+
+        if (pDef.type === "28d") {
+          const snapId = createHash("md5").update(`snap_p_${todayStr}_${canonKey}`).digest("hex");
+          await cmsExecute(
+            `INSERT INTO gsc_ranking_snapshots (id, snapshot_date, entity_type, identifier, page_url, period_type, clicks, impressions, ctr, position, created_at)
+             VALUES (?, ?, 'page', ?, ?, 'current_28d', ?, ?, ?, ?, NOW())
+             ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position)`,
+            [snapId, todayStr, pageUrl, pageUrl, clicks, impressions, ctr, position]
+          );
+        }
+      }
+
+      // Record pages in previous window that dropped to zero in current window
+      for (const [canonKey, prev] of pPrevMap.entries()) {
+        if (!seenPages.has(canonKey)) {
+          const pageUrl = `https://www.dgeniussolutions.com${canonKey === "/" ? "/" : canonKey}`;
+          const rowId = createHash("md5").update(`p_${pDef.type}_${canonKey}`).digest("hex");
+          await cmsExecute(
+            `INSERT INTO gsc_page_metrics (id, page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type, updated_at)
+             VALUES (?, ?, 0, 0, 0, 0, ?, ?, ?, ?, NOW())
+             ON DUPLICATE KEY UPDATE clicks = VALUES(clicks), impressions = VALUES(impressions), ctr = VALUES(ctr), position = VALUES(position), prev_position = VALUES(prev_position), prev_clicks = VALUES(prev_clicks), prev_impressions = VALUES(prev_impressions), updated_at = NOW()`,
+            [rowId, pageUrl, prev.position, prev.clicks, prev.impressions, pDef.type]
+          );
+        }
+      }
+    }
+
+    // 1f. Page + Query Matrix (Current 28d vs Previous 28d, paginated up to 5000 rows)
+    const prevPqMap = new Map<string, { clicks: number; impressions: number; ctr: number; position: number }>();
+    try {
+      const prevPqData = await fetchGscSearchAnalyticsPaginated(
+        siteUrl,
+        accessToken,
+        {
+          startDate: windows.previousStart,
+          endDate: windows.previousEnd,
+          dimensions: ["page", "query"],
+        },
+        2000
+      );
+      for (const r of prevPqData.rows) {
+        const pUrl = (r.keys[0] || "").slice(0, 500);
+        const qText = (r.keys[1] || "").slice(0, 500);
+        prevPqMap.set(`${canonicalPageKey(pUrl)}|||${normalizeSearchQuery(qText)}`, {
+          clicks: Math.round(r.clicks || 0),
+          impressions: Math.round(r.impressions || 0),
+          ctr: Number(r.ctr || 0),
+          position: Number(r.position || 0),
+        });
+      }
+    } catch (prevErr) {
+      console.warn("Could not fetch previous 28d GSC page-query matrix:", prevErr);
+    }
+
     const currentPqData = await fetchGscSearchAnalyticsPaginated(
       siteUrl,
       accessToken,
@@ -1611,6 +1689,8 @@ export type WindowStandingSummary = {
   windowDays: 7 | 15 | 28;
   currentRange: { start: string; end: string };
   previousRange: { start: string; end: string };
+  isPartial?: boolean;
+  partialDays?: number;
   clicks: MetricWithStanding;
   impressions: MetricWithStanding;
   ctr: MetricWithStanding;
@@ -1635,15 +1715,15 @@ export type StrategicPageStandingItem = {
   url: string;
   currentPosition: number | null;
   previousPosition: number | null;
-  delta: number; // prev_position - current_position (positive = improved rank)
+  delta: number | null; // prev_position - current_position (positive = improved rank), null if no prev data
   standing: "UP" | "DOWN" | "STABLE" | "NEW";
-  movement7d: number;
-  movement15d: number;
-  movement28d: number;
+  movement7d: number | null;
+  movement15d: number | null;
+  movement28d: number | null;
   clicks: number;
-  previousClicks: number;
+  previousClicks: number | null;
   impressions: number;
-  previousImpressions: number;
+  previousImpressions: number | null;
   ctr: number;
 };
 
@@ -1713,13 +1793,9 @@ function computeWindowStanding(
     prevPosWeightedSum += (pos * imp);
   }
 
-  // If prevSlice is empty or smaller (e.g. 28d window with 31 total days in DB), scale gracefully
-  if (prevSlice.length > 0 && prevSlice.length < windowDays) {
-    const scale = windowDays / prevSlice.length;
-    prevClicks = Math.round(prevClicks * scale);
-    prevImpressions = Math.round(prevImpressions * scale);
-    prevPosWeightedSum = prevPosWeightedSum * scale;
-  }
+  // Zero synthetic scaling: strictly record whether previous window data is partial
+  const isPartial = prevSlice.length > 0 && prevSlice.length < windowDays;
+  const partialDays = prevSlice.length;
 
   const prevCtr = prevImpressions > 0 ? Number(((prevClicks / prevImpressions) * 100).toFixed(2)) : 0;
   const prevPos = prevImpressions > 0 ? Number((prevPosWeightedSum / prevImpressions).toFixed(1)) : (curPos || 0);
@@ -1757,6 +1833,8 @@ function computeWindowStanding(
     windowDays,
     currentRange: { start: curStart, end: curEnd },
     previousRange: { start: prevStart, end: prevEnd },
+    isPartial,
+    partialDays,
     clicks: { current: curClicks, previous: prevClicks, delta: clicksDelta, pct: clicksPct, direction: clicksDirection },
     impressions: { current: curImpressions, previous: prevImpressions, delta: impDelta, pct: impPct, direction: impDirection },
     ctr: { current: curCtr, previous: prevCtr, delta: ctrDelta, pct: ctrPct, direction: ctrDirection },
@@ -1828,8 +1906,8 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
          (SELECT pq.page_url FROM gsc_page_query_metrics pq WHERE pq.query_text = qm.query_text ORDER BY pq.clicks DESC LIMIT 1) as page_url
        FROM gsc_query_metrics qm
        WHERE qm.period_type = '28d'
-       ORDER BY qm.clicks DESC, qm.impressions DESC
-       LIMIT 250`
+       ORDER BY qm.clicks DESC, qm.impressions DESC, qm.prev_clicks DESC, qm.prev_impressions DESC
+       LIMIT 300`
     );
 
     let upCount = 0;
@@ -1844,7 +1922,11 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
       let delta = 0;
       let standing: "UP" | "DOWN" | "STABLE" | "NEW" | "LOST" = "STABLE";
 
-      if (prevPos == null) {
+      if (curPos === 0 && prevPos != null) {
+        standing = "LOST";
+        lostCount++;
+        delta = -Number(prevPos.toFixed(1));
+      } else if (prevPos == null) {
         standing = "NEW";
         newCount++;
         delta = 0;
@@ -1883,36 +1965,95 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
        LIMIT 25`
     );
 
-    const targetStrategicDefs = [
-      { name: "Homepage & Brand", path: "/", full: "https://www.dgeniussolutions.com/" },
-      { name: "AI Video Production Agency", path: "/services/ai-video-production-agency/", full: "https://www.dgeniussolutions.com/services/ai-video-production-agency/" },
-      { name: "SEO Services in Mumbai", path: "/services/seo-services-in-mumbai/", full: "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/" },
-      { name: "AEO Services in Mumbai", path: "/services/aeo-services-in-mumbai/", full: "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/" },
-      { name: "Generative Engine Optimization (GEO)", path: "/services/geo/", full: "https://www.dgeniussolutions.com/services/geo/" },
-      { name: "LLM SEO Service", path: "/services/llm-seo-service/", full: "https://www.dgeniussolutions.com/services/llm-seo-service/" },
-      { name: "Performance Marketing Agency", path: "/services/performance-marketing/", full: "https://www.dgeniussolutions.com/services/performance-marketing/" },
-      { name: "AI Production Agency Dubai", path: "/services/ai-production-dubai-page/", full: "https://www.dgeniussolutions.com/services/ai-production-dubai-page/" },
+    // Build strategic pages list dynamically from canonical route manifest
+    const manifest = await getPublicRouteManifest().catch(() => []);
+
+    const priorityPaths = [
+      "/",
+      "/services/seo-services-in-mumbai/",
+      "/services/ai-video-production-agency/",
+      "/services/aeo-services-in-mumbai/",
+      "/services/geo/",
+      "/services/llm-seo-service/",
+      "/services/performance-marketing/",
+      "/services/social-media-marketing/",
+      "/services/website-development-amc/",
+      "/services/branding/",
+      "/services/content-creation/",
+      "/services/ai-production-dubai-page/",
+      "/services/dubai-seo/",
+      "/aeo-dubai/",
+      "/services/seo-service-in-banglore/",
+      "/services/seo-service-in-gurugram/",
+      "/services/seo-service-pune/",
+      "/services/seo-services-in-hyderabad/",
+      "/services/website-development-pune-page/",
+      "/blogs/",
     ];
 
+    const manifestMap = new Map<string, any>();
+    for (const m of manifest) {
+      manifestMap.set(m.path, m);
+    }
+
+    const targetStrategicDefs: Array<{ name: string; path: string; full: string }> = [];
+    const addedPaths = new Set<string>();
+
+    for (const p of priorityPaths) {
+      const m = manifestMap.get(p);
+      const name = m?.title
+        ? m.title.split("|")[0].split("—")[0].split("-")[0].trim()
+        : p === "/"
+          ? "Homepage & Brand"
+          : p.replace("/services/", "").replace(/-/g, " ").replace(/\/$/, "");
+      targetStrategicDefs.push({
+        name: name || p,
+        path: p,
+        full: `https://www.dgeniussolutions.com${p === "/" ? "/" : p}`,
+      });
+      addedPaths.add(p);
+    }
+
+    for (const m of manifest) {
+      if (!addedPaths.has(m.path) && (m.contentType === "service" || m.contentType === "case-study")) {
+        const cleanName = m.title.split("|")[0].split("—")[0].split("-")[0].trim() || m.path;
+        targetStrategicDefs.push({
+          name: cleanName,
+          path: m.path,
+          full: m.canonical,
+        });
+        addedPaths.add(m.path);
+      }
+    }
+
     const { rows: allPageRows } = await cmsQuery<any>(
-      `SELECT page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions
+      `SELECT page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type
        FROM gsc_page_metrics
-       WHERE period_type = '28d'`
+       WHERE period_type IN ('28d', '15d', '7d')`
     ).catch(() => ({ rows: [] }));
 
-    const pageRowMap = new Map<string, any>();
+    const page28Map = new Map<string, any>();
+    const page15Map = new Map<string, any>();
+    const page7Map = new Map<string, any>();
+
     for (const pr of allPageRows || []) {
-      const norm = String(pr.page_url).replace(/\/$/, "");
-      if (!pageRowMap.has(norm)) pageRowMap.set(norm, pr);
-      if (!pageRowMap.has(pr.page_url)) pageRowMap.set(pr.page_url, pr);
+      const pKey = canonicalPageKey(pr.page_url);
+      const period = pr.period_type || "28d";
+      if (period === "28d") page28Map.set(pKey, pr);
+      else if (period === "15d") page15Map.set(pKey, pr);
+      else if (period === "7d") page7Map.set(pKey, pr);
     }
 
     const strategicPages: StrategicPageStandingItem[] = targetStrategicDefs.map((def) => {
-      const row = pageRowMap.get(def.full) || pageRowMap.get(def.full.replace(/\/$/, ""));
-      const curPos = row?.position != null && Number(row.position) > 0 ? Number(Number(row.position).toFixed(1)) : null;
-      const prevPos = row?.prev_position != null && Number(row.prev_position) > 0 ? Number(Number(row.prev_position).toFixed(1)) : null;
+      const canonKey = canonicalPageKey(def.path);
+      const row28 = page28Map.get(canonKey);
+      const row15 = page15Map.get(canonKey);
+      const row7 = page7Map.get(canonKey);
 
-      let delta = 0;
+      const curPos = row28?.position != null && Number(row28.position) > 0 ? Number(Number(row28.position).toFixed(1)) : null;
+      const prevPos = row28?.prev_position != null && Number(row28.prev_position) > 0 ? Number(Number(row28.prev_position).toFixed(1)) : null;
+
+      let delta: number | null = null;
       let standing: "UP" | "DOWN" | "STABLE" | "NEW" = "STABLE";
       if (curPos != null && prevPos != null) {
         delta = Number((prevPos - curPos).toFixed(1)); // Lower position = UP (positive delta)
@@ -1921,9 +2062,23 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
         standing = "NEW";
       }
 
-      const m28 = delta;
-      const m15 = Number((delta * 0.6).toFixed(1));
-      const m7 = Number((delta * 0.3).toFixed(1));
+      // Authentic 7D, 15D, 28D movement calculated strictly from corresponding period windows:
+      // prev_position - current_position (positive = improved rank, negative = dropped rank)
+      const m28 = (row28?.prev_position != null && Number(row28.prev_position) > 0 && curPos != null)
+        ? Number((Number(row28.prev_position) - curPos).toFixed(1))
+        : null;
+
+      const m15 = (row15?.prev_position != null && Number(row15.prev_position) > 0 && row15?.position != null && Number(row15.position) > 0)
+        ? Number((Number(row15.prev_position) - Number(row15.position)).toFixed(1))
+        : null;
+
+      const m7 = (row7?.prev_position != null && Number(row7.prev_position) > 0 && row7?.position != null && Number(row7.position) > 0)
+        ? Number((Number(row7.prev_position) - Number(row7.position)).toFixed(1))
+        : null;
+
+      // Authentic previous clicks & impressions (null if no previous data existed)
+      const previousClicks = row28?.prev_clicks != null ? Number(row28.prev_clicks) : null;
+      const previousImpressions = row28?.prev_impressions != null ? Number(row28.prev_impressions) : null;
 
       return {
         name: def.name,
@@ -1936,11 +2091,11 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
         movement7d: m7,
         movement15d: m15,
         movement28d: m28,
-        clicks: Number(row?.clicks || 0),
-        previousClicks: Number(row?.prev_clicks || Math.round((row?.clicks || 0) * 0.9)),
-        impressions: Number(row?.impressions || 0),
-        previousImpressions: Number(row?.prev_impressions || Math.round((row?.impressions || 0) * 0.9)),
-        ctr: Number(row?.ctr || 0),
+        clicks: Number(row28?.clicks || 0),
+        previousClicks,
+        impressions: Number(row28?.impressions || 0),
+        previousImpressions,
+        ctr: Number(row28?.ctr || 0),
       };
     });
 

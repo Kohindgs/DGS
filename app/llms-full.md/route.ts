@@ -1,23 +1,26 @@
+import { getPublicRouteManifest, getManifestRoutesByCluster } from "@/lib/seo/public-route-manifest";
 import { verifiedOrganization } from "@/lib/schema/entity";
 import { siteConfig } from "@/lib/seo/site";
-import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  let cmsBlogLines: string[] = [];
-  if (isCmsDatabaseConfigured()) {
-    try {
-      cmsBlogLines = (await listPublishedCmsBlogs(50)).map((blog) => `- ${blog.title}: ${siteConfig.url}/blogs/${blog.slug}/`);
-    } catch {
-      cmsBlogLines = [];
-    }
-  }
+  const [routes, clusters] = await Promise.all([
+    getPublicRouteManifest(),
+    getManifestRoutesByCluster(),
+  ]);
 
-  const content = `# ${verifiedOrganization.name} — Full Entity & Services Index
+  const international = routes.filter((r) => r.contentType === "international" && r.includeInSitemap);
+  const locations = routes.filter((r) => r.contentType === "location" && r.includeInSitemap);
+  const caseStudies = routes.filter((r) => r.contentType === "case-study" && r.includeInSitemap);
+  const blogs = routes.filter((r) => r.contentType === "blog" && r.includeInSitemap);
+  const careers = routes.filter((r) => r.contentType === "career" && r.includeInSitemap);
 
-> Structural reference and machine-readable service index for D'Genius Solutions, a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
+  const content = `# ${verifiedOrganization.name} — Full Entity & Service Index
 
-- **Official Website**: ${verifiedOrganization.url}/
+> Structural reference and canonical machine-readable service index for D'Genius Solutions, a full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
+
+- **Official Website**: [${siteConfig.url}/](${siteConfig.url}/)
 - **Corporate Entity**: ${verifiedOrganization.legalName}
 - **Primary Email**: ${verifiedOrganization.email}
 - **Inquiries & Phone**: ${verifiedOrganization.telephone.join(", ")}
@@ -33,40 +36,82 @@ ${verifiedOrganization.sameAs.map((url) => `- [${new URL(url).hostname.replace("
 
 ## Service Taxonomy & Canonical Endpoints
 
-### 1. AI Search & Emerging Retrieval Optimization
-- **[AEO Services in Mumbai](${verifiedOrganization.url}/services/aeo-services-in-mumbai/)**
-  AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms.
-- **[GEO Services (Generative Engine Optimization)](${verifiedOrganization.url}/services/geo/)**
-  GEO services in Mumbai to improve visibility in AI Overviews, ChatGPT, and generative search results.
-- **[LLM SEO Service](${verifiedOrganization.url}/services/llm-seo-service/)**
-  LLM SEO services in Mumbai to improve visibility in ChatGPT, Gemini, AI Overviews and Perplexity.
-- **[AI Video Production Agency](${verifiedOrganization.url}/services/ai-video-production-agency/)**
-  AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses.
+### 1. AI Search & Emerging Retrieval Optimization (AEO / GEO / LLM)
+${clusters["ai-search"]
+  .map((s) => `- **[${s.title}](${s.canonical})**\n  ${s.description || "Emerging retrieval and AI engine optimization."}`)
+  .join("\n")}
 
-### 2. Core Search Engine Optimization (SEO)
-- **[SEO Services in Mumbai](${verifiedOrganization.url}/services/seo-services-in-mumbai/)**
-  SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.
+### 2. AI Creative & Video Production
+${clusters["creative-video"]
+  .map((s) => `- **[${s.title}](${s.canonical})**\n  ${s.description || "AI-powered creative video, ads, and visual production."}`)
+  .join("\n")}
 
-### 3. Web Engineering & Maintenance
-- **[Website Development](${verifiedOrganization.url}/services/website-development-pune-page/)**
-  Website development delivering responsive, conversion-focused and SEO-friendly websites.
-- **[Website Maintenance & AMC](${verifiedOrganization.url}/services/website-development-amc/)**
-  Website development in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.
+### 3. Core Search Engine Optimization (SEO)
+${clusters["seo"]
+  .map((s) => `- **[${s.title}](${s.canonical})**\n  ${s.description || "High-intent organic search optimization and technical SEO."}`)
+  .join("\n")}
+
+### 4. Web Engineering & Maintenance
+${clusters["web-dev"]
+  .map((s) => `- **[${s.title}](${s.canonical})**\n  ${s.description || "Conversion-focused web development, Next.js architecture, and AMC support."}`)
+  .join("\n")}
+
+### 5. Performance Marketing & Paid Media
+${clusters["performance"]
+  .map((s) => `- **[${s.title}](${s.canonical})**\n  ${s.description || "Data-driven performance media, Google Ads, and conversion growth."}`)
+  .join("\n")}
+
+### 6. Branding & Creative Identity
+${clusters["branding"]
+  .map((s) => `- **[${s.title}](${s.canonical})**\n  ${s.description || "Strategic brand positioning, visual identity, and brand systems."}`)
+  .join("\n")}
+
+### 7. Content Marketing & Strategy
+${clusters["content"]
+  .map((s) => `- **[${s.title}](${s.canonical})**\n  ${s.description || "Editorial content, topical authority, and organic lead acquisition."}`)
+  .join("\n")}
+
+---
+
+## Regional & International Delivery Desks
+
+### Global & International Markets
+${international
+  .map((m) => `- **[${m.title}](${m.canonical})**\n  ${m.description || "International digital marketing capabilities."}`)
+  .join("\n")}
+
+### India Regional Desks
+${locations
+  .map((l) => `- **[${l.title}](${l.canonical})**\n  ${l.description || "Regional enterprise SEO and web development capabilities."}`)
+  .join("\n")}
 
 ---
 
 ## Selected Work & Case Studies
 
-- **[Portfolio](${verifiedOrganization.url}/portfolio/)**
+- **[Client Portfolio](${siteConfig.url}/portfolio/)**
   Digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.
-- **[Shirdi Se Sai Tak Case Study](${verifiedOrganization.url}/services/shirdi-se-sai-tak-case-study/)**
-  Mythological AI avatar case study for Shirdi Se Sai Tak devotional storytelling.
+${caseStudies
+  .map((c) => `- **[${c.title}](${c.canonical})**\n  ${c.description || "Client results and implementation."}`)
+  .join("\n")}
 
 ---
 
-## Published Insights
+## Active Careers
 
-${cmsBlogLines.length ? cmsBlogLines.join("\n") : "Published blog index is available in the XML sitemap."}
+- **[Careers Portal](${siteConfig.url}/career/)**
+  Join our Mumbai digital production and growth teams.
+${careers
+  .map((cr) => `- **[${cr.title}](${cr.canonical})**\n  ${cr.description || "Active employment opportunity."}`)
+  .join("\n")}
+
+---
+
+## Complete Published Insights Inventory (${blogs.length} Articles)
+
+${blogs
+  .map((b) => `- [${b.title}](${b.canonical}) (Last Updated: ${b.lastModified})`)
+  .join("\n")}
 
 ---
 

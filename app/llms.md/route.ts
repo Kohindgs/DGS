@@ -1,44 +1,69 @@
+import { getPublicRouteManifest } from "@/lib/seo/public-route-manifest";
 import { verifiedOrganization } from "@/lib/schema/entity";
 import { siteConfig } from "@/lib/seo/site";
-import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { listPublishedCmsBlogs } from "@/lib/cms/blogs";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  let blogLines = "";
-  if (isCmsDatabaseConfigured()) {
-    try {
-      blogLines = (await listPublishedCmsBlogs(12))
-        .map((blog) => `- [${blog.title}](${siteConfig.url}/blogs/${blog.slug}/)`)
-        .join("\n");
-    } catch {
-      blogLines = "";
-    }
-  }
+  const routes = await getPublicRouteManifest();
+
+  const services = routes.filter((r) => r.contentType === "service" && r.includeInSitemap);
+  const international = routes.filter((r) => r.contentType === "international" && r.includeInSitemap);
+  const caseStudies = routes.filter((r) => r.contentType === "case-study" && r.includeInSitemap);
+  const blogs = routes.filter((r) => r.contentType === "blog" && r.includeInSitemap);
+
+  // Curated key insights (top 30 from manifest)
+  const curatedBlogs = blogs.slice(0, 30);
 
   const content = `# ${verifiedOrganization.name}
 
 > Full service digital marketing agency in Mumbai offering connected search, website development, social media, performance marketing, branding and AI-led creative production.
 
-Website: ${verifiedOrganization.url}/
+- **Official Website**: [${siteConfig.url}/](${siteConfig.url}/)
+- **Corporate Entity**: ${verifiedOrganization.legalName}
+- **Headquarters**: ${verifiedOrganization.address.streetAddress}, ${verifiedOrganization.address.addressLocality}, ${verifiedOrganization.address.addressRegion} ${verifiedOrganization.address.postalCode}, ${verifiedOrganization.address.addressCountry}
+
+---
 
 ## Core Services
 
-- [SEO Services in Mumbai](${verifiedOrganization.url}/services/seo-services-in-mumbai/): SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.
-- [AEO Services in Mumbai](${verifiedOrganization.url}/services/aeo-services-in-mumbai/): AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms.
-- [GEO Services](${verifiedOrganization.url}/services/geo/): GEO services in Mumbai to improve visibility in AI Overviews, ChatGPT, and generative search results.
-- [LLM SEO Services](${verifiedOrganization.url}/services/llm-seo-service/): LLM SEO services in Mumbai to improve visibility in ChatGPT, Gemini, AI Overviews and Perplexity.
-- [AI Video Production Agency](${verifiedOrganization.url}/services/ai-video-production-agency/): AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses.
+${services
+  .map((s) => `- [${s.title}](${s.canonical}): ${s.description || "Official agency service offering."}`)
+  .join("\n")}
 
-## Published Insights
+---
 
-${blogLines || `- [Blog Index](${siteConfig.url}/blogs/)`}
+## International Markets & Dedicated Desks
+
+${international
+  .map((m) => `- [${m.title}](${m.canonical}): ${m.description || "Regional digital marketing capabilities."}`)
+  .join("\n")}
+
+---
 
 ## Key Case Studies & Portfolio
 
-- [Client Portfolio](${verifiedOrganization.url}/portfolio/): Digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.
-- [Shirdi Se Sai Tak Case Study](${verifiedOrganization.url}/services/shirdi-se-sai-tak-case-study/): Mythological AI avatar case study for Shirdi Se Sai Tak devotional storytelling.
+- [Client Portfolio](${siteConfig.url}/portfolio/): Digital marketing case studies, SEO growth results, AI campaigns, and brand success stories.
+${caseStudies
+  .map((c) => `- [${c.title}](${c.canonical}): ${c.description || "Client results and implementation."}`)
+  .join("\n")}
+
+---
+
+## Published Insights
+
+${curatedBlogs.length
+  ? curatedBlogs.map((b) => `- [${b.title}](${b.canonical})`).join("\n")
+  : `- [Blog Archive](${siteConfig.url}/blogs/)`}
+
+---
+
+## Careers
+
+- [Careers at D'Genius Solutions](${siteConfig.url}/career/): Join our team in Mumbai.
+- [Generative AI Artist](${siteConfig.url}/career/generative-ai-artist/): Full-time AI image and video production opening.
+
+---
 
 ## Contact Information
 
@@ -46,12 +71,14 @@ ${blogLines || `- [Blog Index](${siteConfig.url}/blogs/)`}
 - **Phone**: ${verifiedOrganization.telephone.join(", ")}
 - **Address**: ${verifiedOrganization.address.streetAddress}, ${verifiedOrganization.address.addressLocality}, ${verifiedOrganization.address.addressRegion} ${verifiedOrganization.address.postalCode}, ${verifiedOrganization.address.addressCountry}
 
+---
+
 ## AI Discovery & Site Manifests
 
-- **Full AI Document**: ${siteConfig.url}/llms-full.md
-- **Plaintext Summary**: ${siteConfig.url}/llms.txt
-- **Plaintext Full**: ${siteConfig.url}/llms-full.txt
-- **XML Sitemap**: ${siteConfig.url}/sitemap.xml
+- **Full AI Document**: [${siteConfig.url}/llms-full.md](${siteConfig.url}/llms-full.md)
+- **Plaintext Summary**: [${siteConfig.url}/llms.txt](${siteConfig.url}/llms.txt)
+- **Plaintext Full**: [${siteConfig.url}/llms-full.txt](${siteConfig.url}/llms-full.txt)
+- **XML Sitemap**: [${siteConfig.url}/sitemap.xml](${siteConfig.url}/sitemap.xml)
 `;
 
   return new Response(content, {
