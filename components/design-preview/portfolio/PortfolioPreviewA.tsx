@@ -60,27 +60,13 @@ function buildEditorialRows(items: PortfolioItem[]): PortfolioItem[][] {
     }
 
     const currentHasLand = currentRow.some((it) => it.ratio >= 1.2);
+    const maxItems = (isLand || currentHasLand) ? 2 : 3;
 
-    if (isLand) {
-      // Adding a landscape item:
-      // If current row already has a landscape item: max 2 landscape items per row
-      // If current row has portrait items: can pair 1 portrait + 1 landscape (max 2 items)
-      if (currentRow.length >= 2 || (currentHasLand && currentRow.length >= 1)) {
-        rows.push(currentRow);
-        currentRow = [item];
-      } else {
-        currentRow.push(item);
-      }
+    if (currentRow.length >= maxItems) {
+      rows.push(currentRow);
+      currentRow = [item];
     } else {
-      // Adding a portrait item:
-      // If current row has landscape: max 2 items (1 landscape + 1 portrait)
-      // If current row only has portraits: max 3 items per row
-      if ((currentHasLand && currentRow.length >= 2) || (!currentHasLand && currentRow.length >= 3)) {
-        rows.push(currentRow);
-        currentRow = [item];
-      } else {
-        currentRow.push(item);
-      }
+      currentRow.push(item);
     }
   }
 
