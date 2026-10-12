@@ -448,14 +448,18 @@
   display: block;
   width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: calc(100svh - 132px);
+  max-width: 92vw;
+  max-height: min(88vh, calc(100svh - 132px));
   object-fit: contain;
   box-shadow: 0 30px 120px rgba(0, 0, 0, 0.45);
 }
 
 video.viewerImage {
-  width: min(100%, 1440px);
+  max-width: 92vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .viewerTitle {

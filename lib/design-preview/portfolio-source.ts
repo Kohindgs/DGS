@@ -62,6 +62,16 @@ export type PortfolioItem = PortfolioImageItem | PortfolioVideoItem;
 
 const portfolioMedia = portfolioMediaRaw as { items: PortfolioItem[] };
 
+const SAI_VIDEO_IDS = [
+  "shirdi-sai-vachaan-5",
+  "shirdi-sai-vaani-derr",
+  "shirdi-sai-vaani-choothne-ka-darr",
+  "shirdi-sai-vishwas",
+  "shirdi-sai-prarthana",
+  "shirdi-sai-suno-sai-ko",
+  "shirdi-sai-dham-intro"
+];
+
 const NEW_AI_VIDEO_IDS = [
   // 1. Hyundai (3)
   "hyundai-creta-1",
@@ -96,21 +106,29 @@ function orderPortfolioMedia(items: PortfolioItem[]) {
     if (v) orderedAiVideos.push(v);
   }
 
-  // 5: Existing video work (media1..media6)
+  // 2: Shirdi Se Sai mythological AI work (7)
+  const orderedSaiVideos: PortfolioItem[] = [];
+  for (const id of SAI_VIDEO_IDS) {
+    const v = itemMap.get(id);
+    if (v) orderedSaiVideos.push(v);
+  }
+
+  // 3: Existing video work (media1..media6)
   const existingVideos = items.filter((item) => /^media\d+$/i.test(item.id));
 
-  // 6: Other new visual media (picture\d+)
+  // 4: Other new visual media (picture\d+)
   const newPictures = items.filter((item) => /^picture\d+$/i.test(item.id));
 
-  // 7: Remaining legacy portfolio items
+  // 5: Remaining legacy portfolio items
   const processedIds = new Set([
     ...NEW_AI_VIDEO_IDS,
+    ...SAI_VIDEO_IDS,
     ...existingVideos.map((i) => i.id),
     ...newPictures.map((i) => i.id),
   ]);
   const remaining = items.filter((item) => !processedIds.has(item.id));
 
-  return [...orderedAiVideos, ...existingVideos, ...newPictures, ...remaining];
+  return [...orderedAiVideos, ...orderedSaiVideos, ...existingVideos, ...newPictures, ...remaining];
 }
 
 function readPortfolioHero() {

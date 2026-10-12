@@ -62,12 +62,15 @@ body {
 
 .dgs-wp-mirror-inner video.thumb-video,
 .dgs-wp-mirror-inner .gallery-item video,
-.dgs-wp-mirror-inner .case-study-item video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: #0a0a0a;
+.dgs-wp-mirror-inner .case-study-item video,
+.gallery-item video,
+.case-study-item video {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #050505 !important;
 }
 
 /* Live WP JS adds .is-ready on the video; extracted boot also marks .video-ready on the card. */
@@ -1009,4 +1012,70 @@ body {
 
 .dgs-wp-mirror-inner .dgs-faq-item.active .dgs-faq-toggle {
   transform: rotate(45deg) !important;
+}
+
+/* =====================================================
+   DGS ZERO-CROP PORTFOLIO & RESPONSIVE ASPECT RATIO RULES
+   Source frame is authority: object-fit: contain, no forced crop
+===================================================== */
+.gallery-item,
+.case-study-item {
+  background: #050505 !important;
+  overflow: hidden !important;
+}
+
+.gallery-item:not(.wide-item),
+.case-study-item:not(.wide-item) {
+  aspect-ratio: 9/16 !important;
+}
+
+.gallery-item.wide-item,
+.case-study-item.wide-item {
+  aspect-ratio: 16/9 !important;
+}
+
+.gallery-item video,
+.case-study-item video,
+.thumb-video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #050505 !important;
+}
+
+.portfolio-lightbox-content {
+  width: min(92vw, 1440px) !important;
+  max-width: 92vw !important;
+  height: min(88vh, calc(100dvh - 80px)) !important;
+  max-height: 88vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: auto !important;
+  overflow: hidden !important;
+}
+
+#lightbox-player {
+  max-width: 92vw !important;
+  max-height: 88vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #000 !important;
+}
+
+#lightbox-player.is-portrait {
+  max-height: 88vh !important;
+  height: auto !important;
+  width: auto !important;
+  aspect-ratio: 9 / 16 !important;
+}
+
+#lightbox-player.is-landscape {
+  max-width: 92vw !important;
+  width: auto !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
 }

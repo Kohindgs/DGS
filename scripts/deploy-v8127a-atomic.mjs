@@ -89,11 +89,15 @@ async function main() {
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 "${tarPath}" u188101251@147.93.100.126:/home/u188101251/production-app/tmp/${tarName}`);
   console.log("✓ Uploaded archive to VPS tmp directory");
 
-  console.log("Syncing updated page mirrors to shared/data on VPS...");
+  console.log("Syncing updated page mirrors and portfolio data to shared/data on VPS...");
+  execSync(`ssh -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -p 65002 u188101251@147.93.100.126 "mkdir -p /home/u188101251/production-app/shared/data/wordpress/mirrors/pages /home/u188101251/production-app/shared/data/wordpress/content /home/u188101251/production-app/shared/data/portfolio /home/u188101251/production-app/shared/data/design-preview"`);
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/mirrors/pages/services__ai-video-production-agency.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/services__ai-video-production-agency.json`);
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/mirrors/pages/ai-production-videos-google-ads-landing-page.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/ai-production-videos-google-ads-landing-page.json`);
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/mirrors/pages/services__ai-production-dubai-page.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/services__ai-production-dubai-page.json`);
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/content/page-best-digital-marketing-agency-in-mumbai.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/content/page-best-digital-marketing-agency-in-mumbai.json`);
-  console.log("✓ Synced page mirrors to shared storage");
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/portfolio/homepage-gallery.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/portfolio/homepage-gallery.json`);
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/design-preview/portfolio-media.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/design-preview/portfolio-media.json`);
+  console.log("✓ Synced page mirrors and portfolio data to shared storage");
 
   // 7. Execute atomic release activation on VPS
   console.log("Executing atomic release activation with guards on VPS...");
