@@ -269,6 +269,14 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
                         <span>{itemCountLabel}</span>
                       </span>
                     </button>
+                    {hasHumanReadableTitle(item.title) ? (
+                      <div className={styles.workCaption}>
+                        <h3 className={styles.workTitle}>{item.title}</h3>
+                        {isVideo && item.alt ? (
+                          <span className={styles.workCategory}>{item.alt}</span>
+                        ) : null}
+                      </div>
+                    ) : null}
                   </article>
                 );
               })}

@@ -132,6 +132,13 @@ export function serviceSchema(input: {
   providerId: string;
   serviceType?: string;
   areaServed?: string | string[];
+  hasOfferCatalog?: {
+    name: string;
+    itemListElement: Array<{
+      name: string;
+      description?: string;
+    }>;
+  };
 }) {
   const url = absoluteUrl(input.path);
   return {
@@ -148,6 +155,22 @@ export function serviceSchema(input: {
           areaServed: Array.isArray(input.areaServed)
             ? input.areaServed.map((a) => cleanSchemaText(a))
             : cleanSchemaText(input.areaServed),
+        }
+      : {}),
+    ...(input.hasOfferCatalog
+      ? {
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: cleanSchemaText(input.hasOfferCatalog.name),
+            itemListElement: input.hasOfferCatalog.itemListElement.map((item) => ({
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: cleanSchemaText(item.name),
+                ...(item.description ? { description: cleanSchemaText(item.description) } : {}),
+              },
+            })),
+          },
         }
       : {}),
   };

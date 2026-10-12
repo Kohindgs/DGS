@@ -57,13 +57,22 @@ async function main() {
     "DGS_ADMIN_PASSWORD",
     "DGS_ADMIN_SESSION_SECRET",
     "DGS_ENCRYPTION_KEY",
-    "NEXT_PUBLIC_SITE_URL"
+    "NEXT_PUBLIC_SITE_URL",
+    "DGS_CMS_MEDIA_DIR"
   ];
 
   for (const k of requiredKeys) {
     if (env[k] === undefined || env[k] === null || env[k].trim().length === 0) {
       missing.push(k);
     }
+  }
+
+  // Guard against atomic release fallback for media storage
+  if (env["DGS_CMS_MEDIA_DIR"] && env["DGS_CMS_MEDIA_DIR"].includes("/releases/")) {
+    invalid.push({
+      name: "DGS_CMS_MEDIA_DIR",
+      reason: `Must point to persistent shared storage, not an atomic release directory! Found: ${env["DGS_CMS_MEDIA_DIR"]}`
+    });
   }
 
   // 2. Indexing Hard Fail Guard

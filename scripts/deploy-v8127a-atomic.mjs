@@ -19,11 +19,9 @@ async function main() {
   execSync("npm run typecheck", { stdio: "inherit" });
   console.log("✓ TypeScript verification passed");
 
-  if (!fs.existsSync(path.join(ROOT, ".next"))) {
-    console.log("Building Next.js application for production...");
-    execSync("npm run build", { stdio: "inherit" });
-    console.log("✓ Production build completed");
-  }
+  console.log("Building Next.js application for production...");
+  execSync("npm run build", { stdio: "inherit" });
+  console.log("✓ Production build completed");
 
   // 3. Create unique build ID
   const buildId = crypto.randomBytes(8).toString("hex");
@@ -83,6 +81,11 @@ async function main() {
   console.log("Uploading release archive to VPS...");
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 "${tarPath}" u188101251@147.93.100.126:/home/u188101251/production-app/tmp/${tarName}`);
   console.log("✓ Uploaded archive to VPS tmp directory");
+
+  console.log("Syncing updated page mirrors to shared/data on VPS...");
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/mirrors/pages/services__ai-video-production-agency.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/services__ai-video-production-agency.json`);
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/mirrors/pages/ai-production-videos-google-ads-landing-page.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/ai-production-videos-google-ads-landing-page.json`);
+  console.log("✓ Synced page mirrors to shared storage");
 
   // 7. Execute atomic release activation on VPS
   console.log("Executing atomic release activation with guards on VPS...");

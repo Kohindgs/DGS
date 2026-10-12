@@ -58,6 +58,7 @@ export function buildRouteSchemas(input: {
   );
 
   if (route.wordpressType === "service" || path === "/aeo-dubai/") {
+    const isAiVideoAgency = path === "/services/ai-video-production-agency/";
     schemas.push(
       serviceSchema({
         name: seoOverride?.serviceName || pageTitle,
@@ -66,6 +67,31 @@ export function buildRouteSchemas(input: {
         providerId: ORGANIZATION_ID,
         serviceType: seoOverride?.serviceType,
         areaServed: seoOverride?.areaServed,
+        ...(isAiVideoAgency
+          ? {
+              hasOfferCatalog: {
+                name: "Industry AI Video Production Services",
+                itemListElement: [
+                  {
+                    name: "Automotive & Automobile Sales AI Video Production",
+                    description: "AI video production for car launches, vehicle feature explainers, and dealership marketing campaigns.",
+                  },
+                  {
+                    name: "EdTech & Education AI Video Production",
+                    description: "Curriculum animations, chapter explainers, and multilingual e-learning video production.",
+                  },
+                  {
+                    name: "FMCG & Consumer Brands AI Video Production",
+                    description: "Packaged goods product videos, food commercials, and multilingual regional advertising.",
+                  },
+                  {
+                    name: "Manufacturing & Industrial AI Video Production",
+                    description: "Machinery explainers, technical process walkthroughs, and B2B sales presentation videos.",
+                  },
+                ],
+              },
+            }
+          : {}),
       }),
     );
   }
