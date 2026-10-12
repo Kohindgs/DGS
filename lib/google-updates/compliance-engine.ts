@@ -594,8 +594,8 @@ export async function runGoogleUpdateAssessment(
             `SELECT
                SUM(clicks) as total_clicks,
                SUM(impressions) as total_impressions,
-               AVG(ctr) as avg_ctr,
-               AVG(position) as avg_pos
+               CASE WHEN SUM(impressions) > 0 THEN (SUM(clicks) / SUM(impressions)) ELSE 0 END as avg_ctr,
+               CASE WHEN SUM(impressions) > 0 THEN (SUM(position * impressions) / SUM(impressions)) ELSE 0 END as avg_pos
              FROM gsc_daily_metrics
              WHERE metric_date BETWEEN ? AND ?`,
             [start, end]
@@ -743,7 +743,7 @@ export async function runGoogleUpdateAssessment(
            page_url,
            SUM(clicks) as total_clicks,
            SUM(impressions) as total_impressions,
-           AVG(position) as avg_pos
+           CASE WHEN SUM(impressions) > 0 THEN (SUM(position * impressions) / SUM(impressions)) ELSE 0 END as avg_pos
          FROM gsc_page_query_metrics
          GROUP BY page_url
          ORDER BY total_impressions DESC

@@ -196,33 +196,51 @@ async function getDashboardData() {
       }
       if (stats.gscConnected) {
         try {
-          // Strictly query current 28-day window metrics
-          const { rows } = await cmsQuery<{
-            total_clicks: number;
-            total_impressions: number;
-            avg_ctr: number;
-            avg_position: number;
-            last_date: string;
-          }>(`
-            SELECT 
-              SUM(clicks) as total_clicks,
-              SUM(impressions) as total_impressions,
-              CASE WHEN SUM(impressions) > 0 THEN (SUM(clicks) / SUM(impressions)) ELSE 0 END as avg_ctr,
-              AVG(position) as avg_position,
-              MAX(metric_date) as last_date
-            FROM (
-              SELECT clicks, impressions, position, metric_date
-              FROM gsc_daily_metrics
-              ORDER BY metric_date DESC
-              LIMIT 28
-            ) as recent_28d
-          `);
-          if (rows && rows[0]) {
-            stats.gscClicks = Number(rows[0].total_clicks ?? 0);
-            stats.gscImpressions = Number(rows[0].total_impressions ?? 0);
-            stats.gscCtr = Number((Number(rows[0].avg_ctr || 0) * 100).toFixed(2));
-            stats.gscPosition = Number(Number(rows[0].avg_position || 0).toFixed(1));
-            if (!stats.gscLastSync) stats.gscLastSync = formatSyncDate(rows[0].last_date);
+          // Prefer authoritative GSC dimensionless aggregate from latest completed sync run
+          const { rows: syncRuns } = await cmsQuery<any>(
+            `SELECT clicks, impressions, ctr, position, completed_at, window_end
+             FROM gsc_sync_runs
+             WHERE status = 'completed' AND impressions > 0
+             ORDER BY completed_at DESC LIMIT 1`
+          );
+
+          if (syncRuns && syncRuns.length > 0) {
+            stats.gscClicks = Number(syncRuns[0].clicks ?? 0);
+            stats.gscImpressions = Number(syncRuns[0].impressions ?? 0);
+            stats.gscCtr = Number((Number(syncRuns[0].ctr || 0) * 100).toFixed(2));
+            stats.gscPosition = Number(Number(syncRuns[0].position || 0).toFixed(1));
+            if (!stats.gscLastSync && syncRuns[0].window_end) {
+              stats.gscLastSync = formatSyncDate(syncRuns[0].window_end);
+            }
+          } else {
+            // Fallback: strictly calculate true aggregate CTR and impression-weighted position from recent 28 daily records
+            const { rows } = await cmsQuery<{
+              total_clicks: number;
+              total_impressions: number;
+              avg_ctr: number;
+              avg_position: number;
+              last_date: string;
+            }>(`
+              SELECT 
+                SUM(clicks) as total_clicks,
+                SUM(impressions) as total_impressions,
+                CASE WHEN SUM(impressions) > 0 THEN (SUM(clicks) / SUM(impressions)) ELSE 0 END as avg_ctr,
+                CASE WHEN SUM(impressions) > 0 THEN (SUM(position * impressions) / SUM(impressions)) ELSE 0 END as avg_position,
+                MAX(metric_date) as last_date
+              FROM (
+                SELECT clicks, impressions, position, metric_date
+                FROM gsc_daily_metrics
+                ORDER BY metric_date DESC
+                LIMIT 28
+              ) as recent_28d
+            `);
+            if (rows && rows[0]) {
+              stats.gscClicks = Number(rows[0].total_clicks ?? 0);
+              stats.gscImpressions = Number(rows[0].total_impressions ?? 0);
+              stats.gscCtr = Number((Number(rows[0].avg_ctr || 0) * 100).toFixed(2));
+              stats.gscPosition = Number(Number(rows[0].avg_position || 0).toFixed(1));
+              if (!stats.gscLastSync) stats.gscLastSync = formatSyncDate(rows[0].last_date);
+            }
           }
         } catch {}
       }

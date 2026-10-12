@@ -33,8 +33,8 @@ async function main() {
       DATE_FORMAT(metric_date, '%Y-%m-%d') as date, 
       SUM(clicks) as clicks, 
       SUM(impressions) as impressions, 
-      ROUND(AVG(ctr) * 100, 2) as avg_ctr_pct,
-      ROUND(AVG(position), 1) as avg_pos, 
+      ROUND((SUM(clicks) / NULLIF(SUM(impressions), 0)) * 100, 2) as avg_ctr_pct,
+      ROUND(SUM(position * impressions) / NULLIF(SUM(impressions), 0), 1) as avg_pos, 
       COUNT(*) as query_count 
     FROM gsc_daily_metrics 
     GROUP BY metric_date 

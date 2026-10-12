@@ -729,6 +729,7 @@ export async function syncGoogleData(): Promise<{
 
     let sumDailyClicks = 0;
     let sumDailyImpressions = 0;
+    let sumDailyPosWeighted = 0;
 
     if (dailyRes.ok) {
       const dailyData = await dailyRes.json();
@@ -743,6 +744,7 @@ export async function syncGoogleData(): Promise<{
         if (date >= windows.currentStart && date <= windows.currentEnd) {
           sumDailyClicks += clicks;
           sumDailyImpressions += impressions;
+          sumDailyPosWeighted += (position * impressions);
         }
 
         await cmsExecute(
@@ -760,6 +762,7 @@ export async function syncGoogleData(): Promise<{
       aggregateImpressions = sumDailyImpressions;
       if (aggregateImpressions > 0) {
         aggregateCtr = aggregateClicks / aggregateImpressions;
+        aggregatePos = Number((sumDailyPosWeighted / aggregateImpressions).toFixed(1));
       }
     }
 
@@ -1552,13 +1555,16 @@ export async function getGscDashboardMetrics(days: number = 28) {
       avgCtr = Number((Number(syncRuns[0].ctr || 0) * 100).toFixed(2));
       avgPos = Number(Number(syncRuns[0].position || 0).toFixed(1));
     } else {
-      let sumPos = 0;
+      let sumPosWeighted = 0;
       for (const d of daily as any[]) {
-        totalClicks += Number(d.clicks || 0);
-        totalImpressions += Number(d.impressions || 0);
-        sumPos += Number(d.position || 0);
+        const c = Number(d.clicks || 0);
+        const imp = Number(d.impressions || 0);
+        const pos = Number(d.position || 0);
+        totalClicks += c;
+        totalImpressions += imp;
+        sumPosWeighted += (pos * imp);
       }
-      avgPos = daily.length > 0 ? Number((sumPos / daily.length).toFixed(1)) : 0;
+      avgPos = totalImpressions > 0 ? Number((sumPosWeighted / totalImpressions).toFixed(1)) : 0;
       avgCtr = totalImpressions > 0 ? Number(((totalClicks / totalImpressions) * 100).toFixed(2)) : 0;
     }
 

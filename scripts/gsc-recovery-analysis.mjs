@@ -98,7 +98,7 @@ async function main() {
       SELECT 
         SUM(clicks) as clicks,
         SUM(impressions) as impressions,
-        AVG(position) as avg_position,
+        SUM(position * impressions) / NULLIF(SUM(impressions), 0) as avg_position,
         SUM(clicks) / NULLIF(SUM(impressions), 0) as ctr
       FROM gsc_daily_metrics
       WHERE metric_date BETWEEN ? AND ?
