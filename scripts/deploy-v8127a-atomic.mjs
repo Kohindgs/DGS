@@ -85,6 +85,7 @@ async function main() {
   console.log("Syncing updated page mirrors to shared/data on VPS...");
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/mirrors/pages/services__ai-video-production-agency.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/services__ai-video-production-agency.json`);
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/mirrors/pages/ai-production-videos-google-ads-landing-page.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/ai-production-videos-google-ads-landing-page.json`);
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/content/page-best-digital-marketing-agency-in-mumbai.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/content/page-best-digital-marketing-agency-in-mumbai.json`);
   console.log("✓ Synced page mirrors to shared storage");
 
   // 7. Execute atomic release activation on VPS
