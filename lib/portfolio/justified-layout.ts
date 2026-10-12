@@ -1,5 +1,5 @@
 export type JustifiedItem = {
-  id: number;
+  id: number | string;
   width: number;
   height: number;
 };

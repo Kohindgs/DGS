@@ -2,6 +2,42 @@
   "galleryId": 63155,
   "items": [
     {
+      "id": "hyundai-creta-1",
+      "title": "Hyundai Creta — Feature & Technology Explainer",
+      "alt": "Hyundai Creta AI Feature & Technology Explainer Video",
+      "thumbnail": "/media/portfolio/posters/hyundai_creta_1_poster.webp",
+      "media": "/media/portfolio/videos/hyundai_creta_1.mp4",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "id": "sundaram-elearning-bal-3-1",
+      "title": "Sundaram E-Learning — Grade 3 Balbharati Interactive Lesson",
+      "alt": "Sundaram E-Learning Grade 3 Balbharati Chapter 3.1 Animation",
+      "thumbnail": "/media/portfolio/posters/sundaram_bal_3_1_poster.webp",
+      "media": "/media/portfolio/videos/sundaram_bal_3_1.mp4",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "id": "clarion-jasmine-atta-hindi",
+      "title": "Clarion Agro — Jasmine Atta Campaign (Hindi)",
+      "alt": "Clarion Agro Jasmine Atta Commercial Hindi Version",
+      "thumbnail": "/media/portfolio/posters/clarion_jasmine_atta_hindi_poster.webp",
+      "media": "/media/portfolio/videos/clarion_jasmine_atta_hindi.mp4",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "id": "better-ceasons-tenant",
+      "title": "Better Ceasons — 1000 Saal Ka Tenant Ad Campaign",
+      "alt": "Better Ceasons 1000 Saal Ka Tenant Commercial",
+      "thumbnail": "/media/portfolio/posters/better_ceasons_tenant_poster.webp",
+      "media": "/media/portfolio/videos/better_ceasons_tenant.mp4",
+      "width": 1920,
+      "height": 1080
+    },
+    {
       "id": 63158,
       "title": "SS_01 (3)",
       "alt": "SS_01 (3)",

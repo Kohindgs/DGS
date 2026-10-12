@@ -1,10 +1,80 @@
-import { mkdir } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { mkdir, access } from "node:fs/promises";
+import { existsSync, constants } from "node:fs";
 import { join, parse } from "node:path";
 import { createHash, randomBytes } from "node:crypto";
 
 export function getCmsMediaRoot(): string {
+  if (process.env.NODE_ENV === "production") {
+    const configured = process.env.DGS_CMS_MEDIA_DIR;
+    if (!configured || !configured.trim()) {
+      throw new Error(
+        "FATAL PRODUCTION CMS ERROR: DGS_CMS_MEDIA_DIR is not configured in production environment! Silently storing media in release directory is forbidden."
+      );
+    }
+    const clean = configured.trim();
+    if (clean.includes("/releases/")) {
+      throw new Error(
+        `FATAL PRODUCTION CMS ERROR: DGS_CMS_MEDIA_DIR (${clean}) points to an atomic release directory! It must point to persistent shared storage (/home/u188101251/production-app/shared/cms-media).`
+      );
+    }
+    return clean;
+  }
   return process.env.DGS_CMS_MEDIA_DIR || join(process.cwd(), "data", "cms-media");
+}
+
+export type MediaHealthStatus = {
+  configured: boolean;
+  writable: boolean;
+  readable: boolean;
+  persistent: boolean;
+  rootPath: string;
+  error?: string;
+};
+
+export async function getCmsMediaHealth(): Promise<MediaHealthStatus> {
+  const isProd = process.env.NODE_ENV === "production";
+  const configured = Boolean(process.env.DGS_CMS_MEDIA_DIR && process.env.DGS_CMS_MEDIA_DIR.trim());
+  let rootPath = "";
+  try {
+    rootPath = getCmsMediaRoot();
+  } catch (err: any) {
+    return {
+      configured: false,
+      writable: false,
+      readable: false,
+      persistent: false,
+      rootPath: process.env.DGS_CMS_MEDIA_DIR || "",
+      error: err?.message,
+    };
+  }
+
+  const persistent = !rootPath.includes("/releases/");
+  let readable = false;
+  let writable = false;
+  let error: string | undefined;
+
+  try {
+    await access(rootPath, constants.R_OK);
+    readable = true;
+  } catch (e: any) {
+    error = `Not readable: ${e.message}`;
+  }
+
+  try {
+    await access(rootPath, constants.W_OK);
+    writable = true;
+  } catch (e: any) {
+    error = error ? `${error} | Not writable: ${e.message}` : `Not writable: ${e.message}`;
+  }
+
+  return {
+    configured: isProd ? configured : true,
+    writable,
+    readable,
+    persistent,
+    rootPath,
+    error,
+  };
 }
 
 export const MEDIA_SUBDIRS = ["uploads", "originals", "thumbnails", "posters", "blogs"] as const;

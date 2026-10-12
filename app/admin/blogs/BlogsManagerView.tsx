@@ -81,6 +81,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
   const [singleDoc, setSingleDoc] = useState<File | null>(null);
   const [singleImages, setSingleImages] = useState<File[]>([]);
   const [singlePreviewBusy, setSinglePreviewBusy] = useState(false);
+  const [singleFeaturedImageName, setSingleFeaturedImageName] = useState<string | null>(null);
   const [singlePreviewData, setSinglePreviewData] = useState<{
     parsed?: {
       title: string;
@@ -92,7 +93,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       seoDescription: string;
       focusKeyword: string;
       matchedImagesCount: number;
-      matchedImages: Array<{ filename: string; confidence: string; score: number }>;
+      matchedImages: Array<{ filename: string; confidence: string; score: number; isFeatured?: boolean }>;
     };
     slugStatus?: "none" | "active" | "trashed";
     existingBlog?: {
@@ -250,7 +251,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
   };
 
   // Single Document Preview & Upload Handlers
-  const runSingleDocPreview = async (docFile: File, imgFiles: File[]) => {
+  const runSingleDocPreview = async (docFile: File, imgFiles: File[], featuredName?: string | null) => {
     setSinglePreviewBusy(true);
     setSinglePreviewData(null);
     try {
@@ -258,6 +259,10 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       fd.append("documents", docFile);
       for (const img of imgFiles) fd.append("images", img);
       fd.append("previewOnly", "true");
+      const targetFeatured = featuredName !== undefined ? featuredName : singleFeaturedImageName;
+      if (targetFeatured) {
+        fd.append("featuredImageName", targetFeatured);
+      }
 
       const res = await fetch("/api/admin/blogs/import?preview=true", {
         method: "POST",
@@ -279,8 +284,9 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
 
   const handleSingleDocChange = (file: File | null) => {
     setSingleDoc(file);
+    setSingleFeaturedImageName(null);
     if (file) {
-      runSingleDocPreview(file, singleImages);
+      runSingleDocPreview(file, singleImages, null);
     } else {
       setSinglePreviewData(null);
     }
@@ -295,6 +301,9 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
       const fd = new FormData();
       fd.append("documents", singleDoc);
       for (const img of singleImages) fd.append("images", img);
+      if (singleFeaturedImageName) {
+        fd.append("featuredImageName", singleFeaturedImageName);
+      }
       if (replaceTrashed) {
         fd.append("replaceTrashed", "true");
       }
@@ -939,10 +948,15 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                               rel="noreferrer"
                               className="dgs-live-link"
                             >
-                              /blogs/{b.slug}/ ↗
+                              /blogs/{b.slug}/ ↗ (Live)
                             </a>
                           ) : (
-                            <span className="dgs-draft-slug">/blogs/{b.slug}/</span>
+                            <span className="dgs-draft-slug">
+                              <code>/blogs/{b.slug}/</code>{" "}
+                              <span style={{ color: "#f59e0b", fontSize: "0.75rem", fontWeight: 700 }}>
+                                [NOT LIVE YET]
+                              </span>
+                            </span>
                           )}
                         </div>
                       </td>
@@ -1027,6 +1041,15 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                             </>
                           ) : (
                             <>
+                              <a
+                                href={`/admin/blogs/${b.id}/preview/`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="dgs-btn-edit"
+                                style={{ textDecoration: "none", display: "inline-flex", alignItems: "center" }}
+                              >
+                                Preview Draft ↗
+                              </a>
                               <button
                                 type="button"
                                 className="dgs-btn-edit"
@@ -1040,7 +1063,7 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                                   className="dgs-btn-publish"
                                   onClick={() => handleQuickPublish(b)}
                                 >
-                                  Publish
+                                  Publish Live Now
                                 </button>
                               )}
                               <button
@@ -1283,11 +1306,82 @@ export function BlogsManagerView({ initialData }: BlogsManagerViewProps) {
                 {/* Matched Images */}
                 {singlePreviewData.parsed.matchedImages && singlePreviewData.parsed.matchedImages.length > 0 && (
                   <div style={{ marginBottom: "20px" }}>
-                    <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#9ca3af", letterSpacing: "0.5px" }}>Matched Images ({singlePreviewData.parsed.matchedImages.length})</span>
-                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "6px" }}>
-                      {singlePreviewData.parsed.matchedImages.map((m, i) => (
-                        <span key={i} className="dgs-matched-tag">🖼️ {m.filename}</span>
-                      ))}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                      <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "#9ca3af", letterSpacing: "0.5px" }}>
+                        Uploaded Images ({singlePreviewData.parsed.matchedImages.length})
+                      </span>
+                      <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>
+                        Click &quot;Set as Featured&quot; to change the primary article image
+                      </span>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "12px", marginTop: "6px" }}>
+                      {singlePreviewData.parsed.matchedImages.map((m, i) => {
+                        const isFeatured = m.isFeatured ?? (i === 0);
+                        const localFile = singleImages.find((f) => f.name === m.filename);
+                        const localBlobUrl = localFile ? URL.createObjectURL(localFile) : null;
+                        return (
+                          <div
+                            key={i}
+                            style={{
+                              background: isFeatured ? "rgba(34, 197, 94, 0.08)" : "rgba(255, 255, 255, 0.04)",
+                              border: isFeatured ? "1.5px solid #22c55e" : "1px solid rgba(255, 255, 255, 0.1)",
+                              borderRadius: "8px",
+                              padding: "10px",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "8px",
+                            }}
+                          >
+                            {localBlobUrl && (
+                              <div style={{ width: "100%", height: "110px", overflow: "hidden", borderRadius: "4px", background: "#000" }}>
+                                <img
+                                  src={localBlobUrl}
+                                  alt={m.filename}
+                                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                />
+                              </div>
+                            )}
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                              <span style={{ fontSize: "0.8rem", color: "#f8fafc", fontWeight: 600, wordBreak: "break-all" }}>
+                                {m.filename}
+                              </span>
+                              {isFeatured ? (
+                                <span style={{ background: "#22c55e", color: "#052e16", fontSize: "0.7rem", fontWeight: 700, padding: "2px 6px", borderRadius: "4px" }}>
+                                  ★ Featured
+                                </span>
+                              ) : (
+                                <span style={{ background: "rgba(255,255,255,0.1)", color: "#cbd5e1", fontSize: "0.7rem", padding: "2px 6px", borderRadius: "4px" }}>
+                                  Inline
+                                </span>
+                              )}
+                            </div>
+                            {!isFeatured && (
+                              <button
+                                type="button"
+                                style={{
+                                  marginTop: "auto",
+                                  padding: "4px 8px",
+                                  fontSize: "0.75rem",
+                                  background: "rgba(34, 197, 94, 0.15)",
+                                  color: "#4ade80",
+                                  border: "1px solid rgba(34, 197, 94, 0.3)",
+                                  borderRadius: "4px",
+                                  cursor: "pointer",
+                                  fontWeight: 600,
+                                }}
+                                onClick={() => {
+                                  setSingleFeaturedImageName(m.filename);
+                                  if (singleDoc) {
+                                    runSingleDocPreview(singleDoc, singleImages, m.filename);
+                                  }
+                                }}
+                              >
+                                ★ Set as Featured Image
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}

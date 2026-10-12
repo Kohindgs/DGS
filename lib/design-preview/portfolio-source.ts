@@ -62,13 +62,55 @@ export type PortfolioItem = PortfolioImageItem | PortfolioVideoItem;
 
 const portfolioMedia = portfolioMediaRaw as { items: PortfolioItem[] };
 
-const isNewPortfolioMedia = (item: PortfolioItem) =>
-  /^(picture\d+|media\d+)$/i.test(item.id);
+const NEW_AI_VIDEO_IDS = [
+  // 1. Hyundai (3)
+  "hyundai-creta-1",
+  "hyundai-creta-2",
+  "hyundai-creta-3",
+  // 2. Sundaram E-Learning (8)
+  "sundaram-elearning-bal-3-1",
+  "sundaram-elearning-evs1-ch7",
+  "sundaram-elearning-evs2-ch7",
+  "sundaram-elearning-marathi-13",
+  "sundaram-elearning-maths-ch9",
+  "sundaram-elearning-marathi-eng-3-8",
+  "sundaram-elearning-marathi-eng-3-5",
+  "sundaram-elearning-marathi-bhaag-3",
+  // 3. Clarion Agro (2)
+  "clarion-jasmine-atta-hindi",
+  "clarion-jasmine-atta-telugu",
+  // 4. Better Ceasons (4)
+  "better-ceasons-tenant",
+  "better-ceasons-visarjan",
+  "better-ceasons-chaturthi",
+  "better-ceasons-kachra",
+];
 
 function orderPortfolioMedia(items: PortfolioItem[]) {
-  const newMedia = items.filter(isNewPortfolioMedia);
-  const existingMedia = items.filter((item) => !isNewPortfolioMedia(item));
-  return [...newMedia, ...existingMedia];
+  const itemMap = new Map(items.map((item) => [item.id, item]));
+
+  // 1-4: New AI Videos in deterministic client order
+  const orderedAiVideos: PortfolioItem[] = [];
+  for (const id of NEW_AI_VIDEO_IDS) {
+    const v = itemMap.get(id);
+    if (v) orderedAiVideos.push(v);
+  }
+
+  // 5: Existing video work (media1..media6)
+  const existingVideos = items.filter((item) => /^media\d+$/i.test(item.id));
+
+  // 6: Other new visual media (picture\d+)
+  const newPictures = items.filter((item) => /^picture\d+$/i.test(item.id));
+
+  // 7: Remaining legacy portfolio items
+  const processedIds = new Set([
+    ...NEW_AI_VIDEO_IDS,
+    ...existingVideos.map((i) => i.id),
+    ...newPictures.map((i) => i.id),
+  ]);
+  const remaining = items.filter((item) => !processedIds.has(item.id));
+
+  return [...orderedAiVideos, ...existingVideos, ...newPictures, ...remaining];
 }
 
 function readPortfolioHero() {

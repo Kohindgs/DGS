@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
 import { getCurrentCmsUser, hasPermission, logAuditEvent } from "@/lib/cms/auth-db";
 import { isCmsDatabaseConfigured } from "@/lib/cms/db";
-import { getCmsBlogById, publishCmsBlog } from "@/lib/cms/blogs";
+import { getCmsBlogById, publishCmsBlog, revertCmsBlogToReview } from "@/lib/cms/blogs";
 import { evaluatePrePublishGate } from "@/lib/cms/pre-publish-gate";
 import { siteConfig } from "@/lib/seo/site";
+import { verifyPublishedBlogWithRetries } from "@/lib/cms/publish-verification";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -54,7 +55,7 @@ export async function POST(
   revalidatePath("/llms-full.txt");
   revalidatePath("/llms-full.md");
 
-  // 4. Audit Log
+  // 4. Audit Log Successful Publication
   await logAuditEvent({
     user_id: currentUser.id,
     actor_email: currentUser.email,
@@ -73,6 +74,47 @@ export async function POST(
   });
 
   // 5. Automated Post-Publish Verification Pipeline
+  const origin = request.nextUrl.origin || `http://127.0.0.1:${process.env.PORT || 3000}`;
+  const verification = await verifyPublishedBlogWithRetries(
+    publishedBlog.slug,
+    publishedBlog.featured_image_url,
+    origin
+  );
+
+  if (!verification.ok) {
+    // Post-publish verification failed: execute automatic rollback
+    await revertCmsBlogToReview(id, verification.error);
+
+    // Purge caches to remove draft from live site
+    revalidatePath("/blogs/");
+    revalidatePath(`/blogs/${publishedBlog.slug}/`);
+    revalidatePath("/sitemap.xml");
+
+    await logAuditEvent({
+      user_id: currentUser.id,
+      actor_email: currentUser.email,
+      role: currentUser.role,
+      action: "BLOG_POST_PUBLISH_VERIFICATION_FAILED",
+      resource: "blog_post",
+      resource_id: id,
+      summary: `Automated post-publish verification failed for "${publishedBlog.title}" (/blogs/${publishedBlog.slug}/): ${verification.error}. Post automatically rolled back to Review status.`,
+      after_state: {
+        status: "review",
+        reason: verification.error,
+        blogStatus: verification.blogStatus,
+        imageStatus: verification.imageStatus,
+      },
+      status: "failure",
+    });
+
+    return NextResponse.json({
+      ok: false,
+      message: `Post-publish verification failed: ${verification.error}. The post was automatically rolled back to Review status for safety.`,
+      verification,
+      rolledBack: true,
+    }, { status: 502 });
+  }
+
   const liveUrl = `${siteConfig.url}/blogs/${publishedBlog.slug}/`;
   const postPublishVerification = {
     url: liveUrl,
@@ -86,12 +128,15 @@ export async function POST(
     ],
     verifiedChecks: {
       expectedHttp: 200,
+      actualHttp: verification.blogStatus,
+      imageStatus: verification.imageStatus,
       canonical: `${siteConfig.url}/blogs/${publishedBlog.slug}/`,
       schemaGenerated: ["BlogPosting", "BreadcrumbList"],
       datePublished: publishedBlog.published_at,
       dateModified: publishedBlog.updated_at || publishedBlog.published_at,
       sitemapEligible: true,
       inSitemap: true,
+      verifiedAt: verification.verifiedAt,
     },
   };
 

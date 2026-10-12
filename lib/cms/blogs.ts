@@ -916,6 +916,26 @@ export async function publishCmsBlog(id: string) {
   return getCmsBlogById(id);
 }
 
+// 9b. Revert Published Blog to Review Status (Rollback on Verification Failure)
+export async function revertCmsBlogToReview(id: string, reason?: string) {
+  await cmsExecute(
+    `UPDATE blog_posts SET
+      status = 'review',
+      needs_review = 1,
+      updated_at = NOW()
+     WHERE id = ?`,
+    [id]
+  );
+
+  // Disable indexing in seo_metadata
+  await cmsExecute(
+    `UPDATE seo_metadata SET robots_index = 0, updated_at = NOW() WHERE entity_type = 'blog_post' AND entity_id = ?`,
+    [id]
+  );
+
+  return getCmsBlogById(id);
+}
+
 // 10. Schedule Blog for Future Publication
 export async function scheduleCmsBlog(id: string, scheduledFor: string) {
   const targetDate = new Date(scheduledFor);

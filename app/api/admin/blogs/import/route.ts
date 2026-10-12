@@ -107,15 +107,31 @@ export async function POST(request: Request) {
       const parsed = await parseBlogDocx(docBuffer, document.name);
       const slugCheck = await checkBlogSlugAvailability(parsed.slug);
 
-      const previewMatchedImages: Array<{ filename: string; confidence: string; score: number }> = [];
-      for (const img of imageFiles) {
-        const evalResult = evaluateMediaMatch(img.name, parsed.slug, parsed.title);
-        if (evalResult.matched) {
+      const requestedFeatured = (form.get("featuredImageName") as string | null)?.trim();
+      const previewMatchedImages: Array<{ filename: string; confidence: string; score: number; isFeatured: boolean }> = [];
+
+      if (imageFiles.length === 1) {
+        previewMatchedImages.push({
+          filename: imageFiles[0].name,
+          confidence: "EXACT",
+          score: 1.0,
+          isFeatured: true,
+        });
+      } else if (imageFiles.length > 1) {
+        let hasFeatured = false;
+        for (let i = 0; i < imageFiles.length; i++) {
+          const img = imageFiles[i];
+          const isFeatured = requestedFeatured ? img.name === requestedFeatured : i === 0;
+          if (isFeatured) hasFeatured = true;
           previewMatchedImages.push({
             filename: img.name,
-            confidence: evalResult.confidence,
-            score: evalResult.score,
+            confidence: isFeatured ? "EXACT" : "HIGH",
+            score: isFeatured ? 1.0 : 0.8,
+            isFeatured,
           });
+        }
+        if (!hasFeatured && previewMatchedImages.length > 0) {
+          previewMatchedImages[0].isFeatured = true;
         }
       }
 
@@ -294,43 +310,77 @@ export async function POST(request: Request) {
         .map((m) => m[1].replace(/<[^>]+>/g, "").trim())
         .filter(Boolean);
 
-      for (const [origName, asset] of processedMediaByOriginalName.entries()) {
-        const evalResult = evaluateMediaMatch(origName, parsed.slug, parsed.title);
-        if (evalResult.matched) {
-          // EXACT, HIGH, MEDIUM
-          const isFeatured = evalResult.isFeaturedCandidate || /-(featured|hero|cover|banner)\.[^.]+$/i.test(origName);
+      const requestedFeatured = (form.get("featuredImageName") as string | null)?.trim();
+      const isSingleDoc = documents.length === 1;
+
+      if (isSingleDoc) {
+        // Unconditional single doc image assignment
+        const allUploadedMedia = Array.from(processedMediaByOriginalName.entries());
+        let hasFeatured = false;
+
+        for (let i = 0; i < allUploadedMedia.length; i++) {
+          const [origName, asset] = allUploadedMedia[i];
+          const isFeatured = requestedFeatured
+            ? origName === requestedFeatured
+            : allUploadedMedia.length === 1 || i === 0;
+
+          if (isFeatured) hasFeatured = true;
+
           matchedImages.push({
             asset,
             isFeatured,
             originalName: origName,
-            confidence: evalResult.confidence,
-            score: evalResult.score,
-            reason: evalResult.reason,
-          });
-        } else if (evalResult.confidence === "LOW") {
-          lowConfidenceImages.push({
-            assetId: asset.id,
-            filename: origName,
-            url: asset.public_url,
-            confidence: "LOW",
-            score: evalResult.score,
-            reason: evalResult.reason,
-          });
-        } else {
-          unmatchedImages.push({
-            assetId: asset.id,
-            filename: origName,
-            url: asset.public_url,
-            confidence: "UNMATCHED",
-            score: evalResult.score,
-            reason: evalResult.reason,
+            confidence: isFeatured ? "EXACT" : "HIGH",
+            score: isFeatured ? 1.0 : 0.8,
+            reason: isFeatured
+              ? (allUploadedMedia.length === 1 ? "Unconditional single upload featured image" : "Designated featured image")
+              : "Supporting inline blog image",
           });
         }
-      }
 
-      // If no image is specifically tagged as featured, pick the first matched
-      if (matchedImages.length > 0 && !matchedImages.some((m) => m.isFeatured)) {
-        matchedImages[0].isFeatured = true;
+        if (!hasFeatured && matchedImages.length > 0) {
+          matchedImages[0].isFeatured = true;
+        }
+      } else {
+        // Multi-doc bulk upload uses filename confidence matching
+        for (const [origName, asset] of processedMediaByOriginalName.entries()) {
+          const evalResult = evaluateMediaMatch(origName, parsed.slug, parsed.title);
+          if (evalResult.matched) {
+            // EXACT, HIGH, MEDIUM
+            const isFeatured = evalResult.isFeaturedCandidate || /-(featured|hero|cover|banner)\.[^.]+$/i.test(origName);
+            matchedImages.push({
+              asset,
+              isFeatured,
+              originalName: origName,
+              confidence: evalResult.confidence,
+              score: evalResult.score,
+              reason: evalResult.reason,
+            });
+          } else if (evalResult.confidence === "LOW") {
+            lowConfidenceImages.push({
+              assetId: asset.id,
+              filename: origName,
+              url: asset.public_url,
+              confidence: "LOW",
+              score: evalResult.score,
+              reason: evalResult.reason,
+            });
+          } else {
+            unmatchedImages.push({
+              assetId: asset.id,
+              filename: origName,
+              url: asset.public_url,
+              confidence: "UNMATCHED",
+              score: evalResult.score,
+              reason: evalResult.reason,
+            });
+          }
+        }
+
+        // If no image is specifically tagged as featured, pick the first matched
+        if (matchedImages.length > 0 && !matchedImages.some((m) => m.isFeatured)) {
+          matchedImages[0].isFeatured = true;
+        }
       }
 
       // Generate contextual alt text for all matched blog images

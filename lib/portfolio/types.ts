@@ -1,5 +1,5 @@
 export type HomepageGalleryItem = {
-  id: number;
+  id: number | string;
   title: string;
   alt: string;
   thumbnail: string;

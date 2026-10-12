@@ -1,6 +1,414 @@
 {
   "items": [
     {
+      "id": "hyundai-creta-1",
+      "type": "video",
+      "title": "Hyundai Creta \u2014 Feature & Technology Explainer (Part 1)",
+      "alt": "Hyundai Creta AI Feature & Technology Explainer Video 1",
+      "sourceWidth": 3840,
+      "sourceHeight": 2160,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 36.566,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/hyundai_creta_1_poster.avif",
+        "webp": "/media/portfolio/posters/hyundai_creta_1_poster.webp",
+        "fallback": "/media/portfolio/posters/hyundai_creta_1_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/hyundai_creta_1.webm",
+        "mp4": "/media/portfolio/videos/hyundai_creta_1.mp4"
+      }
+    },
+    {
+      "id": "hyundai-creta-2",
+      "type": "video",
+      "title": "Hyundai Creta \u2014 Feature & Technology Explainer (Part 2)",
+      "alt": "Hyundai Creta AI Feature & Technology Explainer Video 2",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 49.433,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/hyundai_creta_2_poster.avif",
+        "webp": "/media/portfolio/posters/hyundai_creta_2_poster.webp",
+        "fallback": "/media/portfolio/posters/hyundai_creta_2_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/hyundai_creta_2.webm",
+        "mp4": "/media/portfolio/videos/hyundai_creta_2.mp4"
+      }
+    },
+    {
+      "id": "hyundai-creta-3",
+      "type": "video",
+      "title": "Hyundai Creta \u2014 Feature & Technology Explainer (Part 3)",
+      "alt": "Hyundai Creta AI Feature & Technology Explainer Video 3",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 117.033,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/hyundai_creta_3_poster.avif",
+        "webp": "/media/portfolio/posters/hyundai_creta_3_poster.webp",
+        "fallback": "/media/portfolio/posters/hyundai_creta_3_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/hyundai_creta_3.webm",
+        "mp4": "/media/portfolio/videos/hyundai_creta_3.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-bal-3-1",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 Grade 3 Balbharati Interactive Lesson",
+      "alt": "Sundaram E-Learning Grade 3 Balbharati Chapter 3.1 Animation",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 177.8,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_bal_3_1_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_bal_3_1_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_bal_3_1_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_bal_3_1.webm",
+        "mp4": "/media/portfolio/videos/sundaram_bal_3_1.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-evs1-ch7",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 Grade 3 Environmental Studies Chapter 7",
+      "alt": "Sundaram E-Learning Grade 3 EVS Chapter 7 Video Lesson",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 734.466667,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_evs1_ch7_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_evs1_ch7_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_evs1_ch7_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_evs1_ch7.webm",
+        "mp4": "/media/portfolio/videos/sundaram_evs1_ch7.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-evs2-ch7",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 Grade 4 Environmental Studies Chapter 7",
+      "alt": "Sundaram E-Learning Grade 4 EVS2 Chapter 7 Video Lesson",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 464.625,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_evs2_ch7_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_evs2_ch7_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_evs2_ch7_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_evs2_ch7.webm",
+        "mp4": "/media/portfolio/videos/sundaram_evs2_ch7.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-marathi-13",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 English Medium Marathi Lesson 13",
+      "alt": "Sundaram E-Learning English Medium Marathi Lesson 13",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 79.6,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_marathi_13_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_marathi_13_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_marathi_13_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_marathi_13.webm",
+        "mp4": "/media/portfolio/videos/sundaram_marathi_13.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-maths-ch9",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 Grade 4 Mathematics Chapter 9",
+      "alt": "Sundaram E-Learning Grade 4 Maths Chapter 9 Animation",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 1033.44,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_maths_ch9_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_maths_ch9_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_maths_ch9_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_maths_ch9.webm",
+        "mp4": "/media/portfolio/videos/sundaram_maths_ch9.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-marathi-eng-3-8",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 Grade 3 English Subject Chapter 3.8",
+      "alt": "Sundaram E-Learning Grade 3 Marathi Medium English 3.8",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 91.433333,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_marathi_eng_3_8_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_marathi_eng_3_8_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_marathi_eng_3_8_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_marathi_eng_3_8.webm",
+        "mp4": "/media/portfolio/videos/sundaram_marathi_eng_3_8.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-marathi-eng-3-5",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 Grade 3 English Subject Chapter 3.5",
+      "alt": "Sundaram E-Learning Grade 3 Marathi Medium English 3.5",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 139.333333,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_marathi_eng_3_5_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_marathi_eng_3_5_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_marathi_eng_3_5_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_marathi_eng_3_5.webm",
+        "mp4": "/media/portfolio/videos/sundaram_marathi_eng_3_5.mp4"
+      }
+    },
+    {
+      "id": "sundaram-elearning-marathi-bhaag-3",
+      "type": "video",
+      "title": "Sundaram E-Learning \u2014 Grade 4 Marathi Bhaag 3",
+      "alt": "Sundaram E-Learning Grade 4 English Marathi Bhaag 3",
+      "sourceWidth": 1920,
+      "sourceHeight": 1080,
+      "width": 1920,
+      "height": 1080,
+      "ratio": 1.7778,
+      "orientation": "landscape",
+      "duration": 108.233333,
+      "poster": {
+        "width": 1920,
+        "height": 1080,
+        "avif": "/media/portfolio/posters/sundaram_marathi_bhaag_3_poster.avif",
+        "webp": "/media/portfolio/posters/sundaram_marathi_bhaag_3_poster.webp",
+        "fallback": "/media/portfolio/posters/sundaram_marathi_bhaag_3_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/sundaram_marathi_bhaag_3.webm",
+        "mp4": "/media/portfolio/videos/sundaram_marathi_bhaag_3.mp4"
+      }
+    },
+    {
+      "id": "clarion-jasmine-atta-hindi",
+      "type": "video",
+      "title": "Clarion Agro \u2014 Jasmine Atta Campaign (Hindi)",
+      "alt": "Clarion Agro Jasmine Atta Commercial Hindi Version",
+      "sourceWidth": 1080,
+      "sourceHeight": 1920,
+      "width": 1080,
+      "height": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "duration": 29.316667,
+      "poster": {
+        "width": 1080,
+        "height": 1920,
+        "avif": "/media/portfolio/posters/clarion_jasmine_atta_hindi_poster.avif",
+        "webp": "/media/portfolio/posters/clarion_jasmine_atta_hindi_poster.webp",
+        "fallback": "/media/portfolio/posters/clarion_jasmine_atta_hindi_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/clarion_jasmine_atta_hindi.webm",
+        "mp4": "/media/portfolio/videos/clarion_jasmine_atta_hindi.mp4"
+      }
+    },
+    {
+      "id": "clarion-jasmine-atta-telugu",
+      "type": "video",
+      "title": "Clarion Agro \u2014 Jasmine Atta Campaign (Telugu)",
+      "alt": "Clarion Agro Jasmine Atta Commercial Telugu Version",
+      "sourceWidth": 1080,
+      "sourceHeight": 1920,
+      "width": 1080,
+      "height": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "duration": 36.116667,
+      "poster": {
+        "width": 1080,
+        "height": 1920,
+        "avif": "/media/portfolio/posters/clarion_jasmine_atta_telugu_poster.avif",
+        "webp": "/media/portfolio/posters/clarion_jasmine_atta_telugu_poster.webp",
+        "fallback": "/media/portfolio/posters/clarion_jasmine_atta_telugu_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/clarion_jasmine_atta_telugu.webm",
+        "mp4": "/media/portfolio/videos/clarion_jasmine_atta_telugu.mp4"
+      }
+    },
+    {
+      "id": "better-ceasons-tenant",
+      "type": "video",
+      "title": "Better Ceasons \u2014 1000 Saal Ka Tenant Ad Campaign",
+      "alt": "Better Ceasons 1000 Saal Ka Tenant Commercial",
+      "sourceWidth": 1080,
+      "sourceHeight": 1920,
+      "width": 1080,
+      "height": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "duration": 30.28,
+      "poster": {
+        "width": 1080,
+        "height": 1920,
+        "avif": "/media/portfolio/posters/better_ceasons_tenant_poster.avif",
+        "webp": "/media/portfolio/posters/better_ceasons_tenant_poster.webp",
+        "fallback": "/media/portfolio/posters/better_ceasons_tenant_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/better_ceasons_tenant.webm",
+        "mp4": "/media/portfolio/videos/better_ceasons_tenant.mp4"
+      }
+    },
+    {
+      "id": "better-ceasons-visarjan",
+      "type": "video",
+      "title": "Better Ceasons \u2014 Ganesh Visarjan Special Campaign",
+      "alt": "Better Ceasons Ganesh Visarjan Brand Film",
+      "sourceWidth": 1080,
+      "sourceHeight": 1920,
+      "width": 1080,
+      "height": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "duration": 36.2,
+      "poster": {
+        "width": 1080,
+        "height": 1920,
+        "avif": "/media/portfolio/posters/better_ceasons_visarjan_poster.avif",
+        "webp": "/media/portfolio/posters/better_ceasons_visarjan_poster.webp",
+        "fallback": "/media/portfolio/posters/better_ceasons_visarjan_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/better_ceasons_visarjan.webm",
+        "mp4": "/media/portfolio/videos/better_ceasons_visarjan.mp4"
+      }
+    },
+    {
+      "id": "better-ceasons-chaturthi",
+      "type": "video",
+      "title": "Better Ceasons \u2014 Ganesh Chaturthi Festive Commercial",
+      "alt": "Better Ceasons Ganesh Chaturthi Festive Ad",
+      "sourceWidth": 1080,
+      "sourceHeight": 1920,
+      "width": 1080,
+      "height": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "duration": 19.916,
+      "poster": {
+        "width": 1080,
+        "height": 1920,
+        "avif": "/media/portfolio/posters/better_ceasons_chaturthi_poster.avif",
+        "webp": "/media/portfolio/posters/better_ceasons_chaturthi_poster.webp",
+        "fallback": "/media/portfolio/posters/better_ceasons_chaturthi_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/better_ceasons_chaturthi.webm",
+        "mp4": "/media/portfolio/videos/better_ceasons_chaturthi.mp4"
+      }
+    },
+    {
+      "id": "better-ceasons-kachra",
+      "type": "video",
+      "title": "Better Ceasons \u2014 Kachra Samjha Kya Brand Film",
+      "alt": "Better Ceasons Kachra Samjha Kya Narrative Film",
+      "sourceWidth": 1080,
+      "sourceHeight": 1920,
+      "width": 1080,
+      "height": 1920,
+      "ratio": 0.5625,
+      "orientation": "portrait",
+      "duration": 26.716,
+      "poster": {
+        "width": 1080,
+        "height": 1920,
+        "avif": "/media/portfolio/posters/better_ceasons_kachra_poster.avif",
+        "webp": "/media/portfolio/posters/better_ceasons_kachra_poster.webp",
+        "fallback": "/media/portfolio/posters/better_ceasons_kachra_poster.webp"
+      },
+      "sources": {
+        "webm": "/media/portfolio/videos/better_ceasons_kachra.webm",
+        "mp4": "/media/portfolio/videos/better_ceasons_kachra.mp4"
+      }
+    },
+    {
       "id": "63158",
       "type": "image",
       "title": "SS_01 (3)",
