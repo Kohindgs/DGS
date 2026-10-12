@@ -7,8 +7,13 @@ export const revalidate = 0;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = await getSitemapRoutes();
 
-  return routes.map((r) => ({
-    url: r.canonical,
-    lastModified: r.lastModified,
-  }));
+  return routes.map((r) => {
+    const entry: MetadataRoute.Sitemap[number] = {
+      url: r.canonical,
+    };
+    if (r.lastModified) {
+      entry.lastModified = r.lastModified;
+    }
+    return entry;
+  });
 }

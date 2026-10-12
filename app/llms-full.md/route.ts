@@ -110,7 +110,7 @@ ${careers
 ## Complete Published Insights Inventory (${blogs.length} Articles)
 
 ${blogs
-  .map((b) => `- [${b.title}](${b.canonical}) (Last Updated: ${b.lastModified})`)
+  .map((b) => `- [${b.title}](${b.canonical})${b.lastModified ? ` (Last Updated: ${b.lastModified})` : ""}`)
   .join("\n")}
 
 ---

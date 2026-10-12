@@ -41,7 +41,7 @@ export type PublicRouteManifestItem = {
   includeInSitemap: boolean;
   title: string;
   description: string;
-  lastModified: string;
+  lastModified?: string;
   contentType: ContentType;
   serviceCluster: ServiceCluster;
   market: Market;
@@ -121,22 +121,27 @@ export async function getPublicRouteManifest(forceFresh = false): Promise<Public
     const title = seoOverride?.title || r.title || "";
     const description = seoOverride?.description || r.description || "";
 
-    // Reliable freshness: check hash registry first, then fallback to valid W3C date
+    // Reliable freshness: check hash registry first, then fallback to authentic registry date (omit if unproven)
     const hashEntry = rawHashes[r.path];
-    const lastModified = hashEntry?.lastModified || formatW3CDate(r.modified) || "2026-09-30";
+    const sourceDate = formatW3CDate(r.modified);
+    const lastModified = hashEntry?.lastModified || (sourceDate && sourceDate <= "2026-10-12" ? sourceDate : undefined);
 
-    items.push({
+    const item: PublicRouteManifestItem = {
       path: r.path,
       canonical,
       indexable: isIndexable,
       includeInSitemap,
       title,
       description,
-      lastModified,
       contentType: classifyContentType(r.path),
       serviceCluster: classifyServiceCluster(r.path),
       market: classifyMarket(r.path),
-    });
+    };
+    if (lastModified) {
+      item.lastModified = lastModified;
+    }
+
+    items.push(item);
     seenPaths.add(r.path);
   }
 
@@ -197,25 +202,28 @@ export async function getPublicRouteManifest(forceFresh = false): Promise<Public
 
         const bPath = `/blogs/${cleanSlug}/`;
         const existingIdx = items.findIndex((it) => it.path === bPath);
-        const lastMod = formatW3CDate(blog.updated_at || blog.published_at) || "2026-10-07";
+        const lastMod = formatW3CDate(blog.updated_at || blog.published_at) || undefined;
 
         if (existingIdx !== -1) {
-          items[existingIdx].lastModified = lastMod;
+          if (lastMod) items[existingIdx].lastModified = lastMod;
           items[existingIdx].title = blog.title;
           items[existingIdx].description = blog.excerpt || items[existingIdx].description;
         } else {
-          items.push({
+          const blogItem: PublicRouteManifestItem = {
             path: bPath,
             canonical: `${siteConfig.url}${bPath}`,
             indexable: true,
             includeInSitemap: true,
             title: blog.title,
             description: blog.excerpt || "",
-            lastModified: lastMod,
             contentType: "blog",
             serviceCluster: classifyServiceCluster(cleanSlug),
             market: "GLOBAL",
-          });
+          };
+          if (lastMod) {
+            blogItem.lastModified = lastMod;
+          }
+          items.push(blogItem);
         }
       }
     } catch (cmsErr) {

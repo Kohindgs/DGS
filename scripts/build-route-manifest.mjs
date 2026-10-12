@@ -67,15 +67,9 @@ function getMarket(p) {
   return "GLOBAL";
 }
 
-// Meaningful update milestones in Next.js migration:
-function determineMeaningfulDate(routePath, currentHash, existingEntry) {
-  // If hash is unchanged and we already recorded a validated date >= 2026-09-01, preserve it
-  if (existingEntry && existingEntry.contentHash === currentHash && existingEntry.lastModified >= "2026-09-01") {
-    return existingEntry.lastModified;
-  }
-
-  // Milestones:
-  // 1. Pages updated during October P0 form restoration & pricing fixes
+// Truthful modification date determination:
+function determineMeaningfulDate(routePath, currentHash, existingEntry, r) {
+  // 1. Pages with proven git commit modifications:
   if (
     routePath === "/" ||
     routePath === "/services/ai-video-production-agency/" ||
@@ -86,23 +80,33 @@ function determineMeaningfulDate(routePath, currentHash, existingEntry) {
     return "2026-10-06";
   }
 
-  // 2. Dubai pages updated in commit a592d01
-  if (routePath.includes("dubai")) {
+  // 2. Dubai pages with verified commits in a592d01
+  if (
+    routePath === "/services/dubai-seo/" ||
+    routePath === "/services/ai-production-dubai-page/" ||
+    routePath === "/aeo-dubai/"
+  ) {
     return "2026-10-01";
   }
 
-  // 3. Blog pages restored in commits 9432d7d & f09c36c
-  if (routePath.startsWith("/blogs/")) {
-    return "2026-09-30";
+  // 3. If content hash changed after baseline was recorded: record change date
+  if (existingEntry && existingEntry.contentHash && existingEntry.contentHash !== currentHash) {
+    return new Date().toISOString().slice(0, 10);
   }
 
-  // 4. Core service pages migrated to Next.js in late September
-  if (routePath.startsWith("/services/")) {
-    return "2026-09-29";
+  // 4. Authentic historical modified date from source content registry:
+  if (r && r.modified) {
+    const d = new Date(r.modified);
+    if (!isNaN(d.getTime())) {
+      const iso = d.toISOString().slice(0, 10);
+      if (iso <= "2026-10-12") {
+        return iso;
+      }
+    }
   }
 
-  // 5. Default Next.js release date for migrated static pages
-  return "2026-09-27";
+  // 5. If meaningful date cannot be proven: return null (never fabricate dates!)
+  return null;
 }
 
 const manifestRoutes = [];
@@ -128,27 +132,30 @@ for (const r of rawReg.routes) {
   const currentContentHash = crypto.createHash("sha256").update(hashMaterial).digest("hex").slice(0, 16);
 
   const existingEntry = hashRegistry[r.path];
-  const lastModified = determineMeaningfulDate(r.path, currentContentHash, existingEntry);
+  const lastModified = determineMeaningfulDate(r.path, currentContentHash, existingEntry, r);
 
   hashRegistry[r.path] = {
     contentHash: currentContentHash,
-    lastModified,
+    lastModified: lastModified || null,
     title: r.title || "",
     updatedAt: new Date().toISOString(),
   };
 
-  manifestRoutes.push({
+  const item = {
     path: r.path,
     canonical: canonicalUrl,
     indexable: isIndexable,
     includeInSitemap: inSitemap,
     title: r.title || "",
     description: r.description || "",
-    lastModified,
     contentType: getContentType(r.path),
     serviceCluster: getServiceCluster(r.path),
     market: getMarket(r.path),
-  });
+  };
+  if (lastModified) {
+    item.lastModified = lastModified;
+  }
+  manifestRoutes.push(item);
 }
 
 // Write updated hash registry
