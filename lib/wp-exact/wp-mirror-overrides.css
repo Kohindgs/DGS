@@ -334,6 +334,8 @@
 /* =====================================================
    DGS ZERO-CROP PORTFOLIO — 12-COLUMN MIXED-ASPECT GRID & FULLSCREEN RULES
    Source frame is authority: object-fit: contain, no forced crop
+===================================================== */
+
 /* Persistent Page-Wide Background Globe Layer */
 #global-webgl-background {
   position: fixed !important;
@@ -668,4 +670,136 @@ video:-webkit-full-screen {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* 9. Empty Container Rule — Never leave empty 400px/700px black boxes */
+.content-view:not(.active-view) {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+#portfolio-gallery:empty,
+#mascot-gallery:empty,
+#festival-gallery:empty,
+#mythological-gallery:empty,
+#product-gallery:empty,
+#jewellery-gallery:empty,
+#concept-gallery:empty,
+#tvc-gallery:empty,
+#automobile-gallery:empty,
+#edtech-gallery:empty,
+#fmcg-gallery:empty,
+#commercial-film-gallery:empty,
+#campaign-gallery:empty {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* 10. Load More Button & CTA Section Rules */
+.dgs-load-more-wrap {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: clamp(32px, 4vw, 56px) auto 0 !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+#load-more-btn,
+.dgs-load-more-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 14px 36px !important;
+  border-radius: 9999px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  text-decoration: none !important;
+}
+
+#load-more-btn:hover,
+.dgs-load-more-btn:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-2px) !important;
+  color: #ffffff !important;
+}
+
+.dgs-ai-portfolio-cta {
+  margin-top: clamp(40px, 5vw, 64px) !important;
+  padding: clamp(36px, 5vw, 60px) clamp(20px, 4vw, 40px) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 24px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.dgs-ai-portfolio-cta h3 {
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: clamp(1.4rem, 2.5vw, 2.1rem) !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin: 0 0 14px !important;
+  line-height: 1.25 !important;
+}
+
+.dgs-ai-portfolio-cta p {
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  max-width: 680px !important;
+  margin: 0 auto clamp(24px, 3vw, 32px) !important;
+  line-height: 1.65 !important;
+}
+
+.dgs-ai-cta-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 15px 36px !important;
+  border-radius: 9999px !important;
+  background: linear-gradient(135deg, #00d4ff 0%, #a900ff 100%) !important;
+  color: #ffffff !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-decoration: none !important;
+  box-shadow: 0 6px 24px rgba(169, 0, 255, 0.35) !important;
+  transition: all 0.25s ease !important;
+}
+
+.dgs-ai-cta-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 30px rgba(169, 0, 255, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.dgs-ai-enquiry-anchor {
+  scroll-margin-top: 100px !important;
+}
+
+.thumb-picture,
+.thumb-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #050505 !important;
+  display: block !important;
+}
+
 

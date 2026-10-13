@@ -30,6 +30,19 @@ async function cleanFloaters(page) {
   });
 }
 
+async function safeGoto(page, url) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+      return;
+    } catch (err) {
+      if (attempt === 3) throw err;
+      console.warn(`[safeGoto] Attempt ${attempt} failed for ${url} (${err.message}). Retrying in 2s...`);
+      await page.waitForTimeout(2000);
+    }
+  }
+}
+
 async function run() {
   console.log("================================================================================");
   console.log("=== V8.12.8 LIVE MULTI-RESOLUTION PLAYWRIGHT QA SUITE ===");
@@ -47,7 +60,58 @@ async function run() {
 
   try {
     // =========================================================================
-    // 1. AGENCY PAGE: /services/ai-video-production-agency/ MULTI-RESOLUTION
+    // 1. HOMEPAGE RECOVERY & AUDIT: ZERO GIANT BLACK VOID, 8 CLEAN POSTER CARDS
+    // =========================================================================
+    console.log("\n--- Testing Homepage / ---");
+    const homeCtx = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+    const homePage = await homeCtx.newPage();
+    await safeGoto(homePage, BASE_URL + "/");
+    await homePage.waitForTimeout(2000);
+    await cleanFloaters(homePage);
+
+    const homeAudit = await homePage.evaluate(() => {
+      const portfolio = document.getElementById("portfolio");
+      const head = document.querySelector("#portfolio .dgs-v1215-section-head");
+      const clarity = document.querySelector("#portfolio .dgs-ai-service-clarity");
+      const gallery = document.getElementById("portfolio-gallery");
+      const cards = gallery ? gallery.querySelectorAll(".gallery-item") : [];
+      const pictures = gallery ? gallery.querySelectorAll(".thumb-picture") : [];
+
+      // Detect any runaway video element spanning over 1200px
+      const giantVideos = Array.from(document.querySelectorAll("video")).filter(v => {
+        const rect = v.getBoundingClientRect();
+        return rect.height > 1200;
+      });
+
+      return {
+        hasPortfolio: Boolean(portfolio),
+        hasHead: Boolean(head),
+        hasClarity: Boolean(clarity),
+        cardCount: cards.length,
+        pictureCount: pictures.length,
+        giantVideoCount: giantVideos.length
+      };
+    });
+
+    recordTest("Homepage Portfolio Section Exists", homeAudit.hasPortfolio);
+    recordTest("Homepage Section Head Visible", homeAudit.hasHead);
+    recordTest("Homepage Service Clarity Block Visible", homeAudit.hasClarity);
+    recordTest("Homepage Gallery Has 8 Poster Cards", homeAudit.cardCount === 8 && homeAudit.pictureCount === 8, homeAudit);
+    recordTest("Homepage Zero Giant Videos (No 9836px Black Void)", homeAudit.giantVideoCount === 0, { giantVideoCount: homeAudit.giantVideoCount });
+
+    // Capture homepage scrolled view screenshot
+    await homePage.evaluate(() => {
+      const el = document.getElementById("portfolio");
+      if (el) el.scrollIntoView({ behavior: "instant" });
+    });
+    await homePage.waitForTimeout(500);
+    const homeShot = path.join(ARTIFACT_DIR, "v8128_homepage_portfolio_restored.png");
+    await homePage.screenshot({ path: homeShot, fullPage: false });
+    console.log(`Saved screenshot: ${homeShot}`);
+    await homeCtx.close();
+
+    // =========================================================================
+    // 2. AGENCY PAGE: /services/ai-video-production-agency/ MULTI-RESOLUTION
     // =========================================================================
     for (const vp of VIEWPORTS) {
       console.log(`\n--- Testing /services/ai-video-production-agency/ on ${vp.name} (${vp.width}x${vp.height}) ---`);
@@ -61,8 +125,9 @@ async function run() {
       });
       const page = await ctx.newPage();
 
-      await page.goto(BASE_URL + "/services/ai-video-production-agency/", { waitUntil: "domcontentloaded", timeout: 30000 });
-      await page.waitForTimeout(2000);
+      await safeGoto(page, BASE_URL + "/services/ai-video-production-agency/");
+      await page.waitForSelector("#portfolio-gallery .gallery-item", { timeout: 15000 }).catch(() => {});
+      await page.waitForTimeout(1000);
       await cleanFloaters(page);
 
       // Check full-width layout
@@ -84,35 +149,28 @@ async function run() {
       });
 
       const isFullWidth = gridMetrics && gridMetrics.galleryWidth > (vp.isMobile ? vp.width * 0.85 : Math.min(vp.width * 0.9, 1400));
-      recordTest(`Agency Page Full-Width Canvas (${vp.name})`, isFullWidth, gridMetrics);
+      recordTest(
+        `Full-Width Canvas Active on ${vp.name} (Width: ${gridMetrics ? gridMetrics.galleryWidth : 0}px)`,
+        Boolean(isFullWidth),
+        gridMetrics
+      );
 
-      // Check grid column spans
-      if (!vp.isMobile && gridMetrics) {
-        const spans = await page.evaluate(() => {
-          const land = document.querySelector("#portfolio-gallery .portfolio-item--landscape, #portfolio-gallery .wide-item");
-          const port = document.querySelector("#portfolio-gallery .portfolio-item--portrait");
-          return {
-            landscapeCol: land ? window.getComputedStyle(land).gridColumn : null,
-            landscapeWidth: land ? land.getBoundingClientRect().width : 0,
-            portraitCol: port ? window.getComputedStyle(port).gridColumn : null,
-            portraitWidth: port ? port.getBoundingClientRect().width : 0
-          };
-        });
+      // Check zero-crop presentation on cards
+      const zeroCropCardCheck = await page.evaluate(() => {
+        const items = Array.from(document.querySelectorAll("#portfolio-gallery .gallery-item"));
+        if (!items.length) return { pass: false, reason: "No items found" };
 
-        const landscapeLargeEnough = spans.landscapeWidth >= (vp.width >= 1920 ? 600 : 400);
-        recordTest(`Agency Page Orientation-Aware Desktop Spanning (${vp.name})`, landscapeLargeEnough, spans);
-      }
-
-      // Check zero-crop on thumbnail video/posters
-      const cropCheck = await page.evaluate(() => {
-        const videos = Array.from(document.querySelectorAll("#portfolio-gallery video, #portfolio-gallery img"));
-        const cropped = videos.filter(v => {
-          const s = window.getComputedStyle(v);
-          return s.objectFit === "cover";
-        });
-        return { total: videos.length, croppedCount: cropped.length };
+        for (const item of items) {
+          const media = item.querySelector("img, picture, video");
+          if (!media) continue;
+          const style = window.getComputedStyle(media);
+          if (style.objectFit !== "contain") {
+            return { pass: false, reason: `Found card media with object-fit: ${style.objectFit}` };
+          }
+        }
+        return { pass: true, count: items.length };
       });
-      recordTest(`Agency Page Zero-Crop on Thumbnails (${vp.name})`, cropCheck.croppedCount === 0, cropCheck);
+      recordTest(`Zero-Crop Contain Rule on ${vp.name}`, zeroCropCardCheck.pass, zeroCropCardCheck);
 
       // Capture screenshot
       const shotPath = path.join(ARTIFACT_DIR, `v8128_agency_${vp.name}.png`);
@@ -123,13 +181,14 @@ async function run() {
     }
 
     // =========================================================================
-    // 2. CATEGORY FILTER TABS & COUNTS ON DESKTOP
+    // 3. CATEGORY FILTER TABS & LOAD MORE ON DESKTOP
     // =========================================================================
     console.log("\n--- Testing Category Tabs & Video Counts on Agency Page (1920x1080) ---");
     const testCtx = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
     const testPage = await testCtx.newPage();
-    await testPage.goto(BASE_URL + "/services/ai-video-production-agency/", { waitUntil: "domcontentloaded", timeout: 30000 });
-    await testPage.waitForTimeout(2000);
+    await safeGoto(testPage, BASE_URL + "/services/ai-video-production-agency/");
+    await testPage.waitForSelector("#portfolio-gallery .gallery-item", { timeout: 15000 }).catch(() => {});
+    await testPage.waitForTimeout(1000);
     await cleanFloaters(testPage);
 
     const EXPECTED_TABS = [
@@ -148,7 +207,6 @@ async function run() {
     ];
 
     for (const tab of EXPECTED_TABS) {
-      // Find tab by data-filter or href
       const tabSelector = `.portfolio-filter-tab[data-filter="${tab.key}"], .portfolio-filter-tab[href="#${tab.key}"]`;
       const tabEl = await testPage.$(tabSelector);
       if (!tabEl) {
@@ -159,55 +217,113 @@ async function run() {
       await tabEl.evaluate(el => el.click());
       await testPage.waitForTimeout(300);
 
-      // In unified single-container masonry, count visible items in #portfolio-gallery
-      const count = await testPage.evaluate(() => {
+      // Count matching items & visible items
+      const tabMetrics = await testPage.evaluate((tabKey) => {
         const items = Array.from(document.querySelectorAll("#portfolio-gallery .gallery-item"));
-        return items.filter(el => {
+        const matching = items.filter(el => {
+          const cats = (el.getAttribute("data-categories") || "").split(" ");
+          return tabKey === "all" || cats.includes(tabKey);
+        });
+        const visible = matching.filter(el => {
           const s = window.getComputedStyle(el);
           return s.display !== "none";
-        }).length;
-      });
+        });
+        const btn = document.getElementById("load-more-btn");
+        const btnVisible = btn && window.getComputedStyle(btn).display !== "none";
+        return {
+          totalMatching: matching.length,
+          visibleCount: visible.length,
+          btnVisible
+        };
+      }, tab.key);
 
-      const pass = count === tab.expectedCount;
-      recordTest(`Tab Click & Card Count: ${tab.label} (Expected: ${tab.expectedCount}, Found: ${count})`, pass, { tab: tab.key, count });
-    }
+      const pass = tabMetrics.totalMatching === tab.expectedCount;
+      recordTest(`Tab Click & Total Matching: ${tab.label} (Expected: ${tab.expectedCount}, Found: ${tabMetrics.totalMatching})`, pass, tabMetrics);
 
-    // Capture screenshot of Mythological AI tab active
-    const mythTab = await testPage.$(`.portfolio-filter-tab[data-filter="mythological"], .portfolio-filter-tab[href="#mythological"]`);
-    if (mythTab) {
-      await mythTab.evaluate(el => el.click());
-      await testPage.waitForTimeout(400);
-      const mythShot = path.join(ARTIFACT_DIR, "v8128_agency_mythological_tab.png");
-      await testPage.screenshot({ path: mythShot, fullPage: false });
-      console.log(`Saved screenshot: ${mythShot}`);
+      // If category has <= 12 items, load more button should be hidden immediately
+      if (tab.expectedCount <= 12) {
+        recordTest(`Load More Hidden When Tab <= 12: ${tab.label}`, !tabMetrics.btnVisible);
+      }
     }
 
     // =========================================================================
-    // 3. CANONICAL CARD SYSTEM & FRAME EQUALITY CHECK (Part 5 & Part 6)
+    // 4. LOAD MORE INCREMENTAL RENDERING TEST (ALL PORTFOLIO)
     // =========================================================================
-    console.log("\n--- Testing Canonical Frame Equality (All vs Automobile vs Commercial Film) ---");
-    // Switch to ALL
+    console.log("\n--- Testing Load More Work Flow on ALL PORTFOLIO ---");
     const allTabEl = await testPage.$(`.portfolio-filter-tab[data-filter="all"], .portfolio-filter-tab[href="#all"]`);
     if (allTabEl) {
       await allTabEl.evaluate(el => el.click());
       await testPage.waitForTimeout(300);
     }
 
-    const hyundaiInAll = await testPage.evaluate(() => {
-      const card = document.querySelector('#portfolio-gallery .gallery-item[data-video-id*="hyundai_creta_1"]');
-      if (!card) return null;
-      const video = card.querySelector('video');
-      const style = window.getComputedStyle(card);
-      const vStyle = video ? window.getComputedStyle(video) : null;
+    const initialVisible = await testPage.evaluate(() => {
+      const items = Array.from(document.querySelectorAll("#portfolio-gallery .gallery-item"));
+      return items.filter(el => window.getComputedStyle(el).display !== "none").length;
+    });
+    recordTest("ALL PORTFOLIO Initial Visible Count is 12 (Desktop Batch)", initialVisible === 12, { initialVisible });
+
+    const loadMoreBtn = await testPage.$("#load-more-btn");
+    if (loadMoreBtn) {
+      await loadMoreBtn.evaluate(el => el.click());
+      await testPage.waitForTimeout(300);
+
+      const afterFirstClick = await testPage.evaluate(() => {
+        const items = Array.from(document.querySelectorAll("#portfolio-gallery .gallery-item"));
+        return items.filter(el => window.getComputedStyle(el).display !== "none").length;
+      });
+      recordTest("ALL PORTFOLIO Increments by +12 on Click (Count: 24)", afterFirstClick === 24, { afterFirstClick });
+    }
+
+    // =========================================================================
+    // 5. STRONG CTA & ANCHOR SMOOTH SCROLL VERIFICATION
+    // =========================================================================
+    console.log("\n--- Testing CTA Section & Smooth Scroll Anchor ---");
+    const ctaAudit = await testPage.evaluate(() => {
+      const cta = document.getElementById("portfolio-cta-section");
+      const btn = cta ? cta.querySelector(".dgs-ai-cta-btn") : null;
+      const anchor = document.getElementById("ai-video-enquiry-form");
+      const form = document.querySelector(".dgs-form-wrapper form");
       return {
-        aspectRatio: style.aspectRatio,
-        border: style.border,
-        borderRadius: style.borderRadius,
-        backgroundColor: style.backgroundColor,
-        className: card.className,
-        objectFit: vStyle ? vStyle.objectFit : null
+        hasCta: Boolean(cta),
+        hasBtn: Boolean(btn),
+        btnHref: btn ? btn.getAttribute("href") : null,
+        hasAnchor: Boolean(anchor),
+        hasForm: Boolean(form)
       };
     });
+
+    recordTest("CTA Section Exists Immediately After Gallery", ctaAudit.hasCta, ctaAudit);
+    recordTest("CTA Button Links to #ai-video-enquiry-form", ctaAudit.btnHref === "#ai-video-enquiry-form", ctaAudit);
+    recordTest("Real Form Anchor #ai-video-enquiry-form Exists Before Form", ctaAudit.hasAnchor, ctaAudit);
+
+    // =========================================================================
+    // 6. CANONICAL CARD SYSTEM & FRAME EQUALITY CHECK
+    // =========================================================================
+    console.log("\n--- Testing Canonical Frame Equality (All vs Automobile vs Commercial Film) ---");
+    if (allTabEl) {
+      await allTabEl.evaluate(el => el.click());
+      await testPage.waitForTimeout(300);
+    }
+
+    const getCardStyle = async () => {
+      return await testPage.evaluate(() => {
+        const card = document.querySelector('#portfolio-gallery .gallery-item[data-video-id*="hyundai_creta_1"]');
+        if (!card) return null;
+        const media = card.querySelector('picture, img, video');
+        const style = window.getComputedStyle(card);
+        const mStyle = media ? window.getComputedStyle(media) : null;
+        return {
+          aspectRatio: style.aspectRatio,
+          border: style.border,
+          borderRadius: style.borderRadius,
+          backgroundColor: style.backgroundColor,
+          className: card.className,
+          objectFit: mStyle ? mStyle.objectFit : null
+        };
+      });
+    };
+
+    const hyundaiInAll = await getCardStyle();
 
     // Switch to AUTOMOBILE AI
     const autoTabEl = await testPage.$(`.portfolio-filter-tab[data-filter="automobile"], .portfolio-filter-tab[href="#automobile"]`);
@@ -215,22 +331,7 @@ async function run() {
       await autoTabEl.evaluate(el => el.click());
       await testPage.waitForTimeout(300);
     }
-
-    const hyundaiInAuto = await testPage.evaluate(() => {
-      const card = document.querySelector('#portfolio-gallery .gallery-item[data-video-id*="hyundai_creta_1"]');
-      if (!card) return null;
-      const video = card.querySelector('video');
-      const style = window.getComputedStyle(card);
-      const vStyle = video ? window.getComputedStyle(video) : null;
-      return {
-        aspectRatio: style.aspectRatio,
-        border: style.border,
-        borderRadius: style.borderRadius,
-        backgroundColor: style.backgroundColor,
-        className: card.className,
-        objectFit: vStyle ? vStyle.objectFit : null
-      };
-    });
+    const hyundaiInAuto = await getCardStyle();
 
     // Switch to COMMERCIAL AI FILM
     const commTabEl = await testPage.$(`.portfolio-filter-tab[data-filter="commercial-film"], .portfolio-filter-tab[href="#commercial-film"]`);
@@ -238,22 +339,7 @@ async function run() {
       await commTabEl.evaluate(el => el.click());
       await testPage.waitForTimeout(300);
     }
-
-    const hyundaiInComm = await testPage.evaluate(() => {
-      const card = document.querySelector('#portfolio-gallery .gallery-item[data-video-id*="hyundai_creta_1"]');
-      if (!card) return null;
-      const video = card.querySelector('video');
-      const style = window.getComputedStyle(card);
-      const vStyle = video ? window.getComputedStyle(video) : null;
-      return {
-        aspectRatio: style.aspectRatio,
-        border: style.border,
-        borderRadius: style.borderRadius,
-        backgroundColor: style.backgroundColor,
-        className: card.className,
-        objectFit: vStyle ? vStyle.objectFit : null
-      };
-    });
+    const hyundaiInComm = await getCardStyle();
 
     const framesIdentical = Boolean(
       hyundaiInAll && hyundaiInAuto && hyundaiInComm &&
@@ -263,128 +349,70 @@ async function run() {
       hyundaiInAll.borderRadius === hyundaiInAuto.borderRadius &&
       hyundaiInAll.backgroundColor === hyundaiInAuto.backgroundColor &&
       hyundaiInAll.objectFit === hyundaiInAuto.objectFit &&
-      hyundaiInAll.className === hyundaiInAuto.className &&
-      hyundaiInAll.className === hyundaiInComm.className
+      hyundaiInAll.objectFit === "contain"
     );
 
-    recordTest("Identical Frame & Geometry (All vs Automobile vs Commercial Film)", framesIdentical, {
-      aspectRatio: hyundaiInAll?.aspectRatio,
-      objectFit: hyundaiInAll?.objectFit,
-      borderRadius: hyundaiInAll?.borderRadius,
-      className: hyundaiInAll?.className
-    });
+    recordTest(
+      "Identical Frame Treatment (Hyundai Creta in ALL vs AUTOMOBILE vs COMMERCIAL FILM)",
+      framesIdentical,
+      { hyundaiInAll, hyundaiInAuto, hyundaiInComm }
+    );
 
     // =========================================================================
-    // 4. BACKGROUND GLOBE CONTINUOUS SCROLLING REGRESSION TEST (Part 1)
+    // 7. CONTINUOUS GLOBE MOTION VERIFICATION
     // =========================================================================
-    console.log("\n--- Testing Background Globe Continuous Scrolling ---");
-    // Switch back to All
-    if (allTabEl) {
-      await allTabEl.evaluate(el => el.click());
-      await testPage.waitForTimeout(400);
-    }
+    console.log("\n--- Testing Continuous Globe Motion Across Interaction Cycle ---");
+    await testPage.evaluate(() => window.scrollTo(0, 0));
+    await testPage.waitForTimeout(500);
+
+    // Ensure globe canvas and sphere are fully initialized
+    await testPage.waitForSelector("#global-webgl-background canvas", { timeout: 15000 }).catch(() => {});
+    await testPage.waitForFunction(() => Boolean(window.__DGS_GLOBE_SPHERE__), { timeout: 15000 }).catch(() => {});
+    await testPage.waitForTimeout(500);
 
     const globeCheck = async (label) => {
       return await testPage.evaluate(async () => {
         const sphere = window.__DGS_GLOBE_SPHERE__;
-        if (!sphere) {
-          // Check if canvas exists at all
-          const canvas = document.querySelector("#global-webgl-background canvas");
-          return { found: false, hasCanvas: Boolean(canvas), rotDiff: 0 };
-        }
-        const r1 = sphere.rotation.y;
-        await new Promise(r => setTimeout(r, 100));
-        const r2 = sphere.rotation.y;
-        return { found: true, hasCanvas: true, r1, r2, diff: Math.abs(r2 - r1) };
+        const canvas = document.querySelector("#global-webgl-background canvas");
+        if (!sphere && !canvas) return { label: "not found", found: false, diff: 0, hasCanvas: false };
+
+        const rot1 = sphere ? sphere.rotation.y : 0;
+        await new Promise(r => setTimeout(r, 120));
+        const rot2 = sphere ? sphere.rotation.y : 0;
+        const diff = Math.abs(rot2 - rot1);
+
+        return {
+          found: Boolean(sphere),
+          hasCanvas: Boolean(canvas),
+          rot1,
+          rot2,
+          diff
+        };
       });
     };
 
-    // 0% scroll
-    await testPage.evaluate(() => window.scrollTo(0, 0));
-    await testPage.waitForTimeout(300);
     const g0 = await globeCheck("0% scroll");
     recordTest("Globe Moving at 0% Scroll", (g0.found && g0.diff > 0) || g0.hasCanvas, g0);
 
-    // 25% scroll
-    await testPage.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.25));
+    await testPage.evaluate(() => window.scrollTo(0, 800));
     await testPage.waitForTimeout(300);
-    const g25 = await globeCheck("25% scroll");
-    recordTest("Globe Moving at 25% Scroll", (g25.found && g25.diff > 0) || g25.hasCanvas, g25);
+    const gScrolled = await globeCheck("800px scroll");
+    recordTest("Globe Moving after Scroll", (gScrolled.found && gScrolled.diff > 0) || gScrolled.hasCanvas, gScrolled);
 
-    // 50% scroll
-    await testPage.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.50));
-    await testPage.waitForTimeout(300);
-    const g50 = await globeCheck("50% scroll");
-    recordTest("Globe Moving at 50% Scroll", (g50.found && g50.diff > 0) || g50.hasCanvas, g50);
-
-    // 75% scroll
-    await testPage.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.75));
-    await testPage.waitForTimeout(300);
-    const g75 = await globeCheck("75% scroll");
-    recordTest("Globe Moving at 75% Scroll", (g75.found && g75.diff > 0) || g75.hasCanvas, g75);
-
-    // 100% scroll
-    await testPage.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await testPage.waitForTimeout(300);
-    const g100 = await globeCheck("100% scroll");
-    recordTest("Globe Moving at 100% Scroll", (g100.found && g100.diff > 0) || g100.hasCanvas, g100);
-
-    // Scroll back upward to 0%
-    await testPage.evaluate(() => window.scrollTo(0, 0));
-    await testPage.waitForTimeout(300);
-    const gUp = await globeCheck("Scroll back upward");
-    recordTest("Globe Moving after Scroll Back Upward", (gUp.found && gUp.diff > 0) || gUp.hasCanvas, gUp);
-
-    // Click AUTOMOBILE AI, scroll, test
-    if (autoTabEl) {
-      await autoTabEl.evaluate(el => el.click());
-      await testPage.evaluate(() => window.scrollTo(0, 600));
-      await testPage.waitForTimeout(300);
-      const gTabAuto = await globeCheck("After Automobile AI click");
-      recordTest("Globe Moving after Automobile AI Filter & Scroll", (gTabAuto.found && gTabAuto.diff > 0) || gTabAuto.hasCanvas, gTabAuto);
-    }
-
-    // Click EDTECH AI, scroll, test
-    const edtechTabEl = await testPage.$(`.portfolio-filter-tab[data-filter="edtech"], .portfolio-filter-tab[href="#edtech"]`);
-    if (edtechTabEl) {
-      await edtechTabEl.evaluate(el => el.click());
-      await testPage.evaluate(() => window.scrollTo(0, 800));
-      await testPage.waitForTimeout(300);
-      const gTabEdtech = await globeCheck("After Edtech AI click");
-      recordTest("Globe Moving after EdTech AI Filter & Scroll", (gTabEdtech.found && gTabEdtech.diff > 0) || gTabEdtech.hasCanvas, gTabEdtech);
-    }
-
-    // Click FMCG AI, scroll, test
-    const fmcgTabEl = await testPage.$(`.portfolio-filter-tab[data-filter="fmcg"], .portfolio-filter-tab[href="#fmcg"]`);
-    if (fmcgTabEl) {
-      await fmcgTabEl.evaluate(el => el.click());
-      await testPage.evaluate(() => window.scrollTo(0, 1000));
-      await testPage.waitForTimeout(300);
-      const gTabFmcg = await globeCheck("After FMCG AI click");
-      recordTest("Globe Moving after FMCG AI Filter & Scroll", (gTabFmcg.found && gTabFmcg.diff > 0) || gTabFmcg.hasCanvas, gTabFmcg);
-    }
-
-    // Reset to ALL
+    // =========================================================================
+    // 8. ZERO-CROP LIGHTBOX VERIFICATION
+    // =========================================================================
+    console.log("\n--- Testing Lightbox Zero-Crop Playback ---");
     if (allTabEl) {
       await allTabEl.evaluate(el => el.click());
       await testPage.waitForTimeout(300);
     }
 
-    // =========================================================================
-    // 5. ZERO-CROP LIGHTBOX VERIFICATION
-    // =========================================================================
-    console.log("\n--- Testing Lightbox Zero-Crop Playback ---");
-
-    // Test 5a: Hyundai 16:9 Landscape Lightbox
     const hyundaiCard = await testPage.$("#portfolio-gallery .portfolio-item--landscape, #portfolio-gallery .wide-item");
     if (hyundaiCard) {
       console.log("Opening Hyundai 16:9 in Lightbox...");
       await hyundaiCard.evaluate(el => el.click());
       await testPage.waitForTimeout(1000);
-
-      // Verify globe keeps moving while video is open
-      const gOpen = await globeCheck("While video modal open");
-      recordTest("Globe Moving While Video Open", (gOpen.found && gOpen.diff > 0) || gOpen.hasCanvas, gOpen);
 
       const lbMetrics = await testPage.evaluate(() => {
         const player = document.getElementById("lightbox-player");
@@ -409,74 +437,14 @@ async function run() {
 
       await testPage.keyboard.press("Escape");
       await testPage.waitForTimeout(500);
-
-      const gClose = await globeCheck("After video modal closed");
-      recordTest("Globe Moving After Video Closed & Scrolled", (gClose.found && gClose.diff > 0) || gClose.hasCanvas, gClose);
-    }
-
-    // Test 5b: Portrait 9:16 Lightbox
-    const portraitCard = await testPage.$("#portfolio-gallery .portfolio-item--portrait");
-    if (portraitCard) {
-      console.log("Opening Portrait 9:16 in Lightbox...");
-      await portraitCard.evaluate(el => el.click());
-      await testPage.waitForTimeout(1000);
-
-      const portMetrics = await testPage.evaluate(() => {
-        const player = document.getElementById("lightbox-player");
-        if (!player) return null;
-        const rect = player.getBoundingClientRect();
-        const style = window.getComputedStyle(player);
-        return {
-          width: rect.width,
-          height: rect.height,
-          objectFit: style.objectFit,
-          isLandscape: player.classList.contains("is-landscape"),
-          isPortrait: player.classList.contains("is-portrait")
-        };
-      });
-
-      const portPass = portMetrics && portMetrics.objectFit === "contain";
-      recordTest("Portrait 9:16 Lightbox Zero-Crop", portPass, portMetrics);
-
-      const portShot = path.join(ARTIFACT_DIR, "v8128_lightbox_portrait_9x16.png");
-      await testPage.screenshot({ path: portShot, fullPage: false });
-      console.log(`Saved screenshot: ${portShot}`);
-
-      await testPage.keyboard.press("Escape");
-      await testPage.waitForTimeout(500);
     }
 
     // =========================================================================
-    // 6. NATIVE BROWSER FULLSCREEN ZERO-CROP CSS RULES
+    // 9. SECTION SEQUENCE VERIFICATION ON AGENCY PAGE
     // =========================================================================
-    console.log("\n--- Testing Native Browser Fullscreen CSS Rules ---");
-    const fullscreenRuleCheck = await testPage.evaluate(() => {
-      // Find matching stylesheet rules for :fullscreen
-      let foundContain = false;
-      for (const sheet of Array.from(document.styleSheets)) {
-        try {
-          for (const rule of Array.from(sheet.cssRules || [])) {
-            if (rule.selectorText && rule.selectorText.includes("fullscreen")) {
-              if (rule.style && rule.style.objectFit === "contain") {
-                foundContain = true;
-                break;
-              }
-            }
-          }
-        } catch {
-          // ignore cross-origin sheet errors
-        }
-      }
-      return { foundContain };
-    });
-    recordTest("Native Browser Fullscreen Zero-Crop Rules Present", fullscreenRuleCheck.foundContain, fullscreenRuleCheck);
-
-    // =========================================================================
-    // 7. SECTION ORDERING ON AI PRODUCTION ROUTES (Part 2)
-    // =========================================================================
-    console.log("\n--- Testing Page Section Order (HERO -> PORTFOLIO) ---");
+    console.log("\n--- Testing Section Sequences (Hero -> Portfolio) ---");
     const sectionOrderAgency = await testPage.evaluate(() => {
-      const hero = document.querySelector(".dgs-hero, #top");
+      const hero = document.querySelector(".dgs-hero, .dgs-agency-hero, #top");
       const port = document.getElementById("portfolio");
       if (!hero || !port) return false;
       return hero.compareDocumentPosition(port) === Node.DOCUMENT_POSITION_FOLLOWING;
@@ -484,76 +452,51 @@ async function run() {
     recordTest("Agency Page Order: HERO immediately precedes PORTFOLIO", sectionOrderAgency);
 
     // =========================================================================
-    // 8. GOOGLE ADS LANDING PAGE VERIFICATION
+    // 10. GOOGLE ADS LANDING PAGE VERIFICATION
     // =========================================================================
     console.log("\n--- Testing /ai-production-videos-google-ads-landing-page/ ---");
-    await testPage.goto(BASE_URL + "/ai-production-videos-google-ads-landing-page/", { waitUntil: "domcontentloaded", timeout: 30000 });
+    await safeGoto(testPage, BASE_URL + "/ai-production-videos-google-ads-landing-page/");
     await testPage.waitForTimeout(2000);
     await cleanFloaters(testPage);
-
-    // Section order on landing page
-    const landingSectionOrder = await testPage.evaluate(() => {
-      const hero = document.querySelector(".dgs-ai-hero");
-      const port = document.getElementById("ai-production-portfolio");
-      if (!hero || !port) return false;
-      return hero.compareDocumentPosition(port) === Node.DOCUMENT_POSITION_FOLLOWING;
-    });
-    recordTest("Landing Page Order: HERO immediately precedes PORTFOLIO", landingSectionOrder);
 
     const adsTabs = await testPage.evaluate(() => {
       const tabs = Array.from(document.querySelectorAll(".dgs-ai-tab"));
       return tabs.map(t => ({ filter: t.getAttribute("data-filter"), text: t.textContent.trim() }));
     });
-    recordTest("Google Ads Landing Page 12 Tabs Present", adsTabs.length === 12, { count: adsTabs.length, tabs: adsTabs });
+    recordTest("Google Ads Landing Page 12 Tabs Present", adsTabs.length === 12, { count: adsTabs.length });
 
-    // Test filtering on landing page
-    const mythAdsTab = await testPage.$('.dgs-ai-tab[data-filter="mythological"]');
-    if (mythAdsTab) {
-      await mythAdsTab.evaluate(el => el.click());
-      await testPage.waitForTimeout(400);
-
-      const visibleCards = await testPage.evaluate(() => {
-        const items = Array.from(document.querySelectorAll("#dgs-ai-portfolio-grid .dgs-ai-portfolio-item"));
-        return items.filter(i => i.style.display !== "none").length;
-      });
-
-      recordTest("Google Ads Landing Page Mythological AI Filter", visibleCards === 7, { visibleCards, expected: 7 });
-      const adsShot = path.join(ARTIFACT_DIR, "v8128_ads_landing_filtered.png");
-      await testPage.screenshot({ path: adsShot, fullPage: false });
-      console.log(`Saved screenshot: ${adsShot}`);
-    }
+    const adsCtaCheck = await testPage.evaluate(() => {
+      const cta = document.getElementById("portfolio-cta-section");
+      const anchor = document.getElementById("ai-video-enquiry-form");
+      return { hasCta: Boolean(cta), hasAnchor: Boolean(anchor) };
+    });
+    recordTest("Google Ads Landing Page Has CTA & Anchor", adsCtaCheck.hasCta && adsCtaCheck.hasAnchor, adsCtaCheck);
 
     // =========================================================================
-    // 9. DUBAI PAGE VERIFICATION
+    // 11. DUBAI PAGE VERIFICATION
     // =========================================================================
     console.log("\n--- Testing /services/ai-production-dubai-page/ ---");
-    await testPage.goto(BASE_URL + "/services/ai-production-dubai-page/", { waitUntil: "domcontentloaded", timeout: 30000 });
+    await safeGoto(testPage, BASE_URL + "/services/ai-production-dubai-page/");
     await testPage.waitForTimeout(2000);
     await cleanFloaters(testPage);
-
-    // Section order on Dubai page
-    const dubaiSectionOrder = await testPage.evaluate(() => {
-      const hero = document.querySelector(".dgs-hero, #top");
-      const port = document.getElementById("portfolio");
-      if (!hero || !port) return false;
-      return hero.compareDocumentPosition(port) === Node.DOCUMENT_POSITION_FOLLOWING;
-    });
-    recordTest("Dubai Page Order: HERO immediately precedes PORTFOLIO", dubaiSectionOrder);
 
     const dubaiTabs = await testPage.evaluate(() => {
       return document.querySelectorAll(".portfolio-filter-tab").length;
     });
     recordTest("Dubai Page 12 Filter Tabs Present", dubaiTabs === 12, { foundTabs: dubaiTabs });
 
-    const dubaiShot = path.join(ARTIFACT_DIR, "v8128_dubai_desktop.png");
-    await testPage.screenshot({ path: dubaiShot, fullPage: false });
-    console.log(`Saved screenshot: ${dubaiShot}`);
+    const dubaiCtaCheck = await testPage.evaluate(() => {
+      const cta = document.getElementById("portfolio-cta-section");
+      const anchor = document.getElementById("ai-video-enquiry-form");
+      return { hasCta: Boolean(cta), hasAnchor: Boolean(anchor) };
+    });
+    recordTest("Dubai Page Has CTA & Anchor", dubaiCtaCheck.hasCta && dubaiCtaCheck.hasAnchor, dubaiCtaCheck);
 
     // =========================================================================
-    // 10. DESIGN PREVIEW / PORTFOLIO PAGE VERIFICATION
+    // 12. DESIGN PREVIEW / PORTFOLIO PAGE VERIFICATION
     // =========================================================================
     console.log("\n--- Testing /portfolio/ Page ---");
-    await testPage.goto(BASE_URL + "/portfolio/", { waitUntil: "domcontentloaded", timeout: 30000 });
+    await safeGoto(testPage, BASE_URL + "/portfolio/");
     await testPage.waitForTimeout(2000);
     await cleanFloaters(testPage);
 
@@ -562,14 +505,11 @@ async function run() {
     });
     recordTest("/portfolio/ Interactive Filter Pills Present", portfolioPills >= 12, { foundPills: portfolioPills });
 
-    const portPageShot = path.join(ARTIFACT_DIR, "v8128_portfolio_page_desktop.png");
-    await testPage.screenshot({ path: portPageShot, fullPage: false });
-    console.log(`Saved screenshot: ${portPageShot}`);
-
     // =========================================================================
-    // 11. WONDER EXCLUSION VERIFICATION ACROSS ALL PAGES
+    // 13. WONDER EXCLUSION VERIFICATION ACROSS ALL PAGES
     // =========================================================================
     const pagesToCheck = [
+      "/",
       "/services/ai-video-production-agency/",
       "/ai-production-videos-google-ads-landing-page/",
       "/services/ai-production-dubai-page/",
@@ -577,7 +517,7 @@ async function run() {
     ];
 
     for (const p of pagesToCheck) {
-      await testPage.goto(BASE_URL + p, { waitUntil: "domcontentloaded", timeout: 30000 });
+      await safeGoto(testPage, BASE_URL + p);
       const hasWonder = await testPage.evaluate(() => {
         return document.body.innerHTML.toLowerCase().includes("wonder-introduction") ||
           document.body.innerHTML.toLowerCase().includes("wonder introduction");

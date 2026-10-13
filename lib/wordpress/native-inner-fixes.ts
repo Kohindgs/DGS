@@ -189,7 +189,7 @@ export function replaceEnviraWrapWithNativeMount(html: string): string {
 }
 
 export function hasNativeVideoPortfolioMount(html: string): boolean {
-  return /id=["']portfolio-gallery["']/.test(html) || /id=["']portfolio["']/.test(html);
+  return /id=["']portfolio-filters["']/.test(html) || /data-dgs-ai-video-portfolio=["']true["']/.test(html);
 }
 
 export type ParsedHtmlLink = {

@@ -277,91 +277,319 @@ const SHIRDI_SE_SAI_VIDEOS = [
 ];
 
 const LEGACY_PRODUCT_VIDEOS = [
-  { title: "Mango Farm Preview", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Mango-Farm-Preview11.mp4", cat: "PRODUCT AI", category: "product", width: 1080, height: 1920, wide: false },
-  { title: "Lava Women", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lava-Women11.mp4", cat: "PRODUCT AI", category: "product", width: 1080, height: 1920, wide: false },
-  { title: "Ice Cream Cone", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Ice-Cream-Cone11.mp4", cat: "PRODUCT AI", category: "product", width: 1080, height: 1920, wide: false },
-  { title: "WINN Green Chilli Sauce", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Green-Chilli11.mp4", cat: "PRODUCT AI", category: "product", width: 1080, height: 1920, wide: false },
-  { title: "WINN Dark Soya Sauce", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dark-Soya11.mp4", cat: "PRODUCT AI", category: "product", width: 1080, height: 1920, wide: false }
+  {
+    title: "Mango Farm Preview",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Mango-Farm-Preview11.mp4",
+    cat: "PRODUCT AI",
+    category: "product",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Lava Women",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lava-Women11.mp4",
+    cat: "PRODUCT AI",
+    category: "product",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Ice Cream Cone",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Ice-Cream-Cone11.mp4",
+    cat: "PRODUCT AI",
+    category: "product",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "WINN Green Chilli Sauce",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Green-Chilli11.mp4",
+    cat: "PRODUCT AI",
+    category: "product",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "WINN Dark Soya Sauce",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dark-Soya11.mp4",
+    cat: "PRODUCT AI",
+    category: "product",
+    width: 1080,
+    height: 1920,
+    wide: false
+  }
 ];
 
 const LEGACY_JEWELLERY_VIDEOS = [
-  { title: "Jewellery Polishing", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Video_Polishing_Request_Fulfilled.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Luxury Jewellery Visual 3", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/V-3.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Luxury Jewellery Visual 2", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/V-2.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Luxury Jewellery Advertisement", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik_cinematic-luxury-jewelry-advertisement-scene-an-el_kling_720p_3-2_24fps_64453.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Luxury Jewellery Event", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik_cinematic-luxury-event-scene-elegant-indian-woman-_kling_720p_16-9_24fps_64450.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1920, height: 1080, wide: true },
-  { title: "Traditional Gold Necklace", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik__a-closeup-of-a-traditional-gold-necklace-with-jhum__50633.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Cushion Cut Jewellery", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Cushion-Cut.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Premium Jewellery", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Jewelry11.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Baanganga Launch", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test211.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1920, height: 1080, wide: true },
-  { title: "Baanganga Creative", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test111.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false },
-  { title: "Baanganga Gold", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Gold-Example11.mp4", cat: "JEWELLERY AI", category: "jewellery", width: 1080, height: 1920, wide: false }
+  {
+    title: "Jewellery Polishing",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Video_Polishing_Request_Fulfilled.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Luxury Jewellery Visual 3",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/V-3.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Luxury Jewellery Visual 2",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/V-2.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Luxury Jewellery Advertisement",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik_cinematic-luxury-jewelry-advertisement-scene-an-el_kling_720p_3-2_24fps_64453.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Luxury Jewellery Event",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik_cinematic-luxury-event-scene-elegant-indian-woman-_kling_720p_16-9_24fps_64450.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1920,
+    height: 1080,
+    wide: true
+  },
+  {
+    title: "Traditional Gold Necklace",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik__a-closeup-of-a-traditional-gold-necklace-with-jhum__50633.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Cushion Cut Jewellery",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Cushion-Cut.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Premium Jewellery",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Jewelry11.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Baanganga Launch",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test211.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1920,
+    height: 1080,
+    wide: true
+  },
+  {
+    title: "Baanganga Creative",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test111.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Baanganga Gold",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Gold-Example11.mp4",
+    cat: "JEWELLERY AI",
+    category: "jewellery",
+    width: 1080,
+    height: 1920,
+    wide: false
+  }
 ];
 
 const LEGACY_FESTIVAL_VIDEOS = [
-  { title: "Makar Sankranti & Pongal", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Makar-Sankranti-And-Pongal-Final-1.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Baisakhi Celebration", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/BaisakhiV1.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Happy Holi", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Happy-Holi_New.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Festival Campaign", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Non-Intro-1.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Festive Story", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik__continue-this-video-showing-the-other-lady-taking-__50626.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Happy Easter", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Easter.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Hanuman Jayanti", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Hanuman-Jayanti-Final.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Navratri", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Navratri11.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Lohri", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lohri11.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Independence Day", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Independence-Day-Dgs11.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Friendship Day", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Friendship-Day11.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Diwali", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dgs-Diwali11.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false },
-  { title: "Children's Day", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Children-S-Day11.mp4", cat: "FESTIVAL VIDEOS", category: "festival", width: 1080, height: 1920, wide: false }
+  {
+    title: "Makar Sankranti & Pongal",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Makar-Sankranti-And-Pongal-Final-1.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Baisakhi Celebration",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/BaisakhiV1.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Happy Holi",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Happy-Holi_New.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Festival Campaign",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/Non-Intro-1.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Festive Story",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/07/freepik__continue-this-video-showing-the-other-lady-taking-__50626.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Happy Easter",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Easter.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Hanuman Jayanti",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Hanuman-Jayanti-Final.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Navratri",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Navratri11.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Lohri",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lohri11.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Independence Day",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Independence-Day-Dgs11.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Friendship Day",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Friendship-Day11.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Diwali",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dgs-Diwali11.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Children's Day",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Children-S-Day11.mp4",
+    cat: "FESTIVAL VIDEOS",
+    category: "festival",
+    width: 1080,
+    height: 1920,
+    wide: false
+  }
 ];
 
 const LEGACY_CONCEPT_VIDEOS = [
-  { title: "Savage Horse", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Savage-Horse11.mp4", cat: "CONCEPT AI", category: "concept", width: 1080, height: 1920, wide: false },
-  { title: "Card Magic Man", url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Card-Magic-Man11.mp4", cat: "CONCEPT AI", category: "concept", width: 1080, height: 1920, wide: false }
+  {
+    title: "Savage Horse",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Savage-Horse11.mp4",
+    cat: "CONCEPT AI",
+    category: "concept",
+    width: 1080,
+    height: 1920,
+    wide: false
+  },
+  {
+    title: "Card Magic Man",
+    url: "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Card-Magic-Man11.mp4",
+    cat: "CONCEPT AI",
+    category: "concept",
+    width: 1080,
+    height: 1920,
+    wide: false
+  }
 ];
 
-const PORTFOLIO_DATA_CATEGORIES = {
-  automobile: HYUNDAI_VIDEOS,
-  edtech: SUNDARAM_VIDEOS,
-  fmcg: CLARION_VIDEOS,
-  "commercial-film": [
-    ...HYUNDAI_VIDEOS.map(v => Object.assign({}, v, { cat: "COMMERCIAL AI FILM", category: "commercial-film" })),
-    HOME_CREDIT_VIDEO
-  ],
-  campaign: BETTER_CEASONS_VIDEOS,
-  mythological: SHIRDI_SE_SAI_VIDEOS,
-  festival: LEGACY_FESTIVAL_VIDEOS,
-  product: LEGACY_PRODUCT_VIDEOS,
-  jewellery: LEGACY_JEWELLERY_VIDEOS,
-  concept: LEGACY_CONCEPT_VIDEOS,
-  tvc: [
-    Object.assign({}, HOME_CREDIT_VIDEO, { cat: "TVC AI", category: "tvc" })
-  ],
-  mascot: [LEGACY_FESTIVAL_VIDEOS[0]]
-};
-
 const CATEGORY_LABELS = {
-  automobile: "AUTOMOBILE AI",
-  edtech: "EDTECH AI",
-  fmcg: "FMCG AI",
+  "all": "ALL PORTFOLIO",
+  "automobile": "AUTOMOBILE AI",
+  "edtech": "EDTECH AI",
+  "fmcg": "FMCG AI",
   "commercial-film": "COMMERCIAL AI FILM",
-  campaign: "CAMPAIGN AI",
-  mythological: "MYTHOLOGICAL AI",
-  festival: "FESTIVAL VIDEOS",
-  product: "PRODUCT AI",
-  jewellery: "JEWELLERY AI",
-  concept: "CONCEPT AI",
-  tvc: "TVC AI",
-  mascot: "MASCOT AI"
+  "campaign": "CAMPAIGN AI",
+  "mythological": "MYTHOLOGICAL AI",
+  "festival": "FESTIVAL VIDEOS",
+  "product": "PRODUCT AI",
+  "jewellery": "JEWELLERY AI",
+  "concept": "CONCEPT AI",
+  "tvc": "TVC AI"
 };
 
-// Canonical ordering: 3 Hyundai -> 8 Sundaram -> 2 Clarion -> 4 Better Ceasons -> 7 Shirdi Se Sai -> Home Credit -> Legacy
+// Canonical multi-category mappings
 const ALL_CANONICAL_VIDEOS = [
   ...HYUNDAI_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "automobile", "commercial-film"] })),
   ...SUNDARAM_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "edtech"] })),
   ...CLARION_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "fmcg"] })),
   ...BETTER_CEASONS_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "campaign"] })),
   ...SHIRDI_SE_SAI_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "mythological"] })),
-  Object.assign({}, HOME_CREDIT_VIDEO, { cat: "COMMERCIAL AI FILM", category: "commercial-film", categories: ["all", "commercial-film", "tvc"] }),
+  Object.assign({}, HOME_CREDIT_VIDEO, { categories: ["all", "commercial-film", "tvc"] }),
   ...LEGACY_PRODUCT_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "product"] })),
   ...LEGACY_JEWELLERY_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "jewellery"] })),
   ...LEGACY_FESTIVAL_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "festival", "mascot"] })),
@@ -371,18 +599,12 @@ const ALL_CANONICAL_VIDEOS = [
 console.log("Total Canonical Videos in Feed:", ALL_CANONICAL_VIDEOS.length);
 
 // -----------------------------------------------------------------------------
-// 2. WRITE EXTRACTED/BOOT-PORTFOLIO-8.JS (UNIFIED VISIBILITY-BASED MASONRY)
+// 2. WRITE EXTRACTED/BOOT-PORTFOLIO-8.JS (UNIFIED VISIBILITY-BASED MASONRY + LOAD MORE + CTA)
 // -----------------------------------------------------------------------------
 function buildBootPortfolio8Js() {
   return `(function(){'use strict';
-if(window.__DGS_PORTFOLIO_THUMB_LAZY_FIXED__)return;
-window.__DGS_PORTFOLIO_THUMB_LAZY_FIXED__=!0;
-
-var AUTO_THUMBS=!0;
-function makeThumbUrl(videoUrl){
-  var path=videoUrl.replace(/^https?:\\/\\/[^\\/]+/i,'');
-  return path.replace(/\\.mp4$/i,'-thumb.webp');
-}
+if(window.__DGS_INNER_AI_PORTFOLIO_BOOTED__)return;
+window.__DGS_INNER_AI_PORTFOLIO_BOOTED__ = true;
 
 var allVideos = ${JSON.stringify(ALL_CANONICAL_VIDEOS)};
 
@@ -391,33 +613,42 @@ var lightboxHasHistoryState = !1;
 var scrollPositionBeforeLightbox = 0;
 var PLAY_SVG = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>';
 
+function getBatchSize(){
+  var w = window.innerWidth || document.documentElement.clientWidth || 1200;
+  if(w < 641) return 6;
+  if(w < 1025) return 8;
+  return 12;
+}
+
+var currentFilter = 'all';
+var visibleCount = getBatchSize();
+
 function escapeHTML(value){
   return String(value||'').replace(/[&<>"']/g, function(char){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char];
   });
 }
 
-function getMimeType(url){
-  return /\\.webm$/i.test(url) ? 'video/webm' : 'video/mp4';
-}
-
 function getThumb(video){
   if(video.thumb) return video.thumb;
-  if(AUTO_THUMBS) return makeThumbUrl(video.url);
-  return '';
+  var path = (video.url || '').replace(/^https?:\\/\\/[^\\/]+/i, '');
+  return path.replace(/\\.(mp4|webm)$/i, '-thumb.webp');
+}
+
+function getPosterSources(video){
+  var thumb = getThumb(video);
+  var avif = thumb ? thumb.replace(/\\.(webp|png|jpg|jpeg)$/i, '.avif') : '';
+  return { avif: avif, webp: thumb, fallback: thumb || '/media/portfolio/posters/hyundai_creta_1_poster.webp' };
 }
 
 function imageHTML(video, isWide){
   var title = escapeHTML(video.title);
-  var label = escapeHTML(video.label || video.cat || '');
-  var thumb = getThumb(video);
-  var posterAttribute = thumb ? ' poster="' + escapeHTML(thumb) + '"' : '';
-  return '<div class="thumb-fallback" style="background:#050505"></div>' +
-    '<video class="thumb-video is-ready" muted playsinline webkit-playsinline preload="none"' + posterAttribute +
-    ' aria-label="' + title + ' ' + label + ' preview" tabindex="-1" disablepictureinpicture controlslist="nodownload"' +
-    ' style="width:100%;height:100%;object-fit:contain;object-position:center;background:#050505;display:block;">' +
-      '<source src="' + escapeHTML(video.url) + '#t=0.08" type="' + getMimeType(video.url) + '">' +
-    '</video>';
+  var posters = getPosterSources(video);
+  return '<picture class="thumb-picture" style="width:100%;height:100%;object-fit:contain;object-position:center;background:#050505;display:block;">' +
+    (posters.avif ? '<source srcset="' + escapeHTML(posters.avif) + '" type="image/avif">' : '') +
+    (posters.webp ? '<source srcset="' + escapeHTML(posters.webp) + '" type="image/webp">' : '') +
+    '<img src="' + escapeHTML(posters.fallback) + '" alt="' + title + '" loading="lazy" decoding="async" class="thumb-img" style="width:100%;height:100%;object-fit:contain;object-position:center;background:#050505;display:block;">' +
+  '</picture>';
 }
 
 function createCard(video, index){
@@ -440,7 +671,7 @@ function createCard(video, index){
   var videoId = (video.url || '').split('/').pop().replace(/\\.[^.]+$/, '');
   div.setAttribute('data-video-id', videoId);
 
-  // ZERO-CROP RULE: Natural source aspect ratio is the authority
+  // ZERO-CROP RULE: Natural source aspect ratio is the authority from the start
   div.style.aspectRatio = w + ' / ' + h;
   div.style.background = '#050505';
 
@@ -464,38 +695,50 @@ function createCard(video, index){
   return div;
 }
 
-var thumbnailQueue = [];
-function runThumbnailQueue(){
-  while(thumbnailQueue.length){
-    var job = thumbnailQueue.shift();
-    var card = job.card;
-    var preview = job.preview;
-    if(!card || !preview || card.dataset.thumbReady === '1') continue;
-    card.dataset.thumbReady = '1';
-    card.classList.add('video-ready');
-    try { preview.classList.add('is-ready'); } catch(e){}
-  }
-}
+function updateVisibility(){
+  var mainGallery = document.getElementById('portfolio-gallery');
+  if(!mainGallery) return;
+  var items = mainGallery.querySelectorAll('.gallery-item');
+  var matching = [];
 
-function prepareCardVideo(card, priority){
-  var preview = card.querySelector('.thumb-video');
-  if(!preview || card.dataset.thumbQueued === '1' || card.dataset.thumbReady === '1') return;
-  card.dataset.thumbQueued = '1';
-
-  preview.onloadedmetadata = function(){
-    if(preview.videoWidth && preview.videoHeight){
-      card.style.aspectRatio = preview.videoWidth + ' / ' + preview.videoHeight;
-      var isLand = (preview.videoWidth / preview.videoHeight) >= 1.2;
-      card.classList.toggle('wide-item', isLand);
-      card.classList.toggle('portfolio-item--landscape', isLand);
-      card.classList.toggle('portfolio-item--portrait', !isLand);
+  items.forEach(function(item){
+    var cats = (item.getAttribute('data-categories') || '').split(' ');
+    if(currentFilter === 'all' || cats.indexOf(currentFilter) !== -1){
+      matching.push(item);
     }
-  };
+  });
 
-  var job = { card: card, preview: preview };
-  if(priority) thumbnailQueue.unshift(job);
-  else thumbnailQueue.push(job);
-  runThumbnailQueue();
+  matching.forEach(function(item, idx){
+    if(idx < visibleCount){
+      item.classList.remove('is-hidden');
+      item.style.removeProperty('display');
+    } else {
+      item.classList.add('is-hidden');
+      item.style.setProperty('display', 'none', 'important');
+    }
+  });
+
+  items.forEach(function(item){
+    var cats = (item.getAttribute('data-categories') || '').split(' ');
+    if(currentFilter !== 'all' && cats.indexOf(currentFilter) === -1){
+      item.classList.add('is-hidden');
+      item.style.setProperty('display', 'none', 'important');
+    }
+  });
+
+  var loadMoreBtn = document.getElementById('load-more-btn');
+  var loadMoreWrap = document.querySelector('.dgs-load-more-wrap');
+  if(loadMoreBtn){
+    var remaining = matching.length - visibleCount;
+    if(remaining > 0){
+      loadMoreBtn.style.display = 'inline-flex';
+      if(loadMoreWrap) loadMoreWrap.style.display = 'flex';
+      loadMoreBtn.textContent = 'LOAD MORE WORK (' + remaining + ' REMAINING)';
+    } else {
+      loadMoreBtn.style.display = 'none';
+      if(loadMoreWrap) loadMoreWrap.style.display = 'none';
+    }
+  }
 }
 
 function setLightboxVideo(index){
@@ -509,33 +752,23 @@ function setLightboxVideo(index){
   while(player.firstChild){
     player.removeChild(player.firstChild);
   }
-  player.classList.remove('is-landscape', 'is-portrait');
-  player.preload = 'auto';
-
-  // Zero-crop rules on lightbox player: source frame is authority, NO forced aspect-ratio on player
-  var w = item.width || (item.wide ? 16 : 9);
-  var h = item.height || (item.wide ? 9 : 16);
-  var ratio = w / h;
-  try { player.style.removeProperty('aspect-ratio'); } catch(e){}
+  player.preload = 'metadata';
   player.style.objectFit = 'contain';
   player.style.objectPosition = 'center';
   player.style.background = '#000';
-  player.classList.toggle('is-landscape', ratio >= 1.2);
-  player.classList.toggle('is-portrait', ratio < 1.2);
 
-  var source = document.createElement('source');
-  source.src = item.url;
-  source.type = getMimeType(item.url);
-  player.appendChild(source);
+  var webmUrl = item.url.replace(/\\.mp4$/i, '.webm');
+  var mp4Url = item.url.replace(/\\.webm$/i, '.mp4');
 
-  player.onloadedmetadata = function(){
-    if(player.videoWidth && player.videoHeight){
-      var realRatio = player.videoWidth / player.videoHeight;
-      try { player.style.removeProperty('aspect-ratio'); } catch(e){}
-      player.classList.toggle('is-landscape', realRatio >= 1.2);
-      player.classList.toggle('is-portrait', realRatio < 1.2);
-    }
-  };
+  var sWebm = document.createElement('source');
+  sWebm.src = webmUrl;
+  sWebm.type = 'video/webm';
+  player.appendChild(sWebm);
+
+  var sMp4 = document.createElement('source');
+  sMp4.src = mp4Url;
+  sMp4.type = 'video/mp4';
+  player.appendChild(sMp4);
 
   player.load();
   function playNow(){
@@ -565,7 +798,7 @@ function internalCloseLightbox(){
   try { player.load(); } catch(e){}
   lightbox.classList.remove('is-open');
   setTimeout(function(){
-    lightbox.style.display = '';
+    lightbox.style.display = 'none';
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
     document.body.classList.remove('lightbox-open');
@@ -609,26 +842,39 @@ function initPortfolio(){
   if(portfolioInitialized) return;
   portfolioInitialized = !0;
 
+  var filterNav = document.getElementById('portfolio-filters');
   var mainGallery = document.getElementById('portfolio-gallery');
-  var loadBtn = document.getElementById('load-more-btn');
-  if(loadBtn) loadBtn.style.display = 'none';
+  if(!filterNav || !mainGallery) return;
 
-  if(mainGallery){
+  visibleCount = getBatchSize();
+
+  // Progressive enhancement: build replacement fragment atomically
+  var fragment = document.createDocumentFragment();
+  for(var i = 0; i < allVideos.length; i++){
+    fragment.appendChild(createCard(allVideos[i], i));
+  }
+  if(fragment.children.length > 0){
     mainGallery.innerHTML = '';
-    var fragment = document.createDocumentFragment();
-    for(var i = 0; i < allVideos.length; i++){
-      fragment.appendChild(createCard(allVideos[i], i));
-    }
     mainGallery.appendChild(fragment);
-    mainGallery.querySelectorAll('.gallery-item').forEach(function(card, idx){
-      prepareCardVideo(card, idx < 8);
+  }
+
+  updateVisibility();
+
+  var loadMoreBtn = document.getElementById('load-more-btn');
+  if(loadMoreBtn){
+    loadMoreBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      visibleCount += getBatchSize();
+      updateVisibility();
     });
   }
 
   document.querySelectorAll('.portfolio-filter-tab').forEach(function(tab){
     tab.addEventListener('click', function(e){
       e.preventDefault();
-      var categoryKey = (tab.getAttribute('data-filter') || tab.getAttribute('href') || '').replace('#', '').toLowerCase();
+      var filterKey = (tab.getAttribute('data-filter') || tab.getAttribute('href') || '').replace('#', '').toLowerCase();
+      currentFilter = filterKey;
+      visibleCount = getBatchSize(); // Reset visible count to initial batch!
 
       document.querySelectorAll('.portfolio-filter-tab').forEach(function(t){
         t.classList.remove('active');
@@ -647,19 +893,17 @@ function initPortfolio(){
         mainView.style.display = '';
       }
 
-      if(mainGallery){
-        var items = mainGallery.querySelectorAll('.gallery-item');
-        items.forEach(function(item){
-          var cats = (item.getAttribute('data-categories') || '').split(' ');
-          var matches = (categoryKey === 'all') || (cats.indexOf(categoryKey) !== -1);
-          if(matches){
-            item.classList.remove('is-hidden');
-            item.style.removeProperty('display');
-          } else {
-            item.classList.add('is-hidden');
-            item.style.setProperty('display', 'none', 'important');
-          }
-        });
+      updateVisibility();
+    });
+  });
+
+  // Smooth scroll CTA to #ai-video-enquiry-form
+  document.querySelectorAll('.dgs-ai-cta-btn, a[href="#ai-video-enquiry-form"]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      var target = document.getElementById('ai-video-enquiry-form');
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
@@ -704,7 +948,7 @@ fs.writeFileSync(path.join(ROOT, "lib/wp-exact/extracted/boot-portfolio-8.js"), 
 console.log("✓ Successfully updated lib/wp-exact/extracted/boot-portfolio-8.js");
 
 // -----------------------------------------------------------------------------
-// 3. UPDATE PAGE MIRRORS: AGENCY & DUBAI WITH 12 TABS & SINGLE UNIVERSAL CONTAINER
+// 3. UPDATE PAGE MIRRORS: AGENCY & DUBAI WITH 12 TABS, LOAD MORE, CTA & FORM ANCHOR
 // -----------------------------------------------------------------------------
 const NAV_TABS_HTML = `<nav class="portfolio-filters" id="portfolio-filters" role="navigation" aria-label="AI video portfolio navigation">
 <a href="#all" class="portfolio-filter-tab active" data-filter="all" data-target="portfolio-gallery-view">ALL PORTFOLIO<span></span></a>
@@ -722,7 +966,14 @@ const NAV_TABS_HTML = `<nav class="portfolio-filters" id="portfolio-filters" rol
 </nav>
 <div id="content-container">
 <div id="portfolio-gallery-view" class="content-view active-view"><div id="portfolio-gallery"></div></div>
-<div id="load-more-btn" style="display:none"></div>
+<div class="dgs-load-more-wrap">
+  <button type="button" id="load-more-btn" class="dgs-load-more-btn">LOAD MORE WORK</button>
+</div>
+<div class="dgs-ai-portfolio-cta" id="portfolio-cta-section">
+  <h3>Ready To Create Your Next AI Video?</h3>
+  <p>From cinematic TVCs and product videos to scalable social content, let's bring your creative vision to life with production-grade AI.</p>
+  <a href="#ai-video-enquiry-form" class="dgs-ai-cta-btn">Start Your Project</a>
+</div>
 </div>`;
 
 function updatePageMirrorTabs(pagePath) {
@@ -738,10 +989,22 @@ function updatePageMirrorTabs(pagePath) {
     return false;
   }
 
-  data.body = html.slice(0, startNav) + NAV_TABS_HTML + html.slice(endContent);
+  html = html.slice(0, startNav) + NAV_TABS_HTML + html.slice(endContent);
+
+  // Ensure real form anchor exists right above the form wrapper
+  if (!html.includes('id="ai-video-enquiry-form"')) {
+    const formWrapperIdx = html.indexOf('<div class="dgs-form-wrapper">');
+    if (formWrapperIdx !== -1) {
+      const anchor = '<div id="ai-video-enquiry-form" class="dgs-ai-enquiry-anchor" style="scroll-margin-top: 100px;"></div>\n';
+      html = html.slice(0, formWrapperIdx) + anchor + html.slice(formWrapperIdx);
+      console.log(`✓ Injected #ai-video-enquiry-form anchor in ${pagePath}`);
+    }
+  }
+
+  data.body = html;
   data.bodyBytes = Buffer.byteLength(data.body, "utf8");
   fs.writeFileSync(fullPath, JSON.stringify(data, null, 2), "utf8");
-  console.log(`✓ Updated 12-filter tabs & views in ${pagePath}`);
+  console.log(`✓ Updated 12-filter tabs, load more, CTA & anchor in ${pagePath}`);
   return true;
 }
 
@@ -749,7 +1012,7 @@ updatePageMirrorTabs("data/wordpress/mirrors/pages/services__ai-video-production
 updatePageMirrorTabs("data/wordpress/mirrors/pages/services__ai-production-dubai-page.json");
 
 // -----------------------------------------------------------------------------
-// 4. UPDATE GOOGLE ADS LANDING PAGE WITH 12 TABS & PRERENDERED VIDEO CARDS
+// 4. UPDATE GOOGLE ADS LANDING PAGE WITH 12 TABS, PRERENDERED CARDS, LOAD MORE & CTA
 // -----------------------------------------------------------------------------
 function buildAdsGridArticle(item, extraCats = "") {
   const isLand = item.wide || (item.width / item.height) >= 1.2;
@@ -760,13 +1023,15 @@ function buildAdsGridArticle(item, extraCats = "") {
 
   const allCats = `all ${item.category} ${extraCats}`.trim();
   const label = CATEGORY_LABELS[item.category] || item.cat;
+  const avif = item.thumb ? item.thumb.replace(/\.(webp|png|jpg|jpeg)$/i, '.avif') : '';
+  const webp = item.thumb || '/media/portfolio/posters/hyundai_creta_1_poster.webp';
 
   return `<article class="${catClasses}" data-categories="${allCats}" style="break-inside:avoid;margin-bottom:16px;border-radius:18px;overflow:hidden;background:#050505;box-shadow:0 10px 30px rgba(0,0,0,0.12);border:1px solid rgba(255,255,255,0.08)">
   <div style="position:relative;width:100%;aspect-ratio:${aspect};overflow:hidden;background:#050505">
     <picture>
-      ${item.thumb ? `<source srcset="${item.thumb.replace(/\.webp$/i, '.avif')}" type="image/avif">` : ""}
-      ${item.thumb ? `<source srcset="${item.thumb}" type="image/webp">` : ""}
-      <img src="${item.thumb || '/media/portfolio/posters/hyundai_creta_1_poster.webp'}" alt="${item.title}" width="${item.width}" height="${item.height}" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;background:#050505;display:block">
+      ${avif ? `<source srcset="${avif}" type="image/avif">` : ""}
+      ${webp ? `<source srcset="${webp}" type="image/webp">` : ""}
+      <img src="${webp}" alt="${item.title}" width="${item.width}" height="${item.height}" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;background:#050505;display:block">
     </picture>
     <a href="${item.url}" target="_blank" rel="noopener" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-decoration:none" aria-label="Play ${item.title}">
       <span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:rgba(196,63,122,0.9);color:#fff;font-size:16px">▶</span>
@@ -833,33 +1098,120 @@ function updateAdsLandingPage() {
     ...LEGACY_CONCEPT_VIDEOS.map(v => buildAdsGridArticle(v, ""))
   ].join("\n");
 
+  const LOAD_MORE_AND_CTA = `
+<div class="dgs-load-more-wrap">
+  <button type="button" id="load-more-btn" class="dgs-load-more-btn">LOAD MORE WORK</button>
+</div>
+<div class="dgs-ai-portfolio-cta" id="portfolio-cta-section">
+  <h3>Ready To Create Your Next AI Video?</h3>
+  <p>From cinematic TVCs and product videos to scalable social content, let's bring your creative vision to life with production-grade AI.</p>
+  <a href="#ai-video-enquiry-form" class="dgs-ai-cta-btn">Start Your Project</a>
+</div>`;
+
   const FILTER_SCRIPT = `<script>
 (function(){
+  function getBatchSize(){
+    var w = window.innerWidth || document.documentElement.clientWidth || 1200;
+    if(w < 641) return 6;
+    if(w < 1025) return 8;
+    return 12;
+  }
+  var currentFilter = 'all';
+  var visibleCount = getBatchSize();
+
   var tabs = document.querySelectorAll('.dgs-ai-tab');
-  var items = document.querySelectorAll('#dgs-ai-portfolio-grid .dgs-ai-portfolio-item');
+  var grid = document.getElementById('dgs-ai-portfolio-grid');
+  var items = grid ? grid.querySelectorAll('.dgs-ai-portfolio-item') : [];
+  var loadMoreBtn = document.getElementById('load-more-btn');
+  var loadMoreWrap = document.querySelector('.dgs-load-more-wrap');
+
+  function updateVisibility(){
+    var matching = [];
+    items.forEach(function(item){
+      var cats = (item.getAttribute('data-categories') || '').split(' ');
+      if(currentFilter === 'all' || cats.indexOf(currentFilter) !== -1){
+        matching.push(item);
+      }
+    });
+
+    matching.forEach(function(item, idx){
+      if(idx < visibleCount){
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    items.forEach(function(item){
+      var cats = (item.getAttribute('data-categories') || '').split(' ');
+      if(currentFilter !== 'all' && cats.indexOf(currentFilter) === -1){
+        item.style.display = 'none';
+      }
+    });
+
+    if(loadMoreBtn){
+      var remaining = matching.length - visibleCount;
+      if(remaining > 0){
+        loadMoreBtn.style.display = 'inline-flex';
+        if(loadMoreWrap) loadMoreWrap.style.display = 'flex';
+        loadMoreBtn.textContent = 'LOAD MORE WORK (' + remaining + ' REMAINING)';
+      } else {
+        loadMoreBtn.style.display = 'none';
+        if(loadMoreWrap) loadMoreWrap.style.display = 'none';
+      }
+    }
+  }
+
+  updateVisibility();
+
+  if(loadMoreBtn){
+    loadMoreBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      visibleCount += getBatchSize();
+      updateVisibility();
+    });
+  }
+
   tabs.forEach(function(tab){
     tab.addEventListener('click', function(){
       tabs.forEach(function(t){ t.classList.remove('active'); });
       tab.classList.add('active');
-      var filter = tab.getAttribute('data-filter');
-      items.forEach(function(item){
-        var cats = (item.getAttribute('data-categories') || '').split(' ');
-        if(filter === 'all' || cats.indexOf(filter) !== -1){
-          item.style.display = '';
-        } else {
-          item.style.display = 'none';
-        }
-      });
+      currentFilter = tab.getAttribute('data-filter') || 'all';
+      visibleCount = getBatchSize(); // Reset visible batch for this tab!
+      updateVisibility();
+    });
+  });
+
+  // Smooth scroll CTA
+  document.querySelectorAll('.dgs-ai-cta-btn, a[href="#ai-video-enquiry-form"]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      var target = document.getElementById('ai-video-enquiry-form');
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   });
 })();
 </script>`;
 
-  const newSection = ADS_TABS + `\n<div class="dgs-ai-portfolio-grid" id="dgs-ai-portfolio-grid">\n` + gridCards + `\n` + FILTER_SCRIPT;
-  data.body = html.slice(0, startTabs) + newSection + html.slice(endGrid);
+  const newSection = ADS_TABS + `\n<div class="dgs-ai-portfolio-grid" id="dgs-ai-portfolio-grid">\n` + gridCards + `\n</div>` + LOAD_MORE_AND_CTA + FILTER_SCRIPT;
+  html = html.slice(0, startTabs) + newSection + html.slice(endGrid);
+
+  // Ensure real form anchor exists right above the lead form card
+  if (!html.includes('id="ai-video-enquiry-form"')) {
+    const formCardIdx = html.indexOf('<div class="dgs-ai-form-card" id="dgs-ai-production-lead-form">');
+    if (formCardIdx !== -1) {
+      const anchor = '<div id="ai-video-enquiry-form" class="dgs-ai-enquiry-anchor" style="scroll-margin-top: 100px;"></div>\n';
+      html = html.slice(0, formCardIdx) + anchor + html.slice(formCardIdx);
+      console.log("✓ Injected #ai-video-enquiry-form anchor in Google Ads landing page");
+    }
+  }
+
+  data.body = html;
   data.bodyBytes = Buffer.byteLength(data.body, "utf8");
   fs.writeFileSync(fullPath, JSON.stringify(data, null, 2), "utf8");
-  console.log("✓ Updated Google Ads landing page with 12 tabs, prerendered cards, and filtering script");
+  console.log("✓ Updated Google Ads landing page with 12 tabs, prerendered cards, load more, CTA & anchor");
   return true;
 }
 
