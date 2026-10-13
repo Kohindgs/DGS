@@ -46,7 +46,7 @@ async function safeGoto(page, url) {
 
 async function cleanFloaters(page) {
   await page.evaluate(() => {
-    document.querySelectorAll(".wh-widget-send-button-desktop, #whatsapp-chat-widget, #tidio-chat, .cookie-banner, [aria-label*='WhatsApp'], [aria-label*='chat' i]").forEach(el => el.remove());
+    document.querySelectorAll(".wh-widget-send-button-desktop, #whatsapp-chat-widget, #tidio-chat, .cookie-banner").forEach(el => el.remove());
   });
 }
 
@@ -464,7 +464,7 @@ async function run() {
       const audit = await p.evaluate(() => {
         const port = document.getElementById("portfolio") || document.querySelector('[data-dgs-portfolio="approved-signature-ui"]');
         const gallery = document.getElementById("portfolio-gallery") || document.querySelector('[aria-label="Portfolio gallery"]');
-        const cards = document.querySelectorAll("#portfolio-gallery .gallery-item, .PortfolioPreviewA-module__work___*");
+        const cards = document.querySelectorAll("#portfolio-gallery .gallery-item, article[data-media-kind], .gallery-item");
         const visible = Array.from(cards).filter(c => window.getComputedStyle(c).display !== "none");
         const loadMore = document.getElementById("load-more-btn") || Array.from(document.querySelectorAll("button")).find(b => b.textContent?.includes("LOAD MORE"));
         const cta = document.getElementById("portfolio-cta-section");
