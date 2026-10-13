@@ -133,10 +133,30 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  const getBatchSize = () => {
+    if (typeof window === "undefined") return 12;
+    const w = window.innerWidth;
+    if (w < 641) return 6;
+    if (w < 1025) return 8;
+    return 12;
+  };
+
+  const [visibleCount, setVisibleCount] = useState<number>(12);
+
+  useEffect(() => {
+    setVisibleCount(getBatchSize());
+  }, []);
+
   const filteredItems = useMemo(() => {
     if (activeFilter === "all") return items;
     return items.filter((item) => matchesCategory(item, activeFilter));
   }, [items, activeFilter]);
+
+  const visibleItems = useMemo(() => {
+    return filteredItems.slice(0, visibleCount);
+  }, [filteredItems, visibleCount]);
+
+  const remainingCount = Math.max(0, filteredItems.length - visibleCount);
 
   const activeItem = activeIndex === null ? null : filteredItems[activeIndex];
   const itemCountLabel = useMemo(() => pad(filteredItems.length), [filteredItems.length]);
@@ -219,6 +239,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
               onClick={() => {
                 setActiveFilter(tab.key);
                 setActiveIndex(null);
+                setVisibleCount(getBatchSize());
               }}
               aria-pressed={activeFilter === tab.key}
             >
@@ -230,7 +251,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
 
       <section className={styles.workSection} aria-label="Portfolio gallery">
         <div className={styles.workContainer}>
-          {filteredItems.map((item, itemIndex) => {
+          {visibleItems.map((item, itemIndex) => {
             const isVideo = item.type === "video";
             const aspect = item.ratio;
             const isLand = aspect >= 1.2;
@@ -339,6 +360,34 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
             );
           })}
         </div>
+        {remainingCount > 0 ? (
+          <div style={{ display: "flex", justifyContent: "center", margin: "48px 0 24px" }}>
+            <button
+              type="button"
+              id="load-more-btn"
+              className="dgs-load-more-btn"
+              onClick={() => setVisibleCount((prev) => prev + getBatchSize())}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: "48px",
+                padding: "0 32px",
+                borderRadius: "999px",
+                background: "rgba(255, 255, 255, 0.08)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                color: "#fff",
+                fontSize: "13px",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                cursor: "pointer",
+                transition: "all 0.25s ease"
+              }}
+            >
+              LOAD MORE WORK ({remainingCount} REMAINING)
+            </button>
+          </div>
+        ) : null}
       </section>
 
       {activeItem && activeIndex !== null ? (
