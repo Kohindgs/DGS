@@ -1139,6 +1139,15 @@ body {
 }
 
 /* 2. Card Presentation & Zero-Crop Containers */
+.gallery-item.is-hidden,
+.gallery-item[style*="display: none"],
+.case-study-item.is-hidden,
+.case-study-item[style*="display: none"],
+.dgs-ai-portfolio-item.is-hidden,
+.dgs-ai-portfolio-item[style*="display: none"] {
+  display: none !important;
+}
+
 .gallery-item,
 .case-study-item,
 .dgs-ai-portfolio-item {

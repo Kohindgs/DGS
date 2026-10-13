@@ -652,7 +652,13 @@ function initPortfolio(){
         items.forEach(function(item){
           var cats = (item.getAttribute('data-categories') || '').split(' ');
           var matches = (categoryKey === 'all') || (cats.indexOf(categoryKey) !== -1);
-          item.style.display = matches ? '' : 'none';
+          if(matches){
+            item.classList.remove('is-hidden');
+            item.style.removeProperty('display');
+          } else {
+            item.classList.add('is-hidden');
+            item.style.setProperty('display', 'none', 'important');
+          }
         });
       }
     });
