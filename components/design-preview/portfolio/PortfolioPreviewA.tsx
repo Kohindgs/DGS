@@ -49,6 +49,9 @@ const FILTER_TABS = [
 
 function matchesCategory(item: PortfolioItem, filterKey: string): boolean {
   if (filterKey === "all") return true;
+  if ("categories" in item && Array.isArray((item as any).categories)) {
+    return (item as any).categories.includes(filterKey);
+  }
   const id = item.id.toLowerCase();
   const title = (item.title || "").toLowerCase();
   const alt = (item.alt || "").toLowerCase();
@@ -285,21 +288,24 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
                       <>
                         <picture className={styles.picture}>
                           <source
-                            srcSet={item.poster.avif}
-                            type="image/avif"
-                          />
-                          <source
                             srcSet={item.poster.webp}
                             type="image/webp"
                           />
                           <img
                             src={item.poster.fallback}
+                            data-webp-fallback={item.poster.fallback}
                             alt={item.alt || "Portfolio video poster"}
                             width={item.poster.width}
                             height={item.poster.height}
                             loading={isAboveFold ? "eager" : "lazy"}
                             decoding="async"
                             className={styles.image}
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              if (target.dataset.webpFallback && target.src !== target.dataset.webpFallback) {
+                                target.src = target.dataset.webpFallback;
+                              }
+                            }}
                           />
                         </picture>
                         <span className={styles.videoBadge} aria-hidden="true">

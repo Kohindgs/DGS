@@ -58,6 +58,11 @@ app
           urlPath.startsWith('/images/') ||
           urlPath.startsWith('/media/') ||
           urlPath.startsWith('/cms-media/');
+        if (urlPath.endsWith('.avif')) {
+          res.setHeader('Content-Type', 'image/avif');
+        } else if (urlPath.endsWith('.webp')) {
+          res.setHeader('Content-Type', 'image/webp');
+        }
         if (!isStaticAsset) {
           const originalSetHeader = res.setHeader.bind(res);
           res.setHeader = (key, value) => {

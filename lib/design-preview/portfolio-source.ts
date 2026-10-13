@@ -155,11 +155,66 @@ function readPortfolioHero() {
   };
 }
 
+import canonicalAiVideos from "@/data/portfolio/canonical-ai-videos.json";
+
+export function getCanonicalPortfolioItems(): PortfolioItem[] {
+  return (canonicalAiVideos as Array<{
+    title: string;
+    url: string;
+    thumb?: string;
+    cat: string;
+    category: string;
+    width: number;
+    height: number;
+    wide?: boolean;
+    categories: string[];
+  }>).map((item, index) => {
+    const isWide = !!item.wide;
+    const w = item.width || (isWide ? 1920 : 1080);
+    const h = item.height || (isWide ? 1080 : 1920);
+    const ratio = w / h;
+    const orientation = ratio >= 1.2 ? "landscape" : "portrait";
+    const rawThumb = item.thumb
+      ? item.thumb.replace(/^https?:\/\/[^\/]+/i, "")
+      : (item.url || "").replace(/^https?:\/\/[^\/]+/i, "").replace(/\.(mp4|webm)$/i, "-thumb.webp");
+    const thumb = rawThumb.startsWith("/") ? rawThumb : `/${rawThumb}`;
+    const webmUrl = item.url.replace(/\.mp4$/i, ".webm");
+    const mp4Url = item.url.replace(/\.webm$/i, ".mp4");
+    const videoId = (item.url || "").split("/").pop()?.replace(/\.[^.]+$/, "") || `video-${index}`;
+
+    return {
+      id: videoId,
+      type: "video" as const,
+      title: item.title,
+      alt: `${item.title} - D'Genius Solutions AI Video Production`,
+      sourceWidth: w,
+      sourceHeight: h,
+      width: w,
+      height: h,
+      ratio,
+      orientation,
+      duration: 30,
+      poster: {
+        width: w,
+        height: h,
+        avif: thumb.replace(/\.(webp|png|jpg|jpeg)$/i, ".avif"),
+        webp: thumb,
+        fallback: thumb,
+      },
+      sources: {
+        webm: webmUrl,
+        mp4: mp4Url,
+      },
+      categories: item.categories || ["all", item.category],
+    } as unknown as PortfolioItem;
+  });
+}
+
 export function loadPortfolioDesignPreviewSourceStatic() {
   const hero = readPortfolioHero();
   return {
     ...hero,
-    items: orderPortfolioMedia(portfolioMedia.items),
+    items: getCanonicalPortfolioItems(),
   };
 }
 
