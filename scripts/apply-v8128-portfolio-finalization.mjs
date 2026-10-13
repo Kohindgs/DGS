@@ -716,6 +716,7 @@ const NAV_TABS_HTML = `<nav class="portfolio-filters" id="portfolio-filters" rol
 </nav>
 <div id="content-container">
 <div id="portfolio-gallery-view" class="content-view active-view"><div id="portfolio-gallery"></div></div>
+<div id="load-more-btn" style="display:none"></div>
 </div>`;
 
 function updatePageMirrorTabs(pagePath) {
