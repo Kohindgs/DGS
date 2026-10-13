@@ -94,42 +94,28 @@ export function WpThreeParticleBackground() {
       const sphere = new THREE.Points(particles, material);
       scene.add(sphere);
 
+      if (typeof window !== "undefined") {
+        // @ts-expect-error global test hook for deterministic motion QA
+        window.__DGS_GLOBE_SPHERE__ = sphere;
+      }
+
       let targetX = 0;
       let targetY = 0;
-      let scrollProgress = 0;
+      let targetScrollProgress = 0;
+      let currentScrollProgress = 0;
       let animationId: number | null = null;
-      let isHeroVisible = true;
-      let heroObserver: IntersectionObserver | null = null;
+      let docHeight = 1000;
+      let winHeight = 800;
+
+      const updateDimensions = () => {
+        docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, 1000);
+        winHeight = Math.max(window.innerHeight, 600);
+      };
+      updateDimensions();
 
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
-
-      // Offscreen RAF pausing: pause loop when hero is scrolled past
-      const heroEl = document.querySelector(
-        ".dgs-hero, #top, .case-hero, .case-study-hero, [data-hero]",
-      );
-      if (heroEl && typeof IntersectionObserver !== "undefined") {
-        heroObserver = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              isHeroVisible = entry.isIntersecting;
-              if (isHeroVisible) {
-                if (!animationId && !document.hidden && !prefersReducedMotion) {
-                  animate();
-                }
-              } else {
-                if (animationId !== null) {
-                  cancelAnimationFrame(animationId);
-                  animationId = null;
-                }
-              }
-            }
-          },
-          { rootMargin: "150px" },
-        );
-        heroObserver.observe(heroEl);
-      }
 
       const onMouseMove = (e: MouseEvent) => {
         const mx = (e.clientX / window.innerWidth) * 2 - 1;
@@ -139,11 +125,16 @@ export function WpThreeParticleBackground() {
       };
 
       const onScroll = () => {
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        scrollProgress = maxScroll > 0 ? (window.scrollY ?? window.pageYOffset) / maxScroll : 0;
+        docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, 1000);
+        winHeight = Math.max(window.innerHeight, 600);
+        const maxScroll = Math.max(docHeight - winHeight, 1);
+        targetScrollProgress = Math.min(Math.max((window.scrollY ?? window.pageYOffset) / maxScroll, 0), 1);
       };
+      onScroll();
 
       const onResize = () => {
+        updateDimensions();
+        onScroll();
         const currentIsMobile = window.innerWidth < 768;
         const currentMaxDpr = currentIsMobile || isLowTier ? 1.25 : 2;
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -156,24 +147,34 @@ export function WpThreeParticleBackground() {
       };
 
       const animate = () => {
-        if (document.hidden || !isHeroVisible) {
+        if (document.hidden) {
           animationId = null;
           return;
         }
         animationId = requestAnimationFrame(animate);
+
+        // Smooth scroll interpolation
+        currentScrollProgress += (targetScrollProgress - currentScrollProgress) * 0.08;
+
+        // Pointer follow
         sphere.rotation.y += (targetY - sphere.rotation.y) * 0.05;
         sphere.rotation.x += (targetX - sphere.rotation.x) * 0.05;
-        sphere.rotation.y += 0.0005;
-        sphere.rotation.x += 0.0002;
-        sphere.position.y = scrollProgress * 5;
-        sphere.position.z = scrollProgress * -10;
+
+        // Continuous ambient rotation throughout the entire page
+        sphere.rotation.y += 0.0012;
+        sphere.rotation.x += 0.0004;
+
+        // Full-page scroll mapping (0% to 100% of page scroll)
+        sphere.position.y = (currentScrollProgress - 0.5) * -12;
+        sphere.position.z = Math.sin(currentScrollProgress * Math.PI) * -8;
+
         const t = Date.now() * 0.0003;
         sphere.scale.setScalar(1 + Math.sin(t) * 0.035);
         renderer.render(scene, camera);
       };
 
       const onVisibilityChange = () => {
-        if (document.hidden || !isHeroVisible) {
+        if (document.hidden) {
           if (animationId !== null) {
             cancelAnimationFrame(animationId);
             animationId = null;
@@ -230,10 +231,6 @@ export function WpThreeParticleBackground() {
           cancelAnimationFrame(animationId);
           animationId = null;
         }
-        if (heroObserver) {
-          heroObserver.disconnect();
-          heroObserver = null;
-        }
         document.removeEventListener("mousemove", onMouseMove);
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("resize", onResize);
@@ -243,6 +240,10 @@ export function WpThreeParticleBackground() {
         material.dispose();
         if (renderer.domElement && renderer.domElement.parentNode === container) {
           container.removeChild(renderer.domElement);
+        }
+        if (typeof window !== "undefined") {
+          // @ts-expect-error clean test hook
+          delete window.__DGS_GLOBE_SPHERE__;
         }
       };
     };

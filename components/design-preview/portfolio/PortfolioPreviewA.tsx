@@ -31,51 +31,6 @@ const hasHumanReadableTitle = (title: string) => {
   return true;
 };
 
-// ZERO-CROP JUSTIFIED EDITORIAL ROW GROUPING ALGORITHM
-// Balanced mixed-aspect rows:
-// - Landscape items: maximum 2 per row (wide enough to appreciate details, min width 560-620px+)
-// - Portrait items: maximum 3 per row (tall, full vertical frame)
-// - Feature paired row: 1 landscape + 1 portrait (max 2 items)
-function buildEditorialRows(items: PortfolioItem[]): PortfolioItem[][] {
-  const rows: PortfolioItem[][] = [];
-  let currentRow: PortfolioItem[] = [];
-
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    const isLand = item.ratio >= 1.2;
-
-    // Standalone ultra-wides (panoramic >= 2.4)
-    if (item.ratio >= 2.4) {
-      if (currentRow.length > 0) {
-        rows.push(currentRow);
-        currentRow = [];
-      }
-      rows.push([item]);
-      continue;
-    }
-
-    if (currentRow.length === 0) {
-      currentRow.push(item);
-      continue;
-    }
-
-    const currentHasLand = currentRow.some((it) => it.ratio >= 1.2);
-    const maxItems = (isLand || currentHasLand) ? 2 : 3;
-
-    if (currentRow.length >= maxItems) {
-      rows.push(currentRow);
-      currentRow = [item];
-    } else {
-      currentRow.push(item);
-    }
-  }
-
-  if (currentRow.length > 0) {
-    rows.push(currentRow);
-  }
-
-  return rows;
-}
 
 const FILTER_TABS = [
   { key: "all", label: "ALL PORTFOLIO" },
@@ -114,7 +69,11 @@ function matchesCategory(item: PortfolioItem, filterKey: string): boolean {
         id.startsWith("media")
       );
     case "campaign":
-      return id.includes("better-ceasons") || title.includes("better ceasons") || alt.includes("campaign");
+      return (
+        (id.includes("better-ceasons") || title.includes("better ceasons") || alt.includes("campaign")) &&
+        !id.includes("home-credit") &&
+        !title.includes("home credit")
+      );
     case "mythological":
       return (
         id.startsWith("shirdi-sai") ||
@@ -181,7 +140,6 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
 
   const activeItem = activeIndex === null ? null : filteredItems[activeIndex];
   const itemCountLabel = useMemo(() => pad(filteredItems.length), [filteredItems.length]);
-  const rows = useMemo(() => buildEditorialRows(filteredItems), [filteredItems]);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -223,8 +181,6 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
     event.currentTarget.style.setProperty("--px", "0");
     event.currentTarget.style.setProperty("--py", "0");
   };
-
-  let globalIndex = 0;
 
   return (
     <main className={styles.page}>
@@ -274,122 +230,114 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
 
       <section className={styles.workSection} aria-label="Portfolio gallery">
         <div className={styles.workContainer}>
-          {rows.map((row, rowIdx) => (
-            <div key={`row-${rowIdx}`} className={styles.editorialRow} data-items={row.length}>
-              {row.map((item) => {
-                const itemIndex = globalIndex++;
-                const isVideo = item.type === "video";
-                const aspect = item.ratio;
-                const delay = `${Math.min(itemIndex % 6, 5) * 40}ms`;
+          {filteredItems.map((item, itemIndex) => {
+            const isVideo = item.type === "video";
+            const aspect = item.ratio;
+            const isLand = aspect >= 1.2;
+            const delay = `${Math.min(itemIndex % 6, 5) * 40}ms`;
 
-                // Resolution-aware feature sizing: ensure CSS max width respects natural width
-                const maxIntrinsicWidth = `${item.sourceWidth}px`;
+            const style = {
+              "--item-ratio": aspect.toFixed(4),
+              "--delay": delay,
+            } as CSSProperties;
 
-                const style = {
-                  "--item-ratio": aspect.toFixed(4),
-                  "--delay": delay,
-                  "--max-intrinsic-w": maxIntrinsicWidth,
-                } as CSSProperties;
+            const isAboveFold = itemIndex < 4;
+            const isLcpCandidate = itemIndex === 0;
 
-                const isAboveFold = itemIndex < 4;
-                const isLcpCandidate = itemIndex === 0;
-
-                return (
-                  <article
-                    key={item.id}
-                    className={styles.work}
-                    style={style}
-                    data-media-kind={isVideo ? "video" : "image"}
-                  >
-                    <button
-                      type="button"
-                      className={styles.mediaButton}
-                      aria-label={item.title ? `View ${item.title}` : `View portfolio item ${itemIndex + 1}`}
-                      onClick={() => setActiveIndex(itemIndex)}
-                      onPointerMove={moveMedia}
-                      onPointerLeave={resetMedia}
-                    >
-                      <span className={styles.mediaFrame}>
-                        {isVideo ? (
-                          <>
-                            <picture className={styles.picture}>
-                              <source
-                                srcSet={item.poster.avif}
-                                type="image/avif"
-                              />
-                              <source
-                                srcSet={item.poster.webp}
-                                type="image/webp"
-                              />
-                              <img
-                                src={item.poster.fallback}
-                                alt={item.alt || "Portfolio video poster"}
-                                width={item.poster.width}
-                                height={item.poster.height}
-                                loading={isAboveFold ? "eager" : "lazy"}
-                                decoding="async"
-                                className={styles.image}
-                              />
-                            </picture>
-                            <span className={styles.videoBadge} aria-hidden="true">
-                              <span>Film</span>
-                            </span>
-                          </>
-                        ) : (
-                          <picture className={styles.picture}>
-                            <source
-                              srcSet={item.variants.avif
-                                .map((v) => `${v.url} ${v.width}w`)
-                                .join(", ")}
-                              type="image/avif"
-                              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                            />
-                            <source
-                              srcSet={item.variants.webp
-                                .map((v) => `${v.url} ${v.width}w`)
-                                .join(", ")}
-                              type="image/webp"
-                              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                            />
-                            <img
-                              src={item.variants.fallback}
-                              alt={
-                                item.alt?.trim() ||
-                                (hasHumanReadableTitle(item.title)
-                                  ? `${item.title} - D'Genius Solutions Creative Project`
-                                  : `D'Genius Solutions Creative Portfolio Project ${pad(itemIndex + 1)}`)
-                              }
-                              width={item.sourceWidth}
-                              height={item.sourceHeight}
-                              loading={isAboveFold ? "eager" : "lazy"}
-                              decoding="async"
-                              fetchPriority={isLcpCandidate ? "high" : "auto"}
-                              className={styles.image}
-                            />
-                          </picture>
-                        )}
-                        <span className={styles.mediaShade} aria-hidden="true" />
-                        <span className={styles.openGlyph} aria-hidden="true">{isVideo ? "▶" : "↗"}</span>
-                      </span>
-                      <span className={styles.workMeta} aria-hidden="true">
-                        <span>{pad(itemIndex + 1)}</span>
-                        <span className={styles.workMetaLine} />
-                        <span>{itemCountLabel}</span>
-                      </span>
-                    </button>
-                    {hasHumanReadableTitle(item.title) ? (
-                      <div className={styles.workCaption}>
-                        <h3 className={styles.workTitle}>{item.title}</h3>
-                        {isVideo && item.alt ? (
-                          <span className={styles.workCategory}>{item.alt}</span>
-                        ) : null}
-                      </div>
+            return (
+              <article
+                key={item.id}
+                className={`${styles.work} ${isLand ? styles.workLandscape : styles.workPortrait}`}
+                style={style}
+                data-media-kind={isVideo ? "video" : "image"}
+              >
+                <button
+                  type="button"
+                  className={styles.mediaButton}
+                  aria-label={item.title ? `View ${item.title}` : `View portfolio item ${itemIndex + 1}`}
+                  onClick={() => setActiveIndex(itemIndex)}
+                  onPointerMove={moveMedia}
+                  onPointerLeave={resetMedia}
+                >
+                  <span className={styles.mediaFrame}>
+                    {isVideo ? (
+                      <>
+                        <picture className={styles.picture}>
+                          <source
+                            srcSet={item.poster.avif}
+                            type="image/avif"
+                          />
+                          <source
+                            srcSet={item.poster.webp}
+                            type="image/webp"
+                          />
+                          <img
+                            src={item.poster.fallback}
+                            alt={item.alt || "Portfolio video poster"}
+                            width={item.poster.width}
+                            height={item.poster.height}
+                            loading={isAboveFold ? "eager" : "lazy"}
+                            decoding="async"
+                            className={styles.image}
+                          />
+                        </picture>
+                        <span className={styles.videoBadge} aria-hidden="true">
+                          <span>Film</span>
+                        </span>
+                      </>
+                    ) : (
+                      <picture className={styles.picture}>
+                        <source
+                          srcSet={item.variants.avif
+                            .map((v) => `${v.url} ${v.width}w`)
+                            .join(", ")}
+                          type="image/avif"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        />
+                        <source
+                          srcSet={item.variants.webp
+                            .map((v) => `${v.url} ${v.width}w`)
+                            .join(", ")}
+                          type="image/webp"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        />
+                        <img
+                          src={item.variants.fallback}
+                          alt={
+                            item.alt?.trim() ||
+                            (hasHumanReadableTitle(item.title)
+                              ? `${item.title} - D'Genius Solutions Creative Project`
+                              : `D'Genius Solutions Creative Portfolio Project ${pad(itemIndex + 1)}`)
+                          }
+                          width={item.sourceWidth}
+                          height={item.sourceHeight}
+                          loading={isAboveFold ? "eager" : "lazy"}
+                          decoding="async"
+                          fetchPriority={isLcpCandidate ? "high" : "auto"}
+                          className={styles.image}
+                        />
+                      </picture>
+                    )}
+                    <span className={styles.mediaShade} aria-hidden="true" />
+                    <span className={styles.openGlyph} aria-hidden="true">{isVideo ? "▶" : "↗"}</span>
+                  </span>
+                  <span className={styles.workMeta} aria-hidden="true">
+                    <span>{pad(itemIndex + 1)}</span>
+                    <span className={styles.workMetaLine} />
+                    <span>{itemCountLabel}</span>
+                  </span>
+                </button>
+                {hasHumanReadableTitle(item.title) ? (
+                  <div className={styles.workCaption}>
+                    <h3 className={styles.workTitle}>{item.title}</h3>
+                    {isVideo && item.alt ? (
+                      <span className={styles.workCategory}>{item.alt}</span>
                     ) : null}
-                  </article>
-                );
-              })}
-            </div>
-          ))}
+                  </div>
+                ) : null}
+              </article>
+            );
+          })}
         </div>
       </section>
 

@@ -356,22 +356,22 @@ const CATEGORY_LABELS = {
 
 // Canonical ordering: 3 Hyundai -> 8 Sundaram -> 2 Clarion -> 4 Better Ceasons -> 7 Shirdi Se Sai -> Home Credit -> Legacy
 const ALL_CANONICAL_VIDEOS = [
-  ...HYUNDAI_VIDEOS,
-  ...SUNDARAM_VIDEOS,
-  ...CLARION_VIDEOS,
-  ...BETTER_CEASONS_VIDEOS,
-  ...SHIRDI_SE_SAI_VIDEOS,
-  Object.assign({}, HOME_CREDIT_VIDEO, { cat: "COMMERCIAL AI FILM / TVC", category: "commercial-film" }),
-  ...LEGACY_PRODUCT_VIDEOS,
-  ...LEGACY_JEWELLERY_VIDEOS,
-  ...LEGACY_FESTIVAL_VIDEOS,
-  ...LEGACY_CONCEPT_VIDEOS
+  ...HYUNDAI_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "automobile", "commercial-film"] })),
+  ...SUNDARAM_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "edtech"] })),
+  ...CLARION_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "fmcg"] })),
+  ...BETTER_CEASONS_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "campaign"] })),
+  ...SHIRDI_SE_SAI_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "mythological"] })),
+  Object.assign({}, HOME_CREDIT_VIDEO, { cat: "COMMERCIAL AI FILM", category: "commercial-film", categories: ["all", "commercial-film", "tvc"] }),
+  ...LEGACY_PRODUCT_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "product"] })),
+  ...LEGACY_JEWELLERY_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "jewellery"] })),
+  ...LEGACY_FESTIVAL_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "festival", "mascot"] })),
+  ...LEGACY_CONCEPT_VIDEOS.map(v => Object.assign({}, v, { categories: ["all", "concept"] }))
 ];
 
 console.log("Total Canonical Videos in Feed:", ALL_CANONICAL_VIDEOS.length);
 
 // -----------------------------------------------------------------------------
-// 2. WRITE EXTRACTED/BOOT-PORTFOLIO-8.JS
+// 2. WRITE EXTRACTED/BOOT-PORTFOLIO-8.JS (UNIFIED VISIBILITY-BASED MASONRY)
 // -----------------------------------------------------------------------------
 function buildBootPortfolio8Js() {
   return `(function(){'use strict';
@@ -384,15 +384,8 @@ function makeThumbUrl(videoUrl){
   return path.replace(/\\.mp4$/i,'-thumb.webp');
 }
 
-var portfolioData = ${JSON.stringify(PORTFOLIO_DATA_CATEGORIES)};
-
-var categoryLabels = ${JSON.stringify(CATEGORY_LABELS)};
-
-// Single canonical ordered list: 17 New Uploads -> 7 Shirdi Se Sai -> Legacy Work
 var allVideos = ${JSON.stringify(ALL_CANONICAL_VIDEOS)};
 
-var currentlyDisplayed = 0;
-var itemsPerLoad = window.matchMedia && window.matchMedia('(max-width: 767px)').matches ? 6 : 10;
 var currentIndex = 0;
 var lightboxHasHistoryState = !1;
 var scrollPositionBeforeLightbox = 0;
@@ -427,7 +420,7 @@ function imageHTML(video, isWide){
     '</video>';
 }
 
-function createCard(video, index, isCaseStudy){
+function createCard(video, index){
   var isWide = !!video.wide;
   var w = video.width || (isWide ? 16 : 9);
   var h = video.height || (isWide ? 9 : 16);
@@ -435,12 +428,17 @@ function createCard(video, index, isCaseStudy){
   var isLand = ratio >= 1.2;
 
   var div = document.createElement('div');
-  div.className = (isCaseStudy ? 'case-study-item' : 'gallery-item') +
+  div.className = 'gallery-item' +
     (isLand ? ' portfolio-item--landscape wide-item' : ' portfolio-item--portrait') +
     (isWide ? ' wide-item' : '');
   div.setAttribute('role', 'button');
   div.setAttribute('tabindex', '0');
   div.setAttribute('aria-label', 'Play ' + video.title);
+  var cats = Array.isArray(video.categories) ? video.categories.join(' ') : (video.categories || video.category || 'all');
+  div.setAttribute('data-categories', cats);
+  div.setAttribute('data-ratio', ratio.toFixed(4));
+  var videoId = (video.url || '').split('/').pop().replace(/\\.[^.]+$/, '');
+  div.setAttribute('data-video-id', videoId);
 
   // ZERO-CROP RULE: Natural source aspect ratio is the authority
   div.style.aspectRatio = w + ' / ' + h;
@@ -450,21 +448,11 @@ function createCard(video, index, isCaseStudy){
   var label = escapeHTML(video.label || video.cat || '');
   var playOverlay = '<div class="play-btn-overlay"><div class="play-btn-circle">' + PLAY_SVG + '</div></div>';
 
-  if (isCaseStudy) {
-    div.innerHTML = '<div class="video-wrapper" style="width:100%;height:100%;position:relative;background:#050505">' +
-      imageHTML(video, isWide) + playOverlay +
-    '</div>' +
-    '<div style="padding:clamp(12px,2vw,15px);background:rgba(0,0,0,0.8)">' +
-      '<p style="font-size:clamp(0.6rem,1.2vw,0.65rem);color:rgba(255,255,255,0.6);margin-bottom:5px;text-transform:uppercase;letter-spacing:clamp(1.5px,0.3vw,2px);font-family:\\'Manrope\\',sans-serif">' + label + '</p>' +
-      '<p style="font-size:clamp(0.85rem,1.8vw,0.95rem);color:#fff;font-weight:700;font-family:\\'Manrope\\',sans-serif;margin:0">' + title + '</p>' +
-    '</div>';
-  } else {
-    div.innerHTML = imageHTML(video, isWide) + playOverlay +
+  div.innerHTML = imageHTML(video, isWide) + playOverlay +
     '<div class="video-overlay">' +
       '<p style="font-size:clamp(0.55rem,1.2vw,0.6rem);font-weight:700;letter-spacing:clamp(1.5px,0.3vw,2px);color:rgba(255,255,255,0.6);margin-bottom:5px;text-transform:uppercase;font-family:\\'Manrope\\',sans-serif">' + label + '</p>' +
       '<h3 style="font-size:clamp(0.75rem,1.5vw,0.85rem);font-weight:700;color:#fff;margin:0;font-family:\\'Manrope\\',sans-serif">' + title + '</h3>' +
     '</div>';
-  }
 
   div.addEventListener('click', function(){ openLightbox(index); });
   div.addEventListener('keydown', function(e){
@@ -494,7 +482,6 @@ function prepareCardVideo(card, priority){
   if(!preview || card.dataset.thumbQueued === '1' || card.dataset.thumbReady === '1') return;
   card.dataset.thumbQueued = '1';
 
-  // Dynamic aspect ratio verification from loaded source metadata
   preview.onloadedmetadata = function(){
     if(preview.videoWidth && preview.videoHeight){
       card.style.aspectRatio = preview.videoWidth + ' / ' + preview.videoHeight;
@@ -509,49 +496,6 @@ function prepareCardVideo(card, priority){
   if(priority) thumbnailQueue.unshift(job);
   else thumbnailQueue.push(job);
   runThumbnailQueue();
-}
-
-function preloadAllPortfolioVideos(){
-  var activeView = document.querySelector('.content-view.active-view');
-  if(!activeView) return;
-  activeView.querySelectorAll('.gallery-item, .case-study-item').forEach(function(card, index){
-    prepareCardVideo(card, index < 8);
-  });
-}
-
-function loadMoreItems(){
-  var mainGallery = document.getElementById('portfolio-gallery');
-  var loadBtn = document.getElementById('load-more-btn');
-  if(!mainGallery || !loadBtn) return;
-  var fragment = document.createDocumentFragment();
-  var start = currentlyDisplayed;
-  var end = Math.min(start + itemsPerLoad, allVideos.length);
-  for(var i = start; i < end; i++){
-    fragment.appendChild(createCard(allVideos[i], i, !1));
-  }
-  mainGallery.appendChild(fragment);
-  mainGallery.querySelectorAll('.gallery-item').forEach(prepareCardVideo);
-  currentlyDisplayed = end;
-  if(currentlyDisplayed >= allVideos.length){
-    loadBtn.textContent = 'ALL LOADED';
-    setTimeout(function(){ loadBtn.style.display = 'none'; }, 1200);
-  } else {
-    loadBtn.textContent = 'LOAD MORE (' + (allVideos.length - currentlyDisplayed) + ' remaining)';
-  }
-}
-
-function renderCategory(categoryKey){
-  if(categoryKey === 'all') return;
-  var container = document.getElementById(categoryKey + '-gallery');
-  if(!container || container.children.length > 0 || !portfolioData[categoryKey]) return;
-  var fragment = document.createDocumentFragment();
-  portfolioData[categoryKey].forEach(function(video){
-    var index = allVideos.findIndex(function(v){ return v.url === video.url; });
-    var enriched = Object.assign({}, video, { label: categoryLabels[categoryKey] || video.cat, category: categoryKey });
-    fragment.appendChild(createCard(enriched, index >= 0 ? index : 0, !0));
-  });
-  container.appendChild(fragment);
-  container.querySelectorAll('.case-study-item').forEach(prepareCardVideo);
 }
 
 function setLightboxVideo(index){
@@ -664,22 +608,28 @@ var portfolioInitialized = !1;
 function initPortfolio(){
   if(portfolioInitialized) return;
   portfolioInitialized = !0;
-  loadMoreItems();
-  preloadAllPortfolioVideos();
 
+  var mainGallery = document.getElementById('portfolio-gallery');
   var loadBtn = document.getElementById('load-more-btn');
-  if(loadBtn){
-    loadBtn.addEventListener('click', function(e){
-      e.preventDefault();
-      loadMoreItems();
+  if(loadBtn) loadBtn.style.display = 'none';
+
+  if(mainGallery){
+    mainGallery.innerHTML = '';
+    var fragment = document.createDocumentFragment();
+    for(var i = 0; i < allVideos.length; i++){
+      fragment.appendChild(createCard(allVideos[i], i));
+    }
+    mainGallery.appendChild(fragment);
+    mainGallery.querySelectorAll('.gallery-item').forEach(function(card, idx){
+      prepareCardVideo(card, idx < 8);
     });
   }
 
   document.querySelectorAll('.portfolio-filter-tab').forEach(function(tab){
     tab.addEventListener('click', function(e){
       e.preventDefault();
-      var categoryKey = tab.getAttribute('href').replace('#', '');
-      var targetId = tab.getAttribute('data-target');
+      var categoryKey = (tab.getAttribute('data-filter') || tab.getAttribute('href') || '').replace('#', '').toLowerCase();
+
       document.querySelectorAll('.portfolio-filter-tab').forEach(function(t){
         t.classList.remove('active');
         t.style.color = 'rgba(255,255,255,0.5)';
@@ -690,13 +640,20 @@ function initPortfolio(){
       tab.style.color = '#ffffff';
       var activeSpan = tab.querySelector('span');
       if(activeSpan) activeSpan.style.opacity = '1';
-      document.querySelectorAll('.content-view').forEach(function(view){
-        view.classList.remove('active-view');
-      });
-      var target = document.getElementById(targetId);
-      if(target){
-        target.classList.add('active-view');
-        renderCategory(categoryKey);
+
+      var mainView = document.getElementById('portfolio-gallery-view');
+      if(mainView){
+        mainView.classList.add('active-view');
+        mainView.style.display = '';
+      }
+
+      if(mainGallery){
+        var items = mainGallery.querySelectorAll('.gallery-item');
+        items.forEach(function(item){
+          var cats = (item.getAttribute('data-categories') || '').split(' ');
+          var matches = (categoryKey === 'all') || (cats.indexOf(categoryKey) !== -1);
+          item.style.display = matches ? '' : 'none';
+        });
       }
     });
   });
@@ -741,35 +698,24 @@ fs.writeFileSync(path.join(ROOT, "lib/wp-exact/extracted/boot-portfolio-8.js"), 
 console.log("✓ Successfully updated lib/wp-exact/extracted/boot-portfolio-8.js");
 
 // -----------------------------------------------------------------------------
-// 3. UPDATE PAGE MIRRORS: AGENCY & DUBAI WITH 12 TABS & 12 VIEWS
+// 3. UPDATE PAGE MIRRORS: AGENCY & DUBAI WITH 12 TABS & SINGLE UNIVERSAL CONTAINER
 // -----------------------------------------------------------------------------
 const NAV_TABS_HTML = `<nav class="portfolio-filters" id="portfolio-filters" role="navigation" aria-label="AI video portfolio navigation">
-<a href="#all" class="portfolio-filter-tab active" data-target="portfolio-gallery-view">ALL PORTFOLIO<span></span></a>
-<a href="#automobile" class="portfolio-filter-tab" data-target="automobile-view">AUTOMOBILE AI<span></span></a>
-<a href="#edtech" class="portfolio-filter-tab" data-target="edtech-view">EDTECH AI<span></span></a>
-<a href="#fmcg" class="portfolio-filter-tab" data-target="fmcg-view">FMCG AI<span></span></a>
-<a href="#commercial-film" class="portfolio-filter-tab" data-target="commercial-film-view">COMMERCIAL AI FILM<span></span></a>
-<a href="#campaign" class="portfolio-filter-tab" data-target="campaign-view">CAMPAIGN AI<span></span></a>
-<a href="#mythological" class="portfolio-filter-tab" data-target="mythological-view">MYTHOLOGICAL AI<span></span></a>
-<a href="#festival" class="portfolio-filter-tab" data-target="festival-view">FESTIVAL VIDEOS<span></span></a>
-<a href="#product" class="portfolio-filter-tab" data-target="product-view">PRODUCT AI<span></span></a>
-<a href="#jewellery" class="portfolio-filter-tab" data-target="jewellery-view">JEWELLERY AI<span></span></a>
-<a href="#concept" class="portfolio-filter-tab" data-target="concept-view">CONCEPT AI<span></span></a>
-<a href="#tvc" class="portfolio-filter-tab" data-target="tvc-view">TVC AI<span></span></a>
+<a href="#all" class="portfolio-filter-tab active" data-filter="all" data-target="portfolio-gallery-view">ALL PORTFOLIO<span></span></a>
+<a href="#automobile" class="portfolio-filter-tab" data-filter="automobile" data-target="automobile-view">AUTOMOBILE AI<span></span></a>
+<a href="#edtech" class="portfolio-filter-tab" data-filter="edtech" data-target="edtech-view">EDTECH AI<span></span></a>
+<a href="#fmcg" class="portfolio-filter-tab" data-filter="fmcg" data-target="fmcg-view">FMCG AI<span></span></a>
+<a href="#commercial-film" class="portfolio-filter-tab" data-filter="commercial-film" data-target="commercial-film-view">COMMERCIAL AI FILM<span></span></a>
+<a href="#campaign" class="portfolio-filter-tab" data-filter="campaign" data-target="campaign-view">CAMPAIGN AI<span></span></a>
+<a href="#mythological" class="portfolio-filter-tab" data-filter="mythological" data-target="mythological-view">MYTHOLOGICAL AI<span></span></a>
+<a href="#festival" class="portfolio-filter-tab" data-filter="festival" data-target="festival-view">FESTIVAL VIDEOS<span></span></a>
+<a href="#product" class="portfolio-filter-tab" data-filter="product" data-target="product-view">PRODUCT AI<span></span></a>
+<a href="#jewellery" class="portfolio-filter-tab" data-filter="jewellery" data-target="jewellery-view">JEWELLERY AI<span></span></a>
+<a href="#concept" class="portfolio-filter-tab" data-filter="concept" data-target="concept-view">CONCEPT AI<span></span></a>
+<a href="#tvc" class="portfolio-filter-tab" data-filter="tvc" data-target="tvc-view">TVC AI<span></span></a>
 </nav>
 <div id="content-container">
-<div id="portfolio-gallery-view" class="content-view active-view"><div id="portfolio-gallery"></div><div style="text-align:center;margin-top:42px"><a href="#load-more" id="load-more-btn" class="dgs-btn dgs-btn-ghost">View More AI Video Work</a></div></div>
-<div id="automobile-view" class="content-view"><div id="automobile-gallery"></div></div>
-<div id="edtech-view" class="content-view"><div id="edtech-gallery"></div></div>
-<div id="fmcg-view" class="content-view"><div id="fmcg-gallery"></div></div>
-<div id="commercial-film-view" class="content-view"><div id="commercial-film-gallery"></div></div>
-<div id="campaign-view" class="content-view"><div id="campaign-gallery"></div></div>
-<div id="mythological-view" class="content-view"><div id="mythological-gallery"></div></div>
-<div id="festival-view" class="content-view"><div id="festival-gallery"></div></div>
-<div id="product-view" class="content-view"><div id="product-gallery"></div></div>
-<div id="jewellery-view" class="content-view"><div id="jewellery-gallery"></div></div>
-<div id="concept-view" class="content-view"><div id="concept-gallery"></div></div>
-<div id="tvc-view" class="content-view"><div id="tvc-gallery"></div></div>
+<div id="portfolio-gallery-view" class="content-view active-view"><div id="portfolio-gallery"></div></div>
 </div>`;
 
 function updatePageMirrorTabs(pagePath) {
@@ -856,20 +802,28 @@ function updateAdsLandingPage() {
 <button type="button" class="dgs-ai-tab" data-filter="tvc">TVC AI</button>
 </div>`;
 
-  // Build grid cards with multi-category mapping
+  // Build grid cards with multi-category mapping (all 56 canonical videos)
   const gridCards = [
     // 1. Hyundai Creta (3) -> automobile, commercial-film
     ...HYUNDAI_VIDEOS.map(v => buildAdsGridArticle(v, "commercial-film")),
-    // 2. Sundaram (8) -> edtech, concept
-    ...SUNDARAM_VIDEOS.map(v => buildAdsGridArticle(v, "concept")),
-    // 3. Clarion (2) -> fmcg, tvc
-    ...CLARION_VIDEOS.map(v => buildAdsGridArticle(v, "tvc")),
-    // 4. Better Ceasons (4) -> campaign, tvc
-    ...BETTER_CEASONS_VIDEOS.map(v => buildAdsGridArticle(v, "tvc")),
+    // 2. Sundaram (8) -> edtech
+    ...SUNDARAM_VIDEOS.map(v => buildAdsGridArticle(v, "")),
+    // 3. Clarion (2) -> fmcg
+    ...CLARION_VIDEOS.map(v => buildAdsGridArticle(v, "")),
+    // 4. Better Ceasons (4) -> campaign (Home Credit strictly excluded!)
+    ...BETTER_CEASONS_VIDEOS.map(v => buildAdsGridArticle(v, "")),
     // 5. Shirdi Se Sai (7) -> mythological
     ...SHIRDI_SE_SAI_VIDEOS.map(v => buildAdsGridArticle(v, "")),
-    // 6. Home Credit -> commercial-film, tvc, campaign
-    buildAdsGridArticle(HOME_CREDIT_VIDEO, "tvc campaign")
+    // 6. Home Credit -> commercial-film, tvc (STRICTLY NO CAMPAIGN!)
+    buildAdsGridArticle(HOME_CREDIT_VIDEO, "tvc"),
+    // 7. Product (5)
+    ...LEGACY_PRODUCT_VIDEOS.map(v => buildAdsGridArticle(v, "")),
+    // 8. Jewellery (11)
+    ...LEGACY_JEWELLERY_VIDEOS.map(v => buildAdsGridArticle(v, "")),
+    // 9. Festival (13)
+    ...LEGACY_FESTIVAL_VIDEOS.map(v => buildAdsGridArticle(v, "mascot")),
+    // 10. Concept (2)
+    ...LEGACY_CONCEPT_VIDEOS.map(v => buildAdsGridArticle(v, ""))
   ].join("\n");
 
   const FILTER_SCRIPT = `<script>

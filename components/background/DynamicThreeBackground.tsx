@@ -18,6 +18,12 @@ export function DynamicThreeBackground() {
     let timer: ReturnType<typeof setTimeout> | null = null;
     let disposed = false;
 
+    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+    if (isDesktop) {
+      setEnabled(true);
+      return;
+    }
+
     const enable = () => {
       if (disposed) return;
       setEnabled(true);
@@ -27,7 +33,7 @@ export function DynamicThreeBackground() {
     };
 
     const schedule = () => {
-      timer = setTimeout(enable, 3500);
+      timer = setTimeout(enable, 600);
     };
 
     if (document.readyState === "complete") schedule();

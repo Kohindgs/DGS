@@ -23,6 +23,7 @@ const THREE_JS_BG_ROUTES = new Set([
   "/services/ai-video-production-agency/",
   "/services/ai-production-dubai-page/",
   "/services/shirdi-se-sai-tak-case-study/",
+  "/ai-production-videos-google-ads-landing-page/",
 ]);
 
 async function loadMirrorOverridesCss(): Promise<string> {
@@ -156,7 +157,24 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
       />
       <InnerMirrorWidgets />
       <DgsLocationFaqBoot />
-      {mountThreeJsBg ? <DynamicThreeBackground /> : null}
+      {mountThreeJsBg ? (
+        <>
+          <div
+            id="global-webgl-background"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100vh",
+              zIndex: 0,
+              pointerEvents: "none",
+              background: "#000",
+            }}
+          />
+          <DynamicThreeBackground />
+        </>
+      ) : null}
     </>
   );
 }
