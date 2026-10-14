@@ -5,12 +5,12 @@ import { useEffect } from "react";
 export function DgsLocationFaqBoot() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>(".dgs-wp-mirror-inner") || document.body;
-    const faqItems = root.querySelectorAll<HTMLElement>(".dgs-faq-item");
+    const faqItems = root.querySelectorAll<HTMLElement>(".dgs-faq-item, .faq-item");
     if (!faqItems.length) return;
 
-    // Initialize accessibility attributes on all FAQ questions (both .dgs-faq-question and .dgs-faq-q)
+    // Initialize accessibility attributes on all FAQ questions
     for (const item of faqItems) {
-      const q = item.querySelector<HTMLElement>(".dgs-faq-question, .dgs-faq-q");
+      const q = item.querySelector<HTMLElement>(".dgs-faq-question, .dgs-faq-q, .faq-question, .faq-q");
       if (q) {
         if (!q.hasAttribute("role")) q.setAttribute("role", "button");
         if (!q.hasAttribute("tabindex")) q.setAttribute("tabindex", "0");
@@ -20,17 +20,19 @@ export function DgsLocationFaqBoot() {
     }
 
     const toggle = (question: HTMLElement) => {
-      const item = question.closest<HTMLElement>(".dgs-faq-item");
+      const item = question.closest<HTMLElement>(".dgs-faq-item, .faq-item");
       if (!item) return;
 
-      const container = item.closest<HTMLElement>(".dgs-faq-container, .dgs-faq") || item.parentElement || root;
+      const container = item.closest<HTMLElement>(".dgs-faq-container, .dgs-faq, .faq-container-single, #webdev-faqs, #faq") || item.parentElement || root;
       const willOpen = !(item.classList.contains("active") || item.classList.contains("on"));
 
       // Sibling closing: Close all other active/on items in this container
-      for (const sibling of container.querySelectorAll<HTMLElement>(".dgs-faq-item")) {
+      for (const sibling of container.querySelectorAll<HTMLElement>(".dgs-faq-item, .faq-item")) {
         if (sibling !== item) {
           sibling.classList.remove("active", "on");
-          sibling.querySelector(".dgs-faq-question, .dgs-faq-q")?.setAttribute("aria-expanded", "false");
+          sibling.querySelector(".dgs-faq-question, .dgs-faq-q, .faq-question, .faq-q")?.setAttribute("aria-expanded", "false");
+          const ans = sibling.querySelector<HTMLElement>(".dgs-faq-answer, .dgs-faq-a, .faq-answer, .faq-a");
+          if (ans) ans.style.maxHeight = "0px";
         }
       }
 
@@ -38,11 +40,15 @@ export function DgsLocationFaqBoot() {
       item.classList.toggle("active", willOpen);
       item.classList.toggle("on", willOpen);
       question.setAttribute("aria-expanded", String(willOpen));
+      const ans = item.querySelector<HTMLElement>(".dgs-faq-answer, .dgs-faq-a, .faq-answer, .faq-a");
+      if (ans) {
+        ans.style.maxHeight = willOpen ? `${ans.scrollHeight + 40}px` : "0px";
+      }
     };
 
     const onClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
-      const q = target?.closest<HTMLElement>(".dgs-faq-question, .dgs-faq-q");
+      const q = target?.closest<HTMLElement>(".dgs-faq-question, .dgs-faq-q, .faq-question, .faq-q");
       if (!q || !root.contains(q)) return;
       event.preventDefault();
       toggle(q);
@@ -51,7 +57,7 @@ export function DgsLocationFaqBoot() {
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       const target = event.target as HTMLElement | null;
-      const q = target?.closest<HTMLElement>(".dgs-faq-question, .dgs-faq-q");
+      const q = target?.closest<HTMLElement>(".dgs-faq-question, .dgs-faq-q, .faq-question, .faq-q");
       if (!q || !root.contains(q)) return;
       event.preventDefault();
       toggle(q);

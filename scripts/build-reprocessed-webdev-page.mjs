@@ -618,12 +618,12 @@ const section11Coverage = `
 // SECTION 12: ONE FAQ SECTION
 // -------------------------------------------------------------
 const faqsHtml = faqs.map((f, i) => `
-  <div class="faq-item">
-    <button class="faq-q faq-question" type="button" aria-expanded="${i === 0 ? 'true' : 'false'}">
+  <div class="faq-item dgs-faq-item">
+    <button class="faq-q faq-question dgs-faq-q dgs-faq-question" type="button" aria-expanded="${i === 0 ? 'true' : 'false'}" onclick="var it=this.closest('.faq-item'); if(it){ it.classList.toggle('active'); var ans=it.querySelector('.faq-a'); if(ans) ans.style.maxHeight = it.classList.contains('active') ? (ans.scrollHeight + 40) + 'px' : '0px'; }">
       <span>${f.q}</span>
       <span class="faq-icon">+</span>
     </button>
-    <div class="faq-a faq-answer" style="${i === 0 ? 'max-height: 400px;' : 'max-height: 0px;'}">
+    <div class="faq-a faq-answer dgs-faq-a dgs-faq-answer" style="${i === 0 ? 'max-height: 400px;' : 'max-height: 0px;'}">
       ${f.a}
     </div>
   </div>
