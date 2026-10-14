@@ -409,7 +409,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
         </div>
 
         {remainingCount > 0 ? (
-          <div style={{ display: "flex", justifyContent: "center", margin: "48px 0 24px" }}>
+          <div className="dgs-load-more-wrap" style={{ display: "flex", justifyContent: "center", margin: "clamp(40px, 5vw, 72px) auto 0" }}>
             <button
               type="button"
               id="load-more-btn"
@@ -419,15 +419,17 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                minHeight: "48px",
-                padding: "0 32px",
+                minHeight: "52px",
+                padding: "0 34px",
                 borderRadius: "999px",
                 background: "rgba(255, 255, 255, 0.08)",
                 border: "1px solid rgba(255, 255, 255, 0.2)",
                 color: "#fff",
-                fontSize: "13px",
+                fontFamily: "'Space Grotesk', 'Manrope', system-ui, sans-serif",
+                fontSize: "14px",
                 fontWeight: 700,
                 letterSpacing: "0.08em",
+                textTransform: "uppercase",
                 cursor: "pointer",
                 transition: "all 0.25s ease"
               }}
