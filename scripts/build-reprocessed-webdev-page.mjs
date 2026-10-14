@@ -5,14 +5,17 @@ const originalRaw = fs.readFileSync("./data/wordpress/mirrors/pages/services__we
 const originalData = JSON.parse(originalRaw);
 
 // Read extracted assets
-const exactForm6Html = fs.readFileSync("./scripts/exact_form6_glass.html", "utf8");
+let exactForm6Html = fs.readFileSync("./scripts/exact_form6_glass.html", "utf8");
+// Remove duplicate id="website-project-form" from the inner div so section carries it cleanly
+exactForm6Html = exactForm6Html.replace('id="website-project-form"', 'class="form-glass-inner"');
+
 const faqs = JSON.parse(fs.readFileSync("./scripts/extracted_faqs.json", "utf8"));
 
 // -------------------------------------------------------------
-// SECTION 1: HERO
+// SECTION 1: HERO — Website Development Company in Mumbai
 // -------------------------------------------------------------
 const section1Hero = `
-<section class="section hero" id="heroVisual">
+<section class="section hero heroVisual" id="hero-section">
   <div class="webdev-container">
     <div class="hero-split">
       <div class="hero-copy">
@@ -21,7 +24,7 @@ const section1Hero = `
         <p class="hero-p">D'Genius Solutions is a premier website development company in Mumbai creating responsive, conversion-focused and SEO-ready websites with WordPress, Next.js, React, HTML5, PHP and SCSS. We unite sitemap planning, UX design, engineering, search readiness, analytics and ongoing website AMC into one seamless, accountable workflow.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#website-project-form">START YOUR WEBSITE PROJECT</a>
-          <a class="btn btn-ghost" href="#recent-work">View Website Projects →</a>
+          <a class="btn btn-ghost" href="#selected-projects">View Website Projects →</a>
         </div>
         <div class="hero-stats">
           <div class="stat"><div class="stat-num">200+ Brands</div><div class="stat-lab">Agency Experience</div></div>
@@ -68,7 +71,8 @@ const section1Hero = `
 // SECTION 2: VERIFIED CLIENTS AND TRUST INDICATORS
 // -------------------------------------------------------------
 const section2Trust = `
-<section class="section" id="proof">
+<section class="section proof" id="trust-indicators">
+  <span id="proof" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Verified Client Trust &amp; Delivery Proof</div>
@@ -110,10 +114,11 @@ const section2Trust = `
 `;
 
 // -------------------------------------------------------------
-// SECTION 3: WEBSITE DEVELOPMENT SERVICES (Consolidated)
+// SECTION 3: WEBSITE DEVELOPMENT SERVICES
 // -------------------------------------------------------------
 const section3Services = `
-<section class="section capability-section" id="website-development-services">
+<section class="section capability-section website-development-services" id="webdev-services">
+  <span id="website-development-services" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Website Development Services</div>
@@ -196,7 +201,8 @@ const section3Services = `
 // SECTION 4: SELECTED WEBSITE PROJECTS (Four authentic case studies)
 // -------------------------------------------------------------
 const section4RecentWork = `
-<section class="section" id="recent-work">
+<section class="section recent-work work-samples-list" id="selected-projects">
+  <span id="recent-work" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Website Development Case Studies</div>
@@ -204,16 +210,16 @@ const section4RecentWork = `
       <p class="p-sub">Examples of how D'Genius Solutions has translated business positioning, content and user journeys into structured, responsive and search-ready website experiences.</p>
     </div>
     <div class="recent-work work-samples-list">
-      <article class="work-project-row">
+      <article class="project-card work-project-row">
         <div class="w-img">
           <img loading="lazy" class="live-preview-image e-lazyloaded" src="https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp" alt="Live preview of HumanXT website" width="1600" height="1000" decoding="async" referrerpolicy="no-referrer" />
           <a aria-label="Open HumanXT live website" class="live-preview-link" href="https://humanxt.com/" rel="noopener noreferrer" target="_blank">Open HumanXT live website</a>
           <div class="work-year">2025</div>
         </div>
         <div class="work-project-body">
-          <div class="work-kicker">Website Revamp • HR &amp; Workforce</div>
+          <div class="project-title work-kicker">Website Revamp • HR &amp; Workforce</div>
           <div class="work-project-index">01 / 04</div>
-          <h3 class="work-client-name">HumanXT</h3>
+          <h3 class="project-client work-client-name">HumanXT</h3>
           <p>HumanXT needed clearer positioning for decision-makers in a competitive HR market. The website revamp reorganised its service catalogue into a credible, enquiry-focused experience for CXOs and HR leaders.</p>
           <div class="work-meta"><span>WordPress</span><span>6–8 weeks</span><span>Discovery, IA, UI/UX, SEO</span></div>
           <div class="work-action-wrap">
@@ -222,16 +228,16 @@ const section4RecentWork = `
         </div>
       </article>
 
-      <article class="work-project-row">
+      <article class="project-card work-project-row">
         <div class="w-img">
           <img loading="lazy" class="live-preview-image e-lazyloaded" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600" alt="Live preview of Weavings website" width="1600" height="1000" decoding="async" referrerpolicy="no-referrer" />
           <a aria-label="Open Weavings live website" class="live-preview-link" href="https://www.weavings.in/" rel="noopener noreferrer" target="_blank">Open Weavings live website</a>
           <div class="work-year">2025</div>
         </div>
         <div class="work-project-body">
-          <div class="work-kicker">Website Revamp • Staffing &amp; Manpower</div>
+          <div class="project-title work-kicker">Website Revamp • Staffing &amp; Manpower</div>
           <div class="work-project-index">02 / 04</div>
-          <h3 class="work-client-name">Weavings</h3>
+          <h3 class="project-client work-client-name">Weavings</h3>
           <p>A modern website structure for manpower services, employer requirements and candidate journeys, designed to support clearer navigation, stronger service discovery and qualified enquiries.</p>
           <div class="work-meta"><span>WordPress</span><span>Conversion UX</span><span>SEO-ready structure</span></div>
           <div class="work-action-wrap">
@@ -240,16 +246,16 @@ const section4RecentWork = `
         </div>
       </article>
 
-      <article class="work-project-row">
+      <article class="project-card work-project-row">
         <div class="w-img">
           <img loading="lazy" class="live-preview-image e-lazyloaded" src="https://www.dgeniussolutions.com/wp-content/uploads/2025/12/katherinesgallery-scaled.webp" alt="Live preview of Katherine's Gallery website" width="1600" height="1000" decoding="async" referrerpolicy="no-referrer" />
           <a aria-label="Open Katherine's Gallery live website" class="live-preview-link" href="https://katherinesgallery.in/" rel="noopener noreferrer" target="_blank">Open Katherine's Gallery live website</a>
           <div class="work-year">2025</div>
         </div>
         <div class="work-project-body">
-          <div class="work-kicker">Website Launch • Beauty &amp; Wellness</div>
+          <div class="project-title work-kicker">Website Launch • Beauty &amp; Wellness</div>
           <div class="work-project-index">03 / 04</div>
-          <h3 class="work-client-name">Katherine's Gallery</h3>
+          <h3 class="project-client work-client-name">Katherine's Gallery</h3>
           <p>An elegant website experience that communicates the brand, presents beauty services clearly and gives visitors a direct route towards enquiries and bookings.</p>
           <div class="work-meta"><span>WordPress</span><span>Brand-led UI</span><span>Booking journey</span></div>
           <div class="work-action-wrap">
@@ -258,16 +264,16 @@ const section4RecentWork = `
         </div>
       </article>
 
-      <article class="work-project-row">
+      <article class="project-card work-project-row">
         <div class="w-img">
-          <img loading="lazy" class="live-preview-image e-lazyloaded" src="/wp-content/uploads/2026/08/better-ceasons-scaled.webp" alt="Live preview of Better Ceasons website" width="1600" height="1000" decoding="async" referrerpolicy="no-referrer" />
+          <img loading="lazy" class="live-preview-image e-lazyloaded" src="https://www.dgeniussolutions.com/wp-content/uploads/2026/08/better-ceasons-scaled.webp" alt="Live preview of Better Ceasons website" width="1600" height="1000" decoding="async" referrerpolicy="no-referrer" />
           <a aria-label="Open Better Ceasons live website" class="live-preview-link" href="https://betterceasons.com/" rel="noopener noreferrer" target="_blank">Open Better Ceasons live website</a>
           <div class="work-year">2026</div>
         </div>
         <div class="work-project-body">
-          <div class="work-kicker">Website Development • Clean Technology</div>
+          <div class="project-title work-kicker">Website Development • Clean Technology</div>
           <div class="work-project-index">04 / 04</div>
-          <h3 class="work-client-name">Better Ceasons</h3>
+          <h3 class="project-client work-client-name">Better Ceasons</h3>
           <p>A modern digital platform designed to communicate Better Ceasons' clean-technology vision, explain its solutions clearly and guide visitors through the brand's technology, impact and partnership journey.</p>
           <div class="work-meta"><span>Next.js</span><span>Headless Development</span><span>Responsive Experience</span></div>
           <div class="work-action-wrap">
@@ -290,10 +296,10 @@ const section4RecentWork = `
 `;
 
 // -------------------------------------------------------------
-// SECTION 5: WHY D'GENIUS SOLUTIONS (Consolidated)
+// SECTION 5: WHY D'GENIUS SOLUTIONS
 // -------------------------------------------------------------
 const section5WhyDgs = `
-<section class="section" id="why-dgs">
+<section class="section why-dgs" id="why-dgs">
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Why D'Genius Solutions</div>
@@ -340,7 +346,7 @@ const section5WhyDgs = `
 // SECTION 6: DEVELOPMENT PROCESS
 // -------------------------------------------------------------
 const section6Process = `
-<section class="section compact-section" id="development-process">
+<section class="section compact-section development-process" id="development-process">
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Development Process</div>
@@ -387,7 +393,8 @@ const section6Process = `
 // SECTION 7: TECHNOLOGY AND PLATFORM CAPABILITIES
 // -------------------------------------------------------------
 const section7Tech = `
-<section class="section" id="tech">
+<section class="section tech" id="tech-stack">
+  <span id="tech" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Technology &amp; Platform Capabilities</div>
@@ -446,7 +453,8 @@ const section7Tech = `
 // SECTION 8: WEBSITE REDESIGN AND MIGRATION
 // -------------------------------------------------------------
 const section8Migration = `
-<section class="section capability-section" id="website-redesign-migration">
+<section class="section capability-section website-redesign-migration" id="redesign-migration">
+  <span id="website-redesign-migration" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Website Redesign &amp; Migration</div>
@@ -488,7 +496,7 @@ const section8Migration = `
 // SECTION 9: SEO, AEO, GEO AND LLM-READY DEVELOPMENT
 // -------------------------------------------------------------
 const section9SeoAeoGeo = `
-<section class="section" id="seo-aeo-geo">
+<section class="section seo-aeo-geo" id="seo-aeo-geo">
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Search &amp; AI Readiness</div>
@@ -525,7 +533,8 @@ const section9SeoAeoGeo = `
 // SECTION 10: WEBSITE MAINTENANCE AND AMC
 // -------------------------------------------------------------
 const section10Amc = `
-<section class="section" id="amc">
+<section class="section amc" id="website-amc">
+  <span id="amc" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Website Maintenance &amp; AMC</div>
@@ -572,7 +581,8 @@ const section10Amc = `
 // SECTION 11: MUMBAI AND INDIA COVERAGE
 // -------------------------------------------------------------
 const section11Coverage = `
-<section class="section" id="mumbai-coverage">
+<section class="section mumbai-coverage" id="coverage-locations">
+  <span id="mumbai-coverage" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="local-panel">
       <div class="local-head">
@@ -609,18 +619,19 @@ const section11Coverage = `
 // -------------------------------------------------------------
 const faqsHtml = faqs.map((f, i) => `
   <div class="faq-item">
-    <button class="faq-q" type="button" aria-expanded="${i === 0 ? 'true' : 'false'}">
+    <button class="faq-q faq-question" type="button" aria-expanded="${i === 0 ? 'true' : 'false'}">
       <span>${f.q}</span>
       <span class="faq-icon">+</span>
     </button>
-    <div class="faq-a" style="${i === 0 ? 'max-height: 400px;' : 'max-height: 0px;'}">
+    <div class="faq-a faq-answer" style="${i === 0 ? 'max-height: 400px;' : 'max-height: 0px;'}">
       ${f.a}
     </div>
   </div>
 `).join("\n");
 
 const section12Faq = `
-<section class="section" id="faq">
+<section class="section faq-section faq" id="webdev-faqs">
+  <span id="faq" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="section-head text-center">
       <div class="section-label"><span class="dot"></span> Frequently Asked Questions</div>
@@ -631,6 +642,41 @@ const section12Faq = `
       ${faqsHtml}
     </div>
   </div>
+  <script>
+  (function() {
+    function initWebdevFaqs() {
+      var container = document.querySelector('#webdev-faqs') || document.querySelector('#faq');
+      if (!container) return;
+      var items = container.querySelectorAll('.faq-item');
+      items.forEach(function(item) {
+        var btn = item.querySelector('.faq-q, .faq-question');
+        var ans = item.querySelector('.faq-a, .faq-answer');
+        if (!btn || !ans) return;
+        btn.onclick = function(e) {
+          e.preventDefault();
+          var isOpen = item.classList.contains('active');
+          items.forEach(function(sib) {
+            sib.classList.remove('active');
+            var sbtn = sib.querySelector('.faq-q, .faq-question');
+            var sans = sib.querySelector('.faq-a, .faq-answer');
+            if (sbtn) sbtn.setAttribute('aria-expanded', 'false');
+            if (sans) sans.style.maxHeight = '0px';
+          });
+          if (!isOpen) {
+            item.classList.add('active');
+            btn.setAttribute('aria-expanded', 'true');
+            ans.style.maxHeight = (ans.scrollHeight + 40) + 'px';
+          }
+        };
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initWebdevFaqs);
+    } else {
+      initWebdevFaqs();
+    }
+  })();
+  </script>
 </section>
 `;
 
@@ -659,7 +705,8 @@ const section13FinalCta = `
 // SECTION 14: EXISTING WEBSITE DEVELOPMENT ENQUIRY FORM
 // -------------------------------------------------------------
 const section14Form = `
-<section class="section form-section" id="form-section">
+<section class="section form-section" id="website-project-form">
+  <span id="form-section" class="scroll-anchor"></span>
   <div class="webdev-container">
     <div class="form-wrapper-center">
       ${exactForm6Html}
@@ -693,7 +740,10 @@ const leadingHtml = originalData.body.substring(0, firstSecIdx);
 
 // Extract modal and scripts after the last section
 const lastSecEndIdx = originalData.body.lastIndexOf("</section>") + 10;
-const trailingHtml = originalData.body.substring(lastSecEndIdx);
+let trailingHtml = originalData.body.substring(lastSecEndIdx);
+
+// Unify all modal/trailing CTA buttons to "START YOUR WEBSITE PROJECT"
+trailingHtml = trailingHtml.replaceAll("Discuss This Service →", "START YOUR WEBSITE PROJECT");
 
 const assembledBody = `${leadingHtml}${fullNewSectionsHtml}${trailingHtml}`;
 
