@@ -1,4 +1,5 @@
 import { chromium } from 'playwright';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
@@ -9,6 +10,7 @@ console.log('Target BASE_URL:', BASE_URL);
 console.log('Artifacts Directory:', ARTIFACTS_DIR);
 
 const results = {
+  activeRelease: {},
   liveQaValues: {},
   acceptanceChecklist: {},
   tests: []
@@ -20,6 +22,81 @@ function recordTest(name, passed, details = '') {
 }
 
 async function run() {
+  // ----------------------------------------------------
+  // STEP 0: INDEPENDENT TYPECHECK & BUILD VALIDATION
+  // ----------------------------------------------------
+  console.log('\n--- Step 0: Independent Typecheck & Build Validation ---');
+  let typecheckPassed = false;
+  try {
+    execSync('npm run typecheck', { stdio: 'pipe', encoding: 'utf8' });
+    typecheckPassed = true;
+    recordTest('Independent Verification: TypeScript Compilation', true, 'Zero type errors');
+  } catch (err) {
+    recordTest('Independent Verification: TypeScript Compilation', false, err.message);
+  }
+
+  let buildPassed = false;
+  try {
+    const buildIdPath = path.join(process.cwd(), '.next', 'BUILD_ID');
+    if (fs.existsSync(buildIdPath)) {
+      const buildId = fs.readFileSync(buildIdPath, 'utf8').trim();
+      buildPassed = !!buildId;
+      recordTest('Independent Verification: Production Build Artifacts', buildPassed, `BUILD_ID: ${buildId}`);
+    } else {
+      recordTest('Independent Verification: Production Build Artifacts', false, '.next/BUILD_ID not found');
+    }
+  } catch (err) {
+    recordTest('Independent Verification: Production Build Artifacts', false, err.message);
+  }
+
+  // ----------------------------------------------------
+  // STEP 1: ACTIVE PRODUCTION RELEASE ON VPS
+  // ----------------------------------------------------
+  console.log('\n--- Step 1: Active Production Release on VPS ---');
+  let vpsSha = '';
+  let vpsBuildId = '';
+  try {
+    const output = execSync(
+      `ssh -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=15 -p 65002 u188101251@147.93.100.126 "cat /home/u188101251/production-app/current/.release-sha && echo '' && cat /home/u188101251/production-app/current/.build-id"`,
+      { encoding: 'utf8' }
+    ).trim();
+    const parts = output.split('\n').map(p => p.trim()).filter(Boolean);
+    vpsSha = parts[0] || '';
+    vpsBuildId = parts[1] || '';
+    results.activeRelease = {
+      sha: vpsSha,
+      buildId: vpsBuildId,
+      expectedShaPrefix: '0f7e8b8'
+    };
+    const shaMatches = vpsSha.startsWith('0f7e8b8');
+    recordTest('VPS Active Release: SHA contains commit 0f7e8b8', shaMatches, `Active SHA: ${vpsSha}, Build: ${vpsBuildId}`);
+  } catch (err) {
+    recordTest('VPS Active Release: SHA contains commit 0f7e8b8', false, err.message);
+  }
+
+  // ----------------------------------------------------
+  // STEP 2: HTTP 200 PROBE ON ALL AFFECTED ROUTES
+  // ----------------------------------------------------
+  console.log('\n--- Step 2: HTTP 200 Probe on Affected Routes ---');
+  const routesToProbe = [
+    '/',
+    '/services/ai-video-production-agency/',
+    '/services/ai-production-dubai-page/',
+    '/ai-production-videos-google-ads-landing-page/',
+    '/portfolio/'
+  ];
+  for (const r of routesToProbe) {
+    try {
+      const res = await fetch(`${BASE_URL}${r}`, { method: 'HEAD' });
+      recordTest(`Route HTTP Status: ${r}`, res.status === 200, `Status: ${res.status}`);
+    } catch (err) {
+      recordTest(`Route HTTP Status: ${r}`, false, err.message);
+    }
+  }
+
+  // ----------------------------------------------------
+  // PLAYWRIGHT BROWSER AUTOMATION
+  // ----------------------------------------------------
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     viewport: { width: 1920, height: 1080 },
@@ -30,9 +107,9 @@ async function run() {
 
   try {
     // =========================================================================
-    // 1. AI VIDEO PRODUCTION AGENCY PAGE (/services/ai-video-production-agency/)
+    // 3. AI VIDEO PRODUCTION AGENCY PAGE (/services/ai-video-production-agency/)
     // =========================================================================
-    console.log('\n--- 1. Testing AI Video Production Page ---');
+    console.log('\n--- Step 3: Testing AI Video Production Page ---');
     await page.goto(`${BASE_URL}/services/ai-video-production-agency/?t=${Date.now()}`, { waitUntil: 'networkidle', timeout: 35000 });
     await page.waitForTimeout(2000);
 
@@ -45,14 +122,28 @@ async function run() {
     const initialHidden = totalCards - initialVisible;
     recordTest('AI Production: Initial Hidden Batch = 44', initialHidden === 44, `Found ${initialHidden}`);
 
-    // Inspect Load More Button DOM & Bounding Box
+    // Inspect Load More Button & CTA Geometry
     const loadMoreBtn = page.locator('#load-more-btn');
     const loadMoreWrap = page.locator('.dgs-load-more-wrap');
+    await loadMoreBtn.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
+
     const isBtnVisible = await loadMoreBtn.isVisible();
     const isWrapVisible = await loadMoreWrap.isVisible();
     recordTest('AI Production: Load More Button Visible on Page', isBtnVisible && isWrapVisible);
 
-    const btnInfo = await page.evaluate(() => {
+    // Verify Thumbnail Images Load & Opacity
+    const thumbInfo = await page.evaluate(() => {
+      const visibleImgs = Array.from(document.querySelectorAll('#portfolio-gallery .gallery-item:not(.is-hidden) img'));
+      return {
+        count: visibleImgs.length,
+        allLoaded: visibleImgs.every(img => img.complete && img.naturalWidth > 0 && img.naturalHeight > 0),
+        allVisible: visibleImgs.every(img => window.getComputedStyle(img).opacity === '1')
+      };
+    });
+    recordTest('AI Production: Thumbnails Loaded with naturalWidth > 0 and Opacity 1', thumbInfo.allLoaded && thumbInfo.allVisible, `Loaded ${thumbInfo.count} images`);
+
+    const initialGeometry = await page.evaluate(() => {
       const btn = document.querySelector('#load-more-btn');
       const wrap = document.querySelector('.dgs-load-more-wrap');
       const gallery = document.querySelector('#portfolio-gallery');
@@ -71,6 +162,7 @@ async function run() {
         btnWidth: bRect.width,
         btnHeight: bRect.height,
         btnTop: bRect.top + window.scrollY,
+        btnBottom: bRect.bottom + window.scrollY,
         btnLeft: bRect.left,
         btnDisplay: bStyle.display,
         btnVisibility: bStyle.visibility,
@@ -79,6 +171,8 @@ async function run() {
         wrapHeight: wRect.height,
         wrapParent: wrap.parentElement ? (wrap.parentElement.id ? '#' + wrap.parentElement.id : '.' + wrap.parentElement.className) : '',
         gapGridToButton: bRect.top - gRect.bottom,
+        ctaTop: cRect ? cRect.top + window.scrollY : null,
+        ctaBottom: cRect ? cRect.bottom + window.scrollY : null,
         gapButtonToCta: cRect ? cRect.top - bRect.bottom : null
       };
     });
@@ -88,24 +182,29 @@ async function run() {
       initialVisible,
       initialHidden,
       loadMoreExists: isBtnVisible ? 'YES' : 'NO',
-      loadMoreRect: `${btnInfo.btnWidth.toFixed(1)} x ${btnInfo.btnHeight.toFixed(1)}`,
-      loadMoreTop: `${btnInfo.btnTop.toFixed(1)} px`,
-      loadMoreDisplay: btnInfo.btnDisplay,
-      loadMoreVisibility: btnInfo.btnVisibility,
-      loadMoreOpacity: btnInfo.btnOpacity,
-      loadMoreText: btnInfo.btnText,
-      gridToButtonGap: `${btnInfo.gapGridToButton.toFixed(1)} px`,
-      buttonToCtaGap: btnInfo.gapButtonToCta ? `${btnInfo.gapButtonToCta.toFixed(1)} px` : 'N/A'
+      loadMoreRect: `${initialGeometry.btnWidth.toFixed(1)} x ${initialGeometry.btnHeight.toFixed(1)}`,
+      loadMoreTop: `${initialGeometry.btnTop.toFixed(1)} px`,
+      loadMoreDisplay: initialGeometry.btnDisplay,
+      loadMoreVisibility: initialGeometry.btnVisibility,
+      loadMoreOpacity: initialGeometry.btnOpacity,
+      loadMoreText: initialGeometry.btnText,
+      gridToButtonGap: `${initialGeometry.gapGridToButton.toFixed(1)} px`,
+      buttonToCtaGap: initialGeometry.gapButtonToCta ? `${initialGeometry.gapButtonToCta.toFixed(1)} px` : 'N/A',
+      ctaTop: `${initialGeometry.ctaTop ? initialGeometry.ctaTop.toFixed(1) : 'N/A'} px`
     };
 
-    recordTest('AI Production: Button Text = "LOAD MORE WORK (44 REMAINING)"', btnInfo.btnText === 'LOAD MORE WORK (44 REMAINING)', `Text: ${btnInfo.btnText}`);
-    recordTest('AI Production: Button Height >= 44 (Actual 52px)', btnInfo.btnHeight >= 44, `Height: ${btnInfo.btnHeight}px`);
-    recordTest('AI Production: Button Width > 0', btnInfo.btnWidth > 0, `Width: ${btnInfo.btnWidth}px`);
-    recordTest('AI Production: Button Display = flex/inline-flex', btnInfo.btnDisplay.includes('flex'), `Display: ${btnInfo.btnDisplay}`);
-    recordTest('AI Production: Button Visibility = visible', btnInfo.btnVisibility === 'visible', `Visibility: ${btnInfo.btnVisibility}`);
-    recordTest('AI Production: Button Opacity = 1', btnInfo.btnOpacity === '1', `Opacity: ${btnInfo.btnOpacity}`);
-    recordTest('AI Production: Load More Wrapper Parent is .dgs-wrap (outside #content-container)', btnInfo.wrapParent.includes('dgs-wrap') && !btnInfo.wrapParent.includes('content-container'), `Parent: ${btnInfo.wrapParent}`);
-    recordTest('AI Production: Gap Grid to Button is 40-72px', btnInfo.gapGridToButton >= 35 && btnInfo.gapGridToButton <= 80, `Gap: ${btnInfo.gapGridToButton.toFixed(1)}px`);
+    recordTest('AI Production: Button Text = "LOAD MORE WORK (44 REMAINING)"', initialGeometry.btnText === 'LOAD MORE WORK (44 REMAINING)', `Text: ${initialGeometry.btnText}`);
+    recordTest('AI Production: Button Height >= 44 (Actual 52px)', initialGeometry.btnHeight >= 44, `Height: ${initialGeometry.btnHeight.toFixed(1)}px`);
+    recordTest('AI Production: Button Width > 0', initialGeometry.btnWidth > 0, `Width: ${initialGeometry.btnWidth.toFixed(1)}px`);
+    recordTest('AI Production: Button Display = flex/inline-flex', initialGeometry.btnDisplay.includes('flex'), `Display: ${initialGeometry.btnDisplay}`);
+    recordTest('AI Production: Button Visibility = visible', initialGeometry.btnVisibility === 'visible', `Visibility: ${initialGeometry.btnVisibility}`);
+    recordTest('AI Production: Button Opacity = 1', initialGeometry.btnOpacity === '1', `Opacity: ${initialGeometry.btnOpacity}`);
+    recordTest('AI Production: Load More Wrapper Parent is .dgs-wrap (outside #content-container)', initialGeometry.wrapParent.includes('dgs-wrap') && !initialGeometry.wrapParent.includes('content-container'), `Parent: ${initialGeometry.wrapParent}`);
+    recordTest('AI Production: Gap Grid to Button is 40-72px', initialGeometry.gapGridToButton >= 35 && initialGeometry.gapGridToButton <= 80, `Gap: ${initialGeometry.gapGridToButton.toFixed(1)}px`);
+
+    // REAL CTA Placement Assertion: CTA must be below Load More
+    const isCtaBelowButtonInitial = initialGeometry.ctaTop !== null && initialGeometry.ctaTop >= initialGeometry.btnBottom;
+    recordTest('AI Production: CTA Sits Strictly Below Load More Button', isCtaBelowButtonInitial, `CTA Top: ${initialGeometry.ctaTop?.toFixed(1)}px, Button Bottom: ${initialGeometry.btnBottom.toFixed(1)}px, Gap: ${initialGeometry.gapButtonToCta?.toFixed(1)}px`);
 
     // Capture AI_PRODUCTION_INITIAL_12_WITH_LOAD_MORE.png
     await loadMoreBtn.scrollIntoViewIfNeeded();
@@ -130,6 +229,21 @@ async function run() {
     const textAfterClick1 = (await loadMoreBtn.innerText()).trim();
     recordTest('AI Production: Click 1 -> 24 Visible', countAfterClick1 === 24, `Visible: ${countAfterClick1}`);
     recordTest('AI Production: Click 1 -> 32 Remaining', textAfterClick1 === 'LOAD MORE WORK (32 REMAINING)', `Button Text: ${textAfterClick1}`);
+
+    // REAL TEST: Verify CTA moves downward as videos expand
+    const ctaAfterClick1 = await page.evaluate(() => {
+      const cta = document.querySelector('#portfolio-cta-section-wrap') || document.querySelector('.dgs-ai-cta-section-wrap');
+      const btn = document.querySelector('#load-more-btn');
+      const cRect = cta ? cta.getBoundingClientRect() : null;
+      const bRect = btn ? btn.getBoundingClientRect() : null;
+      return {
+        ctaTop: cRect ? cRect.top + window.scrollY : 0,
+        btnBottom: bRect ? bRect.bottom + window.scrollY : 0
+      };
+    });
+    const ctaMovedDown = ctaAfterClick1.ctaTop > initialGeometry.ctaTop;
+    const ctaStillBelowButton = ctaAfterClick1.ctaTop >= ctaAfterClick1.btnBottom;
+    recordTest('AI Production: CTA Moves Downward After Click 1', ctaMovedDown && ctaStillBelowButton, `Initial CTA Top: ${initialGeometry.ctaTop?.toFixed(1)}px, New CTA Top: ${ctaAfterClick1.ctaTop.toFixed(1)}px (Delta: +${(ctaAfterClick1.ctaTop - (initialGeometry.ctaTop || 0)).toFixed(1)}px)`);
 
     // Capture AI_PRODUCTION_AFTER_LOAD_MORE_24.png
     await loadMoreBtn.scrollIntoViewIfNeeded();
@@ -203,9 +317,9 @@ async function run() {
     recordTest('AI Production: Reset to ALL -> 12 Visible & 44 Remaining', resetVisible === 12 && resetLoadMoreVisible && resetBtnText.includes('44 REMAINING'), `Visible: ${resetVisible}, BtnText: ${resetBtnText}`);
 
     // =========================================================================
-    // 2. CHECK OTHER TWO AI PRODUCTION ROUTES
+    // 4. CHECK OTHER TWO AI PRODUCTION ROUTES
     // =========================================================================
-    console.log('\n--- 2. Testing Dubai AI Production Page ---');
+    console.log('\n--- Step 4: Testing Dubai AI Production Page ---');
     await page.goto(`${BASE_URL}/services/ai-production-dubai-page/?t=${Date.now()}`, { waitUntil: 'networkidle', timeout: 35000 });
     await page.waitForTimeout(1500);
     const dubaiVisible = await page.locator('#portfolio-gallery .gallery-item:not(.is-hidden)').count();
@@ -214,7 +328,7 @@ async function run() {
     const dubaiLoadMoreText = isDubaiLoadMoreVisible ? (await dubaiLoadMore.innerText()).trim() : '';
     recordTest('Dubai AI Page: 12 Visible & Load More Button Visible with 44 Remaining', dubaiVisible === 12 && isDubaiLoadMoreVisible && dubaiLoadMoreText.includes('44 REMAINING'), `Visible: ${dubaiVisible}, Text: ${dubaiLoadMoreText}`);
 
-    console.log('\n--- 3. Testing Google Ads Landing Page ---');
+    console.log('\n--- Step 5: Testing Google Ads Landing Page ---');
     await page.goto(`${BASE_URL}/ai-production-videos-google-ads-landing-page/?t=${Date.now()}`, { waitUntil: 'networkidle', timeout: 35000 });
     await page.waitForTimeout(1500);
     const adsVisible = await page.locator('#portfolio-gallery .gallery-item:not(.is-hidden)').count();
@@ -224,9 +338,9 @@ async function run() {
     recordTest('Google Ads Landing: 12 Visible & Load More Button Visible with 44 Remaining', adsVisible === 12 && isAdsLoadMoreVisible && adsLoadMoreText.includes('44 REMAINING'), `Visible: ${adsVisible}, Text: ${adsLoadMoreText}`);
 
     // =========================================================================
-    // 4. MAIN /PORTFOLIO/ PAGE LOAD MORE CHECK
+    // 5. MAIN /PORTFOLIO/ PAGE LOAD MORE CHECK
     // =========================================================================
-    console.log('\n--- 4. Testing Main /portfolio/ Page ---');
+    console.log('\n--- Step 6: Testing Main /portfolio/ Page ---');
     await page.goto(`${BASE_URL}/portfolio/?t=${Date.now()}`, { waitUntil: 'networkidle', timeout: 35000 });
     await page.waitForTimeout(1500);
     const mainCards = page.locator('article[data-media-kind]');
@@ -245,14 +359,23 @@ async function run() {
     }
 
     // =========================================================================
-    // 5. HOMEPAGE EXCEPTION CHECK (NO LOAD MORE)
+    // 6. HOMEPAGE EXCEPTION CHECK (NO LOAD MORE)
     // =========================================================================
-    console.log('\n--- 5. Testing Homepage (No Load More) ---');
+    console.log('\n--- Step 7: Testing Homepage (No Load More) ---');
     await page.goto(`${BASE_URL}/?t=${Date.now()}`, { waitUntil: 'networkidle', timeout: 35000 });
     await page.waitForTimeout(1500);
+    const homeCards = page.locator('#portfolio .gallery-item');
+    const homeCardCount = await homeCards.count();
+    recordTest('Homepage: Curated Cards Count 6-9 (Target 8)', homeCardCount >= 6 && homeCardCount <= 9, `Found: ${homeCardCount}`);
+
     const homeLoadMoreBtn = page.locator('#portfolio #load-more-btn');
     const isHomeLoadMoreVisible = await homeLoadMoreBtn.isVisible();
-    recordTest('Homepage: NO Load More Button (Curated Preview Only)', !isHomeLoadMoreVisible);
+    recordTest('Homepage: NO Load More Button (Curated Preview Only)', !isHomeLoadMoreVisible, `Visible: ${isHomeLoadMoreVisible}`);
+
+    const homeCta = page.locator('#portfolio a:has-text("VIEW ALL AI VIDEO WORK")');
+    const isHomeCtaVisible = await homeCta.isVisible();
+    const homeCtaHref = isHomeCtaVisible ? await homeCta.getAttribute('href') : '';
+    recordTest('Homepage: Section CTA links to AI Video Production', isHomeCtaVisible && homeCtaHref?.includes('/services/ai-video-production-agency/'), `Href: ${homeCtaHref}`);
 
   } catch (err) {
     console.error('Error during QA execution:', err);
@@ -261,26 +384,28 @@ async function run() {
     await browser.close();
   }
 
-  // Populate Acceptance Checklist
+  // Populate Acceptance Checklist strictly derived from actual test executions
+  const findTest = (substr) => results.tests.find(t => t.name.toLowerCase().includes(substr.toLowerCase()));
+
   const allTestsPassed = results.tests.every(t => t.passed);
   results.acceptanceChecklist = {
-    'AI PRODUCTION 56 TOTAL': results.tests.find(t => t.name.includes('Total Cards'))?.passed ? 'PASS' : 'FAIL',
-    '12 INITIAL': results.tests.find(t => t.name.includes('Initial Visible Batch'))?.passed ? 'PASS' : 'FAIL',
-    'LOAD MORE VISIBLE': results.tests.find(t => t.name.includes('Load More Button Visible on Page'))?.passed ? 'PASS' : 'FAIL',
-    '44 REMAINING': results.tests.find(t => t.name.includes('44 REMAINING'))?.passed ? 'PASS' : 'FAIL',
-    'CLICK 1 -> 24': results.tests.find(t => t.name.includes('Click 1 -> 24'))?.passed ? 'PASS' : 'FAIL',
-    'CLICK 2 -> 36': results.tests.find(t => t.name.includes('Click 2 -> 36'))?.passed ? 'PASS' : 'FAIL',
-    'CLICK 3 -> 48': results.tests.find(t => t.name.includes('Click 3 -> 48'))?.passed ? 'PASS' : 'FAIL',
-    'CLICK 4 -> 56': results.tests.find(t => t.name.includes('Click 4 -> 56'))?.passed ? 'PASS' : 'FAIL',
-    'BUTTON HIDES AT END': results.tests.find(t => t.name.includes('Button Hides at 0 Remaining'))?.passed ? 'PASS' : 'FAIL',
-    'FILTER RESET': results.tests.find(t => t.name.includes('Reset to ALL'))?.passed ? 'PASS' : 'FAIL',
-    'FESTIVAL LOAD MORE': results.tests.find(t => t.name.includes('FESTIVAL VIDEOS'))?.passed ? 'PASS' : 'FAIL',
-    'CTA BELOW LOAD MORE': 'PASS',
-    'EMPTY BLACK GAP': results.tests.find(t => t.name.includes('Gap Grid to Button'))?.passed ? 'REMOVED' : 'FAIL',
-    'MAIN /PORTFOLIO/ LOAD MORE': results.tests.find(t => t.name.includes('Main /portfolio/: Initial Batch'))?.passed ? 'PASS' : 'FAIL',
-    'HOMEPAGE LOAD MORE': results.tests.find(t => t.name.includes('Homepage: NO Load More'))?.passed ? 'NO / PASS' : 'FAIL',
-    'TYPECHECK': 'PASS',
-    'BUILD': 'PASS',
+    'AI PRODUCTION 56 TOTAL': findTest('Total Cards in DOM = 56')?.passed ? 'PASS' : 'FAIL',
+    '12 INITIAL': findTest('Initial Visible Batch = 12')?.passed ? 'PASS' : 'FAIL',
+    'LOAD MORE VISIBLE': findTest('Load More Button Visible on Page')?.passed ? 'PASS' : 'FAIL',
+    '44 REMAINING': findTest('44 REMAINING')?.passed ? 'PASS' : 'FAIL',
+    'CLICK 1 -> 24': findTest('Click 1 -> 24')?.passed ? 'PASS' : 'FAIL',
+    'CLICK 2 -> 36': findTest('Click 2 -> 36')?.passed ? 'PASS' : 'FAIL',
+    'CLICK 3 -> 48': findTest('Click 3 -> 48')?.passed ? 'PASS' : 'FAIL',
+    'CLICK 4 -> 56': findTest('Click 4 -> 56')?.passed ? 'PASS' : 'FAIL',
+    'BUTTON HIDES AT END': findTest('Button Hides at 0 Remaining')?.passed ? 'PASS' : 'FAIL',
+    'FILTER RESET': findTest('Reset to ALL')?.passed ? 'PASS' : 'FAIL',
+    'FESTIVAL LOAD MORE': findTest('FESTIVAL VIDEOS')?.passed ? 'PASS' : 'FAIL',
+    'CTA BELOW LOAD MORE': (findTest('CTA Sits Strictly Below Load More Button')?.passed && findTest('CTA Moves Downward After Click 1')?.passed) ? 'PASS' : 'FAIL',
+    'EMPTY BLACK GAP': findTest('Gap Grid to Button is 40-72px')?.passed ? 'REMOVED' : 'FAIL',
+    'MAIN /PORTFOLIO/ LOAD MORE': (findTest('Main /portfolio/: Initial Batch')?.passed && findTest('Click Load More reveals next batch')?.passed) ? 'PASS' : 'FAIL',
+    'HOMEPAGE LOAD MORE': findTest('Homepage: NO Load More Button')?.passed ? 'NO / PASS' : 'FAIL',
+    'TYPECHECK': typecheckPassed ? 'PASS' : 'FAIL',
+    'BUILD': buildPassed ? 'PASS' : 'FAIL',
     'LIVE PLAYWRIGHT': allTestsPassed ? 'PASS' : 'FAIL',
     'FINAL STATUS': allTestsPassed ? 'LOAD MORE VISUALLY VERIFIED LIVE' : 'NOT READY'
   };
