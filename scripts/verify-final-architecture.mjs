@@ -113,8 +113,7 @@ async function run() {
     await page.goto(`${BASE_URL}/services/ai-video-production-agency/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.waitForTimeout(1500);
 
-    const aiCards = page.locator('#portfolio-gallery .gallery-item');
-    const initialAiCount = await aiCards.filter({ hasNot: page.locator('.is-hidden') }).count();
+    const initialAiCount = await page.locator('#portfolio-gallery .gallery-item:not(.is-hidden)').count();
     recordTest('AI Production: Initial Visible Batch = 12', initialAiCount === 12, `Found ${initialAiCount}`);
 
     const filterTabs = page.locator('#portfolio-filters .portfolio-filter-tab');
