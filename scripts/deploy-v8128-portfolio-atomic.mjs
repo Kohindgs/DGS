@@ -97,6 +97,7 @@ async function main() {
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/wordpress/content/page-best-digital-marketing-agency-in-mumbai.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/wordpress/content/page-best-digital-marketing-agency-in-mumbai.json`);
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/portfolio/homepage-gallery.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/portfolio/homepage-gallery.json`);
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/portfolio/canonical-ai-videos.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/portfolio/canonical-ai-videos.json`);
+  execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/portfolio/master-portfolio.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/portfolio/master-portfolio.json`);
   execSync(`scp -i C:/Users/Kohin/.ssh/id_ed25519 -o ConnectTimeout=30 -P 65002 data/design-preview/portfolio-media.json u188101251@147.93.100.126:/home/u188101251/production-app/shared/data/design-preview/portfolio-media.json`);
   console.log("✓ Synced page mirrors and portfolio data to shared storage");
 

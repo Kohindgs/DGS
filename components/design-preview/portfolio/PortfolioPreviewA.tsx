@@ -20,7 +20,7 @@ type Props = {
 const pad = (value: number) => String(value).padStart(2, "0");
 
 const hasHumanReadableTitle = (title: string) => {
-  const value = title.trim();
+  const value = title?.trim() || "";
   if (!value) return false;
   if (/^ss[_\s-]*\d+/i.test(value)) return false;
   if (/^img[_\s-]*\d+/i.test(value)) return false;
@@ -31,9 +31,19 @@ const hasHumanReadableTitle = (title: string) => {
   return true;
 };
 
+// PRIMARY WORK DISCIPLINE FILTERS
+const PRIMARY_FILTERS = [
+  { key: "all", label: "ALL WORK" },
+  { key: "ai-video", label: "AI VIDEO" },
+  { key: "social-media", label: "SOCIAL MEDIA" },
+  { key: "branding", label: "BRANDING" },
+  { key: "creative-design", label: "CREATIVE DESIGN" },
+  { key: "other-work", label: "OTHER WORK" },
+] as const;
 
-const FILTER_TABS = [
-  { key: "all", label: "ALL PORTFOLIO" },
+// AI VIDEO SUBFILTERS (revealed only when AI VIDEO is active)
+const AI_SUBFILTERS = [
+  { key: "all-ai", label: "ALL AI VIDEO" },
   { key: "automobile", label: "AUTOMOBILE AI" },
   { key: "edtech", label: "EDTECH AI" },
   { key: "fmcg", label: "FMCG AI" },
@@ -47,93 +57,9 @@ const FILTER_TABS = [
   { key: "tvc", label: "TVC AI" },
 ] as const;
 
-function matchesCategory(item: PortfolioItem, filterKey: string): boolean {
-  if (filterKey === "all") return true;
-  if ("categories" in item && Array.isArray((item as any).categories)) {
-    return (item as any).categories.includes(filterKey);
-  }
-  const id = item.id.toLowerCase();
-  const title = (item.title || "").toLowerCase();
-  const alt = (item.alt || "").toLowerCase();
-
-  switch (filterKey) {
-    case "automobile":
-      return id.includes("hyundai") || title.includes("hyundai") || alt.includes("automobile");
-    case "edtech":
-      return id.includes("sundaram") || title.includes("sundaram") || alt.includes("edtech");
-    case "fmcg":
-      return id.includes("clarion") || title.includes("clarion") || alt.includes("fmcg");
-    case "commercial-film":
-      return (
-        id.includes("hyundai") ||
-        title.includes("hyundai") ||
-        id.includes("home-credit") ||
-        title.includes("home credit") ||
-        id.startsWith("media")
-      );
-    case "campaign":
-      return (
-        (id.includes("better-ceasons") || title.includes("better ceasons") || alt.includes("campaign")) &&
-        !id.includes("home-credit") &&
-        !title.includes("home credit")
-      );
-    case "mythological":
-      return (
-        id.startsWith("shirdi-sai") ||
-        title.includes("sai") ||
-        title.includes("vachaan") ||
-        alt.includes("mythological")
-      );
-    case "festival":
-      return (
-        title.includes("festival") ||
-        title.includes("holi") ||
-        title.includes("diwali") ||
-        title.includes("baisakhi") ||
-        title.includes("easter") ||
-        title.includes("sankranti") ||
-        title.includes("navratri") ||
-        title.includes("lohri") ||
-        title.includes("jayanti") ||
-        alt.includes("festival")
-      );
-    case "product":
-      return (
-        title.includes("mango") ||
-        title.includes("lava") ||
-        title.includes("ice cream") ||
-        title.includes("soya") ||
-        title.includes("chilli") ||
-        alt.includes("product")
-      );
-    case "jewellery":
-      return (
-        title.includes("jewel") ||
-        title.includes("gold") ||
-        title.includes("baanganga") ||
-        alt.includes("jewel")
-      );
-    case "concept":
-      return (
-        id.includes("sundaram") ||
-        title.includes("horse") ||
-        title.includes("magic") ||
-        alt.includes("concept")
-      );
-    case "tvc":
-      return (
-        id.includes("home-credit") ||
-        title.includes("home credit") ||
-        id.includes("clarion") ||
-        id.includes("better-ceasons")
-      );
-    default:
-      return true;
-  }
-}
-
 export function PortfolioPreviewA({ title, industries, items, previewMode = true }: Props) {
-  const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [activePrimaryFilter, setActivePrimaryFilter] = useState<string>("all");
+  const [activeAiSubFilter, setActiveAiSubFilter] = useState<string>("all-ai");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const getBatchSize = () => {
@@ -150,17 +76,97 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
     setVisibleCount(getBatchSize());
   }, []);
 
+  // Compute counts for Primary Filters (to auto-hide any empty filters)
+  const primaryFilterCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      all: items.length,
+      "ai-video": 0,
+      "social-media": 0,
+      branding: 0,
+      "creative-design": 0,
+      "other-work": 0,
+    };
+
+    items.forEach((item) => {
+      const wType = (item as any).workType || (item as any).primaryCategory || (item.type === "video" ? "ai-video" : "creative-design");
+      if (counts[wType] !== undefined) {
+        counts[wType]++;
+      }
+    });
+
+    return counts;
+  }, [items]);
+
+  // Compute counts for AI Subfilters (to auto-hide any empty AI subfilters)
+  const aiItems = useMemo(() => {
+    return items.filter((item) => {
+      const wType = (item as any).workType || (item as any).primaryCategory;
+      return wType === "ai-video" || (item as any).aiVideo === true;
+    });
+  }, [items]);
+
+  const aiSubfilterCounts = useMemo(() => {
+    const counts: Record<string, number> = { "all-ai": aiItems.length };
+    AI_SUBFILTERS.forEach((sub) => {
+      if (sub.key === "all-ai") return;
+      counts[sub.key] = 0;
+    });
+
+    aiItems.forEach((item) => {
+      const cats = Array.isArray((item as any).categories)
+        ? (item as any).categories
+        : [((item as any).category || "")];
+
+      AI_SUBFILTERS.forEach((sub) => {
+        if (sub.key === "all-ai") return;
+        if (cats.includes(sub.key)) {
+          counts[sub.key] = (counts[sub.key] || 0) + 1;
+        }
+      });
+    });
+
+    return counts;
+  }, [aiItems]);
+
+  // Visible Primary Filter Tabs (auto-hide zero-count filters)
+  const visiblePrimaryTabs = useMemo(() => {
+    return PRIMARY_FILTERS.filter((tab) => (primaryFilterCounts[tab.key] || 0) > 0);
+  }, [primaryFilterCounts]);
+
+  // Visible AI Subfilter Tabs (auto-hide zero-count filters)
+  const visibleAiSubTabs = useMemo(() => {
+    return AI_SUBFILTERS.filter((sub) => (aiSubfilterCounts[sub.key] || 0) > 0);
+  }, [aiSubfilterCounts]);
+
+  // Filtered items based on Two-Level Filtering
   const filteredItems = useMemo(() => {
-    if (activeFilter === "all") return items;
-    return items.filter((item) => matchesCategory(item, activeFilter));
-  }, [items, activeFilter]);
+    if (activePrimaryFilter === "all") {
+      return items;
+    }
+
+    if (activePrimaryFilter === "ai-video") {
+      if (activeAiSubFilter === "all-ai") {
+        return aiItems;
+      }
+      return aiItems.filter((item) => {
+        const cats = Array.isArray((item as any).categories)
+          ? (item as any).categories
+          : [((item as any).category || "")];
+        return cats.includes(activeAiSubFilter);
+      });
+    }
+
+    return items.filter((item) => {
+      const wType = (item as any).workType || (item as any).primaryCategory;
+      return wType === activePrimaryFilter;
+    });
+  }, [items, aiItems, activePrimaryFilter, activeAiSubFilter]);
 
   const visibleItems = useMemo(() => {
     return filteredItems.slice(0, visibleCount);
   }, [filteredItems, visibleCount]);
 
   const remainingCount = Math.max(0, filteredItems.length - visibleCount);
-
   const activeItem = activeIndex === null ? null : filteredItems[activeIndex];
   const itemCountLabel = useMemo(() => pad(filteredItems.length), [filteredItems.length]);
 
@@ -232,19 +238,21 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
         </div>
       </section>
 
-      <nav className={styles.filterBar} role="navigation" aria-label="Portfolio category filters">
+      {/* LEVEL 1: PRIMARY WORK DISCIPLINE FILTER BAR */}
+      <nav className={styles.filterBar} role="navigation" aria-label="Portfolio discipline filters">
         <div className={styles.filterScroll}>
-          {FILTER_TABS.map((tab) => (
+          {visiblePrimaryTabs.map((tab) => (
             <button
               key={tab.key}
               type="button"
-              className={`${styles.filterPill} ${activeFilter === tab.key ? styles.filterPillActive : ""}`}
+              className={`${styles.filterPill} ${activePrimaryFilter === tab.key ? styles.filterPillActive : ""}`}
               onClick={() => {
-                setActiveFilter(tab.key);
+                setActivePrimaryFilter(tab.key);
+                setActiveAiSubFilter("all-ai");
                 setActiveIndex(null);
                 setVisibleCount(getBatchSize());
               }}
-              aria-pressed={activeFilter === tab.key}
+              aria-pressed={activePrimaryFilter === tab.key}
             >
               {tab.label}
             </button>
@@ -252,11 +260,34 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
         </div>
       </nav>
 
+      {/* LEVEL 2: AI VIDEO SUBFILTER BAR (Revealed when AI VIDEO is selected) */}
+      {activePrimaryFilter === "ai-video" && visibleAiSubTabs.length > 0 ? (
+        <nav className={styles.subFilterBar} role="navigation" aria-label="AI Video category subfilters">
+          <div className={styles.subFilterScroll}>
+            {visibleAiSubTabs.map((sub) => (
+              <button
+                key={sub.key}
+                type="button"
+                className={`${styles.subFilterPill} ${activeAiSubFilter === sub.key ? styles.subFilterPillActive : ""}`}
+                onClick={() => {
+                  setActiveAiSubFilter(sub.key);
+                  setActiveIndex(null);
+                  setVisibleCount(getBatchSize());
+                }}
+                aria-pressed={activeAiSubFilter === sub.key}
+              >
+                {sub.label}
+              </button>
+            ))}
+          </div>
+        </nav>
+      ) : null}
+
       <section className={styles.workSection} aria-label="Portfolio gallery">
         <div className={styles.workContainer}>
           {visibleItems.map((item, itemIndex) => {
             const isVideo = item.type === "video";
-            const aspect = item.ratio;
+            const aspect = item.ratio || 1.7778;
             const isLand = aspect >= 1.2;
             const delay = `${Math.min(itemIndex % 6, 5) * 40}ms`;
 
@@ -267,6 +298,10 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
 
             const isAboveFold = itemIndex < 4;
             const isLcpCandidate = itemIndex === 0;
+
+            const posterUrl = isVideo
+              ? item.poster?.webp || item.poster?.fallback || ""
+              : (item as any).poster?.webp || (item as any).variants?.fallback || "";
 
             return (
               <article
@@ -288,15 +323,15 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
                       <>
                         <picture className={styles.picture}>
                           <source
-                            srcSet={item.poster.webp}
+                            srcSet={posterUrl}
                             type="image/webp"
                           />
                           <img
-                            src={item.poster.fallback}
-                            data-webp-fallback={item.poster.fallback}
-                            alt={item.alt || "Portfolio video poster"}
-                            width={item.poster.width}
-                            height={item.poster.height}
+                            src={posterUrl}
+                            data-webp-fallback={posterUrl}
+                            alt={item.alt || `${item.title} - D'Genius Solutions Portfolio`}
+                            width={item.poster?.width || 1920}
+                            height={item.poster?.height || 1080}
                             loading={isAboveFold ? "eager" : "lazy"}
                             decoding="async"
                             className={styles.image}
@@ -314,30 +349,34 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
                       </>
                     ) : (
                       <picture className={styles.picture}>
-                        <source
-                          srcSet={item.variants.avif
-                            .map((v) => `${v.url} ${v.width}w`)
-                            .join(", ")}
-                          type="image/avif"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                        />
-                        <source
-                          srcSet={item.variants.webp
-                            .map((v) => `${v.url} ${v.width}w`)
-                            .join(", ")}
-                          type="image/webp"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                        />
+                        {(item as any).variants?.avif?.length ? (
+                          <source
+                            srcSet={(item as any).variants.avif
+                              .map((v: any) => `${v.url} ${v.width}w`)
+                              .join(", ")}
+                            type="image/avif"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                          />
+                        ) : null}
+                        {(item as any).variants?.webp?.length ? (
+                          <source
+                            srcSet={(item as any).variants.webp
+                              .map((v: any) => `${v.url} ${v.width}w`)
+                              .join(", ")}
+                            type="image/webp"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                          />
+                        ) : null}
                         <img
-                          src={item.variants.fallback}
+                          src={(item as any).variants?.fallback || posterUrl}
                           alt={
                             item.alt?.trim() ||
                             (hasHumanReadableTitle(item.title)
                               ? `${item.title} - D'Genius Solutions Creative Project`
                               : `D'Genius Solutions Creative Portfolio Project ${pad(itemIndex + 1)}`)
                           }
-                          width={item.sourceWidth}
-                          height={item.sourceHeight}
+                          width={item.sourceWidth || 1920}
+                          height={item.sourceHeight || 1080}
                           loading={isAboveFold ? "eager" : "lazy"}
                           decoding="async"
                           fetchPriority={isLcpCandidate ? "high" : "auto"}
@@ -348,17 +387,19 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
                     <span className={styles.mediaShade} aria-hidden="true" />
                     <span className={styles.openGlyph} aria-hidden="true">{isVideo ? "▶" : "↗"}</span>
                   </span>
+
                   <span className={styles.workMeta} aria-hidden="true">
                     <span>{pad(itemIndex + 1)}</span>
                     <span className={styles.workMetaLine} />
                     <span>{itemCountLabel}</span>
                   </span>
                 </button>
+
                 {hasHumanReadableTitle(item.title) ? (
                   <div className={styles.workCaption}>
                     <h3 className={styles.workTitle}>{item.title}</h3>
-                    {isVideo && item.alt ? (
-                      <span className={styles.workCategory}>{item.alt}</span>
+                    {item.client ? (
+                      <span className={styles.workCategory}>{item.client}</span>
                     ) : null}
                   </div>
                 ) : null}
@@ -366,6 +407,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
             );
           })}
         </div>
+
         {remainingCount > 0 ? (
           <div style={{ display: "flex", justifyContent: "center", margin: "48px 0 24px" }}>
             <button
@@ -396,6 +438,7 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
         ) : null}
       </section>
 
+      {/* LIGHTBOX / VIEWER */}
       {activeItem && activeIndex !== null ? (
         <div
           className={styles.viewer}
@@ -431,34 +474,40 @@ export function PortfolioPreviewA({ title, industries, items, previewMode = true
             <figure className={styles.viewerFigure}>
               {activeItem.type === "video" ? (
                 <video
-                  poster={activeItem.poster.fallback}
+                  poster={activeItem.poster?.fallback}
                   controls
                   autoPlay
                   playsInline
                   preload="metadata"
                   className={styles.viewerImage}
+                  style={{ maxHeight: "82vh", maxWidth: "90vw", objectFit: "contain" }}
                 >
-                  <source src={activeItem.sources.webm} type="video/webm" />
-                  <source src={activeItem.sources.mp4} type="video/mp4" />
+                  {activeItem.sources?.webm ? <source src={activeItem.sources.webm} type="video/webm" /> : null}
+                  {activeItem.sources?.mp4 ? <source src={activeItem.sources.mp4} type="video/mp4" /> : null}
                 </video>
               ) : (
                 <picture>
-                  <source
-                    srcSet={activeItem.variants.avif
-                      .map((v) => `${v.url} ${v.width}w`)
-                      .join(", ")}
-                    type="image/avif"
-                  />
-                  <source
-                    srcSet={activeItem.variants.webp
-                      .map((v) => `${v.url} ${v.width}w`)
-                      .join(", ")}
-                    type="image/webp"
-                  />
+                  {(activeItem as any).variants?.avif?.length ? (
+                    <source
+                      srcSet={(activeItem as any).variants.avif
+                        .map((v: any) => `${v.url} ${v.width}w`)
+                        .join(", ")}
+                      type="image/avif"
+                    />
+                  ) : null}
+                  {(activeItem as any).variants?.webp?.length ? (
+                    <source
+                      srcSet={(activeItem as any).variants.webp
+                        .map((v: any) => `${v.url} ${v.width}w`)
+                        .join(", ")}
+                      type="image/webp"
+                    />
+                  ) : null}
                   <img
-                    src={activeItem.variants.fallback}
-                    alt={activeItem.alt || ""}
+                    src={(activeItem as any).variants?.fallback || (activeItem as any).url}
+                    alt={activeItem.alt || activeItem.title || ""}
                     className={styles.viewerImage}
+                    style={{ maxHeight: "84vh", maxWidth: "90vw", objectFit: "contain" }}
                   />
                 </picture>
               )}
