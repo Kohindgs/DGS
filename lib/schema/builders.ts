@@ -272,21 +272,29 @@ export function articleSchema(input: {
 }
 
 export function videoObjectSchema(input: {
+  id?: string;
   name: string;
   description: string;
   thumbnailUrl: string;
   uploadDate: string;
   contentUrl?: string;
   embedUrl?: string;
+  publisherId?: string;
+  partOfWebPageId?: string;
+  duration?: string;
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "VideoObject",
+    ...(input.id ? { "@id": input.id } : {}),
     name: cleanSchemaText(input.name),
     description: cleanSchemaText(input.description),
     thumbnailUrl: [absoluteUrl(input.thumbnailUrl)],
     uploadDate: input.uploadDate,
     ...(input.contentUrl ? { contentUrl: absoluteUrl(input.contentUrl) } : {}),
     ...(input.embedUrl ? { embedUrl: input.embedUrl } : {}),
+    ...(input.publisherId ? { publisher: { "@id": input.publisherId } } : {}),
+    ...(input.partOfWebPageId ? { isPartOf: { "@id": input.partOfWebPageId } } : {}),
+    ...(input.duration ? { duration: input.duration } : {}),
   };
 }

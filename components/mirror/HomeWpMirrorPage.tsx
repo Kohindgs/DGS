@@ -12,7 +12,8 @@ import {
 import { parseHtmlLinkTag } from "@/lib/wordpress/native-inner-fixes";
 import { loadWpExtractedAssets } from "@/lib/wp-exact/load-extracted-assets";
 import { buildCreativeGalleryHtml, buildHomeFormHtml } from "@/lib/wp-exact/build-mirror-swap-html";
-import { buildHomepageMirrorJsonLd } from "@/lib/schema/homepage-mirror-schemas";
+import { buildHomepageNativeSchemas } from "@/lib/schema/homepage-native-schemas";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { DgsWpBoot } from "@/components/wp-exact/DgsWpBoot";
 
 const WP_CDN_ORIGIN = "https://www.dgeniussolutions.com";
@@ -42,7 +43,7 @@ export async function HomeWpMirrorPage() {
     .replace(NATIVE_CREATIVE_GALLERY_MOUNT, buildCreativeGalleryHtml(gallery.items))
     .replace(NATIVE_HOME_FORM_MOUNT, buildHomeFormHtml());
 
-  const jsonLdScripts = buildHomepageMirrorJsonLd({
+  const homeSchemas = buildHomepageNativeSchemas({
     route: route!,
     blocks: allBlocks["/"]?.blocks || [],
   });
@@ -61,9 +62,7 @@ export async function HomeWpMirrorPage() {
         fetchPriority="high"
       />
 
-      {jsonLdScripts.map((schema, index) => (
-        <script key={`schema-${index}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema }} />
-      ))}
+      <JsonLd id="page-jsonld" value={homeSchemas} />
 
       {prepared.fontLinks?.map((linkHtml, index) => {
         const parsed = parseHtmlLinkTag(linkHtml);

@@ -6,13 +6,13 @@ import {
   faqSchema,
   organizationSchema,
   serviceSchema,
-  videoObjectSchema,
   webPageSchema,
   websiteSchema,
 } from "@/lib/schema/builders";
 import { ORGANIZATION_ID, WEBSITE_ID, verifiedOrganization } from "@/lib/schema/entity";
 import type { BreadcrumbItem } from "@/lib/schema/builders";
 import { getPageSeoOverride } from "@/lib/seo/page-overrides";
+import { buildVerifiedAiVideoSchemas } from "@/lib/schema/ai-video-inventory";
 
 export function buildGlobalEntitySchemas(): Record<string, unknown>[] {
   return [
@@ -129,36 +129,7 @@ export function buildRouteSchemas(input: {
   ]);
 
   if (aiVideoSchemaPaths.has(path)) {
-    schemas.push(
-      videoObjectSchema({
-        name: "Hyundai Creta — Feature & Technology Explainer",
-        description: "AI-powered automotive feature explainer showcasing advanced tech highlights for Hyundai Creta.",
-        thumbnailUrl: "/media/portfolio/posters/hyundai_creta_1_poster.webp",
-        uploadDate: "2026-10-12",
-        contentUrl: "/media/portfolio/videos/hyundai_creta_1.mp4",
-      }),
-      videoObjectSchema({
-        name: "Sundaram E-Learning — Interactive Curriculum Animation",
-        description: "AI interactive curriculum video animation for primary education produced for Sundaram E-Learning.",
-        thumbnailUrl: "/media/portfolio/posters/sundaram_bal_3_1_poster.webp",
-        uploadDate: "2026-10-12",
-        contentUrl: "/media/portfolio/videos/sundaram_bal_3_1.mp4",
-      }),
-      videoObjectSchema({
-        name: "Clarion Agro — Jasmine Atta Campaign",
-        description: "High-engagement AI commercial campaign for Clarion Agro Jasmine Atta.",
-        thumbnailUrl: "/media/portfolio/posters/clarion_jasmine_atta_hindi_poster.webp",
-        uploadDate: "2026-10-12",
-        contentUrl: "/media/portfolio/videos/clarion_jasmine_atta_hindi.mp4",
-      }),
-      videoObjectSchema({
-        name: "Better Ceasons — 1000 Saal Ka Tenant Ad Campaign",
-        description: "AI narrative commercial series crafted for Better Ceasons brand marketing.",
-        thumbnailUrl: "/media/portfolio/posters/better_ceasons_tenant_poster.webp",
-        uploadDate: "2026-10-12",
-        contentUrl: "/media/portfolio/videos/better_ceasons_tenant.mp4",
-      }),
-    );
+    schemas.push(...buildVerifiedAiVideoSchemas(path));
   }
 
   return schemas;
