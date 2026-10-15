@@ -8,12 +8,15 @@ function closestFaqItem(target: EventTarget | null): HTMLElement | null {
 
 function setAnswerOpen(item: HTMLElement, open: boolean) {
   const answer = item.querySelector<HTMLElement>(".faq-a");
+  const question = item.querySelector<HTMLElement>(".faq-q, .faq-item button");
   item.classList.toggle("active", open);
+  if (question) question.setAttribute("aria-expanded", String(open));
   if (!answer) return;
-  if (open) {
-    answer.style.maxHeight = `${Math.max(answer.scrollHeight, 1)}px`;
+  const isGrid = window.getComputedStyle(answer).display === "grid";
+  if (isGrid) {
+    answer.style.maxHeight = "";
   } else {
-    answer.style.maxHeight = "0px";
+    answer.style.maxHeight = open ? `${Math.max(answer.scrollHeight, 1)}px` : "0px";
   }
 }
 
@@ -46,7 +49,7 @@ export function InnerMirrorWidgets() {
           if (item) {
             event.preventDefault();
             const shouldOpen = !item.classList.contains("active");
-            const container = item.closest(".faq-container") || root;
+            const container = item.closest(".faq-container, .faq-list, .dgs-faq-container, #faq, #webdev-faqs") || root;
             for (const other of container.querySelectorAll<HTMLElement>(".faq-item.active")) {
               if (other !== item) setAnswerOpen(other, false);
             }
