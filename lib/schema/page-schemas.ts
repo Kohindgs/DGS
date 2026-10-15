@@ -100,7 +100,8 @@ export function buildRouteSchemas(input: {
     schemas.push(breadcrumbSchema(breadcrumbs));
   }
 
-  const pageFaqs = extractFaqsFromBlocks(blocks);
+  const blockFaqs = extractFaqsFromBlocks(blocks);
+  const pageFaqs = blockFaqs.length > 0 ? blockFaqs : (route.faqItems || []);
   const faqSchemaExcludedPaths = new Set(["/better-ceasons-case-study/"]);
   if (pageFaqs.length > 0 && !faqSchemaExcludedPaths.has(path)) {
     schemas.push(faqSchema(pageFaqs));
@@ -174,7 +175,11 @@ function cleanFaqQuestion(text: string): string {
 
 function isFaqHeading(text: string): boolean {
   const normalized = text.replace(/\s+/g, " ").trim();
-  return /^(?:frequently asked questions|common questions)$/i.test(normalized) || /\bfaqs?$/i.test(normalized);
+  return (
+    /^(?:frequently asked questions|common questions)$/i.test(normalized) ||
+    /\bfaqs?$/i.test(normalized) ||
+    /^everything about ai video production$/i.test(normalized)
+  );
 }
 
 function extractFaqsFromBlocks(blocks: ContentBlock[]) {
