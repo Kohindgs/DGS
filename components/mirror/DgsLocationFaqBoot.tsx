@@ -63,11 +63,25 @@ export function DgsLocationFaqBoot() {
       toggle(q);
     };
 
+    const onPreviewClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const pill = target?.closest<HTMLElement>(".preview-scroll-pill");
+      if (!pill || !root.contains(pill)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const wImg = pill.closest<HTMLElement>(".w-img");
+      if (wImg) {
+        wImg.classList.toggle("is-scrolling");
+      }
+    };
+
     root.addEventListener("click", onClick);
+    root.addEventListener("click", onPreviewClick);
     root.addEventListener("keydown", onKey);
 
     return () => {
       root.removeEventListener("click", onClick);
+      root.removeEventListener("click", onPreviewClick);
       root.removeEventListener("keydown", onKey);
     };
   }, []);
