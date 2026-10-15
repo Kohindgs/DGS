@@ -128,11 +128,20 @@ echo "Extracting release package..."
 tar -xzf "/home/u188101251/production-app/tmp/${tarName}" -C "$NEW_REL"
 rm -f "/home/u188101251/production-app/tmp/${tarName}"
 
-echo "Syncing reprocessed webdev mirror to persistent shared data..."
+echo "Syncing reprocessed webdev and dubai mirrors to persistent shared data..."
 mkdir -p /home/u188101251/production-app/shared/data/wordpress/mirrors/pages
+mkdir -p /home/u188101251/production-app/shared/data/migration
 if [ -f "$NEW_REL/data/wordpress/mirrors/pages/services__website-development-amc.json" ]; then
   cp "$NEW_REL/data/wordpress/mirrors/pages/services__website-development-amc.json" "/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/services__website-development-amc.json"
   echo "✓ Synced services__website-development-amc.json to shared storage"
+fi
+if [ -f "$NEW_REL/data/wordpress/mirrors/pages/services__ai-production-dubai-page.json" ]; then
+  cp "$NEW_REL/data/wordpress/mirrors/pages/services__ai-production-dubai-page.json" "/home/u188101251/production-app/shared/data/wordpress/mirrors/pages/services__ai-production-dubai-page.json"
+  echo "✓ Synced services__ai-production-dubai-page.json to shared storage"
+fi
+if [ -f "$NEW_REL/data/migration/nextjs-route-registry.generated.json" ]; then
+  cp "$NEW_REL/data/migration/nextjs-route-registry.generated.json" "/home/u188101251/production-app/shared/data/migration/nextjs-route-registry.generated.json"
+  echo "✓ Synced nextjs-route-registry.generated.json to shared storage"
 fi
 
 echo "Configuring persistent symlinks..."
