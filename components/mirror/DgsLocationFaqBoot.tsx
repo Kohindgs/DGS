@@ -72,7 +72,14 @@ export function DgsLocationFaqBoot() {
       event.stopPropagation();
       const wImg = pill.closest<HTMLElement>(".w-img");
       if (wImg) {
-        wImg.classList.toggle("is-scrolling");
+        const isScrolling = wImg.classList.toggle("is-scrolling");
+        pill.innerHTML = isScrolling ? "<span>❚❚</span> Reset" : "<span>▶</span> Preview Scroll";
+        const img = wImg.querySelector<HTMLImageElement>(".live-preview-image");
+        if (img && img.naturalHeight && img.naturalWidth) {
+          const renderedH = (img.naturalHeight / img.naturalWidth) * wImg.clientWidth;
+          const maxScroll = Math.max(0, renderedH - wImg.clientHeight);
+          wImg.style.setProperty("--preview-max-scroll", `-${maxScroll.toFixed(2)}px`);
+        }
       }
     };
 
