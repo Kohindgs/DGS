@@ -62,6 +62,19 @@ app
           res.setHeader('Content-Type', 'image/avif');
         } else if (urlPath.endsWith('.webp')) {
           res.setHeader('Content-Type', 'image/webp');
+        } else if (urlPath.endsWith('.mp4')) {
+          res.setHeader('Content-Type', 'video/mp4');
+          res.setHeader('Accept-Ranges', 'bytes');
+        } else if (urlPath.endsWith('.webm')) {
+          const originalSetHeader = res.setHeader.bind(res);
+          res.setHeader = (key, value) => {
+            if (typeof key === 'string' && key.toLowerCase() === 'content-type') {
+              return originalSetHeader('Content-Type', 'video/webm');
+            }
+            return originalSetHeader(key, value);
+          };
+          res.setHeader('Content-Type', 'video/webm');
+          res.setHeader('Accept-Ranges', 'bytes');
         }
         if (!isStaticAsset) {
           const originalSetHeader = res.setHeader.bind(res);

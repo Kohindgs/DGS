@@ -1,0 +1,10 @@
+<IfModule mod_mime.c>
+  AddType video/mp4 .mp4
+  AddType video/webm .webm
+  AddType image/webp .webp
+  AddType image/avif .avif
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set Accept-Ranges bytes
+</IfModule>
