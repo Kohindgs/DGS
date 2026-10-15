@@ -1,64 +1,102 @@
-# Deploy the new DGS build to the dimgrey demo link
+# Deploy / status — dimgrey demo (`dimgrey-goat-473970.hostingersite.com`)
 
-**What this is:** exact, copy-paste steps to put the new spatial-universe build (the one
-running on the Arena preview) onto `dimgrey-goat-473970.hostingersite.com`, replacing the old
-cinematic prototype.
-
-**Why the Arena agent can't do it directly:** this sandbox has no Hostinger/SSH access and its
-network cannot reach the dimgrey host (connection refused at egress). Deployment must run from
-Hostinger's side. Everything below is prepared so the job is minimal.
+**Last verified:** 2026-08-27 (live HTTP + Hostinger SSH)
 
 ---
 
-## Step 0 — Confirm the build is ready
+## What is live right now
 
-The new build is committed on branch `arena/01a034c2-dgs`. It already includes the Hostinger
-Node config that the old site used:
+The demo is **not** the old cinematic 3D prototype and **not** the `Kohindgs/DGS` `cursor/dgs-next-mirror-755d` HTML-mirror branch.
 
-- `.htaccess` → `PassengerAppType node`, `PassengerStartupFile server.js`
-- `server.js` → Next.js production server
-- `package.json` → `next`, `react`, `react-dom`, plus `three`, `@react-three/fiber`, `gsap`
+It runs a **separate Next.js 16 rebuild** (`dgs-nextjs`) deployed via **Hostinger Builds**:
 
-It builds clean (`npm run build` passes, zero errors) and serves correctly with `next start`.
+| Item | Value |
+|---|---|
+| Active release | `releases/5c39c859` (Passenger `PassengerAppRoot`) |
+| Build date | 2026-08-26 |
+| Stack | Next **16.3.3**, React **19**, TypeScript |
+| Routes in registry | **105** (81 same-URL, 5 protected, 17 sitemap-review) |
+| Tier-0 rebuilt pages | 5 flagship services (SEO, AEO, GEO, LLM, AI Video) |
+| Architecture | Semantic content blocks + `app/[...slug]` catch-all (not WP HTML dumps) |
+| Staging | `X-Robots-Tag: noindex, nofollow` on entire demo (correct for preview) |
+
+### Verified live URLs (200)
+
+- `/` — custom hero (`page.module.css`), correct WP H1/title
+- `/services/seo-services-in-mumbai/`
+- `/services/aeo-services-in-mumbai/` — title correct; tier0 data already flags WP canonical bug
+- `/services/geo/`
+- `/services/llm-seo-service/`
+- `/services/ai-video-production-agency/` (tier-0)
+- `/blogs/`, `/blogs/what-is-llm-seo/`
+- `/our-services/`, `/contact-us/`, `/about-us/`
+
+### Stale folder (ignore)
+
+`domains/.../nodejs/` — old Aug-25 cinematic/wp-dump build. **Not serving traffic.** Passenger points at `releases/5c39c859`.
 
 ---
 
-## Option A — Hostinger Git deploy (recommended, if the old site came from GitHub)
+## Relationship to GitHub `Kohindgs/DGS`
 
-1. In Hostinger **hPanel → Websites → (dimgrey site) → Git**, confirm a repository is connected.
-   The old prototype was almost certainly deployed from `github.com/Kohindgs/DGS`, so this repo
-   should already be linked.
-2. Set the **branch to deploy** to `arena/01a034c2-dgs` (or point it at whichever branch you
-   want live — merge into `main` only when you're ready).
-3. In Hostinger Git settings, make sure **Build command** is `npm install && npm run build`
-   (Hostinger runs this before Passenger starts the app).
-4. Trigger **Deploy**. Hostinger pulls the repo, installs, builds, and restarts `server.js`.
-5. Hard-refresh `dimgrey-goat-473970.hostingersite.com` to clear cache.
+| | **dimgrey live** | **GitHub mirror branch** (`cursor/dgs-next-mirror-755d`) |
+|---|---|---|
+| Source | Hostinger Builds `last-source` / release tarball | GitHub PR #15 |
+| Next version | 16 | 14 |
+| Content model | Parsed content blocks | Synced WP HTML + CSS |
+| Routes | 105 registry-driven | 94 generated static pages |
+| SEO fixes | `tier0-routes.json` + `desiredCanonicalPath` | `redirects.json` + canonical overrides |
+
+**Recommendation:** Treat **dimgrey** as the primary Next rebuild target. Merge ideas from PR #15 (redirect list, sync automation) into the dimgrey codebase rather than replacing dimgrey with the GitHub mirror wholesale.
 
 ---
 
-## Option B — Manual upload
+## Deploy / update dimgrey
 
-1. Build locally: `npm install && npm run build`.
-2. Upload the **entire project folder** (including `.next`, `package.json`, `package-lock.json`,
-   `server.js`, `.htaccess`, `public/`) to the dimgrey site's document root via Hostinger **File
-   Manager / FTP**.
-3. In hPanel, ensure the domain's **Node.js / Passenger** app points at `server.js`.
-4. Restart the Node app in hPanel.
+### Latest deploy (2026-08-27)
+
+- **26 SEO redirects** added to `data/migration/redirects.approved.json` (AEO, GEO, LLM, SEO shortcuts, city slug fixes, junk routes)
+- **Migration baseline** re-run from live WordPress (`npm run migration:baseline`)
+- **91 static pages** built and uploaded to `releases/5c39c859`
+- **Verified live:** `/services/aeo/` → AEO service, `/seo-services/` → Mumbai SEO, AEO canonical correct
+- **`~/rebuild.sh`** updated to point at `releases/5c39c859` (was stale `nodejs/` path)
+
+### Option A — Hostinger Builds (current method)
+
+1. hPanel → **Websites → dimgrey → Builds**
+2. Push source to the connected repo / upload build
+3. Build command: `npm run check` or `npm install && npm run build`
+4. Startup: `server.js` via Passenger (already configured in `public_html/.htaccess`)
+
+### Option B — Manual rebuild on server
+
+```bash
+export PATH=/opt/alt/alt-nodejs22/root/bin:$PATH
+cd ~/domains/dimgrey-goat-473970.hostingersite.com/releases/5c39c859
+npm install
+npm run build
+touch tmp/restart.txt   # Passenger restart
+```
+
+Or use existing `~/rebuild.sh` (points at old `nodejs/` path — **update it** to `releases/5c39c859`).
 
 ---
 
 ## After deploy — verify
 
-- Load `dimgrey-goat-473970.hostingersite.com` → new dark spatial-universe hero with the exact
-  WordPress H1 "Full Service Digital Marketing Agency In Mumbai".
-- Scroll slowly → the camera travels through the universe (first-scroll transition).
-- Check reduced-motion (OS setting) shows the static state, and the site works with WebGL off.
+1. Homepage loads with semantic hero (not Elementor dump)
+2. `/services/aeo-services-in-mumbai/` — view-source canonical should be **this URL**, not `/services/aeo/`
+3. `/services/geo/`, `/services/llm-seo-service/` — interlink cluster intact
+4. Blog post loads with 200
+5. Confirm `noindex` header still present until production cutover
 
 ---
 
-## What you (owner) must decide
+## Production cutover checklist (when ready)
 
-- Which branch goes live: `arena/01a034c2-dgs` (current new build) vs merging to `main`.
-- Whether Hostinger Git is already connected to this repo. If you're not sure, open the hPanel
-  Git tab and tell me what it shows — I'll guide you exactly.
+1. Remove `noindex` from demo `.htaccess` / metadata for production domain only
+2. Point `www.dgeniussolutions.com` DNS to this Node app (or export static + CDN)
+3. Keep WordPress at `cms.` subdomain for editing only
+4. Re-run migration baseline: `npm run migration:baseline` on dimgrey source
+5. Fix remaining WP-side issues (AEO sitemap omission, Redirection plugin wrong rules)
+
