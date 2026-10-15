@@ -44,11 +44,17 @@ async function main() {
   fs.copyFileSync(path.join(ROOT, "next.config.ts"), path.join(pkgDir, "next.config.ts"));
   fs.copyFileSync(path.join(ROOT, "tsconfig.json"), path.join(pkgDir, "tsconfig.json"));
 
+  // Ensure public/.htaccess is explicitly copied
+  if (fs.existsSync(path.join(ROOT, "public", ".htaccess"))) {
+    fs.copyFileSync(path.join(ROOT, "public", ".htaccess"), path.join(pkgDir, "public", ".htaccess"));
+  }
+
   // Copy helper scripts into release
   const pkgScripts = path.join(pkgDir, "scripts");
   fs.mkdirSync(pkgScripts, { recursive: true });
   const scriptsToCopy = [
     "validate-production-env.mjs",
+    "verify-media-availability.mjs",
     "apply-cms-schema.mjs",
     "migrate-turbovec-tables.mjs",
     "migrate-v8123-discovery-tables.mjs",
@@ -147,6 +153,9 @@ cd "$NEW_REL"
 
 echo "Validating environment..."
 node scripts/validate-production-env.mjs "$NEW_REL/.env.production"
+
+echo "Verifying media availability and persistent storage..."
+node scripts/verify-media-availability.mjs "$NEW_REL"
 
 echo "Applying migrations..."
 node scripts/apply-cms-schema.mjs
