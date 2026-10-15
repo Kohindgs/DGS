@@ -101,7 +101,8 @@ export function buildRouteSchemas(input: {
   }
 
   const blockFaqs = extractFaqsFromBlocks(blocks);
-  const pageFaqs = blockFaqs.length > 0 ? blockFaqs : (route.faqItems || []);
+  const routeFaqs = route.faqItems || [];
+  const pageFaqs = routeFaqs.length >= blockFaqs.length && routeFaqs.length > 0 ? routeFaqs : (blockFaqs.length > 0 ? blockFaqs : routeFaqs);
   const faqSchemaExcludedPaths = new Set(["/better-ceasons-case-study/"]);
   if (pageFaqs.length > 0 && !faqSchemaExcludedPaths.has(path)) {
     schemas.push(faqSchema(pageFaqs));
