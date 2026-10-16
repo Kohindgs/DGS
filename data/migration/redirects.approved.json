@@ -42,6 +42,14 @@
     { "source": "/services/aeo-services-in-dubai/", "destination": "/aeo-dubai/", "statusCode": 301, "reason": "WordPress legacy Dubai AEO slug alias; authoritative route canonical is /aeo-dubai/" },
     { "source": "/career/junior-hr-generalist/", "destination": "/career/", "statusCode": 301, "reason": "Archived role redirected to active careers hub" },
     { "source": "/services/llm-seo-services-in-mumbai/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "Legacy LLM SEO Mumbai service alias; canonical is /services/llm-seo-service/" },
-    { "source": "/services/generative-engine-optimization-services-in-mumbai/", "destination": "/services/geo/", "statusCode": 301, "reason": "Legacy GEO Mumbai service alias; canonical is /services/geo/" }
+    { "source": "/services/generative-engine-optimization-services-in-mumbai/", "destination": "/services/geo/", "statusCode": 301, "reason": "Legacy GEO Mumbai service alias; canonical is /services/geo/" },
+    { "source": "/services/seo-service-in-gurgaon/", "destination": "/services/seo-service-in-gurugram/", "statusCode": 301, "reason": "Gurgaon spelling alias to canonical Gurugram SEO page" },
+    { "source": "/services/seo-services-in-gurgaon/", "destination": "/services/seo-service-in-gurugram/", "statusCode": 301, "reason": "Gurgaon plural spelling alias to canonical Gurugram SEO page" },
+    { "source": "/services/seo-service-in-bengaluru/", "destination": "/services/seo-service-in-banglore/", "statusCode": 301, "reason": "Bengaluru spelling alias to canonical Bangalore SEO page" },
+    { "source": "/services/seo-services-in-bengaluru/", "destination": "/services/seo-service-in-banglore/", "statusCode": 301, "reason": "Bengaluru plural spelling alias to canonical Bangalore SEO page" },
+    { "source": "/services/seo-service-in-pune/", "destination": "/services/seo-service-pune/", "statusCode": 301, "reason": "Pune slug variant normalization" },
+    { "source": "/services/seo-service-in-hyderabad/", "destination": "/services/seo-services-in-hyderabad/", "statusCode": 301, "reason": "Hyderabad singular slug variant normalization" },
+    { "source": "/services/web-development-pune/", "destination": "/services/website-development-pune-page/", "statusCode": 301, "reason": "Pune web development short slug alias" },
+    { "source": "/usa/", "destination": "/us-landing-page/", "statusCode": 301, "reason": "USA landing page alias" }
   ]
 }

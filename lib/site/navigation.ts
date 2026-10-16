@@ -53,6 +53,7 @@ export const FOOTER_LOCATIONS = [
   { label: "Dubai AEO", href: "/aeo-dubai/" },
   { label: "Dubai AI Video", href: "/services/ai-production-dubai-page/" },
   { label: "Pune SEO", href: "/services/seo-service-pune/" },
+  { label: "Pune Web Development", href: "/services/website-development-pune-page/" },
   { label: "Bangalore SEO", href: "/services/seo-service-in-banglore/" },
   { label: "Gurugram SEO", href: "/services/seo-service-in-gurugram/" },
   { label: "Hyderabad SEO", href: "/services/seo-services-in-hyderabad/" },

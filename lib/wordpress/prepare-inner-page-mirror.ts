@@ -72,6 +72,15 @@ function applyServiceSearchCorrections(path: string, html: string): string {
   if (path === "/services/seo-service-pune/") {
     output = output.replace(/SEO Agency in Pune for Rankings, Qualified Traffic and Leads —\s*/g, "SEO Agency in Pune for Rankings, Qualified Traffic and Leads");
   }
+  if (path === "/services/seo-service-in-banglore/") {
+    output = output.replace(/SEO Agency in Bangalore for Rankings, Qualified Traffic and Leads —\s*/g, "SEO Agency in Bangalore (Bengaluru) for Rankings, Qualified Traffic and Leads");
+  }
+  if (path === "/services/seo-service-in-gurugram/") {
+    output = output.replace(/SEO Agency in Gurugram for Rankings, Qualified Traffic and Leads —\s*/g, "SEO Agency in Gurugram (Gurgaon) for Rankings, Qualified Traffic and Leads");
+  }
+  if (path === "/services/seo-services-in-hyderabad/") {
+    output = output.replace(/SEO Agency in Hyderabad for Rankings, Qualified Traffic and Leads —\s*/g, "SEO Agency in Hyderabad for Rankings, Qualified Traffic and Leads");
+  }
   if (path === "/services/website-development-pune-page/") {
     output = output.replace(/Talk To Our SEO Team/g, "Talk To Our Website Development Team");
   }

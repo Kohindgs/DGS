@@ -59,7 +59,7 @@ export function buildRouteSchemas(input: {
     }),
   );
 
-  if (route.wordpressType === "service" || path === "/aeo-dubai/") {
+  if (route.wordpressType === "service" || path === "/aeo-dubai/" || Boolean(seoOverride?.serviceType)) {
     const isAiVideoAgency = path === "/services/ai-video-production-agency/";
     schemas.push(
       serviceSchema({
@@ -153,6 +153,7 @@ function isFaqHeading(text: string): boolean {
     /^(?:frequently asked questions|common questions)$/i.test(normalized) ||
     /\bfaqs?$/i.test(normalized) ||
     /\bstraight answers\b/i.test(normalized) ||
+    /\bquestions\b[\s\S]*\b(?:ask|choosing)\b/i.test(normalized) ||
     /^everything about ai video production$/i.test(normalized)
   );
 }

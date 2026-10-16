@@ -38,5 +38,17 @@ export const verifiedOrganization = {
     "Performance Marketing",
     "Digital Marketing",
   ],
-  areaServed: ["Mumbai", "Maharashtra", "India", "Dubai", "United Arab Emirates"],
+  areaServed: [
+    "Mumbai",
+    "Pune",
+    "Bengaluru",
+    "Gurugram",
+    "Hyderabad",
+    "Maharashtra",
+    "India",
+    "Dubai",
+    "United Arab Emirates",
+    "Australia",
+    "United States",
+  ],
 } as const;

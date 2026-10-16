@@ -54,27 +54,41 @@ export function applyInternationalPageContent(path: string, html: string): strin
       "If DGS does not have a physical Dubai office, the page should clearly represent Dubai as a service-targeting market.",
       "DGS serves Dubai as a service-targeting market; this page does not represent a physical DGS office in Dubai.",
     );
+    out = out.replace(/href=["']\/services\/website-development\/["']/gi, 'href="/services/website-development-amc/"');
   }
 
   if (path === "/australia-page/") {
     out = replaceOnce(
       out,
-      "Full Service Digital Marketing Agency In Australia",
-      "Digital Marketing Services for Businesses Targeting Australia",
-    );
-    out = replaceOnce(
-      out,
       "We help Australian businesses grow with SEO, AEO, GEO, LLM SEO, voice search optimization, website development, social media, performance marketing and AI production. Our strategy is built for stronger search visibility, AI discovery and qualified lead generation across Australia’s major business cities.",
       "We help businesses targeting Australian customers grow with SEO, AEO, GEO, LLM SEO, website development, social media, performance marketing and AI production. Our strategy is built around genuine service coverage, stronger search visibility, AI discovery and qualified lead generation across Australia’s major business markets. The city references on this page describe markets we can target and do not represent separate DGS office locations.",
     );
+    out = out
+      .replace(/href=["']\/services\/aeo\/["']/gi, 'href="/services/aeo-services-in-mumbai/"')
+      .replace(/href=["']\/services\/geo["']/gi, 'href="/services/geo/"')
+      .replace(/href=["']\/services\/generative-ai\/["']/gi, 'href="/services/ai-video-production-agency/"');
   }
 
   if (path === "/us-landing-page/") {
     out = replaceOnce(
       out,
+      '<h1>Digital Marketing Services Designed for the <span class="grad-text">US Market.</span></h1>',
+      '<h1>Digital Marketing Agency &amp; Services for the <span class="grad-text">US Market.</span></h1>',
+    );
+    out = replaceOnce(
+      out,
       "D’Genius Solutions supports US businesses with search-first and AI-ready digital marketing solutions, including SEO services, answer engine optimization, generative engine optimization, LLM SEO, website development, content creation, Google Ads, Meta Ads, branding, and social media marketing.",
       "D’Genius Solutions supports businesses targeting US customers with search-first and AI-ready digital marketing solutions, including SEO, AEO, GEO, LLM SEO, website development, content creation, Google Ads, Meta Ads, branding and social media marketing. US city targeting is based on genuine service coverage and does not imply DGS maintains offices in those cities.",
     );
+    out = out
+      .replace("<h3>SEO Services</h3>", '<h3><a href="/services/seo-services-in-mumbai/" style="color:inherit;text-decoration:none;">SEO Services</a></h3>')
+      .replace("<h3>AEO Services</h3>", '<h3><a href="/services/aeo-services-in-mumbai/" style="color:inherit;text-decoration:none;">AEO Services</a></h3>')
+      .replace("<h3>GEO Services</h3>", '<h3><a href="/services/geo/" style="color:inherit;text-decoration:none;">GEO Services</a></h3>')
+      .replace("<h3>LLM SEO</h3>", '<h3><a href="/services/llm-seo-service/" style="color:inherit;text-decoration:none;">LLM SEO</a></h3>')
+      .replace("<h3>Website Development</h3>", '<h3><a href="/services/website-development-amc/" style="color:inherit;text-decoration:none;">Website Development</a></h3>')
+      .replace("<h3>AI Video Production</h3>", '<h3><a href="/services/ai-video-production-agency/" style="color:inherit;text-decoration:none;">AI Video Production</a></h3>')
+      .replace("<h3>Content Creation</h3>", '<h3><a href="/services/content-creation/" style="color:inherit;text-decoration:none;">Content Creation</a></h3>')
+      .replace("<h3>Google Ads</h3>", '<h3><a href="/services/performance-marketing/" style="color:inherit;text-decoration:none;">Google Ads</a></h3>');
   }
 
   return out;
