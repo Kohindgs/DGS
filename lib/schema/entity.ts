@@ -28,4 +28,15 @@ export const verifiedOrganization = {
     "https://www.youtube.com/@dgeniussolutionspvtltd4060",
     "https://in.pinterest.com/dgeniussolutions/",
   ],
+  knowsAbout: [
+    "Search Engine Optimization",
+    "Answer Engine Optimization",
+    "Generative Engine Optimization",
+    "AI Video Production",
+    "Web Development",
+    "Next.js Development",
+    "Performance Marketing",
+    "Digital Marketing",
+  ],
+  areaServed: ["Mumbai", "Maharashtra", "India", "Dubai", "United Arab Emirates"],
 } as const;

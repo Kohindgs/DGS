@@ -4,6 +4,8 @@
   "reviewedAt": "2026-08-27",
   "redirects": [
     { "source": "/services/aeo/", "destination": "/services/aeo-services-in-mumbai/", "statusCode": 301, "reason": "Legacy short slug; tier-0 canonical is the long URL" },
+    { "source": "/services/website-design-development/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "Target page alias for web development service" },
+    { "source": "/website-design-development/", "destination": "/services/website-development-amc/", "statusCode": 301, "reason": "Root alias for web development service" },
     { "source": "/aeo/", "destination": "/services/aeo-services-in-mumbai/", "statusCode": 301, "reason": "Root shortcut must land on AEO service, not blog" },
     { "source": "/geo/", "destination": "/services/geo/", "statusCode": 301, "reason": "Root GEO shortcut" },
     { "source": "/llm-seo/", "destination": "/services/llm-seo-service/", "statusCode": 301, "reason": "Root LLM SEO shortcut must land on service" },

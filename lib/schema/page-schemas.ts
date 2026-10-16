@@ -25,6 +25,8 @@ export function buildGlobalEntitySchemas(): Record<string, unknown>[] {
       telephone: [...verifiedOrganization.telephone],
       address: verifiedOrganization.address,
       sameAs: [...verifiedOrganization.sameAs],
+      knowsAbout: [...verifiedOrganization.knowsAbout],
+      areaServed: [...verifiedOrganization.areaServed],
     }),
     websiteSchema({
       id: WEBSITE_ID,
@@ -150,6 +152,7 @@ function isFaqHeading(text: string): boolean {
   return (
     /^(?:frequently asked questions|common questions)$/i.test(normalized) ||
     /\bfaqs?$/i.test(normalized) ||
+    /\bstraight answers\b/i.test(normalized) ||
     /^everything about ai video production$/i.test(normalized)
   );
 }
@@ -181,11 +184,18 @@ function extractFaqsFromBlocks(blocks: ContentBlock[]) {
     }
     if (!/\?\s*\+?$/.test(text)) continue;
     const question = cleanFaqQuestion(text);
-    const next = scoped[i + 1];
-    const answer = next?.type === "paragraph" ? blockText(next).replace(/\s+/g, " ") : "";
+
+    let nextIdx = i + 1;
+    let nextBlock = scoped[nextIdx];
+    if (nextBlock && nextBlock.type === "paragraph" && /^[\+\-\s]+$/.test(blockText(nextBlock))) {
+      nextIdx += 1;
+      nextBlock = scoped[nextIdx];
+    }
+
+    const answer = nextBlock?.type === "paragraph" ? blockText(nextBlock).replace(/\s+/g, " ") : "";
     if (question && answer) {
       out.push({ question, answer });
-      i += 1;
+      i = nextIdx;
     }
   }
   return out;

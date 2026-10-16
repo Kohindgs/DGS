@@ -12,6 +12,20 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "dgeniussolutions.com" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/services/website-design-development/",
+        destination: "/services/website-development-amc/",
+        permanent: true,
+      },
+      {
+        source: "/website-design-development/",
+        destination: "/services/website-development-amc/",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

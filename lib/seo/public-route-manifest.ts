@@ -64,6 +64,7 @@ function classifyContentType(p: string): ContentType {
 
 function classifyServiceCluster(p: string): ServiceCluster {
   const lp = p.toLowerCase();
+  if (lp.startsWith("/blogs/")) return "content";
   if (lp.includes("aeo") || lp.includes("geo") || lp.includes("llm")) return "ai-search";
   if (lp.includes("ai-video") || lp.includes("video") || lp.includes("motion-graphics")) return "creative-video";
   if (lp.includes("seo")) return "seo";
@@ -255,7 +256,7 @@ export async function getManifestRoutesByCluster(): Promise<Record<ServiceCluste
   };
 
   for (const item of all) {
-    if (clusters[item.serviceCluster]) {
+    if (item.includeInSitemap && item.indexable && clusters[item.serviceCluster]) {
       clusters[item.serviceCluster].push(item);
     }
   }

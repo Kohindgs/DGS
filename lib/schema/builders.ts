@@ -32,6 +32,8 @@ export function organizationSchema(input: {
     addressCountry: string;
   };
   sameAs?: string[];
+  knowsAbout?: string[];
+  areaServed?: string | string[];
 }) {
   const id = input.id || `${input.url.replace(/\/$/, "")}/#organization`;
   return {
@@ -56,6 +58,14 @@ export function organizationSchema(input: {
         }
       : {}),
     ...(input.sameAs?.length ? { sameAs: input.sameAs } : {}),
+    ...(input.knowsAbout?.length ? { knowsAbout: input.knowsAbout.map((k) => cleanSchemaText(k)) } : {}),
+    ...(input.areaServed
+      ? {
+          areaServed: Array.isArray(input.areaServed)
+            ? input.areaServed.map((a) => cleanSchemaText(a))
+            : cleanSchemaText(input.areaServed),
+        }
+      : {}),
   };
 }
 
