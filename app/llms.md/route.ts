@@ -8,6 +8,7 @@ export async function GET() {
   const routes = await getPublicRouteManifest();
 
   const services = routes.filter((r) => r.contentType === "service" && r.includeInSitemap);
+  const locations = routes.filter((r) => r.contentType === "location" && r.includeInSitemap);
   const international = routes.filter((r) => r.contentType === "international" && r.includeInSitemap);
   const caseStudies = routes.filter((r) => r.contentType === "case-study" && r.includeInSitemap);
   const blogs = routes.filter((r) => r.contentType === "blog" && r.includeInSitemap);
@@ -33,8 +34,11 @@ ${services
 
 ---
 
-## International Markets & Dedicated Desks
+## Regional & International Markets
 
+${locations
+  .map((l) => `- [${l.title}](${l.canonical}): ${l.description || "Regional SEO and web development capabilities."}`)
+  .join("\n")}
 ${international
   .map((m) => `- [${m.title}](${m.canonical}): ${m.description || "Regional digital marketing capabilities."}`)
   .join("\n")}

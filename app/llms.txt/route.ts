@@ -11,6 +11,7 @@ export async function GET() {
   const services = routes.filter((r) => r.contentType === "service" && r.includeInSitemap);
   const blogs = routes.filter((r) => r.contentType === "blog" && r.includeInSitemap);
   const caseStudies = routes.filter((r) => r.contentType === "case-study" && r.includeInSitemap);
+  const locations = routes.filter((r) => r.contentType === "location" && r.includeInSitemap);
   const international = routes.filter((r) => r.contentType === "international" && r.includeInSitemap);
 
   // Concise published insights (top recent 25 from manifest)
@@ -33,6 +34,7 @@ export async function GET() {
     "",
     "## Global & Regional Markets",
     "",
+    ...locations.map((l) => `- ${l.canonical} — ${l.title}`),
     ...international.map((m) => `- ${m.canonical} — ${m.title}`),
     "",
     "## Case Studies & Portfolio",
