@@ -710,24 +710,43 @@ export function evaluateCandidateHeuristically(input: {
     "anyone recommend",
     "can anyone recommend",
     "recommendations for",
+    "recommend a",
+    "recommend an",
     "need an agency",
     "need a good",
-    "looking to hire an agency",
-    "searching for a partner",
+    "looking to hire",
+    "searching for a",
     "drop your portfolio",
     "send your portfolio",
     "who is the best",
-    "help with our seo",
-    "redesign our website",
-    "need help with",
+    "help with our",
+    "redesign our",
+    "need help",
     "any recommendations",
     "looking for a vendor",
     "rfp",
+    "which agency",
+    "best seo agency",
+    "best web design",
+    "hiring an agency",
+    "hire an seo",
+    "hire a web",
+    "suggestions for",
+    "anyone worked with",
+    "worth hiring",
+    "how to find a good",
+    "need seo",
+    "need website",
+    "need video",
   ];
   const matchedBuyerPhrases = strongBuyerPhrases.filter((p) => lower.includes(p));
 
+  const isQuestionOrRequest =
+    combined.includes("?") ||
+    /\b(how do i|should i hire|where to find|advice on hiring|seeking|recommend|suggestion|looking|help)\b/i.test(lower);
+
   let classification: IntentClassification = "HIGH_INTENT_DISCUSSION";
-  let score = 62;
+  let score = 64;
 
   if (isJobSeeker) {
     classification = "JOB_SEEKER";
@@ -742,9 +761,15 @@ export function evaluateCandidateHeuristically(input: {
     if (targetRegion === "INDIA" || targetRegion === "UAE_DUBAI") {
       score = Math.min(98, score + 4);
     }
-  } else if (/\b(agency|consultant|freelancer|partner|vendor|quote|cost|budget)\b/i.test(lower)) {
+  } else if (
+    isQuestionOrRequest &&
+    /\b(agency|consultant|freelancer|partner|vendor|quote|cost|budget|seo|website|redesign|video|aeo|geo|marketing)\b/i.test(lower)
+  ) {
     classification = "HIGH_INTENT_DISCUSSION";
-    score = 68;
+    score = 72;
+  } else if (/\b(agency|consultant|services|seo|website|video|aeo|geo)\b/i.test(lower)) {
+    classification = "HIGH_INTENT_DISCUSSION";
+    score = 62;
   } else {
     classification = "LOW_INTENT_NOISE";
     score = 35;
@@ -1040,7 +1065,7 @@ export async function runIntentLeadDiscovery(options?: {
         if (
           heuristic.classification === "JOB_SEEKER" ||
           heuristic.classification === "SELLER_PROMOTION" ||
-          heuristic.intentScore < 60
+          heuristic.intentScore < 52
         ) {
           rejectedNoiseCount++;
           continue;
@@ -1057,7 +1082,8 @@ export async function runIntentLeadDiscovery(options?: {
         if (
           evaluated.classification === "JOB_SEEKER" ||
           evaluated.classification === "SELLER_PROMOTION" ||
-          evaluated.intentScore < 60
+          evaluated.classification === "LOW_INTENT_NOISE" ||
+          evaluated.intentScore < 52
         ) {
           rejectedNoiseCount++;
           continue;
@@ -1117,7 +1143,7 @@ export async function runIntentLeadDiscovery(options?: {
         if (
           heuristic.classification === "JOB_SEEKER" ||
           heuristic.classification === "SELLER_PROMOTION" ||
-          heuristic.intentScore < 60
+          heuristic.intentScore < 52
         ) {
           rejectedNoiseCount++;
           continue;
@@ -1134,7 +1160,8 @@ export async function runIntentLeadDiscovery(options?: {
         if (
           evaluated.classification === "JOB_SEEKER" ||
           evaluated.classification === "SELLER_PROMOTION" ||
-          evaluated.intentScore < 60
+          evaluated.classification === "LOW_INTENT_NOISE" ||
+          evaluated.intentScore < 52
         ) {
           rejectedNoiseCount++;
           continue;
