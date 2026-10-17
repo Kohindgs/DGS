@@ -68,6 +68,7 @@ async function main() {
     "migrate-v8127-raw-candidates.mjs",
     "migrate-v8127a-actionability-schema.mjs",
     "migrate-v8127b-cron-health.mjs",
+    "migrate-v8130-intent-leads.mjs",
     "turbovec-service.py",
     "turbovec-daemon.sh",
     "remote-sql-check.mjs",
@@ -183,6 +184,7 @@ node scripts/migrate-v8126-offpage-lanes.mjs
 node scripts/migrate-v8127-raw-candidates.mjs
 node scripts/migrate-v8127a-actionability-schema.mjs
 node scripts/migrate-v8127b-cron-health.mjs
+node scripts/migrate-v8130-intent-leads.mjs
 
 echo "Verifying TurboVec daemon..."
 bash /home/u188101251/production-app/shared/turbovec-daemon.sh status || bash /home/u188101251/production-app/shared/turbovec-daemon.sh start

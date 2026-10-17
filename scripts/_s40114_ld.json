@@ -1,0 +1,666 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.dgeniussolutions.com/#organization",
+      "name": "D'Genius Solutions",
+      "url": "https://www.dgeniussolutions.com/",
+      "areaServed": [
+        "Mumbai",
+        "Navi Mumbai",
+        "Thane",
+        "Pune",
+        "Delhi",
+        "Bangalore",
+        "Hyderabad",
+        "Chennai",
+        "Maharashtra",
+        "India"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "addressCountry": "IN"
+      },
+      "description": "D'Genius Solutions is a Mumbai-based AI video production agency and digital marketing agency creating AI ads, product videos, brand films, AI avatars, social media reels and campaign-ready videos.",
+      "knowsAbout": [
+        "AI video production agency in Mumbai",
+        "AI video production service in Mumbai",
+        "AI video service in Mumbai",
+        "AI production agency in Mumbai",
+        "AI production service in Mumbai",
+        "AI video generation company in Mumbai",
+        "AI ad film production company in Mumbai",
+        "AI video studio in Mumbai",
+        "AI ads",
+        "AI product videos",
+        "AI avatar videos",
+        "AI brand films",
+        "social media reels",
+        "digital marketing video campaigns"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage",
+      "url": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "name": "AI Video Production House in Mumbai | AI Video Agency",
+      "keywords": "AI video production agency in Mumbai, AI video production service in Mumbai, AI video service in Mumbai, AI production agency in Mumbai, AI production service in Mumbai, AI video generation company in Mumbai, AI ad film production company in Mumbai, AI video studio in Mumbai",
+      "description": "D'Genius Solutions is an AI video production house in Mumbai offering AI video production services for ads, product videos, brand films, AI avatars and campaigns.",
+      "about": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#service"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Makar-Sankranti-And-Pongal-Final-1-thumb.webp"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.dgeniussolutions.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.dgeniussolutions.com/services/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI Video Production House in Mumbai",
+          "item": "https://www.dgeniussolutions.com/services/ai-video-production-agency/"
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#service",
+      "name": "AI Video Production House in Mumbai",
+      "alternateName": [
+        "AI Video Production House in Mumbai",
+        "AI Video Production Houses in Mumbai",
+        "AI Video Production Company in India",
+        "AI Video Production Agency in India",
+        "AI Video Production Agencies in Mumbai",
+        "AI Video Production Service in Mumbai",
+        "AI Video Production Services in Mumbai",
+        "AI Video Services in Mumbai",
+        "AI Production Services in Mumbai",
+        "AI Video Production Service in India",
+        "AI Production Agency in Mumbai",
+        "AI Production Service in Mumbai",
+        "AI Video Generation Company in Mumbai",
+        "AI Ad Film Production Company in Mumbai",
+        "AI Video Studio in Mumbai",
+        "AI Film Studio in Mumbai",
+        "AI Video Production Company",
+        "AI Video Agency",
+        "Generative AI Video Production Agency"
+      ],
+      "serviceType": "AI video production house in Mumbai, AI video production houses in Mumbai, AI video production agency in Mumbai, AI video production agencies in Mumbai, AI video production services in Mumbai, AI video production service in Mumbai, AI video services in Mumbai, AI production services in Mumbai, AI video ads, AI product videos, AI brand films and AI avatar videos",
+      "provider": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Mumbai"
+        },
+        {
+          "@type": "State",
+          "name": "Maharashtra"
+        },
+        {
+          "@type": "Country",
+          "name": "India"
+        }
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Brands, startups, ecommerce businesses, agencies and companies that need campaign-ready AI video content"
+      },
+      "description": "AI video production house in Mumbai offering AI video production services for AI ads, product videos, brand films, avatar videos, mascot videos, reels and campaign videos with scripting, AI visuals, editing and final delivery.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "AI Video Production Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Video Ads",
+              "description": "Short AI-powered ad films, AI commercials and performance creatives for Meta Ads, YouTube Ads, Google Ads, landing pages, remarketing campaigns, product promotions and campaign launches."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Product Videos",
+              "description": "AI-generated product videos and AI product animation for FMCG, beauty, food, jewellery, fashion, ecommerce, packaging, product launches, marketplace listings and paid campaigns."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Brand Films",
+              "description": "Cinematic AI brand films, corporate AI videos and AI film production for websites, campaigns, investor presentations, corporate storytelling, digital launches and brand awareness campaigns."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Social Media Reels",
+              "description": "Platform-ready AI reels, AI influencer-style content and short videos for Instagram, Facebook, YouTube Shorts, LinkedIn, paid social campaigns and always-on content calendars."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Mascot & Character Videos",
+              "description": "AI mascots, brand characters, AI avatar videos, AI-generated characters, spokesperson-style visuals and story-led characters for recall, engagement and campaign storytelling."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI Festival & Campaign Videos",
+              "description": "Festival videos, AI avatar content, AI ad films, concept films, TVC-style AI videos and campaign content for Indian cultural moments and monthly brand calendars."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Which AI video production house in Mumbai creates ads, films and product videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "D'Genius Solutions is an AI video production agency in Mumbai that creates AI ads, product videos, AI avatar videos, mascot videos, jewellery videos, social media reels and brand films for businesses that need faster campaign-ready video content with human creative direction and editing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does an AI video production service include?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An AI video production service usually includes concept planning, scriptwriting, storyboard, AI visual generation, avatar or character creation, product scenes, editing, voiceover, music, subtitles and final exports for ads, reels, websites and presentations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can AI video services help Mumbai brands?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI video services help Mumbai brands create more campaign assets in less time. They are useful for product launches, paid ads, reels, brand films, festival campaigns, landing pages and sales presentations where speed, clarity and creative testing matter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide AI production services in Mumbai?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. D'Genius Solutions provides AI production service in Mumbai for ads, product videos, AI avatar videos, brand films, explainer videos, social media creatives and digital campaigns with scripting, AI visuals, editing and delivery support."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is AI video production in Mumbai?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI video production in Mumbai is the process of creating campaign-ready videos with generative AI tools, scripting, creative direction, editing, sound design and platform formatting. D'Genius Solutions provides this service for ads, reels, product launches, brand films, explainers and website campaigns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of AI videos can D'Genius Solutions create?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "D'Genius Solutions creates AI video ads, product videos, AI avatar videos, AI mascot videos, jewellery videos, festival videos, social media reels, brand films, explainers, concept films and campaign videos for brands in Mumbai and across India."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can AI videos be used for ads and landing pages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. AI videos can be created for Meta Ads, YouTube Ads, Google campaigns, remarketing, landing pages, website hero sections, product pages, reels and sales presentations. D'Genius Solutions formats videos according to the platform and campaign objective."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Mumbai areas do you serve for AI video production?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "D'Genius Solutions serves Mumbai, Andheri West, Bandra, BKC, Lower Parel, Powai, Goregaon, Malad, Navi Mumbai, Thane and India-wide remote clients for AI video production, ad films, product videos, avatar videos, mascot videos and brand campaigns."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-1",
+      "name": "Makar Sankranti & Pongal AI Mascot Video",
+      "description": "Makar Sankranti & Pongal AI Mascot Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: MASCOT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Makar-Sankranti-And-Pongal-Final-1.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Makar-Sankranti-And-Pongal-Final-1-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-2",
+      "name": "Wonder AI Mascot Introduction",
+      "description": "Wonder AI Mascot Introduction by D'Genius Solutions, an AI video production agency in Mumbai. Category: MASCOT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wonder-Introduction11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Wonder-Introduction11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-3",
+      "name": "Happy Easter AI Festival Video",
+      "description": "Happy Easter AI Festival Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: FESTIVAL VIDEOS.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Easter.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Easter-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-4",
+      "name": "Hanuman Jayanti AI Festival Video",
+      "description": "Hanuman Jayanti AI Festival Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: FESTIVAL VIDEOS.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Hanuman-Jayanti-Final.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Hanuman-Jayanti-Final-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-5",
+      "name": "Navratri AI Campaign Video",
+      "description": "Navratri AI Campaign Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: FESTIVAL VIDEOS.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Navratri11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Navratri11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-6",
+      "name": "Lohri AI Festival Video",
+      "description": "Lohri AI Festival Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: FESTIVAL VIDEOS.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lohri11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lohri11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-7",
+      "name": "Independence Day AI Video",
+      "description": "Independence Day AI Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: FESTIVAL VIDEOS.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Independence-Day-Dgs11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Independence-Day-Dgs11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-8",
+      "name": "Friendship Day AI Video",
+      "description": "Friendship Day AI Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: FESTIVAL VIDEOS.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Friendship-Day11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Happy-Friendship-Day11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-9",
+      "name": "Diwali AI Campaign Video",
+      "description": "Diwali AI Campaign Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: FESTIVAL VIDEOS.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dgs-Diwali11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dgs-Diwali11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-11",
+      "name": "Mango Farm AI Product Video",
+      "description": "Mango Farm AI Product Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: PRODUCT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Mango-Farm-Preview11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Mango-Farm-Preview11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-12",
+      "name": "Lava Women AI Product Video",
+      "description": "Lava Women AI Product Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: PRODUCT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lava-Women11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Lava-Women11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-13",
+      "name": "Ice Cream Cone AI Product Video",
+      "description": "Ice Cream Cone AI Product Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: PRODUCT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Ice-Cream-Cone11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Ice-Cream-Cone11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-14",
+      "name": "WINN Green Chilli Sauce AI Product Video",
+      "description": "WINN Green Chilli Sauce AI Product Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: PRODUCT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Green-Chilli11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Green-Chilli11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-15",
+      "name": "WINN Dark Soya Sauce AI Product Video",
+      "description": "WINN Dark Soya Sauce AI Product Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: PRODUCT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dark-Soya11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Dark-Soya11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-16",
+      "name": "Premium Jewellery AI Video",
+      "description": "Premium Jewellery AI Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: JEWELLERY AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Jewelry11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Jewelry11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-17",
+      "name": "Baanganga Launch AI Jewellery Video",
+      "description": "Baanganga Launch AI Jewellery Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: JEWELLERY AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test211.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test211-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-18",
+      "name": "Baanganga Creative AI Jewellery Video",
+      "description": "Baanganga Creative AI Jewellery Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: JEWELLERY AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test111.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Test111-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-19",
+      "name": "Baanganga Gold AI Jewellery Video",
+      "description": "Baanganga Gold AI Jewellery Video by D'Genius Solutions, an AI video production agency in Mumbai. Category: JEWELLERY AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Gold-Example11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Baanganga-Gold-Example11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-20",
+      "name": "Savage Horse AI Concept Film",
+      "description": "Savage Horse AI Concept Film by D'Genius Solutions, an AI video production agency in Mumbai. Category: CONCEPT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Savage-Horse11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Savage-Horse11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-21",
+      "name": "Card Magic Man AI Concept Film",
+      "description": "Card Magic Man AI Concept Film by D'Genius Solutions, an AI video production agency in Mumbai. Category: CONCEPT AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Card-Magic-Man11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Card-Magic-Man11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-22",
+      "name": "Home Credit Diwali AI TVC Campaign",
+      "description": "Home Credit Diwali AI TVC Campaign by D'Genius Solutions, an AI video production agency in Mumbai. Category: TVC AI.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-Campaign-Home-Credit11.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Diwali-Campaign-Home-Credit11-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-04-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-23",
+      "name": "Vachaan 5 Teaser AI Avatar Video",
+      "description": "Vachaan 5 Teaser AI Avatar video by D'Genius Solutions, an AI video production agency in Mumbai. Category: AI AVATAR.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Vachaan-5-Teaser.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Vachaan-5-Teaser-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-05-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-24",
+      "name": "Sai Ki Vaani - Derr AI Avatar Video",
+      "description": "Sai Ki Vaani Derr AI Avatar video by D'Genius Solutions, an AI video production agency in Mumbai. Category: AI AVATAR.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Sai-Ki-Vaani_Derr-1.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Sai-Ki-Vaani_Derr-1-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-05-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-25",
+      "name": "Sai Ki Vaani - Choothne Ka Darr AI Avatar Video",
+      "description": "Sai Ki Vaani Choothne Ka Darr AI Avatar video by D'Genius Solutions, an AI video production agency in Mumbai. Category: AI AVATAR.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Sai-Ki-Vaani_Choothne-Ka-Darr-1.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Sai-Ki-Vaani_Choothne-Ka-Darr-1-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-05-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-26",
+      "name": "Suno Sai Ko Vishwas Episode 7 AI Avatar Video",
+      "description": "Suno Sai Ko Vishwas Episode 7 AI Avatar video by D'Genius Solutions, an AI video production agency in Mumbai. Category: AI AVATAR.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Epsisode-7-Suno-Sai-Ko-Vishwas-2.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Epsisode-7-Suno-Sai-Ko-Vishwas-2-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-05-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-27",
+      "name": "Suno Sai Ko Prarthana Episode 12 AI Avatar Video",
+      "description": "Suno Sai Ko Prarthana Episode 12 AI Avatar video by D'Genius Solutions, an AI video production agency in Mumbai. Category: AI AVATAR.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Episode-12-Suno-Sai-Ko-Prarthana-1.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Episode-12-Suno-Sai-Ko-Prarthana-1-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-05-01T10:00:00+05:30"
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#video-28",
+      "name": "Suno Sai Ko Episode 3 AI Avatar Video",
+      "description": "Suno Sai Ko Episode 3 AI Avatar video by D'Genius Solutions, an AI video production agency in Mumbai. Category: AI AVATAR.",
+      "contentUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Episode-3-Suno-Sai-Ko-1.mp4",
+      "thumbnailUrl": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Episode-3-Suno-Sai-Ko-1-thumb.webp",
+      "publisher": {
+        "@id": "https://www.dgeniussolutions.com/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://www.dgeniussolutions.com/services/ai-video-production-agency/#webpage"
+      },
+      "uploadDate": "2026-05-01T10:00:00+05:30"
+    }
+  ]
+}

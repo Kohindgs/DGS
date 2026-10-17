@@ -1,0 +1,292 @@
+{
+  "route": "/services/website-development-amc/",
+  "status": 200,
+  "badResponses": [],
+  "failedRequests": [],
+  "errors": [],
+  "title": "Website Development Company in Mumbai | Web Design & AMC",
+  "h1": [
+    "Website Development Company in Mumbai Built for Leads, SEO & Growth"
+  ],
+  "h2": [
+    "Website Delivery Supported by Strategy, Search and Ongoing Care",
+    "Selected Website Projects Across Industries",
+    "What Does a Website Development Company in Mumbai Do?",
+    "Your Website May Be Losing Leads Before You Speak",
+    "Complete Website Development Expertise on One Authoritative Page",
+    "How to Choose Among the Best Website Development Companies in Mumbai",
+    "A Website Partner Connecting Development with Digital Growth",
+    "One Development Ecosystem from Strategy to Ongoing Care",
+    "Technology and Development Tools Selected for Performance, Editing and Scale",
+    "A Clear Process from Discovery to Launch and AMC",
+    "Website Development for Different Business Models",
+    "Annual Maintenance Contracts for Long-Term Website Stability",
+    "Website Development Services Across Mumbai and Nearby Business Hubs",
+    "Website Development & AMC Straight Answers"
+  ],
+  "canonical": "https://www.dgeniussolutions.com/services/website-development-amc/",
+  "description": "D'Genius Solutions builds responsive, SEO-ready websites in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.",
+  "formCount": 1,
+  "ctaLinks": [
+    {
+      "text": "Contact Us",
+      "href": "https://www.dgeniussolutions.com/contact-us/"
+    },
+    {
+      "text": "Facebook",
+      "href": "https://www.facebook.com/DGeniussolutions/"
+    },
+    {
+      "text": "Start a Project",
+      "href": "https://www.dgeniussolutions.com/services/website-development-amc/#"
+    },
+    {
+      "text": "→ Book Strategy Call",
+      "href": "https://www.dgeniussolutions.com/services/website-development-amc/#website-project-form"
+    },
+    {
+      "text": "View Website Projects →",
+      "href": "https://www.dgeniussolutions.com/services/website-development-amc/#recent-work"
+    },
+    {
+      "text": "Discuss Your Website Project →",
+      "href": "https://www.dgeniussolutions.com/services/website-development-amc/#website-project-form"
+    },
+    {
+      "text": "Contact",
+      "href": "https://www.dgeniussolutions.com/contact-us/"
+    }
+  ],
+  "images": [
+    {
+      "index": 0,
+      "alt": "D'Genius Solutions",
+      "src": "/wp-content/uploads/2025/11/DGS-LOGO-3.webp",
+      "currentSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2025/11/DGS-LOGO-3.webp",
+      "complete": true,
+      "naturalWidth": 117,
+      "naturalHeight": 117,
+      "loading": "eager",
+      "visible": true,
+      "parentClass": ""
+    },
+    {
+      "index": 1,
+      "alt": "Live preview of HumanXT website",
+      "src": "/wp-content/uploads/2026/05/Humanxt-scaled.webp",
+      "currentSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp",
+      "complete": true,
+      "naturalWidth": 2560,
+      "naturalHeight": 1347,
+      "loading": "eager",
+      "visible": true,
+      "article": "https://humanxt.com/",
+      "parentClass": "w-img"
+    },
+    {
+      "index": 2,
+      "alt": "Live preview of Weavings website",
+      "src": "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600",
+      "currentSrc": "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600",
+      "complete": true,
+      "naturalWidth": 1280,
+      "naturalHeight": 960,
+      "loading": "eager",
+      "visible": true,
+      "article": "https://www.weavings.in/",
+      "parentClass": "w-img"
+    },
+    {
+      "index": 3,
+      "alt": "ChatGPT",
+      "src": "/icons/ai/openai.svg",
+      "currentSrc": "https://www.dgeniussolutions.com/icons/ai/openai.svg",
+      "complete": true,
+      "naturalWidth": 150,
+      "naturalHeight": 150,
+      "loading": "lazy",
+      "visible": true,
+      "parentClass": "dgs-footer-ai-link"
+    },
+    {
+      "index": 4,
+      "alt": "Perplexity",
+      "src": "/icons/ai/perplexity.svg",
+      "currentSrc": "https://www.dgeniussolutions.com/icons/ai/perplexity.svg",
+      "complete": true,
+      "naturalWidth": 150,
+      "naturalHeight": 150,
+      "loading": "lazy",
+      "visible": true,
+      "parentClass": "dgs-footer-ai-link"
+    },
+    {
+      "index": 5,
+      "alt": "Gemini",
+      "src": "/icons/ai/googlegemini.svg",
+      "currentSrc": "https://www.dgeniussolutions.com/icons/ai/googlegemini.svg",
+      "complete": true,
+      "naturalWidth": 150,
+      "naturalHeight": 150,
+      "loading": "lazy",
+      "visible": true,
+      "parentClass": "dgs-footer-ai-link"
+    },
+    {
+      "index": 6,
+      "alt": "Claude",
+      "src": "/icons/ai/anthropic.svg",
+      "currentSrc": "https://www.dgeniussolutions.com/icons/ai/anthropic.svg",
+      "complete": true,
+      "naturalWidth": 150,
+      "naturalHeight": 150,
+      "loading": "lazy",
+      "visible": true,
+      "parentClass": "dgs-footer-ai-link"
+    },
+    {
+      "index": 7,
+      "alt": "Copilot",
+      "src": "/icons/ai/microsoftcopilot.svg",
+      "currentSrc": "https://www.dgeniussolutions.com/icons/ai/microsoftcopilot.svg",
+      "complete": true,
+      "naturalWidth": 150,
+      "naturalHeight": 150,
+      "loading": "lazy",
+      "visible": true,
+      "parentClass": "dgs-footer-ai-link"
+    },
+    {
+      "index": 8,
+      "alt": "D'Genius Solutions digital marketing agency logo",
+      "src": "/wp-content/uploads/2026/02/cropped-DGS-LOGO.png",
+      "currentSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2026/02/cropped-DGS-LOGO.png",
+      "complete": true,
+      "naturalWidth": 512,
+      "naturalHeight": 512,
+      "loading": "lazy",
+      "visible": true,
+      "parentClass": "dgs-footer-column dgs-footer-logo-column"
+    },
+    {
+      "index": 9,
+      "alt": "Clutch 5-star rating badge",
+      "src": "/wp-content/uploads/2026/06/t_clutch-5-star3208.logowik.com_.webp",
+      "currentSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2026/06/t_clutch-5-star3208.logowik.com_.webp",
+      "complete": true,
+      "naturalWidth": 379,
+      "naturalHeight": 283,
+      "loading": "auto",
+      "visible": true,
+      "parentClass": "dgs-footer-trust-logo-wrap"
+    }
+  ],
+  "sections": [
+    {
+      "index": 0,
+      "id": "",
+      "cls": "section hero",
+      "heading": "Website Development Company in Mumbai Built for Leads, SEO & Growth",
+      "height": 990
+    },
+    {
+      "index": 1,
+      "id": "proof",
+      "cls": "section",
+      "heading": "Website Delivery Supported by Strategy, Search and Ongoing Care",
+      "height": 771
+    },
+    {
+      "index": 2,
+      "id": "recent-work",
+      "cls": "section",
+      "heading": "Selected Website Projects Across Industries",
+      "height": 2872
+    },
+    {
+      "index": 3,
+      "id": "answer",
+      "cls": "section",
+      "heading": "What Does a Website Development Company in Mumbai Do?",
+      "height": 876
+    },
+    {
+      "index": 4,
+      "id": "problem",
+      "cls": "section",
+      "heading": "Your Website May Be Losing Leads Before You Speak",
+      "height": 775
+    },
+    {
+      "index": 5,
+      "id": "website-development-services",
+      "cls": "section capability-section",
+      "heading": "Complete Website Development Expertise on One Authoritative Page",
+      "height": 1908
+    },
+    {
+      "index": 6,
+      "id": "choose-company",
+      "cls": "section compact-section",
+      "heading": "How to Choose Among the Best Website Development Companies in Mumbai",
+      "height": 1281
+    },
+    {
+      "index": 7,
+      "id": "why-dgs",
+      "cls": "section",
+      "heading": "A Website Partner Connecting Development with Digital Growth",
+      "height": 695
+    },
+    {
+      "index": 8,
+      "id": "services",
+      "cls": "services-starfield",
+      "heading": "One Development Ecosystem from Strategy to Ongoing Care",
+      "height": 1082
+    },
+    {
+      "index": 9,
+      "id": "tech",
+      "cls": "section",
+      "heading": "Technology and Development Tools Selected for Performance, Editing and Scale",
+      "height": 1253
+    },
+    {
+      "index": 10,
+      "id": "development-process",
+      "cls": "section compact-section",
+      "heading": "A Clear Process from Discovery to Launch and AMC",
+      "height": 879
+    },
+    {
+      "index": 11,
+      "id": "industries",
+      "cls": "section compact-section",
+      "heading": "Website Development for Different Business Models",
+      "height": 879
+    },
+    {
+      "index": 12,
+      "id": "amc",
+      "cls": "section",
+      "heading": "Annual Maintenance Contracts for Long-Term Website Stability",
+      "height": 1023
+    },
+    {
+      "index": 13,
+      "id": "mumbai-service-area",
+      "cls": "section",
+      "heading": "Website Development Services Across Mumbai and Nearby Business Hubs",
+      "height": 680
+    },
+    {
+      "index": 14,
+      "id": "faq",
+      "cls": "section",
+      "heading": "Website Development & AMC Straight Answers",
+      "height": 2295
+    }
+  ],
+  "bodyText": "Skip to main content\nLET'S TALK\nMENU\nWEBSITE DEVELOPMENT COMPANY IN MUMBAI\nWebsite Development\nCompany in Mumbai\nBuilt for Leads, SEO & Growth\n\nD'Genius Solutions is a website development company in Mumbai creating responsive, conversion-focused and SEO-ready websites with WordPress, HTML, Next.js, React, PHP and SCSS. For businesses comparing website development companies in Mumbai, we bring sitemap planning, UI/UX, development, search readiness, analytics and post-launch website AMC into one coordinated workflow.\n\n→ Book Strategy Call\nView Website Projects →\n200+ Brands\nAGENCY EXPERIENCE\nWeb + Search\nONE CONNECTED WORKFLOW\nMumbai Team\nDEVELOPMENT & AMC SUPPORT\nPerformance First\nSecure Build\nSEO Architecture\nWORDPRESS\nHTML5\nCSS3\nJAVASCRIPT\nNEXT.JS\nREACT\nPHP\nSCSS\nNODE.JS\nGIT\nVISUAL STUDIO\nSEO\nAEO\nGEO\nLLM SEO\nAMC\nWORDPRESS\nHTML5\nCSS3\nJAVASCRIPT\nNEXT.JS\nREACT\nPHP\nSCSS\nNODE.JS\nGIT\nVISUAL STUDIO\nSEO\nAEO\nGEO\nLLM SEO\nAMC\nWORDPRESS\nHTML5\nCSS3\nJAVASCRIPT\nNEXT.JS\nREACT\nPHP\nSCSS\nNODE.JS\nGIT\nVISUAL STUDIO\nSEO\nAEO\nGEO\nLLM SEO\nAMC\nDEMONSTRATED WEBSITE EXPERIENCE\nWebsite Delivery Supported by Strategy, Search and Ongoing Care\n\nD'Genius Solutions combines website development with content structure, technical SEO planning, analytics and post-launch support. Our work includes corporate websites, service-led platforms, education websites, workforce solutions and ongoing website AMC.\n\nOnida\nWebsite development and ongoing AMC support for a recognised consumer-electronics brand.\nWeavings\nWebsite development, AMC, SEO and performance support within one connected growth engagement.\nHumanXT\nWebsite revamp focused on clearer positioning, service architecture and enquiry-ready user journeys.\nBetter Ceasons\nModern Next.js and headless website development for a sustainability and technology platform.\nWEBSITE DEVELOPMENT CASE STUDIES\nSelected Website Projects Across Industries\n\nExamples of how D'Genius Solutions has translated business positioning, content and user journeys into structured, responsive and search-ready website experiences.\n\nOpen HumanXT live website\n2025\nWEBSITE REVAMP • HR & WORKFORCE\n01 / 04\nHumanXT\n\nHumanXT needed clearer positioning for decision-makers in a competitive HR market. The website revamp reorganised its service catalogue into a credible, enquiry-focused experience for CXOs and HR leaders.\n\nWordPress\n6–8 weeks\nDiscovery, IA, UI/UX, SEO\nOpen Weavings live website\n2025\nWEBSITE REVAMP • STAFFING & MANPOWER\n02 / 04\nWeavings\n\nA modern website structure for manpower services, employer requirements and candidate journeys, designed to support clearer navigation, stronger service discovery and qualified enquiries.\n\nWordPress\nConversion UX\nSEO-ready structure\nOpen Katherine's Gallery live website\n2025\nWEBSITE LAUNCH • BEAUTY & WELLNESS\n03 / 04\nKatherine's Gallery\n\nAn elegant website experience that communicates the brand, presents beauty services clearly and gives visitors a direct route towards enquiries and bookings.\n\nWordPress\nBrand-led UI\nBooking journey\nOpen Better Ceasons live website\n2026\nWEBSITE DEVELOPMENT • CLEAN TECHNOLOGY\n04 / 04\nBetter Ceasons\n\nA modern digital platform designed to communicate Better Ceasons' clean-technology vision, explain its solutions clearly and guide visitors through the brand's technology, impact and partnership journey.\n\nNext.js\nHeadless Development\nResponsive Experience\nSTART A WEBSITE PROJECT\nPlanning a New Website or Revamp?\n\nStart with the business objective, website scope, content requirements, technology and search visibility priorities.\n\nDiscuss Your Website Project →\nDIRECT ANSWER\nWhat Does a Website Development Company in Mumbai Do?\n\nA website development company plans, designs, develops, launches and maintains websites that help businesses communicate clearly, appear in search and convert visitors into enquiries. D'Genius Solutions combines UI/UX, WordPress and custom development, technical SEO foundations, analytics, responsive testing and website AMC in one coordinated workflow.\n\nThe same technical foundation can support ongoing SEO, answer engine optimisation, generative engine optimisation and LLM visibility without creating artificial or duplicate pages.\n\nStrategy-Led Sitemap\nSearch-Ready Architecture\nPost-Launch AMC\nBusiness-led sitemap and conversion journey\nResponsive development from 4K screens to small mobiles\nSEO, AEO, GEO and LLM-readable foundations\nOngoing maintenance, updates and website AMC\nTHE CRITICAL CHALLENGE\nYour Website May Be Losing Leads Before You Speak\n\nA slow, outdated or poorly structured website can reduce trust, weaken search visibility and make high-intent visitors leave before they understand your offer.\n\nSpeed\nSlow Loading Experience\n\nHeavy assets, uncontrolled scripts and poor hosting can delay meaningful content and prevent visitors from reaching your enquiry path.\n\nSEO\nWeak Search Architecture\n\nUnclear URLs, inconsistent headings, thin service content, missing internal links and technical errors make the website harder to crawl and understand.\n\nAMC\nNo Ongoing Maintenance\n\nWithout regular updates, backups, form checks and performance reviews, a website can become unstable, vulnerable and increasingly difficult to scale.\n\nWEBSITE DEVELOPMENT SERVICES IN MUMBAI\nComplete Website Development Expertise on One Authoritative Page\n\nInstead of sending visitors across multiple thin service pages, this section explains the principal website requirements businesses compare before selecting a website development company in Mumbai. Every capability is planned around the same business objective, sitemap, content, analytics and post-launch support framework.\n\n01\nCMS & MARKETING WEBSITES\nWordPress Website Development in Mumbai\n\nCustom WordPress websites for businesses that need structured service pages, blogs, landing pages and controlled editing without losing brand consistency. We plan reusable sections, user roles, metadata controls, form journeys, responsive behaviour and plugin requirements before development begins.\n\nCustom "
+}

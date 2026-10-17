@@ -1,0 +1,688 @@
+{
+  "timestamp": "2026-10-13T12:14:21.872Z",
+  "targetRelease": "V8.12.8 Final Correction — Thumbnail Visibility + Load More + CTA Position",
+  "baseUrl": "https://www.dgeniussolutions.com",
+  "tests": [
+    {
+      "name": "Poster QA: Hyundai Creta WebP (200 OK)",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "type": "image/webp"
+      }
+    },
+    {
+      "name": "Poster QA: Hyundai Creta AVIF (200 OK)",
+      "passed": false,
+      "details": {
+        "status": 200,
+        "type": "text/plain"
+      }
+    },
+    {
+      "name": "Poster QA: Sundaram WebP (200 OK)",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "type": "image/webp"
+      }
+    },
+    {
+      "name": "Poster QA: Sundaram AVIF (200 OK)",
+      "passed": false,
+      "details": {
+        "status": 200,
+        "type": "text/plain"
+      }
+    },
+    {
+      "name": "Poster QA: Clarion WebP (200 OK)",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "type": "image/webp"
+      }
+    },
+    {
+      "name": "Poster QA: Clarion AVIF (200 OK)",
+      "passed": false,
+      "details": {
+        "status": 200,
+        "type": "text/plain"
+      }
+    },
+    {
+      "name": "Poster QA: Better Ceasons WebP (200 OK)",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "type": "image/webp"
+      }
+    },
+    {
+      "name": "Poster QA: Better Ceasons AVIF (200 OK)",
+      "passed": false,
+      "details": {
+        "status": 200,
+        "type": "text/plain"
+      }
+    },
+    {
+      "name": "Poster QA: Shirdi Se Sai WebP (200 OK)",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "type": "image/webp"
+      }
+    },
+    {
+      "name": "Poster QA: Shirdi Se Sai AVIF (200 OK)",
+      "passed": false,
+      "details": {
+        "status": 200,
+        "type": "text/plain"
+      }
+    },
+    {
+      "name": "Poster QA: Home Credit WebP (200 OK)",
+      "passed": true,
+      "details": {
+        "status": 200,
+        "type": "image/webp"
+      }
+    },
+    {
+      "name": "Poster QA: Home Credit AVIF (200 OK)",
+      "passed": false,
+      "details": {
+        "status": 200,
+        "type": "text/plain"
+      }
+    },
+    {
+      "name": "Desktop All Initial Batch = 12",
+      "passed": true,
+      "details": {
+        "visibleCount": 12
+      }
+    },
+    {
+      "name": "Visible Posters Equal Visible Cards (12/12)",
+      "passed": true,
+      "details": {
+        "validPosters": 12
+      }
+    },
+    {
+      "name": "Broken Posters Count = 0",
+      "passed": true,
+      "details": {
+        "brokenPosters": 0
+      }
+    },
+    {
+      "name": "Poster Opacity = 1 (Zero Fading)",
+      "passed": true,
+      "details": {
+        "opacity1Count": 12
+      }
+    },
+    {
+      "name": "Permanent Dark Mask = 0 (Subtle Overlay)",
+      "passed": true,
+      "details": {
+        "zeroMaskCount": 12
+      }
+    },
+    {
+      "name": "Video Downloads Before Click = 0",
+      "passed": true,
+      "details": {
+        "videoRequests": 0
+      }
+    },
+    {
+      "name": "All Portfolio Load More Button is VISIBLE",
+      "passed": true,
+      "details": {
+        "display": "flex",
+        "visible": true,
+        "text": "LOAD MORE WORK (44 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More Button Text Contains Remaining Count",
+      "passed": true,
+      "details": {
+        "text": "LOAD MORE WORK (44 REMAINING)"
+      }
+    },
+    {
+      "name": "All Portfolio + First Load More = 24 Visible Cards",
+      "passed": true,
+      "details": {
+        "visibleCount": 24
+      }
+    },
+    {
+      "name": "No Duplicate Cards After Load More",
+      "passed": true,
+      "details": {
+        "visibleCount": 24,
+        "hasDuplicates": false,
+        "uniqueCount": 24
+      }
+    },
+    {
+      "name": "Zero Video Downloads Triggered by Load More",
+      "passed": true,
+      "details": {
+        "videoRequests": 0
+      }
+    },
+    {
+      "name": "CTA Outside Portfolio Grid",
+      "passed": true,
+      "details": {
+        "isOutsideGallery": true,
+        "isOutsideSection": true,
+        "separationFromPortfolio": 120,
+        "cardWidth": 1500,
+        "cardHeight": 270.453125,
+        "cardPadding": "56px",
+        "btnHeight": 52,
+        "btnBorderRadius": 999,
+        "btnHref": "#ai-video-enquiry-form",
+        "btnText": "START YOUR AI VIDEO PROJECT"
+      }
+    },
+    {
+      "name": "CTA Outside Portfolio Section",
+      "passed": true,
+      "details": {
+        "isOutsideGallery": true,
+        "isOutsideSection": true,
+        "separationFromPortfolio": 120,
+        "cardWidth": 1500,
+        "cardHeight": 270.453125,
+        "cardPadding": "56px",
+        "btnHeight": 52,
+        "btnBorderRadius": 999,
+        "btnHref": "#ai-video-enquiry-form",
+        "btnText": "START YOUR AI VIDEO PROJECT"
+      }
+    },
+    {
+      "name": "Desktop Separation >= 80px",
+      "passed": true,
+      "details": {
+        "separation": 120
+      }
+    },
+    {
+      "name": "CTA Max Width Controlled (<= 1500px)",
+      "passed": true,
+      "details": {
+        "cardWidth": 1500
+      }
+    },
+    {
+      "name": "CTA Height Content-Driven (<= 350px)",
+      "passed": true,
+      "details": {
+        "cardHeight": 270.453125
+      }
+    },
+    {
+      "name": "CTA Button Computed Height >= 52px",
+      "passed": true,
+      "details": {
+        "btnHeight": 52
+      }
+    },
+    {
+      "name": "CTA Button Pill Radius >= 24px",
+      "passed": true,
+      "details": {
+        "btnBorderRadius": 999
+      }
+    },
+    {
+      "name": "CTA Button Smooth Scrolls to Real Form Anchor",
+      "passed": true,
+      "details": {
+        "scrollY": 32380,
+        "anchorTop": 99.828125,
+        "anchorVisible": true
+      }
+    },
+    {
+      "name": "Filter [Automobile AI] Visible Cards = 3",
+      "passed": true,
+      "details": {
+        "visibleCards": 3,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Automobile AI] Load More Button HIDDEN",
+      "passed": true,
+      "details": {
+        "visibleCards": 3,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [EdTech AI] Visible Cards = 8",
+      "passed": true,
+      "details": {
+        "visibleCards": 8,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [EdTech AI] Load More Button HIDDEN",
+      "passed": true,
+      "details": {
+        "visibleCards": 8,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [FMCG AI] Visible Cards = 2",
+      "passed": true,
+      "details": {
+        "visibleCards": 2,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [FMCG AI] Load More Button HIDDEN",
+      "passed": true,
+      "details": {
+        "visibleCards": 2,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Commercial AI Film] Visible Cards = 4",
+      "passed": true,
+      "details": {
+        "visibleCards": 4,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Commercial AI Film] Load More Button HIDDEN",
+      "passed": true,
+      "details": {
+        "visibleCards": 4,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Campaign AI] Visible Cards = 4",
+      "passed": true,
+      "details": {
+        "visibleCards": 4,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Campaign AI] Load More Button HIDDEN",
+      "passed": true,
+      "details": {
+        "visibleCards": 4,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Mythological AI] Visible Cards = 7",
+      "passed": true,
+      "details": {
+        "visibleCards": 7,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Mythological AI] Load More Button HIDDEN",
+      "passed": true,
+      "details": {
+        "visibleCards": 7,
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Mobile All Portfolio Initial Batch = 6",
+      "passed": true,
+      "details": {
+        "initialCards": 6
+      }
+    },
+    {
+      "name": "Mobile Load More Button is VISIBLE",
+      "passed": true,
+      "details": {
+        "initialCards": 6,
+        "btnVisible": true,
+        "btnText": "LOAD MORE WORK (50 REMAINING)",
+        "separation": 48
+      }
+    },
+    {
+      "name": "Mobile Separation >= 48px",
+      "passed": true,
+      "details": {
+        "separation": 48
+      }
+    },
+    {
+      "name": "Mobile All Portfolio + First Load More = 12",
+      "passed": true,
+      "details": {
+        "count": 12
+      }
+    },
+    {
+      "name": "Mobile EdTech Initial Batch = 6",
+      "passed": true,
+      "details": {
+        "count": 6,
+        "btnVisible": true,
+        "btnText": "LOAD MORE WORK (2 REMAINING)"
+      }
+    },
+    {
+      "name": "Mobile EdTech Load More Button VISIBLE (2 Remaining)",
+      "passed": true,
+      "details": {
+        "count": 6,
+        "btnVisible": true,
+        "btnText": "LOAD MORE WORK (2 REMAINING)"
+      }
+    },
+    {
+      "name": "Normal Viewer: Better Ceasons Bounded <= 920px (Exact 0.5625 Ratio)",
+      "passed": true,
+      "details": {
+        "width": 498.1875,
+        "height": 885.59375,
+        "ratio": 0.5625463142665584
+      }
+    },
+    {
+      "name": "Verified Native Fullscreen (requestFullscreen active on player)",
+      "passed": true,
+      "details": {
+        "success": true,
+        "fullscreenElement": "lightbox-player"
+      }
+    },
+    {
+      "name": "Fullscreen Exit Restores Exact Normal Calculated Dimensions",
+      "passed": true,
+      "details": {
+        "width": 498.1875,
+        "height": 885.59375,
+        "ratio": 0.5625463142665584
+      }
+    },
+    {
+      "name": "Dubai Page: Portfolio Mounted & Active (Cards: 56)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Dubai Page: Visible Cards > 0 (Visible: 12)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Dubai Page: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Dubai Page: Has CTA Conversion Card with Correct Text",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Dubai Page: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Portfolio Mounted & Active (Cards: 56)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Visible Cards > 0 (Visible: 12)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Has CTA Conversion Card with Correct Text",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Portfolio Mounted & Active (Cards: 12)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 12,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Visible Cards > 0 (Visible: 12)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 12,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 12,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: No AI Enquiry CTA (As Intended)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 12,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Portfolio Mounted & Active (Cards: 8)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 8,
+        "visibleCards": 8,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Visible Cards > 0 (Visible: 8)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 8,
+        "visibleCards": 8,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 8,
+        "visibleCards": 8,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: No AI Enquiry CTA (As Intended)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 8,
+        "visibleCards": 8,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    }
+  ],
+  "summary": {
+    "total": 72,
+    "passed": 66,
+    "failed": 6
+  }
+}

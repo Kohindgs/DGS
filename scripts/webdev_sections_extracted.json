@@ -1,0 +1,429 @@
+[
+  {
+    "index": 1,
+    "id": "heroVisual",
+    "className": "section hero",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Website Development Company in Mumbai Built for Leads, SEO &amp; Growth"
+      }
+    ],
+    "charLength": 2421,
+    "html": "<section class=\"section hero\"><div class=\"hero-copy\"><div class=\"hero-pill\"><span class=\"dot\"></span> Website Development Company in Mumbai</div><h1 class=\"hero-h1\"><span class=\"outline\">Website Development</span> Company in Mumbai <span class=\"grad\">Built for Leads, SEO &amp; Growth</span></h1><p class=\"hero-sub\">D'Genius Solutions is a website development company in Mumbai creating responsive, conversion-focused and SEO-ready websites with WordPress, HTML, Next.js, React, PHP and SCSS. For businesses comparing website development companies in Mumbai, we bring sitemap planning, UI/UX, development, search readiness, analytics and post-launch website AMC into one coordinated workflow.</p><div class=\"hero-ctas\"><a aria-label=\"Book a website development strategy call\" class=\"btn btn-primary\" href=\"#website-project-form\">→ Book Strategy Call</a><a class=\"btn btn-ghost\" href=\"#recent-work\">View Website Projects →</a></div><div class=\"hero-stats\"><div class=\"stat\"><div class=\"stat-num\">200+ Brands</div><div class=\"stat-lab\">Agency Experience</div></div><div class=\"stat\"><div class=\"stat-num\">Web + Search</div><div class=\"stat-lab\">One Connected Workflow</div></div><div class=\"stat\"><div class=\"stat-num\">Mumbai Team</div><div class=\"stat-lab\">Development &amp; AMC Support</div></div></div></div><div aria-hidden=\"true\" class=\"hero-visual\" id=\"heroVisual\"><div class=\"hero-scene\" id=\"heroScene\"><div class=\"hero-kinetic-lines\" id=\"kineticLines\"></div><div class=\"scene-rings\"><div class=\"ring ring1\" id=\"ring1\"></div><div class=\"ring ring2\" id=\"ring2\"></div><div class=\"ring ring3\" id=\"ring3\"></div><div class=\"photon-halo\" id=\"halo\"></div><div class=\"photon-core\" id=\"photon\"></div></div><div class=\"hero-fragments\"><div class=\"frag frag1\" id=\"frag1\"><svg fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" viewbox=\"0 0 24 24\"><path d=\"M3.75 13.5h6.75l-1.5 6.75 11.25-12h-6.75l1.5-6.75L3.75 13.5z\"></path></svg> Performance First</div><div class=\"frag frag2\" id=\"frag2\"><svg fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" viewbox=\"0 0 24 24\"><path d=\"M12 3.75 5.25 6v5.25c0 4.35 2.88 8.14 6.75 9.25 3.87-1.11 6.75-4.9 6.75-9.25V6L12 3.75z\"></path></svg> Secure Build</div><div class=\"frag frag3\" id=\"frag3\"><svg fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" viewbox=\"0 0 24 24\"><path d=\"M3.75 19.5h16.5M6 16.5l4.5-4.5 3 3L20.25 8.25\"></path></svg> SEO Architecture</div></div></div></div></section>"
+  },
+  {
+    "index": 2,
+    "id": "proof",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Website Delivery Supported by Strategy, Search and Ongoing Care"
+      }
+    ],
+    "charLength": 1268,
+    "html": "<section class=\"section\" id=\"proof\"><div class=\"section-label\"><span class=\"dot\"></span> Demonstrated Website Experience</div><h2 class=\"h2\">Website Delivery Supported by <i>Strategy, Search and Ongoing Care</i></h2><p class=\"p\">D'Genius Solutions combines website development with content structure, technical SEO planning, analytics and post-launch support. Our work includes corporate websites, service-led platforms, education websites, workforce solutions and ongoing website AMC.</p><div class=\"ranking-proof\" style=\"margin-top:26px\"><article class=\"ranking-proof-card\"><strong>Onida</strong><span>Website development and ongoing AMC support for a recognised consumer-electronics brand.</span></article><article class=\"ranking-proof-card\"><strong>Weavings</strong><span>Website development, AMC, SEO and performance support within one connected growth engagement.</span></article><article class=\"ranking-proof-card\"><strong>HumanXT</strong><span>Website revamp focused on clearer positioning, service architecture and enquiry-ready user journeys.</span></article><article class=\"ranking-proof-card\"><strong>Better Ceasons</strong><span>Modern Next.js and headless website development for a sustainability and technology platform.</span></article></div></section>"
+  },
+  {
+    "index": 3,
+    "id": "recent-work",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Selected Website Projects Across Industries"
+      },
+      {
+        "tag": "h3",
+        "text": "HumanXT"
+      },
+      {
+        "tag": "h3",
+        "text": "Weavings"
+      },
+      {
+        "tag": "h3",
+        "text": "Katherine's Gallery"
+      },
+      {
+        "tag": "h3",
+        "text": "Better Ceasons"
+      },
+      {
+        "tag": "h3",
+        "text": "Planning a New Website or Revamp?"
+      }
+    ],
+    "charLength": 5024,
+    "html": "<section class=\"section\" id=\"recent-work\"><div class=\"section-label\"><span class=\"dot\"></span> Website Development Case Studies</div><h2 class=\"h2\">Selected Website Projects <i>Across Industries</i></h2><p class=\"p\">Examples of how D'Genius Solutions has translated business positioning, content and user journeys into structured, responsive and search-ready website experiences.</p><div class=\"recent-work work-samples-list\"><article class=\"work-project-row\"><div class=\"w-img\">\n<img loading=\"lazy\" class=\"live-preview-image e-lazyloaded\" src=\"https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp\" alt=\"Live preview of HumanXT website\" width=\"1600\" height=\"1000\" loading=\"lazy\" decoding=\"async\" referrerpolicy=\"no-referrer\" />\n<a aria-label=\"Open HumanXT live website\" class=\"live-preview-link\" href=\"https://humanxt.com/\" rel=\"noopener noreferrer\" target=\"_blank\">Open HumanXT live website</a><div class=\"work-year\">2025</div></div><div class=\"work-project-body\"><div class=\"work-kicker\">Website Revamp • HR &amp; Workforce</div><div class=\"work-project-index\">01 / 04</div><h3 class=\"work-client-name\">HumanXT</h3><p>HumanXT needed clearer positioning for decision-makers in a competitive HR market. The website revamp reorganised its service catalogue into a credible, enquiry-focused experience for CXOs and HR leaders.</p><div class=\"work-meta\"><span>WordPress</span><span>6–8 weeks</span><span>Discovery, IA, UI/UX, SEO</span></div></div></article><article class=\"work-project-row\"><div class=\"w-img\">\n<img loading=\"lazy\" class=\"live-preview-image e-lazyloaded\" src=\"https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600\" alt=\"Live preview of Weavings website\" width=\"1600\" height=\"1000\" loading=\"lazy\" decoding=\"async\" referrerpolicy=\"no-referrer\" />\n<a aria-label=\"Open Weavings live website\" class=\"live-preview-link\" href=\"https://www.weavings.in/\" rel=\"noopener noreferrer\" target=\"_blank\">Open Weavings live website</a><div class=\"work-year\">2025</div></div><div class=\"work-project-body\"><div class=\"work-kicker\">Website Revamp • Staffing &amp; Manpower</div><div class=\"work-project-index\">02 / 04</div><h3 class=\"work-client-name\">Weavings</h3><p>A modern website structure for manpower services, employer requirements and candidate journeys, designed to support clearer navigation, stronger service discovery and qualified enquiries.</p><div class=\"work-meta\"><span>WordPress</span><span>Conversion UX</span><span>SEO-ready structure</span></div></div></article><article class=\"work-project-row\"><div class=\"w-img\">\n<img loading=\"lazy\" class=\"live-preview-image e-lazyloaded\" src=\"https://www.dgeniussolutions.com/wp-content/uploads/2025/12/katherinesgallery-scaled.webp\" alt=\"Live preview of Katherine's Gallery website\" width=\"1600\" height=\"1000\" decoding=\"async\" referrerpolicy=\"no-referrer\">\n<a aria-label=\"Open Katherine&#039;s Gallery live website\" class=\"live-preview-link\" href=\"https://katherinesgallery.in/\" rel=\"noopener noreferrer\" target=\"_blank\">Open Katherine's Gallery live website</a><div class=\"work-year\">2025</div></div><div class=\"work-project-body\"><div class=\"work-kicker\">Website Launch • Beauty &amp; Wellness</div><div class=\"work-project-index\">03 / 04</div><h3 class=\"work-client-name\">Katherine's Gallery</h3><p>An elegant website experience that communicates the brand, presents beauty services clearly and gives visitors a direct route towards enquiries and bookings.</p><div class=\"work-meta\"><span>WordPress</span><span>Brand-led UI</span><span>Booking journey</span></div></div></article><article class=\"work-project-row\"><div class=\"w-img\">\n<img loading=\"lazy\" class=\"live-preview-image e-lazyloaded\" src=\"/wp-content/uploads/2026/08/better-ceasons-scaled.webp\" alt=\"Live preview of Better Ceasons website\" width=\"1600\" height=\"1000\" decoding=\"async\" referrerpolicy=\"no-referrer\">\n<a aria-label=\"Open Better Ceasons live website\" class=\"live-preview-link\" href=\"https://betterceasons.com/\" rel=\"noopener noreferrer\" target=\"_blank\">Open Better Ceasons live website</a><div class=\"work-year\">2026</div></div><div class=\"work-project-body\"><div class=\"work-kicker\">Website Development • Clean Technology</div><div class=\"work-project-index\">04 / 04</div><h3 class=\"work-client-name\">Better Ceasons</h3><p>A modern digital platform designed to communicate Better Ceasons' clean-technology vision, explain its solutions clearly and guide visitors through the brand's technology, impact and partnership journey.</p><div class=\"work-meta\"><span>Next.js</span><span>Headless Development</span><span>Responsive Experience</span></div></div></article><div class=\"cta-panel work-samples-cta\"><div><div class=\"work-kicker\">Start a Website Project</div><h3>Planning a New Website or Revamp?</h3><p>Start with the business objective, website scope, content requirements, technology and search visibility priorities.</p></div>\n<a class=\"btn btn-primary\" href=\"#website-project-form\">Discuss Your Website Project →</a></div></div></section>"
+  },
+  {
+    "index": 4,
+    "id": "answer",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "What Does a Website Development Company in Mumbai Do?"
+      }
+    ],
+    "charLength": 1837,
+    "html": "<section class=\"section\" id=\"answer\"><div class=\"answer-grid\"><div><div class=\"section-label\"><span class=\"dot\"></span> Direct Answer</div><h2 class=\"h2\">What Does a <i>Website Development Company</i> in Mumbai Do?</h2><p class=\"p\">A website development company plans, designs, develops, launches and maintains websites that help businesses communicate clearly, appear in search and convert visitors into enquiries. D'Genius Solutions combines UI/UX, WordPress and custom development, technical SEO foundations, analytics, responsive testing and website AMC in one coordinated workflow.</p><p class=\"p\" style=\"margin-top:14px\">The same technical foundation can support ongoing <a class=\"inline-link\" href=\"/services/seo-services-in-mumbai/\">SEO</a>, <a class=\"inline-link\" href=\"/services/aeo-services-in-mumbai/\">answer engine optimisation</a>, <a class=\"inline-link\" href=\"/services/geo/\">generative engine optimisation</a> and <a class=\"inline-link\" href=\"/services/llm-seo-service/\">LLM visibility</a> without creating artificial or duplicate pages.</p><div class=\"proof-row\" style=\"justify-content:flex-start\"><span>Strategy-Led Sitemap</span><span>Search-Ready Architecture</span><span>Post-Launch AMC</span></div></div><div class=\"answer-side\"><div class=\"answer-chip\"><svg viewbox=\"0 0 24 24\"><path d=\"m5 12 4 4L19 6\"></path></svg> Business-led sitemap and conversion journey</div><div class=\"answer-chip\"><svg viewbox=\"0 0 24 24\"><path d=\"m5 12 4 4L19 6\"></path></svg> Responsive development from 4K screens to small mobiles</div><div class=\"answer-chip\"><svg viewbox=\"0 0 24 24\"><path d=\"m5 12 4 4L19 6\"></path></svg> SEO, AEO, GEO and LLM-readable foundations</div><div class=\"answer-chip\"><svg viewbox=\"0 0 24 24\"><path d=\"m5 12 4 4L19 6\"></path></svg> Ongoing maintenance, updates and website AMC</div></div></div></section>"
+  },
+  {
+    "index": 5,
+    "id": "problem",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Your Website May Be Losing Leads Before You Speak"
+      },
+      {
+        "tag": "h3",
+        "text": "Slow Loading Experience"
+      },
+      {
+        "tag": "h3",
+        "text": "Weak Search Architecture"
+      },
+      {
+        "tag": "h3",
+        "text": "No Ongoing Maintenance"
+      }
+    ],
+    "charLength": 1854,
+    "html": "<section class=\"section\" id=\"problem\"><div class=\"section-label\"><span class=\"dot\"></span> The Critical Challenge</div><h2 class=\"h2\">Your Website May Be <i>Losing Leads Before You Speak</i></h2><p class=\"p\">A slow, outdated or poorly structured website can reduce trust, weaken search visibility and make high-intent visitors leave before they understand your offer.</p><div class=\"problem-grid\" style=\"margin-top:26px\"><article class=\"p-card\"><div class=\"p-card-top\"><div aria-hidden=\"true\" class=\"p-icon\"><svg viewbox=\"0 0 24 24\"><path d=\"M4 14a8 8 0 1 1 16 0\"></path><path d=\"M12 14l4-4\"></path><circle cx=\"12\" cy=\"14\" r=\"1\"></circle><path d=\"M6.5 18h11\"></path></svg></div><div class=\"p-num\">Speed</div></div><h3>Slow Loading Experience</h3><p>Heavy assets, uncontrolled scripts and poor hosting can delay meaningful content and prevent visitors from reaching your enquiry path.</p></article><article class=\"p-card\"><div class=\"p-card-top\"><div aria-hidden=\"true\" class=\"p-icon\"><svg viewbox=\"0 0 24 24\"><circle cx=\"11\" cy=\"11\" r=\"7\"></circle><path d=\"m20 20-4-4\"></path><path d=\"M8.5 11h5\"></path><path d=\"M11 8.5v5\"></path></svg></div><div class=\"p-num\">SEO</div></div><h3>Weak Search Architecture</h3><p>Unclear URLs, inconsistent headings, thin service content, missing internal links and technical errors make the website harder to crawl and understand.</p></article><article class=\"p-card\"><div class=\"p-card-top\"><div aria-hidden=\"true\" class=\"p-icon\"><svg viewbox=\"0 0 24 24\"><path d=\"M12 3 19 6v5c0 4.6-2.9 8.3-7 10-4.1-1.7-7-5.4-7-10V6l7-3Z\"></path><path d=\"m9 12 2 2 4-4\"></path></svg></div><div class=\"p-num\">AMC</div></div><h3>No Ongoing Maintenance</h3><p>Without regular updates, backups, form checks and performance reviews, a website can become unstable, vulnerable and increasingly difficult to scale.</p></article></div></section>"
+  },
+  {
+    "index": 6,
+    "id": "website-development-services",
+    "className": "section capability-section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Complete Website Development Expertise on One Authoritative Page"
+      },
+      {
+        "tag": "h3",
+        "text": "WordPress Website Development in Mumbai"
+      },
+      {
+        "tag": "h3",
+        "text": "Custom Website Development in Mumbai"
+      },
+      {
+        "tag": "h3",
+        "text": "E-commerce Website Development in Mumbai"
+      },
+      {
+        "tag": "h3",
+        "text": "Website Redesign and SEO Migration"
+      },
+      {
+        "tag": "h3",
+        "text": "SEO-Friendly Website Development in Mumbai"
+      },
+      {
+        "tag": "h3",
+        "text": "Website Maintenance and AMC in Mumbai"
+      }
+    ],
+    "charLength": 6092,
+    "html": "<section class=\"section capability-section\" id=\"website-development-services\"><div class=\"section-label\"><span class=\"dot\"></span> Website Development Services in Mumbai</div><h2 class=\"h2\">Complete Website Development Expertise <i>on One Authoritative Page</i></h2><p class=\"p\">Instead of sending visitors across multiple thin service pages, this section explains the principal website requirements businesses compare before selecting a website development company in Mumbai. Every capability is planned around the same business objective, sitemap, content, analytics and post-launch support framework.</p><div class=\"capability-grid\"><article class=\"capability-card\"><div class=\"capability-head\"><span class=\"capability-no\">01</span><span class=\"capability-kicker\">CMS &amp; Marketing Websites</span></div><h3>WordPress Website Development in Mumbai</h3><p>Custom WordPress websites for businesses that need structured service pages, blogs, landing pages and controlled editing without losing brand consistency. We plan reusable sections, user roles, metadata controls, form journeys, responsive behaviour and plugin requirements before development begins.</p><ul class=\"capability-list\"><li>Custom sections and design systems</li><li>WooCommerce and form integrations</li><li>SEO-ready page and publishing structure</li><li>Team handover and post-launch AMC</li></ul><div class=\"capability-tags\"><span>WordPress</span><span>WooCommerce</span><span>Custom UI</span><span>AMC</span></div></article><article class=\"capability-card\"><div class=\"capability-head\"><span class=\"capability-no\">02</span><span class=\"capability-kicker\">Purpose-Built Platforms</span></div><h3>Custom Website Development in Mumbai</h3><p>Custom website development is suitable when a business needs specialised workflows, APIs, dashboards, headless content management or functionality that cannot be handled reliably through a standard template. Architecture is selected according to scale, security, performance and future integrations.</p><ul class=\"capability-list\"><li>Next.js and React interfaces</li><li>PHP and database-led functionality</li><li>API, CRM and third-party integrations</li><li>Headless CMS and reusable components</li></ul><div class=\"capability-tags\"><span>Next.js</span><span>React</span><span>PHP</span><span>APIs</span></div></article><article class=\"capability-card\"><div class=\"capability-head\"><span class=\"capability-no\">03</span><span class=\"capability-kicker\">Online Commerce</span></div><h3>E-commerce Website Development in Mumbai</h3><p>An e-commerce website needs more than attractive product pages. We structure categories, filters, product information, cart and checkout journeys, payment integration, order communication, analytics and operational editing so customers and internal teams can use the platform clearly.</p><ul class=\"capability-list\"><li>Product and category architecture</li><li>Payment and checkout integration</li><li>Mobile shopping and conversion journeys</li><li>Commerce analytics and ongoing support</li></ul><div class=\"capability-tags\"><span>Catalogue</span><span>Checkout</span><span>Payments</span><span>Analytics</span></div></article><article class=\"capability-card\"><div class=\"capability-head\"><span class=\"capability-no\">04</span><span class=\"capability-kicker\">Revamp &amp; Migration</span></div><h3>Website Redesign and SEO Migration</h3><p>A redesign should improve the brand and user experience without carelessly removing valuable URLs, content or search signals. We review the existing site, map pages, identify content to retain, plan redirects, validate metadata and test the replacement website before and after launch.</p><ul class=\"capability-list\"><li>Existing-site crawl and content inventory</li><li>URL mapping and redirect planning</li><li>SEO, analytics and form validation</li><li>Pre-launch and post-launch quality checks</li></ul><div class=\"capability-tags\"><span>Redesign</span><span>Migration</span><span>Redirects</span><span>QA</span></div></article><article class=\"capability-card\"><div class=\"capability-head\"><span class=\"capability-no\">05</span><span class=\"capability-kicker\">Search Foundations</span></div><h3>SEO-Friendly Website Development in Mumbai</h3><p>SEO-friendly website development begins before launch. The page hierarchy, headings, URLs, internal links, metadata controls, canonical rules, schema coordination, sitemap readiness and performance requirements should be considered during planning and development rather than added as an afterthought.</p><ul class=\"capability-list\"><li>Crawlable HTML and navigation</li><li>Metadata, canonicals and schema coordination</li><li>Internal linking and answer-first content</li><li>Search Console, analytics and conversion setup</li></ul><div class=\"capability-tags\"><span>SEO</span><span>AEO</span><span>GEO</span><span>LLM Readability</span></div></article><article class=\"capability-card\"><div class=\"capability-head\"><span class=\"capability-no\">06</span><span class=\"capability-kicker\">Long-Term Support</span></div><h3>Website Maintenance and AMC in Mumbai</h3><p>Website AMC keeps a live website monitored, updated and usable after launch. The scope can include backups, software updates, form checks, security reviews, content changes, performance monitoring and technical support according to the platform and agreed response requirements.</p><ul class=\"capability-list\"><li>Uptime, forms and functional checks</li><li>Updates, backups and recovery support</li><li>Content and campaign changes</li><li>Performance reviews and technical assistance</li></ul><div class=\"capability-tags\"><span>Monitoring</span><span>Backups</span><span>Updates</span><span>Support</span></div></article></div><div class=\"section-cta-bar\"><div><strong>Not sure which website approach fits your requirement?</strong><span>Share your current website, business goal and required functionality. We will recommend the appropriate scope and technology.</span></div>\n<a class=\"btn btn-primary\" href=\"#website-project-form\">Discuss Your Website Requirement →</a></div></section>"
+  },
+  {
+    "index": 7,
+    "id": "choose-company",
+    "className": "section compact-section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "How to Choose Among the Best Website Development Companies in Mumbai"
+      },
+      {
+        "tag": "h3",
+        "text": "Relevant project evidence"
+      },
+      {
+        "tag": "h3",
+        "text": "Strategy before visual design"
+      },
+      {
+        "tag": "h3",
+        "text": "Technology based on need"
+      },
+      {
+        "tag": "h3",
+        "text": "SEO-ready architecture"
+      },
+      {
+        "tag": "h3",
+        "text": "Measurement and lead journeys"
+      },
+      {
+        "tag": "h3",
+        "text": "Support after launch"
+      },
+      {
+        "tag": "h3",
+        "text": "Strategy, UI/UX, development, SEO foundations, analytics and AMC in one workflow"
+      }
+    ],
+    "charLength": 3130,
+    "html": "<section class=\"section compact-section\" id=\"choose-company\"><div class=\"section-label\"><span class=\"dot\"></span> Choosing a Website Partner</div><h2 class=\"h2\">How to Choose Among the <i>Best Website Development Companies in Mumbai</i></h2><p class=\"p\">The best website development company for a business is not simply the company using the loudest promotional language. A top website development company in Mumbai should demonstrate relevant work, explain its process and connect design decisions to search visibility, usability and enquiries. Businesses searching for SEO websites in Mumbai or a website dev company in Mumbai generally need the same fundamentals: useful content, crawlable architecture, responsive development, dependable performance and ongoing support.</p><div class=\"decision-grid\"><article class=\"decision-card\"><span aria-hidden=\"true\" class=\"decision-icon\">01</span><div><h3>Relevant project evidence</h3><p>Review projects with similar business models, content volume, integrations or customer journeys. Ask what problem was solved and what was delivered.</p></div></article><article class=\"decision-card\"><span aria-hidden=\"true\" class=\"decision-icon\">02</span><div><h3>Strategy before visual design</h3><p>The sitemap, page purpose, user intent and conversion journey should be clear before visual layouts and animations are finalised.</p></div></article><article class=\"decision-card\"><span aria-hidden=\"true\" class=\"decision-icon\">03</span><div><h3>Technology based on need</h3><p>A credible website dev company should explain why WordPress, Next.js, React, PHP or another approach is suitable for the project.</p></div></article><article class=\"decision-card\"><span aria-hidden=\"true\" class=\"decision-icon\">04</span><div><h3>SEO-ready architecture</h3><p>Clean URLs, semantic headings, crawlable links, metadata controls, migration planning and page performance should be included in development decisions.</p></div></article><article class=\"decision-card\"><span aria-hidden=\"true\" class=\"decision-icon\">05</span><div><h3>Measurement and lead journeys</h3><p>Forms, calls to action, GA4, GTM and conversion events should connect website activity to genuine enquiries and business outcomes.</p></div></article><article class=\"decision-card\"><span aria-hidden=\"true\" class=\"decision-icon\">06</span><div><h3>Support after launch</h3><p>Clarify ownership, backups, software updates, content changes, performance reviews, response times and website AMC responsibilities.</p></div></article></div><div class=\"decision-summary\"><div>\n<span class=\"decision-summary-kicker\">How D'Genius Solutions fits</span><h3>Strategy, UI/UX, development, SEO foundations, analytics and AMC in one workflow</h3><p>D'Genius Solutions combines these disciplines so businesses do not have to coordinate disconnected vendors for the website, search setup and post-launch support. This approach is suited to brands seeking an SEO-friendly website development company in Mumbai with ongoing technical accountability.</p></div>\n<a class=\"btn btn-ghost\" href=\"#website-project-form\">Talk to the Website Team →</a></div></section>"
+  },
+  {
+    "index": 8,
+    "id": "why-dgs",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "A Website Partner Connecting Development with Digital Growth"
+      }
+    ],
+    "charLength": 2199,
+    "html": "<section class=\"section\" id=\"why-dgs\"><div class=\"split\"><div><div class=\"section-label\"><span class=\"dot\"></span> Why D'Genius Solutions</div><h2 class=\"h2\">A Website Partner Connecting <i>Development with Digital Growth</i></h2><p class=\"p\">Many website projects separate strategy, design, development, SEO and maintenance across different vendors. D'Genius Solutions coordinates these disciplines so the website is planned as a business and marketing system from the beginning.</p><div class=\"service-note\">Website planning is coordinated with the wider D'Genius digital ecosystem, including SEO, AEO, GEO, LLM visibility, content, performance marketing and ongoing measurement where these services are relevant to the business objective.</div></div><div class=\"why-dgs-grid\"><article class=\"why-dgs-item\"><span class=\"why-dgs-mark\">01</span><div><b>Strategy before layouts</b><p>Business goals, audience intent, sitemap and conversion journeys are defined before visual execution.</p></div></article><article class=\"why-dgs-item\"><span class=\"why-dgs-mark\">02</span><div><b>Platform-neutral recommendations</b><p>WordPress, HTML, Next.js, React, PHP and SCSS are selected according to the project rather than forced into one stack.</p></div></article><article class=\"why-dgs-item\"><span class=\"why-dgs-mark\">03</span><div><b>SEO architecture during development</b><p>Headings, URLs, crawlable links, metadata controls and migration requirements are considered before launch.</p></div></article><article class=\"why-dgs-item\"><span class=\"why-dgs-mark\">04</span><div><b>Conversion and measurement</b><p>Forms, CTAs, GA4, GTM and conversion events connect website activity to genuine business enquiries.</p></div></article><article class=\"why-dgs-item\"><span class=\"why-dgs-mark\">05</span><div><b>Real cross-industry experience</b><p>Website work spans consumer brands, staffing, education, technology, sustainability and professional services.</p></div></article><article class=\"why-dgs-item\"><span class=\"why-dgs-mark\">06</span><div><b>Post-launch AMC</b><p>The same team can continue with updates, content, monitoring, performance and technical support.</p></div></article></div></div></section>"
+  },
+  {
+    "index": 9,
+    "id": "services",
+    "className": "services-starfield",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "One Development Ecosystem from Strategy to Ongoing Care"
+      },
+      {
+        "tag": "h4",
+        "text": "CustomDevelopment"
+      },
+      {
+        "tag": "h4",
+        "text": "E-CommerceSolutions"
+      },
+      {
+        "tag": "h4",
+        "text": "WordPressCMS"
+      },
+      {
+        "tag": "h4",
+        "text": "SpeedOptimisation"
+      },
+      {
+        "tag": "h4",
+        "text": "SEOArchitecture"
+      },
+      {
+        "tag": "h4",
+        "text": "AnnualMaintenance"
+      }
+    ],
+    "charLength": 2749,
+    "html": "<section class=\"services-starfield\" id=\"services\"><div class=\"svc-content\"><div class=\"section-label\"><span class=\"dot\"></span> Website Development Services</div><h2 class=\"h2\">One Development Ecosystem from <i>Strategy to Ongoing Care</i></h2><p class=\"p\">Each project is planned around the business goal, audience, content workflow, required integrations, search visibility and long-term maintenance needs.</p><div class=\"svc-grid\" id=\"svcGrid\"><article aria-controls=\"serviceModal\" aria-haspopup=\"dialog\" class=\"svc-card\" data-id=\"0\" role=\"button\" tabindex=\"0\"><div class=\"svc-num\">01 — ARCHITECT</div><h4>Custom<br/>Development</h4><p>Purpose-built business websites with tailored user journeys, reusable components, clean code and integration-ready architecture.</p><div class=\"svc-line\"></div></article><article aria-controls=\"serviceModal\" aria-haspopup=\"dialog\" class=\"svc-card\" data-id=\"1\" role=\"button\" tabindex=\"0\"><div class=\"svc-num\">02 — COMMERCE</div><h4>E-Commerce<br/>Solutions</h4><p>Scalable online stores with product architecture, payment integration, streamlined checkout and manageable content workflows.</p><div class=\"svc-line\"></div></article><article aria-controls=\"serviceModal\" aria-haspopup=\"dialog\" class=\"svc-card\" data-id=\"2\" role=\"button\" tabindex=\"0\"><div class=\"svc-num\">03 — CMS</div><h4>WordPress<br/>CMS</h4><p>Custom WordPress websites that give marketing teams controlled editing, landing-page flexibility and structured publishing.</p><div class=\"svc-line\"></div></article><article aria-controls=\"serviceModal\" aria-haspopup=\"dialog\" class=\"svc-card\" data-id=\"3\" role=\"button\" tabindex=\"0\"><div class=\"svc-num\">04 — PERF</div><h4>Speed<br/>Optimisation</h4><p>Performance reviews covering images, caching, code delivery, third-party scripts, layout stability and Core Web Vitals.</p><div class=\"svc-line\"></div></article><article aria-controls=\"serviceModal\" aria-haspopup=\"dialog\" class=\"svc-card\" data-id=\"4\" role=\"button\" tabindex=\"0\"><div class=\"svc-num\">05 — SIGNAL</div><h4>SEO<br/>Architecture</h4><p>Semantic HTML, crawlable navigation, metadata fields, internal links, canonicals, sitemap readiness and schema coordination.</p><div class=\"svc-line\"></div></article><article aria-controls=\"serviceModal\" aria-haspopup=\"dialog\" class=\"svc-card\" data-id=\"5\" role=\"button\" tabindex=\"0\"><div class=\"svc-num\">06 — CARE</div><h4>Annual<br/>Maintenance</h4><p>Monitoring, updates, backups, form checks, content changes and technical support after the website goes live.</p><div class=\"svc-line\"></div></article></div><div class=\"svc-hint\"><span>Strategy-Led Planning</span><span>4K-to-Mobile Responsive Build</span><span>Search-Ready Foundations</span><span>Ongoing AMC Support</span></div></div></section>"
+  },
+  {
+    "index": 10,
+    "id": "tech",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Technology and Development Tools Selected for Performance, Editing and Scale"
+      },
+      {
+        "tag": "h3",
+        "text": "WordPress"
+      },
+      {
+        "tag": "h3",
+        "text": "HTML5"
+      },
+      {
+        "tag": "h3",
+        "text": "CSS3"
+      },
+      {
+        "tag": "h3",
+        "text": "JavaScript"
+      },
+      {
+        "tag": "h3",
+        "text": "Next.js"
+      },
+      {
+        "tag": "h3",
+        "text": "React"
+      },
+      {
+        "tag": "h3",
+        "text": "PHP"
+      },
+      {
+        "tag": "h3",
+        "text": "SCSS / Sass"
+      },
+      {
+        "tag": "h3",
+        "text": "Node.js"
+      },
+      {
+        "tag": "h3",
+        "text": "Git"
+      },
+      {
+        "tag": "h3",
+        "text": "Visual Studio"
+      },
+      {
+        "tag": "h3",
+        "text": "GitHub"
+      }
+    ],
+    "charLength": 28234,
+    "html": "<section class=\"section\" id=\"tech\"><div class=\"section-label\"><span class=\"dot\"></span> Technology Stack</div><h2 class=\"h2\">Technology and Development Tools Selected for <i>Performance, Editing and Scale</i></h2><p class=\"p\">We select the platform, frontend framework, backend technology and development tools according to content-management needs, integrations, performance goals, security requirements, deployment workflow and the team that will manage the website after launch.</p><div class=\"tech-grid\" style=\"margin-top:24px\"><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" fill=\"#000000\" focusable=\"false\" id=\"Capa_1\" version=\"1.1\" viewbox=\"0 0 96.24 96.24\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n<g>\n<path d=\"M48.122,0C21.587,0,0.001,21.585,0.001,48.118c0,26.535,21.587,48.122,48.12,48.122c26.532,0,48.117-21.587,48.117-48.122\nC96.239,21.586,74.654,0,48.122,0z M4.857,48.118c0-6.271,1.345-12.227,3.746-17.606l20.638,56.544\nC14.81,80.042,4.857,65.243,4.857,48.118z M48.122,91.385c-4.247,0-8.346-0.623-12.222-1.763L48.88,51.903l13.301,36.433\nc0.086,0.215,0.191,0.411,0.308,0.596C57.992,90.514,53.16,91.385,48.122,91.385z M54.083,27.834\nc2.604-0.137,4.953-0.412,4.953-0.412c2.33-0.276,2.057-3.701-0.277-3.564c0,0-7.007,0.549-11.532,0.549\nc-4.25,0-11.396-0.549-11.396-0.549c-2.332-0.137-2.604,3.427-0.273,3.564c0,0,2.208,0.275,4.537,0.412l6.74,18.469l-9.468,28.395\nL21.615,27.835c2.608-0.136,4.952-0.412,4.952-0.412c2.33-0.275,2.055-3.702-0.278-3.562c0,0-7.004,0.549-11.53,0.549\nc-0.813,0-1.77-0.021-2.784-0.052C19.709,12.611,33.008,4.856,48.122,4.856c11.265,0,21.519,4.306,29.215,11.357\nc-0.187-0.01-0.368-0.035-0.562-0.035c-4.248,0-7.264,3.702-7.264,7.679c0,3.564,2.055,6.582,4.248,10.146\nc1.647,2.882,3.567,6.585,3.567,11.932c0,3.704-1.422,8-3.293,13.986l-4.315,14.421L54.083,27.834z M69.871,85.516l13.215-38.208\nc2.471-6.171,3.29-11.106,3.29-15.497c0-1.591-0.104-3.07-0.292-4.449c3.38,6.163,5.303,13.236,5.301,20.758\nC91.384,64.08,82.732,78.016,69.871,85.516z\"></path>\n</g>\n</svg></div><h3>WordPress</h3><p>CMS websites, custom themes, reusable content sections, publishing workflows and WooCommerce integrations.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" fill=\"none\" focusable=\"false\" viewbox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M6 28L4 3H28L26 28L16 31L6 28Z\" fill=\"#E44D26\"></path>\n<path d=\"M26 5H16V29.5L24 27L26 5Z\" fill=\"#F16529\"></path>\n<path d=\"M9.5 17.5L8.5 8H24L23.5 11H11.5L12 14.5H23L22 24L16 26L10 24L9.5 19H12.5L13 21.5L16 22.5L19 21.5L19.5 17.5H9.5Z\" fill=\"white\"></path>\n</svg></div><h3>HTML5</h3><p>Semantic and accessible structure for dependable crawling, rendering, responsive behaviour and component reuse.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" focusable=\"false\" viewbox=\"0 0 538.584 538.584\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h538.584v538.583H0V0z\" fill=\"none\"></path><path d=\"M405.5 467.454L269.29 504.13l-136.212-36.676-31.432-340.525h335.29L405.5 467.454z\" fill=\"#2062af\"></path><path d=\"M269.289 154.511v320.367l.308.084 110.229-29.682 25.443-290.769h-135.98z\" fill=\"#3c9cd7\"></path><path d=\"M191.985 76.899V56.631h29.571V34.453h-51.749v62.684h51.749V76.899h-29.571zm82.766-20.268h20.674V34.453h-51.754v22.178c6.924 6.924 10.535 10.238 20.549 20.252-5.854 0-20.549.021-20.549.02v20.234h51.754V76.899l-20.674-20.268zm73.352 0h20.673V34.453H317.02v22.178c6.924 6.924 10.537 10.238 20.551 20.252-5.852 0-20.551.021-20.551.02v20.234h51.757V76.899l-20.674-20.268z\"></path><path d=\"M269.168 239.656l-97.49 40.602 3.233 40.199 94.257-40.301 100.265-42.868 4.157-41.122-104.422 43.49z\" fill=\"#ffffff\"></path><lineargradient gradienttransform=\"matrix(1 0 0 -1 1045.93 1658.759)\" gradientunits=\"userSpaceOnUse\" id=\"a\" x1=\"-825.508\" x2=\"-825.508\" y1=\"1338.301\" y2=\"1419.102\"><stop offset=\".387\" stop-color=\"#d1d3d4\" stop-opacity=\"0\"></stop><stop offset=\"1\" stop-color=\"#d1d3d4\"></stop></lineargradient><path d=\"M171.677 280.258l3.233 40.199 94.257-40.301v-40.5l-97.49 40.602z\" fill=\"url(#a)\"></path><lineargradient gradienttransform=\"matrix(1 0 0 -1 1045.93 1658.759)\" gradientunits=\"userSpaceOnUse\" id=\"b\" x1=\"-724.552\" x2=\"-724.552\" y1=\"1378.602\" y2=\"1462.591\"><stop offset=\".387\" stop-color=\"#d1d3d4\" stop-opacity=\"0\"></stop><stop offset=\"1\" stop-color=\"#d1d3d4\"></stop></lineargradient><path d=\"M373.59 196.167l-104.422 43.489v40.5l100.265-42.868 4.157-41.121z\" fill=\"url(#b)\"></path><lineargradient gradienttransform=\"matrix(1 0 0 -1 1045.93 1658.759)\" gradientunits=\"userSpaceOnUse\" id=\"c\" x1=\"-874.103\" x2=\"-680.039\" y1=\"1302.263\" y2=\"1302.263\"><stop offset=\"0\" stop-color=\"#e8e7e5\"></stop><stop offset=\"1\" stop-color=\"#ffffff\"></stop></lineargradient><path d=\"M171.827 280.258l3.234 40.199 144.625.461-3.235 53.598-47.59 13.398-45.748-11.551-2.772-33.268h-42.508l5.545 64.225 85.945 25.412 85.479-24.951 11.09-127.523H171.827z\" fill=\"url(#c)\"></path><path d=\"M269.168 280.258h-97.49l3.233 40.199 94.257.301v-40.5zm0 107.528l-.462.129-45.742-11.551-2.772-33.268h-42.507l5.544 64.225 85.939 25.412v-44.947z\" opacity=\".05\"></path><lineargradient gradienttransform=\"matrix(1 0 0 -1 1045.93 1658.759)\" gradientunits=\"userSpaceOnUse\" id=\"d\" x1=\"-883.032\" x2=\"-672.341\" y1=\"1442.031\" y2=\"1442.031\"><stop offset=\"0\" stop-color=\"#e8e7e5\"></stop><stop offset=\"1\" stop-color=\"#ffffff\"></stop></lineargradient><path d=\"M162.898 196.167H373.59l-4.157 41.122H167.98l-5.082-41.122z\" fill=\"url(#d)\"></path><path d=\"M269.168 196.167h-106.27l5.082 41.122h101.188v-41.122z\" opacity=\".05\"></path></svg></div><h3>CSS3</h3><p>Responsive layouts, modern visual systems, animations and browser-compatible presentation across screen sizes.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" focusable=\"false\" preserveaspectratio=\"xMinYMin meet\" viewbox=\"0 0 256 256\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M0 0h256v256H0V0z\" fill=\"#F7DF1E\"></path><path d=\"M67.312 213.932l19.59-11.856c3.78 6.701 7.218 12.371 15.465 12.371 7.905 0 12.89-3.092 12.89-15.12v-81.798h24.057v82.138c0 24.917-14.606 36.259-35.916 36.259-19.245 0-30.416-9.967-36.087-21.996M152.381 211.354l19.588-11.341c5.157 8.421 11.859 14.607 23.715 14.607 9.969 0 16.325-4.984 16.325-11.858 0-8.248-6.53-11.17-17.528-15.98l-6.013-2.58c-17.357-7.387-28.87-16.667-28.87-36.257 0-18.044 13.747-31.792 35.228-31.792 15.294 0 26.292 5.328 34.196 19.247L210.29 147.43c-4.125-7.389-8.591-10.31-15.465-10.31-7.046 0-11.514 4.468-11.514 10.31 0 7.217 4.468 10.14 14.778 14.608l6.014 2.577c20.45 8.765 31.963 17.7 31.963 37.804 0 21.654-17.012 33.51-39.867 33.51-22.339 0-36.774-10.654-43.819-24.574\"></path></svg></div><h3>JavaScript</h3><p>Interactive behaviour, form logic, frontend integrations and lightweight user experiences without unnecessary scripts.</p></article><article class=\"t-card tech-stack-card nextjs-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg nextjs-wordmark-svg\" focusable=\"false\" viewBox=\"0 -101.5 512 512\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"xMidYMid meet\"><path d=\"M120.81043,80.5613102 L217.378325,80.5613102 L217.378325,88.2366589 L129.662487,88.2366589 L129.662487,146.003758 L212.147564,146.003758 L212.147564,153.679106 L129.662487,153.679106 L129.662487,217.101725 L218.384241,217.101725 L218.384241,224.777073 L120.81043,224.777073 L120.81043,80.5613102 Z M226.0292,80.5613102 L236.289538,80.5613102 L281.756922,143.983929 L328.230222,80.5613102 L391.441486,0 L287.591232,150.649363 L341.105941,224.777073 L330.443237,224.777073 L281.756922,157.314798 L232.869425,224.777073 L222.407904,224.777073 L276.324978,150.649363 L226.0292,80.5613102 Z M344.928421,88.2366588 L344.928421,80.5613102 L454.975585,80.5613102 L454.975585,88.2366589 L404.27744,88.2366589 L404.27744,224.777073 L395.425382,224.777073 L395.425382,88.2366589 L344.928421,88.2366588 Z M1.42108547e-14,80.5613102 L11.0650714,80.5613102 L163.64593,308.884007 L100.591558,224.777073 L9.25442331,91.4683847 L8.85205708,224.777073 L1.42108547e-14,224.777073 L1.42108547e-14,80.5613102 Z M454.083705,214.785469 C452.275167,214.785469 450.918762,213.38418 450.918762,211.573285 C450.918762,209.762388 452.275167,208.361099 454.083705,208.361099 C455.913774,208.361099 457.248648,209.762388 457.248648,211.573285 C457.248648,213.38418 455.913774,214.785469 454.083705,214.785469 Z M462.781915,206.334618 L467.518563,206.334618 C467.583153,208.900055 469.456284,210.624719 472.212151,210.624719 C475.290972,210.624719 477.03492,208.770705 477.03492,205.29982 L477.03492,183.310363 L481.85769,183.310363 L481.85769,205.321379 C481.85769,211.573285 478.240613,215.173518 472.255212,215.173518 C466.635824,215.173518 462.781915,211.681076 462.781915,206.334618 Z M488.166045,206.054362 L492.945754,206.054362 C493.354828,209.007848 496.239878,210.883419 500.395211,210.883419 C504.270652,210.883419 507.11264,208.878498 507.11264,206.119036 C507.11264,203.747625 505.304102,202.324777 501.191828,201.354653 L497.187209,200.384531 C491.56782,199.069474 489.005723,196.353129 489.005723,191.782772 C489.005723,186.24229 493.527071,182.555823 500.30909,182.555823 C506.617445,182.555823 511.224912,186.24229 511.504805,191.480955 L506.811217,191.480955 C506.359083,188.613703 503.861576,186.824365 500.244499,186.824365 C496.43365,186.824365 493.893085,188.656819 493.893085,191.459398 C493.893085,193.679901 495.52938,194.95184 499.577063,195.900406 L503.000368,196.741178 C509.373314,198.228702 512,200.815695 512,205.493846 C512,211.443935 507.392533,215.173518 500.029197,215.173518 C493.139526,215.173518 488.51053,211.6164 488.166045,206.054362 Z\" fill=\"#f8fafc\" fill-rule=\"nonzero\"></path></svg></div><h3>Next.js</h3><p>Modern React websites with structured routing, scalable rendering, headless CMS support and performance controls.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" focusable=\"false\" preserveaspectratio=\"xMinYMin meet\" viewbox=\"0 -13 256 256\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M.754 114.75c0 19.215 18.763 37.152 48.343 47.263-5.907 29.737-1.058 53.706 15.136 63.045 16.645 9.6 41.443 2.955 64.98-17.62 22.943 19.744 46.13 27.514 62.31 18.148 16.63-9.627 21.687-35.221 15.617-65.887 30.81-10.186 48.044-25.481 48.044-44.949 0-18.769-18.797-35.006-47.979-45.052 6.535-31.933.998-55.32-15.867-65.045-16.259-9.376-39.716-1.204-62.996 19.056C104.122 2.205 80.897-4.36 64.05 5.392 47.806 14.795 43.171 39.2 49.097 69.487 20.515 79.452.754 96.057.754 114.75z\" fill=\"#FFF\"></path><path d=\"M201.025 79.674a151.364 151.364 0 0 0-7.274-2.292 137.5 137.5 0 0 0 1.124-4.961c5.506-26.728 1.906-48.26-10.388-55.348-11.787-6.798-31.065.29-50.535 17.233a151.136 151.136 0 0 0-5.626 5.163 137.573 137.573 0 0 0-3.744-3.458c-20.405-18.118-40.858-25.752-53.139-18.643-11.776 6.817-15.264 27.06-10.307 52.39a150.91 150.91 0 0 0 1.67 7.484c-2.894.822-5.689 1.698-8.363 2.63-23.922 8.34-39.2 21.412-39.2 34.97 0 14.004 16.4 28.05 41.318 36.566a128.44 128.44 0 0 0 6.11 1.91 147.813 147.813 0 0 0-1.775 8.067c-4.726 24.89-1.035 44.653 10.71 51.428 12.131 6.995 32.491-.195 52.317-17.525 1.567-1.37 3.14-2.823 4.715-4.346a148.34 148.34 0 0 0 6.108 5.573c19.204 16.525 38.17 23.198 49.905 16.405 12.12-7.016 16.058-28.247 10.944-54.078-.39-1.973-.845-3.988-1.355-6.04 1.43-.422 2.833-.858 4.202-1.312 25.904-8.582 42.757-22.457 42.757-36.648 0-13.607-15.77-26.767-40.174-35.168z\" fill=\"#53C1DE\"></path><path d=\"M195.406 142.328c-1.235.409-2.503.804-3.795 1.187-2.86-9.053-6.72-18.68-11.442-28.625 4.507-9.71 8.217-19.213 10.997-28.208 2.311.67 4.555 1.375 6.717 2.12 20.91 7.197 33.664 17.84 33.664 26.04 0 8.735-13.775 20.075-36.14 27.486zm-9.28 18.389c2.261 11.422 2.584 21.749 1.086 29.822-1.346 7.254-4.052 12.09-7.398 14.027-7.121 4.122-22.35-1.236-38.772-15.368-1.883-1.62-3.78-3.35-5.682-5.18 6.367-6.964 12.73-15.06 18.94-24.05 10.924-.969 21.244-2.554 30.603-4.717.46 1.86.87 3.683 1.223 5.466zm-93.85 43.137c-6.957 2.457-12.498 2.527-15.847.596-7.128-4.11-10.09-19.98-6.049-41.265a138.507 138.507 0 0 1 1.65-7.502c9.255 2.047 19.5 3.52 30.45 4.408 6.251 8.797 12.798 16.883 19.396 23.964a118.863 118.863 0 0 1-4.305 3.964c-8.767 7.664-17.552 13.1-25.294 15.835zm-32.593-61.58c-11.018-3.766-20.117-8.66-26.354-14-5.604-4.8-8.434-9.565-8.434-13.432 0-8.227 12.267-18.722 32.726-25.855a139.276 139.276 0 0 1 7.777-2.447c2.828 9.197 6.537 18.813 11.013 28.537-4.534 9.869-8.296 19.638-11.15 28.943a118.908 118.908 0 0 1-5.578-1.746zm10.926-74.37c-4.247-21.703-1.427-38.074 5.67-42.182 7.56-4.376 24.275 1.864 41.893 17.507 1.126 1 2.257 2.047 3.39 3.13-6.564 7.049-13.051 15.074-19.248 23.82-10.627.985-20.8 2.567-30.152 4.686a141.525 141.525 0 0 1-1.553-6.962zm97.467 24.067a306.982 306.982 0 0 0-6.871-11.3c7.21.91 14.117 2.12 20.603 3.601-1.947 6.241-4.374 12.767-7.232 19.457a336.42 336.42 0 0 0-6.5-11.758zm-39.747-38.714c4.452 4.823 8.911 10.209 13.297 16.052a284.245 284.245 0 0 0-26.706-.006c4.39-5.789 8.887-11.167 13.409-16.046zm-40.002 38.78a285.24 285.24 0 0 0-6.378 11.685c-2.811-6.667-5.216-13.222-7.18-19.552 6.447-1.443 13.322-2.622 20.485-3.517a283.79 283.79 0 0 0-6.927 11.384zm7.133 57.683c-7.4-.826-14.379-1.945-20.824-3.348 1.995-6.442 4.453-13.138 7.324-19.948a283.494 283.494 0 0 0 6.406 11.692 285.27 285.27 0 0 0 7.094 11.604zm33.136 27.389c-4.575-4.937-9.138-10.397-13.595-16.27 4.326.17 8.737.256 13.22.256 4.606 0 9.159-.103 13.64-.303-4.4 5.98-8.843 11.448-13.265 16.317zm46.072-51.032c3.02 6.884 5.566 13.544 7.588 19.877-6.552 1.495-13.625 2.699-21.078 3.593a337.537 337.537 0 0 0 6.937-11.498 306.632 306.632 0 0 0 6.553-11.972zm-14.915 7.15a316.478 316.478 0 0 1-10.84 17.49c-6.704.479-13.632.726-20.692.726-7.031 0-13.871-.219-20.458-.646A273.798 273.798 0 0 1 96.72 133.28a271.334 271.334 0 0 1-9.64-18.206 273.864 273.864 0 0 1 9.611-18.216v.002a271.252 271.252 0 0 1 10.956-17.442c6.72-.508 13.61-.774 20.575-.774 6.996 0 13.895.268 20.613.78a290.704 290.704 0 0 1 10.887 17.383 316.418 316.418 0 0 1 9.741 18.13 290.806 290.806 0 0 1-9.709 18.29zm19.913-107.792c7.566 4.364 10.509 21.961 5.755 45.038a127.525 127.525 0 0 1-1.016 4.492c-9.374-2.163-19.554-3.773-30.212-4.773-6.209-8.841-12.642-16.88-19.1-23.838a141.92 141.92 0 0 1 5.196-4.766c16.682-14.518 32.273-20.25 39.377-16.153z\" fill=\"#FFF\"></path><path d=\"M128.221 94.665c11.144 0 20.177 9.034 20.177 20.177 0 11.144-9.033 20.178-20.177 20.178-11.143 0-20.177-9.034-20.177-20.178 0-11.143 9.034-20.177 20.177-20.177\" fill=\"#53C1DE\"></path></svg></div><h3>React</h3><p>Reusable components for interactive websites, dashboards, product interfaces and maintainable frontend systems.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg php-brand-svg\" focusable=\"false\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7.01 10.207h-.944l-.515 2.648h.838c.556 0 .97-.105 1.242-.314.272-.21.455-.559.55-1.049.092-.47.05-.802-.124-.995-.175-.193-.523-.29-1.047-.29zM12 5.688C5.373 5.688 0 8.514 0 12s5.373 6.313 12 6.313S24 15.486 24 12c0-3.486-5.373-6.312-12-6.312zm-3.26 7.451c-.261.25-.575.438-.917.551-.336.108-.765.164-1.285.164H5.357l-.327 1.681H3.652l1.23-6.326h2.65c.797 0 1.378.209 1.744.628.366.418.476 1.002.33 1.752a2.836 2.836 0 0 1-.305.847c-.143.255-.33.49-.561.703zm4.024.715l.543-2.799c.063-.318.039-.536-.068-.651-.107-.116-.336-.174-.687-.174H11.46l-.704 3.625H9.388l1.23-6.327h1.367l-.327 1.682h1.218c.767 0 1.295.134 1.586.401s.378.7.263 1.299l-.572 2.944h-1.389zm7.597-2.265a2.782 2.782 0 0 1-.305.847c-.143.255-.33.49-.561.703a2.44 2.44 0 0 1-.917.551c-.336.108-.765.164-1.286.164h-1.18l-.327 1.682h-1.378l1.23-6.326h2.649c.797 0 1.378.209 1.744.628.366.417.477 1.001.331 1.751zM17.766 10.207h-.943l-.516 2.648h.838c.557 0 .971-.105 1.242-.314.272-.21.455-.559.551-1.049.092-.47.049-.802-.125-.995s-.524-.29-1.047-.29z\"></path></svg></div><h3>PHP</h3><p>Backend workflows, WordPress customisation, database-driven features, APIs and business-specific website logic.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" fill=\"#000000\" focusable=\"false\" viewbox=\"0 0 512 512\" xmlns=\"http://www.w3.org/2000/svg\"><title>ionicons-v5_logos</title><path d=\"M511.78,328.07v0c-1.47-11.92-7.51-22.26-18-30.77a3.58,3.58,0,0,0-.43-.44l0,0-.53-.38-.17-.12-5.57-4-.19-.14-.71-.5,0,0a3.5,3.5,0,0,0-.83-.35c-17.62-10.49-46.79-17.84-91.42-2.09C383.28,271.36,382.07,257,389.2,235c1.27-3.83.09-6.36-3.71-8-7.64-3.25-18.1-1.59-25.52.37-3.46.9-5.54,2.86-6.2,5.83-4.7,22-18.36,42.1-31.57,61.5l-.78,1.14c-8.14-17.26-6.45-30.63-.78-47.38,1.13-3.34.24-5.56-2.89-7.22-8.74-4.51-21.85-1.41-27.07.13-6.62,1.93-13.72,19.82-21.65,41.24-2,5.39-3.72,10-4.75,12.15-2.45,5-4.79,10.7-7.27,16.75-5.6,13.69-11.91,29.1-20.93,38.78-3.28-7.25,1.88-18.68,6.89-29.77,5.93-13.11,11.53-25.5,5.08-33.41a11.82,11.82,0,0,0-8.33-4.32,13.26,13.26,0,0,0-6.15,1c.67-5.65.7-10.11-.95-15.5-2.36-7.69-8.49-12-16.93-11.77-19.22.56-35.48,14.88-45.75,26.8-6.84,8-22,14.1-35.31,19.45C129.37,305,124.37,307,120.2,309c-6.65-5.62-15.1-11.29-24-17.28-25-16.78-53.33-35.81-54.31-61.61-1.4-38.11,42-65.14,79.88-84.43,28.71-14.6,53.67-24.28,76.31-29.57,31.8-7.43,58.66-5.93,79.82,4.44,11.58,5.67,17,18,13.56,30.68-9,32.95-46.29,55.53-78.18,65.69-19.21,6.12-35.56,8.68-50,7.84-18.1-1.05-32.88-10.13-39.2-14a21.18,21.18,0,0,0-3.2-1.8l-.29-.07a3.21,3.21,0,0,0-3.19,1c-1.3,1.55-.84,4-.37,5.24,6.15,16.07,18.85,26.22,37.74,30.17a92.09,92.09,0,0,0,18.78,1.79c44.21,0,100.62-25.49,121.34-46.48,14.13-14.3,24.42-29,28.68-54.35,4.45-26.55-13.55-45-31.89-53.5-44.57-20.57-95.19-12.44-129.81-2-40.5,12.21-82.4,34.41-114.94,60.93-40.12,32.67-54.62,63-43.12,90.25,11.81,27.93,40.61,45.4,68.46,62.3,9,5.45,17.56,10.64,25.27,16-2.32,1.13-4.69,2.28-7.1,3.43C67.06,335,40.54,347.75,25.83,368.82c-10.68,15.35-12.68,30.63-5.94,45.42,3.6,7.87,10,13.21,18.89,15.87A50,50,0,0,0,53,432c17.31,0,36.36-7,46.73-13.47,18.32-11.5,30.19-26.94,35.29-45.89,4.54-16.86,3.45-33.61-3.15-48.56l22.45-11.32c-10.83,36-2.53,57.5,6.59,69.36,3.36,4.37,9.42,7,16.19,7.12s13-2.43,16.52-6.77c6.66-8.25,11.58-17.9,16.11-27.55-.24,6.3.06,12.68,2.21,18.09,1.93,4.87,5.11,8.1,9.21,9.34,4.36,1.33,9.47.21,14.39-3.15,22.17-15.17,37.33-51.58,49.51-80.85,1.73-4.16,3.39-8.16,5-11.9a152.5,152.5,0,0,0,12.5,31.07c1.18,2.14,1.08,3.08-.52,4.84-2.41,2.64-5.77,5.83-9.33,9.21-10.78,10.23-24.2,23-26,34.23-.7,4.5,2.4,8.6,7.21,9.53,14.47,2.88,31.9-1.33,46.64-11.25,13.4-9,18.44-21.55,15-37.19-3.33-15.06,4.27-33.76,22.59-55.62,3,12.53,7,22.66,12.52,31.53l-.15.12c-13.34,11.65-31.62,27.6-28.78,46.95a13.35,13.35,0,0,0,5.58,9.22,14.22,14.22,0,0,0,11.2,2.06c17.47-3.67,30.62-11.06,40.18-22.57s6.07-24.27,2.85-34.17c25-6.78,47.26-6.61,68.1.5,11.7,4,20.09,10.57,24.93,19.64,6.09,11.41,2.8,21.94-9.29,29.65-3.71,2.37-5.5,3.82-5.61,5.65a2.65,2.65,0,0,0,1,2.23c1.4,1.15,5.72,3.15,15.49-3,9-5.65,14.28-13.34,15.63-23A39,39,0,0,0,511.78,328.07ZM112.05,353.13l-.1,1.28c-1.56,14.64-9,27.4-22.15,38-8.26,6.66-17.23,10.75-25.25,11.53-5.6.54-9.67-.22-12.09-2.27-1.81-1.53-2.78-3.82-3-7-1.64-25.48,38.32-50.8,60.81-59.13A51.39,51.39,0,0,1,112.05,353.13ZM214.4,281.27h0c-3.7,21.09-14.49,60.9-31.45,76.35-.81.74-1.49,1-1.8.93s-.55-.44-.8-1c-5.66-13.12-3.57-35.28,5-52.69,6.59-13.42,16-22.31,26.52-25a5.29,5.29,0,0,1,1.34-.19,1.58,1.58,0,0,1,1,.27A1.64,1.64,0,0,1,214.4,281.27Zm83.49,76.88c-3.19,3.33-7.56,2.88-6.53,1.66l16.24-17.24C306.29,348.5,302.42,353.41,297.89,358.15Zm67.37-14.91a14.07,14.07,0,0,1-4.93,1.39c-.46-9.07,8.33-19.28,17-26.09C379.66,328,374.89,338,365.26,343.24Z\"></path></svg></div><h3>SCSS / Sass</h3><p>Maintainable styling using variables, reusable modules, responsive scales and consistent design-system rules.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" focusable=\"false\" preserveaspectratio=\"xMinYMin meet\" viewbox=\"-13 0 282 282\" xmlns=\"http://www.w3.org/2000/svg\">\n<g fill=\"#8CC84B\">\n<path d=\"M116.504 3.58c6.962-3.985 16.03-4.003 22.986 0 34.995 19.774 70.001 39.517 104.99 59.303 6.581 3.707 10.983 11.031 10.916 18.614v118.968c.049 7.897-4.788 15.396-11.731 19.019-34.88 19.665-69.742 39.354-104.616 59.019-7.106 4.063-16.356 3.75-23.24-.646-10.457-6.062-20.932-12.094-31.39-18.15-2.137-1.274-4.546-2.288-6.055-4.36 1.334-1.798 3.719-2.022 5.657-2.807 4.365-1.388 8.374-3.616 12.384-5.778 1.014-.694 2.252-.428 3.224.193 8.942 5.127 17.805 10.403 26.777 15.481 1.914 1.105 3.852-.362 5.488-1.274 34.228-19.345 68.498-38.617 102.72-57.968 1.268-.61 1.969-1.956 1.866-3.345.024-39.245.006-78.497.012-117.742.145-1.576-.767-3.025-2.192-3.67-34.759-19.575-69.5-39.18-104.253-58.76a3.621 3.621 0 0 0-4.094-.006C91.2 39.257 56.465 58.88 21.712 78.454c-1.42.646-2.373 2.071-2.204 3.653.006 39.245 0 78.497 0 117.748a3.329 3.329 0 0 0 1.89 3.303c9.274 5.259 18.56 10.481 27.84 15.722 5.228 2.814 11.647 4.486 17.407 2.33 5.083-1.823 8.646-7.01 8.549-12.407.048-39.016-.024-78.038.036-117.048-.127-1.732 1.516-3.163 3.2-3 4.456-.03 8.918-.06 13.374.012 1.86-.042 3.14 1.823 2.91 3.568-.018 39.263.048 78.527-.03 117.79.012 10.464-4.287 21.85-13.966 26.97-11.924 6.177-26.662 4.867-38.442-1.056-10.198-5.09-19.93-11.097-29.947-16.55C5.368 215.886.555 208.357.604 200.466V81.497c-.073-7.74 4.504-15.197 11.29-18.85C46.768 42.966 81.636 23.27 116.504 3.58z\"></path>\n<path d=\"M146.928 85.99c15.21-.979 31.493-.58 45.18 6.913 10.597 5.742 16.472 17.793 16.659 29.566-.296 1.588-1.956 2.464-3.472 2.355-4.413-.006-8.827.06-13.24-.03-1.872.072-2.96-1.654-3.195-3.309-1.268-5.633-4.34-11.212-9.642-13.929-8.139-4.075-17.576-3.87-26.451-3.785-6.479.344-13.446.905-18.935 4.715-4.214 2.886-5.494 8.712-3.99 13.404 1.418 3.369 5.307 4.456 8.489 5.458 18.33 4.794 37.754 4.317 55.734 10.626 7.444 2.572 14.726 7.572 17.274 15.366 3.333 10.446 1.872 22.932-5.56 31.318-6.027 6.901-14.805 10.657-23.56 12.697-11.647 2.597-23.734 2.663-35.562 1.51-11.122-1.268-22.696-4.19-31.282-11.768-7.342-6.375-10.928-16.308-10.572-25.895.085-1.619 1.697-2.748 3.248-2.615 4.444-.036 8.888-.048 13.332.006 1.775-.127 3.091 1.407 3.182 3.08.82 5.367 2.837 11 7.517 14.182 9.032 5.827 20.365 5.428 30.707 5.591 8.568-.38 18.186-.495 25.178-6.158 3.689-3.23 4.782-8.634 3.785-13.283-1.08-3.925-5.186-5.754-8.712-6.95-18.095-5.724-37.736-3.647-55.656-10.12-7.275-2.571-14.31-7.432-17.105-14.906-3.9-10.578-2.113-23.662 6.098-31.765 8.006-8.06 19.563-11.164 30.551-12.275z\"></path>\n</g>\n</svg></div><h3>Node.js</h3><p>Server-side JavaScript, API services, automation and integration layers for suitable custom website requirements.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" focusable=\"false\" preserveaspectratio=\"xMinYMin meet\" viewbox=\"0 0 256 256\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M251.172 116.594L139.4 4.828c-6.433-6.437-16.873-6.437-23.314 0l-23.21 23.21 29.443 29.443c6.842-2.312 14.688-.761 20.142 4.693 5.48 5.489 7.02 13.402 4.652 20.266l28.375 28.376c6.865-2.365 14.786-.835 20.269 4.657 7.663 7.66 7.663 20.075 0 27.74-7.665 7.666-20.08 7.666-27.749 0-5.764-5.77-7.188-14.235-4.27-21.336l-26.462-26.462-.003 69.637a19.82 19.82 0 0 1 5.188 3.71c7.663 7.66 7.663 20.076 0 27.747-7.665 7.662-20.086 7.662-27.74 0-7.663-7.671-7.663-20.086 0-27.746a19.654 19.654 0 0 1 6.421-4.281V94.196a19.378 19.378 0 0 1-6.421-4.281c-5.806-5.798-7.202-14.317-4.227-21.446L81.47 39.442l-76.64 76.635c-6.44 6.443-6.44 16.884 0 23.322l111.774 111.768c6.435 6.438 16.873 6.438 23.316 0l111.251-111.249c6.438-6.44 6.438-16.887 0-23.324\" fill=\"#DE4C36\"></path></svg></div><h3>Git</h3><p>Version control for traceable development, safer releases, collaboration and controlled code changes.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" focusable=\"false\" id=\"svg3336\" inkscape:export-filename=\"C:\\Users\\JimLamb\\Dropbox\\Work\\Resources\\Icons\\Visual Studio.png\" inkscape:export-xdpi=\"171.9095\" inkscape:export-ydpi=\"171.9095\" inkscape:version=\"0.91 r13725\" sodipodi:docname=\"logo-visual-studio.svg\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:cc=\"http://creativecommons.org/ns#\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\" xmlns:svg=\"http://www.w3.org/2000/svg\"><title id=\"title3408\">Visual Studio</title>\n<defs id=\"defs3344\"></defs>\n<sodipodi:namedview bordercolor=\"#666666\" borderopacity=\"1\" gridtolerance=\"20\" guidetolerance=\"10\" id=\"namedview3342\" inkscape:bbox-nodes=\"true\" inkscape:bbox-paths=\"false\" inkscape:current-layer=\"svg3336\" inkscape:cx=\"200.70876\" inkscape:cy=\"198.31687\" inkscape:object-nodes=\"true\" inkscape:pageopacity=\"0\" inkscape:pageshadow=\"2\" inkscape:snap-bbox=\"true\" inkscape:snap-global=\"true\" inkscape:snap-intersection-paths=\"false\" inkscape:window-height=\"1073\" inkscape:window-maximized=\"0\" inkscape:window-width=\"1467\" inkscape:window-x=\"461\" inkscape:window-y=\"213\" inkscape:zoom=\"1.4142136\" objecttolerance=\"10\" pagecolor=\"#ffffff\" showgrid=\"true\">\n<inkscape:grid dotted=\"false\" empspacing=\"2\" id=\"grid4170\" spacingx=\"16\" spacingy=\"16\" type=\"xygrid\"></inkscape:grid>\n</sodipodi:namedview>\n<metadata id=\"metadata3338\">\n<rdf:rdf>\n<cc:work>\n<dc:subject>\nMiscellaneous\n</dc:subject>\n<dc:identifier>\nvisual-studio-online\n</dc:identifier>\n<dc:title>Visual Studio</dc:title>\n<dc:format>\nimage/svg+xml\n</dc:format>\n<dc:publisher>\nAmido Limited\n</dc:publisher>\n<dc:creator>\nRichard Slater\n</dc:creator>\n<dc:type rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\"></dc:type>\n</cc:work>\n</rdf:rdf>\n</metadata>\n<path d=\"M 336,0 448,48 448,400 336,448 160,272 48,352 0,336 0,112 48,96 160,176 Z m -288,160 0,128 64.00625,-63.4896 z m 176,64 112,96 0,-192 z\" id=\"path3340\" inkscape:connector-curvature=\"0\" sodipodi:nodetypes=\"ccccccccccccccccccc\" style=\"fill-opacity:1\"></path>\n</svg></div><h3>Visual Studio</h3><p>Professional development environment for code review, debugging, integration work and structured project delivery.</p></article><article class=\"t-card tech-stack-card\"><div aria-hidden=\"true\" class=\"t-logo\"><svg aria-hidden=\"true\" class=\"tech-inline-svg\" fill=\"none\" focusable=\"false\" viewbox=\"0 0 15 15\" xmlns=\"http://www.w3.org/2000/svg\">\n<path clip-rule=\"evenodd\" d=\"M7.49936 0.850006C3.82767 0.850006 0.849976 3.8273 0.849976 7.50023C0.849976 10.4379 2.75523 12.9306 5.39775 13.8104C5.73047 13.8712 5.85171 13.6658 5.85171 13.4895C5.85171 13.3315 5.846 12.9135 5.84273 12.3587C3.99301 12.7604 3.60273 11.4671 3.60273 11.4671C3.30022 10.6988 2.86423 10.4942 2.86423 10.4942C2.26044 10.0819 2.90995 10.0901 2.90995 10.0901C3.57742 10.137 3.9285 10.7755 3.9285 10.7755C4.52167 11.7916 5.48512 11.4981 5.86396 11.3279C5.92438 10.8984 6.09625 10.6053 6.28608 10.4391C4.80948 10.2709 3.25695 9.70063 3.25695 7.15241C3.25695 6.42615 3.51618 5.83298 3.94157 5.368C3.87299 5.1998 3.64478 4.52375 4.00689 3.60807C4.00689 3.60807 4.56494 3.42926 5.83538 4.28941C6.36568 4.14204 6.93477 4.06856 7.50018 4.0657C8.06518 4.06856 8.63386 4.14204 9.16498 4.28941C10.4346 3.42926 10.9918 3.60807 10.9918 3.60807C11.3548 4.52375 11.1266 5.1998 11.0584 5.368C11.4846 5.83298 11.7418 6.42615 11.7418 7.15241C11.7418 9.70716 10.1868 10.2693 8.70571 10.4338C8.94412 10.6392 9.15681 11.045 9.15681 11.6655C9.15681 12.5542 9.14865 13.2715 9.14865 13.4895C9.14865 13.6675 9.26867 13.8745 9.60588 13.8095C12.2464 12.9282 14.15 10.4375 14.15 7.50023C14.15 3.8273 11.1723 0.850006 7.49936 0.850006Z\" fill=\"#000000\" fill-rule=\"evenodd\"></path>\n</svg></div><h3>GitHub</h3><p>Repository management, collaboration, review workflows and deployment coordination for modern web projects.</p></article></div></section>"
+  },
+  {
+    "index": 11,
+    "id": "development-process",
+    "className": "section compact-section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "A Clear Process from Discovery to Launch and AMC"
+      },
+      {
+        "tag": "h3",
+        "text": "Discovery and objectives"
+      },
+      {
+        "tag": "h3",
+        "text": "Sitemap and search planning"
+      },
+      {
+        "tag": "h3",
+        "text": "UI/UX and content flow"
+      },
+      {
+        "tag": "h3",
+        "text": "Development and integrations"
+      },
+      {
+        "tag": "h3",
+        "text": "QA, migration and launch"
+      },
+      {
+        "tag": "h3",
+        "text": "Measurement and AMC"
+      }
+    ],
+    "charLength": 1648,
+    "html": "<section class=\"section compact-section\" id=\"development-process\"><div class=\"section-label\"><span class=\"dot\"></span> Website Development Process</div><h2 class=\"h2\">A Clear Process from <i>Discovery to Launch and AMC</i></h2><p class=\"p\">A structured process reduces avoidable revisions, keeps content and development aligned and makes technical responsibilities clear before launch.</p><div class=\"process-grid-new\"><article class=\"process-step-new\"><span>01</span><h3>Discovery and objectives</h3><p>Business goals, audience, competitors, content, integrations, timelines and measurable conversion priorities.</p></article><article class=\"process-step-new\"><span>02</span><h3>Sitemap and search planning</h3><p>Page hierarchy, keyword intent, navigation, internal links, URL structure and content requirements.</p></article><article class=\"process-step-new\"><span>03</span><h3>UI/UX and content flow</h3><p>Responsive layouts, visual hierarchy, trust signals, calls to action and reusable component planning.</p></article><article class=\"process-step-new\"><span>04</span><h3>Development and integrations</h3><p>CMS or custom build, forms, APIs, analytics, technical SEO controls and reusable frontend components.</p></article><article class=\"process-step-new\"><span>05</span><h3>QA, migration and launch</h3><p>Device testing, performance checks, redirects, metadata, forms, analytics, indexing and launch validation.</p></article><article class=\"process-step-new\"><span>06</span><h3>Measurement and AMC</h3><p>Post-launch monitoring, content updates, technical support, security, backups and improvement planning.</p></article></div></section>"
+  },
+  {
+    "index": 12,
+    "id": "industries",
+    "className": "section compact-section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Website Development for Different Business Models"
+      },
+      {
+        "tag": "h3",
+        "text": "B2B and professional services"
+      },
+      {
+        "tag": "h3",
+        "text": "Finance and regulated categories"
+      },
+      {
+        "tag": "h3",
+        "text": "Education and training"
+      },
+      {
+        "tag": "h3",
+        "text": "Staffing and workforce solutions"
+      },
+      {
+        "tag": "h3",
+        "text": "Consumer and lifestyle brands"
+      },
+      {
+        "tag": "h3",
+        "text": "Technology and sustainability"
+      }
+    ],
+    "charLength": 1584,
+    "html": "<section class=\"section compact-section\" id=\"industries\"><div class=\"section-label\"><span class=\"dot\"></span> Industries and Website Requirements</div><h2 class=\"h2\">Website Development for <i>Different Business Models</i></h2><p class=\"p\">Industry experience matters because page structure, trust signals, content depth, integrations and enquiry journeys vary by business model. Our approach adapts the technology and content architecture rather than forcing every project into the same template.</p><div class=\"industry-grid\"><article><h3>B2B and professional services</h3><p>Clear service architecture, expertise proof, case studies, lead qualification and decision-maker journeys.</p></article><article><h3>Finance and regulated categories</h3><p>Structured information, trust, disclosures, accessible content, controlled updates and secure enquiry paths.</p></article><article><h3>Education and training</h3><p>Programme discovery, admission enquiries, faculty and credibility content, events and scalable publishing.</p></article><article><h3>Staffing and workforce solutions</h3><p>Employer and candidate journeys, service discovery, location content, lead forms and recruitment workflows.</p></article><article><h3>Consumer and lifestyle brands</h3><p>Brand storytelling, product or service discovery, campaigns, mobile-first experiences and conversion tracking.</p></article><article><h3>Technology and sustainability</h3><p>Complex proposition explanation, solution architecture, credibility signals, resources and investor or partner journeys.</p></article></div></section>"
+  },
+  {
+    "index": 13,
+    "id": "amc",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Annual Maintenance Contracts for Long-Term Website Stability"
+      },
+      {
+        "tag": "h3",
+        "text": "Proactive Monitoring"
+      },
+      {
+        "tag": "h3",
+        "text": "Security &amp; Backups"
+      },
+      {
+        "tag": "h3",
+        "text": "Regular Updates"
+      },
+      {
+        "tag": "h3",
+        "text": "Performance Tuning"
+      },
+      {
+        "tag": "h3",
+        "text": "Content Support"
+      },
+      {
+        "tag": "h3",
+        "text": "Technical Support"
+      }
+    ],
+    "charLength": 2025,
+    "html": "<section class=\"section\" id=\"amc\"><div class=\"section-label\"><span class=\"dot\"></span> Website Maintenance &amp; AMC</div><h2 class=\"h2\">Annual Maintenance Contracts for <i>Long-Term Website Stability</i></h2><p class=\"p\">Website AMC keeps the live website monitored, updated, backed up and ready for ongoing business changes. The exact support plan is defined according to the platform, website size, update frequency and response requirements.</p><div class=\"amc-grid\" style=\"margin-top:22px\"><article class=\"amc-card\"><div class=\"amc-num\">01</div><h3 style=\"font-weight:800\">Proactive Monitoring</h3><p class=\"p\" style=\"font-size:14px\">Scheduled uptime, form and performance checks with issue alerts and documented follow-up.</p></article><article class=\"amc-card\"><div class=\"amc-num\">02</div><h3 style=\"font-weight:800\">Security &amp; Backups</h3><p class=\"p\" style=\"font-size:14px\">Security reviews, malware checks, backup management and recovery support according to the agreed plan.</p></article><article class=\"amc-card\"><div class=\"amc-num\">03</div><h3 style=\"font-weight:800\">Regular Updates</h3><p class=\"p\" style=\"font-size:14px\">WordPress core, theme and plugin updates with compatibility checks and staged testing where applicable.</p></article><article class=\"amc-card\"><div class=\"amc-num\">04</div><h3 style=\"font-weight:800\">Performance Tuning</h3><p class=\"p\" style=\"font-size:14px\">Caching, image delivery, script review, database housekeeping and Core Web Vitals monitoring.</p></article><article class=\"amc-card\"><div class=\"amc-num\">05</div><h3 style=\"font-weight:800\">Content Support</h3><p class=\"p\" style=\"font-size:14px\">Planned updates to pages, banners, blogs, forms and campaign content within the AMC scope.</p></article><article class=\"amc-card\"><div class=\"amc-num\">06</div><h3 style=\"font-weight:800\">Technical Support</h3><p class=\"p\" style=\"font-size:14px\">Issue resolution, change requests, integration assistance and technical guidance for the website team.</p></article></div></section>"
+  },
+  {
+    "index": 14,
+    "id": "mumbai-service-area",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Website Development Services Across Mumbai and Nearby Business Hubs"
+      }
+    ],
+    "charLength": 940,
+    "html": "<section class=\"section\" id=\"mumbai-service-area\"><div class=\"local-panel\"><div class=\"section-label\"><span class=\"dot\"></span> Mumbai Website Development Coverage</div><h2 class=\"h2\" style=\"max-width:none\">Website Development Services Across <i>Mumbai and Nearby Business Hubs</i></h2><p class=\"p\" style=\"max-width:78ch\">D'Genius Solutions works with businesses in Khar, Bandra, Santacruz, BKC, Andheri, Lower Parel, Powai, Borivali, Thane, Navi Mumbai and South Mumbai, while also supporting clients across India and international markets. Location relevance is supported by genuine business information and project experience rather than duplicated area pages.</p><div class=\"location-grid\"><span>Khar</span><span>Bandra</span><span>Santacruz</span><span>BKC</span><span>Andheri</span><span>Lower Parel</span><span>Powai</span><span>Borivali</span><span>Thane</span><span>Navi Mumbai</span><span>South Mumbai</span></div></div></section>"
+  },
+  {
+    "index": 15,
+    "id": "faq",
+    "className": "section",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Website Development &amp; AMC Straight Answers"
+      },
+      {
+        "tag": "h3",
+        "text": "Discuss Your Website Requirement"
+      }
+    ],
+    "charLength": 13827,
+    "html": "<section class=\"section\" id=\"faq\"><div class=\"faq-wrap\"><div style=\"text-align:center; margin-bottom:30px\"><div class=\"section-label\"><span class=\"dot\"></span> Website Development FAQ</div><h2 class=\"h2\" style=\"max-width:none\">Website Development &amp; AMC <i>Straight Answers</i></h2><p class=\"p\" style=\"margin:0 auto\">Answers about scope, platforms, timelines, SEO foundations, redesigns and ongoing website support.</p></div><div class=\"faq-list\"><div class=\"faq-item\"><button aria-controls=\"faq-a-1\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-1\" type=\"button\">What website development services do you offer in Mumbai? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-1\" class=\"faq-a\" id=\"faq-a-1\" role=\"region\"><div class=\"faq-a-inner\"><p>D'Genius Solutions provides website strategy, sitemap planning, UI/UX design, WordPress and custom development, e-commerce development, responsive implementation, technical SEO foundations, analytics setup, website redesign and post-launch AMC support.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-2\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-2\" type=\"button\">Which website platforms and technologies do you work with? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-2\" class=\"faq-a\" id=\"faq-a-2\" role=\"region\"><div class=\"faq-a-inner\"><p>We work with WordPress, WooCommerce, HTML5, CSS and SCSS, JavaScript, React, Next.js and PHP. The stack is selected according to editing needs, integrations, performance, security, scalability and the team that will manage the website.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-3\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-3\" type=\"button\">How long does it take to design and develop a website? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-3\" class=\"faq-a\" id=\"faq-a-3\" role=\"region\"><div class=\"faq-a-inner\"><p>A focused business website may take approximately four to six weeks, while larger websites, e-commerce builds or custom integrations may require eight to twelve weeks or more. The final schedule depends on scope, content readiness, approvals, integrations and migration requirements.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-4\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-4\" type=\"button\">How is website development pricing calculated? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-4\" class=\"faq-a\" id=\"faq-a-4\" role=\"region\"><div class=\"faq-a-inner\"><p>Pricing is based on the number of page templates, content volume, UI/UX complexity, CMS requirements, e-commerce or custom functionality, integrations, migration, SEO setup and testing. A detailed scope and quotation are prepared after the discovery discussion.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-5\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-5\" type=\"button\">Is SEO included in website development? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-5\" class=\"faq-a\" id=\"faq-a-5\" role=\"region\"><div class=\"faq-a-inner\"><p>Each website can include technical SEO foundations such as semantic headings, crawlable navigation, clean URLs, metadata fields, canonicals, sitemap readiness, redirects and schema coordination. Ongoing keyword strategy, content development, authority building and reporting are handled through a separate SEO engagement.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-6\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-6\" type=\"button\">How do you prepare websites for AI Overviews and AI-assisted discovery? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-6\" class=\"faq-a\" id=\"faq-a-6\" role=\"region\"><div class=\"faq-a-inner\"><p>We focus on the same strong foundations required for Google Search: crawlable HTML, clear service definitions, useful answer-first passages, descriptive internal links, consistent organisation details, accessible page structure and technically indexable content. These practices support eligibility, but no agency can guarantee inclusion in an AI Overview or any search feature.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-7\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-7\" type=\"button\">Can you redesign an existing website without damaging its SEO? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-7\" class=\"faq-a\" id=\"faq-a-7\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. A redesign should begin with a crawl and content inventory, URL mapping, metadata review, redirect plan, analytics checks and pre-launch testing. Existing rankings cannot be guaranteed, but careful migration planning reduces avoidable loss of URLs, content and search signals.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-8\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-8\" type=\"button\">Do you provide website maintenance and AMC after launch? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-8\" class=\"faq-a\" id=\"faq-a-8\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. Website AMC can include monitoring, security and software updates, backups, form checks, content changes, performance reviews and technical support. Deliverables and response times are defined in the selected maintenance scope.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-9\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-9\" type=\"button\">Will the website work on mobile, desktop and 4K screens? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-9\" class=\"faq-a\" id=\"faq-a-9\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. Layouts are developed and tested responsively across small mobile devices, tablets, laptops, desktop screens and large displays. Testing also covers navigation, forms, content hierarchy, media behaviour and layout stability.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-10\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-10\" type=\"button\">How do I choose among the best website development companies in Mumbai? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-10\" class=\"faq-a\" id=\"faq-a-10\" role=\"region\"><div class=\"faq-a-inner\"><p>Compare relevant case studies, the clarity of the proposed process, technology recommendations, responsive testing, SEO foundations, analytics setup, ownership terms and the support available after launch. The best partner for a business is the company whose capabilities and working process match the project rather than the one making the broadest promotional claim.</p></div></div></div><div class=\"faq-item\"><button aria-controls=\"faq-a-11\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-11\" type=\"button\">Does D'Genius Solutions build SEO-friendly websites in Mumbai? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-11\" class=\"faq-a\" id=\"faq-a-11\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. Our website builds can include semantic HTML, crawlable navigation, clean URL planning, metadata fields, internal links, canonical controls, sitemap readiness, schema coordination, responsive development and performance testing. Ongoing SEO strategy and content growth are available through a separate <a href=\"/services/seo-services-in-mumbai/\">SEO services in Mumbai</a> engagement.</p></div></div></div></div><div class=\"form-glass\" id=\"website-project-form\"><h3 style=\"margin:0 0 6px; font-size:22px; font-weight:800\">Discuss Your Website Requirement</h3><p class=\"p\" style=\"font-size:14px; margin:0 0 18px\">Share your business objective, current website, required pages, preferred timeline and any integrations your project needs.</p><div class=\"wdgs-fluent-form\"><div class='fluentform ff-default fluentform_wrapper_6 ffs_custom_wrap'><form data-form_id=\"6\" id=\"fluentform_6\" class=\"frm-fluent-form fluent_form_6 ff-el-form-top ff_form_instance_6_2 ff-form-loading ffs_custom\" data-form_instance=\"ff_form_instance_6_2\" method=\"POST\" data-turnstile_key=\"0x4AAAAAACEtYgQis2AyFxPk\" ><fieldset  style=\"border: none!important;margin: 0!important;padding: 0!important;background-color: transparent!important;box-shadow: none!important;outline: none!important; min-inline-size: 100%;\"><legend class=\"ff_screen_reader_title\" style=\"display: block; margin: 0!important;padding: 0!important;height: 0!important;text-indent: -999999px;width: 0!important;overflow:hidden;\">Website Development Form</legend><input type='hidden' name='__fluent_form_embded_post_id' value='41418' /><input type=\"hidden\" id=\"_fluentform_6_fluentformnonce\" name=\"_fluentform_6_fluentformnonce\" value=\"62508fd966\" /><input type=\"hidden\" name=\"_wp_http_referer\" value=\"/services/website-development-amc/\" /><div data-type=\"name-element\" data-name=\"names\" class=\" ff-field_container ff-name-field-wrapper\" ><div class='ff-t-container'><div class='ff-t-cell '><div class='ff-el-group ff-el-form-top'><div class=\"ff-el-input--label ff-el-is-required asterisk-right\"><label for='ff_6_2_names_first_name_' id='label_ff_6_2_names_first_name_' >First Name</label></div><div class='ff-el-input--content'><input type=\"text\" name=\"names[first_name]\" id=\"ff_6_2_names_first_name_\" class=\"ff-el-form-control\" placeholder=\"Enter Your First Name\" aria-invalid=\"false\" aria-required=true></div></div></div><div class='ff-t-cell '><div class='ff-el-group ff-el-form-top'><div class=\"ff-el-input--label ff-el-is-required asterisk-right\"><label for='ff_6_2_names_last_name_' id='label_ff_6_2_names_last_name_' >Last Name</label></div><div class='ff-el-input--content'><input type=\"text\" name=\"names[last_name]\" id=\"ff_6_2_names_last_name_\" class=\"ff-el-form-control\" placeholder=\"Enter Your Last Name\" aria-invalid=\"false\" aria-required=true></div></div></div></div></div><div class='ff-el-group'><div class=\"ff-el-input--label ff-el-is-required asterisk-right\"><label for='ff_6_2_email' id='label_ff_6_2_email' aria-label=\"Email\">Email</label></div><div class='ff-el-input--content'><input type=\"email\" name=\"email\" id=\"ff_6_2_email\" class=\"ff-el-form-control\" placeholder=\"Email Address\" data-name=\"email\"  aria-invalid=\"false\" aria-required=true></div></div><div class='ff-el-group'><div class=\"ff-el-input--label ff-el-is-required asterisk-right\"><label for='ff_6_2_input_text' id='label_ff_6_2_input_text' aria-label=\"Company Name\">Company Name</label></div><div class='ff-el-input--content'><input type=\"text\" name=\"input_text\" class=\"ff-el-form-control\" data-name=\"input_text\" id=\"ff_6_2_input_text\"  aria-invalid=\"false\" aria-required=true></div></div><div class='ff-el-group'><div class=\"ff-el-input--label ff-el-is-required asterisk-right\"><label for='ff_6_2_phone' id='label_ff_6_2_phone' aria-label=\"Phone/Mobile\">Phone/Mobile</label></div><div class='ff-el-input--content'><input name=\"phone\" class=\"ff-el-form-control ff-el-phone\" type=\"tel\" placeholder=\"Mobile Number\" data-name=\"phone\" id=\"ff_6_2_phone\" inputmode=\"tel\"  aria-invalid='false' aria-required=true></div></div><div class='ff-el-group'><div class=\"ff-el-input--label ff-el-is-required asterisk-right\"><label for='ff_6_2_dropdown' id='label_ff_6_2_dropdown' aria-label=\"Select your requirement\">Select your requirement</label></div><div class='ff-el-input--content'><select name=\"dropdown\" id=\"ff_6_2_dropdown\" class=\"ff-el-form-control\" data-name=\"dropdown\" data-calc_value=\"0\"  aria-invalid=\"false\" aria-required=\"true\" aria-labelledby=\"label_ff_6_2_dropdown\"><option value=\"\">- Select -</option><option value=\"New Website Development\"  >New Website Development</option><option value=\"Website Redevelopment\"  >Website Redevelopment</option><option value=\"Website Maintenance\"  >Website Maintenance</option><option value=\"Ecommerce Website\"  >Ecommerce Website</option></select></div></div><div class='ff-el-group'><div class=\"ff-el-input--label ff-el-is-required asterisk-right\"><label for='ff_6_2_dropdown_1' id='label_ff_6_2_dropdown_1' aria-label=\"Where did you hear about us?\">Where did you hear about us?</label></div><div class='ff-el-input--content'><select name=\"dropdown_1\" id=\"ff_6_2_dropdown_1\" class=\"ff-el-form-control\" data-name=\"dropdown_1\" data-calc_value=\"0\"  aria-invalid=\"false\" aria-required=\"true\" aria-labelledby=\"label_ff_6_2_dropdown_1\"><option value=\"\">- Select -</option><option value=\"Google Ads\"  >Google Ads</option><option value=\"Google Search\"  >Google Search</option><option value=\"Friend / Colleague\"  >Friend / Colleague</option><option value=\"Twitter\"  >Twitter</option><option value=\"Youtube\"  >Youtube</option><option value=\"Instagram\"  >Instagram</option><option value=\"Facebook\"  >Facebook</option><option value=\"LinkedIn\"  >LinkedIn</option><option value=\"Podcast\"  >Podcast</option><option value=\"Blog / Article\"  >Blog / Article</option><option value=\"Other\"  >Other</option></select></div></div><div class='ff-el-group ' ><div class='ff-el-input--content'><div data-fluent_id='6' name='cf-turnstile-response'><div\ndata-sitekey='0x4AAAAAACEtYgQis2AyFxPk'\ndata-theme='auto'\nid='fluentform-turnstile-6-2'\nclass='ff-el-turnstile cf-turnstile'\ndata-appearance='always'></div></div></div></div><input type=\"hidden\" name=\"hidden\" value=\"Website Development Page\" data-name=\"hidden\" ><div class='ff-el-group ff-text-left ff_submit_btn_wrapper'><button type=\"submit\" class=\"ff-btn ff-btn-submit ff-btn-md ff_btn_style\"  aria-label=\"Submit Form\">Submit Form</button></div></fieldset></form><div id='fluentform_6_errors' class='ff-errors-in-stack ff_form_instance_6_2 ff-form-loading_errors ff_form_instance_6_2_errors'></div></div>  </div></div></div></section>"
+  }
+]

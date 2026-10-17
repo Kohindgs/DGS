@@ -40,6 +40,7 @@ import {
   Mail,
   RefreshCw,
   Target,
+  Radar,
 } from "lucide-react";
 
 type NavItem = {
@@ -82,6 +83,7 @@ const NAV_GROUPS: NavGroup[] = [
   {
     title: "GROWTH",
     items: [
+      { title: "Buyer Intent Leads", href: "/admin/intent-leads/", icon: Radar, badge: "AI", badgeVariant: "success" },
       { title: "SEO Hub", href: "/admin/seo/", icon: Globe },
       { title: "Keywords & Queries", href: "/admin/seo/keywords/", icon: Search },
       { title: "Page Rankings", href: "/admin/seo/pages/", icon: BarChart3 },

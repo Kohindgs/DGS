@@ -1,0 +1,610 @@
+{
+  "timestamp": "2026-10-13T12:46:45.860Z",
+  "targetRelease": "DGS V8.12.8 — ALL PORTFOLIO 56-ITEM MASTER VIEW + LOAD MORE + BROKEN POSTER RECOVERY",
+  "baseUrl": "https://www.dgeniussolutions.com",
+  "productionSha": null,
+  "tests": [
+    {
+      "name": "Canonical Total = 56",
+      "passed": true,
+      "details": {
+        "total": 56
+      }
+    },
+    {
+      "name": "No Duplication: Unique Video URLs = 56",
+      "passed": true,
+      "details": {
+        "uniqueUrls": 56
+      }
+    },
+    {
+      "name": "First Canonical Video is Hyundai Creta",
+      "passed": true,
+      "details": {
+        "firstTitle": "Hyundai Creta — Feature & Technology Explainer (Part 1)"
+      }
+    },
+    {
+      "name": "Filter Count: [automobile] = 3",
+      "passed": true,
+      "details": {
+        "expected": 3,
+        "actual": 3
+      }
+    },
+    {
+      "name": "Filter Count: [edtech] = 8",
+      "passed": true,
+      "details": {
+        "expected": 8,
+        "actual": 8
+      }
+    },
+    {
+      "name": "Filter Count: [fmcg] = 2",
+      "passed": true,
+      "details": {
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "name": "Filter Count: [commercial-film] = 4",
+      "passed": true,
+      "details": {
+        "expected": 4,
+        "actual": 4
+      }
+    },
+    {
+      "name": "Filter Count: [campaign] = 4",
+      "passed": true,
+      "details": {
+        "expected": 4,
+        "actual": 4
+      }
+    },
+    {
+      "name": "Filter Count: [mythological] = 7",
+      "passed": true,
+      "details": {
+        "expected": 7,
+        "actual": 7
+      }
+    },
+    {
+      "name": "Filter Count: [festival] = 13",
+      "passed": true,
+      "details": {
+        "expected": 13,
+        "actual": 13
+      }
+    },
+    {
+      "name": "Filter Count: [product] = 5",
+      "passed": true,
+      "details": {
+        "expected": 5,
+        "actual": 5
+      }
+    },
+    {
+      "name": "Filter Count: [jewellery] = 11",
+      "passed": true,
+      "details": {
+        "expected": 11,
+        "actual": 11
+      }
+    },
+    {
+      "name": "Filter Count: [concept] = 2",
+      "passed": true,
+      "details": {
+        "expected": 2,
+        "actual": 2
+      }
+    },
+    {
+      "name": "Filter Count: [tvc] = 1",
+      "passed": true,
+      "details": {
+        "expected": 1,
+        "actual": 1
+      }
+    },
+    {
+      "name": "Filter Count: [all] = 56",
+      "passed": true,
+      "details": {
+        "expected": 56,
+        "actual": 56
+      }
+    },
+    {
+      "name": "All 56 WebP Posters Return HTTP 200 image/webp",
+      "passed": true,
+      "details": {
+        "brokenWebpCount": 0
+      }
+    },
+    {
+      "name": "Desktop All Initial Batch = 12",
+      "passed": true,
+      "details": {
+        "visibleCards": 12
+      }
+    },
+    {
+      "name": "Desktop All Hidden Remaining = 44",
+      "passed": true,
+      "details": {
+        "hiddenCards": 44
+      }
+    },
+    {
+      "name": "First Visible Card is Hyundai (Not Sai)",
+      "passed": true,
+      "details": {
+        "firstTitle": "Hyundai Creta — Feature & Technology Explainer (Part 1)"
+      }
+    },
+    {
+      "name": "Active Tab is ALL PORTFOLIO",
+      "passed": true,
+      "details": {
+        "activeTab": "ALL PORTFOLIO"
+      }
+    },
+    {
+      "name": "Broken Posters = 0",
+      "passed": true,
+      "details": {
+        "brokenImages": 0
+      }
+    },
+    {
+      "name": "Natural Width Zero Count = 0",
+      "passed": true,
+      "details": {
+        "zeroWidthCount": 0
+      }
+    },
+    {
+      "name": "Poster Opacity = 1",
+      "passed": true,
+      "details": {
+        "opacity1Count": 12
+      }
+    },
+    {
+      "name": "Load More Button is VISIBLE",
+      "passed": true,
+      "details": {
+        "text": "LOAD MORE WORK (44 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More Shows 44 REMAINING",
+      "passed": true,
+      "details": {
+        "text": "LOAD MORE WORK (44 REMAINING)"
+      }
+    },
+    {
+      "name": "Video Downloads Before Click = 0",
+      "passed": true,
+      "details": {
+        "videoDownloadsBeforeClick": 0
+      }
+    },
+    {
+      "name": "Load More 1: Visible = 24",
+      "passed": true,
+      "details": {
+        "visible": 24,
+        "text": "LOAD MORE WORK (32 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More 1: Text Shows 32 REMAINING",
+      "passed": true,
+      "details": {
+        "text": "LOAD MORE WORK (32 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More 2: Visible = 36",
+      "passed": true,
+      "details": {
+        "visible": 36,
+        "text": "LOAD MORE WORK (20 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More 2: Text Shows 20 REMAINING",
+      "passed": true,
+      "details": {
+        "text": "LOAD MORE WORK (20 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More 3: Visible = 48",
+      "passed": true,
+      "details": {
+        "visible": 48,
+        "text": "LOAD MORE WORK (8 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More 3: Text Shows 8 REMAINING",
+      "passed": true,
+      "details": {
+        "text": "LOAD MORE WORK (8 REMAINING)"
+      }
+    },
+    {
+      "name": "Load More Final: Visible = 56",
+      "passed": true,
+      "details": {
+        "visible": 56
+      }
+    },
+    {
+      "name": "Load More Final: Button Hidden at End",
+      "passed": true,
+      "details": {
+        "btnVisible": false,
+        "wrapVisible": false
+      }
+    },
+    {
+      "name": "Mythological Broken Posters = 0 (All 7 Valid)",
+      "passed": true,
+      "details": {
+        "details": [
+          {
+            "title": "Vachaan 5 Teaser",
+            "found": true,
+            "complete": true,
+            "naturalWidth": 480,
+            "naturalHeight": 853,
+            "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Vachaan-5-Teaser-thumb.webp"
+          },
+          {
+            "title": "Sai Ki Vaani - Derr",
+            "found": true,
+            "complete": true,
+            "naturalWidth": 480,
+            "naturalHeight": 853,
+            "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Sai-Ki-Vaani_Derr-1-thumb.webp"
+          },
+          {
+            "title": "Sai Ki Vaani - Choothne Ka Darr",
+            "found": true,
+            "complete": true,
+            "naturalWidth": 480,
+            "naturalHeight": 853,
+            "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Sai-Ki-Vaani_Choothne-Ka-Darr-1-thumb.webp"
+          },
+          {
+            "title": "Suno Sai Ko - Vishwas",
+            "found": true,
+            "complete": true,
+            "naturalWidth": 480,
+            "naturalHeight": 853,
+            "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Epsisode-7-Suno-Sai-Ko-Vishwas-2-thumb.webp"
+          },
+          {
+            "title": "Suno Sai Ko - Prarthana",
+            "found": true,
+            "complete": true,
+            "naturalWidth": 480,
+            "naturalHeight": 853,
+            "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Episode-12-Suno-Sai-Ko-Prarthana-1-thumb.webp"
+          },
+          {
+            "title": "Suno Sai Ko",
+            "found": true,
+            "complete": true,
+            "naturalWidth": 480,
+            "naturalHeight": 853,
+            "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Instagram-Epsisode-7-Suno-Sai-Ko-Vishwas-2-thumb.webp"
+          },
+          {
+            "title": "Sai Dham Introduction",
+            "found": true,
+            "complete": true,
+            "naturalWidth": 720,
+            "naturalHeight": 406,
+            "src": "https://www.dgeniussolutions.com/wp-content/uploads/2026/04/Sai-Dham-Introductionfinal-New-thumb.webp"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CTA Outside Portfolio Gallery",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "CTA Outside Portfolio Section",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "CTA Desktop Separation >= 80px",
+      "passed": true,
+      "details": {
+        "separation": 120
+      }
+    },
+    {
+      "name": "CTA Max Width <= 1500px",
+      "passed": true,
+      "details": {
+        "cardWidth": 1500
+      }
+    },
+    {
+      "name": "CTA Height <= 350px (Content-Driven)",
+      "passed": true,
+      "details": {
+        "cardHeight": 270.453
+      }
+    },
+    {
+      "name": "CTA Button Height >= 52px",
+      "passed": true,
+      "details": {
+        "btnHeight": 52
+      }
+    },
+    {
+      "name": "CTA Button Pill Radius >= 24px",
+      "passed": true,
+      "details": {
+        "btnBorderRadius": 999
+      }
+    },
+    {
+      "name": "Filter [Mythological AI] Visible Cards = 7",
+      "passed": true,
+      "details": {
+        "visible": 7
+      }
+    },
+    {
+      "name": "Filter [Mythological AI] Load More Button HIDDEN",
+      "passed": true,
+      "details": {
+        "btnVisible": false
+      }
+    },
+    {
+      "name": "Filter [Mythological AI] Tab Active",
+      "passed": true,
+      "details": {
+        "tab": "MYTHOLOGICAL AI"
+      }
+    },
+    {
+      "name": "Filter -> ALL Reset: Visible Cards Resets to 12",
+      "passed": true,
+      "details": {
+        "visibleCards": 12
+      }
+    },
+    {
+      "name": "Filter -> ALL Reset: Matching Total = 56",
+      "passed": true,
+      "details": {
+        "totalCards": 56
+      }
+    },
+    {
+      "name": "Filter -> ALL Reset: First Video is Hyundai",
+      "passed": true,
+      "details": {
+        "firstTitle": "Hyundai Creta — Feature & Technology Explainer (Part 1)"
+      }
+    },
+    {
+      "name": "Filter -> ALL Reset: Load More is VISIBLE",
+      "passed": true,
+      "details": {
+        "btnVisible": true
+      }
+    },
+    {
+      "name": "Filter -> ALL Reset: Remaining Count = 44",
+      "passed": true,
+      "details": {
+        "text": "LOAD MORE WORK (44 REMAINING)"
+      }
+    },
+    {
+      "name": "Filter -> ALL Reset: Active Tab is ONLY ALL PORTFOLIO",
+      "passed": true,
+      "details": {
+        "activeTab": "ALL PORTFOLIO"
+      }
+    },
+    {
+      "name": "Filter -> ALL Reset: Hash Cleared Cleanly",
+      "passed": true,
+      "details": {
+        "hash": ""
+      }
+    },
+    {
+      "name": "Dubai Page: Portfolio Mounted & Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "totalCards": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Dubai Page: Visible Cards > 0",
+      "passed": true,
+      "details": {
+        "visibleCards": 12
+      }
+    },
+    {
+      "name": "Dubai Page: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasLoadMore": true
+      }
+    },
+    {
+      "name": "Dubai Page: Has CTA Conversion Card",
+      "passed": true,
+      "details": {
+        "hasCta": true
+      }
+    },
+    {
+      "name": "Dubai Page: Zero Wonder Rule Maintained",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Portfolio Mounted & Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "totalCards": 56,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": true,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Visible Cards > 0",
+      "passed": true,
+      "details": {
+        "visibleCards": 12
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasLoadMore": true
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Has CTA Conversion Card",
+      "passed": true,
+      "details": {
+        "hasCta": true
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Zero Wonder Rule Maintained",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Portfolio Mounted & Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "totalCards": 12,
+        "visibleCards": 12,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Visible Cards > 0",
+      "passed": true,
+      "details": {
+        "visibleCards": 12
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasLoadMore": true
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: No CTA (As Intended)",
+      "passed": true,
+      "details": {
+        "hasCta": false
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Zero Wonder Rule Maintained",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Portfolio Mounted & Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "totalCards": 8,
+        "visibleCards": 8,
+        "hasLoadMore": true,
+        "hasCta": false,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Visible Cards > 0",
+      "passed": true,
+      "details": {
+        "visibleCards": 8
+      }
+    },
+    {
+      "name": "Homepage: Load More Logic Active",
+      "passed": true,
+      "details": {
+        "hasLoadMore": true
+      }
+    },
+    {
+      "name": "Homepage: No CTA (As Intended)",
+      "passed": true,
+      "details": {
+        "hasCta": false
+      }
+    },
+    {
+      "name": "Homepage: Zero Wonder Rule Maintained",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    }
+  ],
+  "summary": {
+    "total": 72,
+    "passed": 72,
+    "failed": 0
+  }
+}

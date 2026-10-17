@@ -1,0 +1,81 @@
+{
+  "releaseSha": "62c3ff7-21b161fb5f7e7979",
+  "blogArchive": {
+    "totalImages": 77,
+    "brokenImages": 0,
+    "post1CardLoaded": true,
+    "post2CardLoaded": true
+  },
+  "blogArticles": {},
+  "webdevPage": {
+    "httpStatus": 200,
+    "h1": "Website Development Company in Mumbai Built for Leads, SEO & Growth",
+    "badAssetResponses": 0,
+    "pageErrors": 0,
+    "caseCards": [
+      {
+        "index": 1,
+        "name": "HumanXT",
+        "hasImg": true,
+        "imgSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp",
+        "imgComplete": true,
+        "naturalWidth": 2560,
+        "naturalHeight": 1347,
+        "hasIframe": false
+      },
+      {
+        "index": 2,
+        "name": "Weavings",
+        "hasImg": true,
+        "imgSrc": "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600",
+        "imgComplete": true,
+        "naturalWidth": 1280,
+        "naturalHeight": 960,
+        "hasIframe": false
+      },
+      {
+        "index": 3,
+        "name": "Katherine's Gallery",
+        "hasImg": true,
+        "imgSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/katherinesgallery-scaled.webp",
+        "imgComplete": true,
+        "naturalWidth": 2560,
+        "naturalHeight": 1385,
+        "hasIframe": false
+      },
+      {
+        "index": 4,
+        "name": "Better Ceasons",
+        "hasImg": true,
+        "imgSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2026/08/better-ceasons-scaled.webp",
+        "imgComplete": true,
+        "naturalWidth": 1600,
+        "naturalHeight": 1000,
+        "hasIframe": false
+      }
+    ],
+    "noAboutBlankIframes": true,
+    "allCaseCardsHaveLoadedImages": true,
+    "form6Present": true,
+    "faqsCount": 11,
+    "faqExpandWorks": true
+  },
+  "protectedRoutes": {
+    "homepage": {
+      "aiCardsCount": 8,
+      "hasNoLoadMore": true
+    },
+    "aiProduction": {
+      "totalCards": 56,
+      "visibleCards": 12,
+      "loadMoreVisible": true,
+      "loadMoreText": "LOAD MORE WORK (44 REMAINING)"
+    },
+    "portfolio": {
+      "itemsFound": 12,
+      "filtersFound": 0,
+      "hasLoadMore": true
+    }
+  },
+  "passed": true
+}

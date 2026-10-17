@@ -1,0 +1,299 @@
+{
+  "pages": [
+    {
+      "name": "Non-Ranking: SEO Mumbai",
+      "url": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "httpStatus": 200,
+      "title": "SEO Services in Mumbai | SEO Agency for Rankings & Leads | DGS",
+      "metaDesc": "D'Genius Solutions is an SEO agency in Mumbai offering technical SEO, local SEO, content optimisation, authority building and AI-search readiness.",
+      "canonical": "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/",
+      "robots": "index, follow",
+      "h1Count": 1,
+      "h1s": [
+        "SEO AGENCY IN MUMBAI FOR SEO SERVICES, AI SEARCH VISIBILITY AND QUALIFIED LEADS"
+      ],
+      "h2Count": 4,
+      "h2Sample": [
+        "Selected clients we have worked with",
+        "Real Search Results Supporting SEO and AI Visibility",
+        "A simple framework for steady organic growth",
+        "BUILD A SEARCH PRESENCE THAT BRINGS BETTER ENQUIRIES"
+      ],
+      "wordCount": 944,
+      "kwAnalysis": {
+        "seo agency in mumbai": {
+          "inTitle": 0,
+          "inMetaDesc": 1,
+          "inH1": 1,
+          "inH2": 0,
+          "inBody": 2
+        },
+        "seo company in mumbai": {
+          "inTitle": 0,
+          "inMetaDesc": 0,
+          "inH1": 0,
+          "inH2": 0,
+          "inBody": 0
+        },
+        "seo services in mumbai": {
+          "inTitle": 1,
+          "inMetaDesc": 0,
+          "inH1": 0,
+          "inH2": 0,
+          "inBody": 3
+        }
+      },
+      "schemas": [
+        "unknown"
+      ],
+      "internalLinks": 71,
+      "totalImages": 98,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "name": "Non-Ranking: Web Dev AMC",
+      "url": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "httpStatus": 200,
+      "title": "Website Development Company in Mumbai | Web Design & AMC",
+      "metaDesc": "D'Genius Solutions builds responsive, SEO-ready websites in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.",
+      "canonical": "https://www.dgeniussolutions.com/services/website-development-amc/",
+      "robots": "index, follow",
+      "h1Count": 1,
+      "h1s": [
+        "Website Development\nCompany in Mumbai\nBuilt for Leads, SEO & Growth"
+      ],
+      "h2Count": 14,
+      "h2Sample": [
+        "Website Delivery Supported by Strategy, Search and Ongoing Care",
+        "Selected Website Projects Across Industries",
+        "What Does a Website Development Company in Mumbai Do?",
+        "Your Website May Be Losing Leads Before You Speak",
+        "Complete Website Development Expertise on One Authoritative Page"
+      ],
+      "wordCount": 3281,
+      "kwAnalysis": {
+        "web development agency in mumbai": {
+          "inTitle": 0,
+          "inMetaDesc": 0,
+          "inH1": 0,
+          "inH2": 0,
+          "inBody": 0
+        },
+        "website development company in mumbai": {
+          "inTitle": 1,
+          "inMetaDesc": 0,
+          "inH1": 1,
+          "inH2": 1,
+          "inBody": 7
+        },
+        "website development services in mumbai": {
+          "inTitle": 0,
+          "inMetaDesc": 0,
+          "inH1": 0,
+          "inH2": 0,
+          "inBody": 1
+        }
+      },
+      "schemas": [
+        "unknown"
+      ],
+      "internalLinks": 59,
+      "totalImages": 12,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "name": "Ranking Benchmark: AI Video",
+      "url": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "httpStatus": 200,
+      "title": "AI Video Production Agency in Mumbai | D'Genius Solutions",
+      "metaDesc": "AI video production agency in Mumbai creating AI video ads, product films, reels, brand videos and AI product videos for businesses. Book a free strategy call.",
+      "canonical": "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
+      "robots": "index, follow",
+      "h1Count": 1,
+      "h1s": [
+        "AI Video Production House In Mumbai\nFor AI Ads, Brand Films & Product Videos"
+      ],
+      "h2Count": 21,
+      "h2Sample": [
+        "AI Video Production Service In Mumbai For Ads, Brand Films, Product Videos And Social Campaigns",
+        "AI-Generated Video Work",
+        "AI Video Production House In Mumbai For Brands",
+        "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+        "Proof-Led AI Video Production For Brands"
+      ],
+      "wordCount": 5501,
+      "kwAnalysis": {
+        "ai video production agency in mumbai": {
+          "inTitle": 1,
+          "inMetaDesc": 1,
+          "inH1": 0,
+          "inH2": 1,
+          "inBody": 5
+        },
+        "ai video production company": {
+          "inTitle": 0,
+          "inMetaDesc": 0,
+          "inH1": 0,
+          "inH2": 0,
+          "inBody": 3
+        }
+      },
+      "schemas": [
+        "unknown"
+      ],
+      "internalLinks": 61,
+      "totalImages": 112,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "name": "Ranking Benchmark: AEO Mumbai",
+      "url": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "httpStatus": 200,
+      "title": "AEO Services in Mumbai : 7 Proven Ways to Win AI Answers",
+      "metaDesc": "Get expert AEO services in Mumbai to improve visibility in Google AI Overviews, AI Mode, featured snippets, voice search, and AI search platforms. Partner with DGS for answer-led growth.",
+      "canonical": "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/",
+      "robots": "index, follow",
+      "h1Count": 1,
+      "h1s": [
+        "AEO Services in Mumbai from a Mumbai-Based AEO Agency"
+      ],
+      "h2Count": 15,
+      "h2Sample": [
+        "Trusted by brands across finance, retail, education, healthcare, consumer and technology categories.",
+        "Real Search Results Supporting SEO and AI Visibility",
+        "Detailed Client SEO Case Studies",
+        "Recognized for Search, Content and Digital Growth",
+        "What Does an AEO Agency in Mumbai Do?"
+      ],
+      "wordCount": 2529,
+      "kwAnalysis": {
+        "aeo services in mumbai": {
+          "inTitle": 1,
+          "inMetaDesc": 1,
+          "inH1": 1,
+          "inH2": 3,
+          "inBody": 13
+        },
+        "answer engine optimization": {
+          "inTitle": 0,
+          "inMetaDesc": 0,
+          "inH1": 0,
+          "inH2": 0,
+          "inBody": 4
+        }
+      },
+      "schemas": [
+        "unknown"
+      ],
+      "internalLinks": 78,
+      "totalImages": 88,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "name": "Ranking Benchmark: GEO",
+      "url": "https://www.dgeniussolutions.com/services/geo/",
+      "httpStatus": 200,
+      "title": "GEO Services in Mumbai | D'Genius Solutions",
+      "metaDesc": "Boost AI search visibility with GEO services in Mumbai by D'Genius Solutions. Get featured in AI Overviews, ChatGPT, and generative search results.",
+      "canonical": "https://www.dgeniussolutions.com/services/geo/",
+      "robots": "index, follow",
+      "h1Count": 1,
+      "h1s": [
+        "Generative Engine Optimization (GEO) Services in Mumbai"
+      ],
+      "h2Count": 15,
+      "h2Sample": [
+        "Generative Engine Optimization Services in Mumbai",
+        "What Is Generative Engine Optimization?",
+        "GEO Services We Provide in Mumbai",
+        "How GEO Helps You Rank in AI Search Results",
+        "How D'Genius Solutions Builds GEO Visibility"
+      ],
+      "wordCount": 2011,
+      "kwAnalysis": {
+        "geo services in mumbai": {
+          "inTitle": 1,
+          "inMetaDesc": 1,
+          "inH1": 0,
+          "inH2": 0,
+          "inBody": 1
+        },
+        "generative engine optimization": {
+          "inTitle": 0,
+          "inMetaDesc": 0,
+          "inH1": 1,
+          "inH2": 3,
+          "inBody": 9
+        }
+      },
+      "schemas": [
+        "unknown"
+      ],
+      "internalLinks": 69,
+      "totalImages": 29,
+      "imagesWithoutAlt": 0
+    }
+  ],
+  "internalLinks": {
+    "https://www.dgeniussolutions.com/services/seo-services-in-mumbai/": {
+      "headerMenu": 0,
+      "footer": 4,
+      "bodyContent": 5,
+      "total": 9,
+      "foundOn": [
+        "https://www.dgeniussolutions.com/",
+        "https://www.dgeniussolutions.com/services/",
+        "https://www.dgeniussolutions.com/about-us/",
+        "https://www.dgeniussolutions.com/blogs/"
+      ]
+    },
+    "https://www.dgeniussolutions.com/services/website-development-amc/": {
+      "headerMenu": 0,
+      "footer": 4,
+      "bodyContent": 5,
+      "total": 9,
+      "foundOn": [
+        "https://www.dgeniussolutions.com/",
+        "https://www.dgeniussolutions.com/services/",
+        "https://www.dgeniussolutions.com/about-us/",
+        "https://www.dgeniussolutions.com/blogs/"
+      ]
+    },
+    "https://www.dgeniussolutions.com/services/ai-video-production-agency/": {
+      "headerMenu": 0,
+      "footer": 4,
+      "bodyContent": 5,
+      "total": 9,
+      "foundOn": [
+        "https://www.dgeniussolutions.com/",
+        "https://www.dgeniussolutions.com/services/",
+        "https://www.dgeniussolutions.com/about-us/",
+        "https://www.dgeniussolutions.com/blogs/"
+      ]
+    },
+    "https://www.dgeniussolutions.com/services/aeo-services-in-mumbai/": {
+      "headerMenu": 0,
+      "footer": 4,
+      "bodyContent": 7,
+      "total": 11,
+      "foundOn": [
+        "https://www.dgeniussolutions.com/",
+        "https://www.dgeniussolutions.com/services/",
+        "https://www.dgeniussolutions.com/about-us/",
+        "https://www.dgeniussolutions.com/blogs/"
+      ]
+    },
+    "https://www.dgeniussolutions.com/services/geo/": {
+      "headerMenu": 0,
+      "footer": 4,
+      "bodyContent": 5,
+      "total": 9,
+      "foundOn": [
+        "https://www.dgeniussolutions.com/",
+        "https://www.dgeniussolutions.com/services/",
+        "https://www.dgeniussolutions.com/about-us/",
+        "https://www.dgeniussolutions.com/blogs/"
+      ]
+    }
+  }
+}

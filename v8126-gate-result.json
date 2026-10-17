@@ -1,0 +1,787 @@
+{
+  "at": "2026-10-05T15:14:16.756Z",
+  "results": [
+    {
+      "name": "Public home 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "Public home robots index, follow",
+      "pass": true
+    },
+    {
+      "name": "robots.txt 200 + sitemap",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "sitemap.xml 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/action-center rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/mismatches rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/lanes rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/integrations/google-sheets rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated POST backlinks/discover rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Admin session acquired",
+      "pass": true
+    },
+    {
+      "name": "Lanes API ok",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "13 discovery lanes registered",
+      "pass": true,
+      "detail": 13
+    },
+    {
+      "name": "Provider matrix includes Brave",
+      "pass": true,
+      "detail": "NOT_CONFIGURED: WEB SEARCH (BRAVE) — NOT CONFIGURED. Add BRAVE_SEARCH_API_KEY to the server environment."
+    },
+    {
+      "name": "Needs Review contains only QUALIFIED/MANAGER_REVIEW/APPROVED",
+      "pass": true,
+      "detail": {
+        "needsReviewCount": 15,
+        "raw": 32,
+        "offending": 0
+      }
+    },
+    {
+      "name": "V8.12.6 columns present",
+      "pass": true,
+      "detail": [
+        "source_type",
+        "discovery_lane",
+        "semantic_status",
+        "qualification_reason",
+        "page_title",
+        "last_checked_at"
+      ]
+    },
+    {
+      "name": "dofollow_status column default UNKNOWN",
+      "pass": true,
+      "detail": "UNKNOWN"
+    },
+    {
+      "name": "Zero opportunity link types asserted without live observation",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Needs Review (DB) == Action Center KPI",
+      "pass": true,
+      "detail": {
+        "db": 15,
+        "api": 15
+      }
+    },
+    {
+      "name": "Every Needs Review record is VERIFIED_ACTIVE",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "No LIVE backlink pointing outside dgeniussolutions.com",
+      "pass": true,
+      "detail": 0
+    }
+  ],
+  "db": {
+    "total": 189,
+    "byStatus": [
+      {
+        "status": "EXPIRED",
+        "n": 81
+      },
+      {
+        "status": "REJECTED",
+        "n": 54
+      },
+      {
+        "status": "DISCOVERED",
+        "n": 32
+      },
+      {
+        "status": "QUALIFIED",
+        "n": 15
+      },
+      {
+        "status": "APPROVED",
+        "n": 5
+      },
+      {
+        "status": "VERIFIED",
+        "n": 1
+      },
+      {
+        "status": "ARCHIVED",
+        "n": 1
+      }
+    ],
+    "byVerification": [
+      {
+        "v": "UNVERIFIED",
+        "n": 87
+      },
+      {
+        "v": "FAILED_LANE_VALIDATION",
+        "n": 54
+      },
+      {
+        "v": "BLOCKED_UNVERIFIABLE",
+        "n": 32
+      },
+      {
+        "v": "VERIFIED_ACTIVE",
+        "n": 15
+      },
+      {
+        "v": "DEAD",
+        "n": 1
+      }
+    ],
+    "byLinkType": [
+      {
+        "v": "UNKNOWN",
+        "n": 162
+      },
+      {
+        "v": "N/A",
+        "n": 27
+      }
+    ],
+    "byFree": [
+      {
+        "v": "FREE",
+        "n": 93
+      },
+      {
+        "v": "UNKNOWN",
+        "n": 92
+      },
+      {
+        "v": "FREEMIUM",
+        "n": 4
+      }
+    ],
+    "bySourceType": [
+      {
+        "v": "curated_seed",
+        "n": 180
+      },
+      {
+        "v": "google_news_rss",
+        "n": 8
+      },
+      {
+        "v": "curated",
+        "n": 1
+      }
+    ],
+    "byLane": [
+      {
+        "v": "AGENCY_DIRECTORIES",
+        "status": "DISCOVERED",
+        "n": 7
+      },
+      {
+        "v": "AGENCY_DIRECTORIES",
+        "status": "QUALIFIED",
+        "n": 2
+      },
+      {
+        "v": "AGENCY_DIRECTORIES",
+        "status": "REJECTED",
+        "n": 12
+      },
+      {
+        "v": "BUSINESS_CITATIONS",
+        "status": "DISCOVERED",
+        "n": 7
+      },
+      {
+        "v": "BUSINESS_CITATIONS",
+        "status": "EXPIRED",
+        "n": 1
+      },
+      {
+        "v": "BUSINESS_CITATIONS",
+        "status": "QUALIFIED",
+        "n": 2
+      },
+      {
+        "v": "BUSINESS_CITATIONS",
+        "status": "REJECTED",
+        "n": 1
+      },
+      {
+        "v": "COMMUNITIES_QA",
+        "status": "DISCOVERED",
+        "n": 2
+      },
+      {
+        "v": "COMMUNITIES_QA",
+        "status": "QUALIFIED",
+        "n": 3
+      },
+      {
+        "v": "COMMUNITIES_QA",
+        "status": "REJECTED",
+        "n": 2
+      },
+      {
+        "v": "DIGITAL_PR",
+        "status": "DISCOVERED",
+        "n": 6
+      },
+      {
+        "v": "DIGITAL_PR",
+        "status": "REJECTED",
+        "n": 24
+      },
+      {
+        "v": "EXPERT_CONTRIBUTIONS",
+        "status": "DISCOVERED",
+        "n": 1
+      },
+      {
+        "v": "EXPERT_CONTRIBUTIONS",
+        "status": "QUALIFIED",
+        "n": 3
+      },
+      {
+        "v": "EXPERT_CONTRIBUTIONS",
+        "status": "REJECTED",
+        "n": 4
+      },
+      {
+        "v": "LOCAL_LISTINGS",
+        "status": "DISCOVERED",
+        "n": 5
+      },
+      {
+        "v": "LOCAL_LISTINGS",
+        "status": "QUALIFIED",
+        "n": 3
+      },
+      {
+        "v": "LOCAL_LISTINGS",
+        "status": "REJECTED",
+        "n": 3
+      },
+      {
+        "v": "PARTNERSHIPS",
+        "status": "DISCOVERED",
+        "n": 1
+      },
+      {
+        "v": "PARTNERSHIPS",
+        "status": "REJECTED",
+        "n": 7
+      },
+      {
+        "v": "RESOURCE_PAGES",
+        "status": "REJECTED",
+        "n": 1
+      },
+      {
+        "v": "REVIEW_PLATFORMS",
+        "status": "DISCOVERED",
+        "n": 3
+      },
+      {
+        "v": "REVIEW_PLATFORMS",
+        "status": "QUALIFIED",
+        "n": 2
+      }
+    ],
+    "needsReview": 15,
+    "needsReviewNotVerified": 0,
+    "dofollowWithoutObservation": 0,
+    "activeBacklinks": [
+      {
+        "status": "ARCHIVED",
+        "verified_status": "ARCHIVED",
+        "n": 3
+      }
+    ],
+    "backlinksLiveNotOnDgs": 0,
+    "laneRuns": [
+      {
+        "provider": "REVERIFY:EXISTING",
+        "status": "COMPLETED",
+        "started_at": "2026-10-05 15:07:18",
+        "queries_run": 0,
+        "results_returned": 102,
+        "valid_candidates": 15,
+        "inserted_count": 0,
+        "spam_rejected": 54
+      },
+      {
+        "provider": "REVERIFY:EXISTING",
+        "status": "RUNNING",
+        "started_at": "2026-10-05 14:51:15",
+        "queries_run": 0,
+        "results_returned": 0,
+        "valid_candidates": 0,
+        "inserted_count": 0,
+        "spam_rejected": 0
+      }
+    ],
+    "vectorDocs": 189,
+    "braveKeyConfigured": false,
+    "columns": [
+      "source_type",
+      "discovery_lane",
+      "semantic_status",
+      "qualification_reason",
+      "page_title",
+      "last_checked_at"
+    ],
+    "dofollowDefault": "UNKNOWN"
+  },
+  "lanes": [
+    {
+      "id": "BUSINESS_CITATIONS",
+      "label": "Business Citations",
+      "category": "BUSINESS_LISTING",
+      "validator": "SUBMISSION",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Free business listing / citation sites that accept company profiles.",
+      "queries": [
+        {
+          "query": "free business listing India add your company",
+          "region": "INDIA"
+        },
+        {
+          "query": "UAE business directory free listing",
+          "region": "UAE"
+        },
+        {
+          "query": "add your business free directory USA",
+          "region": "USA"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "LOCAL_LISTINGS",
+      "label": "Local Listings",
+      "category": "LOCAL_CITATION",
+      "validator": "SUBMISSION",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "City / local directories (Mumbai, Bengaluru, Dubai, etc.).",
+      "queries": [
+        {
+          "query": "Mumbai local business directory add listing",
+          "region": "INDIA"
+        },
+        {
+          "query": "Dubai local business directory add your business",
+          "region": "UAE"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "AGENCY_DIRECTORIES",
+      "label": "Agency Directories",
+      "category": "AGENCY_DIRECTORY",
+      "validator": "SUBMISSION",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Marketing / SEO / AI video / web development agency directories.",
+      "queries": [
+        {
+          "query": "SEO agency directory India",
+          "region": "INDIA"
+        },
+        {
+          "query": "digital marketing agency directory India",
+          "region": "INDIA"
+        },
+        {
+          "query": "SEO agency submit company",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "digital marketing agency directory UAE",
+          "region": "UAE"
+        },
+        {
+          "query": "Dubai marketing agency directory",
+          "region": "UAE"
+        },
+        {
+          "query": "marketing agency directory USA",
+          "region": "USA"
+        },
+        {
+          "query": "digital agency free listing",
+          "region": "USA"
+        },
+        {
+          "query": "AI video production directory",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "AI production company directory",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "web development agency directory",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "website development company listing",
+          "region": "INDIA"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "ARTICLE_CONTRIBUTIONS",
+      "label": "Article / Content Contributions",
+      "category": "ARTICLE_SUBMISSION",
+      "validator": "CONTRIBUTION",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Write-for-us / guest article pages in DGS topics.",
+      "queries": [
+        {
+          "query": "digital marketing write for us India",
+          "region": "INDIA"
+        },
+        {
+          "query": "Dubai write for us marketing",
+          "region": "UAE"
+        },
+        {
+          "query": "generative engine optimization write for us",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "AI video write for us",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "AI search marketing guest article",
+          "region": "GLOBAL"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "EXPERT_CONTRIBUTIONS",
+      "label": "Expert Contributions",
+      "category": "EXPERT_CONTRIBUTION",
+      "validator": "CONTRIBUTION",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Expert roundups / contributor programmes / expert quotes.",
+      "queries": [
+        {
+          "query": "SEO expert contribute article",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "answer engine optimization contribute",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "GEO marketing expert contribution",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "generative AI video expert contribution",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "UAE AI marketing contribute",
+          "region": "UAE"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "DIGITAL_PR",
+      "label": "Digital PR / Journalist Requests",
+      "category": "DIGITAL_PR",
+      "validator": "PR_REQUEST",
+      "providers": [
+        "BRAVE_SEARCH",
+        "GOOGLE_NEWS_RSS"
+      ],
+      "description": "Journalist source requests and expert-source platforms.",
+      "queries": [
+        {
+          "query": "SEO expert journalist query",
+          "region": "USA"
+        },
+        {
+          "query": "marketing expert source journalist",
+          "region": "USA"
+        },
+        {
+          "query": "journalist request marketing expert India",
+          "region": "INDIA"
+        }
+      ],
+      "ready": true,
+      "readiness": "Ready via GOOGLE_NEWS_RSS",
+      "last_run": null
+    },
+    {
+      "id": "COMMUNITIES_QA",
+      "label": "Communities / Q&A",
+      "category": "COMMUNITY",
+      "validator": "COMMUNITY",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Active forums and Q&A threads where DGS expertise is relevant (UGC links).",
+      "queries": [
+        {
+          "query": "generative engine optimization forum discussion",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "SEO community India forum",
+          "region": "INDIA"
+        },
+        {
+          "query": "AI video production community forum",
+          "region": "GLOBAL"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "PARTNERSHIPS",
+      "label": "Partnership Opportunities",
+      "category": "PARTNERSHIP",
+      "validator": "PARTNERSHIP",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Agency / technology partner programmes and partner directories.",
+      "queries": [
+        {
+          "query": "agency partner program marketing tools",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "become a partner digital agency India",
+          "region": "INDIA"
+        },
+        {
+          "query": "agency partner directory UAE",
+          "region": "UAE"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "RESOURCE_PAGES",
+      "label": "Resource Page Opportunities",
+      "category": "RESOURCE_PAGE",
+      "validator": "RESOURCE",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Curated resource lists relevant to SEO / AEO / GEO / AI marketing.",
+      "queries": [
+        {
+          "query": "SEO resources",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "digital marketing resources",
+          "region": "INDIA"
+        },
+        {
+          "query": "AI marketing resources",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "recommended SEO agencies",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "marketing tools resources",
+          "region": "USA"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "BROKEN_LINKS",
+      "label": "Broken Link Opportunities",
+      "category": "BROKEN_LINK",
+      "validator": "BROKEN_LINK",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Resource pages with dead outbound links DGS content can replace.",
+      "queries": [
+        {
+          "query": "SEO resources useful links",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "digital marketing resources links",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "AI marketing tools resources list",
+          "region": "GLOBAL"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "UNLINKED_MENTIONS",
+      "label": "Unlinked Brand Mentions",
+      "category": "UNLINKED_MENTION",
+      "validator": "UNLINKED_MENTION",
+      "providers": [
+        "BRAVE_SEARCH",
+        "GOOGLE_NEWS_RSS",
+        "GDELT"
+      ],
+      "description": "Pages mentioning D'Genius Solutions / founders without linking to dgeniussolutions.com.",
+      "queries": [
+        {
+          "query": "\"D'Genius Solutions\"",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "\"D Genius Solutions\"",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "\"dgeniussolutions\"",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "\"Kohin Bellara\"",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "\"Sneha Bellara\"",
+          "region": "GLOBAL"
+        }
+      ],
+      "ready": true,
+      "readiness": "Ready via GOOGLE_NEWS_RSS, GDELT",
+      "last_run": null
+    },
+    {
+      "id": "REVIEW_PLATFORMS",
+      "label": "Reviews / Client Review Platforms",
+      "category": "REVIEW_PLATFORM",
+      "validator": "SUBMISSION",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Client review platforms where agencies can create a free profile.",
+      "queries": [
+        {
+          "query": "agency reviews platform create free profile",
+          "region": "GLOBAL"
+        },
+        {
+          "query": "digital marketing company reviews India list your agency",
+          "region": "INDIA"
+        }
+      ],
+      "ready": false,
+      "readiness": "WEB SEARCH (BRAVE) — NOT CONFIGURED",
+      "last_run": null
+    },
+    {
+      "id": "COMPETITOR_LINK_GAP",
+      "label": "Competitor Link Gap",
+      "category": "OTHER",
+      "validator": "COMPETITOR_GAP",
+      "providers": [
+        "BRAVE_SEARCH"
+      ],
+      "description": "Pages linking to configured competitors but not DGS. Requires competitor domains in settings.",
+      "queries": [],
+      "ready": false,
+      "readiness": "NOT CONFIGURED — add competitor domains",
+      "last_run": null
+    }
+  ],
+  "brave": {
+    "health": {
+      "id": "brave-search",
+      "name": "Web Search (Brave Search API)",
+      "type": "SEARCH",
+      "status": "NOT_CONFIGURED",
+      "reason": "WEB SEARCH (BRAVE) — NOT CONFIGURED. Add BRAVE_SEARCH_API_KEY to the server environment.",
+      "requiredConfig": [
+        "BRAVE_SEARCH_API_KEY"
+      ]
+    },
+    "usage": {
+      "date": "2026-10-05",
+      "used": 0,
+      "quota": 60
+    }
+  }
+}

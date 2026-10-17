@@ -1,0 +1,128 @@
+[
+  {
+    "site": "AskLaila Mumbai",
+    "orig": "https://www.asklaila.com/addBusiness/",
+    "status": 200,
+    "finalUrl": "https://www.asklaila.com/addBusiness/",
+    "title": "AskLaila Bangalore - India&#039;s local information service.",
+    "valid": true,
+    "date": "2026-10-05 17:13:04"
+  },
+  {
+    "site": "Yellow Pages UAE",
+    "orig": "https://www.yellowpages.ae/free-listing",
+    "status": 200,
+    "finalUrl": "https://www.yellowpages.ae/free-listing",
+    "title": "Yellow Pages UAE | B2B Portal | Business Directory In UAE",
+    "valid": true,
+    "date": "2026-10-05 17:13:05"
+  },
+  {
+    "site": "Content Marketing Institute",
+    "orig": "https://contentmarketinginstitute.com/blog/blog-guidelines/",
+    "status": 200,
+    "finalUrl": "https://contentmarketinginstitute.com/cmi-guest-blogging-guidelines",
+    "title": "CMI Guest Blogging Guidelines",
+    "valid": true,
+    "date": "2026-10-05 17:12:59"
+  },
+  {
+    "site": "Top.ai Tools Directory",
+    "orig": "https://topai.tools/submit",
+    "status": 403,
+    "finalUrl": "https://topai.tools/submit",
+    "title": "Just a moment...",
+    "valid": false,
+    "date": "2026-10-05 17:13:00"
+  },
+  {
+    "site": "Sortlist India",
+    "orig": "https://www.sortlist.com/join",
+    "status": 403,
+    "finalUrl": "https://www.sortlist.com/join",
+    "title": "Just a moment...",
+    "valid": false,
+    "date": "2026-10-05 17:13:06"
+  },
+  {
+    "site": "GoodFirms Global Network",
+    "orig": "https://www.goodfirms.co/get-listed",
+    "status": 403,
+    "finalUrl": "https://www.goodfirms.co/get-listed",
+    "title": "Just a moment...",
+    "valid": false,
+    "date": "2026-10-05 17:13:01"
+  },
+  {
+    "site": "Indie Hackers Products",
+    "orig": "https://www.indiehackers.com/products/new",
+    "status": 403,
+    "finalUrl": "https://www.indiehackers.com/products/new",
+    "title": "Just a moment...",
+    "valid": false,
+    "date": "2026-10-05 17:13:02"
+  },
+  {
+    "site": "Brownbook USA",
+    "orig": "https://www.brownbook.net/add-business/",
+    "status": 200,
+    "finalUrl": "https://www.brownbook.net/add-business",
+    "title": "Brownbook - The Global Business Listing Database. Free business listings for SEO and search engine marketing",
+    "valid": true,
+    "date": "2026-10-05 17:13:02"
+  },
+  {
+    "site": "Mumbai Online Business Directory",
+    "orig": "https://www.mumbaionline.in/city-guide/add-your-business",
+    "status": 200,
+    "finalUrl": "https://www.mumbaionline.in/guide",
+    "title": "Mumbai City Guide, Mumbai Travel Guide, Mumbai City Profile",
+    "valid": true,
+    "date": "2026-10-05 17:13:07"
+  },
+  {
+    "site": "Dev.to AI & Web Community",
+    "orig": "https://dev.to/enter",
+    "status": 200,
+    "finalUrl": "https://dev.to/enter",
+    "title": "Welcome! - DEV Community",
+    "valid": true,
+    "date": "2026-10-05 17:13:03"
+  },
+  {
+    "site": "GoodFirms India",
+    "orig": "https://www.goodfirms.co/get-listed",
+    "status": 403,
+    "finalUrl": "https://www.goodfirms.co/get-listed",
+    "title": "Just a moment...",
+    "valid": false,
+    "date": "2026-10-05 17:13:07"
+  },
+  {
+    "site": "Hashnode Tech Blog Network",
+    "orig": "https://hashnode.com/onboard",
+    "status": 200,
+    "finalUrl": "https://hashnode.com/onboard",
+    "title": "Get Started | Hashnode",
+    "valid": true,
+    "date": "2026-10-05 17:13:03"
+  },
+  {
+    "site": "Better Business Bureau (BBB)",
+    "orig": "https://www.bbb.org/get-listed",
+    "status": 200,
+    "finalUrl": "https://www.bbb.org/get-listed",
+    "title": "Submit a business to our directory | Better Business Bureau",
+    "valid": true,
+    "date": "2026-10-05 17:13:08"
+  },
+  {
+    "site": "MarketingProfs Write for Us",
+    "orig": "https://www.marketingprofs.com/write-for-us",
+    "status": 403,
+    "finalUrl": "https://www.marketingprofs.com/write-for-us",
+    "title": "Just a moment...",
+    "valid": false,
+    "date": "2026-10-05 17:13:04"
+  }
+]

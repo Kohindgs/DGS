@@ -1,0 +1,380 @@
+{
+  "timestamp": "2026-10-13T11:16:16.372Z",
+  "targetRelease": "V8.12.8 Visual Correction",
+  "baseUrl": "https://www.dgeniussolutions.com",
+  "tests": [
+    {
+      "name": "CTA Card Display is Grid",
+      "passed": true,
+      "details": {
+        "cardDisplay": "grid",
+        "cardBg": "rgb(11, 11, 16)",
+        "cardBorderRadius": 28,
+        "cardWidth": 1500,
+        "cardHeight": 270.453125,
+        "btnDisplay": "inline-flex",
+        "btnHeight": 52,
+        "btnMinHeight": 52,
+        "btnBg": "linear-gradient(135deg, rgb(253, 92, 98) 0%, rgb(169, 0, 255) 100%)",
+        "btnBorderRadius": 999,
+        "btnPaddingInline": 72,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "btnHref": "#ai-video-enquiry-form",
+        "headingText": "Ready To Create Your Next AI Video?",
+        "descText": "Tell us what you want to create and we'll help you plan the right AI video approach for your brand, campaign or product."
+      }
+    },
+    {
+      "name": "CTA Card Background is Not Transparent",
+      "passed": true,
+      "details": {
+        "cardDisplay": "grid",
+        "cardBg": "rgb(11, 11, 16)",
+        "cardBorderRadius": 28,
+        "cardWidth": 1500,
+        "cardHeight": 270.453125,
+        "btnDisplay": "inline-flex",
+        "btnHeight": 52,
+        "btnMinHeight": 52,
+        "btnBg": "linear-gradient(135deg, rgb(253, 92, 98) 0%, rgb(169, 0, 255) 100%)",
+        "btnBorderRadius": 999,
+        "btnPaddingInline": 72,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "btnHref": "#ai-video-enquiry-form",
+        "headingText": "Ready To Create Your Next AI Video?",
+        "descText": "Tell us what you want to create and we'll help you plan the right AI video approach for your brand, campaign or product."
+      }
+    },
+    {
+      "name": "CTA Card Border Radius >= 24px",
+      "passed": true,
+      "details": {
+        "borderRadius": 28
+      }
+    },
+    {
+      "name": "CTA Card Width Reasonable on Desktop",
+      "passed": true,
+      "details": {
+        "cardWidth": 1500
+      }
+    },
+    {
+      "name": "CTA Button Display is inline-flex",
+      "passed": true,
+      "details": {
+        "cardDisplay": "grid",
+        "cardBg": "rgb(11, 11, 16)",
+        "cardBorderRadius": 28,
+        "cardWidth": 1500,
+        "cardHeight": 270.453125,
+        "btnDisplay": "inline-flex",
+        "btnHeight": 52,
+        "btnMinHeight": 52,
+        "btnBg": "linear-gradient(135deg, rgb(253, 92, 98) 0%, rgb(169, 0, 255) 100%)",
+        "btnBorderRadius": 999,
+        "btnPaddingInline": 72,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "btnHref": "#ai-video-enquiry-form",
+        "headingText": "Ready To Create Your Next AI Video?",
+        "descText": "Tell us what you want to create and we'll help you plan the right AI video approach for your brand, campaign or product."
+      }
+    },
+    {
+      "name": "CTA Button Computed Height >= 52px",
+      "passed": true,
+      "details": {
+        "btnHeight": 52
+      }
+    },
+    {
+      "name": "CTA Button Border Radius >= 24px",
+      "passed": true,
+      "details": {
+        "btnBorderRadius": 999
+      }
+    },
+    {
+      "name": "CTA Button Padding-Inline > 20px",
+      "passed": true,
+      "details": {
+        "btnPaddingInline": 72
+      }
+    },
+    {
+      "name": "CTA Button Text is 'START YOUR AI VIDEO PROJECT'",
+      "passed": true,
+      "details": {
+        "text": "START YOUR AI VIDEO PROJECT"
+      }
+    },
+    {
+      "name": "CTA Button Links to #ai-video-enquiry-form",
+      "passed": true,
+      "details": {
+        "href": "#ai-video-enquiry-form"
+      }
+    },
+    {
+      "name": "CTA Heading is 'Ready To Create Your Next AI Video?'",
+      "passed": true,
+      "details": {
+        "heading": "Ready To Create Your Next AI Video?"
+      }
+    },
+    {
+      "name": "CTA Button Smooth Scrolls to Real Form Anchor",
+      "passed": true,
+      "details": {
+        "scrollY": 30312,
+        "anchorTop": 100.0625,
+        "anchorVisible": true
+      }
+    },
+    {
+      "name": "Better Ceasons: Rendered Ratio within 0.5% of Source (0.5625)",
+      "passed": true,
+      "details": {
+        "renderedRatio": 0.5625463142665584,
+        "sourceRatio": 0.5625,
+        "deviationPercent": "0.008%"
+      }
+    },
+    {
+      "name": "Better Ceasons: Height Bounded <= 82dvh and <= 920px",
+      "passed": true,
+      "details": {
+        "playerHeight": 885.59375,
+        "max82dvh": 885.5999999999999,
+        "limit": 920
+      }
+    },
+    {
+      "name": "Better Ceasons: Width Bounded <= 58vw and <= 620px (Exact Ratio)",
+      "passed": true,
+      "details": {
+        "playerWidth": 498.1875,
+        "targetWidth": 498
+      }
+    },
+    {
+      "name": "Better Ceasons: Comfortable Margins (Left/Right > 500px, Top/Bottom > 60px)",
+      "passed": true,
+      "details": {
+        "topMargin": 97.203125,
+        "leftMargin": 710.90625
+      }
+    },
+    {
+      "name": "Better Ceasons: Close Button Clearly Outside/Visible",
+      "passed": true,
+      "details": {
+        "closeTop": 32,
+        "mediaTop": 97.203125
+      }
+    },
+    {
+      "name": "Hyundai: Rendered Ratio within 0.5% of Source (1.7778)",
+      "passed": true,
+      "details": {
+        "renderedRatio": 1.7777800104489008,
+        "sourceRatio": 1.7777777777777777,
+        "deviationPercent": "0.000%"
+      }
+    },
+    {
+      "name": "Hyundai: Width Bounded <= 86vw and <= 1600px",
+      "passed": true,
+      "details": {
+        "playerWidth": 1382.390625,
+        "max86vw": 1651.2
+      }
+    },
+    {
+      "name": "Hyundai: Desktop Preferred Width within 1200-1450px Range",
+      "passed": true,
+      "details": {
+        "playerWidth": 1382.390625
+      }
+    },
+    {
+      "name": "Hyundai: Height Bounded <= 80dvh",
+      "passed": true,
+      "details": {
+        "playerHeight": 777.59375,
+        "max80dvh": 864
+      }
+    },
+    {
+      "name": "Hyundai: Comfortable Safe Margins (Top/Bottom >= 60px, Left/Right >= 60px)",
+      "passed": true,
+      "details": {
+        "topMargin": 151.203125,
+        "leftMargin": 268.8125
+      }
+    },
+    {
+      "name": "Hyundai: Normal Viewer Distinct from Fullscreen (widthRatio < 0.85)",
+      "passed": true,
+      "details": {
+        "widthRatio": 0.7199951171875
+      }
+    },
+    {
+      "name": "Clarion: Rendered Ratio within 0.5% of Source (0.5625)",
+      "passed": true,
+      "details": {
+        "renderedRatio": 0.5625463142665584,
+        "sourceRatio": 0.5625,
+        "deviationPercent": "0.008%"
+      }
+    },
+    {
+      "name": "Clarion: Height Bounded <= 82dvh and <= 920px",
+      "passed": true,
+      "details": {
+        "playerHeight": 885.59375
+      }
+    },
+    {
+      "name": "Sundaram: Rendered Ratio within 0.5% of Source (1.7778)",
+      "passed": true,
+      "details": {
+        "renderedRatio": 1.7777800104489008,
+        "sourceRatio": 1.7777777777777777,
+        "deviationPercent": "0.000%"
+      }
+    },
+    {
+      "name": "Sundaram: Desktop Preferred Width within 1200-1450px Range",
+      "passed": true,
+      "details": {
+        "playerWidth": 1382.390625
+      }
+    },
+    {
+      "name": "Hyundai Fullscreen Screenshot Captured (100vw x 100vh contain)",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Better Ceasons Fullscreen Screenshot Captured (100vw x 100vh contain)",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "Fullscreen Exit Restores Exact Normal Calculated Dimensions (Height bounded <= 920px)",
+      "passed": true,
+      "details": {
+        "width": 498.1875,
+        "height": 885.59375,
+        "ratio": 0.5625463142665584
+      }
+    },
+    {
+      "name": "Dubai Page: Has CTA Conversion Card with Correct Text",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Dubai Page: Portfolio Mounted & Active (Cards: 56)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 56,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Dubai Page: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Has CTA Conversion Card with Correct Text",
+      "passed": true,
+      "details": {
+        "hasPortfolio": false,
+        "hasGallery": false,
+        "cardCount": 0,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Form/Landing Structure Active",
+      "passed": true,
+      "details": {
+        "hasPortfolio": false,
+        "hasGallery": false,
+        "cardCount": 0,
+        "hasCta": true,
+        "btnText": "START YOUR AI VIDEO PROJECT",
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Google Ads Landing Page: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Portfolio Mounted & Active (Cards: 111)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": false,
+        "cardCount": 111,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Portfolio Preview Page: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Portfolio Mounted & Active (Cards: 8)",
+      "passed": true,
+      "details": {
+        "hasPortfolio": true,
+        "hasGallery": true,
+        "cardCount": 8,
+        "hasCta": false,
+        "btnText": null,
+        "wonderCount": 0
+      }
+    },
+    {
+      "name": "Homepage: Zero Wonder Rule Maintained (Count: 0)",
+      "passed": true,
+      "details": {
+        "wonderCount": 0
+      }
+    }
+  ],
+  "summary": {
+    "total": 40,
+    "passed": 40,
+    "failed": 0
+  }
+}

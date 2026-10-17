@@ -1,0 +1,430 @@
+{
+  "createdAt": "2026-10-15T19:32:43.383Z",
+  "statusCounts": [
+    {
+      "status": "EXPIRED",
+      "verification_status": "UNVERIFIED",
+      "n": 80,
+      "recorded404": null,
+      "recorded410": null,
+      "neverChecked": "80",
+      "unassigned": "77"
+    },
+    {
+      "status": "REJECTED",
+      "verification_status": "FAILED_LANE_VALIDATION",
+      "n": 55,
+      "recorded404": "0",
+      "recorded410": "0",
+      "neverChecked": "0",
+      "unassigned": "55"
+    },
+    {
+      "status": "DISCOVERED",
+      "verification_status": "BLOCKED_UNVERIFIABLE",
+      "n": 32,
+      "recorded404": "0",
+      "recorded410": "0",
+      "neverChecked": "0",
+      "unassigned": "32"
+    },
+    {
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "n": 14,
+      "recorded404": "0",
+      "recorded410": "0",
+      "neverChecked": "0",
+      "unassigned": "14"
+    },
+    {
+      "status": "APPROVED",
+      "verification_status": "UNVERIFIED",
+      "n": 5,
+      "recorded404": null,
+      "recorded410": null,
+      "neverChecked": "5",
+      "unassigned": "0"
+    },
+    {
+      "status": "EXPIRED",
+      "verification_status": "DEAD",
+      "n": 1,
+      "recorded404": "1",
+      "recorded410": "0",
+      "neverChecked": "0",
+      "unassigned": "1"
+    },
+    {
+      "status": "ARCHIVED",
+      "verification_status": "UNVERIFIED",
+      "n": 1,
+      "recorded404": null,
+      "recorded410": null,
+      "neverChecked": "1",
+      "unassigned": "1"
+    },
+    {
+      "status": "VERIFIED",
+      "verification_status": "UNVERIFIED",
+      "n": 1,
+      "recorded404": null,
+      "recorded410": null,
+      "neverChecked": "1",
+      "unassigned": "0"
+    },
+    {
+      "status": "OUTREACH",
+      "verification_status": "VERIFIED_ACTIVE",
+      "n": 1,
+      "recorded404": "0",
+      "recorded410": "0",
+      "neverChecked": "0",
+      "unassigned": "0"
+    }
+  ],
+  "sourceCounts": [
+    {
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "status": "EXPIRED",
+      "n": 81
+    },
+    {
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "status": "REJECTED",
+      "n": 48
+    },
+    {
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "status": "DISCOVERED",
+      "n": 30
+    },
+    {
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "status": "QUALIFIED",
+      "n": 14
+    },
+    {
+      "source": "GOOGLE_NEWS_RSS",
+      "source_type": "google_news_rss",
+      "status": "REJECTED",
+      "n": 6
+    },
+    {
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "status": "APPROVED",
+      "n": 5
+    },
+    {
+      "source": "GOOGLE_NEWS_RSS",
+      "source_type": "google_news_rss",
+      "status": "DISCOVERED",
+      "n": 2
+    },
+    {
+      "source": "WEB_SEARCH",
+      "source_type": "web_search",
+      "status": "REJECTED",
+      "n": 1
+    },
+    {
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "status": "OUTREACH",
+      "n": 1
+    },
+    {
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "status": "VERIFIED",
+      "n": 1
+    },
+    {
+      "source": "VERIFIED_BATCH_IMPORT",
+      "source_type": "curated",
+      "status": "ARCHIVED",
+      "n": 1
+    }
+  ],
+  "active404": [],
+  "priorityCandidates": [
+    {
+      "id": "opp_042919a6fc1c412d",
+      "site_name": "AskLaila Mumbai",
+      "domain": "asklaila.com",
+      "exact_submission_url": "https://www.asklaila.com/addBusiness/",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:04",
+      "last_verified_at": "2026-10-05 17:13:04",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "LOCAL_CITATION",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=LOCAL_LISTINGS HTTP=200; PASSED_LANE_VALIDATOR; signals=free:free listing,topics:ai |brand|business,submit:add a business,submit:free listing"
+    },
+    {
+      "id": "opp_0c271071609b4afa",
+      "site_name": "Yellow Pages UAE",
+      "domain": "yellowpages.ae",
+      "exact_submission_url": "https://www.yellowpages.ae/free-listing",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:05",
+      "last_verified_at": "2026-10-05 17:13:05",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "LOCAL_CITATION",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=LOCAL_LISTINGS HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:ai |business,submit:add your business,page_noindex"
+    },
+    {
+      "id": "opp_2ab973eb31b34aef",
+      "site_name": "Content Marketing Institute",
+      "domain": "contentmarketinginstitute.com",
+      "exact_submission_url": "https://contentmarketinginstitute.com/blog/blog-guidelines/",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:12:59",
+      "last_verified_at": "2026-10-05 17:12:59",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "EXPERT_CONTRIBUTION",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=EXPERT_CONTRIBUTIONS HTTP=200; PASSED_LANE_VALIDATOR; signals=free:free registration,topics:seo|marketing|ai |video|website|brand,contrib:guest contributor,contrib:submit an article"
+    },
+    {
+      "id": "opp_3ca833d1ce06496a",
+      "site_name": "Top.ai Tools Directory",
+      "domain": "topai.tools",
+      "exact_submission_url": "https://topai.tools/submit",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:00",
+      "last_verified_at": "2026-10-05 17:13:00",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "TOOL_DIRECTORY",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=AGENCY_DIRECTORIES HTTP=200; PASSED_LANE_VALIDATOR; signals=free:free listing,paid:featured listing,topics:seo|ai |growth|geo ,submit:free listing"
+    },
+    {
+      "id": "opp_42ee09a8e0224c34",
+      "site_name": "Sortlist India",
+      "domain": "sortlist.com",
+      "exact_submission_url": "https://www.sortlist.com/join",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:06",
+      "last_verified_at": "2026-10-05 17:13:06",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "AGENCY_DIRECTORY",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=AGENCY_DIRECTORIES HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:business,submit:register your business"
+    },
+    {
+      "id": "opp_5e778db57f2d4d85",
+      "site_name": "GoodFirms Global Network",
+      "domain": "goodfirms.co",
+      "exact_submission_url": "https://www.goodfirms.co/get-listed",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:01",
+      "last_verified_at": "2026-10-05 17:13:01",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "REVIEW_PLATFORM",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=REVIEW_PLATFORMS HTTP=200; PASSED_LANE_VALIDATOR; signals=free:free listing,free:free profile,paid:featured listing,paid:pricing,topics:seo|search engine|digital marketing|marketing|ai |artificial intelligence,submit:list your business,submit:list your company,submit:get listed"
+    },
+    {
+      "id": "opp_72e798af4d4a442c",
+      "site_name": "Indie Hackers Products",
+      "domain": "indiehackers.com",
+      "exact_submission_url": "https://www.indiehackers.com/products/new",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:02",
+      "last_verified_at": "2026-10-05 17:13:02",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "COMMUNITY",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=COMMUNITIES_QA HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:business,community:community,page_noindex"
+    },
+    {
+      "id": "opp_b3fec0acb26e41ca",
+      "site_name": "Brownbook USA",
+      "domain": "brownbook.net",
+      "exact_submission_url": "https://www.brownbook.net/add-business/",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:02",
+      "last_verified_at": "2026-10-05 17:13:02",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "BUSINESS_LISTING",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=BUSINESS_CITATIONS HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:seo|search engine|marketing|video|website|business,submit:add a business,submit:claim your listing"
+    },
+    {
+      "id": "opp_b4a39878c82e494a",
+      "site_name": "Mumbai Online Business Directory",
+      "domain": "mumbaionline.in",
+      "exact_submission_url": "https://www.mumbaionline.in/city-guide/add-your-business",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:07",
+      "last_verified_at": "2026-10-05 17:13:07",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "LOCAL_CITATION",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=LOCAL_LISTINGS HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:search engine|ai |business,submit:add your business,submit:list your business"
+    },
+    {
+      "id": "opp_ca8e6596c6df46f1",
+      "site_name": "Dev.to AI & Web Community",
+      "domain": "dev.to",
+      "exact_submission_url": "https://dev.to/enter",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:03",
+      "last_verified_at": "2026-10-05 17:13:03",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "COMMUNITY",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=COMMUNITIES_QA HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:video|content,community:community"
+    },
+    {
+      "id": "opp_d9a5616fb82a4e6b",
+      "site_name": "GoodFirms India",
+      "domain": "goodfirms.co",
+      "exact_submission_url": "https://www.goodfirms.co/get-listed",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:07",
+      "last_verified_at": "2026-10-05 17:13:07",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "REVIEW_PLATFORM",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=REVIEW_PLATFORMS HTTP=200; PASSED_LANE_VALIDATOR; signals=free:free listing,free:free profile,paid:featured listing,paid:pricing,topics:seo|search engine|digital marketing|marketing|ai |artificial intelligence,submit:list your business,submit:list your company,submit:get listed"
+    },
+    {
+      "id": "opp_e256bc4de4574144",
+      "site_name": "Hashnode Tech Blog Network",
+      "domain": "hashnode.com",
+      "exact_submission_url": "https://hashnode.com/onboard",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:03",
+      "last_verified_at": "2026-10-05 17:13:03",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "COMMUNITY",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=COMMUNITIES_QA HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:ai |brand"
+    },
+    {
+      "id": "opp_f3cc678c972f46b6",
+      "site_name": "Better Business Bureau (BBB)",
+      "domain": "bbb.org",
+      "exact_submission_url": "https://www.bbb.org/get-listed",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:08",
+      "last_verified_at": "2026-10-05 17:13:08",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "BUSINESS_LISTING",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=BUSINESS_CITATIONS HTTP=200; PASSED_LANE_VALIDATOR; signals=topics:ai |business|content,submit:claim your business"
+    },
+    {
+      "id": "opp_fb7bb1592168447f",
+      "site_name": "MarketingProfs Write for Us",
+      "domain": "marketingprofs.com",
+      "exact_submission_url": "https://www.marketingprofs.com/write-for-us",
+      "status": "QUALIFIED",
+      "verification_status": "VERIFIED_ACTIVE",
+      "http_status": 200,
+      "last_checked_at": "2026-10-05 17:13:04",
+      "last_verified_at": "2026-10-05 17:13:04",
+      "source": "CURATED_SEED",
+      "source_type": "curated_seed",
+      "category": "EXPERT_CONTRIBUTION",
+      "priority_score": 88,
+      "assigned_to": null,
+      "qualification_reason": "[V8.12.6 re-verify 2026-10-05] lane=EXPERT_CONTRIBUTIONS HTTP=200; PASSED_LANE_VALIDATOR; signals=free:it's free,topics:seo|marketing|advertising|ai |artificial intelligence|generative,contrib:write for us,contrib:guest contributor,contrib:submit an article,contrib-head:write for us,contrib-head:write for"
+    }
+  ],
+  "discoveryRuns": {
+    "error": "Unknown column 'qualified_count' in 'SELECT'"
+  },
+  "automatedRuns": [
+    {
+      "run_type": "SCHEDULED_CRON",
+      "status": "SUCCESS",
+      "started_at": "2026-10-05 08:44:39",
+      "completed_at": "2026-10-05 08:44:43"
+    },
+    {
+      "run_type": "cron",
+      "status": "SUCCESS",
+      "started_at": "2026-10-04 13:33:25",
+      "completed_at": "2026-10-04 13:33:49"
+    },
+    {
+      "run_type": "cron",
+      "status": "FAILED",
+      "started_at": "2026-10-04 13:26:55",
+      "completed_at": "2026-10-04 13:26:55"
+    },
+    {
+      "run_type": "cron",
+      "status": "SUCCESS",
+      "started_at": "2026-10-04 09:44:10",
+      "completed_at": "2026-10-04 09:44:28"
+    },
+    {
+      "run_type": "cron",
+      "status": "FAILED",
+      "started_at": "2026-10-04 09:38:39",
+      "completed_at": "2026-10-04 09:38:39"
+    }
+  ]
+}

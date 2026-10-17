@@ -8,7 +8,8 @@ declare global {
 export type CronJobName =
   | "scheduled-blog-publisher"
   | "google-search-update-monitor"
-  | "off-page-seo-daily-monitor";
+  | "off-page-seo-daily-monitor"
+  | "buyer-intent-lead-monitor";
 
 export type CronRunStatus = "RUNNING" | "SUCCESS" | "PARTIAL" | "FAILED";
 
@@ -88,6 +89,20 @@ export const DGS_SCHEDULED_JOBS_REGISTRY: CronJobDefinition[] = [
     databaseDependency: "MariaDB (off_page_automation_runs, off_page_opportunities, off_page_backlinks, cron_run_history)",
     externalNetworkDependency: "External backlink source URLs, Opportunity discovery feeds, TurboVec local daemon",
     staleThresholdMinutes: 1560, // > 26 hours (1560m) without success => STALE
+  },
+  {
+    jobName: "buyer-intent-lead-monitor",
+    displayName: "Buyer-Intent & LinkedIn/Web Lead Discovery",
+    workflowName: "DGS Buyer-Intent Lead Discovery Monitor",
+    workflowFile: ".github/workflows/intent-leads-monitor.yml",
+    scheduleCron: "45 */6 * * *",
+    scheduleHuman: "Every 6 hours at minute 45 UTC",
+    triggerSource: "GitHub Actions (schedule / workflow_dispatch)",
+    endpoint: "/api/internal/intent-leads/check",
+    authMethod: "Bearer DGS_CRON_SECRET",
+    databaseDependency: "MariaDB (intent_lead_signals, intent_lead_discovery_runs, cron_run_history)",
+    externalNetworkDependency: "Public LinkedIn / Web SERPs, Reddit API, Gemini 2.5 Flash qualification, SMTP digest",
+    staleThresholdMinutes: 840, // > 14 hours without success => STALE
   },
 ];
 

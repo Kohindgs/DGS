@@ -1,0 +1,272 @@
+{
+  "at": "2026-10-05T17:13:39.032Z",
+  "results": [
+    {
+      "name": "Public home 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "Public home robots index, follow",
+      "pass": true
+    },
+    {
+      "name": "robots.txt 200 + sitemap",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "sitemap.xml 200",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/action-center rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/mismatches rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/lanes rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated GET /api/admin/off-page/integrations/google-sheets rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Unauthenticated POST backlinks/discover rejected",
+      "pass": true,
+      "detail": 401
+    },
+    {
+      "name": "Admin session acquired",
+      "pass": true
+    },
+    {
+      "name": "Lanes API ok",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "13 discovery lanes registered",
+      "pass": true,
+      "detail": 13
+    },
+    {
+      "name": "Web Search provider active in lanes",
+      "pass": true,
+      "detail": "Native Live Web Search engine operational. Today's quota: 15/100 queries used."
+    },
+    {
+      "name": "Provider matrix includes Web Search ACTIVE",
+      "pass": true,
+      "detail": "ACTIVE: Native Live Web Search engine operational. Today's quota: 15/100 queries used."
+    },
+    {
+      "name": "Provider matrix includes Brave",
+      "pass": true,
+      "detail": "NOT_CONFIGURED: WEB SEARCH (BRAVE) — NOT CONFIGURED. Add BRAVE_SEARCH_API_KEY to server environment or configure in Off-Page Settings."
+    },
+    {
+      "name": "Provider matrix includes TurboVec ACTIVE",
+      "pass": true,
+      "detail": "ACTIVE: TurboVec 1.0.0 daemon connected via private Unix socket (nomic-embed-text, 768d, IdMapIndex 4-bit)"
+    },
+    {
+      "name": "Needs Review contains only QUALIFIED/MANAGER_REVIEW/APPROVED",
+      "pass": true,
+      "detail": {
+        "needsReviewCount": 15,
+        "offending": 0
+      }
+    },
+    {
+      "name": "Staging table off_page_raw_candidates exists with required columns",
+      "pass": true,
+      "detail": 24
+    },
+    {
+      "name": "Total opportunities baseline preserved",
+      "pass": true,
+      "detail": 190
+    },
+    {
+      "name": "Zero opportunity link types asserted without live observation",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Needs Review (DB) == Action Center KPI",
+      "pass": true,
+      "detail": {
+        "db": 15,
+        "api": 15
+      }
+    },
+    {
+      "name": "Every Needs Review record is VERIFIED_ACTIVE",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "No LIVE backlink pointing outside dgeniussolutions.com",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "TurboVec vector documents intact",
+      "pass": true,
+      "detail": 189
+    },
+    {
+      "name": "Google Sheets connection truthful (PENDING USER SHEET)",
+      "pass": true,
+      "detail": "No synthetic sheets fabricated"
+    }
+  ],
+  "db": {
+    "total": 190,
+    "rawCandidatesTotal": 71,
+    "byStatus": [
+      {
+        "status": "EXPIRED",
+        "n": 81
+      },
+      {
+        "status": "REJECTED",
+        "n": 55
+      },
+      {
+        "status": "DISCOVERED",
+        "n": 32
+      },
+      {
+        "status": "QUALIFIED",
+        "n": 15
+      },
+      {
+        "status": "APPROVED",
+        "n": 5
+      },
+      {
+        "status": "VERIFIED",
+        "n": 1
+      },
+      {
+        "status": "ARCHIVED",
+        "n": 1
+      }
+    ],
+    "byVerification": [
+      {
+        "v": "UNVERIFIED",
+        "n": 87
+      },
+      {
+        "v": "FAILED_LANE_VALIDATION",
+        "n": 55
+      },
+      {
+        "v": "BLOCKED_UNVERIFIABLE",
+        "n": 32
+      },
+      {
+        "v": "VERIFIED_ACTIVE",
+        "n": 15
+      },
+      {
+        "v": "DEAD",
+        "n": 1
+      }
+    ],
+    "byLinkType": [
+      {
+        "v": "UNKNOWN",
+        "n": 163
+      },
+      {
+        "v": "N/A",
+        "n": 27
+      }
+    ],
+    "byFree": [
+      {
+        "v": "FREE",
+        "n": 93
+      },
+      {
+        "v": "UNKNOWN",
+        "n": 93
+      },
+      {
+        "v": "FREEMIUM",
+        "n": 4
+      }
+    ],
+    "bySourceType": [
+      {
+        "v": "curated_seed",
+        "n": 180
+      },
+      {
+        "v": "google_news_rss",
+        "n": 8
+      },
+      {
+        "v": "curated",
+        "n": 1
+      },
+      {
+        "v": "web_search",
+        "n": 1
+      }
+    ],
+    "needsReview": 15,
+    "needsReviewNotVerified": 0,
+    "dofollowWithoutObservation": 0,
+    "activeBacklinks": [
+      {
+        "status": "ARCHIVED",
+        "verified_status": "ARCHIVED",
+        "n": 3
+      }
+    ],
+    "backlinksLiveNotOnDgs": 0,
+    "vectorDocs": 189,
+    "rawTableColumns": [
+      "id",
+      "run_id",
+      "provider",
+      "query",
+      "lane",
+      "page_intent",
+      "confidence",
+      "action_required",
+      "action_destination",
+      "actionability_score",
+      "actionable_evidence",
+      "url",
+      "domain",
+      "title",
+      "snippet",
+      "region",
+      "http_status",
+      "fetched_at",
+      "validation_status",
+      "qualification_status",
+      "qualification_reasons",
+      "opportunity_id",
+      "created_at",
+      "updated_at"
+    ],
+    "sheetConnectionsCount": 0,
+    "braveKeyConfigured": false
+  }
+}

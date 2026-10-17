@@ -1,0 +1,46 @@
+[
+  {
+    "q": "What website development services do you offer in Mumbai?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-1\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-1\" type=\"button\">What website development services do you offer in Mumbai? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-1\" class=\"faq-a\" id=\"faq-a-1\" role=\"region\"><div class=\"faq-a-inner\"><p>D'Genius Solutions provides website strategy, sitemap planning, UI/UX design, WordPress and custom development, e-commerce development, responsive implementation, technical SEO foundations, analytics setup, website redesign and post-launch AMC support.</p></div></div>"
+  },
+  {
+    "q": "Which website platforms and technologies do you work with?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-2\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-2\" type=\"button\">Which website platforms and technologies do you work with? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-2\" class=\"faq-a\" id=\"faq-a-2\" role=\"region\"><div class=\"faq-a-inner\"><p>We work with WordPress, WooCommerce, HTML5, CSS and SCSS, JavaScript, React, Next.js and PHP. The stack is selected according to editing needs, integrations, performance, security, scalability and the team that will manage the website.</p></div></div>"
+  },
+  {
+    "q": "How long does it take to design and develop a website?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-3\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-3\" type=\"button\">How long does it take to design and develop a website? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-3\" class=\"faq-a\" id=\"faq-a-3\" role=\"region\"><div class=\"faq-a-inner\"><p>A focused business website may take approximately four to six weeks, while larger websites, e-commerce builds or custom integrations may require eight to twelve weeks or more. The final schedule depends on scope, content readiness, approvals, integrations and migration requirements.</p></div></div>"
+  },
+  {
+    "q": "How is website development pricing calculated?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-4\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-4\" type=\"button\">How is website development pricing calculated? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-4\" class=\"faq-a\" id=\"faq-a-4\" role=\"region\"><div class=\"faq-a-inner\"><p>Pricing is based on the number of page templates, content volume, UI/UX complexity, CMS requirements, e-commerce or custom functionality, integrations, migration, SEO setup and testing. A detailed scope and quotation are prepared after the discovery discussion.</p></div></div>"
+  },
+  {
+    "q": "Is SEO included in website development?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-5\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-5\" type=\"button\">Is SEO included in website development? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-5\" class=\"faq-a\" id=\"faq-a-5\" role=\"region\"><div class=\"faq-a-inner\"><p>Each website can include technical SEO foundations such as semantic headings, crawlable navigation, clean URLs, metadata fields, canonicals, sitemap readiness, redirects and schema coordination. Ongoing keyword strategy, content development, authority building and reporting are handled through a separate SEO engagement.</p></div></div>"
+  },
+  {
+    "q": "How do you prepare websites for AI Overviews and AI-assisted discovery?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-6\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-6\" type=\"button\">How do you prepare websites for AI Overviews and AI-assisted discovery? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-6\" class=\"faq-a\" id=\"faq-a-6\" role=\"region\"><div class=\"faq-a-inner\"><p>We focus on the same strong foundations required for Google Search: crawlable HTML, clear service definitions, useful answer-first passages, descriptive internal links, consistent organisation details, accessible page structure and technically indexable content. These practices support eligibility, but no agency can guarantee inclusion in an AI Overview or any search feature.</p></div></div>"
+  },
+  {
+    "q": "Can you redesign an existing website without damaging its SEO?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-7\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-7\" type=\"button\">Can you redesign an existing website without damaging its SEO? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-7\" class=\"faq-a\" id=\"faq-a-7\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. A redesign should begin with a crawl and content inventory, URL mapping, metadata review, redirect plan, analytics checks and pre-launch testing. Existing rankings cannot be guaranteed, but careful migration planning reduces avoidable loss of URLs, content and search signals.</p></div></div>"
+  },
+  {
+    "q": "Do you provide website maintenance and AMC after launch?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-8\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-8\" type=\"button\">Do you provide website maintenance and AMC after launch? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-8\" class=\"faq-a\" id=\"faq-a-8\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. Website AMC can include monitoring, security and software updates, backups, form checks, content changes, performance reviews and technical support. Deliverables and response times are defined in the selected maintenance scope.</p></div></div>"
+  },
+  {
+    "q": "Will the website work on mobile, desktop and 4K screens?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-9\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-9\" type=\"button\">Will the website work on mobile, desktop and 4K screens? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-9\" class=\"faq-a\" id=\"faq-a-9\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. Layouts are developed and tested responsively across small mobile devices, tablets, laptops, desktop screens and large displays. Testing also covers navigation, forms, content hierarchy, media behaviour and layout stability.</p></div></div>"
+  },
+  {
+    "q": "How do I choose among the best website development companies in Mumbai?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-10\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-10\" type=\"button\">How do I choose among the best website development companies in Mumbai? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-10\" class=\"faq-a\" id=\"faq-a-10\" role=\"region\"><div class=\"faq-a-inner\"><p>Compare relevant case studies, the clarity of the proposed process, technology recommendations, responsive testing, SEO foundations, analytics setup, ownership terms and the support available after launch. The best partner for a business is the company whose capabilities and working process match the project rather than the one making the broadest promotional claim.</p></div></div>"
+  },
+  {
+    "q": "Does D'Genius Solutions build SEO-friendly websites in Mumbai?",
+    "raw": "<div class=\"faq-item\"><button aria-controls=\"faq-a-11\" aria-expanded=\"false\" class=\"faq-q\" id=\"faq-q-11\" type=\"button\">Does D'Genius Solutions build SEO-friendly websites in Mumbai? <span aria-hidden=\"true\" class=\"faq-icon\">+</span></button><div aria-labelledby=\"faq-q-11\" class=\"faq-a\" id=\"faq-a-11\" role=\"region\"><div class=\"faq-a-inner\"><p>Yes. Our website builds can include semantic HTML, crawlable navigation, clean URL planning, metadata fields, internal links, canonical controls, sitemap readiness, schema coordination, responsive development and performance testing. Ongoing SEO strategy and content growth are available through a separate <a href=\"/services/seo-services-in-mumbai/\">SEO services in Mumbai</a> engagement.</p></div></div>"
+  }
+]

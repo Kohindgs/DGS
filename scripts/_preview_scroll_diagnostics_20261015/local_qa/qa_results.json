@@ -1,0 +1,88 @@
+{
+  "katherine": {
+    "stages": {
+      "beforeHover": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\kath_1_before_hover.png",
+      "after3s": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\kath_2_after_3s.png",
+      "approx50pct": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\kath_3_approx_50pct.png",
+      "endOfAnimation": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\kath_4_end_of_animation.png",
+      "afterMouseLeave": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\kath_5_after_mouse_leave.png"
+    },
+    "alignment": {
+      "imgTop": -1174.671875,
+      "imgBottom": 612.9375,
+      "frameTop": 273.84375,
+      "frameBottom": 613.9375,
+      "diffBottom": -1,
+      "transform": "matrix(1, 0, 0, 1, 0, -1449.52)"
+    },
+    "visualTest": false,
+    "metrics": {
+      "diff1_2": {
+        "diff": 453556,
+        "total": 557535,
+        "percent": 81.35
+      },
+      "diff2_3": {
+        "diff": 0,
+        "total": 557535,
+        "percent": 0
+      },
+      "diff3_4": {
+        "diff": 0,
+        "total": 557535,
+        "percent": 0
+      },
+      "diff1_5": {
+        "diff": 0,
+        "total": 557535,
+        "percent": 0
+      },
+      "distinctSections": false,
+      "resetsCleanly": true,
+      "endAligned": true
+    }
+  },
+  "betterceasons": {
+    "stages": {
+      "beforeHover": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\bc_1_before_hover.png",
+      "after3s": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\bc_2_after_3s.png",
+      "approx50pct": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\bc_3_approx_50pct.png",
+      "endOfAnimation": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\bc_4_end_of_animation.png",
+      "afterMouseLeave": "scripts\\_preview_scroll_diagnostics_20261015\\local_qa\\bc_5_after_mouse_leave.png"
+    },
+    "alignment": {
+      "imgTop": -3493.65625,
+      "imgBottom": 894.03125,
+      "frameTop": 554.9375,
+      "frameBottom": 895.03125,
+      "diffBottom": -1,
+      "transform": "matrix(1, 0, 0, 1, 0, -4049.59)"
+    },
+    "visualTest": false,
+    "metrics": {
+      "diff1_2": {
+        "diff": 539954,
+        "total": 559170,
+        "percent": 96.56
+      },
+      "diff2_3": {
+        "diff": 15333,
+        "total": 559170,
+        "percent": 2.74
+      },
+      "diff3_4": {
+        "diff": 46940,
+        "total": 559170,
+        "percent": 8.39
+      },
+      "diff1_5": {
+        "diff": 0,
+        "total": 559170,
+        "percent": 0
+      },
+      "distinctSections": false,
+      "resetsCleanly": true,
+      "endAligned": true
+    }
+  }
+}

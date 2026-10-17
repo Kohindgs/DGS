@@ -1,0 +1,88 @@
+{
+  "katherine": {
+    "stages": {
+      "beforeHover": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\kath_1_before_hover.png",
+      "after3s": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\kath_2_after_3s.png",
+      "approx50pct": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\kath_3_approx_50pct.png",
+      "endOfAnimation": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\kath_4_end_of_animation.png",
+      "afterMouseLeave": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\kath_5_after_mouse_leave.png"
+    },
+    "alignment": {
+      "imgTop": -1330.90625,
+      "imgBottom": 612.9375,
+      "frameTop": 273.84375,
+      "frameBottom": 613.9375,
+      "diffBottom": -1,
+      "transform": "matrix(1, 0, 0, 1, 0, -1605.75)"
+    },
+    "visualTest": true,
+    "metrics": {
+      "diff1_2": {
+        "diff": 146519,
+        "total": 184280,
+        "percent": 79.51
+      },
+      "diff2_3": {
+        "diff": 76064,
+        "total": 184280,
+        "percent": 41.28
+      },
+      "diff3_4": {
+        "diff": 143238,
+        "total": 184280,
+        "percent": 77.73
+      },
+      "diff1_5": {
+        "diff": 0,
+        "total": 184280,
+        "percent": 0
+      },
+      "distinctSections": true,
+      "resetsCleanly": true,
+      "endAligned": true
+    }
+  },
+  "betterceasons": {
+    "stages": {
+      "beforeHover": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\bc_1_before_hover.png",
+      "after3s": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\bc_2_after_3s.png",
+      "approx50pct": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\bc_3_approx_50pct.png",
+      "endOfAnimation": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\bc_4_end_of_animation.png",
+      "afterMouseLeave": "scripts\\_preview_scroll_diagnostics_20261015\\qa_results\\bc_5_after_mouse_leave.png"
+    },
+    "alignment": {
+      "imgTop": -3493.65625,
+      "imgBottom": 894.03125,
+      "frameTop": 554.9375,
+      "frameBottom": 895.03125,
+      "diffBottom": -1,
+      "transform": "matrix(1, 0, 0, 1, 0, -4049.59)"
+    },
+    "visualTest": true,
+    "metrics": {
+      "diff1_2": {
+        "diff": 182263,
+        "total": 184280,
+        "percent": 98.91
+      },
+      "diff2_3": {
+        "diff": 2977,
+        "total": 184280,
+        "percent": 1.62
+      },
+      "diff3_4": {
+        "diff": 14308,
+        "total": 184280,
+        "percent": 7.76
+      },
+      "diff1_5": {
+        "diff": 0,
+        "total": 184280,
+        "percent": 0
+      },
+      "distinctSections": true,
+      "resetsCleanly": true,
+      "endAligned": true
+    }
+  }
+}

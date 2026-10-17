@@ -1,0 +1,111 @@
+{
+  "allEntities": [
+    {
+      "scriptIndex": 1,
+      "entity": {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://www.dgeniussolutions.com/#organization",
+        "name": "D'Genius Solutions",
+        "url": "https://www.dgeniussolutions.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.dgeniussolutions.com/images/dgs-logo.webp"
+        },
+        "email": "business@dgeniussolutions.com",
+        "telephone": [
+          "+91-99879-22901",
+          "+91-85919-50238"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Unit 202, Amore Edge, Swami Vivekanand Rd, Govind Dham, Khar West",
+          "addressLocality": "Mumbai",
+          "postalCode": "400052",
+          "addressRegion": "Maharashtra",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/company/d-genius-solutions/",
+          "https://www.facebook.com/dgeniussolutions/",
+          "https://www.instagram.com/dgeniussolutions/",
+          "https://www.youtube.com/@dgeniussolutionspvtltd4060",
+          "https://in.pinterest.com/dgeniussolutions/"
+        ]
+      }
+    },
+    {
+      "scriptIndex": 1,
+      "entity": {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://www.dgeniussolutions.com/#website",
+        "url": "https://www.dgeniussolutions.com",
+        "name": "D'Genius Solutions",
+        "publisher": {
+          "@id": "https://www.dgeniussolutions.com/#organization"
+        }
+      }
+    },
+    {
+      "scriptIndex": 1,
+      "entity": {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://www.dgeniussolutions.com/services/website-development-amc/#webpage",
+        "url": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "name": "Website Development Company in Mumbai | Web Design & AMC",
+        "description": "D'Genius Solutions builds responsive, SEO-ready websites in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.",
+        "isPartOf": {
+          "@id": "https://www.dgeniussolutions.com/#website"
+        },
+        "about": {
+          "@id": "https://www.dgeniussolutions.com/#organization"
+        }
+      }
+    },
+    {
+      "scriptIndex": 1,
+      "entity": {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": "https://www.dgeniussolutions.com/services/website-development-amc/#service",
+        "url": "https://www.dgeniussolutions.com/services/website-development-amc/",
+        "name": "Website Development Company in Mumbai | Web Design & AMC",
+        "description": "D'Genius Solutions builds responsive, SEO-ready websites in Mumbai using WordPress, Next.js, React, PHP and HTML, with redesign, migration and AMC support.",
+        "provider": {
+          "@id": "https://www.dgeniussolutions.com/#organization"
+        }
+      }
+    },
+    {
+      "scriptIndex": 1,
+      "entity": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.dgeniussolutions.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://www.dgeniussolutions.com/our-services/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Website Development Company in Mumbai | Web Design & AMC",
+            "item": "https://www.dgeniussolutions.com/services/website-development-amc/"
+          }
+        ]
+      }
+    }
+  ],
+  "itemtypes": [],
+  "itemprops": []
+}

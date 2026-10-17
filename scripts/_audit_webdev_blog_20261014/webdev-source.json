@@ -1,0 +1,296 @@
+{
+  "keys": [
+    "path",
+    "family",
+    "wordpressId",
+    "type",
+    "source",
+    "capturedAt",
+    "liveStatus",
+    "liveLocation",
+    "body",
+    "styles",
+    "cssFiles",
+    "fontLinks",
+    "fluentFormIds",
+    "runPortfolio",
+    "needsThemeCss",
+    "bodyBytes",
+    "styleBytes"
+  ],
+  "bodyLength": 80872,
+  "stylesLength": 111444,
+  "sectionHeadings": [
+    {
+      "i": 0,
+      "cls": "section hero",
+      "text": "Website Development Company in Mumbai Built for Leads, SEO & Growth"
+    },
+    {
+      "i": 1,
+      "id": "proof",
+      "cls": "section",
+      "text": "Website Delivery Supported by Strategy, Search and Ongoing Care"
+    },
+    {
+      "i": 2,
+      "id": "recent-work",
+      "cls": "section",
+      "text": "Selected Website Projects Across Industries"
+    },
+    {
+      "i": 3,
+      "id": "answer",
+      "cls": "section",
+      "text": "What Does a Website Development Company in Mumbai Do?"
+    },
+    {
+      "i": 4,
+      "id": "problem",
+      "cls": "section",
+      "text": "Your Website May Be Losing Leads Before You Speak"
+    },
+    {
+      "i": 5,
+      "id": "website-development-services",
+      "cls": "section capability-section",
+      "text": "Complete Website Development Expertise on One Authoritative Page"
+    },
+    {
+      "i": 6,
+      "id": "choose-company",
+      "cls": "section compact-section",
+      "text": "How to Choose Among the Best Website Development Companies in Mumbai"
+    },
+    {
+      "i": 7,
+      "id": "why-dgs",
+      "cls": "section",
+      "text": "A Website Partner Connecting Development with Digital Growth"
+    },
+    {
+      "i": 8,
+      "id": "services",
+      "cls": "services-starfield",
+      "text": "One Development Ecosystem from Strategy to Ongoing Care"
+    },
+    {
+      "i": 9,
+      "id": "tech",
+      "cls": "section",
+      "text": "Technology and Development Tools Selected for Performance, Editing and Scale"
+    },
+    {
+      "i": 10,
+      "id": "development-process",
+      "cls": "section compact-section",
+      "text": "A Clear Process from Discovery to Launch and AMC"
+    },
+    {
+      "i": 11,
+      "id": "industries",
+      "cls": "section compact-section",
+      "text": "Website Development for Different Business Models"
+    },
+    {
+      "i": 12,
+      "id": "amc",
+      "cls": "section",
+      "text": "Annual Maintenance Contracts for Long-Term Website Stability"
+    },
+    {
+      "i": 13,
+      "id": "mumbai-service-area",
+      "cls": "section",
+      "text": "Website Development Services Across Mumbai and Nearby Business Hubs"
+    },
+    {
+      "i": 14,
+      "id": "faq",
+      "cls": "section",
+      "text": "Website Development & AMC Straight Answers"
+    }
+  ],
+  "headingCounts": {
+    "h1": 1,
+    "h2": 14,
+    "h3": 53
+  },
+  "forms": [
+    {
+      "i": 0,
+      "id": "fluentform_6",
+      "cls": "frm-fluent-form fluent_form_6 ff-el-form-top ff_form_instance_6_2 ff-form-loading ffs_custom"
+    }
+  ],
+  "placeholderMatches": [
+    {
+      "text": "Website Development",
+      "index": 1396
+    },
+    {
+      "text": "Website Development",
+      "index": 1481
+    },
+    {
+      "text": "website development",
+      "index": 1634
+    },
+    {
+      "text": "website development",
+      "index": 1812
+    },
+    {
+      "text": "website development",
+      "index": 2035
+    },
+    {
+      "text": "website development",
+      "index": 7846
+    },
+    {
+      "text": "Website development",
+      "index": 8193
+    },
+    {
+      "text": "Website development",
+      "index": 8365
+    },
+    {
+      "text": "website development",
+      "index": 8759
+    },
+    {
+      "text": "Website Development",
+      "index": 8952
+    },
+    {
+      "text": "Website Development",
+      "index": 12924
+    },
+    {
+      "text": "Website Development",
+      "index": 13955
+    },
+    {
+      "text": "website development",
+      "index": 14020
+    },
+    {
+      "text": "The Critical Challenge",
+      "index": 15714
+    },
+    {
+      "text": "Website Development",
+      "index": 17608
+    },
+    {
+      "text": "Website Development",
+      "index": 17676
+    },
+    {
+      "text": "website development",
+      "index": 17915
+    },
+    {
+      "text": "Website Development",
+      "index": 18299
+    },
+    {
+      "text": "Website Development",
+      "index": 19154
+    },
+    {
+      "text": "website development",
+      "index": 19198
+    },
+    {
+      "text": "Website Development",
+      "index": 19988
+    },
+    {
+      "text": "Website Development",
+      "index": 21678
+    },
+    {
+      "text": "website development",
+      "index": 21728
+    },
+    {
+      "text": "Website Development",
+      "index": 23762
+    },
+    {
+      "text": "website development",
+      "index": 23832
+    },
+    {
+      "text": "website development",
+      "index": 23947
+    },
+    {
+      "text": "website development",
+      "index": 26512
+    },
+    {
+      "text": "Website Development",
+      "index": 29026
+    },
+    {
+      "text": "Website Development",
+      "index": 60000
+    },
+    {
+      "text": "Website Development",
+      "index": 61695
+    },
+    {
+      "text": "Website Development",
+      "index": 65273
+    },
+    {
+      "text": "Website Development",
+      "index": 65345
+    },
+    {
+      "text": "Website Development",
+      "index": 66238
+    },
+    {
+      "text": "Website Development",
+      "index": 66305
+    },
+    {
+      "text": "website development",
+      "index": 66650
+    },
+    {
+      "text": "website development",
+      "index": 68488
+    },
+    {
+      "text": "website development",
+      "index": 69106
+    },
+    {
+      "text": "website development",
+      "index": 72340
+    },
+    {
+      "text": "Website Development",
+      "index": 74747
+    },
+    {
+      "text": "Website Development",
+      "index": 77826
+    },
+    {
+      "text": "Website Development",
+      "index": 77853
+    },
+    {
+      "text": "Website Development",
+      "index": 79484
+    }
+  ]
+}

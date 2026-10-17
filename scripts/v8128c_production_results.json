@@ -1,0 +1,362 @@
+{
+  "timestamp": "2026-10-14T17:36:35.315Z",
+  "targetHost": "https://www.dgeniussolutions.com",
+  "releaseSha": null,
+  "phase1_blogRepairs": {
+    "blogArchive": {
+      "totalImages": 77,
+      "brokenImagesCount": 0,
+      "card1_spamUpdate": {
+        "naturalWidth": 1672,
+        "src": "https://www.dgeniussolutions.com/cms-media/uploads/google-september-2026-spam-update-what-website-owners-should-know.webp"
+      },
+      "card2_b2bLeads": {
+        "naturalWidth": 1734,
+        "src": "https://www.dgeniussolutions.com/cms-media/uploads/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads.webp"
+      }
+    },
+    "post1": {
+      "httpStatus": 200,
+      "featured": {
+        "src": "https://www.dgeniussolutions.com/cms-media/uploads/google-september-2026-spam-update-what-website-owners-should-know.webp",
+        "complete": true,
+        "naturalWidth": 1672,
+        "naturalHeight": 941
+      }
+    },
+    "post2": {
+      "httpStatus": 200,
+      "featured": {
+        "src": "https://www.dgeniussolutions.com/cms-media/uploads/google-ads-for-b2b-lead-generation-how-to-get-better-quality-leads.webp",
+        "complete": true,
+        "naturalWidth": 1734,
+        "naturalHeight": 907
+      }
+    }
+  },
+  "phase2_webdevPage": {
+    "sectionsFound": [
+      {
+        "index": 1,
+        "id": "hero-section",
+        "classes": "section hero heroVisual",
+        "h1": "Website Development Company in Mumbai Built for Leads, SEO & Growth",
+        "h2": null
+      },
+      {
+        "index": 2,
+        "id": "trust-indicators",
+        "classes": "section proof",
+        "h1": null,
+        "h2": "Website Delivery Supported by Strategy, Search and Ongoing Care"
+      },
+      {
+        "index": 3,
+        "id": "webdev-services",
+        "classes": "section capability-section website-development-services",
+        "h1": null,
+        "h2": "Complete Website Development Expertise on One Authoritative Page"
+      },
+      {
+        "index": 4,
+        "id": "selected-projects",
+        "classes": "section recent-work work-samples-list",
+        "h1": null,
+        "h2": "Selected Website Projects Across Industries"
+      },
+      {
+        "index": 5,
+        "id": "why-dgs",
+        "classes": "section why-dgs",
+        "h1": null,
+        "h2": "A Website Partner Connecting Development with Digital Growth"
+      },
+      {
+        "index": 6,
+        "id": "development-process",
+        "classes": "section compact-section development-process",
+        "h1": null,
+        "h2": "A Clear Process from Discovery to Launch and AMC"
+      },
+      {
+        "index": 7,
+        "id": "tech-stack",
+        "classes": "section tech",
+        "h1": null,
+        "h2": "Technology and Development Tools Selected for Performance, Editing and Scale"
+      },
+      {
+        "index": 8,
+        "id": "redesign-migration",
+        "classes": "section capability-section website-redesign-migration",
+        "h1": null,
+        "h2": "Website Redesign and Zero-Downtime SEO Migration"
+      },
+      {
+        "index": 9,
+        "id": "seo-aeo-geo",
+        "classes": "section seo-aeo-geo",
+        "h1": null,
+        "h2": "SEO, AEO, GEO and LLM-Ready Website Development"
+      },
+      {
+        "index": 10,
+        "id": "website-amc",
+        "classes": "section amc",
+        "h1": null,
+        "h2": "Annual Maintenance Contracts for Long-Term Website Stability"
+      },
+      {
+        "index": 11,
+        "id": "coverage-locations",
+        "classes": "section mumbai-coverage",
+        "h1": null,
+        "h2": "Website Development Services Across Mumbai and Nearby Business Hubs"
+      },
+      {
+        "index": 12,
+        "id": "webdev-faqs",
+        "classes": "section faq-section faq",
+        "h1": null,
+        "h2": "Website Development & AMC Straight Answers"
+      },
+      {
+        "index": 13,
+        "id": "final-cta",
+        "classes": "section final-cta-section",
+        "h1": null,
+        "h2": "Ready to Build a High-Performing Website for Your Business?"
+      },
+      {
+        "index": 14,
+        "id": "website-project-form",
+        "classes": "section form-section",
+        "h1": null,
+        "h2": null
+      }
+    ],
+    "caseStudies": [
+      {
+        "index": 1,
+        "client": "HumanXT",
+        "title": "Website Revamp • HR & Workforce",
+        "hasImg": true,
+        "imgSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2026/05/Humanxt-scaled.webp",
+        "complete": true,
+        "naturalWidth": 2560,
+        "naturalHeight": 1347,
+        "hasIframe": false
+      },
+      {
+        "index": 2,
+        "client": "Weavings",
+        "title": "Website Revamp • Staffing & Manpower",
+        "hasImg": true,
+        "imgSrc": "https://s.wordpress.com/mshots/v1/https%3A%2F%2Fwww.weavings.in%2F?w=1600",
+        "complete": true,
+        "naturalWidth": 1280,
+        "naturalHeight": 960,
+        "hasIframe": false
+      },
+      {
+        "index": 3,
+        "client": "Katherine's Gallery",
+        "title": "Website Launch • Beauty & Wellness",
+        "hasImg": true,
+        "imgSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2025/12/katherinesgallery-scaled.webp",
+        "complete": true,
+        "naturalWidth": 2560,
+        "naturalHeight": 1385,
+        "hasIframe": false
+      },
+      {
+        "index": 4,
+        "client": "Better Ceasons",
+        "title": "Website Development • Clean Technology",
+        "hasImg": true,
+        "imgSrc": "https://www.dgeniussolutions.com/wp-content/uploads/2026/08/better-ceasons-scaled.webp",
+        "complete": true,
+        "naturalWidth": 1600,
+        "naturalHeight": 1000,
+        "hasIframe": false
+      }
+    ],
+    "primaryCtas": [
+      {
+        "text": "START YOUR WEBSITE PROJECT",
+        "href": "#website-project-form",
+        "tag": "a"
+      },
+      {
+        "text": "START YOUR WEBSITE PROJECT",
+        "href": "#website-project-form",
+        "tag": "a"
+      },
+      {
+        "text": "START YOUR WEBSITE PROJECT",
+        "href": "#website-project-form",
+        "tag": "a"
+      },
+      {
+        "text": "START YOUR WEBSITE PROJECT",
+        "href": "#website-project-form",
+        "tag": "a"
+      }
+    ],
+    "form6": {
+      "present": true,
+      "id": "fluentform_6",
+      "action": null,
+      "inputsCount": 12,
+      "hasSubmitBtn": true
+    },
+    "faqs": {
+      "count": 11,
+      "items": [
+        {
+          "index": 1,
+          "question": "What website development services do you offer in Mumbai?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 2,
+          "question": "Which website platforms and technologies do you work with?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 3,
+          "question": "How long does it take to design and develop a website?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 4,
+          "question": "How is website development pricing calculated?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 5,
+          "question": "Is SEO included in website development?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 6,
+          "question": "How do you prepare websites for AI Overviews and AI-assisted discovery?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 7,
+          "question": "Can you redesign an existing website without damaging its SEO?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 8,
+          "question": "Do you provide website maintenance and AMC after launch?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 9,
+          "question": "Will the website work on mobile, desktop and 4K screens?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 10,
+          "question": "How do I choose among the best website development companies in Mumbai?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        },
+        {
+          "index": 11,
+          "question": "Does D'Genius Solutions build SEO-friendly websites in Mumbai?\n      +",
+          "hasAnswer": true,
+          "isActive": false
+        }
+      ]
+    },
+    "faqClickExpanded": true,
+    "viewportChecks": [
+      {
+        "viewport": "mobile-390",
+        "width": 390,
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "hasOverflow": false,
+        "maxWidthViolationsCount": 0
+      },
+      {
+        "viewport": "tablet-768",
+        "width": 768,
+        "clientWidth": 768,
+        "scrollWidth": 768,
+        "hasOverflow": false,
+        "maxWidthViolationsCount": 0
+      },
+      {
+        "viewport": "laptop-1024",
+        "width": 1024,
+        "clientWidth": 1024,
+        "scrollWidth": 1024,
+        "hasOverflow": false,
+        "maxWidthViolationsCount": 0
+      },
+      {
+        "viewport": "desktop-1440",
+        "width": 1440,
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "hasOverflow": false,
+        "maxWidthViolationsCount": 0
+      },
+      {
+        "viewport": "desktop-1920",
+        "width": 1920,
+        "clientWidth": 1920,
+        "scrollWidth": 1920,
+        "hasOverflow": false,
+        "maxWidthViolationsCount": 0
+      },
+      {
+        "viewport": "desktop-2560",
+        "width": 2560,
+        "clientWidth": 2560,
+        "scrollWidth": 2560,
+        "hasOverflow": false,
+        "maxWidthViolationsCount": 0
+      },
+      {
+        "viewport": "desktop-3840",
+        "width": 3840,
+        "clientWidth": 3840,
+        "scrollWidth": 3840,
+        "hasOverflow": false,
+        "maxWidthViolationsCount": 0
+      }
+    ]
+  },
+  "phase3_protectedRoutes": {
+    "homepage": {
+      "aiCardsCount": 8,
+      "hasLoadMoreButton": false
+    },
+    "aiProduction": {
+      "totalCards": 56,
+      "visibleCards": 12,
+      "loadMoreVisible": true,
+      "loadMoreText": "LOAD MORE WORK (44 REMAINING)"
+    },
+    "portfolio": {
+      "itemsCount": 12,
+      "filtersCount": 0
+    }
+  },
+  "passed": true,
+  "failures": []
+}
