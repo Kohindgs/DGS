@@ -58,16 +58,46 @@ async function main() {
 
   // 1. MariaDB service is active and reachable
   try {
-    const dbStatusJson = execSync(
-      `${SSH_CMD} "cd /home/u188101251/production-app/current && node -e 'const fs=require(\\"fs\\"),mysql=require(\\"mysql2/promise\\");(async()=>{const env={};fs.readFileSync(\\".env.production\\",\\"utf8\\").split(/\\\\r?\\\\n/).forEach(l=>{const idx=l.indexOf(\\"=\\");if(idx>0)env[l.slice(0,idx).trim()]=l.slice(idx+1).trim().replace(/^[\\\\x27\\\\x22]|[\\\\x27\\\\x22]\$/g,\\"\\");});const c=await mysql.createConnection({host:env.DGS_MYSQL_HOST,port:Number(env.DGS_MYSQL_PORT||3306),user:env.DGS_MYSQL_USER,password:env.DGS_MYSQL_PASSWORD,database:env.DGS_MYSQL_DATABASE});const [s]=await c.query(\\"SHOW GLOBAL STATUS WHERE Variable_name IN (\\\\x27Uptime\\\\x27,\\\\x27Threads_connected\\\\x27,\\\\x27Threads_running\\\\x27,\\\\x27Max_used_connections\\\\x27)\\");const m={};s.forEach(r=>m[r.Variable_name]=r.Value);await c.end();console.log(JSON.stringify(m));})()'"`,
-      { encoding: "utf8" }
-    ).trim();
+    const remoteProbe = `
+      const fs = require("fs");
+      const mysql = require("/home/u188101251/production-app/current/node_modules/mysql2/promise");
+      (async () => {
+        const env = {};
+        fs.readFileSync("/home/u188101251/production-app/current/.env.production", "utf8")
+          .split(/\\r?\\n/)
+          .forEach((l) => {
+            const idx = l.indexOf("=");
+            if (idx > 0) {
+              env[l.slice(0, idx).trim()] = l.slice(idx + 1).trim().replace(/^['"]|['"]$/g, "");
+            }
+          });
+        const c = await mysql.createConnection({
+          host: env.DGS_MYSQL_HOST,
+          port: Number(env.DGS_MYSQL_PORT || 3306),
+          user: env.DGS_MYSQL_USER,
+          password: env.DGS_MYSQL_PASSWORD,
+          database: env.DGS_MYSQL_DATABASE,
+        });
+        const [s] = await c.query(
+          "SHOW GLOBAL STATUS WHERE Variable_name IN ('Uptime','Threads_connected','Threads_running','Max_used_connections')"
+        );
+        const [p] = await c.query("SELECT COUNT(*) AS userConns FROM information_schema.PROCESSLIST");
+        const m = { userConns: Number(p[0]?.userConns || 0) };
+        s.forEach((r) => (m[r.Variable_name] = r.Value));
+        await c.end();
+        console.log(JSON.stringify(m));
+      })();
+    `;
+    const dbStatusJson = execSync(`${SSH_CMD} "node -"`, {
+      input: remoteProbe,
+      encoding: "utf8",
+    }).trim();
     const metrics = JSON.parse(dbStatusJson);
     record(
       1,
       "MariaDB service is active and reachable",
       Number(metrics.Uptime) > 0,
-      `Uptime=${metrics.Uptime}s, Threads_connected=${metrics.Threads_connected}, Threads_running=${metrics.Threads_running}, Max_used=${metrics.Max_used_connections}`
+      `Uptime=${metrics.Uptime}s, UserConns=${metrics.userConns}, GlobalThreads=${metrics.Threads_connected}, Running=${metrics.Threads_running}`
     );
   } catch (err) {
     record(1, "MariaDB service is active and reachable", false, String(err.message || err));
@@ -99,13 +129,37 @@ async function main() {
 
   // 3. Connection pool does not leak connections across repeated runs
   try {
-    const beforeRes = await httpRequest(`${PROD_ORIGIN}/api/admin/system/cron-health`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${cronSecret}` },
-    });
-    const beforeThreads = Number(beforeRes.json?.dbHealth?.serverStatus?.Threads_connected || 0);
+    const countUserConns = () => {
+      const script = `
+        const fs = require("fs");
+        const mysql = require("/home/u188101251/production-app/current/node_modules/mysql2/promise");
+        (async () => {
+          const env = {};
+          fs.readFileSync("/home/u188101251/production-app/current/.env.production", "utf8")
+            .split(/\\r?\\n/)
+            .forEach((l) => {
+              const idx = l.indexOf("=");
+              if (idx > 0) env[l.slice(0, idx).trim()] = l.slice(idx + 1).trim().replace(/^['"]|['"]$/g, "");
+            });
+          const c = await mysql.createConnection({
+            host: env.DGS_MYSQL_HOST,
+            port: Number(env.DGS_MYSQL_PORT || 3306),
+            user: env.DGS_MYSQL_USER,
+            password: env.DGS_MYSQL_PASSWORD,
+            database: env.DGS_MYSQL_DATABASE,
+          });
+          // Subtract 1 for this probe connection itself
+          const [p] = await c.query("SELECT COUNT(*) AS cnt FROM information_schema.PROCESSLIST");
+          await c.end();
+          console.log(Math.max(0, Number(p[0]?.cnt || 1) - 1));
+        })();
+      `;
+      return Number(execSync(`${SSH_CMD} "node -"`, { input: script, encoding: "utf8" }).trim());
+    };
 
-    for (let i = 0; i < 4; i++) {
+    const beforeUserConns = countUserConns();
+
+    for (let i = 0; i < 6; i++) {
       await httpRequest(`${PROD_ORIGIN}/api/internal/blogs/publish-scheduled`, {
         method: "POST",
         headers: { Authorization: `Bearer ${cronSecret}`, "Content-Type": "application/json" },
@@ -116,14 +170,13 @@ async function main() {
       method: "GET",
       headers: { Authorization: `Bearer ${cronSecret}` },
     });
-    const afterThreads = Number(afterRes.json?.dbHealth?.serverStatus?.Threads_connected || 0);
-    const delta = afterThreads - beforeThreads;
+    const afterUserConns = countUserConns();
     const poolLimit = Number(afterRes.json?.dbHealth?.poolConfig?.connectionLimit || 8);
     record(
       3,
       "Connection pool does not leak connections across repeated runs",
-      afterRes.status === 200 && delta <= poolLimit,
-      `Threads_connected before=${beforeThreads}, after=${afterThreads} (delta=${delta}, poolLimit=${poolLimit})`
+      afterRes.status === 200 && afterUserConns <= poolLimit,
+      `App user connections before=${beforeUserConns}, after 6 sequential runs=${afterUserConns} (poolLimit=${poolLimit})`
     );
   } catch (err) {
     record(3, "Connection pool does not leak connections across repeated runs", false, String(err.message || err));

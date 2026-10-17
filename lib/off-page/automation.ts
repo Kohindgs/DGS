@@ -65,24 +65,40 @@ export async function runDailyOffPageAutomation(runType: string = "FULL_AUTOMATI
   };
 
   try {
+    const budgetDeadlineMs = startedAt.getTime() + 40_000; // 40s hard ceiling to stay well below LiteSpeed 120s proxy timeout
+
     // 1. Run Opportunity Discovery
-    if (discoveryEnabled) {
+    if (discoveryEnabled && Date.now() < budgetDeadlineMs - 10_000) {
       const disc = await runOpportunityDiscoverySuite();
       summary.discovery = disc;
       summary.newOpportunitiesAdded = disc.new_records_added;
 
-      // 1b. V8.12.6 discovery lanes (only lanes with a usable live provider)
+      // 1b. V8.12.6 discovery lanes (bounded to 1 ready rotating lane per run within time budget)
       try {
         const { getLaneOverview, runDiscoveryLane } = await import("./lanes/runner");
         const lanes = await getLaneOverview();
         summary.lanes = [];
+        const readyLanes = lanes.filter((l) => l.ready);
+        const dayIndex = new Date().getUTCDate() % Math.max(1, readyLanes.length);
+        const selectedLane = readyLanes[dayIndex];
+
         for (const lane of lanes) {
           if (!lane.ready) {
             summary.lanes.push({ lane: lane.id, status: "SKIPPED", reason: lane.readiness });
             continue;
           }
-          const r = await runDiscoveryLane(lane.id, { maxQueries: 2, perQuery: 10, maxValidate: 20 });
-          summary.lanes.push({ lane: lane.id, status: r.status, qualified: r.qualified_inserted, discovered: r.discovered_inserted, rejected: r.rejected });
+          if (Date.now() >= budgetDeadlineMs - 12_000 || (selectedLane && lane.id !== selectedLane.id)) {
+            summary.lanes.push({ lane: lane.id, status: "DEFERRED_ROTATION", reason: "Rotating daily lane budget" });
+            continue;
+          }
+          const r = await runDiscoveryLane(lane.id, { maxQueries: 1, perQuery: 6, maxValidate: 6 });
+          summary.lanes.push({
+            lane: lane.id,
+            status: r.status,
+            qualified: r.qualified_inserted,
+            discovered: r.discovered_inserted,
+            rejected: r.rejected,
+          });
           summary.newOpportunitiesAdded += r.qualified_inserted + r.discovered_inserted;
         }
       } catch (laneErr: any) {
@@ -91,33 +107,36 @@ export async function runDailyOffPageAutomation(runType: string = "FULL_AUTOMATI
     }
 
     // 2. Revalidate active opportunities via rotating queue
-    if (revalidationEnabled) {
-      const reval = await revalidateOpportunityUrls(25);
+    if (revalidationEnabled && Date.now() < budgetDeadlineMs - 8_000) {
+      const reval = await revalidateOpportunityUrls(6);
       summary.revalidatedOpportunities = reval;
     }
 
     // 3. Check active backlinks via rotating queue (where next_check_at IS NULL or <= NOW())
-    if (backlinksEnabled) {
+    if (backlinksEnabled && Date.now() < budgetDeadlineMs - 4_000) {
       const { rows: links } = await cmsQuery<OffPageBacklink>(
         `SELECT id FROM off_page_backlinks 
          WHERE status NOT IN ('REMOVED', 'SPAM', 'IGNORED')
            AND (next_check_at IS NULL OR next_check_at <= NOW())
          ORDER BY CASE WHEN next_check_at IS NULL THEN 0 ELSE 1 END, next_check_at ASC 
-         LIMIT 15`
+         LIMIT 5`
       );
 
       let liveCount = 0;
       let lostCount = 0;
       let brokenCount = 0;
+      let checkedCount = 0;
 
       for (const l of links) {
+        if (Date.now() >= budgetDeadlineMs) break;
         const res = await checkLiveBacklink(l.id);
+        checkedCount++;
         if (res.status === "LIVE" || res.status === "VERIFIED") liveCount++;
         else if (res.status === "LOST") lostCount++;
         else brokenCount++;
       }
       summary.backlinksChecked = {
-        checked: links.length,
+        checked: checkedCount,
         live: liveCount,
         lost: lostCount,
         broken: brokenCount,
