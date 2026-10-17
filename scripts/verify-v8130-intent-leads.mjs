@@ -3,38 +3,31 @@ import { execSync } from "node:child_process";
 const remoteBash = `
 set -e
 ENV_FILE="/home/u188101251/production-app/shared/.env.production"
+DB_USER=$(grep -E '^DGS_MYSQL_USER=' "$ENV_FILE" | cut -d= -f2- | tr -d "'\\"\\r")
+DB_PASS=$(grep -E '^DGS_MYSQL_PASSWORD=' "$ENV_FILE" | cut -d= -f2- | tr -d "'\\"\\r")
+DB_NAME=$(grep -E '^DGS_MYSQL_DATABASE=' "$ENV_FILE" | cut -d= -f2- | tr -d "'\\"\\r")
 CRON_SECRET=$(grep -E '^DGS_CRON_SECRET=' "$ENV_FILE" | cut -d= -f2- | tr -d "'\\"\\r")
 
-echo "1. Testing unauthenticated /api/internal/intent-leads/check (expect 401):"
-curl -sS -w "\\nHTTP_CODE=%{http_code}\\n" -X POST "https://www.dgeniussolutions.com/api/internal/intent-leads/check"
+CNF="/home/u188101251/production-app/tmp/verify_v8130_$$.cnf"
+trap 'rm -f "$CNF"' EXIT
+cat > "$CNF" <<EOF
+[client]
+host=127.0.0.1
+port=3306
+user=$DB_USER
+password="$DB_PASS"
+EOF
+chmod 600 "$CNF"
 
-echo ""
-echo "2. Testing authenticated /api/internal/intent-leads/check (expect 200):"
+echo "1. Clearing previous noisy rows before clean B2B discovery run..."
+mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "TRUNCATE TABLE intent_lead_signals;"
+
+echo "2. Running authenticated B2B Buyer-Intent Discovery (/api/internal/intent-leads/check)..."
 curl -sS -w "\\nHTTP_CODE=%{http_code} TIME=%{time_total}s\\n" -X POST "https://www.dgeniussolutions.com/api/internal/intent-leads/check" -H "Authorization: Bearer $CRON_SECRET" -H "Content-Type: application/json"
 
 echo ""
-echo "3. Testing Personal LinkedIn Feed Bookmarklet Ingest endpoint (/api/admin/intent-leads/ingest):"
-INGEST_TOKEN=$(echo -n "dgs-linkedin-companion:$CRON_SECRET" | sha256sum | cut -c1-28)
-FULL_TOKEN="dgs_li_$INGEST_TOKEN"
-curl -sS -w "\\nHTTP_CODE=%{http_code}\\n" -X POST "https://www.dgeniussolutions.com/api/admin/intent-leads/ingest" \\
-  -H "Content-Type: application/json" \\
-  -H "X-DGS-Ingest-Token: $FULL_TOKEN" \\
-  -d '{
-    "posts": [
-      {
-        "postUrl": "https://www.linkedin.com/feed/update/urn:li:activity:73189401294810291",
-        "authorName": "Aarav Mehta",
-        "authorRole": "Co-Founder & CEO at FinScale Dubai & Mumbai",
-        "postText": "Looking for recommendations for a strong SEO, AEO (Answer Engine Optimization), and Next.js Website Redesign agency in Mumbai or Dubai. We are scaling our B2B acquisition this quarter—please drop your portfolio or DM me!"
-      },
-      {
-        "postUrl": "https://www.linkedin.com/feed/update/urn:li:activity:73189401294899999",
-        "authorName": "Spam Job Seeker",
-        "authorRole": "Student",
-        "postText": "I am #opentowork and looking for a full-time internship or job role in SEO. Please review my resume and hire me."
-      }
-    ]
-  }'
+echo "3. Inspecting qualified B2B buyer-intent leads in production DB:"
+mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "SELECT id, source_platform, service_category, intent_score, urgency_level, LEFT(post_title, 90) AS title, LEFT(post_url, 80) AS url FROM intent_lead_signals ORDER BY intent_score DESC;"
 `;
 
 const out = execSync(

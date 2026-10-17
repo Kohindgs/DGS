@@ -427,23 +427,50 @@ function isValidSocialLeadUrl(url: string): boolean {
     const path = parsed.pathname.toLowerCase();
 
     if (host.includes("dgeniussolutions")) return false;
-    if (
-      host === "google.com" ||
-      host === "bing.com" ||
-      host === "duckduckgo.com" ||
-      host === "yahoo.com" ||
-      host === "wikipedia.org"
-    ) {
-      return false;
-    }
 
-    // Filter out LinkedIn job boards / directory pages that aren't posts or articles
+    // Strict domain whitelist: only social/community platforms where real buyer posts live
+    const isAllowedPlatform =
+      host === "linkedin.com" ||
+      host.endsWith(".linkedin.com") ||
+      host === "reddit.com" ||
+      host.endsWith(".reddit.com") ||
+      host === "x.com" ||
+      host === "twitter.com" ||
+      host === "indiehackers.com" ||
+      host === "quora.com" ||
+      host === "news.ycombinator.com";
+
+    if (!isAllowedPlatform) return false;
+
     if (host.includes("linkedin.com")) {
-      if (path.startsWith("/jobs") || path.startsWith("/company/") || path.startsWith("/school/")) {
+      if (
+        path.startsWith("/jobs") ||
+        path.startsWith("/company/") ||
+        path.startsWith("/school/") ||
+        path.startsWith("/learning")
+      ) {
         return false;
       }
-      return true;
+      return (
+        path.startsWith("/posts") ||
+        path.startsWith("/feed/update") ||
+        path.startsWith("/pulse") ||
+        path.startsWith("/in/")
+      );
     }
+
+    if (host.includes("reddit.com")) {
+      // Only allow business/marketing/founder subreddits, block consumer software/gaming subreddits
+      if (
+        /\/r\/(capcut|piracy|cracked|movies|television|gaming|memes|anime|music|videos| DavinciResolve)/i.test(
+          path
+        )
+      ) {
+        return false;
+      }
+      return path.includes("/comments/");
+    }
+
     return true;
   } catch {
     return false;
@@ -538,7 +565,7 @@ async function searchBingSocial(
     if (seen.has(href)) return;
     seen.add(href);
 
-    const snippet = $(el).find(".b_caption p").text().trim().replace(/\s+/g, " ");
+    const snippet = $(el).find(".result__snippet, .b_caption p").text().trim().replace(/\s+/g, " ");
     if (!snippet && !title) return;
 
     results.push({
@@ -555,26 +582,45 @@ async function searchBingSocial(
 async function searchRedditJsonApi(
   serviceCategory: IntentServiceCategory,
   region: IntentRegion,
-  limit = 8
+  limit = 10
 ): Promise<RawSocialResult[]> {
-  const queryMap: Record<IntentServiceCategory, string> = {
-    SEO: `("looking for" OR "recommend") AND ("SEO agency" OR "SEO consultant" OR "SEO help")`,
-    WEB_DEV: `("looking for" OR "recommend" OR "need") AND ("web development agency" OR "website redesign" OR "web designer")`,
-    AI_VIDEO: `("looking for" OR "recommend") AND ("video production agency" OR "AI video" OR "product video")`,
-    AEO_GEO: `("Answer Engine Optimization" OR "AEO" OR "GEO" OR "AI search SEO" OR "SEO agency Dubai")`,
-    PAID_MEDIA: `("looking for" OR "recommend") AND ("Google Ads agency" OR "performance marketing agency" OR "Meta ads agency")`,
-    BRANDING: `("looking for" OR "recommend") AND ("branding agency" OR "creative agency" OR "social media agency")`,
+  // Query specifically inside B2B / entrepreneur / marketing / webdev subreddits
+  const subredditMap: Record<IntentServiceCategory, { sub: string; q: string }> = {
+    SEO: {
+      sub: "smallbusiness+entrepreneur+startups+SEO+bigseo+digital_marketing+india+dubai",
+      q: `"SEO agency" OR "recommend SEO" OR "hire SEO" OR "looking for SEO"`,
+    },
+    WEB_DEV: {
+      sub: "smallbusiness+entrepreneur+startups+ecommerce+web_design+india+dubai",
+      q: `"website redesign" OR "web development agency" OR "web design agency" OR "looking for web developer"`,
+    },
+    AI_VIDEO: {
+      sub: "smallbusiness+entrepreneur+startups+marketing+advertising+ecommerce",
+      q: `"video production agency" OR "product video" OR "AI video agency" OR "explainer video"`,
+    },
+    AEO_GEO: {
+      sub: "SEO+bigseo+digital_marketing+startups+entrepreneur+dubai",
+      q: `"Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "SEO agency Dubai"`,
+    },
+    PAID_MEDIA: {
+      sub: "smallbusiness+entrepreneur+PPC+marketing+ecommerce+startups",
+      q: `"Google Ads agency" OR "performance marketing agency" OR "Meta ads agency" OR "hire PPC"`,
+    },
+    BRANDING: {
+      sub: "smallbusiness+entrepreneur+startups+marketing+branding",
+      q: `"branding agency" OR "social media agency" OR "creative agency"`,
+    },
   };
 
-  const q = queryMap[serviceCategory] || queryMap.SEO;
-  const url = `https://www.reddit.com/search.json?q=${encodeURIComponent(q)}&sort=new&t=month&limit=${limit}`;
+  const spec = subredditMap[serviceCategory] || subredditMap.SEO;
+  const url = `https://www.reddit.com/r/${spec.sub}/search.json?q=${encodeURIComponent(spec.q)}&restrict_sr=on&sort=new&t=month&limit=${limit}`;
 
   try {
     const res = await fetchWithTimeout(url, {
       timeoutMs: 8000,
       maxRetries: 0,
       headers: {
-        "User-Agent": "DGS-BuyerIntentRadar/8.13 (https://www.dgeniussolutions.com)",
+        "User-Agent": "Mozilla/5.0 (compatible; DGS-BuyerIntentRadar/8.13; +https://www.dgeniussolutions.com)",
         Accept: "application/json",
       },
     });
@@ -589,12 +635,13 @@ async function searchRedditJsonApi(
       const title = String(post.title || "").trim();
       const selftext = String(post.selftext || "").trim();
       const author = String(post.author || "").trim();
-      const subreddit = String(post.subreddit_name_prefixed || "r/business").trim();
+      const subreddit = String(post.subreddit_name_prefixed || "r/smallbusiness").trim();
       const fullUrl = `https://www.reddit.com${post.permalink}`;
+      if (!isValidSocialLeadUrl(fullUrl)) continue;
       results.push({
         title: `${title} (${subreddit} by u/${author})`,
         url: fullUrl,
-        snippet: selftext ? selftext.slice(0, 600) : title,
+        snippet: selftext ? selftext.slice(0, 700) : title,
         platform: "REDDIT",
       });
     }
@@ -622,7 +669,7 @@ export type EvaluatedLeadCandidate = {
 
 /**
  * Fast deterministic pre-filter + scoring before/alongside Gemini 2.5 qualification.
- * Protects against false positives (job seekers, agency self-promotions).
+ * Protects against false positives (job seekers, agency self-promotions, non-B2B consumer posts).
  */
 export function evaluateCandidateHeuristically(input: {
   title: string;
@@ -658,17 +705,23 @@ export function evaluateCandidateHeuristically(input: {
       ? "Requested DM / Portfolio in Comments"
       : null;
 
-  // Detect service category
+  // Require at least one explicit B2B digital service keyword in the post
+  const hasExplicitB2bServiceMention =
+    /\b(seo|search engine optimization|aeo|answer engine|generative engine|web development|web design|website redesign|website development|next\.?js|wordpress|shopify|video production|ai video|brand film|ad film|explainer video|performance marketing|google ads|meta ads|digital marketing agency|marketing agency|branding agency|social media agency|creative agency)\b/i.test(
+      lower
+    );
+
+  // Detect service category (strictly word-boundary matched, never matching 'geo' inside 'george')
   let serviceCategory: IntentServiceCategory = input.defaultService || "SEO";
-  if (/\b(aeo|answer engine|generative engine|geo|ai overview|llm seo|chatgpt ranking)\b/i.test(lower)) {
+  if (/\b(aeo|answer engine|generative engine|ai overview|llm seo|chatgpt ranking|seo agency dubai|digital marketing dubai)\b/i.test(lower)) {
     serviceCategory = "AEO_GEO";
-  } else if (/\b(ai video|video production|brand film|ad film|explainer video|commercial video|motion graphics)\b/i.test(lower)) {
+  } else if (/\b(ai video|video production|brand film|ad film|explainer video|commercial video|product video)\b/i.test(lower)) {
     serviceCategory = "AI_VIDEO";
-  } else if (/\b(web development|website redesign|web design|next\.?js|wordpress|shopify|website amc|landing page)\b/i.test(lower)) {
+  } else if (/\b(web development|website redesign|web design|next\.?js|wordpress|shopify|website amc|landing page|build a website)\b/i.test(lower)) {
     serviceCategory = "WEB_DEV";
   } else if (/\b(google ads|meta ads|performance marketing|paid media|ppc|lead generation agency|roas)\b/i.test(lower)) {
     serviceCategory = "PAID_MEDIA";
-  } else if (/\b(branding|brand identity|social media agency|social media management|creative agency)\b/i.test(lower)) {
+  } else if (/\b(branding agency|brand identity|social media agency|social media management|creative agency)\b/i.test(lower)) {
     serviceCategory = "BRANDING";
   } else if (/\b(seo|search engine optimization|backlink|organic traffic|search ranking)\b/i.test(lower)) {
     serviceCategory = "SEO";
@@ -695,14 +748,15 @@ export function evaluateCandidateHeuristically(input: {
       lower
     );
 
-  // Check for Competing Agency Self-Promotion (Negative)
+  // Check for Competing Agency Self-Promotion or Consumer Entertainment (Negative)
   const isSellerPromo =
-    /\b(we help brands|our agency|contact us today for|book a free consultation with us|dm me for seo|we offer seo|our seo services|why every business needs)\b/i.test(
+    (/\b(we help brands|our agency|contact us today for|book a free consultation with us|dm me for seo|we offer seo|our seo services)\b/i.test(
       lower
     ) &&
-    !/\b(looking for an agency|recommend an agency|anyone know a good|need a reliable)\b/i.test(
-      lower
-    );
+      !/\b(looking for an agency|recommend an agency|anyone know a good|need a reliable)\b/i.test(
+        lower
+      )) ||
+    /\b(capcut|cracked|watch tv show|season 1|prime video|netflix|torrent)\b/i.test(lower);
 
   // Check for Strong Buyer Signals (Positive)
   const strongBuyerPhrases = [
@@ -737,7 +791,6 @@ export function evaluateCandidateHeuristically(input: {
     "how to find a good",
     "need seo",
     "need website",
-    "need video",
   ];
   const matchedBuyerPhrases = strongBuyerPhrases.filter((p) => lower.includes(p));
 
@@ -745,10 +798,13 @@ export function evaluateCandidateHeuristically(input: {
     combined.includes("?") ||
     /\b(how do i|should i hire|where to find|advice on hiring|seeking|recommend|suggestion|looking|help)\b/i.test(lower);
 
-  let classification: IntentClassification = "HIGH_INTENT_DISCUSSION";
-  let score = 64;
+  let classification: IntentClassification = "LOW_INTENT_NOISE";
+  let score = 30;
 
-  if (isJobSeeker) {
+  if (!hasExplicitB2bServiceMention) {
+    classification = "LOW_INTENT_NOISE";
+    score = 15;
+  } else if (isJobSeeker) {
     classification = "JOB_SEEKER";
     score = 18;
   } else if (isSellerPromo) {
@@ -763,13 +819,13 @@ export function evaluateCandidateHeuristically(input: {
     }
   } else if (
     isQuestionOrRequest &&
-    /\b(agency|consultant|freelancer|partner|vendor|quote|cost|budget|seo|website|redesign|video|aeo|geo|marketing)\b/i.test(lower)
+    /\b(agency|consultant|freelancer|partner|vendor|quote|cost|budget|redesign|hire)\b/i.test(lower)
   ) {
     classification = "HIGH_INTENT_DISCUSSION";
     score = 72;
-  } else if (/\b(agency|consultant|services|seo|website|video|aeo|geo)\b/i.test(lower)) {
+  } else if (/\b(agency|consultant|services|hire|vendor|client)\b/i.test(lower)) {
     classification = "HIGH_INTENT_DISCUSSION";
-    score = 62;
+    score = 64;
   } else {
     classification = "LOW_INTENT_NOISE";
     score = 35;
