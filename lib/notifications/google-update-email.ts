@@ -66,6 +66,9 @@ export async function sendGoogleUpdateAlertEmail(
     host: process.env.DGS_SMTP_HOST,
     port: Number(process.env.DGS_SMTP_PORT || 587),
     secure: process.env.DGS_SMTP_SECURE === "true",
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 10000,
     auth: {
       user: process.env.DGS_SMTP_USER,
       pass: process.env.DGS_SMTP_PASSWORD,
@@ -294,6 +297,9 @@ export async function sendTestGoogleUpdateEmail(actorEmail?: string): Promise<{
     host: process.env.DGS_SMTP_HOST,
     port: Number(process.env.DGS_SMTP_PORT || 587),
     secure: process.env.DGS_SMTP_SECURE === "true",
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 10000,
     auth: {
       user: process.env.DGS_SMTP_USER,
       pass: process.env.DGS_SMTP_PASSWORD,

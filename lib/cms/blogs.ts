@@ -960,14 +960,47 @@ export async function scheduleCmsBlog(id: string, scheduledFor: string) {
   return getCmsBlogById(id);
 }
 
-// 11. Worker to Check and Automatically Publish Due Scheduled Blogs
-export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
-  const dueRows = await cmsQuery<{ id: string; title: string }>(
-    `SELECT id, title FROM blog_posts WHERE status = 'scheduled' AND scheduled_for IS NOT NULL AND scheduled_for <= NOW()`
-  );
+// 11. Worker to Check and Automatically Publish Due Scheduled Blogs (Idempotent & Atomic)
+export type ScheduledBlogPublishResult = {
+  checked: number;
+  due: number;
+  published: number;
+  failed: number;
+  skippedAlreadyPublished: number;
+  publishedIds: string[];
+  publishedSlugs: string[];
+  errors: string[];
+};
+
+export async function checkAndPublishScheduledBlogsDetailed(): Promise<ScheduledBlogPublishResult> {
+  const [totalScheduledRes, dueRows] = await Promise.all([
+    cmsQuery<{ cnt: number }>(
+      `SELECT COUNT(*) AS cnt FROM blog_posts WHERE status = 'scheduled' AND deleted_at IS NULL`,
+      [],
+      { endpoint: "/api/internal/blogs/publish-scheduled", operation: "COUNT_SCHEDULED_BLOGS" }
+    ),
+    cmsQuery<{ id: string; slug: string; title: string; scheduled_for: string }>(
+      `SELECT id, slug, title, scheduled_for
+       FROM blog_posts
+       WHERE status = 'scheduled'
+         AND deleted_at IS NULL
+         AND scheduled_for IS NOT NULL
+         AND scheduled_for <= UTC_TIMESTAMP()
+       ORDER BY scheduled_for ASC`,
+      [],
+      { endpoint: "/api/internal/blogs/publish-scheduled", operation: "SELECT_DUE_SCHEDULED_BLOGS" }
+    ),
+  ]);
+
+  const totalScheduled = Number(totalScheduledRes.rows[0]?.cnt || 0);
+  const dueCount = dueRows.rows.length;
+  const checkedCount = Math.max(totalScheduled, dueCount);
 
   const publishedIds: string[] = [];
+  const publishedSlugs: string[] = [];
   const errors: string[] = [];
+  let skippedAlreadyPublished = 0;
+
   const { logAuditEvent } = await import("@/lib/cms/auth-db");
 
   for (const row of dueRows.rows) {
@@ -975,26 +1008,61 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
       const qa = await validateCmsBlogForPublish(row.id);
       if (!qa.ok) {
         console.warn(`Scheduled blog QA failed for "${row.title}" (${row.id}):`, qa.errors);
-        await cmsExecute(
-          `UPDATE blog_posts SET status = 'review', needs_review = 1, updated_at = NOW() WHERE id = ?`,
-          [row.id]
+        const revertRes = await cmsExecute(
+          `UPDATE blog_posts
+           SET status = 'review', needs_review = 1, updated_at = UTC_TIMESTAMP()
+           WHERE id = ? AND status = 'scheduled'`,
+          [row.id],
+          { endpoint: "/api/internal/blogs/publish-scheduled", operation: "REVERT_QA_FAILED_BLOG" }
         );
-        await logAuditEvent({
-          actor_email: "scheduler@dgeniussolutions.com",
-          role: "system",
-          action: "BLOG_SCHEDULE_QA_FAILED",
-          resource: "blog_post",
-          resource_id: row.id,
-          summary: `Scheduled publish aborted for "${row.title}". QA failed: ${qa.errors.join("; ")}`,
-          after_state: { qaErrors: qa.errors, status: "review", needs_review: true },
-          status: "failure",
-        });
+        if (Number(revertRes?.affectedRows || 0) > 0) {
+          await logAuditEvent({
+            actor_email: "scheduler@dgeniussolutions.com",
+            role: "system",
+            action: "BLOG_SCHEDULE_QA_FAILED",
+            resource: "blog_post",
+            resource_id: row.id,
+            summary: `Scheduled publish aborted for "${row.title}". QA failed: ${qa.errors.join("; ")}`,
+            after_state: { qaErrors: qa.errors, status: "review", needs_review: true },
+            status: "failure",
+          });
+        }
         errors.push(`QA failed for "${row.title}": ${qa.errors.join("; ")}`);
         continue;
       }
 
-      await publishCmsBlog(row.id);
+      // Atomic idempotent status transition: ONLY transitions if status is still 'scheduled'
+      // and scheduled_for <= UTC_TIMESTAMP(). Prevents double publishing on concurrent runs.
+      const updateResult = await cmsExecute(
+        `UPDATE blog_posts SET
+          status = 'published',
+          needs_review = 0,
+          scheduled_for = NULL,
+          deleted_at = NULL,
+          deleted_by = NULL,
+          redirect_url = NULL,
+          published_at = COALESCE(published_at, UTC_TIMESTAMP()),
+          updated_at = UTC_TIMESTAMP()
+         WHERE id = ? AND status = 'scheduled' AND scheduled_for IS NOT NULL AND scheduled_for <= UTC_TIMESTAMP()`,
+        [row.id],
+        { endpoint: "/api/internal/blogs/publish-scheduled", operation: "ATOMIC_PUBLISH_SCHEDULED_BLOG" }
+      );
+
+      if (Number(updateResult?.affectedRows || 0) === 0) {
+        skippedAlreadyPublished += 1;
+        continue;
+      }
+
+      await cmsExecute(
+        `UPDATE seo_metadata
+         SET robots_index = 1, updated_at = UTC_TIMESTAMP()
+         WHERE entity_type = 'blog_post' AND entity_id = ?`,
+        [row.id],
+        { endpoint: "/api/internal/blogs/publish-scheduled", operation: "ENABLE_BLOG_SEO_INDEXING" }
+      );
+
       publishedIds.push(row.id);
+      if (row.slug) publishedSlugs.push(row.slug);
       console.log(`Auto-published scheduled blog: "${row.title}" (${row.id})`);
 
       await logAuditEvent({
@@ -1003,8 +1071,8 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
         action: "BLOG_PUBLISHED",
         resource: "blog_post",
         resource_id: row.id,
-        summary: `Auto-published scheduled blog "${row.title}"`,
-        after_state: { status: "published" },
+        summary: `Auto-published scheduled blog "${row.title}" (/blogs/${row.slug}/)`,
+        after_state: { status: "published", slug: row.slug },
         status: "success",
       });
     } catch (err: any) {
@@ -1019,18 +1087,34 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
     role: "system",
     action: "BLOG_SCHEDULE_HEARTBEAT",
     resource: "blog_scheduler",
-    summary: `Scheduler run complete: checked ${dueRows.rows.length} due posts, published ${publishedIds.length}, errors ${errors.length}`,
+    summary: `Scheduler run complete: checked ${checkedCount} scheduled posts (${dueCount} due), published ${publishedIds.length}, errors ${errors.length}`,
     after_state: {
       timestamp: new Date().toISOString(),
-      checkedCount: dueRows.rows.length,
+      checkedCount,
+      dueCount,
       publishedCount: publishedIds.length,
+      skippedAlreadyPublished,
       errorsCount: errors.length,
       errors: errors.slice(0, 3),
     },
     status: errors.length === 0 ? "success" : "failure",
   }).catch((err) => console.warn("[scheduler] Heartbeat logging notice:", err?.message));
 
-  return publishedIds;
+  return {
+    checked: checkedCount,
+    due: dueCount,
+    published: publishedIds.length,
+    failed: errors.length,
+    skippedAlreadyPublished,
+    publishedIds,
+    publishedSlugs,
+    errors,
+  };
+}
+
+export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
+  const result = await checkAndPublishScheduledBlogsDetailed();
+  return result.publishedIds;
 }
 
 // 12. List Published Blogs for Public Archive & Sitemaps

@@ -438,7 +438,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     }
   }
 
-  // 6. GOOGLE UPDATE MONITOR
+  // 6. GOOGLE UPDATE MONITOR (with 7-hour stale threshold & run status check)
   if (!dbAvailable) {
     subsystems.google_update_monitor = {
       id: "google_update_monitor",
@@ -449,24 +449,58 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     };
   } else {
     try {
-      const { rows: updateRows } = await cmsQuery<{
-        total: number;
-        latest_title: string | null;
-        last_checked: string | null;
-      }>(`SELECT COUNT(*) as total, MAX(title) as latest_title, MAX(updated_at) as last_checked FROM google_search_updates`);
+      const [{ rows: updateRows }, { rows: latestRunRows }, { rows: latestSuccessRows }] = await Promise.all([
+        cmsQuery<{
+          total: number;
+          latest_title: string | null;
+          last_checked: string | null;
+        }>(`SELECT COUNT(*) as total, MAX(title) as latest_title, MAX(updated_at) as last_checked FROM google_search_updates`),
+        cmsQuery<{
+          id: string;
+          status: string;
+          started_at: string;
+          completed_at: string | null;
+          last_error: string | null;
+        }>(`SELECT id, status, started_at, completed_at, last_error FROM google_update_monitor_runs ORDER BY started_at DESC LIMIT 1`).catch(() => ({ rows: [] })),
+        cmsQuery<{
+          completed_at: string;
+        }>(`SELECT completed_at FROM google_update_monitor_runs WHERE status IN ('SUCCESS', 'PARTIAL') AND completed_at IS NOT NULL ORDER BY completed_at DESC LIMIT 1`).catch(() => ({ rows: [] })),
+      ]);
 
       const updateCount = Number(updateRows?.[0]?.total || 0);
       const latestUpdateTitle = updateRows?.[0]?.latest_title || null;
-      const lastChecked = updateRows?.[0]?.last_checked || null;
+      const latestRun = latestRunRows?.[0] || null;
+      const latestSuccessAt = latestSuccessRows?.[0]?.completed_at || null;
+      const minutesSinceSuccess = latestSuccessAt
+        ? (Date.now() - new Date(String(latestSuccessAt).replace(" ", "T") + (String(latestSuccessAt).endsWith("Z") ? "" : "Z")).getTime()) / (1000 * 60)
+        : null;
 
-      if (updateCount > 0) {
+      if (latestRun && latestRun.status === "FAILED") {
+        subsystems.google_update_monitor = {
+          id: "google_update_monitor",
+          name: "Google Search Update Monitor",
+          status: "DEGRADED",
+          details: `Latest monitor run failed: ${latestRun.last_error || "Source error"} (${updateCount} updates cataloged)`,
+          lastCheckedAt: now,
+          metrics: { updateCount, latestUpdateTitle, lastSuccessAt: latestSuccessAt, minutesSinceSuccess },
+        };
+      } else if (minutesSinceSuccess != null && minutesSinceSuccess > 420) {
+        subsystems.google_update_monitor = {
+          id: "google_update_monitor",
+          name: "Google Search Update Monitor",
+          status: "STALE",
+          details: `Google update monitor has not succeeded for ${(minutesSinceSuccess / 60).toFixed(1)}h (threshold: 7h)`,
+          lastCheckedAt: now,
+          metrics: { updateCount, latestUpdateTitle, lastSuccessAt: latestSuccessAt, minutesSinceSuccess: Math.round(minutesSinceSuccess) },
+        };
+      } else if (updateCount > 0) {
         subsystems.google_update_monitor = {
           id: "google_update_monitor",
           name: "Google Search Update Monitor",
           status: "HEALTHY",
-          details: `${updateCount} updates cataloged · Latest: ${latestUpdateTitle || "Active"}`,
+          details: `${updateCount} updates cataloged · Latest: ${latestUpdateTitle || "Active"} · Last check: ${minutesSinceSuccess != null ? `${Math.round(minutesSinceSuccess)}m ago` : "recent"}`,
           lastCheckedAt: now,
-          metrics: { updateCount, latestUpdateTitle, lastChecked },
+          metrics: { updateCount, latestUpdateTitle, lastSuccessAt: latestSuccessAt, minutesSinceSuccess: minutesSinceSuccess != null ? Math.round(minutesSinceSuccess) : 0 },
         };
       } else {
         subsystems.google_update_monitor = {
@@ -491,7 +525,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     }
   }
 
-  // 7. BLOG SCHEDULER (with mandatory heartbeat evidence verification)
+  // 7. BLOG SCHEDULER (with mandatory 75-minute heartbeat evidence verification)
   if (!dbAvailable) {
     subsystems.blog_scheduler = {
       id: "blog_scheduler",
@@ -502,13 +536,18 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
     };
   } else {
     try {
-      const [{ rows: schedRows }, { rows: overdueRows }, { rows: heartbeatRows }] = await Promise.all([
+      const [{ rows: schedRows }, { rows: overdueRows }, { rows: heartbeatRows }, { rows: cronHistRows }] = await Promise.all([
         cmsQuery<{ total: number }>(`SELECT COUNT(*) as total FROM blog_posts WHERE status = 'scheduled'`),
-        cmsQuery<{ overdue: number }>(`SELECT COUNT(*) as overdue FROM blog_posts WHERE status = 'scheduled' AND scheduled_for IS NOT NULL AND scheduled_for < NOW()`),
+        cmsQuery<{ overdue: number }>(`SELECT COUNT(*) as overdue FROM blog_posts WHERE status = 'scheduled' AND scheduled_for IS NOT NULL AND scheduled_for <= UTC_TIMESTAMP()`),
         cmsQuery<{ created_at: string; status: string; summary: string }>(
           `SELECT created_at, status, summary FROM cms_audit_log
            WHERE action LIKE 'BLOG_SCHEDULE%' OR actor_email = 'scheduler@dgeniussolutions.com'
            ORDER BY created_at DESC LIMIT 5`
+        ).catch(() => ({ rows: [] })),
+        cmsQuery<{ completed_at: string; status: string; error_summary: string | null }>(
+          `SELECT completed_at, status, error_summary FROM cron_run_history
+           WHERE job_name = 'scheduled-blog-publisher'
+           ORDER BY started_at DESC LIMIT 5`
         ).catch(() => ({ rows: [] })),
       ]);
 
@@ -516,15 +555,29 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
       const overduePosts = Number(overdueRows?.[0]?.overdue || 0);
       const overdueBlogCount = overduePosts;
 
+      const latestCronHist = cronHistRows?.[0] || null;
+      const latestCronSuccess = cronHistRows?.find((r) => r.status === "SUCCESS") || null;
+
       const latestHeartbeat = heartbeatRows?.[0] || null;
       const latestSuccessful = heartbeatRows?.find((r) => r.status === "success") || null;
 
-      const lastSchedulerRun = latestHeartbeat?.created_at || null;
-      const lastSuccessfulSchedulerRun = latestSuccessful?.created_at || null;
+      const lastSchedulerRun = latestCronHist?.completed_at || latestHeartbeat?.created_at || null;
+      const lastSuccessfulSchedulerRun = latestCronSuccess?.completed_at || latestSuccessful?.created_at || null;
 
-      const schedulerAgeHours = lastSchedulerRun
-        ? (Date.now() - new Date(lastSchedulerRun).getTime()) / (1000 * 60 * 60)
-        : null;
+      const parseTs = (val: string | null) => {
+        if (!val) return null;
+        const normalized = String(val).includes("T") ? String(val) : String(val).replace(" ", "T") + "Z";
+        const ms = new Date(normalized).getTime();
+        return Number.isNaN(ms) ? new Date(val).getTime() : ms;
+      };
+
+      const successMs = parseTs(lastSuccessfulSchedulerRun || lastSchedulerRun);
+      const schedulerAgeMinutes = successMs != null ? Math.max(0, (Date.now() - successMs) / (1000 * 60)) : null;
+      const schedulerAgeHours = schedulerAgeMinutes != null ? schedulerAgeMinutes / 60 : null;
+
+      const latestFailed =
+        (latestCronHist && latestCronHist.status === "FAILED") ||
+        (!latestCronHist && latestHeartbeat && latestHeartbeat.status === "failure");
 
       if (!lastSchedulerRun) {
         subsystems.blog_scheduler = {
@@ -533,7 +586,7 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
           status: "UNKNOWN",
           details: "No scheduler execution evidence recorded in telemetry",
           lastCheckedAt: now,
-          metrics: { scheduledPosts, overduePosts, overdueBlogCount, lastSchedulerRun: null, schedulerAgeHours: null },
+          metrics: { scheduledPosts, overduePosts, overdueBlogCount, lastSchedulerRun: null, schedulerAgeMinutes: null, schedulerAgeHours: null },
         };
       } else if (overduePosts > 0 || overdueBlogCount > 0) {
         subsystems.blog_scheduler = {
@@ -542,34 +595,34 @@ export async function getCmsSystemHealth(): Promise<CmsSystemHealthReport> {
           status: "DEGRADED",
           details: `${overduePosts} overdue scheduled post(s) pending publish (${scheduledPosts} scheduled total)`,
           lastCheckedAt: now,
-          metrics: { scheduledPosts, overduePosts, overdueBlogCount, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
+          metrics: { scheduledPosts, overduePosts, overdueBlogCount, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeMinutes, schedulerAgeHours },
         };
-      } else if (latestHeartbeat && latestHeartbeat.status === "failure") {
+      } else if (latestFailed) {
         subsystems.blog_scheduler = {
           id: "blog_scheduler",
           name: "Editorial Scheduler",
           status: "DEGRADED",
-          details: `Latest scheduler run failed: ${latestHeartbeat.summary}`,
+          details: `Latest scheduler run failed: ${latestCronHist?.error_summary || latestHeartbeat?.summary || "Error"}`,
           lastCheckedAt: now,
-          metrics: { scheduledPosts, overduePosts, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
+          metrics: { scheduledPosts, overduePosts, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeMinutes, schedulerAgeHours },
         };
-      } else if (schedulerAgeHours != null && schedulerAgeHours > 2) {
+      } else if (schedulerAgeMinutes != null && schedulerAgeMinutes > 75) {
         subsystems.blog_scheduler = {
           id: "blog_scheduler",
           name: "Editorial Scheduler",
           status: "STALE",
-          details: `Scheduler heartbeat is stale (${schedulerAgeHours.toFixed(1)}h ago; expected <= 2h)`,
+          details: `Scheduler heartbeat is stale (${Math.round(schedulerAgeMinutes)}m ago; threshold: 75m)`,
           lastCheckedAt: now,
-          metrics: { scheduledPosts, overduePosts, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
+          metrics: { scheduledPosts, overduePosts, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeMinutes: Math.round(schedulerAgeMinutes), schedulerAgeHours },
         };
       } else {
         subsystems.blog_scheduler = {
           id: "blog_scheduler",
           name: "Editorial Scheduler",
           status: "HEALTHY",
-          details: `Active scheduler worker (${scheduledPosts} scheduled posts, Last heartbeat: ${schedulerAgeHours ? schedulerAgeHours.toFixed(1) + "h ago" : "recent"})`,
+          details: `Active scheduler worker (${scheduledPosts} scheduled posts, Last heartbeat: ${schedulerAgeMinutes != null ? Math.round(schedulerAgeMinutes) + "m ago" : "recent"})`,
           lastCheckedAt: now,
-          metrics: { scheduledPosts, overduePosts: 0, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeHours },
+          metrics: { scheduledPosts, overduePosts: 0, lastSchedulerRun, lastSuccessfulSchedulerRun, schedulerAgeMinutes: schedulerAgeMinutes != null ? Math.round(schedulerAgeMinutes) : 0, schedulerAgeHours },
         };
       }
     } catch (err: any) {
