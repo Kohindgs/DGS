@@ -19,15 +19,29 @@ password="$DB_PASS"
 EOF
 chmod 600 "$CNF"
 
-echo "1. Clearing previous noisy rows before clean B2B discovery run..."
-mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "TRUNCATE TABLE intent_lead_signals;"
-
-echo "2. Running authenticated B2B Buyer-Intent Discovery (/api/internal/intent-leads/check)..."
-curl -sS -w "\\nHTTP_CODE=%{http_code} TIME=%{time_total}s\\n" -X POST "https://www.dgeniussolutions.com/api/internal/intent-leads/check" -H "Authorization: Bearer $CRON_SECRET" -H "Content-Type: application/json"
+echo "=== 1. Testing PIN 0215 Gate (No PIN -> Expect 403 Locked) ==="
+curl -sS -w "\\nHTTP_CODE=%{http_code}\\n" "https://www.dgeniussolutions.com/api/admin/intent-leads"
 
 echo ""
-echo "3. Inspecting qualified B2B buyer-intent leads in production DB:"
-mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "SELECT id, source_platform, service_category, intent_score, urgency_level, LEFT(post_title, 90) AS title, LEFT(post_url, 80) AS url FROM intent_lead_signals ORDER BY intent_score DESC;"
+echo "=== 2. Clearing table for clean fresh-only (<72h) discovery + email test ==="
+mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "TRUNCATE TABLE intent_lead_signals;"
+
+echo ""
+echo "=== 3. Running Full Discovery with PIN 0215 (Populates Vault + Sends Email Alert) ==="
+curl -sS -w "\\nHTTP_CODE=%{http_code} TIME=%{time_total}s\\n" -X POST "https://www.dgeniussolutions.com/api/admin/intent-leads" \\
+  -H "Content-Type: application/json" \\
+  -H "X-DGS-Intent-Pin: 0215" \\
+  -d '{"action":"discover","pin":"0215"}'
+
+echo ""
+echo "=== 4. Running 30-Min Cron Endpoint Immediately After (Proving Zero Repeats / Deduplication) ==="
+curl -sS -w "\\nHTTP_CODE=%{http_code} TIME=%{time_total}s\\n" -X POST "https://www.dgeniussolutions.com/api/internal/intent-leads/check" \\
+  -H "Authorization: Bearer $CRON_SECRET" \\
+  -H "Content-Type: application/json"
+
+echo ""
+echo "=== 5. Inspecting Qualified Fresh Leads + Company Legitimacy + Intent Breakdown in Production DB ==="
+mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "SELECT id, source_platform, service_category, age_hours, freshness_tier, intent_score, company_legitimacy_status, company_legitimacy_score, buyer_persona_type, LEFT(post_title, 75) AS title FROM intent_lead_signals ORDER BY intent_score DESC, age_hours ASC;"
 `;
 
 const out = execSync(
