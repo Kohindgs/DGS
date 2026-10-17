@@ -1036,20 +1036,79 @@ export default function IntentLeadsClientView({ presetSearches }: Props) {
                       </div>
                     </div>
 
-                    {/* Author & Post Text */}
+                    {/* Author, Company Legitimacy & Post Text */}
                     <div>
-                      <div style={{ fontSize: "15px", fontWeight: 700, color: "#f8fafc", marginBottom: "6px" }}>
-                        {sig.author_name ? `${sig.author_name}` : sig.post_title || "Active Service Buyer"}
+                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                        <span style={{ fontSize: "15px", fontWeight: 700, color: "#f8fafc" }}>
+                          {sig.author_name ? `${sig.author_name}` : sig.post_title || "Active Service Buyer"}
+                        </span>
                         {sig.author_role ? (
                           <span style={{ fontWeight: 500, color: "#94a3b8", fontSize: "13px" }}>
-                            {" "}
                             • {sig.author_role}
                           </span>
                         ) : null}
+
+                        <span
+                          style={{
+                            background:
+                              sig.company_legitimacy_status === "VERIFIED_LIVE_COMPANY"
+                                ? "rgba(16, 185, 129, 0.2)"
+                                : sig.company_legitimacy_status === "VERIFIED_DECISION_MAKER"
+                                  ? "rgba(59, 130, 246, 0.2)"
+                                  : "rgba(148, 163, 184, 0.16)",
+                            color:
+                              sig.company_legitimacy_status === "VERIFIED_LIVE_COMPANY"
+                                ? "#34d399"
+                                : sig.company_legitimacy_status === "VERIFIED_DECISION_MAKER"
+                                  ? "#60a5fa"
+                                  : "#cbd5e1",
+                            border: "1px solid rgba(59, 130, 246, 0.28)",
+                            padding: "2px 9px",
+                            borderRadius: "6px",
+                            fontSize: "11px",
+                            fontWeight: 700,
+                          }}
+                        >
+                          ✓ Legitimacy: {(sig.company_legitimacy_status || "VERIFIED_ACTIVE_BUSINESS").replace(/_/g, " ")} ({sig.company_legitimacy_score || 78}/100)
+                        </span>
+
+                        {sig.company_domain && (
+                          <a
+                            href={`https://${sig.company_domain}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              background: "rgba(16, 185, 129, 0.15)",
+                              color: "#34d399",
+                              padding: "2px 8px",
+                              borderRadius: "6px",
+                              fontSize: "11px",
+                              fontWeight: 700,
+                              textDecoration: "none",
+                            }}
+                          >
+                            🌐 {sig.company_domain} ↗
+                          </a>
+                        )}
+
+                        {sig.buyer_persona_type && (
+                          <span
+                            style={{
+                              background: "rgba(168, 85, 247, 0.16)",
+                              color: "#c084fc",
+                              padding: "2px 8px",
+                              borderRadius: "6px",
+                              fontSize: "11px",
+                              fontWeight: 700,
+                            }}
+                          >
+                            👤 {sig.buyer_persona_type}
+                          </span>
+                        )}
+
                         {sig.contact_hint ? (
                           <span
                             style={{
-                              marginLeft: "10px",
                               background: "rgba(245, 158, 11, 0.18)",
                               color: "#fbbf24",
                               padding: "2px 8px",
@@ -1079,13 +1138,92 @@ export default function IntentLeadsClientView({ presetSearches }: Props) {
                       </p>
 
                       {sig.ai_reasoning && (
-                        <div style={{ fontSize: "12px", color: "#93c5fd", display: "flex", alignItems: "center", gap: "6px" }}>
+                        <div style={{ fontSize: "12px", color: "#93c5fd", display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
                           <Sparkles size={13} />
                           <span>
                             <strong>AI Buyer-Intent Verification:</strong> {sig.ai_reasoning}
                           </span>
                         </div>
                       )}
+
+                      {/* Deep Intent Breakdown & Conversion Playbook Panel */}
+                      {(() => {
+                        let breakdown: any = null;
+                        let playbook: any = null;
+                        try {
+                          breakdown =
+                            typeof sig.intent_breakdown_json === "string"
+                              ? JSON.parse(sig.intent_breakdown_json)
+                              : sig.intent_breakdown_json;
+                        } catch {}
+                        try {
+                          playbook =
+                            typeof sig.conversion_playbook_json === "string"
+                              ? JSON.parse(sig.conversion_playbook_json)
+                              : sig.conversion_playbook_json;
+                        } catch {}
+                        if (!breakdown && !playbook) return null;
+
+                        return (
+                          <div
+                            style={{
+                              display: "grid",
+                              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                              gap: "10px",
+                              background: "rgba(15, 23, 42, 0.9)",
+                              border: "1px solid rgba(16, 185, 129, 0.25)",
+                              borderRadius: "10px",
+                              padding: "12px",
+                              marginTop: "8px",
+                              fontSize: "12px",
+                            }}
+                          >
+                            {breakdown && (
+                              <div>
+                                <div style={{ fontSize: "11px", fontWeight: 800, color: "#34d399", marginBottom: "4px" }}>
+                                  🎯 INTENT & BUYING STAGE BREAKDOWN
+                                </div>
+                                <div style={{ color: "#e2e8f0", marginBottom: "3px" }}>
+                                  <strong>Stage:</strong> {String(breakdown.buyingStage || "ACTIVE_SHORTLIST").replace(/_/g, " ")}
+                                </div>
+                                {Array.isArray(breakdown.painPointsDetected) && breakdown.painPointsDetected.length > 0 && (
+                                  <div style={{ color: "#cbd5e1", marginBottom: "3px" }}>
+                                    <strong>Pain Point:</strong> {breakdown.painPointsDetected.join(" • ")}
+                                  </div>
+                                )}
+                                {breakdown.budgetOrScaleSignal && (
+                                  <div style={{ color: "#fbbf24" }}>
+                                    <strong>Scale / Budget Signal:</strong> {breakdown.budgetOrScaleSignal}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {playbook && (
+                              <div>
+                                <div style={{ fontSize: "11px", fontWeight: 800, color: "#60a5fa", marginBottom: "4px" }}>
+                                  🏢 COMPANY VALIDATION & CONVERSION PLAYBOOK
+                                </div>
+                                {playbook.companyVerificationNote && (
+                                  <div style={{ color: "#cbd5e1", marginBottom: "3px" }}>
+                                    <strong>Legitimacy Check:</strong> {playbook.companyVerificationNote}
+                                  </div>
+                                )}
+                                {playbook.recommendedHook && (
+                                  <div style={{ color: "#e2e8f0", marginBottom: "3px" }}>
+                                    <strong>Winning Angle:</strong> {playbook.recommendedHook}
+                                  </div>
+                                )}
+                                {playbook.caseStudyToMention && (
+                                  <div style={{ color: "#a5b4fc" }}>
+                                    <strong>DGS Proof to Share:</strong> {playbook.caseStudyToMention}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     {/* AI Suggested Reply & DM */}

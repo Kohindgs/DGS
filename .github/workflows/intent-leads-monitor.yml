@@ -2,8 +2,8 @@ name: DGS Buyer-Intent Lead Discovery Monitor
 
 on:
   schedule:
-    # Runs every 6 hours at minute 45 UTC
-    - cron: '45 */6 * * *'
+    # Runs every 30 minutes to capture ultra-fresh 1h-12h / 24h buyer-intent leads with strict deduplication
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:

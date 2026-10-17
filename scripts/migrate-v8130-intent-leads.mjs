@@ -95,6 +95,14 @@ async function main() {
   for (const colSql of [
     "ALTER TABLE intent_lead_signals ADD COLUMN age_hours INT NULL AFTER published_at",
     "ALTER TABLE intent_lead_signals ADD COLUMN freshness_tier VARCHAR(24) NOT NULL DEFAULT '24H' AFTER age_hours",
+    "ALTER TABLE intent_lead_signals ADD COLUMN content_fingerprint VARCHAR(64) NULL AFTER url_hash",
+    "ALTER TABLE intent_lead_signals ADD COLUMN company_domain VARCHAR(255) NULL AFTER company_name",
+    "ALTER TABLE intent_lead_signals ADD COLUMN company_legitimacy_status VARCHAR(40) NOT NULL DEFAULT 'UNVERIFIED_SOCIAL_PROFILE' AFTER company_domain",
+    "ALTER TABLE intent_lead_signals ADD COLUMN company_legitimacy_score INT NOT NULL DEFAULT 65 AFTER company_legitimacy_status",
+    "ALTER TABLE intent_lead_signals ADD COLUMN buyer_persona_type VARCHAR(64) NOT NULL DEFAULT 'Founder / Decision Maker' AFTER company_legitimacy_score",
+    "ALTER TABLE intent_lead_signals ADD COLUMN intent_breakdown_json JSON NULL AFTER ai_reasoning",
+    "ALTER TABLE intent_lead_signals ADD COLUMN conversion_playbook_json JSON NULL AFTER intent_breakdown_json",
+    "CREATE INDEX idx_ils_content_fp ON intent_lead_signals (content_fingerprint)",
   ]) {
     try {
       await conn.query(colSql);

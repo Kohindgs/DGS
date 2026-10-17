@@ -95,14 +95,14 @@ export const DGS_SCHEDULED_JOBS_REGISTRY: CronJobDefinition[] = [
     displayName: "Buyer-Intent & LinkedIn/Web Lead Discovery",
     workflowName: "DGS Buyer-Intent Lead Discovery Monitor",
     workflowFile: ".github/workflows/intent-leads-monitor.yml",
-    scheduleCron: "45 */6 * * *",
-    scheduleHuman: "Every 6 hours at minute 45 UTC",
+    scheduleCron: "*/30 * * * *",
+    scheduleHuman: "Every 30 minutes",
     triggerSource: "GitHub Actions (schedule / workflow_dispatch)",
     endpoint: "/api/internal/intent-leads/check",
     authMethod: "Bearer DGS_CRON_SECRET",
     databaseDependency: "MariaDB (intent_lead_signals, intent_lead_discovery_runs, cron_run_history)",
     externalNetworkDependency: "Public LinkedIn / Web SERPs, Reddit API, Gemini 2.5 Flash qualification, SMTP digest",
-    staleThresholdMinutes: 840, // > 14 hours without success => STALE
+    staleThresholdMinutes: 75, // > 75 minutes without success => STALE
   },
 ];
 
