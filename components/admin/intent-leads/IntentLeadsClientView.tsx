@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import Link from "next/link";
 import type {
   IntentLeadSignal,
   IntentDiscoveryRun,
   GoogleBuyerIntentQuery,
   LinkedInFeedPresetSearch,
-  IntentServiceCategory,
 } from "@/lib/intent-leads/engine";
 import {
   Radar,
@@ -15,9 +13,7 @@ import {
   ExternalLink,
   Copy,
   Check,
-  UserPlus,
   Sparkles,
-  Search,
   Bookmark,
   MessageSquare,
   Send,
@@ -28,23 +24,23 @@ import {
   Clock,
   CheckCircle2,
   ArrowUpRight,
+  Lock,
+  KeyRound,
+  Archive,
+  Flame,
 } from "lucide-react";
 
 type Props = {
-  initialSignals: IntentLeadSignal[];
-  initialRuns: IntentDiscoveryRun[];
-  initialGoogleBuyerQueries: GoogleBuyerIntentQuery[];
-  ingestToken: string;
   presetSearches: LinkedInFeedPresetSearch[];
 };
 
 const SERVICE_LABELS: Record<string, string> = {
-  SEO: "SEO & Organic Growth",
-  AEO_GEO: "AEO / GEO & AI Search",
-  WEB_DEV: "Website Dev & AMC",
-  AI_VIDEO: "AI Video Production",
-  PAID_MEDIA: "Performance Marketing",
-  BRANDING: "Branding & Social Media",
+  SEO: "SEO & Organic Growth (/services/seo/)",
+  AEO_GEO: "AEO / GEO & AI Search (/services/aeo-geo-aio/)",
+  WEB_DEV: "Website Dev & AMC (/services/website-development/)",
+  AI_VIDEO: "AI Video Production (/services/ai-video-production-agency/)",
+  PAID_MEDIA: "Digital & Performance Marketing (/services/digital-marketing/)",
+  BRANDING: "Branding & Social Media (/services/branding/)",
 };
 
 const PLATFORM_LABELS: Record<string, { label: string; color: string; bg: string }> = {
@@ -56,18 +52,25 @@ const PLATFORM_LABELS: Record<string, { label: string; color: string; bg: string
   GOOGLE_SERP_INTENT: { label: "Google Search", color: "#34d399", bg: "rgba(5, 150, 105, 0.18)" },
 };
 
-export default function IntentLeadsClientView({
-  initialSignals,
-  initialRuns,
-  initialGoogleBuyerQueries,
-  ingestToken,
-  presetSearches,
-}: Props) {
-  const [activeTab, setActiveTab] = useState<"signals" | "linkedin-companion" | "google-radar">("signals");
-  const [signals, setSignals] = useState<IntentLeadSignal[]>(initialSignals);
-  const [runs, setRuns] = useState<IntentDiscoveryRun[]>(initialRuns);
-  const [googleQueries] = useState<GoogleBuyerIntentQuery[]>(initialGoogleBuyerQueries);
+const FRESHNESS_BADGES: Record<string, { label: string; color: string; bg: string }> = {
+  "1H_12H": { label: "⚡ 1h–12h Fresh", color: "#34d399", bg: "rgba(16, 185, 129, 0.2)" },
+  "24H": { label: "🔥 Past 24 Hours", color: "#60a5fa", bg: "rgba(37, 99, 235, 0.2)" },
+  "3D": { label: "🕒 Within 3 Days", color: "#fbbf24", bg: "rgba(245, 158, 11, 0.18)" },
+};
 
+export default function IntentLeadsClientView({ presetSearches }: Props) {
+  const [pinInput, setPinInput] = useState<string>("");
+  const [unlockedPin, setUnlockedPin] = useState<string | null>(null);
+  const [pinError, setPinError] = useState<string | null>(null);
+  const [isUnlocking, setIsUnlocking] = useState<boolean>(false);
+
+  const [activeTab, setActiveTab] = useState<"signals" | "linkedin-companion" | "google-radar">("signals");
+  const [signals, setSignals] = useState<IntentLeadSignal[]>([]);
+  const [runs, setRuns] = useState<IntentDiscoveryRun[]>([]);
+  const [googleQueries, setGoogleQueries] = useState<GoogleBuyerIntentQuery[]>([]);
+  const [ingestToken, setIngestToken] = useState<string>("");
+
+  const [freshnessFilter, setFreshnessFilter] = useState<string>("ALL");
   const [platformFilter, setPlatformFilter] = useState<string>("ALL");
   const [serviceFilter, setServiceFilter] = useState<string>("ALL");
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
@@ -76,9 +79,7 @@ export default function IntentLeadsClientView({
   const [isScanning, setIsScanning] = useState(false);
   const [scanBanner, setScanBanner] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [convertingId, setConvertingId] = useState<string | null>(null);
 
-  // Manual LinkedIn post paste modal/card state
   const [manualAuthor, setManualAuthor] = useState("");
   const [manualRole, setManualRole] = useState("");
   const [manualUrl, setManualUrl] = useState("");
@@ -87,7 +88,55 @@ export default function IntentLeadsClientView({
 
   const bookmarkletRef = useRef<HTMLAnchorElement | null>(null);
 
-  // Build self-contained Bookmarklet JS code that scans currently visible LinkedIn feed/search posts
+  // Restore unlocked session within the same browser tab if previously unlocked
+  useEffect(() => {
+    const savedPin = sessionStorage.getItem("dgs_intent_vault_pin");
+    if (savedPin) {
+      unlockVaultWithPin(savedPin);
+    }
+  }, []);
+
+  async function unlockVaultWithPin(pinToTry: string) {
+    setIsUnlocking(true);
+    setPinError(null);
+    try {
+      const res = await fetch("/api/admin/intent-leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-DGS-Intent-Pin": pinToTry,
+        },
+        body: JSON.stringify({ action: "unlock", pin: pinToTry }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok && data.unlocked) {
+        setUnlockedPin(pinToTry);
+        sessionStorage.setItem("dgs_intent_vault_pin", pinToTry);
+        setSignals(data.signals || []);
+        setRuns(data.runs || []);
+        setGoogleQueries(data.googleBuyerQueries || []);
+        setIngestToken(data.ingestToken || "");
+      } else {
+        sessionStorage.removeItem("dgs_intent_vault_pin");
+        setPinError(data.message || "Invalid PIN. Access denied.");
+      }
+    } catch {
+      setPinError("Network error verifying PIN.");
+    } finally {
+      setIsUnlocking(false);
+    }
+  }
+
+  function handleLockVault() {
+    sessionStorage.removeItem("dgs_intent_vault_pin");
+    setUnlockedPin(null);
+    setPinInput("");
+    setSignals([]);
+    setRuns([]);
+    setGoogleQueries([]);
+  }
+
+  // Build self-contained Bookmarklet JS code that extracts post age ("2h", "1d", "2w") and filters out stale posts >3 days
   const bookmarkletHref = useMemo(() => {
     const endpoint = "https://www.dgeniussolutions.com/api/admin/intent-leads/ingest";
     const code = `(function(){
@@ -102,33 +151,35 @@ export default function IntentLeadsClientView({
           var authorName = authorEl ? authorEl.innerText.split('\\n')[0].trim() : 'LinkedIn Member';
           var roleEl = el.querySelector('.update-components-actor__description, .update-components-actor__sub-description');
           var authorRole = roleEl ? roleEl.innerText.split('\\n')[0].trim() : '';
+          var timeEl = el.querySelector('.update-components-actor__sub-description, time');
+          var ageText = timeEl ? timeEl.innerText.trim() : '';
           var linkEl = el.querySelector('a[href*="/feed/update/"], a[href*="/posts/"]');
           var urn = el.getAttribute('data-urn') || '';
           var postUrl = linkEl ? linkEl.href : (urn ? 'https://www.linkedin.com/feed/update/' + urn : window.location.href);
-          posts.push({ postUrl: postUrl, authorName: authorName.slice(0,120), authorRole: authorRole.slice(0,160), postText: text.slice(0,1800) });
+          posts.push({ postUrl: postUrl, authorName: authorName.slice(0,120), authorRole: authorRole.slice(0,160), ageText: ageText.slice(0,60), postText: text.slice(0,1800) });
         });
         if (posts.length === 0) {
           var sel = window.getSelection().toString().trim();
           if (sel.length > 25) {
-            posts.push({ postUrl: window.location.href, authorName: document.title.slice(0,80), postText: sel.slice(0,1800) });
+            posts.push({ postUrl: window.location.href, authorName: document.title.slice(0,80), ageText: '1h ago', postText: sel.slice(0,1800) });
           }
         }
         if (posts.length === 0) {
-          alert('DGS Scanner: Scroll through your LinkedIn Feed or Search results first, or highlight a post text before clicking.');
+          alert('DGS Scanner: Scroll through your LinkedIn Feed or Past-24h Search results first, or highlight a post text before clicking.');
           return;
         }
         var badge = document.createElement('div');
         badge.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:999999;background:#0f172a;color:#f8fafc;border:1px solid #3b82f6;padding:14px 20px;border-radius:12px;font-family:sans-serif;font-size:14px;box-shadow:0 12px 32px rgba(0,0,0,0.45);';
-        badge.innerText = 'DGS Buyer-Intent AI: Qualifying ' + posts.length + ' LinkedIn posts...';
+        badge.innerText = 'DGS Buyer-Intent AI: Qualifying ' + posts.length + ' fresh LinkedIn posts...';
         document.body.appendChild(badge);
         fetch('${endpoint}', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'X-DGS-Ingest-Token': '${ingestToken}' },
-          body: JSON.stringify({ token: '${ingestToken}', posts: posts.slice(0, 30) })
+          body: JSON.stringify({ token: '${ingestToken}', sendEmailDigest: true, posts: posts.slice(0, 30) })
         }).then(function(r){ return r.json(); }).then(function(res){
           badge.style.borderColor = '#10b981';
-          badge.innerText = res.message || ('Qualified ' + (res.result && res.result.qualifiedAdded || 0) + ' buyer leads!');
-          setTimeout(function(){ badge.remove(); }, 6000);
+          badge.innerText = res.message || ('Fetched ' + (res.result && res.result.qualifiedAdded || 0) + ' buyer leads & emailed alert!');
+          setTimeout(function(){ badge.remove(); }, 6500);
         }).catch(function(err){
           badge.style.borderColor = '#ef4444';
           badge.innerText = 'DGS Sync Error: ' + err.message;
@@ -143,10 +194,15 @@ export default function IntentLeadsClientView({
     if (bookmarkletRef.current) {
       bookmarkletRef.current.setAttribute("href", bookmarkletHref);
     }
-  }, [bookmarkletHref, activeTab]);
+  }, [bookmarkletHref, activeTab, unlockedPin]);
 
   const filteredSignals = useMemo(() => {
     return signals.filter((s) => {
+      const age = s.age_hours ?? 6;
+      if (age > 72) return false; // Never show stale leads > 3 days
+      if (freshnessFilter === "1H_12H" && age > 12) return false;
+      if (freshnessFilter === "24H" && age > 24) return false;
+      if (freshnessFilter === "3D" && age > 72) return false;
       if (platformFilter !== "ALL" && s.source_platform !== platformFilter) return false;
       if (serviceFilter !== "ALL" && s.service_category !== serviceFilter) return false;
       if (statusFilter !== "ALL" && s.status !== statusFilter) return false;
@@ -157,11 +213,14 @@ export default function IntentLeadsClientView({
       }
       return true;
     });
-  }, [signals, platformFilter, serviceFilter, statusFilter, searchQuery]);
+  }, [signals, freshnessFilter, platformFilter, serviceFilter, statusFilter, searchQuery]);
 
   async function refreshSignals() {
+    if (!unlockedPin) return;
     try {
-      const res = await fetch("/api/admin/intent-leads");
+      const res = await fetch("/api/admin/intent-leads", {
+        headers: { "X-DGS-Intent-Pin": unlockedPin },
+      });
       const data = await res.json();
       if (data.ok) {
         setSignals(data.signals || []);
@@ -170,17 +229,24 @@ export default function IntentLeadsClientView({
     } catch {}
   }
 
-  async function handleRunLiveDiscovery(sendEmail = false) {
+  async function handleRunLiveDiscovery() {
+    if (!unlockedPin) return;
     setIsScanning(true);
-    setScanBanner("Scanning Public LinkedIn Posts, Reddit Buyer Threads & Web Forums + running Gemini 2.5 Qualification...");
+    setScanBanner(
+      "Scanning Fresh (<72h / 24h / 1h–12h) LinkedIn Posts, Reddit Buyer Threads & Web + sending Email Notification if new leads are fetched..."
+    );
     try {
       const res = await fetch("/api/admin/intent-leads", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-DGS-Intent-Pin": unlockedPin,
+        },
         body: JSON.stringify({
           action: "discover",
+          pin: unlockedPin,
           serviceCategory: serviceFilter,
-          sendEmailDigest: sendEmail,
+          sendEmailDigest: true,
         }),
       });
       const data = await res.json();
@@ -197,7 +263,8 @@ export default function IntentLeadsClientView({
     }
   }
 
-  async function handleStatusChange(id: string, status: "NEW" | "CONTACTED" | "CONVERTED_TO_LEAD" | "DISMISSED") {
+  async function handleStatusChange(id: string, status: "NEW" | "CONTACTED" | "ARCHIVED" | "DISMISSED") {
+    if (!unlockedPin) return;
     setSignals((prev) =>
       status === "DISMISSED"
         ? prev.filter((item) => item.id !== id)
@@ -205,50 +272,34 @@ export default function IntentLeadsClientView({
     );
     await fetch("/api/admin/intent-leads", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "update-status", id, status }),
+      headers: {
+        "Content-Type": "application/json",
+        "X-DGS-Intent-Pin": unlockedPin,
+      },
+      body: JSON.stringify({ action: "update-status", pin: unlockedPin, id, status }),
     }).catch(() => {});
-  }
-
-  async function handleConvertToCrm(id: string) {
-    setConvertingId(id);
-    try {
-      const res = await fetch("/api/admin/intent-leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "convert-to-crm", id }),
-      });
-      const data = await res.json();
-      if (data.ok) {
-        setSignals((prev) =>
-          prev.map((item) =>
-            item.id === id
-              ? { ...item, status: "CONVERTED_TO_LEAD", crm_lead_id: data.crmLeadId }
-              : item
-          )
-        );
-        setScanBanner("Lead converted and added to main DGS Leads CRM (/admin/leads/)!");
-      }
-    } finally {
-      setConvertingId(null);
-    }
   }
 
   async function handleManualPasteSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!manualText.trim() || manualText.trim().length < 25) return;
+    if (!unlockedPin || !manualText.trim() || manualText.trim().length < 25) return;
     setIsIngestingManual(true);
     try {
       const res = await fetch("/api/admin/intent-leads", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-DGS-Intent-Pin": unlockedPin,
+        },
         body: JSON.stringify({
           action: "manual-paste-ingest",
+          pin: unlockedPin,
           posts: [
             {
               authorName: manualAuthor.trim() || "LinkedIn Prospect",
               authorRole: manualRole.trim() || "",
               postUrl: manualUrl.trim() || "https://www.linkedin.com/feed/",
+              ageText: "1h ago",
               postText: manualText.trim(),
             },
           ],
@@ -259,8 +310,8 @@ export default function IntentLeadsClientView({
         const added = data.result?.qualifiedAdded || 0;
         setScanBanner(
           added > 0
-            ? `AI qualified and added your LinkedIn post to Buyer-Intent Leads!`
-            : `Post analyzed — classified as non-buyer/already saved (Skipped: ${data.result?.skippedNoise || 0}, Duplicate: ${data.result?.duplicates || 0}).`
+            ? `Lead Fetched! AI qualified your post, saved it to this Private Vault, and sent an email notification.`
+            : `Post analyzed — filtered out as cold/non-buyer or duplicate (Skipped: ${data.result?.skippedNoise || 0}, Duplicate: ${data.result?.duplicates || 0}).`
         );
         setManualAuthor("");
         setManualRole("");
@@ -280,9 +331,150 @@ export default function IntentLeadsClientView({
     setTimeout(() => setCopiedKey(null), 2200);
   }
 
-  const highUrgencyCount = signals.filter((s) => s.urgency_level === "HIGH").length;
-  const linkedinCount = signals.filter((s) => s.source_platform.startsWith("LINKEDIN")).length;
-  const convertedCount = signals.filter((s) => s.status === "CONVERTED_TO_LEAD").length;
+  // ============================================================================
+  // PRIVATE PIN GATE (PIN: 0215)
+  // ============================================================================
+  if (!unlockedPin) {
+    return (
+      <div
+        style={{
+          minHeight: "72vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "24px",
+        }}
+      >
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            unlockVaultWithPin(pinInput);
+          }}
+          style={{
+            width: "100%",
+            maxWidth: "440px",
+            background: "linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92))",
+            border: "1px solid rgba(59, 130, 246, 0.35)",
+            borderRadius: "20px",
+            padding: "36px 32px",
+            boxShadow: "0 24px 60px rgba(0, 0, 0, 0.55)",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "16px",
+              background: "rgba(37, 99, 235, 0.2)",
+              border: "1px solid rgba(59, 130, 246, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 18px auto",
+              color: "#60a5fa",
+            }}
+          >
+            <Lock size={26} />
+          </div>
+
+          <div
+            style={{
+              display: "inline-block",
+              fontSize: "11px",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              color: "#34d399",
+              background: "rgba(16, 185, 129, 0.16)",
+              padding: "4px 10px",
+              borderRadius: "999px",
+              marginBottom: "10px",
+            }}
+          >
+            PRIVATE EXECUTIVE VAULT • PIN PROTECTED
+          </div>
+
+          <h1 style={{ fontSize: "22px", fontWeight: 800, color: "#f8fafc", margin: "0 0 8px 0" }}>
+            Buyer-Intent Lead Vault
+          </h1>
+          <p style={{ fontSize: "13px", color: "#94a3b8", margin: "0 0 24px 0", lineHeight: 1.55 }}>
+            This section is restricted and isolated from public website lead forms. Enter your 4-digit security PIN to access fresh (<strong>1h–12h / 24h / &le;3d</strong>) buyer-intent leads.
+          </p>
+
+          <div style={{ marginBottom: "16px" }}>
+            <input
+              type="password"
+              inputMode="numeric"
+              maxLength={8}
+              autoFocus
+              placeholder="••••"
+              value={pinInput}
+              onChange={(e) => setPinInput(e.target.value)}
+              style={{
+                width: "100%",
+                textAlign: "center",
+                letterSpacing: "0.4em",
+                fontSize: "24px",
+                fontWeight: 800,
+                background: "#090d16",
+                color: "#f8fafc",
+                border: pinError
+                  ? "1px solid #ef4444"
+                  : "1px solid rgba(59, 130, 246, 0.45)",
+                borderRadius: "12px",
+                padding: "14px 16px",
+                outline: "none",
+              }}
+            />
+          </div>
+
+          {pinError && (
+            <div
+              style={{
+                fontSize: "12px",
+                color: "#f87171",
+                background: "rgba(239, 68, 68, 0.14)",
+                border: "1px solid rgba(239, 68, 68, 0.3)",
+                borderRadius: "8px",
+                padding: "8px 12px",
+                marginBottom: "16px",
+              }}
+            >
+              {pinError}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={isUnlocking || pinInput.length < 4}
+            style={{
+              width: "100%",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+              color: "#ffffff",
+              border: "none",
+              padding: "13px 20px",
+              borderRadius: "12px",
+              fontSize: "14px",
+              fontWeight: 700,
+              cursor: isUnlocking ? "wait" : "pointer",
+              opacity: pinInput.length < 4 ? 0.6 : 1,
+            }}
+          >
+            <KeyRound size={16} />
+            {isUnlocking ? "Verifying PIN..." : "Unlock Private Lead Vault"}
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  const ultraFreshCount = signals.filter((s) => (s.age_hours ?? 6) <= 12).length;
+  const past24hCount = signals.filter((s) => (s.age_hours ?? 6) <= 24).length;
+  const highUrgencyCount = signals.filter((s) => s.intent_score >= 80).length;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px", paddingBottom: "48px" }}>
@@ -301,37 +493,36 @@ export default function IntentLeadsClientView({
         }}
       >
         <div style={{ maxWidth: "740px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
             <span
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                background: "rgba(37, 99, 235, 0.2)",
-                color: "#60a5fa",
-                border: "1px solid rgba(59, 130, 246, 0.35)",
+                background: "rgba(16, 185, 129, 0.18)",
+                color: "#34d399",
+                border: "1px solid rgba(16, 185, 129, 0.35)",
                 padding: "4px 10px",
                 borderRadius: "999px",
                 fontSize: "12px",
                 fontWeight: 700,
-                letterSpacing: "0.04em",
               }}
             >
-              <Radar size={14} /> DGS V8.13 • AI BUYER-INTENT RADAR
+              <Lock size={13} /> PRIVATE PIN VAULT UNLOCKED
             </span>
-            <span style={{ fontSize: "12px", color: "#94a3b8" }}>
-              LinkedIn Feed • LinkedIn Public • Reddit • X • Google Search
+            <span style={{ fontSize: "12px", color: "#93c5fd", fontWeight: 600 }}>
+              ⚡ Freshness Enforced: 1h–12h • 24h • Max 3 Days Old (Never sent via Website Lead Forms)
             </span>
           </div>
           <h1 style={{ fontSize: "24px", fontWeight: 800, color: "#f8fafc", margin: "0 0 6px 0" }}>
-            Buyer-Intent & LinkedIn Lead Discovery
+            Private Buyer-Intent & LinkedIn Lead Vault
           </h1>
           <p style={{ fontSize: "14px", color: "#94a3b8", margin: 0, lineHeight: 1.55 }}>
-            Finds founders, CMOs, and businesses actively asking for{" "}
+            Exclusively captures <strong style={{ color: "#e2e8f0" }}>warm/hot buyer-intent leads</strong> (people actively asking to hire or get recommendations for{" "}
             <strong style={{ color: "#e2e8f0" }}>
-              SEO, Website Development & AMC, AI Video Production, AEO/GEO, and Performance Marketing
-            </strong>{" "}
-            across LinkedIn, Reddit, and Google — with Gemini 2.5 filtering out job seekers and competing agency promos.
+              SEO, AEO/GEO, Website Development & AMC, AI Video Production, Performance Marketing, and Branding
+            </strong>
+            ) within the last <strong>1–12 hours, 24 hours, or 3 days</strong>. Whenever new leads are fetched, you receive an instant email alert.
           </p>
         </div>
 
@@ -339,7 +530,7 @@ export default function IntentLeadsClientView({
           <button
             type="button"
             disabled={isScanning}
-            onClick={() => handleRunLiveDiscovery(false)}
+            onClick={handleRunLiveDiscovery}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -356,29 +547,27 @@ export default function IntentLeadsClientView({
             }}
           >
             <RefreshCw size={15} className={isScanning ? "animate-spin" : ""} />
-            {isScanning ? "Scanning Live Web & LinkedIn..." : "Scan Web & LinkedIn Now"}
+            {isScanning ? "Fetching Fresh Buyer Leads..." : "Fetch Fresh Leads Now (+ Email Alert)"}
           </button>
 
           <button
             type="button"
-            disabled={isScanning}
-            onClick={() => handleRunLiveDiscovery(true)}
+            onClick={handleLockVault}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "8px",
-              background: "rgba(16, 185, 129, 0.16)",
-              color: "#34d399",
-              border: "1px solid rgba(16, 185, 129, 0.35)",
-              padding: "10px 16px",
+              gap: "6px",
+              background: "rgba(239, 68, 68, 0.14)",
+              color: "#f87171",
+              border: "1px solid rgba(239, 68, 68, 0.3)",
+              padding: "10px 14px",
               borderRadius: "10px",
-              fontSize: "13px",
-              fontWeight: 600,
-              cursor: isScanning ? "wait" : "pointer",
+              fontSize: "12px",
+              fontWeight: 700,
+              cursor: "pointer",
             }}
           >
-            <Send size={14} />
-            Scan + Email Digest
+            <Lock size={14} /> Lock Vault
           </button>
         </div>
       </div>
@@ -430,17 +619,34 @@ export default function IntentLeadsClientView({
         <div
           style={{
             background: "rgba(15, 23, 42, 0.75)",
-            border: "1px solid rgba(148, 163, 184, 0.14)",
+            border: "1px solid rgba(16, 185, 129, 0.28)",
             borderRadius: "14px",
             padding: "16px 18px",
           }}
         >
           <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
-            Qualified Buyer Signals
+            ⚡ Ultra-Fresh (1h to 12h Old)
           </div>
-          <div style={{ fontSize: "26px", fontWeight: 800, color: "#f8fafc" }}>{signals.length}</div>
+          <div style={{ fontSize: "26px", fontWeight: 800, color: "#34d399" }}>{ultraFreshCount}</div>
           <div style={{ fontSize: "11px", color: "#34d399", marginTop: "4px" }}>
-            Job seekers & agency promos filtered out
+            Highest reply-to-call conversion window
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "rgba(15, 23, 42, 0.75)",
+            border: "1px solid rgba(59, 130, 246, 0.28)",
+            borderRadius: "14px",
+            padding: "16px 18px",
+          }}
+        >
+          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
+            🔥 Last 24 Hours Total
+          </div>
+          <div style={{ fontSize: "26px", fontWeight: 800, color: "#60a5fa" }}>{past24hCount}</div>
+          <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
+            Posted within the past 24 hours
           </div>
         </div>
 
@@ -453,47 +659,28 @@ export default function IntentLeadsClientView({
           }}
         >
           <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
-            High-Urgency Leads (Score 80+)
+            🕒 Active Vault (&le; 3 Days Max)
+          </div>
+          <div style={{ fontSize: "26px", fontWeight: 800, color: "#f8fafc" }}>{signals.length}</div>
+          <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
+            2–3 week old posts are strictly blocked
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "rgba(15, 23, 42, 0.75)",
+            border: "1px solid rgba(249, 115, 22, 0.28)",
+            borderRadius: "14px",
+            padding: "16px 18px",
+          }}
+        >
+          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
+            Hot Buyer Intent (Score 80+)
           </div>
           <div style={{ fontSize: "26px", fontWeight: 800, color: "#f97316" }}>{highUrgencyCount}</div>
           <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-            Actively requesting agency recommendations
-          </div>
-        </div>
-
-        <div
-          style={{
-            background: "rgba(15, 23, 42, 0.75)",
-            border: "1px solid rgba(148, 163, 184, 0.14)",
-            borderRadius: "14px",
-            padding: "16px 18px",
-          }}
-        >
-          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
-            LinkedIn Posts Captured
-          </div>
-          <div style={{ fontSize: "26px", fontWeight: 800, color: "#60a5fa" }}>{linkedinCount}</div>
-          <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-            Personal Feed + Public LinkedIn Posts
-          </div>
-        </div>
-
-        <div
-          style={{
-            background: "rgba(15, 23, 42, 0.75)",
-            border: "1px solid rgba(148, 163, 184, 0.14)",
-            borderRadius: "14px",
-            padding: "16px 18px",
-          }}
-        >
-          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
-            Google Search Buyer Queries
-          </div>
-          <div style={{ fontSize: "26px", fontWeight: 800, color: "#34d399" }}>
-            {googleQueries.length}
-          </div>
-          <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-            {convertedCount} converted to DGS CRM Leads
+            Cold chatter & job seekers rejected
           </div>
         </div>
       </div>
@@ -528,8 +715,8 @@ export default function IntentLeadsClientView({
                 : "1px solid rgba(148, 163, 184, 0.16)",
           }}
         >
-          <Sparkles size={15} />
-          1. Qualified Social & Web Buyer Leads ({signals.length})
+          <Flame size={15} />
+          1. Fresh Buyer-Intent Leads ({filteredSignals.length})
         </button>
 
         <button
@@ -553,7 +740,7 @@ export default function IntentLeadsClientView({
           }}
         >
           <Bookmark size={15} />
-          2. Personal LinkedIn Feed Scanner & Deep-Links
+          2. Zero-Login LinkedIn Feed Scanner (Past 24h Deep-Links)
         </button>
 
         <button
@@ -577,19 +764,19 @@ export default function IntentLeadsClientView({
           }}
         >
           <Globe size={15} />
-          3. Google Search Buyer-Intent Radar ({googleQueries.length})
+          3. Google Search Buyer-Intent Queries ({googleQueries.length})
         </button>
       </div>
 
-      {/* TAB 1: QUALIFIED SOCIAL & WEB BUYER LEADS */}
+      {/* TAB 1: FRESH BUYER-INTENT LEADS */}
       {activeTab === "signals" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-          {/* Filters Bar */}
+          {/* Freshness Quick-Pills + Filters */}
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: "12px",
+              gap: "10px",
               alignItems: "center",
               background: "rgba(15, 23, 42, 0.75)",
               border: "1px solid rgba(148, 163, 184, 0.14)",
@@ -598,8 +785,37 @@ export default function IntentLeadsClientView({
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "12px" }}>
-              <Filter size={14} /> Filters:
+              <Clock size={14} /> Freshness:
             </div>
+
+            {[
+              { key: "ALL", label: "All Fresh (≤ 3 Days)" },
+              { key: "1H_12H", label: "⚡ 1h to 12h Old" },
+              { key: "24H", label: "🔥 Past 24 Hours" },
+              { key: "3D", label: "🕒 Up to 3 Days" },
+            ].map((pill) => (
+              <button
+                key={pill.key}
+                type="button"
+                onClick={() => setFreshnessFilter(pill.key)}
+                style={{
+                  background:
+                    freshnessFilter === pill.key ? "rgba(37, 99, 235, 0.25)" : "rgba(2, 6, 23, 0.6)",
+                  color: freshnessFilter === pill.key ? "#60a5fa" : "#94a3b8",
+                  border:
+                    freshnessFilter === pill.key
+                      ? "1px solid #3b82f6"
+                      : "1px solid rgba(148, 163, 184, 0.2)",
+                  borderRadius: "8px",
+                  padding: "6px 12px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                {pill.label}
+              </button>
+            ))}
 
             <select
               value={platformFilter}
@@ -618,7 +834,6 @@ export default function IntentLeadsClientView({
               <option value="LINKEDIN_PUBLIC">Public LinkedIn Posts</option>
               <option value="REDDIT">Reddit Buyer Threads</option>
               <option value="X_TWITTER">X / Twitter</option>
-              <option value="WEB_FORUM">Startup & Web Forums</option>
             </select>
 
             <select
@@ -634,36 +849,18 @@ export default function IntentLeadsClientView({
               }}
             >
               <option value="ALL">All DGS Services</option>
-              <option value="SEO">SEO & Organic Growth</option>
-              <option value="AEO_GEO">AEO / GEO & AI Search (Dubai/Global)</option>
-              <option value="WEB_DEV">Website Development & AMC</option>
-              <option value="AI_VIDEO">AI Video Production</option>
-              <option value="PAID_MEDIA">Performance Marketing / Ads</option>
-              <option value="BRANDING">Branding & Social Media</option>
+              <option value="SEO">SEO (/services/seo/)</option>
+              <option value="AEO_GEO">AEO / GEO (/services/aeo-geo-aio/)</option>
+              <option value="WEB_DEV">Website Dev & AMC (/services/website-development/)</option>
+              <option value="AI_VIDEO">AI Video (/services/ai-video-production-agency/)</option>
+              <option value="PAID_MEDIA">Performance Marketing (/services/digital-marketing/)</option>
+              <option value="BRANDING">Branding & Social (/services/branding/)</option>
             </select>
 
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              style={{
-                background: "#0f172a",
-                color: "#e2e8f0",
-                border: "1px solid rgba(148, 163, 184, 0.25)",
-                borderRadius: "8px",
-                padding: "7px 12px",
-                fontSize: "12px",
-              }}
-            >
-              <option value="ALL">All Active Statuses</option>
-              <option value="NEW">New (Uncontacted)</option>
-              <option value="CONTACTED">Contacted / Replied</option>
-              <option value="CONVERTED_TO_LEAD">Converted to CRM Lead</option>
-            </select>
-
-            <div style={{ position: "relative", flex: "1 1 220px" }}>
+            <div style={{ position: "relative", flex: "1 1 180px" }}>
               <input
                 type="text"
-                placeholder="Search by author, keyword, city (e.g. Dubai, Mumbai, redesign)..."
+                placeholder="Filter by keyword, city (Dubai, Mumbai)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
@@ -692,15 +889,15 @@ export default function IntentLeadsClientView({
             >
               <Radar size={36} color="#60a5fa" style={{ margin: "0 auto 12px auto" }} />
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#f8fafc", margin: "0 0 6px 0" }}>
-                No Buyer-Intent Leads Match Your Current Filter
+                No Fresh (&le;72h) Warm Buyer Leads in This Filter Yet
               </h3>
-              <p style={{ fontSize: "13px", color: "#94a3b8", maxWidth: "520px", margin: "0 auto 18px auto" }}>
-                Click <strong>&ldquo;Scan Web & LinkedIn Now&rdquo;</strong> above to fetch fresh public LinkedIn & Reddit buyer threads, or open Tab 2 to scan your personal LinkedIn feed with 1 click.
+              <p style={{ fontSize: "13px", color: "#94a3b8", maxWidth: "540px", margin: "0 auto 18px auto" }}>
+                Click <strong>&ldquo;Fetch Fresh Leads Now (+ Email Alert)&rdquo;</strong> to scan the last 1h–72h of public LinkedIn & Reddit buyer requests, or open Tab 2 to scan your personal LinkedIn feed with 1 click.
               </p>
               <button
                 type="button"
                 disabled={isScanning}
-                onClick={() => handleRunLiveDiscovery(false)}
+                onClick={handleRunLiveDiscovery}
                 style={{
                   background: "#2563eb",
                   color: "#ffffff",
@@ -712,27 +909,24 @@ export default function IntentLeadsClientView({
                   cursor: "pointer",
                 }}
               >
-                Run First Live Discovery Scan
+                Fetch Fresh Leads Now
               </button>
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               {filteredSignals.map((sig) => {
                 const plat = PLATFORM_LABELS[sig.source_platform] || PLATFORM_LABELS.LINKEDIN_PUBLIC;
-                const scoreColor =
-                  sig.intent_score >= 82
-                    ? "#34d399"
-                    : sig.intent_score >= 68
-                      ? "#60a5fa"
-                      : "#fbbf24";
+                const ageHours = sig.age_hours ?? 6;
+                const tierKey = ageHours <= 12 ? "1H_12H" : ageHours <= 24 ? "24H" : "3D";
+                const freshBadge = FRESHNESS_BADGES[tierKey];
 
                 return (
                   <div
                     key={sig.id}
                     style={{
-                      background: "rgba(15, 23, 42, 0.82)",
+                      background: "rgba(15, 23, 42, 0.85)",
                       border:
-                        sig.status === "CONVERTED_TO_LEAD"
+                        ageHours <= 12
                           ? "1px solid rgba(16, 185, 129, 0.4)"
                           : "1px solid rgba(148, 163, 184, 0.16)",
                       borderRadius: "14px",
@@ -742,7 +936,7 @@ export default function IntentLeadsClientView({
                       gap: "14px",
                     }}
                   >
-                    {/* Top Row: Badges + Score + Actions */}
+                    {/* Top Row: Freshness + Platform + Service + Intent Score */}
                     <div
                       style={{
                         display: "flex",
@@ -753,6 +947,20 @@ export default function IntentLeadsClientView({
                       }}
                     >
                       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px" }}>
+                        <span
+                          style={{
+                            background: freshBadge.bg,
+                            color: freshBadge.color,
+                            border: `1px solid ${freshBadge.color}55`,
+                            padding: "4px 10px",
+                            borderRadius: "999px",
+                            fontSize: "11px",
+                            fontWeight: 800,
+                          }}
+                        >
+                          {freshBadge.label} (~{ageHours}h old)
+                        </span>
+
                         <span
                           style={{
                             background: plat.bg,
@@ -795,15 +1003,15 @@ export default function IntentLeadsClientView({
                         <span
                           style={{
                             background: "rgba(16, 185, 129, 0.14)",
-                            color: scoreColor,
-                            border: `1px solid ${scoreColor}44`,
+                            color: "#34d399",
+                            border: "1px solid rgba(52, 211, 153, 0.35)",
                             padding: "4px 10px",
                             borderRadius: "999px",
                             fontSize: "11px",
                             fontWeight: 800,
                           }}
                         >
-                          Intent Score: {sig.intent_score}/100 ({sig.urgency_level})
+                          Warm Buyer Score: {sig.intent_score}/100 ({sig.urgency_level})
                         </span>
 
                         {sig.status === "CONTACTED" && (
@@ -820,35 +1028,18 @@ export default function IntentLeadsClientView({
                             ✓ Contacted
                           </span>
                         )}
-
-                        {sig.status === "CONVERTED_TO_LEAD" && (
-                          <Link
-                            href="/admin/leads/"
-                            style={{
-                              background: "rgba(16, 185, 129, 0.22)",
-                              color: "#34d399",
-                              padding: "4px 10px",
-                              borderRadius: "999px",
-                              fontSize: "11px",
-                              fontWeight: 700,
-                              textDecoration: "none",
-                            }}
-                          >
-                            ✓ In DGS Leads CRM →
-                          </Link>
-                        )}
                       </div>
 
                       <div style={{ fontSize: "11px", color: "#64748b", display: "flex", alignItems: "center", gap: "5px" }}>
                         <Clock size={12} />
-                        {new Date(sig.discovered_at).toLocaleString()}
+                        Fetched {new Date(sig.discovered_at).toLocaleString()}
                       </div>
                     </div>
 
-                    {/* Author & Post Content */}
+                    {/* Author & Post Text */}
                     <div>
                       <div style={{ fontSize: "15px", fontWeight: 700, color: "#f8fafc", marginBottom: "6px" }}>
-                        {sig.author_name ? `${sig.author_name}` : sig.post_title || "Prospective Service Buyer"}
+                        {sig.author_name ? `${sig.author_name}` : sig.post_title || "Active Service Buyer"}
                         {sig.author_role ? (
                           <span style={{ fontWeight: 500, color: "#94a3b8", fontSize: "13px" }}>
                             {" "}
@@ -891,13 +1082,13 @@ export default function IntentLeadsClientView({
                         <div style={{ fontSize: "12px", color: "#93c5fd", display: "flex", alignItems: "center", gap: "6px" }}>
                           <Sparkles size={13} />
                           <span>
-                            <strong>AI Qualification:</strong> {sig.ai_reasoning}
+                            <strong>AI Buyer-Intent Verification:</strong> {sig.ai_reasoning}
                           </span>
                         </div>
                       )}
                     </div>
 
-                    {/* AI Suggested Comment & DM Box */}
+                    {/* AI Suggested Reply & DM */}
                     {(sig.suggested_reply || sig.suggested_dm) && (
                       <div
                         style={{
@@ -992,7 +1183,7 @@ export default function IntentLeadsClientView({
                       </div>
                     )}
 
-                    {/* Action Bar */}
+                    {/* Action Bar (Isolated to Private Vault — never creates form submissions) */}
                     <div
                       style={{
                         display: "flex",
@@ -1024,33 +1215,10 @@ export default function IntentLeadsClientView({
                           Open Post & Reply <ExternalLink size={13} />
                         </a>
 
-                        {sig.status !== "CONTACTED" && sig.status !== "CONVERTED_TO_LEAD" && (
+                        {sig.status !== "CONTACTED" && (
                           <button
                             type="button"
                             onClick={() => handleStatusChange(sig.id, "CONTACTED")}
-                            style={{
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "6px",
-                              background: "rgba(59, 130, 246, 0.15)",
-                              color: "#93c5fd",
-                              border: "1px solid rgba(59, 130, 246, 0.3)",
-                              padding: "7px 12px",
-                              borderRadius: "8px",
-                              fontSize: "12px",
-                              fontWeight: 600,
-                              cursor: "pointer",
-                            }}
-                          >
-                            <CheckCircle2 size={13} /> Mark Contacted
-                          </button>
-                        )}
-
-                        {sig.status !== "CONVERTED_TO_LEAD" && (
-                          <button
-                            type="button"
-                            disabled={convertingId === sig.id}
-                            onClick={() => handleConvertToCrm(sig.id)}
                             style={{
                               display: "inline-flex",
                               alignItems: "center",
@@ -1065,8 +1233,29 @@ export default function IntentLeadsClientView({
                               cursor: "pointer",
                             }}
                           >
-                            <UserPlus size={13} />
-                            {convertingId === sig.id ? "Saving..." : "Convert to CRM Lead"}
+                            <CheckCircle2 size={13} /> Mark Contacted
+                          </button>
+                        )}
+
+                        {sig.status !== "ARCHIVED" && (
+                          <button
+                            type="button"
+                            onClick={() => handleStatusChange(sig.id, "ARCHIVED")}
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "6px",
+                              background: "rgba(148, 163, 184, 0.14)",
+                              color: "#cbd5e1",
+                              border: "1px solid rgba(148, 163, 184, 0.25)",
+                              padding: "7px 12px",
+                              borderRadius: "8px",
+                              fontSize: "12px",
+                              fontWeight: 600,
+                              cursor: "pointer",
+                            }}
+                          >
+                            <Archive size={13} /> Archive in Vault
                           </button>
                         )}
                       </div>
@@ -1093,64 +1282,12 @@ export default function IntentLeadsClientView({
               })}
             </div>
           )}
-
-          {/* Recent Discovery Run History */}
-          {runs.length > 0 && (
-            <div
-              style={{
-                background: "rgba(15, 23, 42, 0.7)",
-                border: "1px solid rgba(148, 163, 184, 0.14)",
-                borderRadius: "14px",
-                padding: "18px",
-                marginTop: "8px",
-              }}
-            >
-              <h3 style={{ fontSize: "14px", fontWeight: 700, color: "#f8fafc", margin: "0 0 12px 0" }}>
-                Recent Automated & Manual Discovery Runs
-              </h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                {runs.slice(0, 5).map((r) => (
-                  <div
-                    key={r.id}
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "8px",
-                      fontSize: "12px",
-                      padding: "8px 12px",
-                      background: "rgba(2, 6, 23, 0.45)",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <span
-                        style={{
-                          color: r.status === "SUCCESS" ? "#34d399" : "#f87171",
-                          fontWeight: 700,
-                        }}
-                      >
-                        ● {r.status}
-                      </span>
-                      <span style={{ color: "#94a3b8" }}>[{r.run_type}]</span>
-                      <span style={{ color: "#e2e8f0" }}>{r.summary_text || "Discovery check"}</span>
-                    </div>
-                    <div style={{ color: "#64748b" }}>
-                      {new Date(r.started_at).toLocaleString()} ({r.duration_ms}ms)
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
 
-      {/* TAB 2: PERSONAL LINKEDIN FEED SCANNER & DEEP-LINKS */}
+      {/* TAB 2: ZERO-LOGIN PERSONAL LINKEDIN FEED SCANNER */}
       {activeTab === "linkedin-companion" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {/* Step 1: 1-Click Bookmarklet */}
           <div
             style={{
               background: "linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(15, 23, 42, 0.9))",
@@ -1162,15 +1299,15 @@ export default function IntentLeadsClientView({
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
               <ShieldCheck size={18} color="#34d399" />
               <span style={{ fontSize: "12px", fontWeight: 700, color: "#34d399", letterSpacing: "0.04em" }}>
-                100% ACCOUNT-SAFE PERSONAL LINKEDIN FEED SCANNER (ZERO COOKIE SHARING)
+                NO LINKEDIN PASSWORD OR ACCOUNT ACCESS NEEDED • 100% SAFE
               </span>
             </div>
             <h2 style={{ fontSize: "19px", fontWeight: 800, color: "#f8fafc", margin: "0 0 8px 0" }}>
-              Scan Your Personal LinkedIn Feed & Search Results in 1 Click
+              How We Fetch From Your Personal LinkedIn Without Needing Your Login
             </h2>
             <p style={{ fontSize: "13px", color: "#cbd5e1", lineHeight: 1.6, margin: "0 0 18px 0", maxWidth: "780px" }}>
-              Because LinkedIn restricts datacenter bots from reading your personal feed, this browser companion runs{" "}
-              <strong>locally inside your own logged-in browser tab</strong>. Drag the blue button below to your Chrome/Edge Bookmarks Bar. Whenever you are scrolling your LinkedIn Feed or LinkedIn Post Search results, click it — it will automatically extract visible posts, send them to DGS Gemini 2.5 AI, filter out job seekers, and save genuine buyer leads here!
+              You <strong>never</strong> have to give your LinkedIn password or session cookies to any server (which protects your LinkedIn account from security flags). Instead, drag the{" "}
+              <strong>⚡ Scan LinkedIn Feed to DGS</strong> button below to your browser&apos;s Bookmarks Bar. When you open LinkedIn in your browser, click one of the <strong>Past 24 Hours</strong> search links below and click the bookmarklet — it reads the fresh posts on your screen, sends only warm buyer leads (<strong style={{ color: "#34d399" }}>1h–12h / 24h / &le;3 days old</strong>) into this PIN-protected CMS vault, and emails you immediately!
             </p>
 
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px" }}>
@@ -1203,13 +1340,12 @@ export default function IntentLeadsClientView({
               </a>
 
               <div style={{ fontSize: "12px", color: "#94a3b8" }}>
-                ← <strong>Drag this button</strong> up to your browser&apos;s Bookmarks Bar (Press{" "}
-                <code>Ctrl+Shift+B</code> if your Bookmarks Bar is hidden).
+                ← <strong>Drag this button</strong> to your Bookmarks Bar (<code>Ctrl+Shift+B</code>).
               </div>
             </div>
           </div>
 
-          {/* Step 2: 1-Click LinkedIn Buyer Search Deep-Links */}
+          {/* Past-24h LinkedIn & Google Deep-Links */}
           <div
             style={{
               background: "rgba(15, 23, 42, 0.8)",
@@ -1219,16 +1355,16 @@ export default function IntentLeadsClientView({
             }}
           >
             <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#f8fafc", margin: "0 0 6px 0" }}>
-              High-Intent LinkedIn Content Search Deep-Links (Sorted by Latest Posts)
+              1-Click Fresh LinkedIn & Google Buyer Searches (Pre-Filtered to Past 24 Hours)
             </h3>
             <p style={{ fontSize: "13px", color: "#94a3b8", margin: "0 0 16px 0" }}>
-              Click any service below to open LinkedIn&apos;s live Content Feed filtered for people asking for recommendations right now, then click your <strong>⚡ Scan LinkedIn Feed to DGS</strong> bookmarklet to import & AI-qualify them:
+              Every link below uses LinkedIn&apos;s <code>datePosted=&quot;past-24h&quot;</code> and Google&apos;s <code>tbs=qdr:d</code> (Past 24 Hours) / <code>qdr:d3</code> (Past 3 Days) filters so you only ever see ultra-fresh requirements:
             </p>
 
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(330px, 1fr))",
                 gap: "14px",
               }}
             >
@@ -1258,31 +1394,20 @@ export default function IntentLeadsClientView({
                           borderRadius: "6px",
                         }}
                       >
-                        {SERVICE_LABELS[preset.serviceCategory] || preset.serviceCategory}
+                        {preset.serviceCategory}
                       </span>
-                      <span style={{ fontSize: "11px", color: "#64748b" }}>{preset.region}</span>
+                      <span style={{ fontSize: "11px", color: "#34d399", fontWeight: 700 }}>
+                        ⚡ Past 24h / 3d Only
+                      </span>
                     </div>
                     <div style={{ fontSize: "14px", fontWeight: 700, color: "#f8fafc", marginBottom: "6px" }}>
                       {preset.label}
                     </div>
-                    <code
-                      style={{
-                        display: "block",
-                        fontSize: "11px",
-                        color: "#94a3b8",
-                        background: "rgba(15, 23, 42, 0.9)",
-                        padding: "8px",
-                        borderRadius: "6px",
-                        wordBreak: "break-word",
-                      }}
-                    >
-                      {preset.booleanQuery}
-                    </code>
                   </div>
 
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     <a
-                      href={preset.linkedinSearchUrl}
+                      href={preset.linkedinSearch24hUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
@@ -1298,11 +1423,11 @@ export default function IntentLeadsClientView({
                         fontWeight: 700,
                       }}
                     >
-                      Open in LinkedIn Feed <ArrowUpRight size={13} />
+                      LinkedIn (Past 24h) <ArrowUpRight size={13} />
                     </a>
 
                     <a
-                      href={preset.googleDorkUrl}
+                      href={preset.googleDork24hUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
@@ -1319,20 +1444,20 @@ export default function IntentLeadsClientView({
                         fontWeight: 600,
                       }}
                     >
-                      Google LinkedIn Dork <ExternalLink size={12} />
+                      Google Dork (24h) <ExternalLink size={12} />
                     </a>
 
                     <a
-                      href={preset.redditSearchUrl}
+                      href={preset.googleDork3dUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "5px",
-                        background: "rgba(234, 88, 12, 0.16)",
-                        color: "#fb923c",
-                        border: "1px solid rgba(234, 88, 12, 0.3)",
+                        background: "rgba(245, 158, 11, 0.16)",
+                        color: "#fbbf24",
+                        border: "1px solid rgba(245, 158, 11, 0.3)",
                         textDecoration: "none",
                         padding: "6px 12px",
                         borderRadius: "8px",
@@ -1340,7 +1465,7 @@ export default function IntentLeadsClientView({
                         fontWeight: 600,
                       }}
                     >
-                      Reddit Latest <ExternalLink size={12} />
+                      Google Dork (3 Days) <ExternalLink size={12} />
                     </a>
                   </div>
                 </div>
@@ -1348,7 +1473,7 @@ export default function IntentLeadsClientView({
             </div>
           </div>
 
-          {/* Step 3: Quick Paste & Qualify Box */}
+          {/* Quick Paste & Qualify */}
           <form
             onSubmit={handleManualPasteSubmit}
             style={{
@@ -1362,12 +1487,8 @@ export default function IntentLeadsClientView({
             }}
           >
             <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#f8fafc", margin: 0 }}>
-              Quick Paste LinkedIn Post → AI Qualify & Generate Personalized Reply
+              Quick Paste LinkedIn Post → Save to Private Vault & Send Email Alert
             </h3>
-            <p style={{ fontSize: "12px", color: "#94a3b8", margin: 0 }}>
-              Spotted a post on mobile or WhatsApp? Paste the post text below to qualify it with Gemini 2.5 and generate a custom reply & DM.
-            </p>
-
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "10px" }}>
               <input
                 type="text"
@@ -1385,7 +1506,7 @@ export default function IntentLeadsClientView({
               />
               <input
                 type="text"
-                placeholder="Author Role / Company (e.g. Founder at FinTech Co)"
+                placeholder="Author Role / Company"
                 value={manualRole}
                 onChange={(e) => setManualRole(e.target.value)}
                 style={{
@@ -1414,9 +1535,9 @@ export default function IntentLeadsClientView({
             </div>
 
             <textarea
-              rows={4}
+              rows={3}
               required
-              placeholder="Paste the LinkedIn post text here (e.g. 'Looking for a reliable SEO & web development agency in Mumbai/Dubai to help us scale organic traffic...')"
+              placeholder="Paste the LinkedIn post requirement here..."
               value={manualText}
               onChange={(e) => setManualText(e.target.value)}
               style={{
@@ -1449,7 +1570,7 @@ export default function IntentLeadsClientView({
                 }}
               >
                 <MessageSquare size={15} />
-                {isIngestingManual ? "Analyzing with Gemini 2.5..." : "Qualify Post & Generate Reply"}
+                {isIngestingManual ? "Qualifying & Emailing..." : "Qualify & Save to Private Vault"}
               </button>
             </div>
           </form>
@@ -1468,16 +1589,16 @@ export default function IntentLeadsClientView({
         >
           <div style={{ marginBottom: "16px" }}>
             <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#f8fafc", margin: "0 0 6px 0" }}>
-              Live Google Search Commercial Buyer Queries (Last 28 Days via GSC)
+              High-Intent Google Search Queries (People Searching Google for DGS Services)
             </h3>
             <p style={{ fontSize: "13px", color: "#94a3b8", margin: 0 }}>
-              Real searches on Google where prospective buyers are looking for agencies/services and D&apos;Genius Solutions appeared in search results — ranked by commercial intent and impressions.
+              Real commercial searches on Google where prospective buyers are looking for your services and D&apos;Genius Solutions appeared in search results.
             </p>
           </div>
 
           {googleQueries.length === 0 ? (
             <div style={{ padding: "24px", textAlign: "center", color: "#94a3b8", fontSize: "13px" }}>
-              No Google Search Console query rows found yet. Run a GSC sync from Search Console Insights to populate buyer queries.
+              No Google Search Console buyer queries found yet.
             </div>
           ) : (
             <div style={{ overflowX: "auto" }}>
@@ -1497,7 +1618,7 @@ export default function IntentLeadsClientView({
                     <th style={{ padding: "10px 12px" }}>IMPR.</th>
                     <th style={{ padding: "10px 12px" }}>CLICKS</th>
                     <th style={{ padding: "10px 12px" }}>AVG POS</th>
-                    <th style={{ padding: "10px 12px" }}>ACTIONABLE LEAD CAPTURE RECOMMENDATION</th>
+                    <th style={{ padding: "10px 12px" }}>RECOMMENDED ACTION</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1525,7 +1646,7 @@ export default function IntentLeadsClientView({
                             fontWeight: 600,
                           }}
                         >
-                          {SERVICE_LABELS[q.service_category] || q.service_category}
+                          {q.service_category}
                         </span>
                       </td>
                       <td style={{ padding: "12px" }}>

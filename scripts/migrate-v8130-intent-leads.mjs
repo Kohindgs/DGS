@@ -80,6 +80,8 @@ async function main() {
       crm_lead_id VARCHAR(64) NULL,
       notified_at DATETIME NULL,
       published_at DATETIME NULL,
+      age_hours INT NULL,
+      freshness_tier VARCHAR(24) NOT NULL DEFAULT '24H',
       discovered_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       INDEX idx_ils_status_score (status, intent_score DESC, discovered_at DESC),
@@ -89,6 +91,15 @@ async function main() {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
   console.log("  ✓ Table intent_lead_signals verified.");
+
+  for (const colSql of [
+    "ALTER TABLE intent_lead_signals ADD COLUMN age_hours INT NULL AFTER published_at",
+    "ALTER TABLE intent_lead_signals ADD COLUMN freshness_tier VARCHAR(24) NOT NULL DEFAULT '24H' AFTER age_hours",
+  ]) {
+    try {
+      await conn.query(colSql);
+    } catch {}
+  }
 
   await conn.query(`
     CREATE TABLE IF NOT EXISTS intent_lead_discovery_runs (

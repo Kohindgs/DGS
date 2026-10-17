@@ -1,7 +1,6 @@
 import { randomUUID, createHash } from "node:crypto";
 import * as cheerio from "cheerio";
 import { cmsExecute, cmsQuery, isCmsDatabaseConfigured } from "../cms/db";
-import { createCmsLead } from "../cms/leads";
 import { fetchWithTimeout } from "../net/fetch-with-timeout";
 import {
   sendIntentLeadsDigestEmail,
@@ -11,6 +10,8 @@ import {
 declare global {
   var __dgsIntentLeadTablesEnsured: boolean | undefined;
 }
+
+export const INTENT_LEADS_ACCESS_PIN = "0215";
 
 export type IntentSourcePlatform =
   | "LINKEDIN_FEED"
@@ -37,6 +38,8 @@ export type IntentClassification =
   | "JOB_SEEKER"
   | "LOW_INTENT_NOISE";
 
+export type FreshnessTier = "1H_12H" | "24H" | "3D";
+
 export type IntentLeadSignal = {
   id: string;
   url_hash: string;
@@ -59,10 +62,12 @@ export type IntentLeadSignal = {
   suggested_reply: string | null;
   suggested_dm: string | null;
   recommended_dgs_url: string | null;
-  status: "NEW" | "CONTACTED" | "CONVERTED_TO_LEAD" | "DISMISSED";
+  status: "NEW" | "CONTACTED" | "ARCHIVED" | "DISMISSED";
   crm_lead_id: string | null;
   notified_at: string | null;
   published_at: string | null;
+  age_hours: number | null;
+  freshness_tier: FreshnessTier;
   discovered_at: string;
   updated_at: string;
 };
@@ -104,60 +109,74 @@ export type LinkedInFeedPresetSearch = {
   label: string;
   region: IntentRegion;
   booleanQuery: string;
-  linkedinSearchUrl: string;
-  googleDorkUrl: string;
-  redditSearchUrl: string;
+  linkedinSearch24hUrl: string;
+  linkedinSearchWeekUrl: string;
+  googleDork24hUrl: string;
+  googleDork3dUrl: string;
+  redditSearch24hUrl: string;
 };
 
+/**
+ * Canonical live D'Genius Solutions service URLs
+ */
 const DGS_SERVICE_URLS: Record<IntentServiceCategory, string> = {
-  SEO: "https://www.dgeniussolutions.com/services/seo-aeo-geo/",
-  AEO_GEO: "https://www.dgeniussolutions.com/services/aeo-agency-dubai/",
-  WEB_DEV: "https://www.dgeniussolutions.com/services/website-development-amc/",
+  SEO: "https://www.dgeniussolutions.com/services/seo/",
+  AEO_GEO: "https://www.dgeniussolutions.com/services/aeo-geo-aio/",
+  WEB_DEV: "https://www.dgeniussolutions.com/services/website-development/",
   AI_VIDEO: "https://www.dgeniussolutions.com/services/ai-video-production-agency/",
-  PAID_MEDIA: "https://www.dgeniussolutions.com/services/performance-marketing/",
-  BRANDING: "https://www.dgeniussolutions.com/services/branding-social-media/",
+  PAID_MEDIA: "https://www.dgeniussolutions.com/services/digital-marketing/",
+  BRANDING: "https://www.dgeniussolutions.com/services/branding/",
 };
 
 export const LINKEDIN_FEED_PRESET_SEARCHES: LinkedInFeedPresetSearch[] = [
   {
     id: "li-seo-agency",
     serviceCategory: "SEO",
-    label: "Looking for SEO Agency / Consultant",
+    label: "Looking for SEO Agency / Technical SEO Partner",
     region: "GLOBAL",
     booleanQuery: `"looking for" AND ("SEO agency" OR "SEO consultant" OR "SEO partner" OR "technical SEO") -job -jobs -internship -recruiting`,
-    linkedinSearchUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO"`)}&sortBy=%22date_posted%22`,
-    googleDorkUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") -hiring -jobs`)}&tbs=qdr:m`,
-    redditSearchUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("SEO agency" OR "SEO consultant")`)}&sort=new`,
+    // datePosted=%22past-24h%22 filters LinkedIn content search to strictly the last 24 hours!
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") -hiring -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") -hiring -jobs`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("SEO agency" OR "SEO consultant")`)}&sort=new&t=day`,
   },
   {
     id: "li-web-dev",
     serviceCategory: "WEB_DEV",
-    label: "Looking for Website Redesign / Web Development Agency",
+    label: "Looking for Website Development / Redesign / AMC",
     region: "GLOBAL",
-    booleanQuery: `("looking for" OR "recommend") AND ("website development" OR "web design agency" OR "website redesign" OR "Next.js agency") -job -recruiter`,
-    linkedinSearchUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "web development agency" OR "website redesign"`)}&sortBy=%22date_posted%22`,
-    googleDorkUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "website development company") -jobs`)}&tbs=qdr:m`,
-    redditSearchUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "need") ("website redesign" OR "web development agency")`)}&sort=new`,
+    booleanQuery: `("looking for" OR "recommend") AND ("website development" OR "web design agency" OR "website redesign" OR "Next.js agency" OR "website maintenance") -job -recruiter`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "web development agency" OR "website redesign"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "web development agency" OR "website redesign"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "website development company") -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "website development company") -jobs`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "need") ("website redesign" OR "web development agency")`)}&sort=new&t=day`,
   },
   {
     id: "li-ai-video",
     serviceCategory: "AI_VIDEO",
-    label: "Looking for AI Video Production / Ad Creative Studio",
+    label: "Looking for AI Video Production / Brand Film Studio",
     region: "GLOBAL",
     booleanQuery: `("looking for" OR "recommend" OR "need") AND ("AI video" OR "video production agency" OR "brand film" OR "commercial video production")`,
-    linkedinSearchUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video"`)}&sortBy=%22date_posted%22`,
-    googleDorkUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "ad film production")`)}&tbs=qdr:m`,
-    redditSearchUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("video production agency" OR "AI video production")`)}&sort=new`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "ad film production")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "ad film production")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("video production agency" OR "AI video production")`)}&sort=new&t=day`,
   },
   {
     id: "li-aeo-dubai",
     serviceCategory: "AEO_GEO",
-    label: "Looking for AEO / GEO / AI Search Visibility (Dubai & Global)",
+    label: "Looking for AEO / GEO / AI Search & Dubai SEO",
     region: "UAE_DUBAI",
     booleanQuery: `("looking for" OR "recommend" OR "agency") AND ("AEO" OR "Answer Engine Optimization" OR "Generative Engine Optimization" OR "SEO Dubai")`,
-    linkedinSearchUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"SEO agency Dubai" OR "Answer Engine Optimization" OR "GEO agency"`)}&sortBy=%22date_posted%22`,
-    googleDorkUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE" OR "looking for") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:m`,
-    redditSearchUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("SEO agency" OR "marketing agency" OR "website")`)}&sort=new`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"SEO agency Dubai" OR "Answer Engine Optimization" OR "GEO agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"SEO agency Dubai" OR "Answer Engine Optimization" OR "GEO agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE" OR "looking for") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE" OR "looking for") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("SEO agency" OR "marketing agency" OR "website")`)}&sort=new&t=day`,
   },
   {
     id: "li-paid-media",
@@ -165,19 +184,23 @@ export const LINKEDIN_FEED_PRESET_SEARCHES: LinkedInFeedPresetSearch[] = [
     label: "Looking for Performance Marketing / Paid Ads Agency",
     region: "INDIA",
     booleanQuery: `("looking for" OR "recommend") AND ("performance marketing agency" OR "Google Ads agency" OR "Meta Ads agency" OR "lead generation agency")`,
-    linkedinSearchUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency"`)}&sortBy=%22date_posted%22`,
-    googleDorkUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Dubai")`)}&tbs=qdr:m`,
-    redditSearchUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("performance marketing agency" OR "Google Ads agency")`)}&sort=new`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Dubai")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Dubai")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("performance marketing agency" OR "Google Ads agency")`)}&sort=new&t=day`,
   },
   {
     id: "li-branding-social",
     serviceCategory: "BRANDING",
-    label: "Looking for Branding & Social Media Agency",
+    label: "Looking for Branding, Content & Social Media Agency",
     region: "INDIA",
     booleanQuery: `("looking for" OR "recommend") AND ("branding agency" OR "social media agency" OR "creative agency") -job -internship`,
-    linkedinSearchUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency"`)}&sortBy=%22date_posted%22`,
-    googleDorkUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") -hiring`)}&tbs=qdr:m`,
-    redditSearchUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("branding agency" OR "social media agency")`)}&sort=new`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") -hiring`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") -hiring`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("branding agency" OR "social media agency")`)}&sort=new&t=day`,
   },
 ];
 
@@ -189,7 +212,7 @@ type DiscoveryQuerySpec = {
 };
 
 const DISCOVERY_QUERY_POOL: DiscoveryQuerySpec[] = [
-  // Public LinkedIn Posts
+  // Public LinkedIn Posts (Filtered with df=d / freshness: last 24h–72h)
   {
     query: `site:linkedin.com/posts "looking for" "SEO agency" OR "SEO consultant" -hiring -job`,
     platform: "LINKEDIN_PUBLIC",
@@ -203,7 +226,7 @@ const DISCOVERY_QUERY_POOL: DiscoveryQuerySpec[] = [
     region: "GLOBAL",
   },
   {
-    query: `site:linkedin.com/posts "looking for" "video production" OR "AI video" OR "ad film" agency`,
+    query: `site:linkedin.com/posts "looking for" "video production agency" OR "AI video" OR "brand film"`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "AI_VIDEO",
     region: "GLOBAL",
@@ -226,41 +249,10 @@ const DISCOVERY_QUERY_POOL: DiscoveryQuerySpec[] = [
     serviceCategory: "BRANDING",
     region: "INDIA",
   },
-  // Reddit Buyer-Intent Threads
+  // X / Twitter Buyer-Intent Posts
   {
-    query: `site:reddit.com ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "technical SEO")`,
-    platform: "REDDIT",
-    serviceCategory: "SEO",
-    region: "GLOBAL",
-  },
-  {
-    query: `site:reddit.com ("looking for" OR "need") ("web development agency" OR "website redesign" OR "Next.js agency")`,
-    platform: "REDDIT",
-    serviceCategory: "WEB_DEV",
-    region: "GLOBAL",
-  },
-  {
-    query: `site:reddit.com ("looking for" OR "recommend") ("AI video production" OR "video production agency" OR "explainer video")`,
-    platform: "REDDIT",
-    serviceCategory: "AI_VIDEO",
-    region: "GLOBAL",
-  },
-  {
-    query: `site:reddit.com ("Answer Engine Optimization" OR "AEO agency" OR "GEO agency" OR "SEO agency Dubai")`,
-    platform: "REDDIT",
-    serviceCategory: "AEO_GEO",
-    region: "UAE_DUBAI",
-  },
-  // X / Twitter & Startup Forums
-  {
-    query: `site:x.com "looking for" ("SEO agency" OR "web design agency" OR "video production")`,
+    query: `site:x.com "looking for" ("SEO agency" OR "web design agency" OR "video production agency")`,
     platform: "X_TWITTER",
-    serviceCategory: "SEO",
-    region: "GLOBAL",
-  },
-  {
-    query: `site:indiehackers.com OR site:quora.com "recommend" ("SEO agency" OR "web development agency" OR "marketing agency")`,
-    platform: "WEB_FORUM",
     serviceCategory: "SEO",
     region: "GLOBAL",
   },
@@ -297,6 +289,8 @@ export async function ensureIntentLeadTables(): Promise<void> {
       crm_lead_id VARCHAR(64) NULL,
       notified_at DATETIME NULL,
       published_at DATETIME NULL,
+      age_hours INT NULL,
+      freshness_tier VARCHAR(24) NOT NULL DEFAULT '24H',
       discovered_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       INDEX idx_ils_status_score (status, intent_score DESC, discovered_at DESC),
@@ -305,6 +299,15 @@ export async function ensureIntentLeadTables(): Promise<void> {
       INDEX idx_ils_classification (intent_classification, intent_score DESC)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
+
+  for (const colSql of [
+    "ALTER TABLE intent_lead_signals ADD COLUMN age_hours INT NULL AFTER published_at",
+    "ALTER TABLE intent_lead_signals ADD COLUMN freshness_tier VARCHAR(24) NOT NULL DEFAULT '24H' AFTER age_hours",
+  ]) {
+    try {
+      await cmsExecute(colSql);
+    } catch {}
+  }
 
   await cmsExecute(`
     CREATE TABLE IF NOT EXISTS intent_lead_discovery_runs (
@@ -368,7 +371,6 @@ export async function getOrCreateIngestToken(): Promise<string> {
 function normalizeUrlForHash(rawUrl: string): string {
   try {
     const u = new URL(rawUrl.trim());
-    // Strip tracking params
     for (const p of [
       "utm_source",
       "utm_medium",
@@ -410,7 +412,50 @@ type RawSocialResult = {
   url: string;
   snippet: string;
   platform: IntentSourcePlatform;
+  publishedAt: string | null;
+  ageHours: number;
+  freshnessTier: FreshnessTier;
 };
+
+export function classifyFreshnessTier(ageHours: number): FreshnessTier | "STALE" {
+  if (ageHours <= 12) return "1H_12H";
+  if (ageHours <= 24) return "24H";
+  if (ageHours <= 72) return "3D";
+  return "STALE";
+}
+
+/**
+ * Extracts relative age in hours from SERP or LinkedIn text (e.g., "4 hours ago", "2h", "1 day ago").
+ * Returns null if an explicit stale marker ("2 weeks ago", "1 month ago", "2024", "2025") is detected.
+ */
+export function parseFreshnessHoursFromText(text: string): number | null {
+  const lower = text.toLowerCase();
+
+  // Reject anything explicitly weeks, months, or years old
+  if (/\b(\d+\s*(week|weeks|w|month|months|mo|year|years|yr)s?\s*ago)\b/i.test(lower)) {
+    return 999;
+  }
+  const dayMatch = lower.match(/\b(\d+)\s*(?:day|days|d)\s*ago\b/i);
+  if (dayMatch) {
+    const days = Number(dayMatch[1]);
+    return days * 24;
+  }
+  const hourMatch = lower.match(/\b(\d+)\s*(?:hour|hours|hr|hrs|h)\s*ago\b/i);
+  if (hourMatch) {
+    return Math.max(1, Number(hourMatch[1]));
+  }
+  const minMatch = lower.match(/\b(\d+)\s*(?:minute|minutes|min|mins|m)\s*ago\b/i);
+  if (minMatch) {
+    return 1;
+  }
+  if (/\b(just now|today|few hours ago)\b/i.test(lower)) {
+    return 2;
+  }
+  if (/\b(yesterday)\b/i.test(lower)) {
+    return 24;
+  }
+  return null;
+}
 
 function detectPlatformFromUrl(url: string, fallback: IntentSourcePlatform): IntentSourcePlatform {
   const lower = url.toLowerCase();
@@ -428,7 +473,6 @@ function isValidSocialLeadUrl(url: string): boolean {
 
     if (host.includes("dgeniussolutions")) return false;
 
-    // Strict domain whitelist: only social/community platforms where real buyer posts live
     const isAllowedPlatform =
       host === "linkedin.com" ||
       host.endsWith(".linkedin.com") ||
@@ -460,9 +504,8 @@ function isValidSocialLeadUrl(url: string): boolean {
     }
 
     if (host.includes("reddit.com")) {
-      // Only allow business/marketing/founder subreddits, block consumer software/gaming subreddits
       if (
-        /\/r\/(capcut|piracy|cracked|movies|television|gaming|memes|anime|music|videos| DavinciResolve)/i.test(
+        /\/r\/(capcut|piracy|cracked|movies|television|gaming|memes|anime|music|videos|davinciresolve|premiere|aftereffects|youtubers|newtubers)/i.test(
           path
         )
       ) {
@@ -477,12 +520,16 @@ function isValidSocialLeadUrl(url: string): boolean {
   }
 }
 
+/**
+ * Searches DuckDuckGo with strict `df=d` (Past 24 Hours) or `df=w` (filtered to <=72h)
+ */
 async function searchDuckDuckGoSocial(
   query: string,
   defaultPlatform: IntentSourcePlatform,
   limit = 10
 ): Promise<RawSocialResult[]> {
-  const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+  // df=d enforces Past 24 Hours on DuckDuckGo HTML
+  const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}&df=d`;
   const res = await fetchWithTimeout(searchUrl, {
     timeoutMs: 9000,
     maxRetries: 0,
@@ -515,28 +562,42 @@ async function searchDuckDuckGoSocial(
     if (!href || !href.startsWith("http")) return;
     if (!isValidSocialLeadUrl(href)) return;
     if (seen.has(href)) return;
-    seen.add(href);
 
     const snippet = $(el).find(".result__snippet").text().trim().replace(/\s+/g, " ");
     if (!snippet && !title) return;
+
+    const parsedAge = parseFreshnessHoursFromText(`${title} ${snippet}`);
+    const ageHours = parsedAge !== null ? parsedAge : 18; // df=d guarantees past 24h unless marked otherwise
+    if (ageHours > 72) return; // Strictly reject anything older than 3 days (72h)
+
+    seen.add(href);
+    const tier = classifyFreshnessTier(ageHours);
+    if (tier === "STALE") return;
 
     results.push({
       title,
       url: href,
       snippet,
       platform: detectPlatformFromUrl(href, defaultPlatform),
+      publishedAt: new Date(Date.now() - ageHours * 3600_000).toISOString(),
+      ageHours,
+      freshnessTier: tier,
     });
   });
 
   return results;
 }
 
+/**
+ * Searches Bing with strict Past 24 Hours (`ex1:"ez1"`) filter
+ */
 async function searchBingSocial(
   query: string,
   defaultPlatform: IntentSourcePlatform,
   limit = 10
 ): Promise<RawSocialResult[]> {
-  const url = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+  // filters=ex1:"ez1" enforces Past 24 Hours on Bing
+  const url = `https://www.bing.com/search?q=${encodeURIComponent(query)}&filters=ex1%3a%22ez1%22`;
   const res = await fetchWithTimeout(url, {
     timeoutMs: 9000,
     maxRetries: 0,
@@ -563,64 +624,59 @@ async function searchBingSocial(
     if (!href || !href.startsWith("http")) return;
     if (!isValidSocialLeadUrl(href)) return;
     if (seen.has(href)) return;
-    seen.add(href);
 
     const snippet = $(el).find(".result__snippet, .b_caption p").text().trim().replace(/\s+/g, " ");
     if (!snippet && !title) return;
+
+    const parsedAge = parseFreshnessHoursFromText(`${title} ${snippet}`);
+    const ageHours = parsedAge !== null ? parsedAge : 18;
+    if (ageHours > 72) return;
+
+    seen.add(href);
+    const tier = classifyFreshnessTier(ageHours);
+    if (tier === "STALE") return;
 
     results.push({
       title,
       url: href,
       snippet,
       platform: detectPlatformFromUrl(href, defaultPlatform),
+      publishedAt: new Date(Date.now() - ageHours * 3600_000).toISOString(),
+      ageHours,
+      freshnessTier: tier,
     });
   });
 
   return results;
 }
 
+/**
+ * Queries Reddit's live JSON feed sorted by `new` (`t=week` filtered by exact `created_utc` <= 72 hours).
+ * Every Reddit post has an exact Unix timestamp (`created_utc`), so we can verify 1h–12h, 24h, or <=72h (3 days) precision!
+ */
 async function searchRedditJsonApi(
   serviceCategory: IntentServiceCategory,
   region: IntentRegion,
-  limit = 10
+  limit = 20
 ): Promise<RawSocialResult[]> {
-  // Query specifically inside B2B / entrepreneur / marketing / webdev subreddits
-  const subredditMap: Record<IntentServiceCategory, { sub: string; q: string }> = {
-    SEO: {
-      sub: "smallbusiness+entrepreneur+startups+SEO+bigseo+digital_marketing+india+dubai",
-      q: `"SEO agency" OR "recommend SEO" OR "hire SEO" OR "looking for SEO"`,
-    },
-    WEB_DEV: {
-      sub: "smallbusiness+entrepreneur+startups+ecommerce+web_design+india+dubai",
-      q: `"website redesign" OR "web development agency" OR "web design agency" OR "looking for web developer"`,
-    },
-    AI_VIDEO: {
-      sub: "smallbusiness+entrepreneur+startups+marketing+advertising+ecommerce",
-      q: `"video production agency" OR "product video" OR "AI video agency" OR "explainer video"`,
-    },
-    AEO_GEO: {
-      sub: "SEO+bigseo+digital_marketing+startups+entrepreneur+dubai",
-      q: `"Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "SEO agency Dubai"`,
-    },
-    PAID_MEDIA: {
-      sub: "smallbusiness+entrepreneur+PPC+marketing+ecommerce+startups",
-      q: `"Google Ads agency" OR "performance marketing agency" OR "Meta ads agency" OR "hire PPC"`,
-    },
-    BRANDING: {
-      sub: "smallbusiness+entrepreneur+startups+marketing+branding",
-      q: `"branding agency" OR "social media agency" OR "creative agency"`,
-    },
+  const queryMap: Record<IntentServiceCategory, string> = {
+    SEO: `("looking for" OR "recommend" OR "hire" OR "need") ("SEO agency" OR "SEO consultant" OR "SEO company" OR "SEO help" OR "local SEO")`,
+    WEB_DEV: `("looking for" OR "recommend" OR "need" OR "hire") ("website redesign" OR "web development" OR "web design" OR "website built" OR "shopify developer")`,
+    AI_VIDEO: `("looking for" OR "recommend" OR "hire") ("video production" OR "AI video" OR "explainer video" OR "product video" OR "ad video")`,
+    AEO_GEO: `("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AI search" OR "SEO Dubai" OR "marketing agency Dubai" OR "rank in ChatGPT")`,
+    PAID_MEDIA: `("looking for" OR "recommend" OR "hire") ("Google Ads" OR "performance marketing" OR "Meta ads" OR "Facebook ads agency" OR "PPC agency")`,
+    BRANDING: `("looking for" OR "recommend" OR "hire") ("branding agency" OR "social media agency" OR "creative agency" OR "social media manager")`,
   };
 
-  const spec = subredditMap[serviceCategory] || subredditMap.SEO;
-  const url = `https://www.reddit.com/r/${spec.sub}/search.json?q=${encodeURIComponent(spec.q)}&restrict_sr=on&sort=new&t=month&limit=${limit}`;
+  const q = queryMap[serviceCategory] || queryMap.SEO;
+  const url = `https://www.reddit.com/search.json?q=${encodeURIComponent(q)}&sort=new&t=week&limit=${limit}`;
 
   try {
     const res = await fetchWithTimeout(url, {
       timeoutMs: 8000,
       maxRetries: 0,
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; DGS-BuyerIntentRadar/8.13; +https://www.dgeniussolutions.com)",
+        "User-Agent": "DGS-BuyerIntentRadar/8.13 (https://www.dgeniussolutions.com)",
         Accept: "application/json",
       },
     });
@@ -628,21 +684,37 @@ async function searchRedditJsonApi(
     const data: any = JSON.parse(res.text);
     const children = data?.data?.children || [];
     const results: RawSocialResult[] = [];
+    const nowSec = Math.floor(Date.now() / 1000);
 
     for (const child of children) {
       const post = child?.data;
       if (!post || !post.permalink) continue;
+
+      const createdUtc = Number(post.created_utc || 0);
+      if (!createdUtc) continue;
+
+      const ageHours = Math.max(1, Math.round((nowSec - createdUtc) / 3600));
+      // STRICT FRESHNESS REQUIREMENT: Reject any post older than 72 hours (3 days)!
+      if (ageHours > 72) continue;
+
+      const tier = classifyFreshnessTier(ageHours);
+      if (tier === "STALE") continue;
+
       const title = String(post.title || "").trim();
       const selftext = String(post.selftext || "").trim();
       const author = String(post.author || "").trim();
-      const subreddit = String(post.subreddit_name_prefixed || "r/smallbusiness").trim();
+      const subreddit = String(post.subreddit_name_prefixed || "r/business").trim();
       const fullUrl = `https://www.reddit.com${post.permalink}`;
       if (!isValidSocialLeadUrl(fullUrl)) continue;
+
       results.push({
         title: `${title} (${subreddit} by u/${author})`,
         url: fullUrl,
-        snippet: selftext ? selftext.slice(0, 700) : title,
+        snippet: selftext ? selftext.slice(0, 800) : title,
         platform: "REDDIT",
+        publishedAt: new Date(createdUtc * 1000).toISOString(),
+        ageHours,
+        freshnessTier: tier,
       });
     }
     return results;
@@ -668,8 +740,9 @@ export type EvaluatedLeadCandidate = {
 };
 
 /**
- * Fast deterministic pre-filter + scoring before/alongside Gemini 2.5 qualification.
- * Protects against false positives (job seekers, agency self-promotions, non-B2B consumer posts).
+ * Strict Buyer-Intent Pre-Filter + Scoring.
+ * Rejects cold discussions, job seekers, and competing agency self-promotions.
+ * Requires genuine buyer-intent signals (actively seeking an agency, consultant, quote, or service partner).
  */
 export function evaluateCandidateHeuristically(input: {
   title: string;
@@ -679,11 +752,11 @@ export function evaluateCandidateHeuristically(input: {
   defaultRegion?: IntentRegion;
   authorName?: string | null;
   authorRole?: string | null;
+  ageHours?: number;
 }): EvaluatedLeadCandidate {
   const combined = `${input.title || ""} ${input.text || ""}`.trim();
   const lower = combined.toLowerCase();
 
-  // Extract author from LinkedIn title if not explicitly provided
   let authorName = input.authorName || null;
   let authorRole = input.authorRole || null;
   if (!authorName && input.url.includes("linkedin.com")) {
@@ -697,41 +770,37 @@ export function evaluateCandidateHeuristically(input: {
     if (m && m[1]) authorName = m[1];
   }
 
-  // Detect contact hints (email or phone or "DM me")
   const emailMatch = combined.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
   const contactHint = emailMatch
     ? emailMatch[0]
-    : /dm me|drop your portfolio|comment below|send portfolio|inbox me/i.test(combined)
-      ? "Requested DM / Portfolio in Comments"
+    : /dm me|drop your portfolio|comment below|send portfolio|inbox me|send me a dm|rip my inbox/i.test(combined)
+      ? "Requested DM / Portfolio in Post"
       : null;
 
-  // Require at least one explicit B2B digital service keyword in the post
   const hasExplicitB2bServiceMention =
-    /\b(seo|search engine optimization|aeo|answer engine|generative engine|web development|web design|website redesign|website development|next\.?js|wordpress|shopify|video production|ai video|brand film|ad film|explainer video|performance marketing|google ads|meta ads|digital marketing agency|marketing agency|branding agency|social media agency|creative agency)\b/i.test(
+    /\b(seo|search engine optimization|aeo|answer engine|generative engine|web development|web design|website redesign|website development|next\.?js|wordpress|shopify|video production|ai video|brand film|ad film|explainer video|performance marketing|google ads|meta ads|facebook ads|ppc|digital marketing|marketing agency|branding agency|social media agency|social media manager|creative agency|website maintenance|website amc)\b/i.test(
       lower
     );
 
-  // Detect service category (strictly word-boundary matched, never matching 'geo' inside 'george')
   let serviceCategory: IntentServiceCategory = input.defaultService || "SEO";
   if (/\b(aeo|answer engine|generative engine|ai overview|llm seo|chatgpt ranking|seo agency dubai|digital marketing dubai)\b/i.test(lower)) {
     serviceCategory = "AEO_GEO";
   } else if (/\b(ai video|video production|brand film|ad film|explainer video|commercial video|product video)\b/i.test(lower)) {
     serviceCategory = "AI_VIDEO";
-  } else if (/\b(web development|website redesign|web design|next\.?js|wordpress|shopify|website amc|landing page|build a website)\b/i.test(lower)) {
+  } else if (/\b(web development|website redesign|web design|next\.?js|wordpress|shopify|website amc|website maintenance|landing page|build a website)\b/i.test(lower)) {
     serviceCategory = "WEB_DEV";
-  } else if (/\b(google ads|meta ads|performance marketing|paid media|ppc|lead generation agency|roas)\b/i.test(lower)) {
+  } else if (/\b(google ads|meta ads|facebook ads|performance marketing|paid media|ppc|lead generation agency|roas)\b/i.test(lower)) {
     serviceCategory = "PAID_MEDIA";
-  } else if (/\b(branding agency|brand identity|social media agency|social media management|creative agency)\b/i.test(lower)) {
+  } else if (/\b(branding agency|brand identity|social media agency|social media management|social media manager|creative agency)\b/i.test(lower)) {
     serviceCategory = "BRANDING";
-  } else if (/\b(seo|search engine optimization|backlink|organic traffic|search ranking)\b/i.test(lower)) {
+  } else if (/\b(seo|search engine optimization|backlink|organic traffic|search ranking|local seo)\b/i.test(lower)) {
     serviceCategory = "SEO";
   }
 
-  // Detect region
   let targetRegion: IntentRegion = input.defaultRegion || "GLOBAL";
   if (/\b(dubai|uae|abu dhabi|sharjah|mena|middle east)\b/i.test(lower)) {
     targetRegion = "UAE_DUBAI";
-  } else if (/\b(mumbai|india|bangalore|bengaluru|delhi|gurgaon|pune|hyderabad|chennai)\b/i.test(lower)) {
+  } else if (/\b(mumbai|india|navi mumbai|bangalore|bengaluru|delhi|gurgaon|pune|hyderabad|chennai)\b/i.test(lower)) {
     targetRegion = "INDIA";
   } else if (/\b(uk|london|united kingdom|manchester)\b/i.test(lower)) {
     targetRegion = "UK";
@@ -739,18 +808,18 @@ export function evaluateCandidateHeuristically(input: {
     targetRegion = "USA";
   }
 
-  // Check for Job Seeker signals (Negative)
+  // Reject Job Seekers & Freelancers pitching themselves ("for hire", "[for hire]", "hire me")
   const isJobSeeker =
-    /\b(open to work|#opentowork|looking for a job|looking for a full-time|looking for an internship|my resume|hire me|applying for|seeking a role)\b/i.test(
+    /\b(open to work|#opentowork|\[for hire\]|for hire:|looking for a job|looking for a full-time|looking for an internship|my resume|hire me|applying for|seeking a role|i offer seo|i am a freelance|i am an seo|i can build your)\b/i.test(
       lower
     ) ||
     /\b(we are hiring a full-time|job opening|years of experience required|send your cv to hr)\b/i.test(
       lower
     );
 
-  // Check for Competing Agency Self-Promotion or Consumer Entertainment (Negative)
+  // Reject Competing Agencies Promoting Themselves or Consumer Entertainment
   const isSellerPromo =
-    (/\b(we help brands|our agency|contact us today for|book a free consultation with us|dm me for seo|we offer seo|our seo services)\b/i.test(
+    (/\b(we help brands|our agency|contact us today for|book a free consultation with us|dm me for seo|we offer seo|our seo services|case study: how we)\b/i.test(
       lower
     ) &&
       !/\b(looking for an agency|recommend an agency|anyone know a good|need a reliable)\b/i.test(
@@ -758,7 +827,7 @@ export function evaluateCandidateHeuristically(input: {
       )) ||
     /\b(capcut|cracked|watch tv show|season 1|prime video|netflix|torrent)\b/i.test(lower);
 
-  // Check for Strong Buyer Signals (Positive)
+  // Strict High-Intent Buyer Phrases (Must not be cold!)
   const strongBuyerPhrases = [
     "looking for",
     "anyone recommend",
@@ -775,66 +844,60 @@ export function evaluateCandidateHeuristically(input: {
     "who is the best",
     "help with our",
     "redesign our",
-    "need help",
+    "need help with",
     "any recommendations",
     "looking for a vendor",
     "rfp",
     "which agency",
-    "best seo agency",
-    "best web design",
     "hiring an agency",
+    "hire an agency",
     "hire an seo",
     "hire a web",
     "suggestions for",
     "anyone worked with",
-    "worth hiring",
     "how to find a good",
     "need seo",
-    "need website",
+    "need a website",
+    "[hiring]",
   ];
   const matchedBuyerPhrases = strongBuyerPhrases.filter((p) => lower.includes(p));
 
-  const isQuestionOrRequest =
-    combined.includes("?") ||
-    /\b(how do i|should i hire|where to find|advice on hiring|seeking|recommend|suggestion|looking|help)\b/i.test(lower);
+  const hasActiveCommercialQuestion =
+    (combined.includes("?") || /\b(recommend|looking|hire|agency|consultant|partner|quote|budget)\b/i.test(lower)) &&
+    /\b(agency|consultant|partner|company|freelancer|studio|redesign|audit|quote|budget|hire|looking for)\b/i.test(lower);
 
   let classification: IntentClassification = "LOW_INTENT_NOISE";
-  let score = 30;
+  let score = 25;
 
   if (!hasExplicitB2bServiceMention) {
     classification = "LOW_INTENT_NOISE";
     score = 15;
   } else if (isJobSeeker) {
     classification = "JOB_SEEKER";
-    score = 18;
+    score = 15;
   } else if (isSellerPromo) {
     classification = "SELLER_PROMOTION";
-    score = 22;
-  } else if (matchedBuyerPhrases.length > 0) {
+    score = 20;
+  } else if (matchedBuyerPhrases.length > 0 && hasActiveCommercialQuestion) {
     classification = "BUYER_SEEKING_SERVICE";
-    score = 76 + Math.min(20, matchedBuyerPhrases.length * 6);
-    if (contactHint) score = Math.min(98, score + 6);
+    score = 78 + Math.min(18, matchedBuyerPhrases.length * 6);
+    if (contactHint) score = Math.min(99, score + 6);
     if (targetRegion === "INDIA" || targetRegion === "UAE_DUBAI") {
-      score = Math.min(98, score + 4);
+      score = Math.min(99, score + 4);
     }
-  } else if (
-    isQuestionOrRequest &&
-    /\b(agency|consultant|freelancer|partner|vendor|quote|cost|budget|redesign|hire)\b/i.test(lower)
-  ) {
-    classification = "HIGH_INTENT_DISCUSSION";
-    score = 72;
-  } else if (/\b(agency|consultant|services|hire|vendor|client)\b/i.test(lower)) {
-    classification = "HIGH_INTENT_DISCUSSION";
-    score = 64;
+    if (input.ageHours && input.ageHours <= 12) {
+      score = Math.min(99, score + 4); // Ultra-fresh 1h-12h boost
+    }
   } else {
+    // Reject cold general chatter! Only high-intent buyer leads are accepted.
     classification = "LOW_INTENT_NOISE";
-    score = 35;
+    score = 40;
   }
 
   const urgencyLevel: "HIGH" | "MEDIUM" | "LOW" =
-    score >= 82 || /\b(urgent|asap|immediately|this week|finalizing)\b/i.test(lower)
+    score >= 82 || (input.ageHours !== undefined && input.ageHours <= 12)
       ? "HIGH"
-      : score >= 65
+      : score >= 70
         ? "MEDIUM"
         : "LOW";
 
@@ -852,16 +915,19 @@ export function evaluateCandidateHeuristically(input: {
 
   const pitch = servicePitchMap[serviceCategory];
 
-  const suggestedReply = `Hi ${firstName} — saw your post regarding ${serviceCategory.replace("_", " ")}. At D'Genius Solutions, we specialize in ${pitch}. Happy to share relevant case studies and a quick audit tailored to your goals: ${recommendedDgsUrl}`;
+  const suggestedReply = `Hi ${firstName} — saw your post looking for ${serviceCategory.replace("_", " ")} support. At D'Genius Solutions, we specialize in ${pitch}. Happy to share relevant case studies and a quick roadmap tailored to your goals: ${recommendedDgsUrl}`;
 
-  const suggestedDm = `Hi ${firstName}, I came across your recent post looking for ${serviceCategory.replace("_", " ")} support. We lead ${pitch} for growth-focused brands at D'Genius Solutions (${recommendedDgsUrl}). Would you be open to a quick 10-minute chat this week, or can I send over our relevant work samples here?`;
+  const suggestedDm = `Hi ${firstName}, I came across your recent post looking for ${serviceCategory.replace("_", " ")}. We lead ${pitch} for growth-focused brands at D'Genius Solutions (${recommendedDgsUrl}). Would you be open to a quick 10-minute chat this week, or can I send over our relevant work samples here?`;
+
+  const freshnessNote =
+    input.ageHours !== undefined
+      ? `Posted ~${input.ageHours}h ago.`
+      : "Fresh post.";
 
   const aiReasoning =
     classification === "BUYER_SEEKING_SERVICE"
-      ? `Verified buyer-intent signal (${matchedBuyerPhrases.slice(0, 2).join(", ") || "active vendor search"}) seeking ${serviceCategory} in ${targetRegion}.${contactHint ? ` Contact cue: ${contactHint}.` : ""}`
-      : classification === "HIGH_INTENT_DISCUSSION"
-        ? `Commercial evaluation discussion around ${serviceCategory} (${targetRegion}). Good opportunity for consultative outreach.`
-        : `Filtered as ${classification} (non-buyer post).`;
+      ? `${freshnessNote} Verified buyer-intent signal (${matchedBuyerPhrases.slice(0, 2).join(", ")}) actively seeking ${serviceCategory} in ${targetRegion}.${contactHint ? ` Contact cue: ${contactHint}.` : ""}`
+      : `Filtered out (${classification} — cold or non-buyer post).`;
 
   return {
     classification,
@@ -880,49 +946,51 @@ export function evaluateCandidateHeuristically(input: {
   };
 }
 
-/**
- * Refines top candidate leads with Gemini 2.5 Flash when GEMINI_API_KEY is configured.
- * Strictly bounded timeout (8 seconds) so cron and interactive scans never hang.
- */
 export async function qualifyWithGeminiIfAvailable(
   input: {
     title: string;
     text: string;
     url: string;
     platform: IntentSourcePlatform;
+    ageHours?: number;
   },
   heuristic: EvaluatedLeadCandidate
 ): Promise<EvaluatedLeadCandidate> {
   const apiKey = (process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || "").trim();
   if (!apiKey || apiKey.length < 10) return heuristic;
-
-  // Don't waste tokens on obvious job seekers or noise
-  if (heuristic.intentScore < 55) return heuristic;
+  if (heuristic.intentScore < 70) return heuristic;
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
-  const prompt = `You are the Lead Qualification AI for D'Genius Solutions (https://www.dgeniussolutions.com), a digital growth, SEO/AEO/GEO, Website Development & AMC, AI Video Production, and Branding agency operating in Mumbai (India), Dubai (UAE), and globally.
+  const prompt = `You are the strict Buyer-Intent Lead Qualifier for D'Genius Solutions (https://www.dgeniussolutions.com), a digital agency offering:
+- SEO (/services/seo/)
+- AEO / GEO / AI Search Optimization (/services/aeo-geo-aio/)
+- Website Development & Website Maintenance AMC (/services/website-development/ & /services/website-maintenance-amc/)
+- AI Video Production & Commercial Brand Films (/services/ai-video-production-agency/)
+- Digital & Performance Marketing (/services/digital-marketing/)
+- Branding & Social Media Marketing (/services/branding/ & /services/social-media-marketing/)
 
-Analyze this social/web post and determine if the author is a genuine prospective BUYER looking for an agency/service provider, or if they are a seller promoting their own services / a job seeker.
+STRICT RULE: We ONLY want warm/hot BUYER-INTENT leads (people/businesses actively asking for agency recommendations, looking to hire an agency/consultant/partner, or needing help with their company's SEO, website, video production, or marketing).
+Reject cold general chatter, reject freelancers pitching themselves ("[For Hire]"), reject job seekers, and reject competing agencies promoting their own services.
 
-POST PLATFORM: ${input.platform}
+POST PLATFORM: ${input.platform} (Age: ~${input.ageHours ?? 12} hours old)
 POST URL: ${input.url}
 POST TITLE: ${input.title}
 POST TEXT: ${input.text.slice(0, 1200)}
 
-Return ONLY valid JSON matching this schema:
+Return ONLY valid JSON:
 {
-  "classification": "BUYER_SEEKING_SERVICE" | "HIGH_INTENT_DISCUSSION" | "SELLER_PROMOTION" | "JOB_SEEKER" | "LOW_INTENT_NOISE",
-  "intentScore": number (0 to 100),
+  "classification": "BUYER_SEEKING_SERVICE" | "SELLER_PROMOTION" | "JOB_SEEKER" | "LOW_INTENT_NOISE",
+  "intentScore": number (0 to 100, give 75-98 ONLY if genuine buyer/prospect seeking service/advice on hiring),
   "urgencyLevel": "HIGH" | "MEDIUM" | "LOW",
   "serviceCategory": "SEO" | "WEB_DEV" | "AI_VIDEO" | "AEO_GEO" | "PAID_MEDIA" | "BRANDING",
   "targetRegion": "INDIA" | "UAE_DUBAI" | "USA" | "UK" | "GLOBAL",
   "authorName": string or null,
   "authorRole": string or null,
   "companyName": string or null,
-  "aiReasoning": "1-2 sentence explanation of why this is or isn't a buyer lead",
-  "suggestedReply": "Short, high-value public comment reply (max 280 chars) mentioning D'Genius Solutions naturally",
-  "suggestedDm": "Personalized LinkedIn/direct message (max 450 chars)"
+  "aiReasoning": "1-2 sentence explanation of the prospect's specific requirement and why they have buyer intent",
+  "suggestedReply": "Warm, consultative comment reply (max 280 chars) referencing their exact requirement",
+  "suggestedDm": "Personalized direct message (max 450 chars)"
 }`;
 
   try {
@@ -934,7 +1002,7 @@ Return ONLY valid JSON matching this schema:
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.2,
+          temperature: 0.15,
           responseMimeType: "application/json",
         },
       }),
@@ -978,8 +1046,7 @@ Return ONLY valid JSON matching this schema:
 }
 
 /**
- * Saves a qualified signal to `intent_lead_signals` (idempotent on `url_hash`).
- * Returns `{ inserted: boolean, id: string, signal: EvaluatedLeadCandidate }`.
+ * Saves a qualified signal exclusively to `intent_lead_signals` (NEVER touches the public `leads` form table).
  */
 export async function upsertIntentLeadSignal(input: {
   sourcePlatform: IntentSourcePlatform;
@@ -991,12 +1058,22 @@ export async function upsertIntentLeadSignal(input: {
   authorRole?: string | null;
   authorProfileUrl?: string | null;
   publishedAt?: string | null;
+  ageHours?: number;
+  freshnessTier?: FreshnessTier;
   evaluated: EvaluatedLeadCandidate;
 }): Promise<{ inserted: boolean; id: string }> {
   if (!isCmsDatabaseConfigured()) {
     return { inserted: false, id: randomUUID() };
   }
   await ensureIntentLeadTables();
+
+  const ageHours = input.ageHours ?? 6;
+  // Strictly enforce <= 72 hours (3 days max)
+  if (ageHours > 72) {
+    return { inserted: false, id: "skipped_stale" };
+  }
+  const freshnessTier: FreshnessTier =
+    input.freshnessTier || (ageHours <= 12 ? "1H_12H" : ageHours <= 24 ? "24H" : "3D");
 
   const urlHash = computeUrlHash(input.postUrl, input.postText);
 
@@ -1010,6 +1087,8 @@ export async function upsertIntentLeadSignal(input: {
   }
 
   const id = `ils_${randomUUID().replace(/-/g, "").slice(0, 20)}`;
+  const publishedDate = input.publishedAt ? new Date(input.publishedAt) : new Date(Date.now() - ageHours * 3600_000);
+
   await cmsExecute(
     `INSERT INTO intent_lead_signals (
       id, url_hash, source_platform, post_url, post_title, post_text,
@@ -1017,8 +1096,8 @@ export async function upsertIntentLeadSignal(input: {
       service_category, target_region, discovery_query,
       intent_classification, intent_score, urgency_level,
       ai_reasoning, suggested_reply, suggested_dm, recommended_dgs_url,
-      status, published_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'NEW', ?)`,
+      status, published_at, age_hours, freshness_tier
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'NEW', ?, ?, ?)`,
     [
       id,
       urlHash,
@@ -1041,7 +1120,9 @@ export async function upsertIntentLeadSignal(input: {
       input.evaluated.suggestedReply,
       input.evaluated.suggestedDm,
       input.evaluated.recommendedDgsUrl,
-      input.publishedAt || null,
+      publishedDate,
+      ageHours,
+      freshnessTier,
     ]
   );
 
@@ -1049,9 +1130,9 @@ export async function upsertIntentLeadSignal(input: {
 }
 
 /**
- * Executes a time-bounded Buyer-Intent Lead Discovery Run across LinkedIn Public Posts,
- * Reddit Buyer Threads, X, and Web Forums.
- * Strictly bounded to 32 seconds so cron and manual UI calls always complete cleanly.
+ * Executes a Fresh Buyer-Intent Lead Discovery Run (strictly 1h–12h, 24h, and <=3 days old,
+ * and strictly high-intent buyers — zero cold posts, zero form submissions).
+ * Automatically sends an email notification whenever new buyer-intent leads are fetched.
  */
 export async function runIntentLeadDiscovery(options?: {
   runType?: "CRON" | "MANUAL" | "SERVICE_FILTER";
@@ -1076,6 +1157,11 @@ export async function runIntentLeadDiscovery(options?: {
 
   if (isCmsDatabaseConfigured()) {
     await ensureIntentLeadTables();
+    // Auto-prune any leads older than 4 days that are still untouched so the vault stays 100% fresh
+    await cmsExecute(
+      `DELETE FROM intent_lead_signals WHERE status = 'NEW' AND discovered_at < DATE_SUB(NOW(), INTERVAL 4 DAY)`
+    ).catch(() => {});
+
     await cmsExecute(
       `INSERT INTO intent_lead_discovery_runs (id, run_type, started_at, status) VALUES (?, ?, ?, 'RUNNING')`,
       [runId, runType, startedAt]
@@ -1088,25 +1174,16 @@ export async function runIntentLeadDiscovery(options?: {
   let rejectedNoiseCount = 0;
   let emailsSent = 0;
   const newlyInsertedForEmail: IntentLeadEmailItem[] = [];
-  const errors: string[] = [];
 
   try {
-    // Select rotating subset of queries so every run covers LinkedIn + Reddit + Web within the 32s budget
-    const pool = options?.serviceFilter
-      ? DISCOVERY_QUERY_POOL.filter((q) => q.serviceCategory === options.serviceFilter)
-      : DISCOVERY_QUERY_POOL;
-
-    const hourOffset = new Date().getUTCHours() % Math.max(1, pool.length);
-    const orderedQueries = [...pool.slice(hourOffset), ...pool.slice(0, hourOffset)].slice(0, 5);
-
-    // 1. Run Reddit JSON API search for fresh buyer-intent discussions
     const targetCategories: IntentServiceCategory[] = options?.serviceFilter
       ? [options.serviceFilter]
-      : ["SEO", "WEB_DEV", "AI_VIDEO", "AEO_GEO"];
+      : ["SEO", "WEB_DEV", "AI_VIDEO", "AEO_GEO", "PAID_MEDIA", "BRANDING"];
 
-    for (const cat of targetCategories.slice(0, 3)) {
+    // 1. Fresh Reddit Buyer-Intent Search (Exact created_utc <= 72h, prioritizing 1h-12h and 24h)
+    for (const cat of targetCategories.slice(0, 4)) {
       if (Date.now() - startMs > BUDGET_MS - 8000) break;
-      const redditResults = await searchRedditJsonApi(cat, "GLOBAL", 8);
+      const redditResults = await searchRedditJsonApi(cat, "GLOBAL", 20);
       queriesExecuted++;
       rawCandidatesFound += redditResults.length;
 
@@ -1116,31 +1193,23 @@ export async function runIntentLeadDiscovery(options?: {
           text: r.snippet,
           url: r.url,
           defaultService: cat,
+          ageHours: r.ageHours,
         });
 
-        if (
-          heuristic.classification === "JOB_SEEKER" ||
-          heuristic.classification === "SELLER_PROMOTION" ||
-          heuristic.intentScore < 52
-        ) {
+        if (heuristic.classification !== "BUYER_SEEKING_SERVICE" || heuristic.intentScore < 72) {
           rejectedNoiseCount++;
           continue;
         }
 
         const evaluated =
-          Date.now() - startMs < BUDGET_MS - 9000 && newlyInsertedForEmail.length < 3
+          Date.now() - startMs < BUDGET_MS - 9000 && newlyInsertedForEmail.length < 4
             ? await qualifyWithGeminiIfAvailable(
-                { title: r.title, text: r.snippet, url: r.url, platform: "REDDIT" },
+                { title: r.title, text: r.snippet, url: r.url, platform: "REDDIT", ageHours: r.ageHours },
                 heuristic
               )
             : heuristic;
 
-        if (
-          evaluated.classification === "JOB_SEEKER" ||
-          evaluated.classification === "SELLER_PROMOTION" ||
-          evaluated.classification === "LOW_INTENT_NOISE" ||
-          evaluated.intentScore < 52
-        ) {
+        if (evaluated.classification !== "BUYER_SEEKING_SERVICE" || evaluated.intentScore < 72) {
           rejectedNoiseCount++;
           continue;
         }
@@ -1150,7 +1219,10 @@ export async function runIntentLeadDiscovery(options?: {
           postUrl: r.url,
           postTitle: r.title,
           postText: r.snippet,
-          discoveryQuery: `Reddit buyer search (${cat})`,
+          discoveryQuery: `Fresh <72h buyer search (${cat})`,
+          publishedAt: r.publishedAt,
+          ageHours: r.ageHours,
+          freshnessTier: r.freshnessTier,
           evaluated,
         });
 
@@ -1158,10 +1230,10 @@ export async function runIntentLeadDiscovery(options?: {
           qualifiedLeadsAdded++;
           newlyInsertedForEmail.push({
             id: upserted.id,
-            sourcePlatform: "REDDIT",
+            sourcePlatform: `REDDIT (${r.ageHours}h ago)`,
             postUrl: r.url,
-            authorName: evaluated.authorName || "Reddit Founder / Buyer",
-            authorRole: evaluated.authorRole || "",
+            authorName: evaluated.authorName || "Active Service Buyer",
+            authorRole: evaluated.authorRole || `Posted ${r.ageHours}h ago`,
             companyName: evaluated.companyName || "",
             serviceCategory: evaluated.serviceCategory,
             targetRegion: evaluated.targetRegion,
@@ -1176,7 +1248,13 @@ export async function runIntentLeadDiscovery(options?: {
       }
     }
 
-    // 2. Run Public LinkedIn & Web Search Dorks (DuckDuckGo + Bing fallback)
+    // 2. Public LinkedIn & X Fresh 24h Search
+    const pool = options?.serviceFilter
+      ? DISCOVERY_QUERY_POOL.filter((q) => q.serviceCategory === options.serviceFilter)
+      : DISCOVERY_QUERY_POOL;
+    const hourOffset = new Date().getUTCHours() % Math.max(1, pool.length);
+    const orderedQueries = [...pool.slice(hourOffset), ...pool.slice(0, hourOffset)].slice(0, 4);
+
     for (const spec of orderedQueries) {
       if (Date.now() - startMs > BUDGET_MS - 6000) break;
 
@@ -1194,31 +1272,23 @@ export async function runIntentLeadDiscovery(options?: {
           url: r.url,
           defaultService: spec.serviceCategory,
           defaultRegion: spec.region,
+          ageHours: r.ageHours,
         });
 
-        if (
-          heuristic.classification === "JOB_SEEKER" ||
-          heuristic.classification === "SELLER_PROMOTION" ||
-          heuristic.intentScore < 52
-        ) {
+        if (heuristic.classification !== "BUYER_SEEKING_SERVICE" || heuristic.intentScore < 72) {
           rejectedNoiseCount++;
           continue;
         }
 
         const evaluated =
-          Date.now() - startMs < BUDGET_MS - 9000 && newlyInsertedForEmail.length < 4
+          Date.now() - startMs < BUDGET_MS - 9000 && newlyInsertedForEmail.length < 5
             ? await qualifyWithGeminiIfAvailable(
-                { title: r.title, text: r.snippet, url: r.url, platform: r.platform },
+                { title: r.title, text: r.snippet, url: r.url, platform: r.platform, ageHours: r.ageHours },
                 heuristic
               )
             : heuristic;
 
-        if (
-          evaluated.classification === "JOB_SEEKER" ||
-          evaluated.classification === "SELLER_PROMOTION" ||
-          evaluated.classification === "LOW_INTENT_NOISE" ||
-          evaluated.intentScore < 52
-        ) {
+        if (evaluated.classification !== "BUYER_SEEKING_SERVICE" || evaluated.intentScore < 72) {
           rejectedNoiseCount++;
           continue;
         }
@@ -1229,6 +1299,9 @@ export async function runIntentLeadDiscovery(options?: {
           postTitle: r.title,
           postText: r.snippet || r.title,
           discoveryQuery: spec.query,
+          publishedAt: r.publishedAt,
+          ageHours: r.ageHours,
+          freshnessTier: r.freshnessTier,
           evaluated,
         });
 
@@ -1236,10 +1309,10 @@ export async function runIntentLeadDiscovery(options?: {
           qualifiedLeadsAdded++;
           newlyInsertedForEmail.push({
             id: upserted.id,
-            sourcePlatform: r.platform,
+            sourcePlatform: `${r.platform} (~${r.ageHours}h old)`,
             postUrl: r.url,
-            authorName: evaluated.authorName || "LinkedIn / Web Prospect",
-            authorRole: evaluated.authorRole || "",
+            authorName: evaluated.authorName || "LinkedIn Prospect",
+            authorRole: evaluated.authorRole || `Posted ~${r.ageHours}h ago`,
             companyName: evaluated.companyName || "",
             serviceCategory: evaluated.serviceCategory,
             targetRegion: evaluated.targetRegion,
@@ -1254,34 +1327,28 @@ export async function runIntentLeadDiscovery(options?: {
       }
     }
 
-    // 3. Send Email Digest if new high-intent leads were discovered
+    // 3. Always send Email Notification when new Buyer-Intent Leads are fetched!
     if (options?.sendEmailDigest !== false && newlyInsertedForEmail.length > 0) {
-      const highIntentForEmail = newlyInsertedForEmail
-        .filter((l) => l.intentScore >= 68)
-        .sort((a, b) => b.intentScore - a.intentScore);
-
-      if (highIntentForEmail.length > 0) {
-        const emailRes = await sendIntentLeadsDigestEmail({
-          runType,
-          leads: highIntentForEmail,
-          totalChecked: rawCandidatesFound,
-        });
-        if (emailRes.sent) {
-          emailsSent = 1;
-          const ids = highIntentForEmail.map((l) => l.id);
-          for (const id of ids) {
-            await cmsExecute(
-              `UPDATE intent_lead_signals SET notified_at = NOW() WHERE id = ?`,
-              [id]
-            ).catch(() => {});
-          }
+      const sortedLeads = newlyInsertedForEmail.sort((a, b) => b.intentScore - a.intentScore);
+      const emailRes = await sendIntentLeadsDigestEmail({
+        runType,
+        leads: sortedLeads,
+        totalChecked: rawCandidatesFound,
+      });
+      if (emailRes.sent) {
+        emailsSent = 1;
+        for (const item of sortedLeads) {
+          await cmsExecute(
+            `UPDATE intent_lead_signals SET notified_at = NOW() WHERE id = ?`,
+            [item.id]
+          ).catch(() => {});
         }
       }
     }
 
     const completedAt = new Date();
     const durationMs = Math.max(0, completedAt.getTime() - startMs);
-    const summaryText = `Executed ${queriesExecuted} discovery queries across LinkedIn, Reddit & Web. Evaluated ${rawCandidatesFound} posts, qualified ${qualifiedLeadsAdded} new buyer-intent leads, filtered ${rejectedNoiseCount} job-seeker/promo posts.`;
+    const summaryText = `Executed ${queriesExecuted} fresh (<72h) queries across LinkedIn, Reddit & Web. Evaluated ${rawCandidatesFound} recent posts, qualified ${qualifiedLeadsAdded} warm buyer-intent leads, rejected ${rejectedNoiseCount} cold/job-seeker posts.${emailsSent ? " Email alert sent!" : ""}`;
 
     if (isCmsDatabaseConfigured()) {
       await cmsExecute(
@@ -1320,7 +1387,6 @@ export async function runIntentLeadDiscovery(options?: {
     const completedAt = new Date();
     const durationMs = Math.max(0, completedAt.getTime() - startMs);
     const errorMsg = String(err?.message || err);
-    errors.push(errorMsg);
 
     if (isCmsDatabaseConfigured()) {
       await cmsExecute(
@@ -1358,8 +1424,9 @@ export async function runIntentLeadDiscovery(options?: {
 }
 
 /**
- * Ingests a batch of posts captured directly from the user's personal LinkedIn feed
- * or LinkedIn search results via the DGS LinkedIn Feed Companion Bookmarklet / Extension.
+ * Ingests posts captured from the user's personal LinkedIn feed/search via the browser bookmarklet
+ * (Zero LinkedIn credentials or cookies ever shared with the server).
+ * Enforces strict freshness (1h–12h, 24h, <=3 days) and automatically emails you when leads are fetched!
  */
 export async function ingestLinkedInFeedPosts(
   posts: Array<{
@@ -1369,8 +1436,9 @@ export async function ingestLinkedInFeedPosts(
     authorProfileUrl?: string;
     postText: string;
     publishedAt?: string;
+    ageText?: string;
   }>,
-  sendDigest = false
+  sendDigest = true
 ): Promise<{
   received: number;
   qualifiedAdded: number;
@@ -1382,6 +1450,7 @@ export async function ingestLinkedInFeedPosts(
     serviceCategory: IntentServiceCategory;
     intentScore: number;
     classification: IntentClassification;
+    ageHours: number;
   }>;
 }> {
   await ensureIntentLeadTables();
@@ -1395,12 +1464,27 @@ export async function ingestLinkedInFeedPosts(
     serviceCategory: IntentServiceCategory;
     intentScore: number;
     classification: IntentClassification;
+    ageHours: number;
   }> = [];
   const emailItems: IntentLeadEmailItem[] = [];
 
   for (const post of posts.slice(0, 40)) {
     const text = String(post.postText || "").trim();
     if (text.length < 25) continue;
+
+    // Parse post age from LinkedIn timestamp badge ("3h", "1d", "2w")
+    const parsedAge = parseFreshnessHoursFromText(`${post.ageText || ""} ${text.slice(0, 120)}`);
+    const ageHours = parsedAge !== null ? parsedAge : 4;
+    if (ageHours > 72) {
+      skippedNoise++;
+      continue;
+    }
+
+    const freshnessTier = classifyFreshnessTier(ageHours);
+    if (freshnessTier === "STALE") {
+      skippedNoise++;
+      continue;
+    }
 
     const postUrl =
       post.postUrl && post.postUrl.startsWith("http")
@@ -1413,13 +1497,10 @@ export async function ingestLinkedInFeedPosts(
       url: postUrl,
       authorName: post.authorName || null,
       authorRole: post.authorRole || null,
+      ageHours,
     });
 
-    if (
-      heuristic.classification === "JOB_SEEKER" ||
-      heuristic.classification === "SELLER_PROMOTION" ||
-      heuristic.intentScore < 58
-    ) {
+    if (heuristic.classification !== "BUYER_SEEKING_SERVICE" || heuristic.intentScore < 72) {
       skippedNoise++;
       continue;
     }
@@ -1432,16 +1513,13 @@ export async function ingestLinkedInFeedPosts(
               text,
               url: postUrl,
               platform: "LINKEDIN_FEED",
+              ageHours,
             },
             heuristic
           )
         : heuristic;
 
-    if (
-      evaluated.classification === "JOB_SEEKER" ||
-      evaluated.classification === "SELLER_PROMOTION" ||
-      evaluated.intentScore < 58
-    ) {
+    if (evaluated.classification !== "BUYER_SEEKING_SERVICE" || evaluated.intentScore < 72) {
       skippedNoise++;
       continue;
     }
@@ -1455,7 +1533,9 @@ export async function ingestLinkedInFeedPosts(
       authorRole: evaluated.authorRole || post.authorRole || null,
       authorProfileUrl: post.authorProfileUrl || null,
       discoveryQuery: "Personal LinkedIn Feed Companion",
-      publishedAt: post.publishedAt || null,
+      publishedAt: post.publishedAt || new Date(Date.now() - ageHours * 3600_000).toISOString(),
+      ageHours,
+      freshnessTier,
       evaluated,
     });
 
@@ -1467,10 +1547,11 @@ export async function ingestLinkedInFeedPosts(
         serviceCategory: evaluated.serviceCategory,
         intentScore: evaluated.intentScore,
         classification: evaluated.classification,
+        ageHours,
       });
       emailItems.push({
         id: upserted.id,
-        sourcePlatform: "LINKEDIN_FEED",
+        sourcePlatform: `LINKEDIN_FEED (${ageHours}h old)`,
         postUrl,
         authorName: evaluated.authorName || post.authorName || "LinkedIn Connection",
         authorRole: evaluated.authorRole || post.authorRole || "",
@@ -1489,12 +1570,22 @@ export async function ingestLinkedInFeedPosts(
     }
   }
 
+  // Send immediate email stating the new buyer-intent lead(s) have been fetched into the PIN-protected CMS vault!
   if (sendDigest && emailItems.length > 0) {
-    await sendIntentLeadsDigestEmail({
-      runType: "LINKEDIN_FEED_SYNC",
+    const emailRes = await sendIntentLeadsDigestEmail({
+      runType: "LINKEDIN_FEED_FETCHED",
       leads: emailItems,
       totalChecked: posts.length,
-    }).catch(() => {});
+    }).catch(() => ({ sent: false }));
+
+    if (emailRes.sent) {
+      for (const item of emailItems) {
+        await cmsExecute(
+          `UPDATE intent_lead_signals SET notified_at = NOW() WHERE id = ?`,
+          [item.id]
+        ).catch(() => {});
+      }
+    }
   }
 
   return {
@@ -1506,10 +1597,6 @@ export async function ingestLinkedInFeedPosts(
   };
 }
 
-/**
- * Queries Google Search Console cached query/page metrics (`gsc_page_query_metrics` & `gsc_query_metrics`)
- * to surface real commercial/buyer-intent searches where people on Google are looking for DGS services.
- */
 export async function getGoogleSearchBuyerIntentRadar(): Promise<GoogleBuyerIntentQuery[]> {
   if (!isCmsDatabaseConfigured()) return [];
 
@@ -1556,13 +1643,20 @@ export async function getGoogleSearchBuyerIntentRadar(): Promise<GoogleBuyerInte
       const q = String(r.query_text || "").trim();
       const lower = q.toLowerCase();
       if (!q) continue;
-      // Exclude pure brand navigational queries unless paired with a service
       if (/^(d\s*genius|dgenius|d'genius)(\s+solutions)?$/i.test(q)) continue;
 
       const isHighCommercial =
         /\b(agency|company|services|consultant|studio|partner|hire|cost|pricing|best|top|near me|mumbai|dubai|uae|india)\b/i.test(
           lower
         );
+
+      // Only include queries with commercial/service intent (no cold informational queries)
+      if (
+        !isHighCommercial &&
+        !/\b(seo|aeo|geo|website|web design|web development|amc|video|marketing|branding|social media)\b/i.test(lower)
+      ) {
+        continue;
+      }
 
       let serviceCategory: IntentServiceCategory = "SEO";
       if (/\b(aeo|answer engine|generative engine|geo|dubai)\b/i.test(lower)) {
@@ -1571,7 +1665,7 @@ export async function getGoogleSearchBuyerIntentRadar(): Promise<GoogleBuyerInte
         serviceCategory = "AI_VIDEO";
       } else if (/\b(website|web design|web development|amc|redesign|nextjs|wordpress)\b/i.test(lower)) {
         serviceCategory = "WEB_DEV";
-      } else if (/\b(performance marketing|ppc|google ads|meta ads|lead gen)\b/i.test(lower)) {
+      } else if (/\b(performance marketing|ppc|google ads|meta ads|lead gen|digital marketing)\b/i.test(lower)) {
         serviceCategory = "PAID_MEDIA";
       } else if (/\b(brand|branding|social media|creative)\b/i.test(lower)) {
         serviceCategory = "BRANDING";
@@ -1587,11 +1681,11 @@ export async function getGoogleSearchBuyerIntentRadar(): Promise<GoogleBuyerInte
 
       let recommendedAction = "Monitor SERP CTR & ensure conversion CTA is above the fold.";
       if (pos > 3 && pos <= 15 && impressions >= 5) {
-        recommendedAction = `Striking-distance buyer query (Pos #${pos.toFixed(1)}). Add FAQ schema & publish a LinkedIn case-study post targeting "${q}".`;
+        recommendedAction = `Striking-distance buyer query (Pos #${pos.toFixed(1)}). Publish a LinkedIn post & FAQ block targeting "${q}".`;
       } else if (pos <= 3) {
-        recommendedAction = `Top-3 buyer ranking (Pos #${pos.toFixed(1)}). Ensure instant WhatsApp/audit lead capture is prominent on ${r.page_url}.`;
+        recommendedAction = `Top-3 buyer ranking (Pos #${pos.toFixed(1)}). High-intent Google traffic active on ${r.page_url}.`;
       } else if (pos > 15) {
-        recommendedAction = `Emerging buyer search (Pos #${pos.toFixed(1)}). Build internal links & dedicated comparison section on ${r.page_url}.`;
+        recommendedAction = `Emerging buyer search (Pos #${pos.toFixed(1)}). Strengthen internal links to ${r.page_url}.`;
       }
 
       buyerQueries.push({
@@ -1623,12 +1717,16 @@ export async function listIntentLeadSignals(filters?: {
   status?: string;
   platform?: string;
   serviceCategory?: string;
+  freshness?: string;
   limit?: number;
 }): Promise<IntentLeadSignal[]> {
   if (!isCmsDatabaseConfigured()) return [];
   await ensureIntentLeadTables();
 
-  const where: string[] = [];
+  const where: string[] = [
+    "intent_classification = 'BUYER_SEEKING_SERVICE'",
+    "(age_hours IS NULL OR age_hours <= 72)",
+  ];
   const params: any[] = [];
 
   if (filters?.status && filters.status !== "ALL") {
@@ -1648,15 +1746,24 @@ export async function listIntentLeadSignals(filters?: {
     params.push(filters.serviceCategory);
   }
 
+  if (filters?.freshness === "1H_12H") {
+    where.push("age_hours <= 12");
+  } else if (filters?.freshness === "24H") {
+    where.push("age_hours <= 24");
+  } else if (filters?.freshness === "3D") {
+    where.push("age_hours <= 72");
+  }
+
   const limit = Math.min(200, Math.max(10, Number(filters?.limit || 100)));
   params.push(limit);
 
   const sql = `
     SELECT *
     FROM intent_lead_signals
-    ${where.length > 0 ? `WHERE ${where.join(" AND ")}` : ""}
+    WHERE ${where.join(" AND ")}
     ORDER BY
-      CASE status WHEN 'NEW' THEN 0 WHEN 'CONTACTED' THEN 1 WHEN 'CONVERTED_TO_LEAD' THEN 2 ELSE 3 END ASC,
+      CASE status WHEN 'NEW' THEN 0 WHEN 'CONTACTED' THEN 1 ELSE 2 END ASC,
+      COALESCE(age_hours, 12) ASC,
       intent_score DESC,
       discovered_at DESC
     LIMIT ?
@@ -1678,64 +1785,9 @@ export async function listIntentDiscoveryRuns(limit = 15): Promise<IntentDiscove
 
 export async function updateIntentSignalStatus(
   id: string,
-  status: "NEW" | "CONTACTED" | "CONVERTED_TO_LEAD" | "DISMISSED"
+  status: "NEW" | "CONTACTED" | "ARCHIVED" | "DISMISSED"
 ): Promise<void> {
   if (!isCmsDatabaseConfigured()) return;
   await ensureIntentLeadTables();
   await cmsExecute(`UPDATE intent_lead_signals SET status = ? WHERE id = ?`, [status, id]);
-}
-
-/**
- * Converts a discovered Buyer-Intent Signal into an official CRM Lead in the `leads` table
- * so the sales team can track it through `new -> contacted -> qualified -> won`.
- */
-export async function convertSignalToCrmLead(signalId: string): Promise<{ crmLeadId: string }> {
-  if (!isCmsDatabaseConfigured()) {
-    throw new Error("CMS database is not configured");
-  }
-  await ensureIntentLeadTables();
-
-  const { rows } = await cmsQuery<IntentLeadSignal>(
-    `SELECT * FROM intent_lead_signals WHERE id = ? LIMIT 1`,
-    [signalId]
-  );
-  if (rows.length === 0) {
-    throw new Error("Intent lead signal not found");
-  }
-
-  const sig = rows[0];
-  if (sig.crm_lead_id) {
-    return { crmLeadId: sig.crm_lead_id };
-  }
-
-  const emailHint =
-    sig.contact_hint && sig.contact_hint.includes("@") ? sig.contact_hint : undefined;
-
-  const crmLeadId = await createCmsLead({
-    formKey: `intent_${sig.source_platform.toLowerCase()}`,
-    route: sig.post_url,
-    name: sig.author_name || `${sig.source_platform} Buyer Lead`,
-    email: emailHint,
-    company: sig.company_name || sig.author_role || undefined,
-    payload: {
-      intent_signal_id: sig.id,
-      source_platform: sig.source_platform,
-      service_category: sig.service_category,
-      target_region: sig.target_region,
-      intent_score: sig.intent_score,
-      urgency_level: sig.urgency_level,
-      post_url: sig.post_url,
-      post_text: sig.post_text,
-      ai_reasoning: sig.ai_reasoning,
-      suggested_reply: sig.suggested_reply,
-      suggested_dm: sig.suggested_dm,
-    },
-  });
-
-  await cmsExecute(
-    `UPDATE intent_lead_signals SET status = 'CONVERTED_TO_LEAD', crm_lead_id = ? WHERE id = ?`,
-    [crmLeadId, signalId]
-  );
-
-  return { crmLeadId };
 }

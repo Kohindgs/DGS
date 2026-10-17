@@ -44,12 +44,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await ingestLinkedInFeedPosts(posts, Boolean(body.sendEmailDigest));
+    const result = await ingestLinkedInFeedPosts(
+      posts,
+      body.sendEmailDigest !== false
+    );
 
     return NextResponse.json(
       {
         ok: true,
-        message: `Scanned ${result.received} LinkedIn posts: ${result.qualifiedAdded} new buyer-intent leads qualified & saved (${result.skippedNoise} non-buyer/job-seeker posts filtered, ${result.duplicates} already in CRM).`,
+        message: `Scanned ${result.received} LinkedIn posts: ${result.qualifiedAdded} fresh (<72h) buyer-intent leads qualified & saved to your PIN-protected CMS vault (${result.skippedNoise} cold/stale/job-seeker posts filtered, ${result.duplicates} duplicates).`,
         result,
       },
       { status: 200, headers: CORS_HEADERS }

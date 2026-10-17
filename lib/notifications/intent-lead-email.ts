@@ -59,7 +59,7 @@ export async function sendIntentLeadsDigestEmail(input: {
   const from = process.env.DGS_SMTP_FROM || process.env.DGS_SMTP_USER!;
 
   const topLead = input.leads[0];
-  const subject = `[DGS Buyer-Intent Leads] ${input.leads.length} New Qualified Prospect${input.leads.length > 1 ? "s" : ""} (${topLead.serviceCategory} • ${topLead.sourcePlatform})`;
+  const subject = `[DGS Lead Fetched] ${input.leads.length} Fresh Buyer-Intent Lead${input.leads.length > 1 ? "s" : ""} Fetched (${topLead.serviceCategory} • ${topLead.sourcePlatform})`;
 
   const siteOrigin =
     process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://www.dgeniussolutions.com";
@@ -67,24 +67,24 @@ export async function sendIntentLeadsDigestEmail(input: {
 
   const sections: EmailSection[] = [
     {
-      title: "Discovery Digest Overview",
+      title: "Fresh Buyer-Intent Lead Fetch Summary",
       fields: [
         {
-          label: "Qualified Buyer Leads",
-          value: `${input.leads.length} High-Intent Prospect${input.leads.length > 1 ? "s" : ""}`,
+          label: "Status",
+          value: `${input.leads.length} Fresh High-Intent Lead${input.leads.length > 1 ? "s" : ""} Fetched into CMS Vault`,
           isBadge: true,
           badgeColor: "#059669",
+        },
+        {
+          label: "Freshness Window",
+          value: "Strictly 1h–12h, 24h, or <= 3 Days Old (Stale & cold posts excluded)",
         },
         {
           label: "Discovery Trigger",
           value: input.runType.toUpperCase(),
         },
         {
-          label: "Candidates Evaluated",
-          value: `${input.totalChecked} posts / threads analyzed (Job seekers & competing agency promotions filtered out)`,
-        },
-        {
-          label: "Detected At",
+          label: "Fetched At",
           value: formatAuditDate(new Date()),
         },
       ],
@@ -96,16 +96,16 @@ export async function sendIntentLeadsDigestEmail(input: {
     const badgeColor =
       item.intentScore >= 85
         ? "#dc2626"
-        : item.intentScore >= 70
+        : item.intentScore >= 75
           ? "#ea580c"
           : "#2563eb";
 
     sections.push({
-      title: `#${i + 1} [${item.serviceCategory}] ${item.authorName || "Active Buyer"} (${item.sourcePlatform})`,
+      title: `Lead #${i + 1} Fetched: [${item.serviceCategory}] ${item.authorName || "Active Buyer"} (${item.sourcePlatform})`,
       fields: [
         {
           label: "Buyer Intent Score",
-          value: `${item.intentScore}/100 (${item.urgencyLevel} URGENCY)`,
+          value: `${item.intentScore}/100 (${item.urgencyLevel} URGENCY • WARM BUYER INTENT)`,
           isBadge: true,
           badgeColor,
         },
@@ -116,11 +116,11 @@ export async function sendIntentLeadsDigestEmail(input: {
             .join(" • ") || "View on source platform",
         },
         {
-          label: "Region & Service",
+          label: "Region & DGS Service",
           value: `${item.targetRegion} • ${item.serviceCategory}`,
         },
         {
-          label: "Original Post / Request",
+          label: "Prospect Requirement",
           value: item.postSnippet.slice(0, 360),
         },
         {
@@ -132,7 +132,7 @@ export async function sendIntentLeadsDigestEmail(input: {
           value: item.suggestedReply,
         },
         {
-          label: "Source Post Link",
+          label: "Direct Post Link",
           value: item.postUrl,
         },
       ],
@@ -140,20 +140,20 @@ export async function sendIntentLeadsDigestEmail(input: {
   }
 
   const html = renderDgsEmailHtml({
-    kicker: "DGS BUYER-INTENT RADAR • V8.13",
+    kicker: "DGS PRIVATE BUYER-INTENT VAULT • V8.13",
     statusBadge: {
-      text: `${input.leads.length} NEW QUALIFIED LEADS`,
+      text: `LEAD FETCHED (${input.leads.length})`,
       color: "#ffffff",
-      bg: "#2563eb",
+      bg: "#059669",
     },
-    title: `${input.leads.length} New Buyer-Intent Lead${input.leads.length > 1 ? "s" : ""} Discovered`,
+    title: `New Buyer-Intent Lead${input.leads.length > 1 ? "s" : ""} Fetched Into Your Private CMS Vault`,
     subtitle:
-      "Prospects actively looking for SEO, Website Development, AI Video Production, AEO/GEO, or Digital Marketing services on LinkedIn, Reddit, X & Google.",
+      "Fresh (<72h / 24h / 1h–12h) warm buyer-intent leads looking for D'Genius Solutions services have been fetched and saved exclusively in your PIN-protected CMS section.",
     sections,
-    ctaText: "Open Buyer-Intent Leads Dashboard",
+    ctaText: "Unlock Buyer-Intent Vault in CMS",
     ctaUrl: dashboardUrl,
     note:
-      "D'Genius Solutions Automated Buyer-Intent Lead Engine (V8.13.0). Non-buyer posts, job seekers, and agency self-promotions are automatically filtered out.",
+      "D'Genius Solutions Private Buyer-Intent Lead Vault (V8.13.0). Stored exclusively in your PIN-protected CMS section (never sent via website lead forms).",
   });
 
   try {

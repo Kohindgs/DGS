@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { hasAdminSession } from "@/lib/cms/auth";
 import {
+  INTENT_LEADS_ACCESS_PIN,
   listIntentLeadSignals,
   listIntentDiscoveryRuns,
   getGoogleSearchBuyerIntentRadar,
   getOrCreateIngestToken,
   runIntentLeadDiscovery,
   updateIntentSignalStatus,
-  convertSignalToCrmLead,
   ingestLinkedInFeedPosts,
   LINKEDIN_FEED_PRESET_SEARCHES,
   type IntentServiceCategory,
@@ -16,18 +16,34 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+function verifyPinHeaderOrParam(request: Request, bodyPin?: string): boolean {
+  const headerPin = request.headers.get("x-dgs-intent-pin") || "";
+  const { searchParams } = new URL(request.url);
+  const queryPin = searchParams.get("pin") || "";
+  const supplied = (headerPin || queryPin || bodyPin || "").trim();
+  return supplied === INTENT_LEADS_ACCESS_PIN;
+}
+
 export async function GET(request: Request) {
   if (!(await hasAdminSession())) {
     return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!verifyPinHeaderOrParam(request)) {
+    return NextResponse.json(
+      { ok: false, locked: true, message: "PIN 0215 required to unlock Private Buyer-Intent Vault" },
+      { status: 403 }
+    );
   }
 
   const { searchParams } = new URL(request.url);
   const status = searchParams.get("status") || "ALL";
   const platform = searchParams.get("platform") || "ALL";
   const serviceCategory = searchParams.get("serviceCategory") || "ALL";
+  const freshness = searchParams.get("freshness") || "ALL";
 
   const [signals, runs, googleBuyerQueries, ingestToken] = await Promise.all([
-    listIntentLeadSignals({ status, platform, serviceCategory, limit: 150 }),
+    listIntentLeadSignals({ status, platform, serviceCategory, freshness, limit: 150 }),
     listIntentDiscoveryRuns(15),
     getGoogleSearchBuyerIntentRadar(),
     getOrCreateIngestToken(),
@@ -52,6 +68,40 @@ export async function POST(request: Request) {
     const body = await request.json().catch(() => ({}));
     const action = String(body.action || "discover");
 
+    // Allow explicit PIN verification check
+    if (action === "unlock") {
+      if (!verifyPinHeaderOrParam(request, body.pin)) {
+        return NextResponse.json(
+          { ok: false, locked: true, message: "Invalid PIN. Please enter your 4-digit private vault PIN." },
+          { status: 403 }
+        );
+      }
+
+      const [signals, runs, googleBuyerQueries, ingestToken] = await Promise.all([
+        listIntentLeadSignals({ limit: 150 }),
+        listIntentDiscoveryRuns(15),
+        getGoogleSearchBuyerIntentRadar(),
+        getOrCreateIngestToken(),
+      ]);
+
+      return NextResponse.json({
+        ok: true,
+        unlocked: true,
+        signals,
+        runs,
+        googleBuyerQueries,
+        ingestToken,
+        presetSearches: LINKEDIN_FEED_PRESET_SEARCHES,
+      });
+    }
+
+    if (!verifyPinHeaderOrParam(request, body.pin)) {
+      return NextResponse.json(
+        { ok: false, locked: true, message: "Vault is locked. Enter PIN to continue." },
+        { status: 403 }
+      );
+    }
+
     if (action === "discover") {
       const serviceFilter =
         body.serviceCategory && body.serviceCategory !== "ALL"
@@ -60,7 +110,8 @@ export async function POST(request: Request) {
       const result = await runIntentLeadDiscovery({
         runType: "MANUAL",
         serviceFilter,
-        sendEmailDigest: Boolean(body.sendEmailDigest),
+        // Always send email when new buyer-intent leads are fetched!
+        sendEmailDigest: body.sendEmailDigest !== false,
       });
       return NextResponse.json({
         ok: result.status !== "FAILED",
@@ -70,7 +121,7 @@ export async function POST(request: Request) {
 
     if (action === "update-status") {
       const id = String(body.id || "");
-      const status = body.status as "NEW" | "CONTACTED" | "CONVERTED_TO_LEAD" | "DISMISSED";
+      const status = body.status as "NEW" | "CONTACTED" | "ARCHIVED" | "DISMISSED";
       if (!id || !status) {
         return NextResponse.json({ ok: false, message: "Missing id or status" }, { status: 400 });
       }
@@ -78,18 +129,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, id, status });
     }
 
-    if (action === "convert-to-crm") {
-      const id = String(body.id || "");
-      if (!id) {
-        return NextResponse.json({ ok: false, message: "Missing signal id" }, { status: 400 });
-      }
-      const { crmLeadId } = await convertSignalToCrmLead(id);
-      return NextResponse.json({ ok: true, id, crmLeadId });
-    }
-
     if (action === "manual-paste-ingest") {
       const posts = Array.isArray(body.posts) ? body.posts : [];
-      const res = await ingestLinkedInFeedPosts(posts, Boolean(body.sendEmailDigest));
+      const res = await ingestLinkedInFeedPosts(posts, true);
       return NextResponse.json({ ok: true, result: res });
     }
 
