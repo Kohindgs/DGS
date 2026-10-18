@@ -2,42 +2,61 @@ name: DGS Buyer-Intent Lead Discovery Monitor
 
 on:
   schedule:
-    # Runs every 30 minutes to capture ultra-fresh 1h-12h / 24h buyer-intent leads with strict deduplication
-    - cron: '*/30 * * * *'
+    # Runs every 30 minutes (offset to :12 and :42 to avoid :00/:30 contention)
+    - cron: '12,42 * * * *'
   workflow_dispatch:
+
+permissions: {}
 
 jobs:
   discover_buyer_intent_leads:
     name: Discover & Qualify Buyer-Intent Leads
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
       - name: Trigger DGS Buyer-Intent Lead Discovery API
         env:
-          DGS_CRON_SECRET: ${{ secrets.DGS_CRON_SECRET }}
+          ENDPOINT_URL: "https://www.dgeniussolutions.com/api/internal/intent-leads/check"
+          AUTH_SECRET: ${{ secrets.DGS_CRON_SECRET }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
-          if [ -z "$DGS_CRON_SECRET" ]; then
-            echo "::error::DGS_CRON_SECRET is not set in GitHub Actions repository secrets."
+          if [ -z "$AUTH_SECRET" ]; then
+            echo "ERROR: DGS_CRON_SECRET is not configured in GitHub Actions secrets."
             exit 1
           fi
 
-          ENDPOINT="https://www.dgeniussolutions.com/api/internal/intent-leads/check"
-          START_MS=$(date +%s%3N)
+          # Pre-warm Passenger worker before POSTing discovery run
+          curl -sS --connect-timeout 10 --max-time 15 "https://www.dgeniussolutions.com/api/health" >/dev/null 2>&1 || true
 
-          set +e
-          HTTP_STATUS=$(curl -sS -o /tmp/intent_leads_response.json -w "%{http_code}" \
-            --connect-timeout 15 \
-            --max-time 75 \
-            --retry 2 \
-            --retry-delay 3 \
-            -X POST "$ENDPOINT" \
-            -H "Authorization: Bearer $DGS_CRON_SECRET" \
-            -H "X-GitHub-Run-Id: $GITHUB_RUN_ID" \
-            -H "Content-Type: application/json" \
-            -H "User-Agent: DGS-GitHub-Cron/1.0 (buyer-intent-lead-monitor)")
-          CURL_EXIT=$?
-          set -e
+          START_MS=$(date +%s%3N)
+          HTTP_STATUS="000"
+          CURL_EXIT=1
+
+          for ATTEMPT in 1 2 3; do
+            rm -f response.json
+            set +e
+            HTTP_STATUS=$(curl -sS -o response.json -w "%{http_code}" \
+              --connect-timeout 15 \
+              --max-time 90 \
+              -X POST "$ENDPOINT_URL" \
+              -H "Authorization: Bearer $AUTH_SECRET" \
+              -H "x-github-run-id: $GITHUB_RUN_ID" \
+              -H "User-Agent: DGS-GitHubActions-Cron/1.0 (buyer-intent-lead-monitor)" \
+              -H "Content-Type: application/json")
+            CURL_EXIT=$?
+            set -e
+
+            if [ -z "$HTTP_STATUS" ]; then
+              HTTP_STATUS="000"
+            fi
+
+            if [ "$CURL_EXIT" -eq 0 ] && [ "$HTTP_STATUS" = "200" ]; then
+              break
+            fi
+
+            echo "Attempt $ATTEMPT returned HTTP=$HTTP_STATUS (curl_exit=$CURL_EXIT). Retrying in 5s..."
+            sleep 5
+          done
 
           END_MS=$(date +%s%3N)
           DURATION_MS=$((END_MS - START_MS))
@@ -48,11 +67,25 @@ jobs:
           echo "HTTP: $HTTP_STATUS (curl_exit=$CURL_EXIT)"
           echo "Duration: ${DURATION_MS}ms"
           echo "Response:"
-          cat /tmp/intent_leads_response.json 2>/dev/null || echo "(no response body)"
-          echo ""
+          if [ -f response.json ]; then
+            cat response.json
+            echo ""
+          else
+            echo "(no response body)"
+          fi
           echo "=========================================="
 
-          if [ "$CURL_EXIT" -ne 0 ] || [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
-            echo "::error::Buyer-Intent Lead Discovery cron failed (HTTP $HTTP_STATUS, curl_exit=$CURL_EXIT)"
+          if [ "$CURL_EXIT" -ne 0 ] || [ "$HTTP_STATUS" != "200" ]; then
+            echo "ERROR: Buyer-Intent Lead Discovery cron failed after 3 attempts (HTTP $HTTP_STATUS, curl_exit=$CURL_EXIT)."
             exit 1
           fi
+
+          if command -v jq >/dev/null 2>&1 && [ -f response.json ]; then
+            OK_FLAG=$(jq -r '.ok // false' response.json 2>/dev/null || echo "false")
+            if [ "$OK_FLAG" != "true" ]; then
+              echo "ERROR: Endpoint returned HTTP 200 but payload ok=$OK_FLAG."
+              exit 1
+            fi
+          fi
+
+          echo "Buyer-Intent Lead Discovery cron completed successfully."
