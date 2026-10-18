@@ -36,6 +36,8 @@ type Props = {
   initialRuns?: IntentDiscoveryRun[];
   initialGoogleQueries?: GoogleBuyerIntentQuery[];
   initialIngestToken?: string;
+  initialUnlockedPin?: string | null;
+  initialPinError?: string | null;
 };
 
 const SERVICE_LABELS: Record<string, string> = {
@@ -68,10 +70,12 @@ export default function IntentLeadsClientView({
   initialRuns = [],
   initialGoogleQueries = [],
   initialIngestToken = "",
+  initialUnlockedPin = null,
+  initialPinError = null,
 }: Props) {
   const [pinInput, setPinInput] = useState<string>("");
-  const [unlockedPin, setUnlockedPin] = useState<string | null>(null);
-  const [pinError, setPinError] = useState<string | null>(null);
+  const [unlockedPin, setUnlockedPin] = useState<string | null>(initialUnlockedPin);
+  const [pinError, setPinError] = useState<string | null>(initialPinError);
   const [isUnlocking, setIsUnlocking] = useState<boolean>(false);
 
   const [activeTab, setActiveTab] = useState<"signals" | "linkedin-companion" | "google-radar">("signals");
@@ -98,9 +102,16 @@ export default function IntentLeadsClientView({
 
   const bookmarkletRef = useRef<HTMLAnchorElement | null>(null);
 
-  // Restore unlocked session within the same browser tab if previously unlocked
+  // Restore unlocked session within the same browser tab or via URL parameter
   useEffect(() => {
     try {
+      const urlPin = new URLSearchParams(window.location.search).get("pin")?.trim();
+      if (urlPin === "021514") {
+        setUnlockedPin("021514");
+        sessionStorage.setItem("dgs_intent_vault_pin", "021514");
+        window.history.replaceState({}, "", "/admin/intent-leads/");
+        return;
+      }
       const savedPin = sessionStorage.getItem("dgs_intent_vault_pin");
       if (savedPin === "021514") {
         setUnlockedPin("021514");
@@ -159,6 +170,9 @@ export default function IntentLeadsClientView({
   function handleLockVault() {
     try {
       sessionStorage.removeItem("dgs_intent_vault_pin");
+      if (window.location.search) {
+        window.history.replaceState({}, "", "/admin/intent-leads/");
+      }
     } catch {}
     setUnlockedPin(null);
     setPinInput("");
@@ -378,6 +392,8 @@ export default function IntentLeadsClientView({
         }}
       >
         <form
+          method="GET"
+          action="/admin/intent-leads/"
           onSubmit={(e) => {
             e.preventDefault();
             unlockVaultWithPin(pinInput);
@@ -435,6 +451,7 @@ export default function IntentLeadsClientView({
 
           <div style={{ marginBottom: "16px" }}>
             <input
+              name="pin"
               type="password"
               inputMode="numeric"
               autoComplete="off"

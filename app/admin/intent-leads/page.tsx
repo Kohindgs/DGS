@@ -11,9 +11,21 @@ import IntentLeadsClientView from "@/components/admin/intent-leads/IntentLeadsCl
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminIntentLeadsPage() {
+export default async function AdminIntentLeadsPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ pin?: string }> | { pin?: string };
+}) {
   if (process.env.DGS_ADMIN_ENABLED !== "true") notFound();
   if (!(await hasAdminSession())) redirect("/admin/login/");
+
+  const resolvedParams = await Promise.resolve(searchParams || {});
+  const suppliedPin = String(resolvedParams?.pin || "").trim();
+  const initialUnlockedPin = suppliedPin === "021514" ? "021514" : null;
+  const initialPinError =
+    suppliedPin && !initialUnlockedPin
+      ? "Invalid passcode. Please enter your 6-digit passcode."
+      : null;
 
   const [initialSignals, initialRuns, initialGoogleQueries, initialIngestToken] =
     await Promise.all([
@@ -30,6 +42,8 @@ export default async function AdminIntentLeadsPage() {
       initialRuns={initialRuns}
       initialGoogleQueries={initialGoogleQueries}
       initialIngestToken={initialIngestToken}
+      initialUnlockedPin={initialUnlockedPin}
+      initialPinError={initialPinError}
     />
   );
 }
