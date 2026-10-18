@@ -159,77 +159,154 @@ const DGS_SERVICE_URLS: Record<IntentServiceCategory, string> = {
 };
 
 export const LINKEDIN_FEED_PRESET_SEARCHES: LinkedInFeedPresetSearch[] = [
+  // 🇮🇳 LINKEDIN INDIA PRESETS
   {
-    id: "li-seo-agency",
+    id: "li-india-seo",
     serviceCategory: "SEO",
-    label: "Looking for SEO Agency / Technical SEO Partner",
-    region: "GLOBAL",
-    booleanQuery: `"looking for" AND ("SEO agency" OR "SEO consultant" OR "SEO partner" OR "technical SEO") -job -jobs -internship -recruiting`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") -hiring -jobs`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") -hiring -jobs`)}&tbs=qdr:d3`,
+    label: "🇮🇳 LinkedIn India: Looking for SEO Agency / Technical SEO Partner",
+    region: "INDIA",
+    booleanQuery: `("looking for" OR "recommend") AND ("SEO agency" OR "SEO consultant" OR "SEO company" OR "technical SEO") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi" OR "Pune" OR "Hyderabad") -job -hiring`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" India OR Mumbai OR Bangalore OR Delhi`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" India OR Mumbai OR Bangalore OR Delhi`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi" OR "Pune") -hiring -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi" OR "Pune") -hiring -jobs`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai" OR "Bangalore") ("looking for" OR "recommend") ("SEO agency" OR "digital marketing")`)}&sort=new&t=week`,
+  },
+  {
+    id: "li-india-web-dev",
+    serviceCategory: "WEB_DEV",
+    label: "🇮🇳 LinkedIn India: Looking for Website Development / Redesign / AMC",
+    region: "INDIA",
+    booleanQuery: `("looking for" OR "recommend") AND ("website development" OR "web design agency" OR "website redesign" OR "Next.js") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -job`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -jobs`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai" OR "Bangalore") ("website development" OR "website redesign" OR "web developer")`)}&sort=new&t=week`,
+  },
+  {
+    id: "li-india-paid-media",
+    serviceCategory: "PAID_MEDIA",
+    label: "🇮🇳 LinkedIn India: Looking for Performance Marketing / Paid Ads Agency",
+    region: "INDIA",
+    booleanQuery: `("looking for" OR "recommend") AND ("performance marketing agency" OR "Google Ads agency" OR "Meta Ads agency" OR "digital marketing agency") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi")`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Bangalore" OR "Delhi")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Bangalore" OR "Delhi")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai") ("performance marketing" OR "marketing agency")`)}&sort=new&t=week`,
+  },
+  {
+    id: "li-india-ai-video",
+    serviceCategory: "AI_VIDEO",
+    label: "🇮🇳 LinkedIn India: Looking for AI Video Production / Brand Film Studio",
+    region: "INDIA",
+    booleanQuery: `("looking for" OR "recommend") AND ("AI video" OR "video production agency" OR "brand film" OR "ad film") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi")`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video" OR "ad film") ("India" OR "Mumbai" OR "Bangalore")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video" OR "ad film") ("India" OR "Mumbai" OR "Bangalore")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai") ("video production" OR "AI video")`)}&sort=new&t=week`,
+  },
+  {
+    id: "li-india-branding",
+    serviceCategory: "BRANDING",
+    label: "🇮🇳 LinkedIn India: Looking for Branding, Content & Social Media Agency",
+    region: "INDIA",
+    booleanQuery: `("looking for" OR "recommend") AND ("branding agency" OR "social media agency" OR "creative agency") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -job -internship`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") ("India" OR "Mumbai" OR "Bangalore") -hiring`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") ("India" OR "Mumbai" OR "Bangalore") -hiring`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai") ("branding agency" OR "social media agency")`)}&sort=new&t=week`,
+  },
+
+  // 🇺🇸 LINKEDIN USA PRESETS
+  {
+    id: "li-usa-seo",
+    serviceCategory: "SEO",
+    label: "🇺🇸 LinkedIn USA: Looking for B2B / SaaS / E-Commerce SEO Agency",
+    region: "USA",
+    booleanQuery: `"looking for" AND ("SEO agency" OR "SEO consultant" OR "B2B SEO" OR "technical SEO") AND ("USA" OR "US" OR "SaaS" OR "New York" OR "Austin" OR "California") -job -jobs -recruiting`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO" USA OR SaaS OR "United States"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO" USA OR SaaS OR "United States"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO consultant" OR "B2B SEO") ("USA" OR "United States" OR "New York" OR "Austin" OR "San Francisco" OR "SaaS") -hiring -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO consultant" OR "B2B SEO") ("USA" OR "United States" OR "New York" OR "Austin" OR "San Francisco" OR "SaaS") -hiring -jobs`)}&tbs=qdr:d3`,
     redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("SEO agency" OR "SEO consultant")`)}&sort=new&t=day`,
   },
   {
-    id: "li-web-dev",
+    id: "li-usa-web-dev",
     serviceCategory: "WEB_DEV",
-    label: "Looking for Website Development / Redesign / AMC",
-    region: "GLOBAL",
-    booleanQuery: `("looking for" OR "recommend") AND ("website development" OR "web design agency" OR "website redesign" OR "Next.js agency" OR "website maintenance") -job -recruiter`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "web development agency" OR "website redesign"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "web development agency" OR "website redesign"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "website development company") -jobs`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "website development company") -jobs`)}&tbs=qdr:d3`,
+    label: "🇺🇸 LinkedIn USA: Looking for Website Redesign / Next.js / Web Dev Agency",
+    region: "USA",
+    booleanQuery: `("looking for" OR "recommend") AND ("website redesign" OR "web design agency" OR "Next.js agency" OR "web development agency") AND ("USA" OR "SaaS" OR "B2B") -job -recruiter`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website redesign" OR "web design agency" USA OR SaaS OR B2B`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website redesign" OR "web design agency" USA OR SaaS OR B2B`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "Next.js agency") ("USA" OR "United States" OR "SaaS" OR "B2B") -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "Next.js agency") ("USA" OR "United States" OR "SaaS" OR "B2B") -jobs`)}&tbs=qdr:d3`,
     redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "need") ("website redesign" OR "web development agency")`)}&sort=new&t=day`,
   },
   {
-    id: "li-ai-video",
+    id: "li-usa-ai-video",
     serviceCategory: "AI_VIDEO",
-    label: "Looking for AI Video Production / Brand Film Studio",
-    region: "GLOBAL",
-    booleanQuery: `("looking for" OR "recommend" OR "need") AND ("AI video" OR "video production agency" OR "brand film" OR "commercial video production")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "ad film production")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "ad film production")`)}&tbs=qdr:d3`,
+    label: "🇺🇸 LinkedIn USA: Looking for AI Video Production / Commercial Video Studio",
+    region: "USA",
+    booleanQuery: `("looking for" OR "recommend") AND ("AI video" OR "video production agency" OR "product video" OR "explainer video") AND ("USA" OR "SaaS" OR "startup")`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" USA OR SaaS`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" USA OR SaaS`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "product launch video") ("USA" OR "SaaS" OR "startup")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "product launch video") ("USA" OR "SaaS" OR "startup")`)}&tbs=qdr:d3`,
     redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("video production agency" OR "AI video production")`)}&sort=new&t=day`,
   },
   {
+    id: "li-usa-aeo-geo",
+    serviceCategory: "AEO_GEO",
+    label: "🇺🇸 LinkedIn USA: Looking for AEO / GEO / AI Search Visibility Partner",
+    region: "USA",
+    booleanQuery: `("looking for" OR "recommend") AND ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "GEO" OR "ChatGPT SEO")`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency" USA`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency" USA`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "AI search SEO")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "AI search SEO")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO") agency`)}&sort=new&t=week`,
+  },
+  {
+    id: "li-usa-paid-media",
+    serviceCategory: "PAID_MEDIA",
+    label: "🇺🇸 LinkedIn USA: Looking for Performance Marketing / Paid Media Agency",
+    region: "USA",
+    booleanQuery: `("looking for" OR "recommend") AND ("performance marketing agency" OR "paid media agency" OR "Google Ads agency" OR "Meta Ads agency") AND ("USA" OR "SaaS" OR "ecommerce")`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "paid media agency" OR "performance marketing agency" USA OR SaaS`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "paid media agency" OR "performance marketing agency" USA OR SaaS`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("paid media agency" OR "performance marketing agency" OR "Google Ads agency") ("USA" OR "SaaS" OR "DTC")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("paid media agency" OR "performance marketing agency" OR "Google Ads agency") ("USA" OR "SaaS" OR "DTC")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("Google Ads agency" OR "paid media agency")`)}&sort=new&t=day`,
+  },
+
+  // 🇦🇪 LINKEDIN UAE / DUBAI PRESETS
+  {
     id: "li-aeo-dubai",
     serviceCategory: "AEO_GEO",
-    label: "Looking for AEO / GEO / AI Search & Dubai SEO",
+    label: "🇦🇪 LinkedIn UAE / Dubai: Looking for SEO, AEO / GEO & AI Search Agency",
     region: "UAE_DUBAI",
     booleanQuery: `("looking for" OR "recommend" OR "agency") AND ("AEO" OR "Answer Engine Optimization" OR "Generative Engine Optimization" OR "SEO Dubai")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"SEO agency Dubai" OR "Answer Engine Optimization" OR "GEO agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"SEO agency Dubai" OR "Answer Engine Optimization" OR "GEO agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE" OR "looking for") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE" OR "looking for") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("SEO agency" OR "marketing agency" OR "website")`)}&sort=new&t=day`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "digital marketing agency" Dubai OR UAE`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "digital marketing agency" Dubai OR UAE`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("SEO agency" OR "marketing agency" OR "website")`)}&sort=new&t=week`,
   },
   {
-    id: "li-paid-media",
-    serviceCategory: "PAID_MEDIA",
-    label: "Looking for Performance Marketing / Paid Ads Agency",
-    region: "INDIA",
-    booleanQuery: `("looking for" OR "recommend") AND ("performance marketing agency" OR "Google Ads agency" OR "Meta Ads agency" OR "lead generation agency")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Dubai")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Dubai")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("performance marketing agency" OR "Google Ads agency")`)}&sort=new&t=day`,
-  },
-  {
-    id: "li-branding-social",
-    serviceCategory: "BRANDING",
-    label: "Looking for Branding, Content & Social Media Agency",
-    region: "INDIA",
-    booleanQuery: `("looking for" OR "recommend") AND ("branding agency" OR "social media agency" OR "creative agency") -job -internship`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") -hiring`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") -hiring`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("branding agency" OR "social media agency")`)}&sort=new&t=day`,
+    id: "li-uae-web-dev",
+    serviceCategory: "WEB_DEV",
+    label: "🇦🇪 LinkedIn UAE / Dubai: Looking for Website Development & Redesign",
+    region: "UAE_DUBAI",
+    booleanQuery: `("looking for" OR "recommend") AND ("website development" OR "web design agency" OR "website redesign") AND ("Dubai" OR "UAE" OR "Abu Dhabi")`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design" Dubai OR UAE`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design" Dubai OR UAE`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign")`)}&tbs=qdr:d3`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("website development" OR "web design")`)}&sort=new&t=week`,
   },
 ];
 
@@ -242,25 +319,37 @@ type DiscoveryQuerySpec = {
 
 const DISCOVERY_QUERY_POOL: DiscoveryQuerySpec[] = [
   {
-    query: `site:linkedin.com/posts "looking for" "SEO agency" OR "SEO consultant" -hiring -job`,
+    query: `site:linkedin.com/posts "looking for" ("SEO agency" OR "SEO consultant") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -hiring -job`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "SEO",
-    region: "GLOBAL",
+    region: "INDIA",
   },
   {
-    query: `site:linkedin.com/posts "looking for" "website development" OR "web design agency" OR "website redesign" -job`,
+    query: `site:linkedin.com/posts "looking for" ("SEO agency" OR "SEO consultant" OR "B2B SEO") ("USA" OR "United States" OR "SaaS") -hiring -job`,
+    platform: "LINKEDIN_PUBLIC",
+    serviceCategory: "SEO",
+    region: "USA",
+  },
+  {
+    query: `site:linkedin.com/posts "looking for" ("website development" OR "web design agency" OR "website redesign") ("India" OR "Mumbai" OR "Bangalore") -job`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "WEB_DEV",
-    region: "GLOBAL",
+    region: "INDIA",
+  },
+  {
+    query: `site:linkedin.com/posts "looking for" ("website redesign" OR "web design agency" OR "Next.js") ("USA" OR "SaaS" OR "B2B") -job`,
+    platform: "LINKEDIN_PUBLIC",
+    serviceCategory: "WEB_DEV",
+    region: "USA",
   },
   {
     query: `site:linkedin.com/posts "looking for" "video production agency" OR "AI video" OR "brand film"`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "AI_VIDEO",
-    region: "GLOBAL",
+    region: "USA",
   },
   {
-    query: `site:linkedin.com/posts "looking for" "digital marketing agency" OR "performance marketing" Mumbai OR India OR Dubai`,
+    query: `site:linkedin.com/posts "looking for" "digital marketing agency" OR "performance marketing" Mumbai OR India OR Bangalore`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "PAID_MEDIA",
     region: "INDIA",
@@ -276,12 +365,6 @@ const DISCOVERY_QUERY_POOL: DiscoveryQuerySpec[] = [
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "BRANDING",
     region: "INDIA",
-  },
-  {
-    query: `site:x.com "looking for" ("SEO agency" OR "web design agency" OR "video production agency")`,
-    platform: "X_TWITTER",
-    serviceCategory: "SEO",
-    region: "GLOBAL",
   },
 ];
 
@@ -381,6 +464,29 @@ export async function ensureIntentLeadTables(): Promise<void> {
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
+
+  // Ensure existing leads have regional tags populated (INDIA, UAE_DUBAI, USA)
+  try {
+    await cmsExecute(
+      `UPDATE intent_lead_signals
+       SET target_region = 'INDIA'
+       WHERE target_region = 'GLOBAL'
+         AND (post_text REGEXP 'Mumbai|India|Bangalore|Bengaluru|Delhi|Gurgaon|Pune|Hyderabad|Chennai|INR|lakh' OR post_url REGEXP '/r/(india|mumbai|bangalore|delhi|IndianStartups|StartUpIndia)')`
+    );
+    await cmsExecute(
+      `UPDATE intent_lead_signals
+       SET target_region = 'UAE_DUBAI'
+       WHERE target_region = 'GLOBAL'
+         AND (post_text REGEXP 'Dubai|UAE|Abu Dhabi|Sharjah|AED' OR post_url REGEXP '/r/(dubai|UAE)')`
+    );
+    await cmsExecute(
+      `UPDATE intent_lead_signals
+       SET target_region = 'USA'
+       WHERE target_region = 'GLOBAL'
+         AND source_platform = 'REDDIT'
+         AND post_url REGEXP '/r/(smallbusiness|entrepreneur|startups|SEO|bigseo|PPC|web_design|ecommerce|marketing)'`
+    );
+  } catch {}
 
   global.__dgsIntentLeadTablesEnsured = true;
 }
@@ -1026,13 +1132,24 @@ export function evaluateCandidateHeuristically(input: {
   }
 
   let targetRegion: IntentRegion = input.defaultRegion || "GLOBAL";
-  if (/\b(dubai|uae|abu dhabi|sharjah|mena|middle east)\b/i.test(lower)) {
+  const urlLower = (input.url || "").toLowerCase();
+  if (/\b(dubai|uae|abu dhabi|sharjah|mena|middle east|dxb|aed)\b|\.ae\b|r\/dubai|r\/uae/i.test(lower) || /dubai|uae|abudhabi/i.test(urlLower)) {
     targetRegion = "UAE_DUBAI";
-  } else if (/\b(mumbai|india|navi mumbai|bangalore|bengaluru|delhi|gurgaon|pune|hyderabad|chennai)\b/i.test(lower)) {
+  } else if (
+    /\b(mumbai|india|indian|navi mumbai|thane|bangalore|bengaluru|delhi|ncr|gurgaon|gurugram|noida|pune|hyderabad|chennai|kolkata|ahmedabad|jaipur|surat|kochi|chandigarh|inr|lakh|crore)\b|₹|\.in\b|r\/indianstartups|r\/startupindia|r\/india|r\/mumbai|r\/bangalore/i.test(
+      lower
+    ) ||
+    /\/r\/(india|indianstartups|startupindia|mumbai|bangalore|delhi|pune|hyderabad)\b/i.test(urlLower)
+  ) {
     targetRegion = "INDIA";
-  } else if (/\b(uk|london|united kingdom|manchester)\b/i.test(lower)) {
+  } else if (/\b(uk|london|united kingdom|manchester|birmingham|scotland|gbp)\b|£|\.co\.uk\b/i.test(lower)) {
     targetRegion = "UK";
-  } else if (/\b(usa|united states|new york|austin|california|san francisco|chicago|canadian|canada)\b/i.test(lower)) {
+  } else if (
+    /\b(usa|u\.s\.a|u\.s\.|united states|american|new york|nyc|austin|texas|california|san francisco|bay area|los angeles|chicago|miami|florida|boston|seattle|atlanta|denver|dallas|houston|phoenix|philadelphia|washington|new jersey|north carolina|ohio|michigan|pennsylvania|illinois|georgia|virginia|massachusetts|colorado|arizona|tennessee|canadian|canada|toronto|vancouver|usd|llc)\b|\$\s*\d/i.test(
+      lower
+    ) ||
+    (targetRegion === "GLOBAL" && /\/r\/(smallbusiness|entrepreneur|startups|seo|bigseo|ppc|web_design|ecommerce|marketing)\b/i.test(urlLower))
+  ) {
     targetRegion = "USA";
   }
 
@@ -1790,6 +1907,9 @@ export async function runIntentLeadDiscovery(options?: {
 export async function ingestLinkedInFeedPosts(
   posts: Array<{
     postUrl?: string;
+    pageUrl?: string;
+    regionHint?: IntentRegion;
+    sourceChannelHint?: IntentSourcePlatform;
     authorName?: string;
     authorRole?: string;
     authorProfileUrl?: string;
@@ -1853,10 +1973,28 @@ export async function ingestLinkedInFeedPosts(
         ? post.postUrl
         : `https://www.linkedin.com/feed/#dgs-post-${computeUrlHash("", text).slice(0, 12)}`;
 
+    // Infer defaultRegion from regionHint or LinkedIn search page URL keywords
+    let defaultRegion: IntentRegion = post.regionHint || "GLOBAL";
+    const decodedPageUrl = decodeURIComponent(post.pageUrl || postUrl || "").toLowerCase();
+    if (defaultRegion === "GLOBAL") {
+      if (/\b(india|mumbai|bangalore|bengaluru|delhi|pune|hyderabad)\b/i.test(decodedPageUrl)) {
+        defaultRegion = "INDIA";
+      } else if (/\b(dubai|uae|abu dhabi)\b/i.test(decodedPageUrl)) {
+        defaultRegion = "UAE_DUBAI";
+      } else if (/\b(usa|united states|new york|austin|san francisco|saas)\b/i.test(decodedPageUrl)) {
+        defaultRegion = "USA";
+      }
+    }
+
+    const sourcePlatform: IntentSourcePlatform =
+      post.sourceChannelHint ||
+      (decodedPageUrl.includes("/search/results/") ? "LINKEDIN_PUBLIC" : "LINKEDIN_FEED");
+
     const heuristic = evaluateCandidateHeuristically({
       title: `${post.authorName || "LinkedIn Member"} on LinkedIn`,
       text,
       url: postUrl,
+      defaultRegion,
       authorName: post.authorName || null,
       authorRole: post.authorRole || null,
       ageHours,
@@ -1874,12 +2012,16 @@ export async function ingestLinkedInFeedPosts(
               title: `${post.authorName || "LinkedIn Member"} (${post.authorRole || ""})`,
               text,
               url: postUrl,
-              platform: "LINKEDIN_FEED",
+              platform: sourcePlatform,
               ageHours,
             },
             heuristic
           )
         : heuristic;
+
+    if (post.regionHint && evaluated.targetRegion === "GLOBAL") {
+      evaluated.targetRegion = post.regionHint;
+    }
 
     if (evaluated.classification !== "BUYER_SEEKING_SERVICE" || evaluated.intentScore < 72) {
       skippedNoise++;
@@ -1887,14 +2029,14 @@ export async function ingestLinkedInFeedPosts(
     }
 
     const upserted = await upsertIntentLeadSignal({
-      sourcePlatform: "LINKEDIN_FEED",
+      sourcePlatform,
       postUrl,
       postTitle: `${evaluated.authorName || post.authorName || "LinkedIn Feed Post"}${evaluated.authorRole ? ` — ${evaluated.authorRole}` : ""}`,
       postText: text,
       authorName: evaluated.authorName || post.authorName || null,
       authorRole: evaluated.authorRole || post.authorRole || null,
       authorProfileUrl: post.authorProfileUrl || null,
-      discoveryQuery: "Personal LinkedIn Feed Companion",
+      discoveryQuery: `LinkedIn (${evaluated.targetRegion}) Companion Scanner`,
       publishedAt: post.publishedAt || new Date(Date.now() - ageHours * 3600_000).toISOString(),
       ageHours,
       freshnessTier,

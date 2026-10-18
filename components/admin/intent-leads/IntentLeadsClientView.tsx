@@ -50,12 +50,20 @@ const SERVICE_LABELS: Record<string, string> = {
 };
 
 const PLATFORM_LABELS: Record<string, { label: string; color: string; bg: string }> = {
-  LINKEDIN_FEED: { label: "LinkedIn Feed", color: "#60a5fa", bg: "rgba(37, 99, 235, 0.18)" },
-  LINKEDIN_PUBLIC: { label: "LinkedIn Public", color: "#38bdf8", bg: "rgba(2, 132, 199, 0.18)" },
-  REDDIT: { label: "Reddit", color: "#fb923c", bg: "rgba(234, 88, 12, 0.18)" },
+  LINKEDIN_FEED: { label: "My LinkedIn Feed", color: "#60a5fa", bg: "rgba(37, 99, 235, 0.18)" },
+  LINKEDIN_PUBLIC: { label: "LinkedIn", color: "#38bdf8", bg: "rgba(2, 132, 199, 0.18)" },
+  REDDIT: { label: "Reddit Buyer Forum", color: "#fb923c", bg: "rgba(234, 88, 12, 0.18)" },
   X_TWITTER: { label: "X / Twitter", color: "#cbd5e1", bg: "rgba(100, 116, 139, 0.22)" },
   WEB_FORUM: { label: "Web Forum", color: "#a78bfa", bg: "rgba(124, 58, 237, 0.18)" },
   GOOGLE_SERP_INTENT: { label: "Google Search", color: "#34d399", bg: "rgba(5, 150, 105, 0.18)" },
+};
+
+const REGION_BADGES: Record<string, { label: string; color: string; bg: string }> = {
+  INDIA: { label: "🇮🇳 India", color: "#fb923c", bg: "rgba(249, 115, 22, 0.18)" },
+  USA: { label: "🇺🇸 USA", color: "#60a5fa", bg: "rgba(59, 130, 246, 0.18)" },
+  UAE_DUBAI: { label: "🇦🇪 UAE / Dubai", color: "#34d399", bg: "rgba(16, 185, 129, 0.18)" },
+  UK: { label: "🇬🇧 UK", color: "#c084fc", bg: "rgba(168, 85, 247, 0.18)" },
+  GLOBAL: { label: "🌍 Global", color: "#cbd5e1", bg: "rgba(148, 163, 184, 0.16)" },
 };
 
 const FRESHNESS_BADGES: Record<string, { label: string; color: string; bg: string }> = {
@@ -63,6 +71,15 @@ const FRESHNESS_BADGES: Record<string, { label: string; color: string; bg: strin
   "24H": { label: "🔥 Past 24 Hours", color: "#60a5fa", bg: "rgba(37, 99, 235, 0.2)" },
   "3D": { label: "🕒 Within 3 Days", color: "#fbbf24", bg: "rgba(245, 158, 11, 0.18)" },
 };
+
+export type VaultChannelTab =
+  | "ALL"
+  | "LINKEDIN_INDIA"
+  | "LINKEDIN_USA"
+  | "LINKEDIN_UAE"
+  | "MY_LINKEDIN_FEED"
+  | "REDDIT_FORUMS"
+  | "GOOGLE_SEARCH";
 
 export default function IntentLeadsClientView({
   presetSearches,
@@ -78,14 +95,14 @@ export default function IntentLeadsClientView({
   const [pinError, setPinError] = useState<string | null>(initialPinError);
   const [isUnlocking, setIsUnlocking] = useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = useState<"signals" | "linkedin-companion" | "google-radar">("signals");
+  const [activeChannelTab, setActiveChannelTab] = useState<VaultChannelTab>("ALL");
   const [signals, setSignals] = useState<IntentLeadSignal[]>(initialSignals);
   const [runs, setRuns] = useState<IntentDiscoveryRun[]>(initialRuns);
   const [googleQueries, setGoogleQueries] = useState<GoogleBuyerIntentQuery[]>(initialGoogleQueries);
   const [ingestToken, setIngestToken] = useState<string>(initialIngestToken);
 
   const [freshnessFilter, setFreshnessFilter] = useState<string>("ALL");
-  const [platformFilter, setPlatformFilter] = useState<string>("ALL");
+  const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [serviceFilter, setServiceFilter] = useState<string>("ALL");
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -98,6 +115,7 @@ export default function IntentLeadsClientView({
   const [manualRole, setManualRole] = useState("");
   const [manualUrl, setManualUrl] = useState("");
   const [manualText, setManualText] = useState("");
+  const [manualRegion, setManualRegion] = useState<"INDIA" | "USA" | "UAE_DUBAI" | "GLOBAL">("INDIA");
   const [isIngestingManual, setIsIngestingManual] = useState(false);
 
   const bookmarkletRef = useRef<HTMLAnchorElement | null>(null);
@@ -118,6 +136,13 @@ export default function IntentLeadsClientView({
       }
     } catch {}
   }, []);
+
+  // Sync manualRegion default when switching LinkedIn regional tabs
+  useEffect(() => {
+    if (activeChannelTab === "LINKEDIN_INDIA") setManualRegion("INDIA");
+    else if (activeChannelTab === "LINKEDIN_USA") setManualRegion("USA");
+    else if (activeChannelTab === "LINKEDIN_UAE") setManualRegion("UAE_DUBAI");
+  }, [activeChannelTab]);
 
   async function unlockVaultWithPin(pinToTry: string) {
     const cleanPin = (pinToTry || "").trim();
@@ -178,7 +203,7 @@ export default function IntentLeadsClientView({
     setPinInput("");
   }
 
-  // Build self-contained Bookmarklet JS code that extracts post age ("2h", "1d", "2w") and filters out stale posts >3 days
+  // Build self-contained Bookmarklet JS code that extracts post age ("2h", "1d", "2w"), pageUrl for region tagging, and filters out stale posts >3 days
   const bookmarkletHref = useMemo(() => {
     const endpoint = "https://www.dgeniussolutions.com/api/admin/intent-leads/ingest";
     const code = `(function(){
@@ -198,12 +223,12 @@ export default function IntentLeadsClientView({
           var linkEl = el.querySelector('a[href*="/feed/update/"], a[href*="/posts/"]');
           var urn = el.getAttribute('data-urn') || '';
           var postUrl = linkEl ? linkEl.href : (urn ? 'https://www.linkedin.com/feed/update/' + urn : window.location.href);
-          posts.push({ postUrl: postUrl, authorName: authorName.slice(0,120), authorRole: authorRole.slice(0,160), ageText: ageText.slice(0,60), postText: text.slice(0,1800) });
+          posts.push({ postUrl: postUrl, pageUrl: window.location.href, authorName: authorName.slice(0,120), authorRole: authorRole.slice(0,160), ageText: ageText.slice(0,60), postText: text.slice(0,1800) });
         });
         if (posts.length === 0) {
           var sel = window.getSelection().toString().trim();
           if (sel.length > 25) {
-            posts.push({ postUrl: window.location.href, authorName: document.title.slice(0,80), ageText: '1h ago', postText: sel.slice(0,1800) });
+            posts.push({ postUrl: window.location.href, pageUrl: window.location.href, authorName: document.title.slice(0,80), ageText: '1h ago', postText: sel.slice(0,1800) });
           }
         }
         if (posts.length === 0) {
@@ -236,7 +261,26 @@ export default function IntentLeadsClientView({
     if (bookmarkletRef.current) {
       bookmarkletRef.current.setAttribute("href", bookmarkletHref);
     }
-  }, [bookmarkletHref, activeTab, unlockedPin]);
+  }, [bookmarkletHref, activeChannelTab, unlockedPin]);
+
+  // Compute channel counts for the bifurcated tab bar
+  const channelCounts = useMemo(() => {
+    const fresh = signals.filter((s) => (s.age_hours ?? 6) <= 72);
+    const isLinkedIn = (s: IntentLeadSignal) =>
+      s.source_platform === "LINKEDIN_PUBLIC" || s.source_platform === "LINKEDIN_FEED";
+    const isForumOrReddit = (s: IntentLeadSignal) =>
+      s.source_platform === "REDDIT" || s.source_platform === "WEB_FORUM" || s.source_platform === "X_TWITTER";
+
+    return {
+      ALL: fresh.length,
+      LINKEDIN_INDIA: fresh.filter((s) => isLinkedIn(s) && s.target_region === "INDIA").length,
+      LINKEDIN_USA: fresh.filter((s) => isLinkedIn(s) && (s.target_region === "USA" || s.target_region === "GLOBAL")).length,
+      LINKEDIN_UAE: fresh.filter((s) => isLinkedIn(s) && s.target_region === "UAE_DUBAI").length,
+      MY_LINKEDIN_FEED: fresh.filter((s) => s.source_platform === "LINKEDIN_FEED").length,
+      REDDIT_FORUMS: fresh.filter((s) => isForumOrReddit(s)).length,
+      GOOGLE_SEARCH: googleQueries.length,
+    };
+  }, [signals, googleQueries]);
 
   const filteredSignals = useMemo(() => {
     return signals.filter((s) => {
@@ -245,17 +289,50 @@ export default function IntentLeadsClientView({
       if (freshnessFilter === "1H_12H" && age > 12) return false;
       if (freshnessFilter === "24H" && age > 24) return false;
       if (freshnessFilter === "3D" && age > 72) return false;
-      if (platformFilter !== "ALL" && s.source_platform !== platformFilter) return false;
+
+      const isLi = s.source_platform === "LINKEDIN_PUBLIC" || s.source_platform === "LINKEDIN_FEED";
+      const isForum =
+        s.source_platform === "REDDIT" ||
+        s.source_platform === "WEB_FORUM" ||
+        s.source_platform === "X_TWITTER";
+
+      // Bifurcated Channel Tab Filtering
+      if (activeChannelTab === "LINKEDIN_INDIA") {
+        if (!isLi || s.target_region !== "INDIA") return false;
+      } else if (activeChannelTab === "LINKEDIN_USA") {
+        if (!isLi || (s.target_region !== "USA" && s.target_region !== "GLOBAL")) return false;
+      } else if (activeChannelTab === "LINKEDIN_UAE") {
+        if (!isLi || s.target_region !== "UAE_DUBAI") return false;
+      } else if (activeChannelTab === "MY_LINKEDIN_FEED") {
+        if (s.source_platform !== "LINKEDIN_FEED") return false;
+      } else if (activeChannelTab === "REDDIT_FORUMS") {
+        if (!isForum) return false;
+      }
+
+      if (regionFilter !== "ALL" && s.target_region !== regionFilter) return false;
       if (serviceFilter !== "ALL" && s.service_category !== serviceFilter) return false;
       if (statusFilter !== "ALL" && s.status !== statusFilter) return false;
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
-        const hay = `${s.author_name || ""} ${s.author_role || ""} ${s.post_title || ""} ${s.post_text || ""} ${s.service_category}`.toLowerCase();
+        const hay = `${s.author_name || ""} ${s.author_role || ""} ${s.post_title || ""} ${s.post_text || ""} ${s.service_category} ${s.target_region}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [signals, freshnessFilter, platformFilter, serviceFilter, statusFilter, searchQuery]);
+  }, [signals, activeChannelTab, freshnessFilter, regionFilter, serviceFilter, statusFilter, searchQuery]);
+
+  const activePresetSearches = useMemo(() => {
+    if (activeChannelTab === "LINKEDIN_INDIA") {
+      return presetSearches.filter((p) => p.region === "INDIA");
+    }
+    if (activeChannelTab === "LINKEDIN_USA") {
+      return presetSearches.filter((p) => p.region === "USA" || p.region === "GLOBAL");
+    }
+    if (activeChannelTab === "LINKEDIN_UAE") {
+      return presetSearches.filter((p) => p.region === "UAE_DUBAI");
+    }
+    return presetSearches;
+  }, [presetSearches, activeChannelTab]);
 
   async function refreshSignals() {
     if (!unlockedPin) return;
@@ -330,6 +407,8 @@ export default function IntentLeadsClientView({
     if (!unlockedPin || !manualText.trim() || manualText.trim().length < 25) return;
     setIsIngestingManual(true);
     try {
+      const sourceChannelHint =
+        activeChannelTab === "MY_LINKEDIN_FEED" ? "LINKEDIN_FEED" : "LINKEDIN_PUBLIC";
       const res = await fetch("/api/admin/intent-leads/", {
         method: "POST",
         credentials: "same-origin",
@@ -345,6 +424,8 @@ export default function IntentLeadsClientView({
               authorName: manualAuthor.trim() || "LinkedIn Prospect",
               authorRole: manualRole.trim() || "",
               postUrl: manualUrl.trim() || "https://www.linkedin.com/feed/",
+              regionHint: manualRegion,
+              sourceChannelHint,
               ageText: "1h ago",
               postText: manualText.trim(),
             },
@@ -356,7 +437,7 @@ export default function IntentLeadsClientView({
         const added = data.result?.qualifiedAdded || 0;
         setScanBanner(
           added > 0
-            ? `Lead Fetched! AI qualified your post, saved it to this Private Vault, and sent an email notification.`
+            ? `Lead Fetched (${manualRegion})! AI qualified your LinkedIn post, saved it to this tab, and sent an email notification.`
             : `Post analyzed — filtered out as cold/non-buyer or duplicate (Skipped: ${data.result?.skippedNoise || 0}, Duplicate: ${data.result?.duplicates || 0}).`
         );
         setManualAuthor("");
@@ -364,7 +445,6 @@ export default function IntentLeadsClientView({
         setManualUrl("");
         setManualText("");
         await refreshSignals();
-        setActiveTab("signals");
       }
     } finally {
       setIsIngestingManual(false);
@@ -741,93 +821,503 @@ export default function IntentLeadsClientView({
         </div>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* SOURCE & REGION BIFURCATION TABS */}
       <div
         style={{
           display: "flex",
-          flexWrap: "wrap",
-          gap: "8px",
-          borderBottom: "1px solid rgba(148, 163, 184, 0.16)",
-          paddingBottom: "12px",
+          flexDirection: "column",
+          gap: "10px",
+          background: "rgba(15, 23, 42, 0.82)",
+          border: "1px solid rgba(59, 130, 246, 0.25)",
+          borderRadius: "14px",
+          padding: "14px 16px",
         }}
       >
-        <button
-          type="button"
-          onClick={() => setActiveTab("signals")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "10px 16px",
-            borderRadius: "10px",
-            fontSize: "13px",
-            fontWeight: 700,
-            cursor: "pointer",
-            background: activeTab === "signals" ? "#2563eb" : "rgba(15, 23, 42, 0.7)",
-            color: activeTab === "signals" ? "#ffffff" : "#94a3b8",
-            border:
-              activeTab === "signals"
-                ? "1px solid #3b82f6"
-                : "1px solid rgba(148, 163, 184, 0.16)",
-          }}
-        >
-          <Flame size={15} />
-          1. Fresh Buyer-Intent Leads ({filteredSignals.length})
-        </button>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+          <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.06em", color: "#93c5fd" }}>
+            BIFURCATED LEAD CHANNELS BY SOURCE & REGION
+          </span>
+          <span style={{ fontSize: "12px", color: "#34d399", fontWeight: 700 }}>
+            🔒 Zero LinkedIn Login Needed • Safe Browser-Session Bookmarklet + 30m Automated Forum & Search Radar
+          </span>
+        </div>
 
-        <button
-          type="button"
-          onClick={() => setActiveTab("linkedin-companion")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "10px 16px",
-            borderRadius: "10px",
-            fontSize: "13px",
-            fontWeight: 700,
-            cursor: "pointer",
-            background: activeTab === "linkedin-companion" ? "#2563eb" : "rgba(15, 23, 42, 0.7)",
-            color: activeTab === "linkedin-companion" ? "#ffffff" : "#94a3b8",
-            border:
-              activeTab === "linkedin-companion"
-                ? "1px solid #3b82f6"
-                : "1px solid rgba(148, 163, 184, 0.16)",
-          }}
-        >
-          <Bookmark size={15} />
-          2. Zero-Login LinkedIn Feed Scanner (Past 24h Deep-Links)
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab("google-radar")}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "10px 16px",
-            borderRadius: "10px",
-            fontSize: "13px",
-            fontWeight: 700,
-            cursor: "pointer",
-            background: activeTab === "google-radar" ? "#2563eb" : "rgba(15, 23, 42, 0.7)",
-            color: activeTab === "google-radar" ? "#ffffff" : "#94a3b8",
-            border:
-              activeTab === "google-radar"
-                ? "1px solid #3b82f6"
-                : "1px solid rgba(148, 163, 184, 0.16)",
-          }}
-        >
-          <Globe size={15} />
-          3. Google Search Buyer-Intent Queries ({googleQueries.length})
-        </button>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {(
+            [
+              {
+                key: "ALL" as VaultChannelTab,
+                label: "🌐 All Fresh Leads",
+                count: channelCounts.ALL,
+                accent: "#3b82f6",
+              },
+              {
+                key: "LINKEDIN_INDIA" as VaultChannelTab,
+                label: "🇮🇳 LinkedIn India",
+                count: channelCounts.LINKEDIN_INDIA,
+                accent: "#f97316",
+              },
+              {
+                key: "LINKEDIN_USA" as VaultChannelTab,
+                label: "🇺🇸 LinkedIn USA",
+                count: channelCounts.LINKEDIN_USA,
+                accent: "#60a5fa",
+              },
+              {
+                key: "LINKEDIN_UAE" as VaultChannelTab,
+                label: "🇦🇪 LinkedIn UAE / Dubai",
+                count: channelCounts.LINKEDIN_UAE,
+                accent: "#10b981",
+              },
+              {
+                key: "MY_LINKEDIN_FEED" as VaultChannelTab,
+                label: "⚡ My LinkedIn Feed (1-Click Scanner)",
+                count: channelCounts.MY_LINKEDIN_FEED,
+                accent: "#8b5cf6",
+              },
+              {
+                key: "REDDIT_FORUMS" as VaultChannelTab,
+                label: "💬 Reddit & Startup Forums",
+                count: channelCounts.REDDIT_FORUMS,
+                accent: "#fb923c",
+              },
+              {
+                key: "GOOGLE_SEARCH" as VaultChannelTab,
+                label: "🔍 Google Search Buyer Queries",
+                count: channelCounts.GOOGLE_SEARCH,
+                accent: "#34d399",
+              },
+            ]
+          ).map((tab) => {
+            const isActive = activeChannelTab === tab.key;
+            return (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => {
+                  setActiveChannelTab(tab.key);
+                  setRegionFilter("ALL");
+                }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "10px 14px",
+                  borderRadius: "10px",
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  background: isActive ? "#2563eb" : "rgba(2, 6, 23, 0.7)",
+                  color: isActive ? "#ffffff" : "#cbd5e1",
+                  border: isActive ? "1px solid #60a5fa" : "1px solid rgba(148, 163, 184, 0.2)",
+                  boxShadow: isActive ? "0 6px 18px rgba(37, 99, 235, 0.35)" : "none",
+                }}
+              >
+                <span>{tab.label}</span>
+                <span
+                  style={{
+                    background: isActive ? "rgba(255, 255, 255, 0.22)" : "rgba(148, 163, 184, 0.16)",
+                    color: isActive ? "#ffffff" : tab.accent,
+                    padding: "2px 8px",
+                    borderRadius: "999px",
+                    fontSize: "11px",
+                    fontWeight: 800,
+                  }}
+                >
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* TAB 1: FRESH BUYER-INTENT LEADS */}
-      {activeTab === "signals" && (
+      {/* LINKEDIN REGIONAL & PERSONAL FEED HUB (Shown on LinkedIn India, LinkedIn USA, LinkedIn UAE, and My LinkedIn Feed tabs) */}
+      {(activeChannelTab === "LINKEDIN_INDIA" ||
+        activeChannelTab === "LINKEDIN_USA" ||
+        activeChannelTab === "LINKEDIN_UAE" ||
+        activeChannelTab === "MY_LINKEDIN_FEED") && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div
+            style={{
+              background: "linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(15, 23, 42, 0.92))",
+              border: "1px solid rgba(59, 130, 246, 0.38)",
+              borderRadius: "16px",
+              padding: "22px",
+            }}
+          >
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "10px", marginBottom: "8px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <ShieldCheck size={18} color="#34d399" />
+                <span style={{ fontSize: "12px", fontWeight: 800, color: "#34d399", letterSpacing: "0.04em" }}>
+                  DO WE NEED YOUR LINKEDIN LOGIN? NO — NEVER SHARE YOUR PASSWORD OR COOKIES
+                </span>
+              </div>
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "#93c5fd",
+                  background: "rgba(37, 99, 235, 0.2)",
+                  padding: "3px 10px",
+                  borderRadius: "999px",
+                }}
+              >
+                {activeChannelTab === "LINKEDIN_INDIA"
+                  ? "🇮🇳 LinkedIn India (Mumbai • Bangalore • Delhi NCR • Pune • Hyderabad)"
+                  : activeChannelTab === "LINKEDIN_USA"
+                    ? "🇺🇸 LinkedIn USA (US Founders • SaaS • E-Commerce • Agencies)"
+                    : activeChannelTab === "LINKEDIN_UAE"
+                      ? "🇦🇪 LinkedIn UAE / Dubai (Dubai • Abu Dhabi • MENA)"
+                      : "⚡ Personal LinkedIn Feed & Network"}
+              </span>
+            </div>
+
+            <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#f8fafc", margin: "0 0 8px 0" }}>
+              {activeChannelTab === "LINKEDIN_INDIA"
+                ? "🇮🇳 LinkedIn India Past-24h Buyer Feed & 1-Click Browser Scanner"
+                : activeChannelTab === "LINKEDIN_USA"
+                  ? "🇺🇸 LinkedIn USA Past-24h Buyer Feed & 1-Click Browser Scanner"
+                  : activeChannelTab === "LINKEDIN_UAE"
+                    ? "🇦🇪 LinkedIn UAE / Dubai Past-24h Buyer Feed & 1-Click Browser Scanner"
+                    : "⚡ How to Fetch Leads From Your Personal LinkedIn Feed Without Sharing Your Login"}
+            </h2>
+
+            <p style={{ fontSize: "13px", color: "#cbd5e1", lineHeight: 1.6, margin: "0 0 16px 0", maxWidth: "880px" }}>
+              Giving your LinkedIn email/password to a cloud server can trigger LinkedIn security restrictions. Instead, because you are already logged into LinkedIn in your own browser:
+              <br />
+              <strong>Step 1:</strong> Drag <strong>⚡ Scan LinkedIn Feed to DGS</strong> below to your browser Bookmarks Bar once.{" "}
+              <strong>Step 2:</strong> Click any{" "}
+              <strong>
+                {activeChannelTab === "LINKEDIN_INDIA"
+                  ? "🇮🇳 LinkedIn India (Past 24h)"
+                  : activeChannelTab === "LINKEDIN_USA"
+                    ? "🇺🇸 LinkedIn USA (Past 24h)"
+                    : activeChannelTab === "LINKEDIN_UAE"
+                      ? "🇦🇪 LinkedIn UAE (Past 24h)"
+                      : "LinkedIn (Past 24h)"}
+              </strong>{" "}
+              search button below (or open your personal LinkedIn Home Feed).{" "}
+              <strong>Step 3:</strong> Click <strong>⚡ Scan LinkedIn Feed to DGS</strong> in your Bookmarks Bar — it reads the visible posts on your screen, auto-tags the region, filters for warm buyer intent (&le;72h old), saves them directly into this tab, and sends your email alert!
+            </p>
+
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px", marginBottom: "18px" }}>
+              <a
+                ref={bookmarkletRef}
+                href="#dgs-linkedin-scanner"
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert(
+                    "Drag this button to your browser Bookmarks Bar (Ctrl+Shift+B)! Then click it whenever you have LinkedIn open in your browser."
+                  );
+                }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+                  color: "#ffffff",
+                  padding: "11px 20px",
+                  borderRadius: "12px",
+                  fontSize: "13px",
+                  fontWeight: 800,
+                  textDecoration: "none",
+                  boxShadow: "0 8px 24px rgba(37, 99, 235, 0.4)",
+                  border: "1px solid #60a5fa",
+                  cursor: "grab",
+                }}
+              >
+                <Bookmark size={15} />⚡ Scan LinkedIn Feed to DGS
+              </a>
+
+              <a
+                href="https://www.linkedin.com/feed/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "rgba(16, 185, 129, 0.16)",
+                  color: "#34d399",
+                  border: "1px solid rgba(16, 185, 129, 0.35)",
+                  padding: "10px 16px",
+                  borderRadius: "10px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  textDecoration: "none",
+                }}
+              >
+                Open My LinkedIn Feed ↗
+              </a>
+
+              <span style={{ fontSize: "12px", color: "#94a3b8" }}>
+                ← Drag the blue button to your Bookmarks Bar (<code>Ctrl+Shift+B</code>), then click it on any LinkedIn page.
+              </span>
+            </div>
+
+            {/* Region-Filtered LinkedIn Past-24h Search Cards */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
+                gap: "12px",
+              }}
+            >
+              {activePresetSearches.map((preset) => {
+                const regBadge = REGION_BADGES[preset.region] || REGION_BADGES.GLOBAL;
+                return (
+                  <div
+                    key={preset.id}
+                    style={{
+                      background: "rgba(2, 6, 23, 0.65)",
+                      border: "1px solid rgba(148, 163, 184, 0.18)",
+                      borderRadius: "12px",
+                      padding: "14px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      gap: "10px",
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                        <span
+                          style={{
+                            fontSize: "11px",
+                            fontWeight: 700,
+                            color: "#60a5fa",
+                            background: "rgba(37, 99, 235, 0.16)",
+                            padding: "2px 8px",
+                            borderRadius: "6px",
+                          }}
+                        >
+                          {preset.serviceCategory}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "11px",
+                            fontWeight: 700,
+                            color: regBadge.color,
+                            background: regBadge.bg,
+                            padding: "2px 8px",
+                            borderRadius: "6px",
+                          }}
+                        >
+                          {regBadge.label} • Past 24h
+                        </span>
+                      </div>
+                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#f8fafc" }}>
+                        {preset.label}
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "7px" }}>
+                      <a
+                        href={preset.linkedinSearch24hUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          background: "#2563eb",
+                          color: "#ffffff",
+                          textDecoration: "none",
+                          padding: "6px 11px",
+                          borderRadius: "8px",
+                          fontSize: "11px",
+                          fontWeight: 700,
+                        }}
+                      >
+                        LinkedIn (Past 24h) <ArrowUpRight size={12} />
+                      </a>
+
+                      <a
+                        href={preset.googleDork24hUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          background: "rgba(16, 185, 129, 0.16)",
+                          color: "#34d399",
+                          border: "1px solid rgba(16, 185, 129, 0.3)",
+                          textDecoration: "none",
+                          padding: "6px 11px",
+                          borderRadius: "8px",
+                          fontSize: "11px",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Google Dork (24h) <ExternalLink size={11} />
+                      </a>
+
+                      <a
+                        href={preset.googleDork3dUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          background: "rgba(245, 158, 11, 0.16)",
+                          color: "#fbbf24",
+                          border: "1px solid rgba(245, 158, 11, 0.3)",
+                          textDecoration: "none",
+                          padding: "6px 11px",
+                          borderRadius: "8px",
+                          fontSize: "11px",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Google Dork (3d) <ExternalLink size={11} />
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Quick Paste LinkedIn Post into this Regional Tab */}
+          <form
+            onSubmit={handleManualPasteSubmit}
+            style={{
+              background: "rgba(15, 23, 42, 0.8)",
+              border: "1px solid rgba(148, 163, 184, 0.16)",
+              borderRadius: "14px",
+              padding: "18px 20px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
+              <h3 style={{ fontSize: "14px", fontWeight: 700, color: "#f8fafc", margin: 0 }}>
+                Quick Paste LinkedIn Requirement → Qualify, Save to{" "}
+                {manualRegion === "INDIA"
+                  ? "🇮🇳 LinkedIn India"
+                  : manualRegion === "USA"
+                    ? "🇺🇸 LinkedIn USA"
+                    : manualRegion === "UAE_DUBAI"
+                      ? "🇦🇪 LinkedIn UAE / Dubai"
+                      : "Vault"}{" "}
+                & Send Email Alert
+              </h3>
+              <select
+                value={manualRegion}
+                onChange={(e) => setManualRegion(e.target.value as any)}
+                style={{
+                  background: "#090d16",
+                  color: "#60a5fa",
+                  border: "1px solid rgba(59, 130, 246, 0.4)",
+                  borderRadius: "8px",
+                  padding: "5px 10px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                }}
+              >
+                <option value="INDIA">Target Tab: 🇮🇳 LinkedIn India</option>
+                <option value="USA">Target Tab: 🇺🇸 LinkedIn USA</option>
+                <option value="UAE_DUBAI">Target Tab: 🇦🇪 LinkedIn UAE / Dubai</option>
+                <option value="GLOBAL">Target Tab: 🌍 Global</option>
+              </select>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", gap: "10px" }}>
+              <input
+                type="text"
+                placeholder="Author Name (e.g. Rahul Sharma / David Miller)"
+                value={manualAuthor}
+                onChange={(e) => setManualAuthor(e.target.value)}
+                style={{
+                  background: "#0f172a",
+                  color: "#e2e8f0",
+                  border: "1px solid rgba(148, 163, 184, 0.25)",
+                  borderRadius: "8px",
+                  padding: "8px 12px",
+                  fontSize: "12px",
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Author Role & Company (e.g. Founder at FinScale)"
+                value={manualRole}
+                onChange={(e) => setManualRole(e.target.value)}
+                style={{
+                  background: "#0f172a",
+                  color: "#e2e8f0",
+                  border: "1px solid rgba(148, 163, 184, 0.25)",
+                  borderRadius: "8px",
+                  padding: "8px 12px",
+                  fontSize: "12px",
+                }}
+              />
+              <input
+                type="url"
+                placeholder="LinkedIn Post URL (optional)"
+                value={manualUrl}
+                onChange={(e) => setManualUrl(e.target.value)}
+                style={{
+                  background: "#0f172a",
+                  color: "#e2e8f0",
+                  border: "1px solid rgba(148, 163, 184, 0.25)",
+                  borderRadius: "8px",
+                  padding: "8px 12px",
+                  fontSize: "12px",
+                }}
+              />
+            </div>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", alignItems: "center" }}>
+              <textarea
+                rows={2}
+                required
+                placeholder="Paste the LinkedIn post requirement here (e.g. 'Looking for an SEO or web development agency in Mumbai/USA...')..."
+                value={manualText}
+                onChange={(e) => setManualText(e.target.value)}
+                style={{
+                  flex: "1 1 360px",
+                  background: "#0f172a",
+                  color: "#e2e8f0",
+                  border: "1px solid rgba(148, 163, 184, 0.25)",
+                  borderRadius: "8px",
+                  padding: "9px 12px",
+                  fontSize: "12px",
+                  fontFamily: "inherit",
+                }}
+              />
+              <button
+                type="submit"
+                disabled={isIngestingManual}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: "#2563eb",
+                  color: "#ffffff",
+                  border: "none",
+                  padding: "12px 18px",
+                  borderRadius: "10px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                <MessageSquare size={14} />
+                {isIngestingManual ? "Qualifying..." : "Qualify & Save Lead"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* LEADS STREAM (Shown on All Leads, LinkedIn India, LinkedIn USA, LinkedIn UAE, My LinkedIn Feed, and Reddit & Forums tabs) */}
+      {activeChannelTab !== "GOOGLE_SEARCH" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-          {/* Freshness Quick-Pills + Filters */}
+          {/* Freshness Quick-Pills + Region & Service Filters */}
           <div
             style={{
               display: "flex",
@@ -873,24 +1363,27 @@ export default function IntentLeadsClientView({
               </button>
             ))}
 
-            <select
-              value={platformFilter}
-              onChange={(e) => setPlatformFilter(e.target.value)}
-              style={{
-                background: "#0f172a",
-                color: "#e2e8f0",
-                border: "1px solid rgba(148, 163, 184, 0.25)",
-                borderRadius: "8px",
-                padding: "7px 12px",
-                fontSize: "12px",
-              }}
-            >
-              <option value="ALL">All Platforms</option>
-              <option value="LINKEDIN_FEED">Personal LinkedIn Feed</option>
-              <option value="LINKEDIN_PUBLIC">Public LinkedIn Posts</option>
-              <option value="REDDIT">Reddit Buyer Threads</option>
-              <option value="X_TWITTER">X / Twitter</option>
-            </select>
+            {(activeChannelTab === "ALL" || activeChannelTab === "REDDIT_FORUMS") && (
+              <select
+                value={regionFilter}
+                onChange={(e) => setRegionFilter(e.target.value)}
+                style={{
+                  background: "#0f172a",
+                  color: "#e2e8f0",
+                  border: "1px solid rgba(148, 163, 184, 0.25)",
+                  borderRadius: "8px",
+                  padding: "7px 12px",
+                  fontSize: "12px",
+                }}
+              >
+                <option value="ALL">All Regions (India / USA / UAE / Global)</option>
+                <option value="INDIA">🇮🇳 India</option>
+                <option value="USA">🇺🇸 USA & North America</option>
+                <option value="UAE_DUBAI">🇦🇪 UAE / Dubai</option>
+                <option value="UK">🇬🇧 UK</option>
+                <option value="GLOBAL">🌍 Global</option>
+              </select>
+            )}
 
             <select
               value={serviceFilter}
@@ -916,7 +1409,7 @@ export default function IntentLeadsClientView({
             <div style={{ position: "relative", flex: "1 1 180px" }}>
               <input
                 type="text"
-                placeholder="Filter by keyword, city (Dubai, Mumbai)..."
+                placeholder="Filter by keyword, city (Mumbai, USA, Dubai)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
@@ -939,16 +1432,27 @@ export default function IntentLeadsClientView({
                 background: "rgba(15, 23, 42, 0.7)",
                 border: "1px dashed rgba(148, 163, 184, 0.25)",
                 borderRadius: "16px",
-                padding: "40px 24px",
+                padding: "36px 24px",
                 textAlign: "center",
               }}
             >
-              <Radar size={36} color="#60a5fa" style={{ margin: "0 auto 12px auto" }} />
+              <Radar size={34} color="#60a5fa" style={{ margin: "0 auto 12px auto" }} />
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#f8fafc", margin: "0 0 6px 0" }}>
-                No Fresh (&le;72h) Warm Buyer Leads in This Filter Yet
+                {activeChannelTab === "LINKEDIN_INDIA"
+                  ? "No Saved 🇮🇳 LinkedIn India Leads in This Filter Yet — Use the Past-24h Buttons Above!"
+                  : activeChannelTab === "LINKEDIN_USA"
+                    ? "No Saved 🇺🇸 LinkedIn USA Leads in This Filter Yet — Use the Past-24h Buttons Above!"
+                    : activeChannelTab === "LINKEDIN_UAE"
+                      ? "No Saved 🇦🇪 LinkedIn UAE / Dubai Leads in This Filter Yet — Use the Past-24h Buttons Above!"
+                      : "No Fresh (≤72h) Warm Buyer Leads in This Filter Yet"}
               </h3>
-              <p style={{ fontSize: "13px", color: "#94a3b8", maxWidth: "540px", margin: "0 auto 18px auto" }}>
-                Click <strong>&ldquo;Fetch Fresh Leads Now (+ Email Alert)&rdquo;</strong> to scan the last 1h–72h of public LinkedIn & Reddit buyer requests, or open Tab 2 to scan your personal LinkedIn feed with 1 click.
+              <p style={{ fontSize: "13px", color: "#94a3b8", maxWidth: "620px", margin: "0 auto 18px auto", lineHeight: 1.55 }}>
+                {activeChannelTab === "LINKEDIN_INDIA" ||
+                activeChannelTab === "LINKEDIN_USA" ||
+                activeChannelTab === "LINKEDIN_UAE" ||
+                activeChannelTab === "MY_LINKEDIN_FEED"
+                  ? "Click any 'LinkedIn (Past 24h)' or 'Google Dork (24h)' button above to open live LinkedIn buyer posts in your browser, then click the '⚡ Scan LinkedIn Feed to DGS' bookmarklet (or paste a post above) to populate this tab and trigger an email alert."
+                  : "Click 'Fetch Fresh Leads Now (+ Email Alert)' to scan the last 1h–72h of buyer requests, or switch to the LinkedIn India / LinkedIn USA tabs."}
               </p>
               <button
                 type="button"
@@ -972,6 +1476,7 @@ export default function IntentLeadsClientView({
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               {filteredSignals.map((sig) => {
                 const plat = PLATFORM_LABELS[sig.source_platform] || PLATFORM_LABELS.LINKEDIN_PUBLIC;
+                const regBadge = REGION_BADGES[sig.target_region] || REGION_BADGES.GLOBAL;
                 const ageHours = sig.age_hours ?? 6;
                 const tierKey = ageHours <= 12 ? "1H_12H" : ageHours <= 24 ? "24H" : "3D";
                 const freshBadge = FRESHNESS_BADGES[tierKey];
@@ -992,7 +1497,7 @@ export default function IntentLeadsClientView({
                       gap: "14px",
                     }}
                   >
-                    {/* Top Row: Freshness + Platform + Service + Intent Score */}
+                    {/* Top Row: Freshness + Platform + Region + Service + Intent Score */}
                     <div
                       style={{
                         display: "flex",
@@ -1032,6 +1537,19 @@ export default function IntentLeadsClientView({
 
                         <span
                           style={{
+                            background: regBadge.bg,
+                            color: regBadge.color,
+                            padding: "4px 10px",
+                            borderRadius: "999px",
+                            fontSize: "11px",
+                            fontWeight: 800,
+                          }}
+                        >
+                          {regBadge.label}
+                        </span>
+
+                        <span
+                          style={{
                             background: "rgba(99, 102, 241, 0.16)",
                             color: "#a5b4fc",
                             padding: "4px 10px",
@@ -1041,19 +1559,6 @@ export default function IntentLeadsClientView({
                           }}
                         >
                           {SERVICE_LABELS[sig.service_category] || sig.service_category}
-                        </span>
-
-                        <span
-                          style={{
-                            background: "rgba(148, 163, 184, 0.14)",
-                            color: "#cbd5e1",
-                            padding: "4px 10px",
-                            borderRadius: "999px",
-                            fontSize: "11px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {sig.target_region}
                         </span>
 
                         <span
@@ -1479,300 +1984,8 @@ export default function IntentLeadsClientView({
         </div>
       )}
 
-      {/* TAB 2: ZERO-LOGIN PERSONAL LINKEDIN FEED SCANNER */}
-      {activeTab === "linkedin-companion" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <div
-            style={{
-              background: "linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(15, 23, 42, 0.9))",
-              border: "1px solid rgba(59, 130, 246, 0.35)",
-              borderRadius: "16px",
-              padding: "24px",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-              <ShieldCheck size={18} color="#34d399" />
-              <span style={{ fontSize: "12px", fontWeight: 700, color: "#34d399", letterSpacing: "0.04em" }}>
-                NO LINKEDIN PASSWORD OR ACCOUNT ACCESS NEEDED • 100% SAFE
-              </span>
-            </div>
-            <h2 style={{ fontSize: "19px", fontWeight: 800, color: "#f8fafc", margin: "0 0 8px 0" }}>
-              How We Fetch From Your Personal LinkedIn Without Needing Your Login
-            </h2>
-            <p style={{ fontSize: "13px", color: "#cbd5e1", lineHeight: 1.6, margin: "0 0 18px 0", maxWidth: "780px" }}>
-              You <strong>never</strong> have to give your LinkedIn password or session cookies to any server (which protects your LinkedIn account from security flags). Instead, drag the{" "}
-              <strong>⚡ Scan LinkedIn Feed to DGS</strong> button below to your browser&apos;s Bookmarks Bar. When you open LinkedIn in your browser, click one of the <strong>Past 24 Hours</strong> search links below and click the bookmarklet — it reads the fresh posts on your screen, sends only warm buyer leads (<strong style={{ color: "#34d399" }}>1h–12h / 24h / &le;3 days old</strong>) into this PIN-protected CMS vault, and emails you immediately!
-            </p>
-
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px" }}>
-              <a
-                ref={bookmarkletRef}
-                href="#dgs-linkedin-scanner"
-                onClick={(e) => {
-                  e.preventDefault();
-                  alert(
-                    "Drag this button to your browser Bookmarks Bar! Then click it while you have LinkedIn.com open."
-                  );
-                }}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
-                  color: "#ffffff",
-                  padding: "12px 22px",
-                  borderRadius: "12px",
-                  fontSize: "14px",
-                  fontWeight: 800,
-                  textDecoration: "none",
-                  boxShadow: "0 8px 24px rgba(37, 99, 235, 0.4)",
-                  border: "1px solid #60a5fa",
-                  cursor: "grab",
-                }}
-              >
-                <Bookmark size={16} />⚡ Scan LinkedIn Feed to DGS
-              </a>
-
-              <div style={{ fontSize: "12px", color: "#94a3b8" }}>
-                ← <strong>Drag this button</strong> to your Bookmarks Bar (<code>Ctrl+Shift+B</code>).
-              </div>
-            </div>
-          </div>
-
-          {/* Past-24h LinkedIn & Google Deep-Links */}
-          <div
-            style={{
-              background: "rgba(15, 23, 42, 0.8)",
-              border: "1px solid rgba(148, 163, 184, 0.16)",
-              borderRadius: "16px",
-              padding: "22px",
-            }}
-          >
-            <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#f8fafc", margin: "0 0 6px 0" }}>
-              1-Click Fresh LinkedIn & Google Buyer Searches (Pre-Filtered to Past 24 Hours)
-            </h3>
-            <p style={{ fontSize: "13px", color: "#94a3b8", margin: "0 0 16px 0" }}>
-              Every link below uses LinkedIn&apos;s <code>datePosted=&quot;past-24h&quot;</code> and Google&apos;s <code>tbs=qdr:d</code> (Past 24 Hours) / <code>qdr:d3</code> (Past 3 Days) filters so you only ever see ultra-fresh requirements:
-            </p>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(330px, 1fr))",
-                gap: "14px",
-              }}
-            >
-              {presetSearches.map((preset) => (
-                <div
-                  key={preset.id}
-                  style={{
-                    background: "rgba(2, 6, 23, 0.55)",
-                    border: "1px solid rgba(148, 163, 184, 0.14)",
-                    borderRadius: "12px",
-                    padding: "16px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    gap: "12px",
-                  }}
-                >
-                  <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                      <span
-                        style={{
-                          fontSize: "11px",
-                          fontWeight: 700,
-                          color: "#60a5fa",
-                          background: "rgba(37, 99, 235, 0.16)",
-                          padding: "2px 8px",
-                          borderRadius: "6px",
-                        }}
-                      >
-                        {preset.serviceCategory}
-                      </span>
-                      <span style={{ fontSize: "11px", color: "#34d399", fontWeight: 700 }}>
-                        ⚡ Past 24h / 3d Only
-                      </span>
-                    </div>
-                    <div style={{ fontSize: "14px", fontWeight: 700, color: "#f8fafc", marginBottom: "6px" }}>
-                      {preset.label}
-                    </div>
-                  </div>
-
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                    <a
-                      href={preset.linkedinSearch24hUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "5px",
-                        background: "#2563eb",
-                        color: "#ffffff",
-                        textDecoration: "none",
-                        padding: "6px 12px",
-                        borderRadius: "8px",
-                        fontSize: "12px",
-                        fontWeight: 700,
-                      }}
-                    >
-                      LinkedIn (Past 24h) <ArrowUpRight size={13} />
-                    </a>
-
-                    <a
-                      href={preset.googleDork24hUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "5px",
-                        background: "rgba(16, 185, 129, 0.16)",
-                        color: "#34d399",
-                        border: "1px solid rgba(16, 185, 129, 0.3)",
-                        textDecoration: "none",
-                        padding: "6px 12px",
-                        borderRadius: "8px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Google Dork (24h) <ExternalLink size={12} />
-                    </a>
-
-                    <a
-                      href={preset.googleDork3dUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "5px",
-                        background: "rgba(245, 158, 11, 0.16)",
-                        color: "#fbbf24",
-                        border: "1px solid rgba(245, 158, 11, 0.3)",
-                        textDecoration: "none",
-                        padding: "6px 12px",
-                        borderRadius: "8px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Google Dork (3 Days) <ExternalLink size={12} />
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Paste & Qualify */}
-          <form
-            onSubmit={handleManualPasteSubmit}
-            style={{
-              background: "rgba(15, 23, 42, 0.8)",
-              border: "1px solid rgba(148, 163, 184, 0.16)",
-              borderRadius: "16px",
-              padding: "22px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-            }}
-          >
-            <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#f8fafc", margin: 0 }}>
-              Quick Paste LinkedIn Post → Save to Private Vault & Send Email Alert
-            </h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "10px" }}>
-              <input
-                type="text"
-                placeholder="Author Name (e.g. Rahul Sharma)"
-                value={manualAuthor}
-                onChange={(e) => setManualAuthor(e.target.value)}
-                style={{
-                  background: "#0f172a",
-                  color: "#e2e8f0",
-                  border: "1px solid rgba(148, 163, 184, 0.25)",
-                  borderRadius: "8px",
-                  padding: "9px 12px",
-                  fontSize: "13px",
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Author Role / Company"
-                value={manualRole}
-                onChange={(e) => setManualRole(e.target.value)}
-                style={{
-                  background: "#0f172a",
-                  color: "#e2e8f0",
-                  border: "1px solid rgba(148, 163, 184, 0.25)",
-                  borderRadius: "8px",
-                  padding: "9px 12px",
-                  fontSize: "13px",
-                }}
-              />
-              <input
-                type="url"
-                placeholder="Post URL (optional)"
-                value={manualUrl}
-                onChange={(e) => setManualUrl(e.target.value)}
-                style={{
-                  background: "#0f172a",
-                  color: "#e2e8f0",
-                  border: "1px solid rgba(148, 163, 184, 0.25)",
-                  borderRadius: "8px",
-                  padding: "9px 12px",
-                  fontSize: "13px",
-                }}
-              />
-            </div>
-
-            <textarea
-              rows={3}
-              required
-              placeholder="Paste the LinkedIn post requirement here..."
-              value={manualText}
-              onChange={(e) => setManualText(e.target.value)}
-              style={{
-                background: "#0f172a",
-                color: "#e2e8f0",
-                border: "1px solid rgba(148, 163, 184, 0.25)",
-                borderRadius: "8px",
-                padding: "10px 12px",
-                fontSize: "13px",
-                fontFamily: "inherit",
-              }}
-            />
-
-            <div>
-              <button
-                type="submit"
-                disabled={isIngestingManual}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: "#2563eb",
-                  color: "#ffffff",
-                  border: "none",
-                  padding: "10px 18px",
-                  borderRadius: "10px",
-                  fontSize: "13px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
-              >
-                <MessageSquare size={15} />
-                {isIngestingManual ? "Qualifying & Emailing..." : "Qualify & Save to Private Vault"}
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {/* TAB 3: GOOGLE SEARCH BUYER-INTENT RADAR */}
-      {activeTab === "google-radar" && (
+      {/* GOOGLE SEARCH BUYER-INTENT RADAR TAB */}
+      {activeChannelTab === "GOOGLE_SEARCH" && (
         <div
           style={{
             background: "rgba(15, 23, 42, 0.8)",
@@ -1783,10 +1996,10 @@ export default function IntentLeadsClientView({
         >
           <div style={{ marginBottom: "16px" }}>
             <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#f8fafc", margin: "0 0 6px 0" }}>
-              High-Intent Google Search Queries (People Searching Google for DGS Services)
+              🔍 High-Intent Google Search Queries (People Searching Google for DGS Services)
             </h3>
             <p style={{ fontSize: "13px", color: "#94a3b8", margin: 0 }}>
-              Real commercial searches on Google where prospective buyers are looking for your services and D&apos;Genius Solutions appeared in search results.
+              Real commercial searches on Google where prospective buyers in India, UAE/Dubai, USA & Global markets are looking for your services and D&apos;Genius Solutions appeared in search results.
             </p>
           </div>
 
@@ -1807,6 +2020,7 @@ export default function IntentLeadsClientView({
                     }}
                   >
                     <th style={{ padding: "10px 12px" }}>GOOGLE BUYER QUERY</th>
+                    <th style={{ padding: "10px 12px" }}>REGION</th>
                     <th style={{ padding: "10px 12px" }}>SERVICE</th>
                     <th style={{ padding: "10px 12px" }}>INTENT TIER</th>
                     <th style={{ padding: "10px 12px" }}>IMPR.</th>
@@ -1816,60 +2030,77 @@ export default function IntentLeadsClientView({
                   </tr>
                 </thead>
                 <tbody>
-                  {googleQueries.slice(0, 60).map((q, idx) => (
-                    <tr
-                      key={`${q.query_text}-${idx}`}
-                      style={{
-                        borderBottom: "1px solid rgba(148, 163, 184, 0.08)",
-                      }}
-                    >
-                      <td style={{ padding: "12px", fontWeight: 700, color: "#f8fafc" }}>
-                        {q.query_text}
-                        <div style={{ fontSize: "11px", fontWeight: 400, color: "#64748b", marginTop: "2px" }}>
-                          {q.page_url}
-                        </div>
-                      </td>
-                      <td style={{ padding: "12px" }}>
-                        <span
-                          style={{
-                            background: "rgba(99, 102, 241, 0.15)",
-                            color: "#a5b4fc",
-                            padding: "3px 8px",
-                            borderRadius: "6px",
-                            fontSize: "11px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {q.service_category}
-                        </span>
-                      </td>
-                      <td style={{ padding: "12px" }}>
-                        <span
-                          style={{
-                            background:
-                              q.buyer_intent_tier === "HIGH_COMMERCIAL"
-                                ? "rgba(16, 185, 129, 0.16)"
-                                : "rgba(59, 130, 246, 0.16)",
-                            color: q.buyer_intent_tier === "HIGH_COMMERCIAL" ? "#34d399" : "#60a5fa",
-                            padding: "3px 8px",
-                            borderRadius: "6px",
-                            fontSize: "11px",
-                            fontWeight: 700,
-                          }}
-                        >
-                          {q.buyer_intent_tier === "HIGH_COMMERCIAL" ? "HIGH BUYER INTENT" : "SOLUTION AWARE"}
-                        </span>
-                      </td>
-                      <td style={{ padding: "12px", color: "#e2e8f0", fontWeight: 600 }}>{q.impressions}</td>
-                      <td style={{ padding: "12px", color: "#34d399", fontWeight: 700 }}>{q.clicks}</td>
-                      <td style={{ padding: "12px", color: q.position <= 10 ? "#34d399" : "#fbbf24", fontWeight: 700 }}>
-                        #{q.position}
-                      </td>
-                      <td style={{ padding: "12px", color: "#cbd5e1", fontSize: "12px", maxWidth: "360px" }}>
-                        {q.recommended_action}
-                      </td>
-                    </tr>
-                  ))}
+                  {googleQueries.slice(0, 60).map((q, idx) => {
+                    const reg = REGION_BADGES[q.target_region] || REGION_BADGES.GLOBAL;
+                    return (
+                      <tr
+                        key={`${q.query_text}-${idx}`}
+                        style={{
+                          borderBottom: "1px solid rgba(148, 163, 184, 0.08)",
+                        }}
+                      >
+                        <td style={{ padding: "12px", fontWeight: 700, color: "#f8fafc" }}>
+                          {q.query_text}
+                          <div style={{ fontSize: "11px", fontWeight: 400, color: "#64748b", marginTop: "2px" }}>
+                            {q.page_url}
+                          </div>
+                        </td>
+                        <td style={{ padding: "12px" }}>
+                          <span
+                            style={{
+                              background: reg.bg,
+                              color: reg.color,
+                              padding: "3px 8px",
+                              borderRadius: "6px",
+                              fontSize: "11px",
+                              fontWeight: 700,
+                            }}
+                          >
+                            {reg.label}
+                          </span>
+                        </td>
+                        <td style={{ padding: "12px" }}>
+                          <span
+                            style={{
+                              background: "rgba(99, 102, 241, 0.15)",
+                              color: "#a5b4fc",
+                              padding: "3px 8px",
+                              borderRadius: "6px",
+                              fontSize: "11px",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {q.service_category}
+                          </span>
+                        </td>
+                        <td style={{ padding: "12px" }}>
+                          <span
+                            style={{
+                              background:
+                                q.buyer_intent_tier === "HIGH_COMMERCIAL"
+                                  ? "rgba(16, 185, 129, 0.16)"
+                                  : "rgba(59, 130, 246, 0.16)",
+                              color: q.buyer_intent_tier === "HIGH_COMMERCIAL" ? "#34d399" : "#60a5fa",
+                              padding: "3px 8px",
+                              borderRadius: "6px",
+                              fontSize: "11px",
+                              fontWeight: 700,
+                            }}
+                          >
+                            {q.buyer_intent_tier === "HIGH_COMMERCIAL" ? "HIGH BUYER INTENT" : "SOLUTION AWARE"}
+                          </span>
+                        </td>
+                        <td style={{ padding: "12px", color: "#e2e8f0", fontWeight: 600 }}>{q.impressions}</td>
+                        <td style={{ padding: "12px", color: "#34d399", fontWeight: 700 }}>{q.clicks}</td>
+                        <td style={{ padding: "12px", color: q.position <= 10 ? "#34d399" : "#fbbf24", fontWeight: 700 }}>
+                          #{q.position}
+                        </td>
+                        <td style={{ padding: "12px", color: "#cbd5e1", fontSize: "12px", maxWidth: "360px" }}>
+                          {q.recommended_action}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
