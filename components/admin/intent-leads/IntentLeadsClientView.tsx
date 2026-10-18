@@ -984,11 +984,11 @@ export default function IntentLeadsClientView({
           }}
         >
           <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
-            🕒 Active Vault (&le; 3 Days Max)
+            📅 Active Vault (Past Week / &le; 7d)
           </div>
           <div style={{ fontSize: "26px", fontWeight: 800, color: "#f8fafc" }}>{signals.length}</div>
           <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-            2–3 week old posts are strictly blocked
+            Includes Past 24h &amp; Past Week buyer leads
           </div>
         </div>
 
@@ -1524,10 +1524,10 @@ export default function IntentLeadsClientView({
             </div>
 
             {[
-              { key: "ALL", label: "All Fresh (≤ 3 Days)" },
+              { key: "ALL", label: "All Fresh (Past Week)" },
               { key: "1H_12H", label: "⚡ 1h to 12h Old" },
               { key: "24H", label: "🔥 Past 24 Hours" },
-              { key: "3D", label: "🕒 Up to 3 Days" },
+              { key: "3D", label: "📅 Past Week (2d–7d)" },
             ].map((pill) => (
               <button
                 key={pill.key}

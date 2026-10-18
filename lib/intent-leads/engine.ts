@@ -531,6 +531,7 @@ export async function ensureIntentLeadTables(): Promise<void> {
 export async function getLinkedInSessionStatus(): Promise<{
   connected: boolean;
   maskedCookie: string | null;
+  rawCookie?: string | null;
 }> {
   if (!isCmsDatabaseConfigured()) return { connected: false, maskedCookie: null };
   await ensureIntentLeadTables();
@@ -543,6 +544,7 @@ export async function getLinkedInSessionStatus(): Promise<{
       return {
         connected: true,
         maskedCookie: `${val.slice(0, 6)}...${val.slice(-6)}`,
+        rawCookie: val,
       };
     }
   } catch {}
@@ -834,24 +836,29 @@ type RawSocialResult = {
 export function classifyFreshnessTier(ageHours: number): FreshnessTier | "STALE" {
   if (ageHours <= 12) return "1H_12H";
   if (ageHours <= 24) return "24H";
-  if (ageHours <= 72) return "3D";
+  if (ageHours <= 168) return "3D";
   return "STALE";
 }
 
 export function parseFreshnessHoursFromText(text: string): number | null {
   const lower = text.toLowerCase();
-  if (/\b(\d+\s*(week|weeks|w|month|months|mo|year|years|yr)s?\s*ago)\b/i.test(lower)) {
+  if (/\b(\d+\s*(month|months|mo|year|years|yr)s?\s*(?:ago)?)\b/i.test(lower)) {
     return 999;
   }
-  const dayMatch = lower.match(/\b(\d+)\s*(?:day|days|d)\s*ago\b/i);
+  const weekMatch = lower.match(/\b(\d+)\s*(?:week|weeks|w)\b(?:\s*ago)?/i);
+  if (weekMatch) {
+    const weeks = Number(weekMatch[1]);
+    return weeks === 1 ? 144 : weeks * 168;
+  }
+  const dayMatch = lower.match(/\b(\d+)\s*(?:day|days|d)\b(?:\s*ago)?/i);
   if (dayMatch) {
     return Number(dayMatch[1]) * 24;
   }
-  const hourMatch = lower.match(/\b(\d+)\s*(?:hour|hours|hr|hrs|h)\s*ago\b/i);
+  const hourMatch = lower.match(/\b(\d+)\s*(?:hour|hours|hr|hrs|h)\b(?:\s*ago)?/i);
   if (hourMatch) {
     return Math.max(1, Number(hourMatch[1]));
   }
-  const minMatch = lower.match(/\b(\d+)\s*(?:minute|minutes|min|mins|m)\s*ago\b/i);
+  const minMatch = lower.match(/\b(\d+)\s*(?:minute|minutes|min|mins|m)\b(?:\s*ago)?/i);
   if (minMatch) {
     return 1;
   }
@@ -971,7 +978,7 @@ async function searchDuckDuckGoSocial(
 
     const parsedAge = parseFreshnessHoursFromText(`${title} ${snippet}`);
     const ageHours = parsedAge !== null ? parsedAge : 14;
-    if (ageHours > 72) return;
+    if (ageHours > 168) return;
 
     seen.add(href);
     const tier = classifyFreshnessTier(ageHours);
@@ -1029,7 +1036,7 @@ async function searchBingSocial(
 
     const parsedAge = parseFreshnessHoursFromText(`${title} ${snippet}`);
     const ageHours = parsedAge !== null ? parsedAge : 14;
-    if (ageHours > 72) return;
+    if (ageHours > 168) return;
 
     seen.add(href);
     const tier = classifyFreshnessTier(ageHours);
@@ -1111,7 +1118,7 @@ async function searchRedditAtomRss(
           if (!tsMs || Number.isNaN(tsMs)) continue;
 
           const ageHours = Math.max(1, Math.round((nowMs - tsMs) / 3600_000));
-          if (ageHours > 72) continue;
+          if (ageHours > 168) continue;
 
           const tier = classifyFreshnessTier(ageHours);
           if (tier === "STALE") continue;
@@ -1192,7 +1199,7 @@ async function searchLinkedInAuthenticated(
   await Promise.all(
     presets.slice(0, 4).map(async (preset) => {
       try {
-        const res = await fetchWithTimeout(preset.linkedinSearch24hUrl, {
+        const res = await fetchWithTimeout(preset.linkedinSearchWeekUrl, {
           timeoutMs: 5000,
           maxRetries: 0,
           headers: {
@@ -1238,7 +1245,7 @@ async function searchLinkedInAuthenticated(
               const ageText = item?.actor?.subDescription?.text || "4h ago";
               const parsedAge = parseFreshnessHoursFromText(ageText);
               const ageHours = parsedAge !== null ? parsedAge : 6;
-              if (ageHours > 72) continue;
+              if (ageHours > 168) continue;
               const tier = classifyFreshnessTier(ageHours);
               if (tier === "STALE") continue;
 
@@ -1775,7 +1782,7 @@ export async function upsertIntentLeadSignal(input: {
   await ensureIntentLeadTables();
 
   const ageHours = input.ageHours ?? 6;
-  if (ageHours > 72) {
+  if (ageHours > 168) {
     return { inserted: false, id: "skipped_stale" };
   }
   const freshnessTier: FreshnessTier =
@@ -2135,7 +2142,7 @@ export async function ingestLinkedInFeedPosts(
 
     const parsedAge = parseFreshnessHoursFromText(`${post.ageText || ""} ${text.slice(0, 120)}`);
     const ageHours = parsedAge !== null ? parsedAge : 4;
-    if (ageHours > 72) {
+    if (ageHours > 168) {
       skippedNoise++;
       continue;
     }
