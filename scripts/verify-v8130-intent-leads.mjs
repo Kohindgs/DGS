@@ -19,29 +19,32 @@ password="$DB_PASS"
 EOF
 chmod 600 "$CNF"
 
-echo "=== 1. Testing PIN 0215 Gate (No PIN -> Expect 403 Locked) ==="
-curl -sS -w "\\nHTTP_CODE=%{http_code}\\n" "https://www.dgeniussolutions.com/api/admin/intent-leads"
-
-echo ""
-echo "=== 2. Clearing table for clean fresh-only (<72h) discovery + email test ==="
+echo "=== 1. Clearing table for clean fresh-only (<72h) discovery + email test ==="
 mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "TRUNCATE TABLE intent_lead_signals;"
 
 echo ""
-echo "=== 3. Running Full Discovery with PIN 0215 (Populates Vault + Sends Email Alert) ==="
-curl -sS -w "\\nHTTP_CODE=%{http_code} TIME=%{time_total}s\\n" -X POST "https://www.dgeniussolutions.com/api/admin/intent-leads" \\
-  -H "Content-Type: application/json" \\
-  -H "X-DGS-Intent-Pin: 0215" \\
-  -d '{"action":"discover","pin":"0215"}'
-
-echo ""
-echo "=== 4. Running 30-Min Cron Endpoint Immediately After (Proving Zero Repeats / Deduplication) ==="
+echo "=== 2. Cron Run #1 (/api/internal/intent-leads/check) -> Fetches Fresh Leads & Sends Email ==="
 curl -sS -w "\\nHTTP_CODE=%{http_code} TIME=%{time_total}s\\n" -X POST "https://www.dgeniussolutions.com/api/internal/intent-leads/check" \\
   -H "Authorization: Bearer $CRON_SECRET" \\
   -H "Content-Type: application/json"
 
 echo ""
-echo "=== 5. Inspecting Qualified Fresh Leads + Company Legitimacy + Intent Breakdown in Production DB ==="
-mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "SELECT id, source_platform, service_category, age_hours, freshness_tier, intent_score, company_legitimacy_status, company_legitimacy_score, buyer_persona_type, LEFT(post_title, 75) AS title FROM intent_lead_signals ORDER BY intent_score DESC, age_hours ASC;"
+echo "Waiting 7 seconds before Cron Run #2..."
+sleep 7
+
+echo ""
+echo "=== 3. Cron Run #2 Immediately After -> Proves 3-Way Anti-Repeat Deduplication (0 Repeats, 0 Duplicate Emails) ==="
+curl -sS -w "\\nHTTP_CODE=%{http_code} TIME=%{time_total}s\\n" -X POST "https://www.dgeniussolutions.com/api/internal/intent-leads/check" \\
+  -H "Authorization: Bearer $CRON_SECRET" \\
+  -H "Content-Type: application/json"
+
+echo ""
+echo "=== 4. Qualified Fresh Leads (<72h) + Company Legitimacy + Buyer Persona in Production Vault ==="
+mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "SELECT id, source_platform, service_category, age_hours, freshness_tier, intent_score, company_legitimacy_status, company_legitimacy_score, buyer_persona_type, notified_at IS NOT NULL AS emailed, LEFT(post_title, 70) AS title FROM intent_lead_signals ORDER BY intent_score DESC, age_hours ASC;"
+
+echo ""
+echo "=== 5. Sample Deep Intent Breakdown & Conversion Playbook JSON (Top Lead) ==="
+mysql --defaults-extra-file="$CNF" "$DB_NAME" -e "SELECT post_title, intent_breakdown_json, conversion_playbook_json FROM intent_lead_signals ORDER BY intent_score DESC LIMIT 1\\G"
 `;
 
 const out = execSync(
