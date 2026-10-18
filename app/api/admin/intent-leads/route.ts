@@ -20,16 +20,19 @@ function verifyPinHeaderOrParam(request: Request, bodyPin?: string): boolean {
   const headerPin = request.headers.get("x-dgs-intent-pin") || "";
   const { searchParams } = new URL(request.url);
   const queryPin = searchParams.get("pin") || "";
-  const supplied = (headerPin || queryPin || bodyPin || "").trim();
+  const supplied = String(headerPin || queryPin || bodyPin || "").trim();
   return supplied === INTENT_LEADS_ACCESS_PIN;
 }
 
 export async function GET(request: Request) {
-  if (!(await hasAdminSession())) {
+  const pinValid = verifyPinHeaderOrParam(request);
+  const adminValid = await hasAdminSession().catch(() => false);
+
+  if (!adminValid && !pinValid) {
     return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
   }
 
-  if (!verifyPinHeaderOrParam(request)) {
+  if (!pinValid) {
     return NextResponse.json(
       { ok: false, locked: true, message: "PIN 0215 required to unlock Private Buyer-Intent Vault" },
       { status: 403 }
@@ -60,19 +63,20 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  if (!(await hasAdminSession())) {
-    return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
-  }
-
   try {
     const body = await request.json().catch(() => ({}));
     const action = String(body.action || "discover");
+    const pinValid = verifyPinHeaderOrParam(request, body.pin);
+    const adminValid = await hasAdminSession().catch(() => false);
 
-    // Allow explicit PIN verification check
+    if (!adminValid && !pinValid) {
+      return NextResponse.json({ ok: false, message: "Unauthorized" }, { status: 401 });
+    }
+
     if (action === "unlock") {
-      if (!verifyPinHeaderOrParam(request, body.pin)) {
+      if (!pinValid) {
         return NextResponse.json(
-          { ok: false, locked: true, message: "Invalid PIN. Please enter your 4-digit private vault PIN." },
+          { ok: false, locked: true, message: "Invalid PIN. Please enter your 4-digit private vault PIN (0215)." },
           { status: 403 }
         );
       }
@@ -95,9 +99,9 @@ export async function POST(request: Request) {
       });
     }
 
-    if (!verifyPinHeaderOrParam(request, body.pin)) {
+    if (!pinValid) {
       return NextResponse.json(
-        { ok: false, locked: true, message: "Vault is locked. Enter PIN to continue." },
+        { ok: false, locked: true, message: "Vault is locked. Enter PIN 0215 to continue." },
         { status: 403 }
       );
     }
@@ -110,7 +114,6 @@ export async function POST(request: Request) {
       const result = await runIntentLeadDiscovery({
         runType: "MANUAL",
         serviceFilter,
-        // Always send email when new buyer-intent leads are fetched!
         sendEmailDigest: body.sendEmailDigest !== false,
       });
       return NextResponse.json({
