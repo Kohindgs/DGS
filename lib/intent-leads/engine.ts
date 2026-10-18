@@ -465,6 +465,21 @@ export async function ensureIntentLeadTables(): Promise<void> {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
 
+  // Purge any service-provider, agency-self-promo, or DIY troubleshooting rows so ONLY genuine service-needing buyers remain
+  try {
+    await cmsExecute(
+      `DELETE FROM intent_lead_signals
+       WHERE id IN (
+         'ils_8bdfc8e594bc4b5fb57a',
+         'ils_8632fd15a2b14c7ab7e9',
+         'ils_c1905c5e30f349a9a220',
+         'ils_91322a15c05341aeaf04',
+         'ils_ace84c9cdd124b30a7df'
+       )
+       OR post_text REGEXP 'I run Google Ads for|I used to run a social media marketing agency|Google ads blocked me|High CPC spike in Google Ads|Bad Google Ads performance since|I run a small agency|how I got [0-9]+ freelancing clients|\\\\[For Hire\\\\]|Virtual Assistant|Talent Manager for Minecraft'`
+    );
+  } catch {}
+
   // Ensure existing leads have regional tags populated (INDIA, UAE_DUBAI, USA)
   try {
     await cmsExecute(
@@ -484,11 +499,62 @@ export async function ensureIntentLeadTables(): Promise<void> {
        SET target_region = 'USA'
        WHERE target_region = 'GLOBAL'
          AND source_platform = 'REDDIT'
-         AND post_url REGEXP '/r/(smallbusiness|entrepreneur|startups|SEO|bigseo|PPC|web_design|ecommerce|marketing)'`
+         AND post_url REGEXP '/r/(smallbusiness|entrepreneur|startups|SEO|bigseo|PPC|web_design|ecommerce|marketing|forhire|DesignJobs)'`
     );
   } catch {}
 
   global.__dgsIntentLeadTablesEnsured = true;
+}
+
+export async function getLinkedInSessionStatus(): Promise<{
+  connected: boolean;
+  maskedCookie: string | null;
+}> {
+  if (!isCmsDatabaseConfigured()) return { connected: false, maskedCookie: null };
+  await ensureIntentLeadTables();
+  try {
+    const { rows } = await cmsQuery<{ setting_value: string }>(
+      `SELECT setting_value FROM intent_lead_settings WHERE setting_key = 'linkedin_li_at_cookie' LIMIT 1`
+    );
+    const val = (rows[0]?.setting_value || process.env.LINKEDIN_LI_AT || "").trim();
+    if (val && val.length > 15) {
+      return {
+        connected: true,
+        maskedCookie: `${val.slice(0, 6)}...${val.slice(-6)}`,
+      };
+    }
+  } catch {}
+  return { connected: false, maskedCookie: null };
+}
+
+export async function saveLinkedInSessionCookie(rawCookie: string): Promise<{
+  connected: boolean;
+  maskedCookie: string | null;
+}> {
+  if (!isCmsDatabaseConfigured()) return { connected: false, maskedCookie: null };
+  await ensureIntentLeadTables();
+  let clean = String(rawCookie || "").trim();
+  const match = clean.match(/li_at=([^;\s"']+)/i);
+  if (match && match[1]) {
+    clean = match[1].trim();
+  }
+  clean = clean.replace(/^["']+|["']+$/g, "").trim();
+
+  if (!clean || clean.length < 15) {
+    await cmsExecute(`DELETE FROM intent_lead_settings WHERE setting_key = 'linkedin_li_at_cookie'`).catch(() => {});
+    return { connected: false, maskedCookie: null };
+  }
+
+  await cmsExecute(
+    `INSERT INTO intent_lead_settings (setting_key, setting_value) VALUES ('linkedin_li_at_cookie', ?)
+     ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)`,
+    [clean]
+  );
+
+  return {
+    connected: true,
+    maskedCookie: `${clean.slice(0, 6)}...${clean.slice(-6)}`,
+  };
 }
 
 export async function getOrCreateIngestToken(): Promise<string> {
@@ -658,26 +724,31 @@ export async function validateCompanyLegitimacy(input: {
   let domainLiveHttpStatus: number | null = null;
 
   if (candidateDomain) {
-    try {
-      const mx = await Promise.race([
-        dns.resolveMx(candidateDomain),
-        new Promise<null>((r) => setTimeout(() => r(null), 2000)),
-      ]);
-      if (Array.isArray(mx) && mx.length > 0) {
-        domainHasMxRecords = true;
-      }
-    } catch {}
-
-    try {
-      const probe = await fetchWithTimeout(`https://${candidateDomain}`, {
-        method: "GET",
-        timeoutMs: 3000,
-        maxRetries: 0,
-      });
-      if (probe.httpStatus) {
-        domainLiveHttpStatus = probe.httpStatus;
-      }
-    } catch {}
+    await Promise.all([
+      (async () => {
+        try {
+          const mx = await Promise.race([
+            dns.resolveMx(candidateDomain!),
+            new Promise<null>((r) => setTimeout(() => r(null), 1200)),
+          ]);
+          if (Array.isArray(mx) && mx.length > 0) {
+            domainHasMxRecords = true;
+          }
+        } catch {}
+      })(),
+      (async () => {
+        try {
+          const probe = await fetchWithTimeout(`https://${candidateDomain}`, {
+            method: "GET",
+            timeoutMs: 1200,
+            maxRetries: 0,
+          });
+          if (probe.httpStatus) {
+            domainLiveHttpStatus = probe.httpStatus;
+          }
+        } catch {}
+      })(),
+    ]);
   }
 
   // 4. Compute Legitimacy Score & Status
@@ -958,102 +1029,218 @@ async function searchBingSocial(
 
 async function searchRedditAtomRss(
   serviceFilter?: IntentServiceCategory,
-  limit = 100
+  limit = 80
 ): Promise<RawSocialResult[]> {
-  const subs =
-    "smallbusiness+entrepreneur+startups+SEO+bigseo+digital_marketing+web_design+webdev+ecommerce+PPC+marketing+branding+socialmedia+india+dubai";
+  const subsHiring =
+    "forhire+DesignJobs+smallbusiness+entrepreneur+startups+IndianStartups+StartUpIndia+dubai+SEO+web_design+ecommerce";
+  const subsBusiness =
+    "smallbusiness+entrepreneur+startups+IndianStartups+StartUpIndia+dubai+SEO+bigseo+web_design+ecommerce+marketing";
 
   const queryByCategory: Record<IntentServiceCategory, string> = {
-    SEO: `"SEO agency" OR "recommend SEO" OR "hire SEO" OR "looking for SEO" OR "SEO consultant" OR "local SEO" OR "SEO help"`,
-    WEB_DEV: `"website redesign" OR "web development" OR "web design" OR "looking for web developer" OR "need a website" OR "conversion rate"`,
-    AI_VIDEO: `"video production" OR "product video" OR "AI video" OR "explainer video" OR "commercial video"`,
+    SEO: `"looking for SEO" OR "SEO agency" OR "recommend SEO" OR "hire SEO" OR "struggling to get orders"`,
+    WEB_DEV: `"need a website" OR "new website" OR "looking for a web developer" OR "website redesign" OR "website launch" OR "corporate site redesign"`,
+    AI_VIDEO: `"video production" OR "AI video" OR "explainer video" OR "motion graphics" OR "promo video"`,
     AEO_GEO: `"Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "SEO agency Dubai" OR "marketing Dubai"`,
-    PAID_MEDIA: `"Google Ads" OR "performance marketing" OR "marketing agency" OR "Meta ads" OR "Facebook ads"`,
-    BRANDING: `"branding agency" OR "social media agency" OR "creative agency" OR "social media manager" OR "rebrand"`,
+    PAID_MEDIA: `"looking for someone to market" OR "Google Ads" OR "performance marketing" OR "marketing agency" OR "struggling to get orders"`,
+    BRANDING: `"branding agency" OR "social media agency" OR "UI/UX designer" OR "rebrand"`,
   };
 
-  const combinedQuery = serviceFilter
-    ? queryByCategory[serviceFilter]
-    : `"SEO agency" OR "website redesign" OR "web development" OR "web design" OR "marketing agency" OR "Google Ads" OR "video production" OR "branding agency" OR "social media agency" OR "local SEO"`;
+  const urls = serviceFilter
+    ? [
+        `https://www.reddit.com/r/${subsHiring}/search.rss?q=${encodeURIComponent(
+          queryByCategory[serviceFilter]
+        )}&restrict_sr=on&sort=new&t=week&limit=${limit}`,
+      ]
+    : [
+        `https://www.reddit.com/r/${subsHiring}/search.rss?q=${encodeURIComponent(
+          `title:"Hiring" AND (website OR SEO OR marketing OR "Google Ads" OR Shopify OR WordPress OR Next.js OR "landing page" OR "video" OR "UI/UX")`
+        )}&restrict_sr=on&sort=new&t=week&limit=65`,
+        `https://www.reddit.com/r/${subsBusiness}/search.rss?q=${encodeURIComponent(
+          `"need a website" OR "new website" OR "web developer" OR "website redesign" OR "website launch" OR "SEO agency" OR "recommend an agency" OR "looking for someone to market" OR "struggling to get orders"`
+        )}&restrict_sr=on&sort=new&t=week&limit=65`,
+      ];
 
-  const url = `https://www.reddit.com/r/${subs}/search.rss?q=${encodeURIComponent(
-    combinedQuery
-  )}&restrict_sr=on&sort=new&t=week&limit=${limit}`;
+  const seenUrls = new Set<string>();
+  const results: RawSocialResult[] = [];
+  const nowMs = Date.now();
 
-  try {
-    const res = await fetchWithTimeout(url, {
-      timeoutMs: 10000,
-      maxRetries: 0,
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-      },
-    });
-    if (!res.ok || !res.text) return [];
+  await Promise.all(
+    urls.map(async (url) => {
+      try {
+        const res = await fetchWithTimeout(url, {
+          timeoutMs: 5500,
+          maxRetries: 0,
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+          },
+        });
+        if (!res.ok || !res.text) return;
 
-    const xml = res.text;
-    const entries = xml.match(/<entry>[\s\S]*?<\/entry>/g) || [];
-    const results: RawSocialResult[] = [];
-    const nowMs = Date.now();
+        const xml = res.text;
+        const entries = xml.match(/<entry>[\s\S]*?<\/entry>/g) || [];
 
-    for (const entry of entries) {
-      const updatedStr = (entry.match(/<updated>([^<]+)<\/updated>/) || [])[1] || "";
-      const publishedStr = (entry.match(/<published>([^<]+)<\/published>/) || [])[1] || updatedStr;
-      const tsMs = publishedStr ? new Date(publishedStr).getTime() : 0;
-      if (!tsMs || Number.isNaN(tsMs)) continue;
+        for (const entry of entries) {
+          const updatedStr = (entry.match(/<updated>([^<]+)<\/updated>/) || [])[1] || "";
+          const publishedStr = (entry.match(/<published>([^<]+)<\/published>/) || [])[1] || updatedStr;
+          const tsMs = publishedStr ? new Date(publishedStr).getTime() : 0;
+          if (!tsMs || Number.isNaN(tsMs)) continue;
 
-      const ageHours = Math.max(1, Math.round((nowMs - tsMs) / 3600_000));
-      if (ageHours > 72) continue;
+          const ageHours = Math.max(1, Math.round((nowMs - tsMs) / 3600_000));
+          if (ageHours > 72) continue;
 
-      const tier = classifyFreshnessTier(ageHours);
-      if (tier === "STALE") continue;
+          const tier = classifyFreshnessTier(ageHours);
+          if (tier === "STALE") continue;
 
-      const rawTitle = (entry.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || "";
-      const title = rawTitle
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'")
-        .replace(/&amp;/g, "&")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .trim();
+          const rawTitle = (entry.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || "";
+          const title = rawTitle
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&amp;/g, "&")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .trim();
 
-      const link = (entry.match(/<link href="([^"]+)"/) || [])[1] || "";
-      if (!link || !isValidSocialLeadUrl(link)) continue;
+          if (/\[for hire\]/i.test(title)) continue;
 
-      const authorRaw = (entry.match(/<author>\s*<name>([^<]+)<\/name>/) || [])[1] || "";
-      const author = authorRaw.replace(/^\/?u\//, "").trim() || "redditor";
-      const subLabel = (entry.match(/<category[^>]*label="([^"]+)"/) || [])[1] || "r/smallbusiness";
+          const link = (entry.match(/<link href="([^"]+)"/) || [])[1] || "";
+          if (!link || seenUrls.has(link) || !isValidSocialLeadUrl(link)) continue;
 
-      const contentHtml = (entry.match(/<content[^>]*>([\s\S]*?)<\/content>/) || [])[1] || "";
-      const cleanText = contentHtml
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'")
-        .replace(/&amp;/g, "&")
-        .replace(/&#32;/g, " ")
-        .replace(/<[^>]+>/g, " ")
-        .replace(/submitted by\s+\/u\/[^\s]+\s+to\s+r\/[^\s]+\s*\[link\]\s*\[comments\]/gi, "")
-        .replace(/\s+/g, " ")
-        .trim();
+          const authorRaw = (entry.match(/<author>\s*<name>([^<]+)<\/name>/) || [])[1] || "";
+          const author = authorRaw.replace(/^\/?u\//, "").trim() || "redditor";
+          const subLabel = (entry.match(/<category[^>]*label="([^"]+)"/) || [])[1] || "r/smallbusiness";
 
-      results.push({
-        title: `${title} (${subLabel} by u/${author})`,
-        url: link,
-        snippet: cleanText ? cleanText.slice(0, 800) : title,
-        platform: "REDDIT",
-        publishedAt: new Date(tsMs).toISOString(),
-        ageHours,
-        freshnessTier: tier,
-      });
-    }
+          const contentHtml = (entry.match(/<content[^>]*>([\s\S]*?)<\/content>/) || [])[1] || "";
+          const cleanText = contentHtml
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&amp;/g, "&")
+            .replace(/&#32;/g, " ")
+            .replace(/<[^>]+>/g, " ")
+            .replace(/submitted by\s+\/u\/[^\s]+\s+to\s+r\/[^\s]+\s*\[link\]\s*\[comments\]/gi, "")
+            .replace(/\s+/g, " ")
+            .trim();
 
-    return results;
-  } catch {
-    return [];
-  }
+          seenUrls.add(link);
+          results.push({
+            title: `${title} (${subLabel} by u/${author})`,
+            url: link,
+            snippet: cleanText ? cleanText.slice(0, 800) : title,
+            platform: "REDDIT",
+            publishedAt: new Date(tsMs).toISOString(),
+            ageHours,
+            freshnessTier: tier,
+          });
+        }
+      } catch {}
+    })
+  );
+
+  return results;
+}
+
+/**
+ * Authenticated LinkedIn Content & Feed Search using the user's `li_at` session cookie.
+ * Fetches live 1h–24h posts across LinkedIn India, LinkedIn USA, LinkedIn UAE, and Home Feed.
+ */
+async function searchLinkedInAuthenticated(
+  liAtCookie: string,
+  serviceFilter?: IntentServiceCategory
+): Promise<Array<RawSocialResult & { regionHint: IntentRegion; authorName?: string; authorRole?: string }>> {
+  if (!liAtCookie || liAtCookie.length < 15) return [];
+
+  const presets = serviceFilter
+    ? LINKEDIN_FEED_PRESET_SEARCHES.filter((p) => p.serviceCategory === serviceFilter).slice(0, 3)
+    : [
+        LINKEDIN_FEED_PRESET_SEARCHES[0], // India SEO
+        LINKEDIN_FEED_PRESET_SEARCHES[1], // India Web Dev
+        LINKEDIN_FEED_PRESET_SEARCHES[5], // USA SEO
+        LINKEDIN_FEED_PRESET_SEARCHES[6], // USA Web Dev
+        LINKEDIN_FEED_PRESET_SEARCHES[10], // UAE / Dubai SEO & AEO
+      ].filter(Boolean);
+
+  const results: Array<RawSocialResult & { regionHint: IntentRegion; authorName?: string; authorRole?: string }> = [];
+  const seen = new Set<string>();
+  const csrfToken = "ajax:5829104728194021";
+
+  await Promise.all(
+    presets.slice(0, 4).map(async (preset) => {
+      try {
+        const res = await fetchWithTimeout(preset.linkedinSearch24hUrl, {
+          timeoutMs: 5000,
+          maxRetries: 0,
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            Cookie: `li_at=${liAtCookie}; JSESSIONID="${csrfToken}"`,
+            "csrf-token": csrfToken,
+          },
+        });
+        if (!res.ok || !res.text) return;
+
+        // Parse embedded Voyager JSON inside <code> tags
+        const codeBlocks = res.text.match(/<code[^>]*>([\s\S]*?)<\/code>/g) || [];
+        for (const block of codeBlocks) {
+          if (!block.includes("commentary") && !block.includes("Update")) continue;
+          const inner = block
+            .replace(/^<code[^>]*>/, "")
+            .replace(/<\/code>$/, "")
+            .replace(/&quot;/g, '"')
+            .replace(/&amp;/g, "&")
+            .replace(/&#39;/g, "'");
+          try {
+            const json = JSON.parse(inner);
+            const included = Array.isArray(json?.included) ? json.included : [];
+            for (const item of included) {
+              const postText =
+                item?.commentary?.text?.text ||
+                item?.specificContent?.["com.linkedin.ugc.ShareContent"]?.shareCommentary?.text ||
+                "";
+              if (!postText || postText.length < 35) continue;
+
+              const urn = item?.urn || item?.entityUrn || item?.updateMetadata?.urn || "";
+              const actMatch = String(urn).match(/urn:li:(?:activity|ugcPost|share):\d+/);
+              const postUrl = actMatch
+                ? `https://www.linkedin.com/feed/update/${actMatch[0]}/`
+                : `https://www.linkedin.com/feed/#li-${computeUrlHash("", postText).slice(0, 12)}`;
+              if (seen.has(postUrl)) continue;
+
+              const authorName = item?.actor?.name?.text || "LinkedIn Member";
+              const authorRole = item?.actor?.description?.text || "";
+              const ageText = item?.actor?.subDescription?.text || "4h ago";
+              const parsedAge = parseFreshnessHoursFromText(ageText);
+              const ageHours = parsedAge !== null ? parsedAge : 6;
+              if (ageHours > 72) continue;
+              const tier = classifyFreshnessTier(ageHours);
+              if (tier === "STALE") continue;
+
+              seen.add(postUrl);
+              results.push({
+                title: `${authorName} on LinkedIn${authorRole ? ` — ${authorRole}` : ""}`,
+                url: postUrl,
+                snippet: postText.slice(0, 1200),
+                platform: "LINKEDIN_PUBLIC",
+                publishedAt: new Date(Date.now() - ageHours * 3600_000).toISOString(),
+                ageHours,
+                freshnessTier: tier,
+                regionHint: preset.region,
+                authorName,
+                authorRole,
+              });
+            }
+          } catch {}
+        }
+      } catch {}
+    })
+  );
+
+  return results;
 }
 
 export type EvaluatedLeadCandidate = {
@@ -1112,20 +1299,20 @@ export function evaluateCandidateHeuristically(input: {
       : null;
 
   const hasExplicitB2bServiceMention =
-    /\b(seo|search engine optimization|aeo|answer engine|generative engine|web development|web design|website redesign|website development|next\.?js|wordpress|shopify|video production|ai video|brand film|ad film|explainer video|performance marketing|google ads|meta ads|facebook ads|ppc|digital marketing|marketing agency|branding agency|social media agency|social media manager|creative agency|website maintenance|website amc|marketing my b2b)\b/i.test(
+    /\b(seo|search engine optimization|aeo|answer engine|generative engine|web development|web design|website redesign|website development|website launch|new website|need a website|web developer|next\.?js|wordpress|shopify|video production|ai video|brand film|ad film|explainer video|promo video|motion graphics|3d.*website|ui\/ux|performance marketing|google ads|meta ads|facebook ads|ppc|digital marketing|marketing agency|market my apps|market my|get orders|branding agency|social media agency|creative agency|website maintenance|website amc)\b/i.test(
       lower
     );
 
   let serviceCategory: IntentServiceCategory = input.defaultService || "SEO";
   if (/\b(aeo|answer engine|generative engine|ai overview|llm seo|chatgpt ranking|seo agency dubai|digital marketing dubai)\b/i.test(lower)) {
     serviceCategory = "AEO_GEO";
-  } else if (/\b(ai video|video production|brand film|ad film|explainer video|commercial video|product video)\b/i.test(lower)) {
+  } else if (/\b(ai video|video production|brand film|ad film|explainer video|commercial video|product video|promo video|motion graphics)\b/i.test(lower)) {
     serviceCategory = "AI_VIDEO";
-  } else if (/\b(web development|website redesign|web design|next\.?js|wordpress|shopify|website amc|website maintenance|landing page|build a website|corporate site redesign)\b/i.test(lower)) {
+  } else if (/\b(web development|website redesign|web design|web developer|new website|need a website|website launch|next\.?js|wordpress|shopify|website amc|website maintenance|landing page|build a website|corporate site redesign|ui\/ux|3d.*website)\b/i.test(lower)) {
     serviceCategory = "WEB_DEV";
-  } else if (/\b(google ads|meta ads|facebook ads|performance marketing|paid media|ppc|lead generation agency|roas|marketing my b2b)\b/i.test(lower)) {
+  } else if (/\b(google ads|meta ads|facebook ads|performance marketing|paid media|ppc|lead generation agency|roas|market my apps|struggling to get orders)\b/i.test(lower)) {
     serviceCategory = "PAID_MEDIA";
-  } else if (/\b(branding agency|brand identity|social media agency|social media management|social media manager|creative agency)\b/i.test(lower)) {
+  } else if (/\b(branding agency|brand identity|social media agency|social media management|creative agency)\b/i.test(lower)) {
     serviceCategory = "BRANDING";
   } else if (/\b(seo|search engine optimization|backlink|organic traffic|search ranking|local seo)\b/i.test(lower)) {
     serviceCategory = "SEO";
@@ -1136,7 +1323,7 @@ export function evaluateCandidateHeuristically(input: {
   if (/\b(dubai|uae|abu dhabi|sharjah|mena|middle east|dxb|aed)\b|\.ae\b|r\/dubai|r\/uae/i.test(lower) || /dubai|uae|abudhabi/i.test(urlLower)) {
     targetRegion = "UAE_DUBAI";
   } else if (
-    /\b(mumbai|india|indian|navi mumbai|thane|bangalore|bengaluru|delhi|ncr|gurgaon|gurugram|noida|pune|hyderabad|chennai|kolkata|ahmedabad|jaipur|surat|kochi|chandigarh|inr|lakh|crore)\b|₹|\.in\b|r\/indianstartups|r\/startupindia|r\/india|r\/mumbai|r\/bangalore/i.test(
+    /\b(mumbai|india|indian|navi mumbai|thane|bangalore|bengaluru|delhi|ncr|gurgaon|gurugram|noida|pune|hyderabad|chennai|kolkata|ahmedabad|jaipur|surat|kochi|chandigarh|inr|lakh|crore|flipkart)\b|₹|\.in\b|r\/indianstartups|r\/startupindia|r\/india|r\/mumbai|r\/bangalore/i.test(
       lower
     ) ||
     /\/r\/(india|indianstartups|startupindia|mumbai|bangalore|delhi|pune|hyderabad)\b/i.test(urlLower)
@@ -1148,77 +1335,86 @@ export function evaluateCandidateHeuristically(input: {
     /\b(usa|u\.s\.a|u\.s\.|united states|american|new york|nyc|austin|texas|california|san francisco|bay area|los angeles|chicago|miami|florida|boston|seattle|atlanta|denver|dallas|houston|phoenix|philadelphia|washington|new jersey|north carolina|ohio|michigan|pennsylvania|illinois|georgia|virginia|massachusetts|colorado|arizona|tennessee|canadian|canada|toronto|vancouver|usd|llc)\b|\$\s*\d/i.test(
       lower
     ) ||
-    (targetRegion === "GLOBAL" && /\/r\/(smallbusiness|entrepreneur|startups|seo|bigseo|ppc|web_design|ecommerce|marketing)\b/i.test(urlLower))
+    (targetRegion === "GLOBAL" && /\/r\/(smallbusiness|entrepreneur|startups|seo|bigseo|ppc|web_design|ecommerce|marketing|forhire|designjobs)\b/i.test(urlLower))
   ) {
     targetRegion = "USA";
   }
 
+  // STRICT REJECTION OF JOB SEEKERS, INTERNSHIPS, FULL-TIME ROLES & NON-AGENCY GIGS
   const isJobSeeker =
-    /\b(open to work|#opentowork|\[for hire\]|for hire:|looking for a job|looking for a full-time|looking for an internship|one-year internship|my resume|20-day job|hire me|applying for|seeking a role|i offer seo|i am a freelance|i am an seo|i can build your|self-taught developer|worried about my future|anxious about my career|starting a marketing agency|second year undergrad|student fund|struggling to turn web design skills into)\b/i.test(
+    /\b(open to work|#opentowork|\[for hire\]|for hire:|looking for a job|looking for a full-time|looking for an internship|one-year internship|intern\b|my resume|20-day job|hire me|applying for|seeking a role|seeking.*job opportunities|i offer seo|i am a freelance|i am an seo|i can build your|self-taught developer|worried about my future|anxious about my career|starting a marketing agency|second year undergrad|final-year|final year|student fund|struggling to turn web design skills into)\b/i.test(
       lower
     ) ||
-    /\b(we are hiring a full-time|job opening|years of experience required|send your cv to hr|hiring:\s*retail search director)\b/i.test(
+    /\b(we are hiring a full-time|full-time role|job opening|years of experience required|send your cv to hr|hiring:\s*retail search director|virtual assistant|talent manager|minecraft|freelance sales representatives|get paid to test ai|multi-app data study|tiktok poster|influencer outreach|founding team|co-founders|applications are now closed|this role has been hired|thumbnail designer)\b/i.test(
       lower
     );
 
+  // STRICT REJECTION OF SERVICE PROVIDERS, AGENCIES, FREELANCERS & DIY TROUBLESHOOTERS
   const isSellerPromo =
-    (/\b(we help brands|our agency|we're a freelancing agency|anyone need a website|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer seo|our seo services|case study: how we|showoff saturday|beginner questions)\b/i.test(
+    (/\b(i run google ads for|i manage google ads for|i manage ads for|for my client|for our clients|onboarded.*clients|how i got.*clients|struggling to get.*clients|get small business clients|freelancing clients|anyone need a website|happy to build a website|strengthen my portfolio|i do website and app development|tracked every.*looking for an agency|i run a small|i used to run a|social media marketing agency|we're a freelancing agency|we help brands|our agency|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer|we provide|our seo services|case study: how we|showoff saturday|beginner questions)\b/i.test(
       lower
     ) &&
-      !/\b(looking for an agency|recommend an agency|anyone know a good|need a reliable)\b/i.test(
-        lower
-      )) ||
-    /\b(capcut|cracked|watch tv show|season 1|prime video|netflix|torrent)\b/i.test(lower);
+      !/\b(looking to hire an agency|can anyone recommend an agency)\b/i.test(lower)) ||
+    (/\b(i'm a|i am a|we are a|we're a)\s+(full-stack|freelance|freelancer|web|software|brand|graphic|ui\/ux|seo|marketing|ppc|google ads|social media|video|influencer)\s*(developer|designer|marketer|specialist|consultant|agency|editor|engineer)\b/i.test(
+      lower
+    ) &&
+      !/\b(looking for someone to market|looking to hire|need someone to market)\b/i.test(lower)) ||
+    /\b(google ads blocked me|high cpc spike|bad google ads performance since|is it a good idea to run google ppc ads if i only break even|capcut|cracked|watch tv show|season 1|prime video|netflix|torrent)\b/i.test(
+      lower
+    );
 
+  // STRICT POSITIVE REQUIREMENT: Must explicitly be a BUYER WHO NEEDS A SERVICE
   const strongBuyerPhrases = [
-    "looking for",
-    "anyone recommend",
+    "looking for a web",
+    "looking for an agency",
+    "looking for a marketing",
+    "looking for seo",
+    "looking for an seo",
+    "looking for someone to market",
+    "looking for someone to build",
+    "looking for someone to redesign",
+    "looking for a designer",
+    "looking for a freelance",
+    "looking for a developer",
+    "looking for a video",
+    "looking for a 3d",
+    "looking to hire",
+    "how to find a web developer",
+    "how to find a good",
     "can anyone recommend",
+    "anyone recommend",
     "recommendations for",
     "recommend a",
     "recommend an",
+    "need a new website",
+    "need a website",
+    "need a web developer",
+    "need a web designer",
     "need an agency",
-    "need a good",
-    "looking to hire",
-    "searching for a",
+    "need an seo",
+    "need seo",
+    "need help marketing",
+    "redesign our website",
+    "corporate site redesign",
+    "broke our conversion",
+    "doubled our bounce rate",
+    "website launch",
+    "struggling to get orders",
     "drop your portfolio",
     "send your portfolio",
-    "who is the best",
-    "help with our",
-    "redesign our",
-    "need help with",
-    "need of advice",
-    "need advice",
-    "any recommendations",
-    "looking for a vendor",
-    "rfp",
+    "rip my inbox",
     "which agency",
     "hiring an agency",
     "hire an agency",
     "hire an seo",
     "hire a web",
-    "suggestions for",
-    "anyone worked with",
-    "how to find a good",
-    "need seo",
-    "need a website",
     "[hiring]",
-    "corporate site redesign",
-    "broke our conversion",
-    "doubled our bounce rate",
-    "losing serious money",
-    "conversion performance has been very poor",
-    "high cpc spike",
-    "small business owner trying to set up",
   ];
   const matchedBuyerPhrases = strongBuyerPhrases.filter((p) => lower.includes(p));
 
   const hasActiveCommercialQuestion =
-    (combined.includes("?") ||
-      /\b(recommend|looking|hire|agency|consultant|partner|quote|budget|redesign|advice|struggling|losing serious money|conversion rates)\b/i.test(
-        lower
-      )) &&
-    /\b(agency|consultant|partner|company|freelancer|studio|redesign|audit|quote|budget|hire|looking for|b2b software|small business owner|repair business|conversion rates|conversion performance|cpc spike)\b/i.test(
+    matchedBuyerPhrases.length > 0 &&
+    /\b(website|web developer|web design|web development|redesign|shopify|wordpress|next\.?js|seo|aeo|google ads|meta ads|ppc|digital marketing|market my|marketing|get orders|video|motion graphics|3d|ui\/ux|branding|agency|consultant|developer|designer)\b/i.test(
       lower
     );
 
@@ -1666,16 +1862,41 @@ export async function runIntentLeadDiscovery(options?: {
   const newlyInsertedForEmail: IntentLeadEmailItem[] = [];
 
   try {
-    const redditResults = await searchRedditAtomRss(options?.serviceFilter, 100);
-    queriesExecuted++;
-    rawCandidatesFound += redditResults.length;
+    let liAtCookie = (process.env.LINKEDIN_LI_AT || "").trim();
+    if (!liAtCookie && isCmsDatabaseConfigured()) {
+      try {
+        const { rows } = await cmsQuery<{ setting_value: string }>(
+          `SELECT setting_value FROM intent_lead_settings WHERE setting_key = 'linkedin_li_at_cookie' LIMIT 1`
+        );
+        liAtCookie = (rows[0]?.setting_value || "").trim();
+      } catch {}
+    }
 
-    for (const r of redditResults) {
+    const [linkedinResults, redditResults] = await Promise.all([
+      liAtCookie.length > 15
+        ? searchLinkedInAuthenticated(liAtCookie, options?.serviceFilter)
+        : Promise.resolve([]),
+      searchRedditAtomRss(options?.serviceFilter, 80),
+    ]);
+
+    queriesExecuted = (liAtCookie.length > 15 ? 4 : 0) + 2;
+    rawCandidatesFound = linkedinResults.length + redditResults.length;
+
+    const combinedCandidates: Array<
+      RawSocialResult & { regionHint?: IntentRegion; authorName?: string; authorRole?: string }
+    > = [...linkedinResults, ...redditResults];
+
+    let geminiCallsUsed = 0;
+
+    for (const r of combinedCandidates) {
       const heuristic = evaluateCandidateHeuristically({
         title: r.title,
         text: r.snippet,
         url: r.url,
         defaultService: options?.serviceFilter || "SEO",
+        defaultRegion: r.regionHint,
+        authorName: r.authorName,
+        authorRole: r.authorRole,
         ageHours: r.ageHours,
       });
 
@@ -1685,11 +1906,14 @@ export async function runIntentLeadDiscovery(options?: {
       }
 
       const evaluated =
-        Date.now() - startMs < BUDGET_MS - 9000 && newlyInsertedForEmail.length < 4
-          ? await qualifyWithGeminiIfAvailable(
-              { title: r.title, text: r.snippet, url: r.url, platform: "REDDIT", ageHours: r.ageHours },
-              heuristic
-            )
+        Date.now() - startMs < 7500 && geminiCallsUsed < 2
+          ? await (async () => {
+              geminiCallsUsed++;
+              return qualifyWithGeminiIfAvailable(
+                { title: r.title, text: r.snippet, url: r.url, platform: r.platform, ageHours: r.ageHours },
+                heuristic
+              );
+            })()
           : heuristic;
 
       if (evaluated.classification !== "BUYER_SEEKING_SERVICE" || evaluated.intentScore < 72) {
@@ -1698,11 +1922,13 @@ export async function runIntentLeadDiscovery(options?: {
       }
 
       const upserted = await upsertIntentLeadSignal({
-        sourcePlatform: "REDDIT",
+        sourcePlatform: r.platform,
         postUrl: r.url,
         postTitle: r.title,
         postText: r.snippet,
-        discoveryQuery: `30m Cron <72h buyer search (${evaluated.serviceCategory})`,
+        authorName: evaluated.authorName || r.authorName || null,
+        authorRole: evaluated.authorRole || r.authorRole || null,
+        discoveryQuery: `Buyer-Only Discovery (${evaluated.serviceCategory} • ${evaluated.targetRegion})`,
         publishedAt: r.publishedAt,
         ageHours: r.ageHours,
         freshnessTier: r.freshnessTier,
@@ -1713,7 +1939,7 @@ export async function runIntentLeadDiscovery(options?: {
         qualifiedLeadsAdded++;
         newlyInsertedForEmail.push({
           id: upserted.id,
-          sourcePlatform: `REDDIT (${r.ageHours}h old)`,
+          sourcePlatform: `${r.platform} (${r.ageHours}h old)`,
           postUrl: r.url,
           authorName: evaluated.authorName || "Active Service Buyer",
           authorRole: `${evaluated.buyerPersonaType} • ${evaluated.companyLegitimacyStatus.replace(/_/g, " ")} (${evaluated.companyLegitimacyScore}/100)`,
@@ -1727,84 +1953,6 @@ export async function runIntentLeadDiscovery(options?: {
           suggestedReply: evaluated.suggestedReply,
           recommendedDgsUrl: evaluated.recommendedDgsUrl,
         });
-      }
-    }
-
-    const pool = options?.serviceFilter
-      ? DISCOVERY_QUERY_POOL.filter((q) => q.serviceCategory === options.serviceFilter)
-      : DISCOVERY_QUERY_POOL;
-    const queryOffset = Math.floor(Date.now() / (30 * 60 * 1000)) % Math.max(1, pool.length);
-    const orderedQueries = [...pool.slice(queryOffset), ...pool.slice(0, queryOffset)].slice(0, 4);
-
-    for (const spec of orderedQueries) {
-      if (Date.now() - startMs > BUDGET_MS - 6000) break;
-
-      let webResults = await searchDuckDuckGoSocial(spec.query, spec.platform, 10).catch(() => []);
-      if (webResults.length === 0 && Date.now() - startMs < BUDGET_MS - 6000) {
-        webResults = await searchBingSocial(spec.query, spec.platform, 10).catch(() => []);
-      }
-      queriesExecuted++;
-      rawCandidatesFound += webResults.length;
-
-      for (const r of webResults) {
-        const heuristic = evaluateCandidateHeuristically({
-          title: r.title,
-          text: r.snippet,
-          url: r.url,
-          defaultService: spec.serviceCategory,
-          defaultRegion: spec.region,
-          ageHours: r.ageHours,
-        });
-
-        if (heuristic.classification !== "BUYER_SEEKING_SERVICE" || heuristic.intentScore < 72) {
-          rejectedNoiseCount++;
-          continue;
-        }
-
-        const evaluated =
-          Date.now() - startMs < BUDGET_MS - 9000 && newlyInsertedForEmail.length < 5
-            ? await qualifyWithGeminiIfAvailable(
-                { title: r.title, text: r.snippet, url: r.url, platform: r.platform, ageHours: r.ageHours },
-                heuristic
-              )
-            : heuristic;
-
-        if (evaluated.classification !== "BUYER_SEEKING_SERVICE" || evaluated.intentScore < 72) {
-          rejectedNoiseCount++;
-          continue;
-        }
-
-        const upserted = await upsertIntentLeadSignal({
-          sourcePlatform: r.platform,
-          postUrl: r.url,
-          postTitle: r.title,
-          postText: r.snippet || r.title,
-          discoveryQuery: spec.query,
-          publishedAt: r.publishedAt,
-          ageHours: r.ageHours,
-          freshnessTier: r.freshnessTier,
-          evaluated,
-        });
-
-        if (upserted.inserted) {
-          qualifiedLeadsAdded++;
-          newlyInsertedForEmail.push({
-            id: upserted.id,
-            sourcePlatform: `${r.platform} (~${r.ageHours}h old)`,
-            postUrl: r.url,
-            authorName: evaluated.authorName || "LinkedIn Prospect",
-            authorRole: `${evaluated.buyerPersonaType} • ${evaluated.companyLegitimacyStatus.replace(/_/g, " ")} (${evaluated.companyLegitimacyScore}/100)`,
-            companyName: evaluated.companyName || evaluated.companyDomain || "",
-            serviceCategory: evaluated.serviceCategory,
-            targetRegion: evaluated.targetRegion,
-            intentScore: evaluated.intentScore,
-            urgencyLevel: evaluated.urgencyLevel,
-            postSnippet: `${r.title} — ${r.snippet}`.slice(0, 350),
-            aiReasoning: `${evaluated.aiReasoning} | Legitimacy: ${evaluated.conversionPlaybook.companyVerificationNote} | Hook: ${evaluated.conversionPlaybook.recommendedHook}`,
-            suggestedReply: evaluated.suggestedReply,
-            recommendedDgsUrl: evaluated.recommendedDgsUrl,
-          });
-        }
       }
     }
 
@@ -1829,7 +1977,7 @@ export async function runIntentLeadDiscovery(options?: {
 
     const completedAt = new Date();
     const durationMs = Math.max(0, completedAt.getTime() - startMs);
-    const summaryText = `Executed ${queriesExecuted} fresh (<72h) queries. Evaluated ${rawCandidatesFound} recent posts, qualified ${qualifiedLeadsAdded} net-new buyer leads (0 repeats), rejected ${rejectedNoiseCount} cold/job-seeker posts.${emailsSent ? " Email alert sent!" : ""}`;
+    const summaryText = `Executed ${queriesExecuted} buyer-only (<72h) queries in ${(durationMs / 1000).toFixed(1)}s. Evaluated ${rawCandidatesFound} recent posts, qualified ${qualifiedLeadsAdded} net-new service-needing buyer leads, rejected ${rejectedNoiseCount} service providers/job seekers.${emailsSent ? " Email alert sent!" : ""}`;
 
     if (isCmsDatabaseConfigured()) {
       await cmsExecute(

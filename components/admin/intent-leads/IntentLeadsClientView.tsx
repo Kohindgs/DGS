@@ -108,8 +108,15 @@ export default function IntentLeadsClientView({
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [isScanning, setIsScanning] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [scanBanner, setScanBanner] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  const [linkedinConnected, setLinkedinConnected] = useState<boolean>(false);
+  const [linkedinMaskedCookie, setLinkedinMaskedCookie] = useState<string | null>(null);
+  const [showLinkedinConnect, setShowLinkedinConnect] = useState<boolean>(false);
+  const [liAtInput, setLiAtInput] = useState<string>("");
+  const [isSavingLinkedin, setIsSavingLinkedin] = useState<boolean>(false);
 
   const [manualAuthor, setManualAuthor] = useState("");
   const [manualRole, setManualRole] = useState("");
@@ -169,8 +176,9 @@ export default function IntentLeadsClientView({
     // Background refresh to ensure latest signals are synced
     setIsUnlocking(true);
     try {
-      const res = await fetch("/api/admin/intent-leads/", {
+      const res = await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
         method: "POST",
+        cache: "no-store",
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
@@ -184,6 +192,10 @@ export default function IntentLeadsClientView({
         if (Array.isArray(data.runs)) setRuns(data.runs);
         if (Array.isArray(data.googleBuyerQueries)) setGoogleQueries(data.googleBuyerQueries);
         if (data.ingestToken) setIngestToken(data.ingestToken);
+        if (data.linkedinSession) {
+          setLinkedinConnected(Boolean(data.linkedinSession.connected));
+          setLinkedinMaskedCookie(data.linkedinSession.maskedCookie || null);
+        }
       }
     } catch {
       // Keep server-preloaded data if background refresh fails
@@ -334,30 +346,49 @@ export default function IntentLeadsClientView({
     return presetSearches;
   }, [presetSearches, activeChannelTab]);
 
-  async function refreshSignals() {
+  async function refreshSignals(showToast = false) {
     if (!unlockedPin) return;
+    setIsRefreshing(true);
     try {
-      const res = await fetch("/api/admin/intent-leads/", {
+      const res = await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
+        cache: "no-store",
         credentials: "same-origin",
-        headers: { "X-DGS-Intent-Pin": unlockedPin },
+        headers: {
+          "X-DGS-Intent-Pin": unlockedPin,
+          "Cache-Control": "no-cache",
+        },
       });
       const data = await res.json();
       if (data.ok) {
         setSignals(data.signals || []);
         setRuns(data.runs || []);
+        if (data.linkedinSession) {
+          setLinkedinConnected(Boolean(data.linkedinSession.connected));
+          setLinkedinMaskedCookie(data.linkedinSession.maskedCookie || null);
+        }
+        if (showToast) {
+          setScanBanner(`Vault list refreshed (${(data.signals || []).length} verified service-needing buyer leads loaded).`);
+        }
       }
-    } catch {}
+    } catch {
+      if (showToast) {
+        setScanBanner("Could not refresh list — please check connection.");
+      }
+    } finally {
+      setIsRefreshing(false);
+    }
   }
 
   async function handleRunLiveDiscovery() {
     if (!unlockedPin) return;
     setIsScanning(true);
     setScanBanner(
-      "Scanning Fresh (<72h / 24h / 1h–12h) LinkedIn Posts, Reddit Buyer Threads & Web + sending Email Notification if new leads are fetched..."
+      "Scanning Fresh (<72h / 24h / 1h–12h) Buyer-Only Leads (strictly excluding service providers/agencies)..."
     );
     try {
-      const res = await fetch("/api/admin/intent-leads/", {
+      const res = await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
         method: "POST",
+        cache: "no-store",
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
@@ -371,16 +402,66 @@ export default function IntentLeadsClientView({
         }),
       });
       const data = await res.json();
-      if (data.result) {
-        setScanBanner(data.result.summaryText || "Discovery run completed.");
+      if (Array.isArray(data.signals)) {
+        setSignals(data.signals);
       } else {
-        setScanBanner(data.message || "Discovery run completed.");
+        await refreshSignals(false);
       }
-      await refreshSignals();
+      if (Array.isArray(data.runs)) {
+        setRuns(data.runs);
+      }
+      if (data.linkedinSession) {
+        setLinkedinConnected(Boolean(data.linkedinSession.connected));
+        setLinkedinMaskedCookie(data.linkedinSession.maskedCookie || null);
+      }
+      if (data.result) {
+        setScanBanner(data.result.summaryText || "Discovery run completed & vault refreshed.");
+      } else {
+        setScanBanner(data.message || "Discovery run completed & vault refreshed.");
+      }
     } catch (err: any) {
       setScanBanner(`Discovery scan failed: ${err?.message || "Network error"}`);
     } finally {
       setIsScanning(false);
+    }
+  }
+
+  async function handleSaveLinkedinSession(e: React.FormEvent) {
+    e.preventDefault();
+    if (!unlockedPin) return;
+    setIsSavingLinkedin(true);
+    try {
+      const res = await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
+        method: "POST",
+        cache: "no-store",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-DGS-Intent-Pin": unlockedPin,
+        },
+        body: JSON.stringify({
+          action: "save-linkedin-session",
+          pin: unlockedPin,
+          liAtCookie: liAtInput.trim(),
+        }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        const connected = Boolean(data.linkedinSession?.connected);
+        setLinkedinConnected(connected);
+        setLinkedinMaskedCookie(data.linkedinSession?.maskedCookie || null);
+        if (Array.isArray(data.signals)) setSignals(data.signals);
+        if (Array.isArray(data.runs)) setRuns(data.runs);
+        setLiAtInput("");
+        setShowLinkedinConnect(false);
+        setScanBanner(
+          connected
+            ? `LinkedIn Session Connected (${data.linkedinSession?.maskedCookie})! Auto-scanned LinkedIn India, USA & UAE (${data.result?.qualifiedLeadsAdded || 0} new buyer leads added).`
+            : "LinkedIn session cleared."
+        );
+      }
+    } finally {
+      setIsSavingLinkedin(false);
     }
   }
 
@@ -393,6 +474,7 @@ export default function IntentLeadsClientView({
     );
     await fetch("/api/admin/intent-leads/", {
       method: "POST",
+      cache: "no-store",
       credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
@@ -409,8 +491,9 @@ export default function IntentLeadsClientView({
     try {
       const sourceChannelHint =
         activeChannelTab === "MY_LINKEDIN_FEED" ? "LINKEDIN_FEED" : "LINKEDIN_PUBLIC";
-      const res = await fetch("/api/admin/intent-leads/", {
+      const res = await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
         method: "POST",
+        cache: "no-store",
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
@@ -435,16 +518,17 @@ export default function IntentLeadsClientView({
       const data = await res.json();
       if (data.ok) {
         const added = data.result?.qualifiedAdded || 0;
+        if (Array.isArray(data.signals)) setSignals(data.signals);
+        if (Array.isArray(data.runs)) setRuns(data.runs);
         setScanBanner(
           added > 0
             ? `Lead Fetched (${manualRegion})! AI qualified your LinkedIn post, saved it to this tab, and sent an email notification.`
-            : `Post analyzed — filtered out as cold/non-buyer or duplicate (Skipped: ${data.result?.skippedNoise || 0}, Duplicate: ${data.result?.duplicates || 0}).`
+            : `Post analyzed — filtered out as service provider, job seeker, or duplicate (Skipped: ${data.result?.skippedNoise || 0}, Duplicate: ${data.result?.duplicates || 0}).`
         );
         setManualAuthor("");
         setManualRole("");
         setManualUrl("");
         setManualText("");
-        await refreshSignals();
       }
     } finally {
       setIsIngestingManual(false);
@@ -683,7 +767,54 @@ export default function IntentLeadsClientView({
             }}
           >
             <RefreshCw size={15} className={isScanning ? "animate-spin" : ""} />
-            {isScanning ? "Fetching Fresh Buyer Leads..." : "Fetch Fresh Leads Now (+ Email Alert)"}
+            {isScanning ? "Fetching Buyer Leads..." : "Fetch Fresh Leads Now (+ Email Alert)"}
+          </button>
+
+          <button
+            type="button"
+            disabled={isRefreshing || isScanning}
+            onClick={() => refreshSignals(true)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              background: "rgba(37, 99, 235, 0.16)",
+              color: "#93c5fd",
+              border: "1px solid rgba(59, 130, 246, 0.38)",
+              padding: "10px 14px",
+              borderRadius: "10px",
+              fontSize: "12px",
+              fontWeight: 700,
+              cursor: isRefreshing ? "wait" : "pointer",
+            }}
+          >
+            <RefreshCw size={14} className={isRefreshing ? "animate-spin" : ""} />
+            {isRefreshing ? "Refreshing..." : "Refresh List"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowLinkedinConnect((v) => !v)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              background: linkedinConnected ? "rgba(16, 185, 129, 0.16)" : "rgba(245, 158, 11, 0.16)",
+              color: linkedinConnected ? "#34d399" : "#fbbf24",
+              border: linkedinConnected
+                ? "1px solid rgba(16, 185, 129, 0.35)"
+                : "1px solid rgba(245, 158, 11, 0.38)",
+              padding: "10px 14px",
+              borderRadius: "10px",
+              fontSize: "12px",
+              fontWeight: 700,
+              cursor: "pointer",
+            }}
+          >
+            <KeyRound size={14} />
+            {linkedinConnected
+              ? `LinkedIn Connected (${linkedinMaskedCookie})`
+              : "Connect LinkedIn Auto-Sync"}
           </button>
 
           <button
@@ -707,6 +838,64 @@ export default function IntentLeadsClientView({
           </button>
         </div>
       </div>
+
+      {/* LinkedIn Session Auto-Sync Configuration Drawer */}
+      {showLinkedinConnect && (
+        <form
+          onSubmit={handleSaveLinkedinSession}
+          style={{
+            background: "linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 58, 138, 0.25))",
+            border: "1px solid rgba(59, 130, 246, 0.45)",
+            borderRadius: "14px",
+            padding: "18px 20px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 800, color: "#f8fafc" }}>
+              🔗 Connect Your LinkedIn Session (`li_at`) for Automatic 1h–24h LinkedIn India / USA / UAE Lead Fetching
+            </div>
+            <span style={{ fontSize: "11px", color: "#93c5fd" }}>
+              Chrome on linkedin.com → F12 (DevTools) → Application → Cookies → Copy `li_at` value
+            </span>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            <input
+              type="password"
+              value={liAtInput}
+              onChange={(e) => setLiAtInput(e.target.value)}
+              placeholder="Paste your LinkedIn li_at session cookie here (e.g. AQEDAT...)"
+              style={{
+                flex: "1 1 320px",
+                background: "#020617",
+                color: "#f8fafc",
+                border: "1px solid rgba(59, 130, 246, 0.4)",
+                borderRadius: "8px",
+                padding: "10px 14px",
+                fontSize: "13px",
+              }}
+            />
+            <button
+              type="submit"
+              disabled={isSavingLinkedin}
+              style={{
+                background: "#2563eb",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: "8px",
+                padding: "10px 18px",
+                fontSize: "13px",
+                fontWeight: 700,
+                cursor: isSavingLinkedin ? "wait" : "pointer",
+              }}
+            >
+              {isSavingLinkedin ? "Connecting & Scanning LinkedIn..." : "Save Session & Fetch LinkedIn Leads Now"}
+            </button>
+          </div>
+        </form>
+      )}
 
       {/* Live Status Banner */}
       {scanBanner && (
