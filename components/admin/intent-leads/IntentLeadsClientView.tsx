@@ -102,8 +102,8 @@ export default function IntentLeadsClientView({
   useEffect(() => {
     try {
       const savedPin = sessionStorage.getItem("dgs_intent_vault_pin");
-      if (savedPin === "0215") {
-        setUnlockedPin("0215");
+      if (savedPin === "021514") {
+        setUnlockedPin("021514");
       }
     } catch {}
   }, []);
@@ -111,23 +111,23 @@ export default function IntentLeadsClientView({
   async function unlockVaultWithPin(pinToTry: string) {
     const cleanPin = (pinToTry || "").trim();
     if (!cleanPin) {
-      setPinError("Please type your 4-digit PIN (0215) into the input box above.");
+      setPinError("Please enter your 6-digit passcode into the input box above.");
       return;
     }
 
-    if (cleanPin !== "0215") {
+    if (cleanPin !== "021514") {
       try {
         sessionStorage.removeItem("dgs_intent_vault_pin");
       } catch {}
-      setPinError("Invalid PIN. Please enter your 4-digit PIN (0215).");
+      setPinError("Invalid passcode. Please enter your 6-digit passcode.");
       return;
     }
 
     // Instant 0ms unlock using server-preloaded vault data
     setPinError(null);
-    setUnlockedPin("0215");
+    setUnlockedPin("021514");
     try {
-      sessionStorage.setItem("dgs_intent_vault_pin", "0215");
+      sessionStorage.setItem("dgs_intent_vault_pin", "021514");
     } catch {}
 
     // Background refresh to ensure latest signals are synced
@@ -138,9 +138,9 @@ export default function IntentLeadsClientView({
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
-          "X-DGS-Intent-Pin": "0215",
+          "X-DGS-Intent-Pin": "021514",
         },
-        body: JSON.stringify({ action: "unlock", pin: "0215" }),
+        body: JSON.stringify({ action: "unlock", pin: "021514" }),
       });
       const data = await res.json().catch(() => null);
       if (res.ok && data?.ok) {
@@ -430,7 +430,7 @@ export default function IntentLeadsClientView({
             Buyer-Intent Lead Vault
           </h1>
           <p style={{ fontSize: "13px", color: "#94a3b8", margin: "0 0 24px 0", lineHeight: 1.55 }}>
-            This section is restricted and isolated from public website lead forms. Type your 4-digit security PIN (<strong>0215</strong>) below to unlock fresh (<strong>1h–12h / 24h / &le;3d</strong>) buyer-intent leads.
+            This section is restricted and isolated from public website lead forms. Enter your 6-digit security passcode below to unlock fresh (<strong>1h–12h / 24h / &le;3d</strong>) buyer-intent leads.
           </p>
 
           <div style={{ marginBottom: "16px" }}>
@@ -438,16 +438,16 @@ export default function IntentLeadsClientView({
               type="password"
               inputMode="numeric"
               autoComplete="off"
-              maxLength={8}
+              maxLength={10}
               autoFocus
-              placeholder="Click here & type 0215"
+              placeholder="Enter 6-digit passcode"
               value={pinInput}
               onChange={(e) => {
                 const val = e.target.value;
                 setPinInput(val);
                 setPinError(null);
-                if (val.trim() === "0215") {
-                  unlockVaultWithPin("0215");
+                if (val.trim() === "021514") {
+                  unlockVaultWithPin("021514");
                 }
               }}
               style={{

@@ -34,7 +34,7 @@ export async function GET(request: Request) {
 
   if (!pinValid) {
     return NextResponse.json(
-      { ok: false, locked: true, message: "PIN 0215 required to unlock Private Buyer-Intent Vault" },
+      { ok: false, locked: true, message: "Passcode required to unlock Private Buyer-Intent Vault" },
       { status: 403 }
     );
   }
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
     if (action === "unlock") {
       if (!pinValid) {
         return NextResponse.json(
-          { ok: false, locked: true, message: "Invalid PIN. Please enter your 4-digit private vault PIN (0215)." },
+          { ok: false, locked: true, message: "Invalid passcode. Please enter your 6-digit private vault passcode." },
           { status: 403 }
         );
       }
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
 
     if (!pinValid) {
       return NextResponse.json(
-        { ok: false, locked: true, message: "Vault is locked. Enter PIN 0215 to continue." },
+        { ok: false, locked: true, message: "Vault is locked. Enter your 6-digit passcode to continue." },
         { status: 403 }
       );
     }

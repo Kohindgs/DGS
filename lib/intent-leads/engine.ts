@@ -12,7 +12,7 @@ declare global {
   var __dgsIntentLeadTablesEnsured: boolean | undefined;
 }
 
-export const INTENT_LEADS_ACCESS_PIN = "0215";
+export const INTENT_LEADS_ACCESS_PIN = "021514";
 
 export type IntentSourcePlatform =
   | "LINKEDIN_FEED"
