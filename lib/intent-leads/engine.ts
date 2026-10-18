@@ -465,7 +465,7 @@ export async function ensureIntentLeadTables(): Promise<void> {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
 
-  // Purge any service-provider, agency-self-promo, or DIY troubleshooting rows so ONLY genuine service-needing buyers remain
+  // Purge any service-provider, agency-self-promo, staffing recruiter, or DIY troubleshooting rows so ONLY genuine service-needing buyers remain
   try {
     await cmsExecute(
       `DELETE FROM intent_lead_signals
@@ -474,9 +474,31 @@ export async function ensureIntentLeadTables(): Promise<void> {
          'ils_8632fd15a2b14c7ab7e9',
          'ils_c1905c5e30f349a9a220',
          'ils_91322a15c05341aeaf04',
-         'ils_ace84c9cdd124b30a7df'
+         'ils_ace84c9cdd124b30a7df',
+         'ils_685da6f4cfc5420c86ae',
+         'ils_007929814a114232bc6b',
+         'ils_dbee1bf310c7493f9254',
+         'ils_93b20bbc249a43f9a563',
+         'ils_c476805a2910400c83ed',
+         'ils_a1943f881d2c4b718992',
+         'ils_fa045759505b48edbee5',
+         'ils_3348e1a4277c40e4bbd9',
+         'ils_162435b89647435bab84',
+         'ils_46337b58ecef43b9a8f6',
+         'ils_89dddb7e106b444db0e9',
+         'ils_a67d64ce1ac0477c9246',
+         'ils_b2e9e1d7f14a4d22ad98',
+         'ils_cb7faafedcde48dfa242',
+         'ils_96050c5357994617bbae',
+         'ils_984ad7beff9243e999d8',
+         'ils_cafb1430b11e48e7a1e0'
        )
-       OR post_text REGEXP 'I run Google Ads for|I used to run a social media marketing agency|Google ads blocked me|High CPC spike in Google Ads|Bad Google Ads performance since|I run a small agency|how I got [0-9]+ freelancing clients|\\\\[For Hire\\\\]|Virtual Assistant|Talent Manager for Minecraft'`
+       OR post_text REGEXP 'I run Google Ads for|I used to run a social media marketing agency|Google ads blocked me|High CPC spike in Google Ads|Bad Google Ads performance since|I run a small agency|how I got [0-9]+ freelancing clients|\\\\[For Hire\\\\]|Virtual Assistant|Talent Manager for Minecraft|Available for candidates based in|STEM OPT|WE ARE HIRING – SEO EXECUTIVE|At Iconic Solutions|Looking for SEO Agency Partners|KD Marketing Group|Nova Tech vision|Unpopular opinion:'`
+    );
+    await cmsExecute(
+      `UPDATE intent_lead_signals
+       SET source_platform = 'LINKEDIN_PUBLIC', target_region = 'INDIA'
+       WHERE id IN ('ils_beca0e894aea4f24bfc0', 'ils_c1b15dd8d6dc4ef3bbbc', 'ils_37c7c631756841ea8daa')`
     );
   } catch {}
 
@@ -486,7 +508,7 @@ export async function ensureIntentLeadTables(): Promise<void> {
       `UPDATE intent_lead_signals
        SET target_region = 'INDIA'
        WHERE target_region = 'GLOBAL'
-         AND (post_text REGEXP 'Mumbai|India|Bangalore|Bengaluru|Delhi|Gurgaon|Pune|Hyderabad|Chennai|INR|lakh' OR post_url REGEXP '/r/(india|mumbai|bangalore|delhi|IndianStartups|StartUpIndia)')`
+         AND (post_text REGEXP 'Mumbai|India|Bangalore|Bengaluru|Delhi|Gurgaon|Pune|Hyderabad|Chennai|INR|lakh|Pristyn Care|Swiss Beauty' OR post_url REGEXP '/r/(india|mumbai|bangalore|delhi|IndianStartups|StartUpIndia)')`
     );
     await cmsExecute(
       `UPDATE intent_lead_signals
@@ -1345,16 +1367,18 @@ export function evaluateCandidateHeuristically(input: {
     /\b(open to work|#opentowork|\[for hire\]|for hire:|looking for a job|looking for a full-time|looking for an internship|one-year internship|intern\b|my resume|20-day job|hire me|applying for|seeking a role|seeking.*job opportunities|i offer seo|i am a freelance|i am an seo|i can build your|self-taught developer|worried about my future|anxious about my career|starting a marketing agency|second year undergrad|final-year|final year|student fund|struggling to turn web design skills into)\b/i.test(
       lower
     ) ||
-    /\b(we are hiring a full-time|full-time role|job opening|years of experience required|send your cv to hr|hiring:\s*retail search director|virtual assistant|talent manager|minecraft|freelance sales representatives|get paid to test ai|multi-app data study|tiktok poster|influencer outreach|founding team|co-founders|applications are now closed|this role has been hired|thumbnail designer)\b/i.test(
+    /\b(we are hiring a full-time|full-time role|job opening|years of experience required|send your cv to hr|hiring:\s*retail search director|virtual assistant|talent manager|minecraft|freelance sales representatives|get paid to test ai|multi-app data study|tiktok poster|influencer outreach|founding team|co-founders|applications are now closed|this role has been hired|thumbnail designer|available for candidates based in|stem opt|f1 candidates|we are hiring\s*[-–|]?\s*seo executive|hiring interns)\b/i.test(
       lower
     );
 
   // STRICT REJECTION OF SERVICE PROVIDERS, AGENCIES, FREELANCERS & DIY TROUBLESHOOTERS
   const isSellerPromo =
-    (/\b(i run google ads for|i manage google ads for|i manage ads for|for my client|for our clients|onboarded.*clients|how i got.*clients|struggling to get.*clients|get small business clients|freelancing clients|anyone need a website|happy to build a website|strengthen my portfolio|i do website and app development|tracked every.*looking for an agency|i run a small|i used to run a|social media marketing agency|we're a freelancing agency|we help brands|our agency|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer|we provide|our seo services|case study: how we|showoff saturday|beginner questions)\b/i.test(
+    (/\b(i run google ads for|i manage google ads for|i manage ads for|for my client|for our clients|onboarded.*clients|how i got.*clients|struggling to get.*clients|get small business clients|freelancing clients|anyone need a website|happy to build a website|strengthen my portfolio|i do website and app development|tracked every.*looking for an agency|i run a small|i used to run a|social media marketing agency|we're a freelancing agency|we help brands|our agency|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer|we provide|our seo services|case study: how we|showoff saturday|beginner questions|at iconic solutions|looking for seo agency partners|kd marketing group|nova tech vision|unpopular opinion:|i['’]ve said this to clients|your next client already posted|the wrong digital marketing agency|helps improve search visibility|your business deserves more than)\b/i.test(
       lower
     ) &&
       !/\b(looking to hire an agency|can anyone recommend an agency)\b/i.test(lower)) ||
+    (/\blooking for (?:a|an)\s+[^.?!\n]{3,65}\?/i.test(combined) &&
+      !/\b(i['’]m looking to hire|i am looking to hire|we['’]re looking to hire|we are looking to hire)\b/i.test(lower)) ||
     (/\b(i'm a|i am a|we are a|we're a)\s+(full-stack|freelance|freelancer|web|software|brand|graphic|ui\/ux|seo|marketing|ppc|google ads|social media|video|influencer)\s*(developer|designer|marketer|specialist|consultant|agency|editor|engineer)\b/i.test(
       lower
     ) &&
@@ -1408,6 +1432,12 @@ export function evaluateCandidateHeuristically(input: {
     "hire an agency",
     "hire an seo",
     "hire a web",
+    "exploring agency partnerships",
+    "looking to connect with a reliable",
+    "a client is looking for",
+    "client needs a freelance",
+    "video editors needed",
+    "freelance website developer required",
     "[hiring]",
   ];
   const matchedBuyerPhrases = strongBuyerPhrases.filter((p) => lower.includes(p));
@@ -2121,8 +2151,9 @@ export async function ingestLinkedInFeedPosts(
         ? post.postUrl
         : `https://www.linkedin.com/feed/#dgs-post-${computeUrlHash("", text).slice(0, 12)}`;
 
-    // Infer defaultRegion from regionHint or LinkedIn search page URL keywords
-    let defaultRegion: IntentRegion = post.regionHint || "GLOBAL";
+    // Infer defaultRegion from regionHint/targetRegion or LinkedIn search page URL keywords
+    const explicitRegion = (post.regionHint || (post as any).targetRegion) as IntentRegion | undefined;
+    let defaultRegion: IntentRegion = explicitRegion || "GLOBAL";
     const decodedPageUrl = decodeURIComponent(post.pageUrl || postUrl || "").toLowerCase();
     if (defaultRegion === "GLOBAL") {
       if (/\b(india|mumbai|bangalore|bengaluru|delhi|pune|hyderabad)\b/i.test(decodedPageUrl)) {
@@ -2136,6 +2167,7 @@ export async function ingestLinkedInFeedPosts(
 
     const sourcePlatform: IntentSourcePlatform =
       post.sourceChannelHint ||
+      ((post as any).sourcePlatform as IntentSourcePlatform | undefined) ||
       (decodedPageUrl.includes("/search/results/") ? "LINKEDIN_PUBLIC" : "LINKEDIN_FEED");
 
     const heuristic = evaluateCandidateHeuristically({
@@ -2167,8 +2199,8 @@ export async function ingestLinkedInFeedPosts(
           )
         : heuristic;
 
-    if (post.regionHint && evaluated.targetRegion === "GLOBAL") {
-      evaluated.targetRegion = post.regionHint;
+    if (explicitRegion && explicitRegion !== "GLOBAL") {
+      evaluated.targetRegion = explicitRegion;
     }
 
     if (evaluated.classification !== "BUYER_SEEKING_SERVICE" || evaluated.intentScore < 72) {
