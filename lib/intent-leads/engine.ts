@@ -491,9 +491,11 @@ export async function ensureIntentLeadTables(): Promise<void> {
          'ils_cb7faafedcde48dfa242',
          'ils_96050c5357994617bbae',
          'ils_984ad7beff9243e999d8',
-         'ils_cafb1430b11e48e7a1e0'
+         'ils_cafb1430b11e48e7a1e0',
+         'ils_b8c9756d744d4b5aa29a',
+         'ils_436ccfd3a936442e8e4c'
        )
-       OR post_text REGEXP 'I run Google Ads for|I used to run a social media marketing agency|Google ads blocked me|High CPC spike in Google Ads|Bad Google Ads performance since|I run a small agency|how I got [0-9]+ freelancing clients|\\\\[For Hire\\\\]|Virtual Assistant|Talent Manager for Minecraft|Available for candidates based in|STEM OPT|WE ARE HIRING – SEO EXECUTIVE|At Iconic Solutions|Looking for SEO Agency Partners|KD Marketing Group|Nova Tech vision|Unpopular opinion:'`
+       OR post_text REGEXP 'I run Google Ads for|I used to run a social media marketing agency|Google ads blocked me|High CPC spike in Google Ads|Bad Google Ads performance since|I run a small agency|how I got [0-9]+ freelancing clients|\\\\[For Hire\\\\]|Virtual Assistant|Talent Manager for Minecraft|Available for candidates based in|STEM OPT|WE ARE HIRING – SEO EXECUTIVE|At Iconic Solutions|Looking for SEO Agency Partners|KD Marketing Group|Nova Tech vision|Unpopular opinion:|When we audit a website|Every founder Slack group'`
     );
     await cmsExecute(
       `UPDATE intent_lead_signals
@@ -1328,20 +1330,20 @@ export function evaluateCandidateHeuristically(input: {
       : null;
 
   const hasExplicitB2bServiceMention =
-    /\b(seo|search engine optimization|aeo|answer engine|generative engine|web development|web design|website redesign|website development|website launch|new website|need a website|web developer|next\.?js|wordpress|shopify|video production|ai video|brand film|ad film|explainer video|promo video|motion graphics|3d.*website|ui\/ux|performance marketing|google ads|meta ads|facebook ads|ppc|digital marketing|marketing agency|market my apps|market my|get orders|branding agency|social media agency|creative agency|website maintenance|website amc)\b/i.test(
+    /\b(seo|search engine optimization|aeo|answer engine|generative engine|website|web development|web design|website redesign|website development|website launch|new website|need a website|web developer|web & app developer|react\.?js|next\.?js|wordpress|shopify|video production|video editor|video editors|video editing|videographer|ai video|brand film|ad film|explainer video|promo video|motion graphics|3d.*website|ui\/ux|performance marketing|google ads|meta ads|facebook ads|ppc|digital marketing|marketing agency|market my apps|market my|get orders|branding agency|social media agency|social media expansion|agency partnerships|creative agency|website maintenance|website amc)\b/i.test(
       lower
     );
 
   let serviceCategory: IntentServiceCategory = input.defaultService || "SEO";
   if (/\b(aeo|answer engine|generative engine|ai overview|llm seo|chatgpt ranking|seo agency dubai|digital marketing dubai)\b/i.test(lower)) {
     serviceCategory = "AEO_GEO";
-  } else if (/\b(ai video|video production|brand film|ad film|explainer video|commercial video|product video|promo video|motion graphics)\b/i.test(lower)) {
+  } else if (/\b(ai video|video production|video editor|video editors|video editing|videographer|brand film|ad film|explainer video|commercial video|product video|promo video|motion graphics)\b/i.test(lower)) {
     serviceCategory = "AI_VIDEO";
-  } else if (/\b(web development|website redesign|web design|web developer|new website|need a website|website launch|next\.?js|wordpress|shopify|website amc|website maintenance|landing page|build a website|corporate site redesign|ui\/ux|3d.*website)\b/i.test(lower)) {
+  } else if (/\b(website|web development|website redesign|web design|web developer|web & app developer|react\.?js|new website|need a website|website launch|next\.?js|wordpress|shopify|website amc|website maintenance|landing page|build a website|corporate site redesign|ui\/ux|3d.*website)\b/i.test(lower)) {
     serviceCategory = "WEB_DEV";
   } else if (/\b(google ads|meta ads|facebook ads|performance marketing|paid media|ppc|lead generation agency|roas|market my apps|struggling to get orders)\b/i.test(lower)) {
     serviceCategory = "PAID_MEDIA";
-  } else if (/\b(branding agency|brand identity|social media agency|social media management|creative agency)\b/i.test(lower)) {
+  } else if (/\b(branding agency|brand identity|social media agency|social media expansion|agency partnerships|social media management|creative agency)\b/i.test(lower)) {
     serviceCategory = "BRANDING";
   } else if (/\b(seo|search engine optimization|backlink|organic traffic|search ranking|local seo)\b/i.test(lower)) {
     serviceCategory = "SEO";
@@ -1380,7 +1382,7 @@ export function evaluateCandidateHeuristically(input: {
 
   // STRICT REJECTION OF SERVICE PROVIDERS, AGENCIES, FREELANCERS & DIY TROUBLESHOOTERS
   const isSellerPromo =
-    (/\b(i run google ads for|i manage google ads for|i manage ads for|for my client|for our clients|onboarded.*clients|how i got.*clients|struggling to get.*clients|get small business clients|freelancing clients|anyone need a website|happy to build a website|strengthen my portfolio|i do website and app development|tracked every.*looking for an agency|i run a small|i used to run a|social media marketing agency|we're a freelancing agency|we help brands|our agency|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer|we provide|our seo services|case study: how we|showoff saturday|beginner questions|at iconic solutions|looking for seo agency partners|kd marketing group|nova tech vision|unpopular opinion:|i['’]ve said this to clients|your next client already posted|the wrong digital marketing agency|helps improve search visibility|your business deserves more than)\b/i.test(
+    (/\b(i run google ads for|i manage google ads for|i manage ads for|for my client|for our clients|onboarded.*clients|how i got.*clients|struggling to get.*clients|get small business clients|freelancing clients|anyone need a website|happy to build a website|strengthen my portfolio|i do website and app development|tracked every.*looking for an agency|i run a small|i used to run a|social media marketing agency|we're a freelancing agency|we help brands|our agency|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer|we provide|our seo services|case study: how we|showoff saturday|beginner questions|at iconic solutions|looking for seo agency partners|kd marketing group|nova tech vision|unpopular opinion:|i['’]ve said this to clients|your next client already posted|the wrong digital marketing agency|helps improve search visibility|your business deserves more than|when we audit a website|tell a client they don|every founder slack group|here is a sample of my work)\b/i.test(
       lower
     ) &&
       !/\b(looking to hire an agency|can anyone recommend an agency)\b/i.test(lower)) ||
@@ -1882,7 +1884,7 @@ export async function runIntentLeadDiscovery(options?: {
   if (isCmsDatabaseConfigured()) {
     await ensureIntentLeadTables();
     await cmsExecute(
-      `DELETE FROM intent_lead_signals WHERE status = 'NEW' AND discovered_at < DATE_SUB(NOW(), INTERVAL 4 DAY)`
+      `DELETE FROM intent_lead_signals WHERE status = 'NEW' AND discovered_at < DATE_SUB(NOW(), INTERVAL 7 DAY)`
     ).catch(() => {});
 
     await cmsExecute(
@@ -2416,7 +2418,7 @@ export async function listIntentLeadSignals(filters?: {
 
   const where: string[] = [
     "intent_classification = 'BUYER_SEEKING_SERVICE'",
-    "(age_hours IS NULL OR age_hours <= 72)",
+    "(age_hours IS NULL OR age_hours <= 168)",
   ];
   const params: any[] = [];
 
@@ -2442,7 +2444,7 @@ export async function listIntentLeadSignals(filters?: {
   } else if (filters?.freshness === "24H") {
     where.push("age_hours <= 24");
   } else if (filters?.freshness === "3D") {
-    where.push("age_hours <= 72");
+    where.push("age_hours <= 168");
   }
 
   const limit = Math.min(200, Math.max(10, Number(filters?.limit || 100)));
