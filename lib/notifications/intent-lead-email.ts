@@ -54,7 +54,11 @@ export async function sendIntentLeadsDigestEmail(input: {
     },
   });
 
-  const recipients = getGoogleUpdateRecipients();
+  const rawRecipients = getGoogleUpdateRecipients().filter(
+    (r) => !/ankur\.vishwakarma/i.test(r),
+  );
+  const recipients =
+    rawRecipients.length > 0 ? rawRecipients : ["kohin@dgeniussolutions.com"];
   const recipientString = recipients.join(", ");
   const from = process.env.DGS_SMTP_FROM || process.env.DGS_SMTP_USER!;
 

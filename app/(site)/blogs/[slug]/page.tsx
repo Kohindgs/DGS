@@ -1,6 +1,7 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { getPageSeoOverride } from "@/lib/seo/page-overrides";
 import { getBlogPostBySlug, getRelatedBlogPosts } from "@/lib/blog/blog-data";
 import { BlogArticle } from "@/components/blog/BlogArticle";
 import { BlogWpChrome } from "@/components/blog/BlogWpChrome";
@@ -32,15 +33,26 @@ export async function generateMetadata({
   const { slug: rawSlug } = await params;
   const slug = (rawSlug || "").replace(/^\/blogs\/|\/$/g, "");
   const path = `/blogs/${slug}/`;
+  const seoOverride = getPageSeoOverride(path);
 
   if (isCmsDatabaseConfigured()) {
     try {
       const cmsBlog = await getPublishedCmsBlogBySlug(slug);
-      const article = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
+      const rawArticle = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
+      const article = rawArticle
+        ? {
+            ...rawArticle,
+            title: seoOverride?.title || rawArticle.title,
+            description: seoOverride?.description || rawArticle.description,
+            modified: seoOverride ? "2026-11-14T18:00:00Z" : rawArticle.modified,
+          }
+        : null;
       if (article) {
         return buildPageMetadata({
-          title: article.title,
-          description: article.description,
+          title: seoOverride?.title || article.title,
+          description: seoOverride?.description || article.description,
+          ogTitle: seoOverride?.ogTitle,
+          twitterTitle: seoOverride?.twitterTitle,
           path: article.path,
           canonicalPath: article.canonical || article.path,
           indexable: true,
@@ -66,8 +78,10 @@ export async function generateMetadata({
   const legacyArticle = await getBlogPostBySlug(path);
   if (legacyArticle) {
     return buildPageMetadata({
-      title: legacyArticle.title,
-      description: legacyArticle.description,
+      title: seoOverride?.title || legacyArticle.title,
+      description: seoOverride?.description || legacyArticle.description,
+      ogTitle: seoOverride?.ogTitle,
+      twitterTitle: seoOverride?.twitterTitle,
       path: legacyArticle.path,
       canonicalPath: legacyArticle.canonical || legacyArticle.path,
       indexable: true,
@@ -90,6 +104,7 @@ export default async function BlogSlugPage({
   const { slug: rawSlug } = await params;
   const slug = (rawSlug || "").replace(/^\/blogs\/|\/$/g, "");
   const path = `/blogs/${slug}/`;
+  const seoOverride = getPageSeoOverride(path);
 
   if (isCmsDatabaseConfigured()) {
     try {
@@ -107,7 +122,15 @@ export default async function BlogSlugPage({
       }
 
       const cmsBlog = await getPublishedCmsBlogBySlug(slug);
-      const article = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
+      const rawArticle = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
+      const article = rawArticle
+        ? {
+            ...rawArticle,
+            title: seoOverride?.title || rawArticle.title,
+            description: seoOverride?.description || rawArticle.description,
+            modified: seoOverride ? "2026-11-14T18:00:00Z" : rawArticle.modified,
+          }
+        : null;
       if (article) {
         const relatedPosts = await getRelatedBlogPosts(path, 3);
         const breadcrumbItems = [
@@ -165,7 +188,15 @@ export default async function BlogSlugPage({
   }
 
   // Fallback to legacy static blog data
-  const legacyArticle = await getBlogPostBySlug(path);
+  const rawLegacyArticle = await getBlogPostBySlug(path);
+  const legacyArticle = rawLegacyArticle
+    ? {
+        ...rawLegacyArticle,
+        title: seoOverride?.title || rawLegacyArticle.title,
+        description: seoOverride?.description || rawLegacyArticle.description,
+        modified: seoOverride ? "2026-11-14T18:00:00Z" : rawLegacyArticle.modified,
+      }
+    : null;
   if (legacyArticle) {
     const relatedPosts = await getRelatedBlogPosts(path, 3);
     const breadcrumbItems = [

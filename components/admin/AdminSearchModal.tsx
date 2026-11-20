@@ -40,6 +40,7 @@ const STATIC_TARGETS: SearchResult[] = [
   { id: "10", title: "Client Leads Inbox", category: "Marketing", href: "/admin/leads/", icon: Inbox },
   { id: "11", title: "Career Positions", category: "People", href: "/admin/careers/", icon: UserCheck },
   { id: "12", title: "AI Assessments & Tests", category: "People", href: "/admin/assessment/", icon: GraduationCap },
+  { id: "16", title: "Candidate Reference Checks", category: "People", href: "/admin/reference-checks/", icon: FileCheck2 },
   { id: "13", title: "HR Pipeline & Kanban", category: "People", href: "/admin/hr-pipeline/", icon: Users },
   { id: "14", title: "Users & RBAC Roles", category: "System", href: "/admin/users/", icon: Users },
   { id: "15", title: "System Settings", category: "System", href: "/admin/settings/", icon: Settings },

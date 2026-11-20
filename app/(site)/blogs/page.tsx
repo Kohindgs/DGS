@@ -16,8 +16,9 @@ export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "Blogs - D'Genius Solutions",
-    description: "Strategic thinking on SEO, AI search, and digital growth.",
+    title: "SEO, AI Search & Digital Marketing Insights | D'Genius Solutions",
+    description:
+      "Actionable guides, case studies and strategic Playbooks on SEO, AEO, GEO, AI video production, web development and performance marketing from D'Genius Solutions.",
     path: "/blogs/",
     canonicalPath: "/blogs/",
     indexable: true,

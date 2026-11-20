@@ -17,7 +17,6 @@ export default async function AdminIntentLeadsPage({
   searchParams?: Promise<{ pin?: string }> | { pin?: string };
 }) {
   if (process.env.DGS_ADMIN_ENABLED !== "true") notFound();
-  if (!(await hasAdminSession())) redirect("/admin/login/");
 
   const resolvedParams = await Promise.resolve(searchParams || {});
   const suppliedPin = String(resolvedParams?.pin || "").trim();

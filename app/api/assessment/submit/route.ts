@@ -8,16 +8,13 @@ import { publishNotificationEvent } from "@/lib/notifications/engine";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function countWords(value: unknown) {
-  return String(value || "").trim().split(/\s+/).filter(Boolean).length;
-}
-
 export async function POST(request: Request) {
   try {
     const input = (await request.json()) as {
       attemptId?: string;
       answers?: Record<string, unknown>;
       activity?: unknown[];
+      isAutoSubmit?: boolean;
     };
     const attemptId = String(input.attemptId || "");
     const attempt = await getAttempt(attemptId);
@@ -74,19 +71,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, message: "Assessment configuration missing." }, { status: 400 });
     }
 
+    const rawStarted = String(attempt.started_at || "");
+    const normalizedStarted = rawStarted.includes("T")
+      ? rawStarted.endsWith("Z")
+        ? rawStarted
+        : rawStarted + "Z"
+      : rawStarted.replace(" ", "T") + "Z";
     const startedTime =
-      attempt.started_at instanceof Date
-        ? attempt.started_at.getTime()
-        : new Date(
-            String(attempt.started_at).includes("T")
-              ? String(attempt.started_at)
-              : String(attempt.started_at).replace(" ", "T") + "Z"
-          ).getTime();
-    const elapsed = Date.now() - startedTime;
+      attempt.started_at instanceof Date ? attempt.started_at.getTime() : new Date(normalizedStarted).getTime();
+    const elapsed = Number.isFinite(startedTime) ? Date.now() - startedTime : 0;
     const allowedMs = ((definition.durationMinutes || 75) + 5) * 60 * 1000;
-    if (elapsed > allowedMs) {
-      return NextResponse.json({ ok: false, message: "Assessment time has expired." }, { status: 408 });
-    }
+    const isOvertime = elapsed > allowedMs;
 
     const answers = input.answers || {};
     const technicalAnswers: Record<string, unknown> = {};
@@ -99,31 +94,31 @@ export async function POST(request: Request) {
     for (const question of definition.questions) {
       if (question.type === "mcq") {
         total += 1;
-        technicalAnswers[question.id] = answers[question.id];
-        if (Number(answers[question.id]) === question.correctIndex) {
+        const rawMcq = answers[question.id];
+        technicalAnswers[question.id] = rawMcq ?? "";
+        if (
+          rawMcq !== undefined &&
+          rawMcq !== null &&
+          String(rawMcq).trim() !== "" &&
+          Number(rawMcq) === question.correctIndex
+        ) {
           score += 1;
         }
       } else if (question.type === "short" || question.type === "long") {
         technicalAnswers[question.id] = answers[question.id] || "";
-        if (question.minWords && countWords(answers[question.id]) < question.minWords) {
-          return NextResponse.json(
-            {
-              ok: false,
-              message: `Please complete the written question with at least ${question.minWords} words.`,
-            },
-            { status: 400 }
-          );
-        }
       } else if (question.type === "psychometric") {
         const val = answers[question.id];
         if (val === undefined || val === null || val === "") {
-          return NextResponse.json(
-            {
-              ok: false,
-              message: "Please answer all required psychometric situational questions before submitting.",
-            },
-            { status: 400 }
-          );
+          if (!input.isAutoSubmit) {
+            return NextResponse.json(
+              {
+                ok: false,
+                message: "Please answer all required psychometric situational questions before submitting.",
+              },
+              { status: 400 }
+            );
+          }
+          continue;
         }
         psychometricAnswers[question.id] = val as any;
       } else if (question.type === "practical") {
@@ -141,6 +136,15 @@ export async function POST(request: Request) {
       psychometricProfile = psychometricScoreData.classification;
     }
 
+    const sanitizedActivity = Array.isArray(input.activity) ? input.activity.slice(-200) : [];
+    if (isOvertime || input.isAutoSubmit) {
+      sanitizedActivity.push({
+        type: input.isAutoSubmit ? "server_recorded_auto_submit" : "server_recorded_overtime_submit",
+        detail: `elapsedMinutes=${Math.round(elapsed / 60000)}`,
+        at: new Date().toISOString(),
+      });
+    }
+
     await submitAssessmentAttempt({
       id: attempt.id,
       answers,
@@ -149,7 +153,7 @@ export async function POST(request: Request) {
       psychometric_profile: psychometricProfile,
       psychometric_score_data: psychometricScoreData,
       practical_submission: practicalSubmission,
-      activity: Array.isArray(input.activity) ? input.activity : [],
+      activity: sanitizedActivity.slice(-200),
       score,
       total,
     });

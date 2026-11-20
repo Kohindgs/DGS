@@ -4,7 +4,6 @@ import { formatAuditDate } from "../utils/date.ts";
 
 export const DEFAULT_GOOGLE_UPDATE_RECIPIENTS: string[] = [
   "kohin@dgeniussolutions.com",
-  "ankur.vishwakarma@dgeniussolutions.com",
 ];
 
 export const DGS_ROLLOUT_SAFEGUARDS: string[] = [
@@ -23,7 +22,7 @@ export function getGoogleUpdateRecipients(): string[] {
   const parsed = envVal
     .split(",")
     .map((s) => s.trim())
-    .filter(Boolean);
+    .filter((s) => Boolean(s) && !/ankur\.vishwakarma/i.test(s));
   return parsed.length > 0 ? parsed : [...DEFAULT_GOOGLE_UPDATE_RECIPIENTS];
 }
 
@@ -341,7 +340,7 @@ export async function sendTestGoogleUpdateEmail(actorEmail?: string): Promise<{
           { label: "Scheduler Cadence", value: "Every 3 hours (17 */3 * * *)" },
           { label: "Scheduler Branch", value: "main" },
           { label: "Official Sources", value: "Google Search Status Dashboard, Search Central Blog, Documentation Updates RSS" },
-          { label: "Alert Notification Targets", value: "kohin@dgeniussolutions.com, ankur.vishwakarma@dgeniussolutions.com" },
+          { label: "Alert Notification Targets", value: "kohin@dgeniussolutions.com" },
         ],
       },
       {

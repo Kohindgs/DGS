@@ -155,7 +155,7 @@ export function areQueriesSearchEqual(queryA: unknown, queryB: unknown): boolean
 export function getNonOverlapping28DayWindows(referenceDate: Date = new Date()) {
   const msPerDay = 86400000;
   const now = referenceDate;
-  const gscLatencyDays = 3; // GSC has ~2-3 days reporting latency
+  const gscLatencyDays = 1; // Use 1-day latency with dataState: 'all' to match live GSC web UI
   const endDateObj = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - gscLatencyDays));
   const startDateObj = new Date(endDateObj.getTime() - 27 * msPerDay);
   const prevEndDateObj = new Date(startDateObj.getTime() - 1 * msPerDay);
@@ -173,7 +173,7 @@ export function getNonOverlapping28DayWindows(referenceDate: Date = new Date()) 
  * Calculates exact, non-overlapping 7D, 15D, and 28D evaluation windows
  * taking into account Google Search Console's reporting latency.
  */
-export function getGscEvaluationWindows(referenceDate: Date = new Date(), latencyDays = 3) {
+export function getGscEvaluationWindows(referenceDate: Date = new Date(), latencyDays = 1) {
   const msPerDay = 86400000;
   const now = referenceDate;
   const endDateObj = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - latencyDays));

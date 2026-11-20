@@ -166,9 +166,18 @@ export default function ApplicationsClientView({
   };
 
   // Open detail modal
-  const handleOpenDetails = (app: ApplicationRow) => {
+  const handleOpenDetails = async (app: ApplicationRow) => {
     setSelectedApp(app);
     setNotes(app.interview_notes || "");
+    try {
+      const res = await fetch(`/api/admin/assessment/candidates/${app.id}`);
+      const data = await res.json();
+      if (res.ok && data.candidate) {
+        setSelectedApp((prev) => (prev && prev.id === app.id ? { ...prev, ...data.candidate } : prev));
+      }
+    } catch {
+      // ignore
+    }
   };
 
   // Table Columns
@@ -617,19 +626,43 @@ export default function ApplicationsClientView({
                   <Award size={15} style={{ color: "var(--dgs-purple-light)" }} /> Technical Assessment Status
                 </div>
                 {selectedApp.objective_score != null ? (
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "0.82rem" }}>
-                    <div>
-                      <span style={{ color: "var(--dgs-text-muted)" }}>MCQ Score:</span>{" "}
-                      <strong style={{ color: "var(--dgs-success)" }}>
-                        {selectedApp.objective_score} / {selectedApp.objective_total}
-                      </strong>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "0.82rem" }}>
+                      <div>
+                        <span style={{ color: "var(--dgs-text-muted)" }}>MCQ Score:</span>{" "}
+                        <strong style={{ color: "var(--dgs-success)" }}>
+                          {selectedApp.objective_score} / {selectedApp.objective_total}
+                        </strong>
+                      </div>
+                      <div>
+                        <span style={{ color: "var(--dgs-text-muted)" }}>AI Match Fit:</span>{" "}
+                        <strong style={{ color: "var(--dgs-purple-light)" }}>
+                          {selectedApp.role_match_score ? `${selectedApp.role_match_score}%` : "Evaluated"}
+                        </strong>
+                      </div>
                     </div>
-                    <div>
-                      <span style={{ color: "var(--dgs-text-muted)" }}>AI Match Fit:</span>{" "}
-                      <strong style={{ color: "var(--dgs-purple-light)" }}>
-                        {selectedApp.role_match_score ? `${selectedApp.role_match_score}%` : "Evaluated"}
-                      </strong>
-                    </div>
+                    {(selectedApp as any).answers && typeof (selectedApp as any).answers === "object" && Object.keys((selectedApp as any).answers).length > 0 && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "6px", borderTop: "1px solid var(--dgs-border)", paddingTop: "10px" }}>
+                        <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "var(--dgs-purple-light)", textTransform: "uppercase" }}>
+                          Submitted Candidate Answers ({Object.keys((selectedApp as any).answers).length} Questions)
+                        </div>
+                        {Object.entries((selectedApp as any).answers).map(([qk, av], qi) => (
+                          <div key={qk} style={{ background: "var(--dgs-bg-input)", border: "1px solid var(--dgs-border)", borderRadius: "6px", padding: "10px 12px" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+                              <strong style={{ fontSize: "0.8rem", color: "var(--dgs-text-primary)" }}>
+                                {qk.startsWith("psy") || qk.startsWith("p_") || qk.startsWith("psych") ? `🧠 Workplace Scenario (${qk})` : `🎯 Question ${qi + 1} (${qk})`}
+                              </strong>
+                              <span className="dgs-saas-chip info" style={{ fontSize: "0.64rem" }}>
+                                {qk.startsWith("mcq") ? "MCQ" : qk.startsWith("psy") || qk.startsWith("p_") || qk.startsWith("psych") ? "PSYCHOMETRIC" : "WRITTEN"}
+                              </span>
+                            </div>
+                            <div style={{ fontSize: "0.82rem", color: "var(--dgs-text-primary)", whiteSpace: "pre-wrap", lineHeight: 1.45 }}>
+                              {String(av)}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div style={{ fontSize: "0.8rem", color: "var(--dgs-text-dim)" }}>

@@ -44,7 +44,7 @@ export function buildHomepageNativeSchemas(input: {
 
   const localBusiness = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": LOCAL_BUSINESS_ID,
     name: verifiedOrganization.name,
     url: verifiedOrganization.url,
@@ -52,6 +52,27 @@ export function buildHomepageNativeSchemas(input: {
     logo: { "@type": "ImageObject", "@id": LOGO_ID, url: verifiedOrganization.logoUrl },
     email: verifiedOrganization.email,
     telephone: verifiedOrganization.telephone,
+    priceRange: "$$",
+    hasMap: "https://maps.google.com/?q=D'Genius+Solutions+Khar+West+Mumbai",
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 19.066186,
+      longitude: 72.834937,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "10:00",
+        closes: "19:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday"],
+        opens: "10:00",
+        closes: "15:00",
+      },
+    ],
     address: {
       "@type": "PostalAddress",
       streetAddress: verifiedOrganization.address.streetAddress,
@@ -60,6 +81,8 @@ export function buildHomepageNativeSchemas(input: {
       postalCode: verifiedOrganization.address.postalCode,
       addressCountry: verifiedOrganization.address.addressCountry,
     },
+    areaServed: [...verifiedOrganization.areaServed],
+    knowsAbout: [...verifiedOrganization.knowsAbout],
     sameAs: [...verifiedOrganization.sameAs],
   };
 

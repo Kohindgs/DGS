@@ -14,7 +14,7 @@ export function resolveInnerPageVariant(path: string, wordpressType: RouteRecord
   if (wordpressType === "service") return "service";
   if (wordpressType === "post") return "blog";
   if (path === "/blogs/") return "blog-archive";
-  if (path === "/our-services/" || path === "/case_studies/") return "listing";
+  if (path === "/our-services/" || path === "/services/" || path === "/case_studies/") return "listing";
   if (path === "/contact-us/") return "contact";
   if (path === "/career/") return "career";
   return "page";
@@ -31,7 +31,7 @@ export function buildPageBreadcrumbs(
   const seoOverride = getPageSeoOverride(path);
 
   if (route.wordpressType === "service" && segments[0] === "services") {
-    crumbs.push({ name: "Services", path: "/our-services/" });
+    crumbs.push({ name: "Services", path: "/services/" });
     crumbs.push({ name: seoOverride?.breadcrumbLabel || route.title || "Service", path });
   } else if (route.wordpressType === "post" && segments[0] === "blogs") {
     crumbs.push({ name: "Blogs", path: "/blogs/" });

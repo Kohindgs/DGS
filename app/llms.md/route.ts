@@ -65,6 +65,7 @@ ${curatedBlogs.length
 ## Careers
 
 - [Careers at D'Genius Solutions](${siteConfig.url}/career/): Join our team in Mumbai.
+- [Junior SEO Executive (SEO & AI Tools)](${siteConfig.url}/career/junior-seo-executive/): Full-time on-site SEO, AEO, GEO and AI search role in Khar West, Mumbai.
 - [Generative AI Artist](${siteConfig.url}/career/generative-ai-artist/): Full-time AI image and video production opening.
 
 ---

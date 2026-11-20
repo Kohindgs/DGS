@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import { FormActivationBoot } from "@/components/forms/FormActivationBoot";
 import "./globals.css";
+
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-601FNG2NZP";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -29,10 +32,6 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/wp-content/uploads/2025/11/cropped-DGS-LOGO-180x180.png", sizes: "180x180", type: "image/png" }],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
 };
 
 export default function RootLayout({
@@ -42,6 +41,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${manrope.variable} ${spaceGrotesk.variable}`}>
+      <head>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body suppressHydrationWarning>
         {children}
         <FormActivationBoot />

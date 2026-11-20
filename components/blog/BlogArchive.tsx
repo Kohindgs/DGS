@@ -42,15 +42,17 @@ export function BlogArchive({ posts }: { posts: BlogPostMeta[] }) {
         {featured ? (
           <section aria-label="Featured article" className={styles.featuredBanner}>
             {featured.featuredImage?.src ? (
-              <Link href={featured.path} className={styles.featuredImgWrap} tabIndex={-1} aria-hidden="true">
+              <Link href={featured.path} className={styles.featuredImgWrap} aria-label={featured.title}>
                 <Image
                   src={featured.featuredImage.src}
                   alt={featured.featuredImage.alt || featured.title}
-                  fill
+                  width={960}
+                  height={540}
                   priority
                   unoptimized
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   className={styles.featuredImg}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </Link>
             ) : null}

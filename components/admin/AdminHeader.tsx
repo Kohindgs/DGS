@@ -24,6 +24,7 @@ import {
   GraduationCap,
   Briefcase,
   UserPlus,
+  FileCheck2,
 } from "lucide-react";
 
 type Props = {
@@ -203,6 +204,16 @@ export default function AdminHeader({
                 >
                   <GraduationCap size={14} color="var(--dgs-warning)" />
                   <span>New Assessment</span>
+                </Link>
+                <Link
+                  href="/admin/reference-checks/"
+                  className="dgs-saas-dropdown-item"
+                  role="menuitem"
+                  onClick={() => setCreateOpen(false)}
+                  style={{ display: "flex", alignItems: "center", gap: "8px", padding: "8px 10px", fontSize: "13px", color: "var(--dgs-text-primary)", textDecoration: "none", borderRadius: "var(--dgs-radius-sm)" }}
+                >
+                  <FileCheck2 size={14} color="var(--dgs-brand-cyan, #22d3ee)" />
+                  <span>New Reference Check</span>
                 </Link>
                 <Link
                   href="/admin/careers/"

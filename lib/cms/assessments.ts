@@ -408,6 +408,19 @@ export async function listPipelineCandidates(stage?: string): Promise<CandidateR
 export async function getCandidateDetails(id: string): Promise<CandidateRecord | null> {
   if (!isCmsDatabaseConfigured()) return null;
 
+  const parseJsonSafe = (val: any) => {
+    if (!val) return null;
+    if (typeof val === "object") return val;
+    if (typeof val === "string") {
+      try {
+        return JSON.parse(val);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  };
+
   // Search by pipeline ID, assessment ID, or assignment ID
   let { rows } = await cmsQuery<CandidateRecord>(
     `SELECT p.*, j.role_title,
@@ -425,8 +438,18 @@ export async function getCandidateDetails(id: string): Promise<CandidateRecord |
   if (!rows[0]) {
     const { rows: directCand } = await cmsQuery<any>(
       `SELECT c.id as assessment_id, c.assignment_id, c.objective_score, c.objective_total, c.role_match_score,
-              c.evaluation_notes, c.answers, c.activity_log, c.review_status, c.reviewer_notes, c.submitted_at
+              c.evaluation_notes, c.answers, c.activity_log, c.review_status, c.reviewer_notes, c.submitted_at,
+              COALESCE(a.candidate_name, asgn.candidate_name, 'Candidate') as candidate_name,
+              COALESCE(a.candidate_email, asgn.candidate_email, '') as candidate_email,
+              COALESCE(a.candidate_phone, asgn.candidate_phone, '') as candidate_phone,
+              COALESCE(a.experience, asgn.experience, 'N/A') as experience,
+              COALESCE(a.notice_period, asgn.notice_period, 'Immediate') as notice_period,
+              COALESCE(j.role_title, 'Candidate Assessment') as role_title
        FROM assessment_candidates c
+       LEFT JOIN assessment_attempts a ON (a.id = c.id OR a.assignment_id = c.assignment_id)
+       LEFT JOIN assessment_assignments asgn ON c.assignment_id = asgn.id
+       LEFT JOIN assessment_versions v ON COALESCE(a.assessment_key, asgn.assessment_key) = v.id
+       LEFT JOIN assessment_jds j ON v.jd_id = j.id
        WHERE c.id = ? OR c.assignment_id = ? LIMIT 1`,
       [id, id]
     );
@@ -434,11 +457,15 @@ export async function getCandidateDetails(id: string): Promise<CandidateRecord |
       const dc = directCand[0];
       rows = [{
         id: dc.assignment_id || dc.assessment_id,
-        candidate_name: "Candidate",
-        candidate_email: "",
+        candidate_name: dc.candidate_name || "Candidate",
+        candidate_email: dc.candidate_email || "",
+        candidate_phone: dc.candidate_phone || "",
+        experience: dc.experience,
+        notice_period: dc.notice_period,
+        role_title: dc.role_title,
         assessment_id: dc.assessment_id,
         assignment_id: dc.assignment_id,
-        stage: "applied",
+        stage: "test_submitted",
         objective_score: dc.objective_score,
         objective_total: dc.objective_total,
         role_match_score: dc.role_match_score,
@@ -469,6 +496,8 @@ export async function getCandidateDetails(id: string): Promise<CandidateRecord |
         candidate_name: att.candidate_name,
         candidate_email: att.candidate_email,
         candidate_phone: att.candidate_phone,
+        experience: att.experience,
+        notice_period: att.notice_period,
         position_id: att.assessment_key,
         role_title: att.role_title || "Candidate Assessment",
         stage: "test_submitted",
@@ -490,59 +519,171 @@ export async function getCandidateDetails(id: string): Promise<CandidateRecord |
   }
 
   if (!rows[0]) return null;
-  const r = rows[0];
-  const evalNotes = typeof r.evaluation_notes === "string" ? JSON.parse(r.evaluation_notes) : r.evaluation_notes;
+  const r = rows[0] as any;
+  const evalNotes = parseJsonSafe(r.evaluation_notes);
 
   let psychometricProfile = evalNotes?.psychometric_profile || null;
   let psychometricScoreData = evalNotes?.psychometric_score_data || null;
   let technicalAnswers = null;
   let psychometricAnswers = null;
   let practicalSubmission = null;
+  let snapRaw: any = null;
+  let tdRaw: any = null;
 
   try {
     const targetId = r.assessment_id || r.assignment_id || r.id;
+    const asgnId = r.assignment_id || r.id;
     const { rows: attRows } = await cmsQuery<any>(
-      "SELECT technical_answers, psychometric_answers, psychometric_profile, psychometric_score_data, practical_submission FROM assessment_attempts WHERE id = ? OR assignment_id = ? LIMIT 1",
-      [targetId, targetId]
+      `SELECT a.candidate_name as att_name, a.candidate_email as att_email, a.candidate_phone as att_phone,
+              a.experience as att_exp, a.notice_period as att_np, a.answers as att_answers,
+              a.technical_answers, a.psychometric_answers, a.psychometric_profile, a.psychometric_score_data, a.practical_submission,
+              asgn.assignment_snapshot, v.test_data, j.role_title as att_role
+       FROM assessment_attempts a
+       LEFT JOIN assessment_assignments asgn ON a.assignment_id = asgn.id
+       LEFT JOIN assessment_versions v ON a.assessment_key = v.id
+       LEFT JOIN assessment_jds j ON v.jd_id = j.id
+       WHERE a.id = ? OR a.assignment_id = ? OR a.assignment_id = ? LIMIT 1`,
+      [targetId, targetId, asgnId]
     );
     if (attRows[0]) {
-      if (attRows[0].psychometric_profile) psychometricProfile = attRows[0].psychometric_profile;
-      if (attRows[0].psychometric_score_data) {
-        psychometricScoreData =
-          typeof attRows[0].psychometric_score_data === "string"
-            ? JSON.parse(attRows[0].psychometric_score_data)
-            : attRows[0].psychometric_score_data;
-      }
-      if (attRows[0].technical_answers) {
-        technicalAnswers =
-          typeof attRows[0].technical_answers === "string"
-            ? JSON.parse(attRows[0].technical_answers)
-            : attRows[0].technical_answers;
-      }
-      if (attRows[0].psychometric_answers) {
-        psychometricAnswers =
-          typeof attRows[0].psychometric_answers === "string"
-            ? JSON.parse(attRows[0].psychometric_answers)
-            : attRows[0].psychometric_answers;
-      }
-      if (attRows[0].practical_submission) {
-        practicalSubmission =
-          typeof attRows[0].practical_submission === "string"
-            ? JSON.parse(attRows[0].practical_submission)
-            : attRows[0].practical_submission;
-      }
+      const row = attRows[0];
+      if (!r.candidate_name || r.candidate_name === "Candidate") r.candidate_name = row.att_name || r.candidate_name;
+      if (!r.candidate_email) r.candidate_email = row.att_email || "";
+      if (!r.candidate_phone) r.candidate_phone = row.att_phone || "";
+      if (!r.experience) r.experience = row.att_exp || "2+ years";
+      if (!r.notice_period) r.notice_period = row.att_np || "Immediate";
+      if (!r.role_title && row.att_role) r.role_title = row.att_role;
+      if (!r.answers && row.att_answers) r.answers = row.att_answers;
+      if (row.psychometric_profile) psychometricProfile = row.psychometric_profile;
+      if (row.psychometric_score_data) psychometricScoreData = parseJsonSafe(row.psychometric_score_data);
+      if (row.technical_answers) technicalAnswers = parseJsonSafe(row.technical_answers);
+      if (row.psychometric_answers) psychometricAnswers = parseJsonSafe(row.psychometric_answers);
+      if (row.practical_submission) practicalSubmission = parseJsonSafe(row.practical_submission);
+      snapRaw = row.assignment_snapshot;
+      tdRaw = row.test_data;
+    } else if (r.assignment_id) {
+      const { rows: vr } = await cmsQuery<any>("SELECT test_data FROM assessment_versions WHERE id = ? LIMIT 1", [r.assignment_id]);
+      if (vr[0]) tdRaw = vr[0].test_data;
     }
   } catch (attErr) {
     console.warn("Failed querying attempt psychometrics in getCandidateDetails:", attErr);
   }
 
+  // Build questions map from assignment_snapshot and test_data
+  const qMap: Record<string, any> = {};
+  const snapObj = parseJsonSafe(snapRaw);
+  const tdObj = parseJsonSafe(tdRaw);
+  const addQ = (q: any, defaultType: string, idx: number) => {
+    if (!q || typeof q !== "object") return;
+    const qid = q.id || `${defaultType}_${idx + 1}`;
+    qMap[qid] = {
+      id: qid,
+      type: q.type || defaultType,
+      prompt: q.prompt || q.question || "",
+      options: Array.isArray(q.options) ? q.options : [],
+      correctIndex: q.correctIndex !== undefined ? Number(q.correctIndex) : q.answer !== undefined ? Number(q.answer) : undefined,
+      explanation: q.explanation || "",
+      competencyTag: q.competencyTag || "",
+      rubric: Array.isArray(q.evaluationCriteria) ? q.evaluationCriteria.join("; ") : q.rubric || "",
+    };
+  };
+  if (tdObj) {
+    if (Array.isArray(tdObj.mcqs)) tdObj.mcqs.forEach((q: any, idx: number) => addQ(q, "mcq", idx));
+    if (Array.isArray(tdObj.shortAnswers)) tdObj.shortAnswers.forEach((q: any, idx: number) => addQ(q, "short", idx));
+    if (Array.isArray(tdObj.longAnswers)) tdObj.longAnswers.forEach((q: any, idx: number) => addQ(q, "long", idx));
+    if (Array.isArray(tdObj.psychometric)) tdObj.psychometric.forEach((q: any, idx: number) => addQ(q, "psychometric", idx));
+    if (Array.isArray(tdObj.questions)) tdObj.questions.forEach((q: any, idx: number) => addQ(q, q.type || "mcq", idx));
+  }
+  if (snapObj) {
+    if (Array.isArray(snapObj.role_questions_snapshot)) snapObj.role_questions_snapshot.forEach((q: any, idx: number) => addQ(q, q.type || "mcq", idx));
+    if (Array.isArray(snapObj.psychometric_questions_snapshot)) snapObj.psychometric_questions_snapshot.forEach((q: any, idx: number) => addQ(q, "psychometric", idx));
+  }
+
+  const parsedAns = parseJsonSafe(r.answers);
+  const flatAnswers: Record<string, any> = {};
+  if (parsedAns && typeof parsedAns === "object") {
+    for (const [k, v] of Object.entries(parsedAns)) {
+      if (["mcq", "short", "long", "psychometric"].includes(k) && typeof v === "string") {
+        const inner = parseJsonSafe(v);
+        if (inner && typeof inner === "object" && !Array.isArray(inner)) {
+          for (const [ik, iv] of Object.entries(inner)) flatAnswers[ik] = iv;
+        }
+      } else {
+        flatAnswers[k] = v;
+      }
+    }
+  }
+
+  const formattedAnswers: Record<string, string> = {};
+  const enrichedAnswers: any[] = [];
+  for (const [qKey, aVal] of Object.entries(flatAnswers)) {
+    const q = qMap[qKey] || qMap[qKey.replace(/^sa_/, "short_").replace(/^la_/, "long_").replace(/^psych_/, "psy_")];
+    const isMcq = qKey.startsWith("mcq") || q?.type === "mcq";
+    const isPsycho = qKey.startsWith("psy") || qKey.startsWith("p_") || qKey.startsWith("psych") || q?.type === "psychometric";
+    const qType = isMcq ? "mcq" : isPsycho ? "psychometric" : qKey.startsWith("long") || qKey.startsWith("la_") || q?.type === "long" ? "long" : "short";
+    const prompt = q?.prompt || null;
+    let displayAnswer = String(aVal ?? "");
+    let isCorrect: boolean | null = null;
+    let correctOptionText: string | null = null;
+    let wordCount: number | null = null;
+
+    if (isMcq) {
+      const idx = Number(aVal);
+      const letter = !isNaN(idx) && idx >= 0 && idx < 26 ? String.fromCharCode(65 + idx) : String(aVal);
+      const optVal = Array.isArray(q?.options) && !isNaN(idx) ? q.options[idx] : null;
+      const optLabel = optVal ? (typeof optVal === "string" ? optVal : optVal.label || JSON.stringify(optVal)) : null;
+      if (q && q.correctIndex !== undefined && !isNaN(idx)) {
+        isCorrect = idx === Number(q.correctIndex);
+        const cOpt = Array.isArray(q.options) ? q.options[Number(q.correctIndex)] : null;
+        const cLabel = cOpt ? (typeof cOpt === "string" ? cOpt : cOpt.label || "") : "";
+        const cLetter = String.fromCharCode(65 + Number(q.correctIndex));
+        correctOptionText = cLabel ? `Option ${cLetter} — ${cLabel}` : `Option ${cLetter}`;
+      }
+      displayAnswer = optLabel
+        ? `Option ${letter} — ${optLabel}${isCorrect === true ? " (✓ Correct)" : isCorrect === false ? ` (✗ Incorrect · Correct: ${correctOptionText})` : ""}`
+        : `Selected Option ${letter} (Choice Index: ${aVal})`;
+      formattedAnswers[qKey] = prompt ? `Question: ${prompt}\n\nSelected Answer: ${displayAnswer}` : displayAnswer;
+    } else if (isPsycho) {
+      const idx = Number(aVal);
+      const letter = !isNaN(idx) && idx >= 0 && idx < 26 ? String.fromCharCode(65 + idx) : String(aVal);
+      const optVal = Array.isArray(q?.options) && !isNaN(idx) ? q.options[idx] : null;
+      const optLabel = optVal ? (typeof optVal === "string" ? optVal : optVal.label || JSON.stringify(optVal)) : null;
+      displayAnswer = optLabel ? `Option ${letter} — ${optLabel}` : `Selected Option ${letter} (Choice Index: ${aVal})`;
+      formattedAnswers[qKey] = prompt
+        ? `Scenario (${q?.competencyTag || "Workplace Situational Judgment"}): ${prompt}\n\nSelected Response: ${displayAnswer}`
+        : displayAnswer;
+    } else {
+      const text = String(aVal ?? "").trim();
+      wordCount = text ? text.split(/\s+/).length : 0;
+      displayAnswer = text || "(No written response provided)";
+      formattedAnswers[qKey] = prompt
+        ? `Question: ${prompt}\n\nCandidate Written Answer (${wordCount} words):\n${displayAnswer}`
+        : displayAnswer;
+    }
+
+    enrichedAnswers.push({
+      key: qKey,
+      type: qType,
+      prompt,
+      competencyTag: q?.competencyTag || null,
+      rawValue: aVal,
+      displayAnswer,
+      isCorrect,
+      correctOptionText,
+      rubric: q?.rubric || null,
+      wordCount,
+    });
+  }
+
   return {
     ...r,
-    offer_details: typeof r.offer_details === "string" ? JSON.parse(r.offer_details) : r.offer_details,
-    appointment_details: typeof r.appointment_details === "string" ? JSON.parse(r.appointment_details) : r.appointment_details,
+    offer_details: parseJsonSafe(r.offer_details),
+    appointment_details: parseJsonSafe(r.appointment_details),
     evaluation_notes: evalNotes,
-    answers: typeof r.answers === "string" ? JSON.parse(r.answers) : r.answers,
-    activity_log: typeof r.activity_log === "string" ? JSON.parse(r.activity_log) : r.activity_log,
+    answers: Object.keys(formattedAnswers).length > 0 ? formattedAnswers : parsedAns,
+    raw_answers: flatAnswers,
+    enriched_answers: enrichedAnswers,
+    activity_log: parseJsonSafe(r.activity_log),
     psychometric_profile: psychometricProfile,
     psychometric_score_data: psychometricScoreData,
     technical_answers: technicalAnswers,
@@ -837,6 +978,25 @@ export async function submitAssessmentAttempt(input: {
           submittedAt,
         ]
       );
+
+      try {
+        const { rows: vr } = await cmsQuery<any>("SELECT jd_id FROM assessment_versions WHERE id = ? LIMIT 1", [att.assessment_key]);
+        const jdId = vr[0]?.jd_id || null;
+        const pipeId = att.assignment_id || att.id;
+        const noteStr = `Submitted Assessment on ${submittedAt.slice(0, 10)}. Objective MCQ Score: ${input.score}/${input.total} (${matchScore}%).${input.psychometric_profile ? ` Workplace Profile: ${input.psychometric_profile}.` : ""}`;
+        await cmsExecute(
+          `INSERT INTO hr_pipeline (id, candidate_name, candidate_email, candidate_phone, position_id, stage, interview_notes, created_at, updated_at)
+           VALUES (?, ?, ?, ?, ?, 'test_submitted', ?, ?, ?)
+           ON DUPLICATE KEY UPDATE
+             stage = 'test_submitted',
+             position_id = COALESCE(position_id, VALUES(position_id)),
+             interview_notes = VALUES(interview_notes),
+             updated_at = VALUES(updated_at)`,
+          [pipeId, att.candidate_name, att.candidate_email, att.candidate_phone || "N/A", jdId, noteStr, att.started_at || submittedAt, submittedAt]
+        );
+      } catch (pipeErr) {
+        console.warn("Failed syncing submitted attempt to hr_pipeline:", pipeErr);
+      }
     }
   } catch (syncErr) {
     console.warn("Failed to sync attempt to assessment_candidates:", syncErr);

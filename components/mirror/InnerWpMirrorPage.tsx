@@ -103,17 +103,11 @@ export async function InnerWpMirrorPage({ path, wordpressId, schemaBlocks }: Inn
       })}
 
       {aggregatedCssFiles.length ? (
-        <div
-          style={{ display: "contents" }}
-          dangerouslySetInnerHTML={{
-            __html: aggregatedCssFiles
-              .map(
-                (file) =>
-                  `<link rel="stylesheet" href="/wp-mirror-css/${file}" media="print" onload="this.onload=null;this.media='all'"><noscript><link rel="stylesheet" href="/wp-mirror-css/${file}"></noscript>`,
-              )
-              .join(""),
-          }}
-        />
+        <>
+          {aggregatedCssFiles.map((file) => (
+            <link key={file} rel="stylesheet" href={`/wp-mirror-css/${file}`} />
+          ))}
+        </>
       ) : null}
 
       <style dangerouslySetInnerHTML={{ __html: assets.navStyles }} />

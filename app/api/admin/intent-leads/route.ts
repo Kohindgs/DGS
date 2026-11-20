@@ -128,8 +128,9 @@ export async function POST(request: Request) {
         body.serviceCategory && body.serviceCategory !== "ALL"
           ? (body.serviceCategory as IntentServiceCategory)
           : undefined;
+      const runType = body.runType === "CRON" ? "CRON" : "MANUAL";
       const result = await runIntentLeadDiscovery({
-        runType: "MANUAL",
+        runType,
         serviceFilter,
         sendEmailDigest: body.sendEmailDigest !== false,
       });

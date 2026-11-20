@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { checkAndPublishScheduledBlogsDetailed } from "@/lib/cms/blogs";
-import { recordCronRun } from "@/lib/cms/cron-logger";
+import { recordCronRun, triggerOverdueCronsIfNeeded } from "@/lib/cms/cron-logger";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -79,6 +79,8 @@ export async function POST(request: Request) {
         skippedAlreadyPublished: result.skippedAlreadyPublished,
       },
     });
+
+    void triggerOverdueCronsIfNeeded(cronSecret);
 
     const message =
       result.due === 0 && result.published === 0

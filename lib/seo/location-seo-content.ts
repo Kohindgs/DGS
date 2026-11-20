@@ -447,7 +447,28 @@ function applyPuneWebDevContent(html: string): string {
   for (const [start, replacement] of webDevReplacements) {
     out = replaceParagraphStarting(out, start, replacement);
   }
-  return out;
+  const puneWebDevEcosystem = `
+<section aria-label="Pune Web Development Corridors and Technical Standards" style="max-width:1180px;margin:42px auto;padding:32px 24px;border-radius:20px;background:rgba(15,23,42,0.03);border:1px solid rgba(15,23,42,0.1);">
+  <h2 style="font-size:clamp(1.4rem,2.3vw,1.95rem);font-weight:700;margin:0 0 14px;">Pune Web Development Ecosystem: Corridor-Specific Engineering for IT, MIDC Manufacturing &amp; Real Estate</h2>
+  <p style="font-size:0.98rem;line-height:1.7;margin:0 0 18px;">
+    Unlike single-industry markets, Pune websites must serve vastly different buyer journeys across its commercial zones. We architect custom Next.js, React, and WordPress websites tailored to how buyers evaluate vendors in each Pune corridor:
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Hinjawadi, Kharadi &amp; Magarpatta IT/SaaS Hubs</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Product-led SaaS and enterprise IT websites built with fast Next.js/React rendering, interactive API/integration directories, security compliance trust centers, and HubSpot/Salesforce demo routing.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Pimpri-Chinchwad (PCMC), Chakan &amp; Bhosari MIDC</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">B2B industrial, automotive component, and precision engineering portals featuring searchable technical specification tables, CAD/PDF datasheet libraries, ISO certification proof, and multi-step RFQ forms.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Baner, Wakad, Viman Nagar &amp; Koregaon Park</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">High-converting websites for real estate developers, healthcare clinics, educational institutes, and D2C brands with MahaRERA-compliant project layouts, WhatsApp lead capture, and sub-2-second mobile LCP.</p>
+    </article>
+  </div>
+</section>`;
+  return out + puneWebDevEcosystem;
 }
 
 type IndustryRow = { title: string; description: string; metric: string };
@@ -589,6 +610,93 @@ const LOCATION_PROCESS: Record<string, LocationProcessCopy> = {
   },
 };
 
+const CITY_MARKET_DEEP_DIVE: Record<string, string> = {
+  "/services/seo-service-pune/": `
+<section aria-label="Pune commercial search corridors and buyer behavior" style="max-width:1180px;margin:42px auto;padding:32px 24px;border-radius:20px;background:rgba(15,23,42,0.03);border:1px solid rgba(15,23,42,0.1);">
+  <h2 style="font-size:clamp(1.4rem,2.3vw,1.95rem);font-weight:700;margin:0 0 14px;">Pune Search Landscape: How Buyer Intent Differs Across Hinjawadi, PCMC &amp; Central Pune</h2>
+  <p style="font-size:0.98rem;line-height:1.7;margin:0 0 18px;">
+    Ranking in Pune requires separating three distinct search economies that operate simultaneously within the Pune Metropolitan Region (PMR):
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Hinjawadi Rajiv Gandhi Infotech Park &amp; Kharadi EON</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">B2B SaaS, product engineering, and IT outsourcing firms here compete nationally and globally. We build comparison pages, integration hubs, and AI Overviews citation structures that capture US, UK, and Indian enterprise evaluators.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Pimpri-Chinchwad, Chakan, Talegaon &amp; Ranjangaon</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Procurement engineers searching for OEM suppliers, CNC machining, automation, and industrial components search by part specification, tolerance, and certification. We optimize technical capability pages and downloadable spec sheets for B2B RFQ growth.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Baner, Balewadi, Wakad, Kothrud &amp; Viman Nagar</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">High-intent consumer and residential corridors where Google Business Profile Map Pack rankings, 2/3/4 BHK project microsites, clinic appointment funnels, and college admission pages drive immediate phone and WhatsApp enquiries.</p>
+    </article>
+  </div>
+</section>`,
+  "/services/seo-service-in-banglore/": `
+<section aria-label="Bengaluru technology corridors and SaaS search architecture" style="max-width:1180px;margin:42px auto;padding:32px 24px;border-radius:20px;background:rgba(15,23,42,0.03);border:1px solid rgba(15,23,42,0.1);">
+  <h2 style="font-size:clamp(1.4rem,2.3vw,1.95rem);font-weight:700;margin:0 0 14px;">Bengaluru Search Architecture: Competing Across ORR, Whitefield, Koramangala &amp; Global SaaS Markets</h2>
+  <p style="font-size:0.98rem;line-height:1.7;margin:0 0 18px;">
+    In India's technology capital, buyers evaluate vendors across both traditional Google SERPs and AI answer engines (ChatGPT, Perplexity, Claude, and Google AI Mode). Our Bangalore SEO programs are engineered around three core growth vectors:
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">HSR Layout, Koramangala &amp; Indiranagar Startup Belt</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Seed-to-Series C SaaS, fintech, and AI startups need rapid bottom-of-funnel pipeline: "vs" competitor matrices, "alternatives to" hubs, programmatic use-case pages, and clean Next.js/React SSR indexing.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Outer Ring Road (Bellandur–Marathahalli), Whitefield &amp; Electronic City</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Global capability centers (GCCs), enterprise IT services, and deep-tech firms require multi-region hreflang governance, whitepaper-backed E-E-A-T clusters, and LinkedIn-to-organic entity consistency.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Peenya Industrial Area, Hebbal &amp; High-Growth Residential Zones</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Precision aerospace/electronics manufacturers in Peenya and multi-branch healthcare, education, and luxury real estate brands across North and East Bengaluru rely on hyperlocal schema and verified review velocity.</p>
+    </article>
+  </div>
+</section>`,
+  "/services/seo-service-in-gurugram/": `
+<section aria-label="Gurugram and Delhi NCR corporate search corridors" style="max-width:1180px;margin:42px auto;padding:32px 24px;border-radius:20px;background:rgba(15,23,42,0.03);border:1px solid rgba(15,23,42,0.1);">
+  <h2 style="font-size:clamp(1.4rem,2.3vw,1.95rem);font-weight:700;margin:0 0 14px;">Gurugram &amp; Delhi NCR Search Dynamics: Cyber City Enterprise B2B, Golf Course Road Luxury &amp; Manesar Industrial</h2>
+  <p style="font-size:0.98rem;line-height:1.7;margin:0 0 18px;">
+    Gurugram (Gurgaon) combines Fortune 500 headquarters with India's highest-ticket real estate and automotive manufacturing corridors. We structure campaigns to capture both dual-name ("Gurugram" + "Gurgaon") local queries and pan-NCR procurement searches:
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">DLF Cyber City, Udyog Vihar &amp; NH-48 Corporate Corridor</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">B2B consulting, staffing, SaaS, corporate legal/finance, and ITeS enterprises competing for CXO and procurement committees across Gurugram, Connaught Place, and Noida.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Golf Course Road, Golf Course Extension, Sohna Road &amp; Dwarka Expressway</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Luxury residential developers, commercial REITs, premium hospitals, and hospitality brands requiring high-trust project pages, RERA-aligned schema, and Map Pack dominance.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">IMT Manesar, Dharuhera &amp; Bawal Industrial Belt</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Automotive OEMs, Tier-1/Tier-2 component suppliers, logistics hubs, and heavy engineering manufacturers targeting national and export B2B RFQ keywords.</p>
+    </article>
+  </div>
+</section>`,
+  "/services/seo-services-in-hyderabad/": `
+<section aria-label="Hyderabad HITEC City, Genome Valley and Financial District search landscape" style="max-width:1180px;margin:42px auto;padding:32px 24px;border-radius:20px;background:rgba(15,23,42,0.03);border:1px solid rgba(15,23,42,0.1);">
+  <h2 style="font-size:clamp(1.4rem,2.3vw,1.95rem);font-weight:700;margin:0 0 14px;">Hyderabad Search Corridors: HITEC City Tech, Genome Valley Life Sciences &amp; West Hyderabad Growth</h2>
+  <p style="font-size:0.98rem;line-height:1.7;margin:0 0 18px;">
+    Hyderabad's economy blends global software engineering with regulated pharmaceutical manufacturing and rapid urban expansion. Our Hyderabad SEO architecture addresses the distinct E-E-A-T and conversion requirements of each cluster:
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">HITEC City, Madhapur, Gachibowli &amp; Financial District (Nanakramguda)</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Enterprise SaaS, cloud transformation, cybersecurity, and fintech firms targeting US/EU and Indian B2B buyers through technical solution hubs and AI Overviews citation engineering.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Genome Valley, Jeedimetla &amp; Bollaram Pharma/Biotech Cluster</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">CDMO, API manufacturers, clinical research organizations (CROs), and life-sciences suppliers requiring regulatory-grade accuracy, cGMP/FDA capability pages, and global B2B discovery.</p>
+    </article>
+    <article style="padding:18px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(148,163,184,0.2);">
+      <h3 style="font-size:1.08rem;font-weight:700;margin:0 0 8px;">Banjara Hills, Jubilee Hills, Kokapet, Kondapur &amp; Secunderabad</h3>
+      <p style="margin:0;font-size:0.93rem;line-height:1.6;">Multi-speciality hospital chains, luxury gated-community developers, international schools, and retail brands competing for high-intent local Maps and neighbourhood searches.</p>
+    </article>
+  </div>
+</section>`,
+};
+
 function applyProcessCopy(path: string, html: string): string {
   const process = LOCATION_PROCESS[path];
   if (!process) return html;
@@ -597,6 +705,9 @@ function applyProcessCopy(path: string, html: string): string {
   out = replaceParagraphStarting(out, "The aim is not just traffic", process.leads);
   for (let i = 0; i < GENERIC_STEP_TEXT.length; i += 1) {
     out = out.replace(GENERIC_STEP_TEXT[i], process.steps[i]);
+  }
+  if (CITY_MARKET_DEEP_DIVE[path]) {
+    out += CITY_MARKET_DEEP_DIVE[path];
   }
   return out;
 }

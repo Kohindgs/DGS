@@ -1,0 +1,75 @@
+name: DGS Daily SEO GSC Sync & Ranking Optimizer
+
+on:
+  schedule:
+    # Run daily at 00:35 UTC (06:05 IST)
+    - cron: '35 0 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  daily-seo-sync:
+    name: Sync Google Search Console & Queue Ranking Optimizations
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Trigger Daily SEO Sync Endpoint
+        env:
+          ENDPOINT_URL: "https://www.dgeniussolutions.com/api/internal/seo/daily-sync"
+          AUTH_SECRET: ${{ secrets.DGS_CRON_SECRET }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          if [ -z "$AUTH_SECRET" ]; then
+            echo "ERROR: DGS_CRON_SECRET is not configured in GitHub Actions secrets."
+            exit 1
+          fi
+
+          START_MS=$(date +%s%3N)
+          set +e
+          HTTP_STATUS=$(curl -sS -o response.json -w "%{http_code}" \
+            --connect-timeout 15 \
+            --max-time 90 \
+            --retry 1 \
+            --retry-delay 3 \
+            --retry-connrefused \
+            -X POST "$ENDPOINT_URL" \
+            -H "Authorization: Bearer $AUTH_SECRET" \
+            -H "x-github-run-id: $GITHUB_RUN_ID" \
+            -H "User-Agent: DGS-GitHubActions-Cron/1.0" \
+            -H "Content-Type: application/json")
+          CURL_EXIT=$?
+          set -e
+          END_MS=$(date +%s%3N)
+          DURATION_MS=$((END_MS - START_MS))
+
+          if [ -z "$HTTP_STATUS" ]; then
+            HTTP_STATUS="000"
+          fi
+
+          echo "Cron: seo-daily-gsc-sync-and-optimizer"
+          echo "Endpoint: /api/internal/seo/daily-sync"
+          echo "HTTP: $HTTP_STATUS (curl_exit=$CURL_EXIT)"
+          echo "Duration: ${DURATION_MS}ms"
+          echo "Response:"
+          if [ -f response.json ]; then
+            cat response.json
+            echo ""
+          else
+            echo "(no response body)"
+          fi
+
+          if [ "$CURL_EXIT" -ne 0 ] || [ "$HTTP_STATUS" != "200" ]; then
+            echo "ERROR: Daily SEO sync failed (HTTP $HTTP_STATUS, curl_exit=$CURL_EXIT)."
+            exit 1
+          fi
+
+          if command -v jq >/dev/null 2>&1 && [ -f response.json ]; then
+            OK_FLAG=$(jq -r '.ok // false' response.json 2>/dev/null || echo "false")
+            if [ "$OK_FLAG" != "true" ]; then
+              echo "ERROR: Endpoint returned HTTP 200 but payload ok=$OK_FLAG."
+              exit 1
+            fi
+          fi
+
+          echo "Daily SEO GSC sync & optimizer completed successfully."

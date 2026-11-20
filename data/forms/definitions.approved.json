@@ -4128,6 +4128,57 @@
           "hidden": false
         },
         {
+          "name": "aeo_requirement",
+          "label": "What do you need help with?",
+          "type": "select",
+          "required": false,
+          "placeholder": "Select requirement",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Business website",
+              "value": "Business website"
+            },
+            {
+              "label": "Corporate website",
+              "value": "Corporate website"
+            },
+            {
+              "label": "Landing page for ads",
+              "value": "Landing page for ads"
+            },
+            {
+              "label": "Ecommerce website",
+              "value": "Ecommerce website"
+            },
+            {
+              "label": "WordPress website",
+              "value": "WordPress website"
+            },
+            {
+              "label": "Website redesign",
+              "value": "Website redesign"
+            },
+            {
+              "label": "Website maintenance and AMC",
+              "value": "Website maintenance and AMC"
+            },
+            {
+              "label": "SEO friendly website development",
+              "value": "SEO friendly website development"
+            },
+            {
+              "label": "Not sure, need expert guidance",
+              "value": "Not sure, need expert guidance"
+            }
+          ],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
           "name": "start_timeline",
           "label": "When do you want to start?",
           "type": "select",
@@ -4451,7 +4502,8 @@
         "creative",
         "matchtype",
         "device",
-        "business_confirmation[]"
+        "business_confirmation[]",
+        "aeo_requirement"
       ],
       "captcha": {
         "enabled": true,
@@ -4706,6 +4758,57 @@
           "hidden": false
         },
         {
+          "name": "seo_requirement",
+          "label": "What do you need help with?",
+          "type": "select",
+          "required": false,
+          "placeholder": "Select requirement",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Improve Google rankings",
+              "value": "Improve Google rankings"
+            },
+            {
+              "label": "Increase organic leads",
+              "value": "Increase organic leads"
+            },
+            {
+              "label": "SEO audit and strategy",
+              "value": "SEO audit and strategy"
+            },
+            {
+              "label": "Local SEO for Mumbai or India",
+              "value": "Local SEO for Mumbai or India"
+            },
+            {
+              "label": "Technical SEO",
+              "value": "Technical SEO"
+            },
+            {
+              "label": "Ecommerce SEO",
+              "value": "Ecommerce SEO"
+            },
+            {
+              "label": "Content SEO",
+              "value": "Content SEO"
+            },
+            {
+              "label": "Recover lost traffic",
+              "value": "Recover lost traffic"
+            },
+            {
+              "label": "Not sure, need expert guidance",
+              "value": "Not sure, need expert guidance"
+            }
+          ],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
           "name": "start_timeline",
           "label": "When do you want to start?",
           "type": "select",
@@ -5029,7 +5132,8 @@
         "creative",
         "matchtype",
         "device",
-        "business_confirmation[]"
+        "business_confirmation[]",
+        "seo_requirement"
       ],
       "captcha": {
         "enabled": true,
@@ -5284,6 +5388,53 @@
           "hidden": false
         },
         {
+          "name": "aeo_requirement",
+          "label": "What do you need help with?",
+          "type": "select",
+          "required": false,
+          "placeholder": "Select requirement",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Get featured in AI answers",
+              "value": "Get featured in AI answers"
+            },
+            {
+              "label": "Improve visibility in Google AI Overviews",
+              "value": "Improve visibility in Google AI Overviews"
+            },
+            {
+              "label": "Create answer engine optimized content",
+              "value": "Create answer engine optimized content"
+            },
+            {
+              "label": "Optimize FAQs and service pages",
+              "value": "Optimize FAQs and service pages"
+            },
+            {
+              "label": "Improve voice search visibility",
+              "value": "Improve voice search visibility"
+            },
+            {
+              "label": "Build AEO content strategy",
+              "value": "Build AEO content strategy"
+            },
+            {
+              "label": "Audit current AI search visibility",
+              "value": "Audit current AI search visibility"
+            },
+            {
+              "label": "Not sure, need expert guidance",
+              "value": "Not sure, need expert guidance"
+            }
+          ],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
           "name": "start_timeline",
           "label": "When do you want to start?",
           "type": "select",
@@ -5607,7 +5758,8 @@
         "creative",
         "matchtype",
         "device",
-        "business_confirmation[]"
+        "business_confirmation[]",
+        "aeo_requirement"
       ],
       "captcha": {
         "enabled": true,
@@ -5862,6 +6014,53 @@
           "hidden": false
         },
         {
+          "name": "aeo_requirement",
+          "label": "What do you need help with?",
+          "type": "select",
+          "required": false,
+          "placeholder": "Select requirement",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "AI brand video",
+              "value": "AI brand video"
+            },
+            {
+              "label": "AI product video",
+              "value": "AI product video"
+            },
+            {
+              "label": "AI ad film",
+              "value": "AI ad film"
+            },
+            {
+              "label": "AI social media reels",
+              "value": "AI social media reels"
+            },
+            {
+              "label": "AI explainer video",
+              "value": "AI explainer video"
+            },
+            {
+              "label": "AI character based video",
+              "value": "AI character based video"
+            },
+            {
+              "label": "AI campaign video series",
+              "value": "AI campaign video series"
+            },
+            {
+              "label": "Not sure, need expert guidance",
+              "value": "Not sure, need expert guidance"
+            }
+          ],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
           "name": "start_timeline",
           "label": "When do you want to start?",
           "type": "select",
@@ -6185,7 +6384,8 @@
         "creative",
         "matchtype",
         "device",
-        "business_confirmation[]"
+        "business_confirmation[]",
+        "aeo_requirement"
       ],
       "captcha": {
         "enabled": true,
@@ -6414,6 +6614,636 @@
           "/us-landing-page/": 63974
         }
       }
+    },
+    {
+      "key": "fluentform-25",
+      "fluentFormId": 25,
+      "title": "Website Development Services in Mumbai Landing Page (#25)",
+      "shortcode": "[fluentform id=\"25\"]",
+      "sourceRoutes": [
+        "/website-development-services-in-mumbai-dgenius-solutions/"
+      ],
+      "approvalState": "APPROVED_FOR_IMPLEMENTATION",
+      "activationEnabled": true,
+      "fields": [
+        {
+          "name": "full_name[first_name]",
+          "label": "First Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your First Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "full_name[last_name]",
+          "label": "Last Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter Your Last Name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "email",
+          "label": "Business Email",
+          "type": "email",
+          "required": true,
+          "placeholder": "you@example.com",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "Enter a valid business email address.",
+            "email": "This field must contain a valid email"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "phone",
+          "label": "Work Phone / WhatsApp",
+          "type": "tel",
+          "required": true,
+          "placeholder": "+91 98765 43210",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required",
+            "valid_phone_number": "Phone number is not valid"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "input_text",
+          "label": "Company Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Your company or brand name",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "company_website",
+          "label": "Company Website or Brand Page",
+          "type": "text",
+          "required": true,
+          "placeholder": "www.company.com",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "role",
+          "label": "Your Role",
+          "type": "select",
+          "required": true,
+          "placeholder": "Select your role",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Founder / Owner / CEO",
+              "value": "Founder / Owner / CEO"
+            },
+            {
+              "label": "Marketing Head / CMO",
+              "value": "Marketing Head / CMO"
+            },
+            {
+              "label": "Brand Manager",
+              "value": "Brand Manager"
+            },
+            {
+              "label": "Ecommerce Head",
+              "value": "Ecommerce Head"
+            },
+            {
+              "label": "Business Head",
+              "value": "Business Head"
+            },
+            {
+              "label": "Agency / Consultant representing a brand",
+              "value": "Agency / Consultant representing a brand"
+            },
+            {
+              "label": "Other Decision Maker",
+              "value": "Other Decision Maker"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "budget",
+          "label": "Performance Marketing Budget",
+          "type": "select",
+          "required": true,
+          "placeholder": "Select your budget",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "₹50,000 to ₹1 lakh",
+              "value": "₹50,000 to ₹1 lakh"
+            },
+            {
+              "label": "₹75,000 to ₹1 lakh",
+              "value": "₹75,000 to ₹1 lakh"
+            },
+            {
+              "label": "₹1 lakh to ₹3 lakh",
+              "value": "₹1 lakh to ₹3 lakh"
+            },
+            {
+              "label": "₹3 lakh to ₹5 lakh",
+              "value": "₹3 lakh to ₹5 lakh"
+            },
+            {
+              "label": "₹5 lakh to ₹10 lakh",
+              "value": "₹5 lakh to ₹10 lakh"
+            },
+            {
+              "label": "₹10 lakh plus",
+              "value": "₹10 lakh plus"
+            },
+            {
+              "label": "Not sure yet",
+              "value": "Not sure yet"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "aeo_requirement",
+          "label": "What do you need help with?",
+          "type": "select",
+          "required": false,
+          "placeholder": "Select requirement",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Business website",
+              "value": "Business website"
+            },
+            {
+              "label": "Corporate website",
+              "value": "Corporate website"
+            },
+            {
+              "label": "Landing page for ads",
+              "value": "Landing page for ads"
+            },
+            {
+              "label": "Ecommerce website",
+              "value": "Ecommerce website"
+            },
+            {
+              "label": "WordPress website",
+              "value": "WordPress website"
+            },
+            {
+              "label": "Website redesign",
+              "value": "Website redesign"
+            },
+            {
+              "label": "Website maintenance and AMC",
+              "value": "Website maintenance and AMC"
+            },
+            {
+              "label": "SEO friendly website development",
+              "value": "SEO friendly website development"
+            },
+            {
+              "label": "Not sure, need expert guidance",
+              "value": "Not sure, need expert guidance"
+            }
+          ],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "start_timeline",
+          "label": "When do you want to start?",
+          "type": "select",
+          "required": true,
+          "placeholder": "Select timeline",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "Immediately",
+              "value": "Immediately"
+            },
+            {
+              "label": "Within 2 to 4 weeks",
+              "value": "Within 2 to 4 weeks"
+            },
+            {
+              "label": "Within 1 to 3 months",
+              "value": "Within 1 to 3 months"
+            },
+            {
+              "label": "Exploring options",
+              "value": "Exploring options"
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "requirement",
+          "label": "Briefly describe your business requirement",
+          "type": "textarea",
+          "required": true,
+          "placeholder": "Tell us about your business, website, challenge or growth goal.",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "contact_consent",
+          "label": "Contact consent",
+          "type": "checkbox",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        },
+        {
+          "name": "service_name",
+          "label": "Service Name",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Website Development",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "lead_source",
+          "label": "Lead Source",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "Google Ads Landing Page",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "landing_page_url",
+          "label": "Landing Page URL",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "referrer_url",
+          "label": "Referrer URL",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_source",
+          "label": "UTM Source",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_medium",
+          "label": "UTM Medium",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_campaign",
+          "label": "UTM Campaign",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_term",
+          "label": "UTM Term",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "utm_content",
+          "label": "UTM Content",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "gclid",
+          "label": "GCLID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "campaignid",
+          "label": "Campaign ID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "adgroupid",
+          "label": "Ad Group ID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "creative",
+          "label": "Creative ID",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "matchtype",
+          "label": "Match Type",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "device",
+          "label": "Device",
+          "type": "hidden",
+          "required": false,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [],
+          "validationMessages": {},
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": true
+        },
+        {
+          "name": "business_confirmation[]",
+          "label": "Business enquiry confirmation",
+          "type": "checkbox",
+          "required": true,
+          "placeholder": "",
+          "defaultValue": "",
+          "options": [
+            {
+              "label": "I confirm this is a business enquiry for a company or brand, not a job application, internship request, freelancer pitch or personal enquiry.",
+              "value": "I confirm this is a business enquiry for a company or brand, not a job application, internship request, freelancer pitch or personal enquiry."
+            }
+          ],
+          "validationMessages": {
+            "required": "This field is required"
+          },
+          "conditionalLogic": {
+            "enabled": false
+          },
+          "hidden": false
+        }
+      ],
+      "allowedFieldKeys": [
+        "full_name[first_name]",
+        "full_name[last_name]",
+        "email",
+        "phone",
+        "input_text",
+        "company_website",
+        "role",
+        "budget",
+        "start_timeline",
+        "requirement",
+        "contact_consent",
+        "service_name",
+        "lead_source",
+        "landing_page_url",
+        "referrer_url",
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_term",
+        "utm_content",
+        "gclid",
+        "campaignid",
+        "adgroupid",
+        "creative",
+        "matchtype",
+        "device",
+        "business_confirmation[]",
+        "aeo_requirement"
+      ],
+      "captcha": {
+        "enabled": true,
+        "provider": "recaptcha",
+        "version": "v2_explicit",
+        "publicSiteKey": "6LfK6VgsAAAAAFeLVFPu7qFDLc4phIeAPApUFy-k",
+        "siteKeyEnvRef": "env:NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "secretKeyEnvRef": "env:RECAPTCHA_SECRET_KEY"
+      },
+      "submitButtonText": "Submit Form",
+      "confirmation": {
+        "type": "customPage",
+        "message": "Thank you for your message. We will get in touch with you shortly",
+        "customUrlPresent": false,
+        "samePageFormBehavior": "hide_form"
+      },
+      "failureMessage": "There was an error submitting the form. Please try again.",
+      "notifications": {
+        "count": 1,
+        "enabledCount": 1,
+        "items": [
+          {
+            "name": "Admin Notification Email",
+            "enabled": true,
+            "destinationType": "email",
+            "recipientCount": 1,
+            "recipientDomainClassification": "internal",
+            "recipientEnvRef": "env:FLUENTFORM_NOTIFICATION_RECIPIENT"
+          }
+        ]
+      },
+      "integrations": {
+        "enabled": false,
+        "items": [],
+        "envRefsOnly": true
+      },
+      "backend": {
+        "adapter": "fluent-forms-wordpress",
+        "submissionEndpointClass": "public-admin-ajax",
+        "submissionEndpoint": "https://www.dgeniussolutions.com/wp-admin/admin-ajax.php",
+        "submissionAction": "fluentform_submit",
+        "restFormSubmitEndpoint": "https://www.dgeniussolutions.com/wp-json/fluentform/v1/form-submit",
+        "wordpressPageIds": {
+          "/website-development-services-in-mumbai-dgenius-solutions/": 64376
+        }
+      },
+      "provenance": {
+        "source": "authenticated-fluentform-rest",
+        "retrievedAt": "2026-08-31T16:31:28Z",
+        "sourceExportSha256": "58e2cbb56e80b7af7c6a60d47a558557d169f84f7b4ab0a43b54a37b9a322dac",
+        "accessMethod": "authenticated-fluentform-rest"
+      },
+      "sourceRoute": "/website-development-services-in-mumbai-dgenius-solutions/"
     }
   ]
 }

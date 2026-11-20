@@ -25,10 +25,13 @@ export function aggregateMirrorCss(cssFiles: string[] | undefined): string[] {
     const filePath = join(publicCssDir, f);
     if (!existsSync(filePath)) continue;
     const raw = readFileSync(filePath, "utf8");
-    const stripped = raw.replace(/@import\s+[^;]+;/g, (match) => {
-      if (!imports.includes(match)) imports.push(match);
-      return "";
-    });
+    const stripped = raw.replace(
+      /@import\s+(?:url\([^)]*\)|"[^"]*"|'[^']*')[^;]*;/g,
+      (match) => {
+        if (!imports.includes(match)) imports.push(match);
+        return "";
+      },
+    );
     bodies.push(`/* ${f} */\n${stripped}`);
   }
 

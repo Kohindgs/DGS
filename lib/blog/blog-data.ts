@@ -239,6 +239,30 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
   bodyHtml = applyApprovedLinkCorrectionsToHtml(path, bodyHtml);
   bodyHtml = rewriteWpUrls(bodyHtml);
   bodyHtml = bodyHtml.replace(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi, "<h2$1>$2</h2>");
+  // Strip accidental AI prompt instructions or unlinked "Suggested Read" placeholders
+  bodyHtml = bodyHtml.replace(
+    /<p\b[^>]*>\s*(?:<(?:strong|em|b|i|span)[^>]*>\s*)*(?:Generate an image|Image Prompt|Prompt:|Suggested Read:?)\b[\s\S]*?<\/p>/gi,
+    "",
+  );
+  // Normalize lowercase keyword-stuffed phrases in seo-services-india-2026
+  if (path === "/blogs/seo-services-india-2026/") {
+    bodyHtml = bodyHtml
+      .replace(/\bbest seo services in india\b/g, "best SEO services in India")
+      .replace(/\baffordable seo services in india\b/g, "affordable SEO services in India")
+      .replace(/\bseo packages in india\b/g, "SEO packages in India")
+      .replace(/\bprofessional seo services\b/g, "professional SEO services")
+      .replace(/\btop seo company in india\b/g, "top SEO company in India")
+      .replace(/\blocal seo services\b/g, "local SEO services")
+      .replace(/\btechnical seo\b/g, "technical SEO");
+  }
+  // Ensure inline blog images have width and height attributes
+  bodyHtml = bodyHtml.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
+    if (/\bwidth=/i.test(attrs) && /\bheight=/i.test(attrs)) return match;
+    let next = match;
+    if (!/\bwidth=/i.test(attrs)) next = next.replace(/<img\b/i, '<img width="800"');
+    if (!/\bheight=/i.test(attrs)) next = next.replace(/<img\b/i, '<img height="450"');
+    return next;
+  });
   bodyHtml = normalizeBrandName(bodyHtml);
   const anchored = addHeadingAnchors(bodyHtml);
   bodyHtml = anchored.html;

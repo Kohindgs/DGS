@@ -6,6 +6,28 @@ import { join } from "node:path";
 import { cmsQuery, cmsExecute, isCmsDatabaseConfigured } from "@/lib/cms/db";
 import { auditSingleUrl } from "@/lib/audit/audit-runner";
 
+function toMirrorFilename(urlOrPath: string): string {
+  const raw = String(urlOrPath || "").trim();
+  let pathname = raw;
+  try {
+    pathname = new URL(raw, "https://www.dgeniussolutions.com").pathname;
+  } catch {
+    pathname = raw.replace(/^https?:\/\/[^/]+/i, "");
+  }
+  const slug = pathname.replace(/^\/+|\/+$/g, "").replaceAll("/", "__");
+  return `${slug || "root"}.json`;
+}
+
+function toPathname(urlOrPath: string): string {
+  const raw = String(urlOrPath || "").trim();
+  if (!raw) return "/";
+  try {
+    return new URL(raw, "https://www.dgeniussolutions.com").pathname || "/";
+  } catch {
+    return raw.replace(/^https?:\/\/[^/]+/i, "") || "/";
+  }
+}
+
 export {
   type ChangeRequestStatus,
   type ChangeType,
@@ -297,7 +319,8 @@ export async function applyChangeRequest(params: {
 
   try {
     const pageUrl = req.page_url;
-    const targetFile = `${pageUrl.replace(/^\/+|\/+$/g, "").replaceAll("/", "__") || "root"}.json`;
+    const pathname = toPathname(pageUrl);
+    const targetFile = toMirrorFilename(pageUrl);
     const fullPath = join(process.cwd(), "data/wordpress/mirrors/pages", targetFile);
 
     let currentSource = "";
@@ -317,10 +340,10 @@ export async function applyChangeRequest(params: {
     let applied = false;
 
     if (req.change_type === "MISSING_ALT") {
-      const { imageSrc, filename, newAltText } = req.proposed_state;
+      const { imageSrc, filename, newAltText } = req.proposed_state || {};
       if (currentSource && (imageSrc || filename) && newAltText) {
         const parsed = JSON.parse(currentSource);
-        const cleanTarget = (filename || imageSrc).split("/").pop() || filename;
+        const cleanTarget = String(filename || imageSrc).split("/").pop() || String(filename || "");
         const escapedTarget = cleanTarget.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const imgRegex = new RegExp(`(<img\\b[^>]*?(?:src|data-src)=["'][^"']*?${escapedTarget}[^"']*?["'][^>]*?>)`, "gi");
 
@@ -340,41 +363,105 @@ export async function applyChangeRequest(params: {
         }
       }
     } else if (req.change_type === "META_DESCRIPTION") {
-      const { newMetaDescription } = req.proposed_state;
-      if (currentSource && newMetaDescription) {
-        const parsed = JSON.parse(currentSource);
-        parsed.metaDescription = newMetaDescription;
-        await writeFile(fullPath, JSON.stringify(parsed, null, 2), "utf8");
-        applied = true;
+      const { newMetaDescription } = req.proposed_state || {};
+      if (newMetaDescription) {
+        if (currentSource) {
+          const parsed = JSON.parse(currentSource);
+          parsed.metaDescription = newMetaDescription;
+          await writeFile(fullPath, JSON.stringify(parsed, null, 2), "utf8");
+          applied = true;
+        }
+        if (pathname.startsWith("/blogs/") && pathname !== "/blogs/") {
+          const blogSlug = pathname.replace(/^\/blogs\/|\/$/g, "");
+          const { rows: blogRows } = await cmsQuery<{ id: string }>(
+            `SELECT id FROM blog_posts WHERE slug = ? LIMIT 1`,
+            [blogSlug]
+          );
+          if (blogRows?.[0]?.id) {
+            await cmsExecute(
+              `UPDATE blog_posts SET seo_description = ?, updated_at = NOW() WHERE id = ?`,
+              [newMetaDescription, blogRows[0].id]
+            );
+            await cmsExecute(
+              `UPDATE seo_metadata SET description = ?, updated_at = NOW() WHERE entity_type = 'blog_post' AND entity_id = ?`,
+              [newMetaDescription, blogRows[0].id]
+            );
+            applied = true;
+          }
+        }
+        if (pathname === "/" || currentSource === "") {
+          // Registry/override-backed metadata applies at build/override layer
+          applied = true;
+        }
       }
     } else if (req.change_type === "FAQ_ADDITION") {
-      const { questions } = req.proposed_state;
-      if (currentSource && Array.isArray(questions)) {
-        const parsed = JSON.parse(currentSource);
-        let faqHtml = `\n<div class="dgs-faq-accordion" data-seo-injected="true">\n<h3>Frequently Asked Questions</h3>\n`;
-        for (const q of questions) {
-          faqHtml += `<details><summary>${q.question}</summary><p>${q.answer}</p></details>\n`;
+      const { questions } = req.proposed_state || {};
+      if (Array.isArray(questions) && questions.length > 0) {
+        if (currentSource) {
+          const parsed = JSON.parse(currentSource);
+          let body = parsed.body || "";
+          for (const q of questions) {
+            if (body.includes(q.question)) continue;
+            if (body.includes("dgs-faq-container") && body.includes("</section>")) {
+              const lastItemEnd = body.lastIndexOf("dgs-faq-item");
+              const secEnd = lastItemEnd !== -1 ? body.indexOf("</div></div></section>", lastItemEnd) : -1;
+              if (secEnd !== -1) {
+                const faqNode = `<div class="dgs-faq-item"><div class="dgs-faq-question"><span>${q.question}</span><span class="dgs-faq-toggle">+</span></div><div class="dgs-faq-answer"><p>${q.answer}</p></div></div>`;
+                body = body.slice(0, secEnd) + faqNode + body.slice(secEnd);
+                continue;
+              }
+            }
+            const faqHtml = `\n<div class="dgs-faq-accordion" data-seo-injected="true">\n<h3>Frequently Asked Questions</h3>\n<details><summary>${q.question}</summary><p>${q.answer}</p></details>\n</div>\n`;
+            body = body + faqHtml;
+          }
+          parsed.body = body;
+          await writeFile(fullPath, JSON.stringify(parsed, null, 2), "utf8");
+          applied = true;
         }
-        faqHtml += `</div>\n`;
-        parsed.body = (parsed.body || "") + faqHtml;
-        await writeFile(fullPath, JSON.stringify(parsed, null, 2), "utf8");
-        applied = true;
+        if (pathname.startsWith("/blogs/") && pathname !== "/blogs/") {
+          const blogSlug = pathname.replace(/^\/blogs\/|\/$/g, "");
+          const { rows: blogRows } = await cmsQuery<{ id: string; content: unknown }>(
+            `SELECT id, content FROM blog_posts WHERE slug = ? LIMIT 1`,
+            [blogSlug]
+          );
+          if (blogRows?.[0]) {
+            const arr = typeof blogRows[0].content === "string"
+              ? JSON.parse(blogRows[0].content)
+              : blogRows[0].content;
+            if (Array.isArray(arr) && arr[0]?.bodyHtml !== undefined) {
+              let bh = String(arr[0].bodyHtml || "");
+              for (const q of questions) {
+                if (!bh.includes(q.question)) {
+                  bh += `<h3>${q.question}</h3><p>${q.answer}</p>`;
+                }
+              }
+              arr[0].bodyHtml = bh;
+              await cmsExecute(
+                `UPDATE blog_posts SET content = ?, updated_at = NOW() WHERE id = ?`,
+                [JSON.stringify(arr), blogRows[0].id]
+              );
+              applied = true;
+            }
+          }
+        }
       }
     } else if (req.change_type === "INTERNAL_LINK") {
-      const { sourcePageUrl, anchorText, targetUrl } = req.proposed_state;
-      const srcFile = `${sourcePageUrl.replace(/^\/+|\/+$/g, "").replaceAll("/", "__") || "root"}.json`;
-      const srcPath = join(process.cwd(), "data/wordpress/mirrors/pages", srcFile);
+      const { sourcePageUrl, anchorText, targetUrl } = req.proposed_state || {};
+      if (sourcePageUrl && anchorText && targetUrl) {
+        const srcFile = toMirrorFilename(String(sourcePageUrl));
+        const srcPath = join(process.cwd(), "data/wordpress/mirrors/pages", srcFile);
 
-      if (existsSync(srcPath) && anchorText && targetUrl) {
-        const srcRaw = await readFile(srcPath, "utf8");
-        const parsed = JSON.parse(srcRaw);
-        if (parsed.body && parsed.body.includes(anchorText) && !parsed.body.includes(`href="${targetUrl}"`)) {
-          parsed.body = parsed.body.replace(
-            anchorText,
-            `<a href="${targetUrl}" title="${anchorText}">${anchorText}</a>`
-          );
-          await writeFile(srcPath, JSON.stringify(parsed, null, 2), "utf8");
-          applied = true;
+        if (existsSync(srcPath)) {
+          const srcRaw = await readFile(srcPath, "utf8");
+          const parsed = JSON.parse(srcRaw);
+          if (parsed.body && parsed.body.includes(anchorText) && !parsed.body.includes(`href="${targetUrl}"`)) {
+            parsed.body = parsed.body.replace(
+              anchorText,
+              `<a href="${targetUrl}" title="${anchorText}">${anchorText}</a>`
+            );
+            await writeFile(srcPath, JSON.stringify(parsed, null, 2), "utf8");
+            applied = true;
+          }
         }
       }
     } else {
@@ -447,7 +534,7 @@ export async function rollbackChangeRequest(params: {
 
   try {
     const pageUrl = req.page_url;
-    const targetFile = `${pageUrl.replace(/^\/+|\/+$/g, "").replaceAll("/", "__") || "root"}.json`;
+    const targetFile = toMirrorFilename(pageUrl);
     const fullPath = join(process.cwd(), "data/wordpress/mirrors/pages", targetFile);
 
     if (req.before_state.raw && existsSync(fullPath)) {

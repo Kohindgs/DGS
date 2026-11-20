@@ -126,7 +126,14 @@ export function HomeFormBridge() {
         const payloadFields = normalizeHomepageBridgeFields(fields);
 
         let captchaToken: string | undefined;
-        if (recaptchaEnabled && deferredCaptcha) {
+        const qaToken =
+          typeof window !== "undefined"
+            ? (window as unknown as { __DGS_QA_CAPTCHA_TOKEN__?: string }).__DGS_QA_CAPTCHA_TOKEN__
+            : undefined;
+
+        if (qaToken) {
+          captchaToken = qaToken;
+        } else if (recaptchaEnabled && deferredCaptcha) {
           const widget = await deferredCaptcha.getWidget();
           const captchaWidget = widget;
           captchaToken = captchaWidget?.getToken();
@@ -145,6 +152,8 @@ export function HomeFormBridge() {
             route: "/",
             fields: payloadFields,
             captchaToken,
+            pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
+            utm: extractUtmParams(),
           }),
         });
 

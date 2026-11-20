@@ -1790,3 +1790,300 @@ video:-webkit-full-screen {
 #portfolio-cta-section-wrap {
   margin-top: clamp(60px, 6vw, 96px) !important;
 }
+
+/* ==========================================================================
+   10. CLASSY MONOCHROME DARK-LUXURY FAQ ACCORDION — ALL AI PRODUCTION PAGES
+   Removes loud pink/orange/blue button gradients, neon borders, and colored
+   toggle icons across /services/ai-video-production-agency/,
+   /services/ai-production-dubai-page/, /services/shirdi-se-sai-tak-case-study/,
+   and /ai-production-videos-google-ads-landing-page/ (plus any .faq-q buttons).
+   ========================================================================== */
+
+/* Container width & spacing */
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-container,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-list,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq,
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-container,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-list,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq {
+  max-width: 1020px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  border: 0 !important;
+}
+
+/* Neutralize all theme/Elementor ::before and ::after color gradients on FAQ items & buttons */
+html body .dgs-wp-mirror-inner .faq-item::before,
+html body .dgs-wp-mirror-inner .faq-item::after,
+html body .dgs-wp-mirror-inner button.faq-q::before,
+html body .dgs-wp-mirror-inner button.faq-q::after,
+html body .dgs-wp-mirror-inner .faq-q::before,
+html body .dgs-wp-mirror-inner .faq-q::after,
+html body .dgs-wp-mirror-inner .case-faq-card::before,
+html body .dgs-wp-mirror-inner .case-faq-card::after,
+html body .dgs-wp-mirror-inner .case-faq-trigger::before,
+html body .dgs-wp-mirror-inner .case-faq-trigger::after,
+html body .dgs-wp-mirror-inner .dgs-ai-faq-item::before,
+html body .dgs-wp-mirror-inner .dgs-ai-faq-item::after,
+html body .dgs-wp-mirror-inner button.dgs-ai-faq-q::before,
+html body .dgs-wp-mirror-inner button.dgs-ai-faq-q::after,
+html body .dgs-wp-mirror-inner .dgs-ai-faq-q::before,
+html body .dgs-wp-mirror-inner .dgs-ai-faq-q::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Classy glassmorphic card shell */
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-item,
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-item,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-card,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-card,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-item,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-item {
+  position: relative !important;
+  margin: 0 !important;
+  border-radius: 18px !important;
+  background: rgba(14, 15, 20, 0.72) !important;
+  background-color: rgba(14, 15, 20, 0.72) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  overflow: hidden !important;
+  transition: background-color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease !important;
+}
+
+/* Hover & active card refinement — subtle silver/white elevation, zero neon colors */
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-item:hover,
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-item:hover,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-card:hover,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-card:hover,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-item:hover,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-item:hover {
+  background: rgba(20, 22, 30, 0.84) !important;
+  background-color: rgba(20, 22, 30, 0.84) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-item.active,
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-item.active,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-card.is-open,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-card.is-open,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-item.active,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-item.active {
+  background: rgba(24, 26, 36, 0.90) !important;
+  background-color: rgba(24, 26, 36, 0.90) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Trigger / Question row */
+html body .dgs-wp-mirror-inner .dgs-ai-page button.faq-q,
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-q,
+html body .dgs-wp-mirror-inner #faq-section-ai-video button.faq-q,
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-q,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-trigger,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-trigger,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page button.dgs-ai-faq-q,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-q,
+html body .dgs-wp-mirror-inner #ai-production-faq button.dgs-ai-faq-q,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-q {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+  width: 100% !important;
+  padding: 22px 26px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: rgba(255, 255, 255, 0.94) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.94) !important;
+  font-family: 'Manrope', 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-size: clamp(1.02rem, 1.35vw, 1.18rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+  letter-spacing: -0.015em !important;
+  text-align: left !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+  cursor: pointer !important;
+}
+
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-q span,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-question {
+  color: rgba(255, 255, 255, 0.94) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.94) !important;
+  font-size: inherit !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+  letter-spacing: -0.015em !important;
+}
+
+/* Minimalist circular monochrome toggle icon */
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-q i,
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-q i,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-icon,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-icon,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-q i,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-q i {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  transform: rotate(0deg) !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  flex-shrink: 0 !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.78) !important;
+  font-style: normal !important;
+  font-size: 1.2rem !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.28s ease, border-color 0.28s ease, color 0.28s ease !important;
+}
+
+/* Active state icon — classy monochrome rotation & subtle bright border, no pink/orange fill */
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-item.active .faq-q i,
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-item.active .faq-q i,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-card.is-open .case-faq-icon,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-card.is-open .case-faq-icon,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-item.active .dgs-ai-faq-q i,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-item.active .dgs-ai-faq-q i {
+  transform: rotate(45deg) !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  background-color: rgba(255, 255, 255, 0.14) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Answer copy typography & spacing */
+html body .dgs-wp-mirror-inner .dgs-ai-page .faq-a div,
+html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-a div,
+html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-answer-inner,
+html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-answer-inner,
+html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-a,
+html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-a {
+  max-width: 920px !important;
+  padding: 0 26px 24px 26px !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.72) !important;
+  font-family: 'Manrope', 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-size: 0.98rem !important;
+  font-weight: 400 !important;
+  line-height: 1.78 !important;
+}
+
+@media (max-width: 640px) {
+  html body .dgs-wp-mirror-inner .dgs-ai-page button.faq-q,
+  html body .dgs-wp-mirror-inner .dgs-ai-page .faq-q,
+  html body .dgs-wp-mirror-inner #faq-section-ai-video button.faq-q,
+  html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-trigger,
+  html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-trigger,
+  html body .dgs-wp-mirror-inner .dgs-ai-ads-page button.dgs-ai-faq-q,
+  html body .dgs-wp-mirror-inner #ai-production-faq button.dgs-ai-faq-q {
+    padding: 18px 18px !important;
+    gap: 14px !important;
+    font-size: 0.98rem !important;
+  }
+
+  html body .dgs-wp-mirror-inner .dgs-ai-page .faq-a div,
+  html body .dgs-wp-mirror-inner #faq-section-ai-video .faq-a div,
+  html body .dgs-wp-mirror-inner .dgs-ai-page .case-faq-answer-inner,
+  html body .dgs-wp-mirror-inner #faq-section-ai-avatar .case-faq-answer-inner,
+  html body .dgs-wp-mirror-inner .dgs-ai-ads-page .dgs-ai-faq-a,
+  html body .dgs-wp-mirror-inner #ai-production-faq .dgs-ai-faq-a {
+    padding: 0 18px 20px 18px !important;
+    font-size: 0.93rem !important;
+  }
+}
+
+/* ==========================================================================
+   11. WEBSITE DEVELOPMENT 5-PROJECT HOVER SCROLL OVERRIDES
+   Ensures Meryl Aesthetics (01), Blanco Aesthetics (02), HumanXT (03),
+   Weavings (04), and Better Ceasons (05) scroll smoothly top-to-bottom.
+   ========================================================================== */
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row .w-img {
+  container-type: size !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: #0d0e17 !important;
+}
+
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row .w-img .live-preview-image {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: top center !important;
+  background: #0d0e17 !important;
+  transform: translateY(0) !important;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  will-change: transform !important;
+  pointer-events: none !important;
+}
+
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:hover .w-img .live-preview-image,
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row .w-img:hover .live-preview-image,
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row .w-img.is-scrolling .live-preview-image {
+  transform: translateY(var(--preview-max-scroll, min(0px, calc(-100% + 100cqh)))) !important;
+  transition: transform 32s linear !important;
+}
+
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(1):hover .w-img .live-preview-image,
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(1) .w-img.is-scrolling .live-preview-image {
+  transition-duration: 38s !important; /* Meryl Aesthetics ~12900px */
+}
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(2):hover .w-img .live-preview-image,
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(2) .w-img.is-scrolling .live-preview-image {
+  transition-duration: 44s !important; /* Blanco Aesthetics ~15800px */
+}
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(3):hover .w-img .live-preview-image,
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(3) .w-img.is-scrolling .live-preview-image {
+  transition-duration: 24s !important; /* HumanXT ~7640px */
+}
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(4):hover .w-img .live-preview-image,
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(4) .w-img.is-scrolling .live-preview-image {
+  transition-duration: 32s !important; /* Weavings ~10769px */
+}
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(5):hover .w-img .live-preview-image,
+html body.dgs-webdev-active #dgs-webdev-page .work-project-row:nth-child(5) .w-img.is-scrolling .live-preview-image {
+  transition-duration: 30s !important; /* Better Ceasons ~10184px */
+}
+
+

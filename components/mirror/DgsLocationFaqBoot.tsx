@@ -64,6 +64,36 @@ export function DgsLocationFaqBoot() {
       toggle(q);
     };
 
+    const syncPreviewScrollDistance = (wImg: HTMLElement) => {
+      const img = wImg.querySelector<HTMLImageElement>(".live-preview-image");
+      if (img && img.naturalHeight && img.naturalWidth && wImg.clientWidth > 0) {
+        const renderedH = (img.naturalHeight / img.naturalWidth) * wImg.clientWidth;
+        const maxScroll = Math.max(0, renderedH - wImg.clientHeight);
+        wImg.style.setProperty("--preview-max-scroll", `-${maxScroll.toFixed(2)}px`);
+      }
+    };
+
+    const allPreviewContainers = Array.from(root.querySelectorAll<HTMLElement>(".work-project-row .w-img"));
+    for (const wImg of allPreviewContainers) {
+      const img = wImg.querySelector<HTMLImageElement>(".live-preview-image");
+      if (img) {
+        if (img.complete && img.naturalWidth > 0) {
+          syncPreviewScrollDistance(wImg);
+        } else {
+          img.addEventListener("load", () => syncPreviewScrollDistance(wImg), { once: true });
+        }
+      }
+    }
+
+    const onPreviewHover = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      const row = target?.closest<HTMLElement>(".work-project-row");
+      const wImg = row?.querySelector<HTMLElement>(".w-img") || target?.closest<HTMLElement>(".w-img");
+      if (wImg && root.contains(wImg)) {
+        syncPreviewScrollDistance(wImg);
+      }
+    };
+
     const onPreviewClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
       const pill = target?.closest<HTMLElement>(".preview-scroll-pill");
@@ -74,22 +104,21 @@ export function DgsLocationFaqBoot() {
       if (wImg) {
         const isScrolling = wImg.classList.toggle("is-scrolling");
         pill.innerHTML = isScrolling ? "<span>❚❚</span> Reset" : "<span>▶</span> Preview Scroll";
-        const img = wImg.querySelector<HTMLImageElement>(".live-preview-image");
-        if (img && img.naturalHeight && img.naturalWidth) {
-          const renderedH = (img.naturalHeight / img.naturalWidth) * wImg.clientWidth;
-          const maxScroll = Math.max(0, renderedH - wImg.clientHeight);
-          wImg.style.setProperty("--preview-max-scroll", `-${maxScroll.toFixed(2)}px`);
-        }
+        syncPreviewScrollDistance(wImg);
       }
     };
 
     root.addEventListener("click", onClick);
     root.addEventListener("click", onPreviewClick);
+    root.addEventListener("mouseover", onPreviewHover);
+    root.addEventListener("focusin", onPreviewHover);
     root.addEventListener("keydown", onKey);
 
     return () => {
       root.removeEventListener("click", onClick);
       root.removeEventListener("click", onPreviewClick);
+      root.removeEventListener("mouseover", onPreviewHover);
+      root.removeEventListener("focusin", onPreviewHover);
       root.removeEventListener("keydown", onKey);
     };
   }, []);

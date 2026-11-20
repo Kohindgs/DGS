@@ -2,21 +2,28 @@
   position: fixed;
   inset: 0;
   z-index: 100010;
-  background: rgba(2, 2, 2, 0.82);
-  display: grid;
+  background: rgba(2, 2, 2, 0.84);
+  backdrop-filter: blur(8px);
+  display: none;
   place-items: center;
-  padding: var(--space-6);
+  padding: var(--space-6, 1.5rem);
+}
+
+.overlay:global(.is-open) {
+  display: grid;
 }
 
 .dialog {
   width: min(100%, 42rem);
   max-height: 90vh;
   overflow-y: auto;
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8);
+  background: var(--color-bg-elevated, #0b0e17);
+  color: var(--color-text, #f8fafc);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-lg, 20px);
+  padding: var(--space-8, 2rem);
   position: relative;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
 }
 
 .closeBtn {

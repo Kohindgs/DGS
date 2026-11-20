@@ -42,6 +42,7 @@ export function AssessmentRunner(props: Props) {
   const [instructionsAccepted, setInstructionsAccepted] = useState(false);
 
   const activity = useRef<ActivityEvent[]>([]);
+  const autoSubmitTriggeredRef = useRef(false);
 
   const addActivity = (type: string, detail?: string) => {
     activity.current.push({ type, detail, at: new Date().toISOString() });
@@ -146,17 +147,35 @@ export function AssessmentRunner(props: Props) {
   // 3. Timer Countdown
   useEffect(() => {
     if (status !== "ready" || !startedAt) return;
-    const update = () => {
-      const started = new Date(startedAt.replace(" ", "T") + "Z").getTime();
-      const left = Math.max(0, Math.floor((durationMinutes * 60 * 1000 - (Date.now() - started)) / 1000));
+    const rawStarted = String(startedAt).trim();
+    const normalizedStarted = rawStarted.includes("T")
+      ? rawStarted.endsWith("Z") || /[+-]\d{2}:?\d{2}$/.test(rawStarted)
+        ? rawStarted
+        : `${rawStarted}Z`
+      : `${rawStarted.replace(" ", "T")}Z`;
+    const startedMs = new Date(normalizedStarted).getTime();
+    if (!Number.isFinite(startedMs)) return;
+
+    let timerId = 0;
+    const update = (): boolean => {
+      const left = Math.max(0, Math.floor((durationMinutes * 60 * 1000 - (Date.now() - startedMs)) / 1000));
       setRemaining(left);
       if (left === 0) {
         addActivity("timer_expired");
+        if (timerId) {
+          window.clearInterval(timerId);
+          timerId = 0;
+        }
+        return false;
       }
+      return true;
     };
-    update();
-    const timer = window.setInterval(update, 1000);
-    return () => window.clearInterval(timer);
+    if (update()) {
+      timerId = window.setInterval(update, 1000);
+    }
+    return () => {
+      if (timerId) window.clearInterval(timerId);
+    };
   }, [status, startedAt, durationMinutes]);
 
   // 4. Tab visibility and blur detection
@@ -172,13 +191,18 @@ export function AssessmentRunner(props: Props) {
     };
   }, [status]);
 
-  // 5. Timer auto-submit when expired
+  // 5. Timer auto-submit when expired (guarded to run at most once)
   useEffect(() => {
-    if (status === "ready" && remaining === 0) {
+    if (status !== "ready" || remaining !== 0 || autoSubmitTriggeredRef.current) return;
+    const hasRecordedAnswers = Object.values(formAnswers).some((val) => String(val ?? "").trim() !== "");
+    autoSubmitTriggeredRef.current = true;
+    if (hasRecordedAnswers) {
       addActivity("auto_submitted_time_expired");
-      void submitFinalAssessment();
+      void submitFinalAssessment(true);
+    } else {
+      addActivity("timer_expired_no_answers");
     }
-  }, [status, remaining]);
+  }, [status, remaining, formAnswers]);
 
   const timerText = useMemo(() => {
     const min = Math.floor(remaining / 60);
@@ -220,17 +244,21 @@ export function AssessmentRunner(props: Props) {
   };
 
   // Submit Final Assessment
-  async function submitFinalAssessment() {
+  async function submitFinalAssessment(isAutoSubmit = false) {
     if (!attemptId || status !== "ready") return;
+    const autoSubmit = isAutoSubmit === true;
 
-    // Validate psychometric completion
-    const unPsycho = psychometricQuestions.filter(
-      (q) => formAnswers[q.id] === undefined || formAnswers[q.id] === ""
-    );
-    if (unPsycho.length > 0) {
-      setMessage(`Please answer all ${psychometricQuestions.length} psychometric situational questions before submitting.`);
-      setCurrentSection("psychometric");
-      return;
+    // Validate psychometric completion on manual submit (auto-submit preserves partial progress)
+    if (!autoSubmit) {
+      const unPsycho = psychometricQuestions.filter(
+        (q) => formAnswers[q.id] === undefined || formAnswers[q.id] === ""
+      );
+      if (unPsycho.length > 0) {
+        setMessage(`Please answer all ${psychometricQuestions.length} psychometric situational questions before submitting.`);
+        setCurrentSection("psychometric");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
     }
 
     setStatus("submitting");
@@ -239,7 +267,7 @@ export function AssessmentRunner(props: Props) {
     const answers: Record<string, unknown> = {};
     for (const q of questions) {
       const val = formAnswers[q.id] !== undefined ? formAnswers[q.id] : "";
-      answers[q.id] = q.type === "mcq" || q.type === "psychometric" ? Number(val) : String(val);
+      answers[q.id] = q.type === "mcq" || q.type === "psychometric" ? (val !== "" ? Number(val) : "") : String(val);
     }
     if (formAnswers["practical_task"]) {
       answers["practical_task"] = formAnswers["practical_task"];
@@ -251,7 +279,12 @@ export function AssessmentRunner(props: Props) {
       const response = await fetch("/api/assessment/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ attemptId, answers, activity: activity.current }),
+        body: JSON.stringify({
+          attemptId,
+          answers,
+          activity: activity.current.slice(-200),
+          isAutoSubmit: autoSubmit,
+        }),
       });
       const result = await response.json();
       if (!response.ok || !result.ok) throw new Error(result.message || "Submission failed.");
@@ -267,6 +300,9 @@ export function AssessmentRunner(props: Props) {
     } catch (error) {
       setStatus("ready");
       setMessage(error instanceof Error ? error.message : "Submission failed. Please check your connection and retry.");
+      if (!autoSubmit) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   }
 
@@ -758,8 +794,8 @@ export function AssessmentRunner(props: Props) {
             <button
               type="button"
               className={`${styles.navBtn} ${styles.navBtnPrimary}`}
-              disabled={status === "submitting" || psychometricAnsweredCount < psychometricQuestions.length}
-              onClick={submitFinalAssessment}
+              disabled={status === "submitting"}
+              onClick={() => void submitFinalAssessment(false)}
               style={{ minHeight: "48px", padding: "0 28px", fontWeight: 700 }}
             >
               {status === "submitting" ? "Submitting Securely…" : "Submit Final Assessment"}

@@ -1,6 +1,7 @@
 import { rewriteWpUrls } from "@/lib/wp-exact/rewrite-wp-urls";
 import { applyLocationSeoContent } from "@/lib/seo/location-seo-content";
 import { applyInternationalPageContent } from "@/lib/seo/international-page-content";
+import { buildServicesHubHtml } from "@/lib/seo/services-hub-content";
 import { applyApprovedLinkCorrectionsToHtml } from "./apply-mirror-link-corrections";
 import {
   markElementorBackgroundsReady,
@@ -220,13 +221,183 @@ function remediateMirrorImageAlts(path: string, html: string): string {
     });
   }
 
+  // 5. Ensure all <img> elements have explicit width and height attributes to prevent CLS
+  output = output.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
+    if (/\bwidth=/i.test(attrs) && /\bheight=/i.test(attrs)) return match;
+    const isLogoOrIcon = /logo|icon|badge|chip|avatar|svg/i.test(attrs);
+    const w = isLogoOrIcon ? "160" : "800";
+    const h = isLogoOrIcon ? "60" : "500";
+    let next = match;
+    if (!/\bwidth=/i.test(attrs)) next = next.replace(/<img\b/i, `<img width="${w}"`);
+    if (!/\bheight=/i.test(attrs)) next = next.replace(/<img\b/i, `<img height="${h}"`);
+    return next;
+  });
+
+  // 6. Ensure any empty overlay <a> links have an accessible aria-label
+  output = output.replace(
+    /<a\b([^>]*href=["']([^"']+)["'][^>]*)>\s*<\/a>/gi,
+    (match, attrs, href) => {
+      if (/\baria-label=/i.test(attrs)) return match;
+      const cleanLabel =
+        href === "#" || href.startsWith("#")
+          ? "Explore section"
+          : `Explore ${href.replace(/^\/+|\/+$/g, "").replace(/[-/]+/g, " ") || "D'Genius Solutions"}`;
+      return `<a${attrs} aria-label="${cleanLabel}"></a>`;
+    },
+  );
+
+  // 7. Remove aria-hidden="true" from case-study drawers/modals so ROI proof is indexable by search and AI crawlers
+  output = output.replace(
+    /(<(?:div|aside|section)\b[^>]*(?:id=["'][^"']*(?:modal|drawer|worldgrad|weavings)[^"']*["']|class=["'][^"']*(?:cs-drawer|cs-modal|dgs-modal)[^"']*["'])[^>]*?)\s+aria-hidden=["']true["']/gi,
+    "$1",
+  );
+
   return output;
+}
+
+function appendSemanticAuthoritySections(path: string, html: string): string {
+  if (path === "/services/" || path === "/our-services/") {
+    return html;
+  }
+
+  const linkStyle = "color:#38bdf8;text-decoration:underline;font-weight:600;";
+  const cardStyle =
+    "max-width:1180px;margin:48px auto;padding:32px 28px;border-radius:22px;background:linear-gradient(145deg,rgba(15,20,32,0.92),rgba(8,11,18,0.96));border:1px solid rgba(255,255,255,0.12);color:#f8fafc;box-shadow:0 20px 50px rgba(0,0,0,0.45);";
+
+  if (path === "/about-us/") {
+    const aboutAuthoritySection = `
+<section aria-label="Founder credentials and core expertise" style="${cardStyle}">
+  <h2 style="font-size:clamp(1.4rem,2.4vw,2rem);font-weight:700;margin:0 0 14px;color:#ffffff;">Founder Credentials, Career Highlights &amp; Core Capabilities</h2>
+  <p style="font-size:1rem;line-height:1.7;margin:0 0 18px;color:rgba(241,245,249,0.88);">
+    Led by Founder &amp; CEO <strong>Kohin Bellara</strong> (13+ years in digital marketing, enterprise search, and AI-driven growth), D'Genius Solutions combines in-house full-stack engineering with measurable search and creative execution from our headquarters in Khar West, Mumbai.
+  </p>
+  <ul style="margin:0 0 22px;padding-left:20px;line-height:1.75;font-size:0.98rem;color:rgba(241,245,249,0.86);">
+    <li><strong>75+ Brands Scaled Globally:</strong> Proven organic and paid growth across India, the UAE (Dubai), the United States, and Australia, including enterprise and high-growth leaders such as <em>TheWorldGrad</em> (6x organic traffic), <em>Weavings Manpower</em> (17.4K search clicks), <em>Pidilite</em>, <em>Cello</em>, <em>Bajaj</em>, and <em>HumanXT</em>.</li>
+    <li><strong>Full-Funnel Search &amp; AI Visibility:</strong> Integrated execution across <a href="/services/seo-services-in-mumbai/" style="${linkStyle}">SEO Services in Mumbai</a>, <a href="/services/aeo-services-in-mumbai/" style="${linkStyle}">Answer Engine Optimization (AEO)</a>, <a href="/services/geo/" style="${linkStyle}">Generative Engine Optimization (GEO)</a>, and <a href="/services/llm-seo-service/" style="${linkStyle}">LLM SEO</a>.</li>
+    <li><strong>Engineering, Creative &amp; Paid Media Under One Roof:</strong> Direct deployment across <a href="/services/website-development-amc/" style="${linkStyle}">Custom Website Development &amp; AMC</a>, <a href="/services/ai-video-production-agency/" style="${linkStyle}">AI Video Production</a>, <a href="/services/performance-marketing/" style="${linkStyle}">Performance Marketing (Google &amp; Meta Ads)</a>, <a href="/services/social-media-marketing/" style="${linkStyle}">Social Media Marketing</a>, <a href="/services/branding/" style="${linkStyle}">Brand Strategy &amp; Identity Design</a>, and <a href="/services/content-creation/" style="${linkStyle}">SEO Content Creation</a>.</li>
+  </ul>
+  <p style="margin:0;font-size:0.95rem;color:rgba(241,245,249,0.88);">
+    Explore our <a href="/services/" style="${linkStyle}">Complete Digital Marketing &amp; AI Services Hub</a> or review our <a href="/case_studies/" style="${linkStyle}">Verified Client Case Studies</a>.
+  </p>
+</section>`;
+    return html + aboutAuthoritySection;
+  }
+
+  const isServiceOrMarketPage =
+    (path.startsWith("/services/") && path !== "/services/shirdi-se-sai-tak-case-study/") ||
+    path === "/aeo-dubai/" ||
+    path === "/australia-page/" ||
+    path === "/us-landing-page/";
+
+  if (isServiceOrMarketPage) {
+    const EXACT_QUERY_CAPSULES: Record<string, { heading: string; answer: string }> = {
+      "/aeo-dubai/": {
+        heading: "Answer Engine Optimization (AEO) & GEO Services in Dubai, UAE",
+        answer:
+          "Looking for the best Answer Engine Optimization (AEO) agency in Dubai and the UAE? D'Genius Solutions engineers direct brand citations, structured entity schemas, and bilingual answer capsules so UAE enterprises, real estate developers, hospitality groups, and eCommerce brands rank inside Google AI Overviews, ChatGPT, Perplexity, and Google Gemini.",
+      },
+      "/services/ai-production-dubai-page/": {
+        heading: "AI Corporate Video Production & AI E-Commerce Product Videos in Dubai, UAE",
+        answer:
+          "As a specialized AI video production agency and studio in Dubai and Abu Dhabi, D'Genius Solutions delivers AI corporate video production, AI eCommerce product videos, AI promotional videos, TV commercials, and Arabic/English AI avatar videos—combining generative video technology with human creative direction for 3x faster campaign turnaround.",
+      },
+      "/services/dubai-seo/": {
+        heading: "Technical, Local & AI Search SEO Agency in Downtown Dubai, Business Bay & JLT",
+        answer:
+          "D'Genius Solutions is a full-funnel SEO company serving businesses across Downtown Dubai, JLT (Jumeirah Lakes Towers), Business Bay, DIFC, Dubai Marina, and Abu Dhabi. We combine technical Core Web Vitals engineering, Google Maps pack optimization, and AI Overview readiness to drive qualified B2B and consumer leads across the UAE.",
+      },
+      "/services/geo/": {
+        heading: "Generative Engine Optimization (GEO) Services for Enterprise & D2C Brands in Mumbai & India",
+        answer:
+          "Our Generative Engine Optimization (GEO) services help B2B, SaaS, and D2C brands across Mumbai, India, and global markets earn verifiable brand mentions and source citations inside Google AI Overviews, AI Mode, ChatGPT Search, Perplexity, and Gemini through entity graph seeding, passage citability, and third-party authority corroboration.",
+      },
+      "/services/llm-seo-service/": {
+        heading: "LLM SEO Company in India & Gemini / ChatGPT Search Optimization Services",
+        answer:
+          "As a dedicated LLM SEO agency in Mumbai and India, D'Genius Solutions optimizes your brand's knowledge graph, Schema.org JSON-LD architecture, llms.txt documentation, and authoritative web citations so Large Language Models (ChatGPT, Google Gemini, Claude, and Perplexity) accurately understand, trust, and recommend your business.",
+      },
+      "/services/aeo-services-in-mumbai/": {
+        heading: "Answer Engine Optimization (AEO) Agency in Mumbai with Real Case Studies",
+        answer:
+          "D'Genius Solutions is a premier Answer Engine Optimization (AEO) agency in Khar West, Mumbai backed by verified client case studies—including 6x organic traffic growth for TheWorldGrad and 17.4K+ high-intent clicks for Weavings Manpower. We structure your service pages and FAQs to capture Featured Snippets, People Also Ask, and Google AI Overviews.",
+      },
+      "/services/ai-video-production-agency/": {
+        heading: "AI Video Production Company & Creative Studio in Mumbai, India",
+        answer:
+          "Ranked among the leading AI video production companies in Mumbai and India, D'Genius Solutions produces broadcast-ready AI video ads, product films, jewellery videos, AI avatars, and OTT commercials without expensive physical studio shoots—helping brands launch high-converting video campaigns faster and at scale.",
+      },
+    };
+
+    const capsule = EXACT_QUERY_CAPSULES[path];
+    const capsuleHtml = capsule
+      ? `<div style="margin:0 0 22px;padding:18px 20px;border-radius:14px;background:rgba(56,189,248,0.08);border-left:4px solid #38bdf8;">
+  <h3 style="font-size:1.1rem;font-weight:700;margin:0 0 8px;color:#ffffff;">${capsule.heading}</h3>
+  <p style="font-size:0.95rem;line-height:1.65;margin:0;color:rgba(241,245,249,0.92);">${capsule.answer}</p>
+</div>`
+      : "";
+
+    const serviceHubBlock = `
+<section aria-label="Verified client outcomes and related services" style="${cardStyle}">
+  ${capsuleHtml}
+  <h2 style="font-size:clamp(1.35rem,2.2vw,1.85rem);font-weight:700;margin:0 0 12px;color:#ffffff;">Verified Client Outcomes &amp; Integrated Growth Capabilities</h2>
+  <p style="font-size:0.98rem;line-height:1.65;margin:0 0 18px;color:rgba(241,245,249,0.88);">
+    Every D'Genius Solutions engagement is backed by verifiable Search Console, analytics, and revenue outcomes delivered by our Mumbai engineering, search, and creative teams:
+  </p>
+  <ul style="margin:0 0 20px;padding-left:20px;line-height:1.7;font-size:0.95rem;color:rgba(241,245,249,0.86);">
+    <li><strong>TheWorldGrad (Study Abroad EdTech):</strong> Scaled organic search traffic by <strong>6x</strong> and captured #1 rankings across high-intent international education keywords through technical SEO, topic clusters, and AEO.</li>
+    <li><strong>Weavings Manpower (Enterprise B2B Staffing):</strong> Generated <strong>17,400+ high-intent organic clicks</strong> and 1.19M+ impressions by restructuring commercial staffing service pages and B2B location architecture.</li>
+    <li><strong>Shirdi Sai Cultural &amp; Brand Film (<a href="/services/shirdi-se-sai-tak-case-study/" style="${linkStyle}">Read Case Study</a>):</strong> Delivered 400K+ organic reach through AI-assisted narrative production and multi-platform distribution.</li>
+    <li><strong>Better Ceasons (<a href="/better-ceasons-case-study/" style="${linkStyle}">Read Case Study</a>):</strong> Full-stack brand positioning, custom web experience, and digital growth execution.</li>
+  </ul>
+  <p style="margin:0 0 10px;font-size:0.94rem;line-height:1.7;color:rgba(241,245,249,0.88);">
+    <strong>Connected Services:</strong>
+    <a href="/services/" style="${linkStyle}margin-left:6px;">All Services</a> •
+    <a href="/services/seo-services-in-mumbai/" style="${linkStyle}margin-left:6px;">SEO Agency Mumbai</a> •
+    <a href="/services/aeo-services-in-mumbai/" style="${linkStyle}margin-left:6px;">AEO Services Mumbai</a> •
+    <a href="/services/geo/" style="${linkStyle}margin-left:6px;">Generative Engine Optimization (GEO)</a> •
+    <a href="/services/llm-seo-service/" style="${linkStyle}margin-left:6px;">LLM SEO Services</a> •
+    <a href="/services/website-development-amc/" style="${linkStyle}margin-left:6px;">Website Development &amp; AMC</a> •
+    <a href="/services/ai-video-production-agency/" style="${linkStyle}margin-left:6px;">AI Video Production Agency</a> •
+    <a href="/services/performance-marketing/" style="${linkStyle}margin-left:6px;">Performance Marketing</a> •
+    <a href="/services/social-media-marketing/" style="${linkStyle}margin-left:6px;">Social Media Marketing</a> •
+    <a href="/services/branding/" style="${linkStyle}margin-left:6px;">Branding</a> •
+    <a href="/services/content-creation/" style="${linkStyle}margin-left:6px;">Content Marketing</a> •
+    <a href="/case_studies/" style="${linkStyle}margin-left:6px;">All Case Studies</a>
+  </p>
+  <p style="margin:0;font-size:0.92rem;line-height:1.7;color:rgba(226,232,240,0.84);">
+    <strong>Regional &amp; Global Markets:</strong>
+    <a href="/services/seo-service-pune/" style="${linkStyle}margin-left:6px;">SEO Pune</a> •
+    <a href="/services/website-development-pune-page/" style="${linkStyle}margin-left:6px;">Web Development Pune</a> •
+    <a href="/services/seo-service-in-banglore/" style="${linkStyle}margin-left:6px;">SEO Bangalore</a> •
+    <a href="/services/seo-service-in-gurugram/" style="${linkStyle}margin-left:6px;">SEO Gurugram</a> •
+    <a href="/services/seo-services-in-hyderabad/" style="${linkStyle}margin-left:6px;">SEO Hyderabad</a> •
+    <a href="/services/dubai-seo/" style="${linkStyle}margin-left:6px;">SEO Agency Dubai</a> •
+    <a href="/aeo-dubai/" style="${linkStyle}margin-left:6px;">AEO Agency Dubai</a> •
+    <a href="/services/ai-production-dubai-page/" style="${linkStyle}margin-left:6px;">AI Video Production Dubai</a> •
+    <a href="/us-landing-page/" style="${linkStyle}margin-left:6px;">US Growth Pod</a> •
+    <a href="/australia-page/" style="${linkStyle}margin-left:6px;">Australia Growth Pod</a>
+  </p>
+</section>`;
+    return html + serviceHubBlock;
+  }
+
+  return html;
 }
 
 export function prepareInnerPageMirror(
   content: InnerPageMirrorContent,
   wordpressId: number,
 ): PreparedInnerPageMirror {
+  if (content.path === "/services/" || content.path === "/our-services/") {
+    const hubHtml = normalizeBrandName(buildServicesHubHtml());
+    return {
+      ...content,
+      cssFiles: [],
+      articleHtml: `<article data-migration-content data-wordpress-id="${wordpressId}">${hubHtml}</article>`,
+      combinedStyles: "",
+      fontLinks: content.fontLinks?.map((tag) => rewriteWpUrls(tag)),
+    };
+  }
   let body = stripReviewStructuredData(
     markElementorBackgroundsReady(
       unwrapMirrorLazyMedia(stripCapturedFooters(stripLeadingCloseTags(content.body || ""))),
@@ -276,7 +447,7 @@ export function prepareInnerPageMirror(
     /(<(?:div|span|li)\b[^>]*class=["'][^"']*\b(?:smm-news-strip-logo|dgs-nc|nc|dgs-press-chip)\b[^"']*["'][^>]*>\s*<img\b[^>]*?)\bfetchpriority=["']low["']/gi,
     '$1',
   );
-  body = normalizeBrandName(body);
+  body = normalizeBrandName(appendSemanticAuthoritySections(content.path, body));
   const styles = rewriteWpUrls(content.styles || "");
   const fontLinks = content.fontLinks?.map((tag) => rewriteWpUrls(tag));
   const articleHtml = `<article data-migration-content data-wordpress-id="${wordpressId}">${body}</article>`;

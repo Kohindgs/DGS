@@ -598,6 +598,7 @@ async function fetchGscSearchAnalyticsPaginated(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          dataState: "all",
           ...body,
           startRow,
           rowLimit,
@@ -691,6 +692,7 @@ export async function syncGoogleData(): Promise<{
             startDate: windows.currentStart,
             endDate: windows.currentEnd,
             dimensions: [],
+            dataState: "all",
           }),
         }
       );
@@ -722,6 +724,7 @@ export async function syncGoogleData(): Promise<{
           startDate: windows.previousStart,
           endDate: windows.currentEnd,
           dimensions: ["date"],
+          dataState: "all",
           rowLimit: 70,
         }),
       }
@@ -873,12 +876,19 @@ export async function syncGoogleData(): Promise<{
         );
         for (const r of prevPData.rows) {
           const pUrl = (r.keys[0] || "").slice(0, 500);
-          pPrevMap.set(canonicalPageKey(pUrl), {
-            clicks: Math.round(r.clicks || 0),
-            impressions: Math.round(r.impressions || 0),
-            ctr: Number(r.ctr || 0),
-            position: Number(r.position || 0),
-          });
+          const cKey = canonicalPageKey(pUrl);
+          const c = Math.round(r.clicks || 0);
+          const imp = Math.round(r.impressions || 0);
+          const pos = Number(r.position || 0);
+          const ex = pPrevMap.get(cKey);
+          if (!ex) {
+            pPrevMap.set(cKey, { clicks: c, impressions: imp, ctr: imp > 0 ? c / imp : 0, position: pos });
+          } else {
+            const totImp = ex.impressions + imp;
+            const totClk = ex.clicks + c;
+            const wPos = totImp > 0 ? ((ex.position * ex.impressions) + (pos * imp)) / totImp : ex.position;
+            pPrevMap.set(cKey, { clicks: totClk, impressions: totImp, ctr: totImp > 0 ? totClk / totImp : 0, position: wPos });
+          }
         }
       } catch (err) {
         console.warn(`GSC prev ${pDef.type} page query warning:`, err);
@@ -896,15 +906,32 @@ export async function syncGoogleData(): Promise<{
       );
 
       const seenPages = new Set<string>();
-
+      const curPageAggMap = new Map<string, { pageUrl: string; clicks: number; impressions: number; ctr: number; position: number }>();
       for (const row of curPData.rows) {
-        const pageUrl = (row.keys[0] || "").slice(0, 500);
-        const canonKey = canonicalPageKey(pageUrl);
+        const rawUrl = (row.keys[0] || "").slice(0, 500);
+        const canonKey = canonicalPageKey(rawUrl);
+        const cleanUrl = normalizeSitePageUrl(rawUrl) || `https://www.dgeniussolutions.com${canonKey === "/" ? "/" : canonKey}`;
+        const c = Math.round(row.clicks || 0);
+        const imp = Math.round(row.impressions || 0);
+        const pos = Number(row.position || 0);
+        const ex = curPageAggMap.get(canonKey);
+        if (!ex) {
+          curPageAggMap.set(canonKey, { pageUrl: cleanUrl, clicks: c, impressions: imp, ctr: imp > 0 ? c / imp : 0, position: pos });
+        } else {
+          const totImp = ex.impressions + imp;
+          const totClk = ex.clicks + c;
+          const wPos = totImp > 0 ? ((ex.position * ex.impressions) + (pos * imp)) / totImp : ex.position;
+          curPageAggMap.set(canonKey, { pageUrl: ex.pageUrl, clicks: totClk, impressions: totImp, ctr: totImp > 0 ? totClk / totImp : 0, position: wPos });
+        }
+      }
+
+      for (const [canonKey, agg] of curPageAggMap.entries()) {
+        const pageUrl = agg.pageUrl;
         seenPages.add(canonKey);
-        const clicks = Math.round(row.clicks || 0);
-        const impressions = Math.round(row.impressions || 0);
-        const ctr = Number(row.ctr || 0);
-        const position = Number(row.position || 0);
+        const clicks = agg.clicks;
+        const impressions = agg.impressions;
+        const ctr = agg.ctr;
+        const position = agg.position;
         const prev = pPrevMap.get(canonKey);
         const prevPosition = prev ? prev.position : null;
         const prevClicks = prev ? prev.clicks : 0;
@@ -1040,6 +1067,14 @@ export async function syncGoogleData(): Promise<{
     // 1g. Prune stale current rows that were not updated in this sync run
     await cmsExecute(
       `DELETE FROM gsc_page_query_metrics WHERE period_type = '28d' AND updated_at < ?`,
+      [syncStartTime]
+    );
+    await cmsExecute(
+      `DELETE FROM gsc_page_metrics WHERE updated_at < ?`,
+      [syncStartTime]
+    );
+    await cmsExecute(
+      `DELETE FROM gsc_query_metrics WHERE updated_at < ?`,
       [syncStartTime]
     );
 
@@ -1610,6 +1645,7 @@ export async function getGa4DashboardMetrics(days: number = 28) {
     const { rows: daily } = await cmsQuery(
       `SELECT metric_date, active_users, sessions, engaged_sessions, engagement_rate, views, key_events
        FROM ga4_daily_metrics
+       WHERE metric_date >= DATE_SUB(CURDATE(), INTERVAL 31 DAY)
        ORDER BY metric_date DESC
        LIMIT ?`,
       [days]
@@ -1627,7 +1663,7 @@ export async function getGa4DashboardMetrics(days: number = 28) {
     const { rows: syncRuns } = await cmsQuery<any>(
       `SELECT active_users, sessions, engaged_sessions, engagement_rate, views
        FROM ga4_sync_runs
-       WHERE status = 'completed' AND (active_users > 0 OR sessions > 0)
+       WHERE status = 'completed'
        ORDER BY completed_at DESC LIMIT 1`
     );
 
@@ -2035,7 +2071,8 @@ export async function getGscStandingDashboard(): Promise<GscStandingReport> {
     const { rows: allPageRows } = await cmsQuery<any>(
       `SELECT page_url, clicks, impressions, ctr, position, prev_position, prev_clicks, prev_impressions, period_type
        FROM gsc_page_metrics
-       WHERE period_type IN ('28d', '15d', '7d')`
+       WHERE period_type IN ('28d', '15d', '7d')
+       ORDER BY updated_at ASC`
     ).catch(() => ({ rows: [] }));
 
     const page28Map = new Map<string, any>();

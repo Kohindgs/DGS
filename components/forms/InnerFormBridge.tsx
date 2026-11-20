@@ -126,8 +126,13 @@ export function InnerFormBridge() {
           "input, select, textarea",
         );
         for (const el of controls) {
-          if (el.tagName === "SELECT") el.name = "service";
-          else if (el.tagName === "TEXTAREA") el.name = "message";
+          if (el.tagName === "SELECT") {
+            el.name = "service";
+            const firstOpt = el.querySelector("option");
+            if (firstOpt && firstOpt.textContent?.trim() === "Select one") {
+              firstOpt.value = "";
+            }
+          } else if (el.tagName === "TEXTAREA") el.name = "message";
           else if (el instanceof HTMLInputElement) {
             if (el.type === "email") el.name = "email";
             else if (el.type === "tel") el.name = "phone";

@@ -200,15 +200,22 @@ export function breadcrumbSchema(items: BreadcrumbItem[]) {
 }
 
 export function faqSchema(items: FaqItem[]) {
+  const validItems = items
+    .map((item) => ({
+      question: cleanSchemaText(item.question).replace(/\s*\+\s*$/, "").trim(),
+      answer: cleanSchemaText(item.answer).trim(),
+    }))
+    .filter((item) => item.question.length > 3 && item.answer.length > 5);
+
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: items.map((item) => ({
+    mainEntity: validItems.map((item) => ({
       "@type": "Question",
-      name: cleanSchemaText(item.question),
+      name: item.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: cleanSchemaText(item.answer),
+        text: item.answer,
       },
     })),
   };
@@ -236,22 +243,20 @@ export function articleSchema(input: {
   const published = toIso(input.datePublished);
   const modified = toIso(input.dateModified) || published;
 
-  const rawAuthor = input.authorName?.trim() || "D'Genius Solutions Editorial Team";
-  const isOrgAuthor =
+  const rawAuthor = input.authorName?.trim() || "Kohin Bellara";
+  const isGenericAuthor =
     /editorial team|team|agency|solutions|organization|dgs/i.test(rawAuthor) ||
     rawAuthor === "D'Genius Solutions";
 
-  const authorObj = isOrgAuthor
-    ? {
-        "@type": "Organization",
-        name: cleanSchemaText(rawAuthor),
-        url: "https://www.dgeniussolutions.com",
-      }
-    : {
-        "@type": "Person",
-        name: cleanSchemaText(rawAuthor),
-        url: "https://www.dgeniussolutions.com",
-      };
+  const authorObj = {
+    "@type": "Person",
+    name: isGenericAuthor ? "Kohin Bellara" : cleanSchemaText(rawAuthor),
+    jobTitle: "Founder & CEO",
+    url: "https://www.dgeniussolutions.com/about-us/",
+    worksFor: {
+      "@id": input.publisherId || ORGANIZATION_ID,
+    },
+  };
 
   const publisherObj = {
     "@type": "Organization",
@@ -273,11 +278,15 @@ export function articleSchema(input: {
     ...(modified ? { dateModified: modified } : {}),
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": url,
+      "@id": `${url}#webpage`,
     },
     author: authorObj,
     publisher: publisherObj,
     image: imageArray,
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "aside[aria-label='Key takeaway and executive summary']"],
+    },
   };
 }
 

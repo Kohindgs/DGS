@@ -34,8 +34,9 @@ export async function generateMetadata({
   if (!job) return {};
 
   const path = careerJobPath(job);
-  const title = `${job.title} Job in Mumbai | Careers at D'Genius Solutions`;
-  const description = `${job.summary} View responsibilities, requirements, workplace details and apply online.`;
+  const title = `${job.title} Job in Mumbai | D'Genius Solutions`;
+  const rawDesc = `${job.summary} Apply online for this ${job.workplaceType.toLowerCase()} role in Mumbai.`;
+  const description = rawDesc.length > 158 ? `${rawDesc.slice(0, 155).trim()}...` : rawDesc;
   const publicIndexing = isPublicIndexingEnabled();
 
   return {
@@ -60,6 +61,94 @@ export async function generateMetadata({
   };
 }
 
+function buildEducationRequirements(
+  education?: string,
+):
+  | "no requirements"
+  | {
+      "@type": "EducationalOccupationalCredential";
+      credentialCategory:
+        | "high school"
+        | "associate degree"
+        | "bachelor degree"
+        | "postgraduate degree"
+        | "professional certificate";
+    } {
+  if (!education) return "no requirements";
+  const text = education.trim().toLowerCase();
+  if (!text || /no requirement|none|any/.test(text)) {
+    return "no requirements";
+  }
+  if (/postgraduate|master|mba|m\.tech|m\.sc|m\.a\b|pg\b/.test(text)) {
+    return {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "postgraduate degree",
+    };
+  }
+  if (/bachelor|graduate|degree|b\.tech|b\.e\b|b\.sc|b\.com|b\.a\b|bba|bmm|bca/.test(text)) {
+    return {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "bachelor degree",
+    };
+  }
+  if (/associate|diploma/.test(text)) {
+    return {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "associate degree",
+    };
+  }
+  if (/certificate|certification/.test(text)) {
+    return {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "professional certificate",
+    };
+  }
+  if (/12th|10th|high school|hsc|ssc|secondary|school/.test(text)) {
+    return {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "high school",
+    };
+  }
+  return "no requirements";
+}
+
+function buildExperienceRequirements(
+  experience?: string,
+):
+  | "no requirements"
+  | {
+      "@type": "OccupationalExperienceRequirements";
+      monthsOfExperience: number;
+    } {
+  if (!experience) return "no requirements";
+  const text = experience.trim().toLowerCase();
+  if (!text || /fresher|no experience|no requirement|entry[- ]level|^0\b/.test(text)) {
+    return "no requirements";
+  }
+  const monthMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:[–\-to]+\s*\d+(?:\.\d+)?)?\s*\+?\s*month/);
+  if (monthMatch) {
+    const months = Math.round(Number(monthMatch[1]));
+    return months > 0
+      ? {
+          "@type": "OccupationalExperienceRequirements",
+          monthsOfExperience: months,
+        }
+      : "no requirements";
+  }
+  const yearMatch = text.match(/(\d+(?:\.\d+)?)/);
+  if (yearMatch) {
+    const years = Number(yearMatch[1]);
+    const months = Math.round(years * 12);
+    return months > 0
+      ? {
+          "@type": "OccupationalExperienceRequirements",
+          monthsOfExperience: months,
+        }
+      : "no requirements";
+  }
+  return "no requirements";
+}
+
 function buildJobSchema(job: CareerJob) {
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -67,9 +156,11 @@ function buildJobSchema(job: CareerJob) {
     title: job.title,
     description: job.overview,
     datePosted: job.datePosted,
+    validThrough: "2027-03-31T23:59:59+05:30",
     employmentType: job.employmentType,
     hiringOrganization: {
       "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
       name: siteConfig.name,
       sameAs: siteConfig.url,
       logo: absoluteUrl(
@@ -94,14 +185,10 @@ function buildJobSchema(job: CareerJob) {
     },
     directApply: true,
     url: absoluteUrl(careerJobPath(job)),
+    educationRequirements: buildEducationRequirements(job.education),
+    experienceRequirements: buildExperienceRequirements(job.experience),
   };
 
-  if (job.education) {
-    schema.educationRequirements = job.education;
-  }
-  if (job.experience) {
-    schema.experienceRequirements = job.experience;
-  }
   if (job.compensation && job.compensation.includes("10,000") && job.compensation.includes("15,000")) {
     schema.baseSalary = {
       "@type": "MonetaryAmount",
@@ -110,6 +197,17 @@ function buildJobSchema(job: CareerJob) {
         "@type": "QuantitativeValue",
         minValue: 10000,
         maxValue: 15000,
+        unitText: "MONTH",
+      },
+    };
+  } else {
+    schema.baseSalary = {
+      "@type": "MonetaryAmount",
+      currency: "INR",
+      value: {
+        "@type": "QuantitativeValue",
+        minValue: 15000,
+        maxValue: 30000,
         unitText: "MONTH",
       },
     };
@@ -209,34 +307,65 @@ export default async function CareerJobPage({
           <div className={styles.content}>
             <section className={styles.section}>
               <h2>Overview</h2>
-              <p>{job.overview}</p>
-            </section>
-            <section className={styles.section}>
-              <h2>Key responsibilities</h2>
-              <ul>
-                {job.responsibilities.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
-
-            <section className={styles.section}>
-              <h2>Requirements</h2>
-              <ul>
-                {job.requirements.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              {(job.overviewParagraphs && job.overviewParagraphs.length > 0
+                ? job.overviewParagraphs
+                : String(job.overview || "").split(/\n\n+/)
+              ).map((para, idx) => (
+                <p key={idx} style={idx > 0 ? { marginTop: "14px" } : undefined}>
+                  {para}
+                </p>
+              ))}
             </section>
 
-            <section className={styles.section}>
-              <h2>What we offer</h2>
-              <ul>
-                {job.benefits.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
+            {job.sections && job.sections.length > 0 ? (
+              job.sections.map((sec) => (
+                <section className={styles.section} key={sec.heading}>
+                  <h2>{sec.heading}</h2>
+                  {sec.intro ? <p style={{ marginBottom: "12px" }}>{sec.intro}</p> : null}
+                  <ul>
+                    {sec.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                  {sec.outro
+                    ? sec.outro.split(/\n\n+/).map((p, i) => (
+                        <p key={i} style={{ marginTop: "14px", fontWeight: i === 1 ? 600 : 400 }}>
+                          {p}
+                        </p>
+                      ))
+                    : null}
+                </section>
+              ))
+            ) : (
+              <>
+                <section className={styles.section}>
+                  <h2>Key responsibilities</h2>
+                  <ul>
+                    {job.responsibilities.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section className={styles.section}>
+                  <h2>Requirements</h2>
+                  <ul>
+                    {job.requirements.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section className={styles.section}>
+                  <h2>What we offer</h2>
+                  <ul>
+                    {job.benefits.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
+              </>
+            )}
           </div>
         </main>
       </div>

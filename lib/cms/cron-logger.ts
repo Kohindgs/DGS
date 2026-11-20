@@ -9,7 +9,8 @@ export type CronJobName =
   | "scheduled-blog-publisher"
   | "google-search-update-monitor"
   | "off-page-seo-daily-monitor"
-  | "buyer-intent-lead-monitor";
+  | "buyer-intent-lead-monitor"
+  | "seo-daily-gsc-sync-and-optimizer";
 
 export type CronRunStatus = "RUNNING" | "SUCCESS" | "PARTIAL" | "FAILED";
 
@@ -103,6 +104,20 @@ export const DGS_SCHEDULED_JOBS_REGISTRY: CronJobDefinition[] = [
     databaseDependency: "MariaDB (intent_lead_signals, intent_lead_discovery_runs, cron_run_history)",
     externalNetworkDependency: "Public LinkedIn / Web SERPs, Reddit API, Gemini 2.5 Flash qualification, SMTP digest",
     staleThresholdMinutes: 75, // > 75 minutes without success => STALE
+  },
+  {
+    jobName: "seo-daily-gsc-sync-and-optimizer",
+    displayName: "Daily GSC/GA4 Sync & Automated SEO Opportunity Engine",
+    workflowName: "DGS Daily SEO Sync & Automated Optimizer",
+    workflowFile: ".github/workflows/seo-daily-sync.yml",
+    scheduleCron: "0 6 * * *",
+    scheduleHuman: "Daily at 06:00 UTC (11:30 AM IST)",
+    triggerSource: "GitHub Actions (schedule / workflow_dispatch)",
+    endpoint: "/api/internal/seo/daily-sync",
+    authMethod: "Bearer DGS_CRON_SECRET",
+    databaseDependency: "MariaDB (gsc_page_metrics, gsc_page_query_metrics, seo_change_requests, cron_run_history)",
+    externalNetworkDependency: "Google Search Console API, Google Analytics 4 Data API",
+    staleThresholdMinutes: 1560, // > 26 hours (1560m) without success => STALE
   },
 ];
 
@@ -453,4 +468,38 @@ export async function getCronHealthSummary(limitHistory = 40): Promise<{
     jobs,
     recentHistory,
   };
+}
+
+export async function triggerOverdueCronsIfNeeded(cronSecret: string): Promise<string[]> {
+  try {
+    const overview = await getCronHealthSummary();
+    const staleJobs = overview.jobs.filter(
+      (j: CronJobHealthStatus) =>
+        j.isStale &&
+        (j.minutesSinceLastSuccess === null || j.minutesSinceLastSuccess > j.job.staleThresholdMinutes)
+    );
+    if (staleJobs.length === 0) return [];
+
+    const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.dgeniussolutions.com").replace(/\/+$/, "");
+    const triggered: string[] = [];
+
+    for (const stale of staleJobs.slice(0, 2)) {
+      triggered.push(stale.job.jobName);
+      fetch(`${baseUrl}${stale.job.endpoint}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${cronSecret.trim()}`,
+          "x-dgs-trigger-source": "self_healing_watchdog",
+          "Content-Type": "application/json",
+        },
+      }).catch((err) => {
+        console.warn(`[cron-watchdog] Failed to self-heal ${stale.job.jobName}:`, err?.message || err);
+      });
+    }
+
+    return triggered;
+  } catch (err: any) {
+    console.warn("[cron-watchdog] Error checking overdue crons:", err?.message || err);
+    return [];
+  }
 }

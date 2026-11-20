@@ -9,10 +9,130 @@ import {
   webPageSchema,
   websiteSchema,
 } from "@/lib/schema/builders";
-import { ORGANIZATION_ID, WEBSITE_ID, verifiedOrganization } from "@/lib/schema/entity";
-import type { BreadcrumbItem } from "@/lib/schema/builders";
+import {
+  LOCAL_BUSINESS_ID,
+  LOGO_ID,
+  ORGANIZATION_ID,
+  WEBSITE_ID,
+  verifiedOrganization,
+} from "@/lib/schema/entity";
+import type { BreadcrumbItem, FaqItem } from "@/lib/schema/builders";
 import { getPageSeoOverride } from "@/lib/seo/page-overrides";
 import { buildVerifiedAiVideoSchemas } from "@/lib/schema/ai-video-inventory";
+
+const VERIFIED_PAGE_FAQS: Record<string, FaqItem[]> = {
+  "/us-landing-page/": [
+    {
+      question: "Why would a US business work with an India-based agency?",
+      answer: "Working with D'Genius Solutions gives US businesses senior-level SEO, AEO, GEO, web development, and AI creative execution at a fraction of US agency retainers—with overlapping communication windows, transparent reporting, and proven international growth frameworks.",
+    },
+    {
+      question: "How does communication work across the time zone difference?",
+      answer: "We maintain dedicated US-overlap hours for strategy calls on Zoom/Google Meet, async Slack/email updates with <12-hour turnaround, and real-time dashboards so your team never waits a full day for answers.",
+    },
+    {
+      question: "Will the content feel native to a US audience?",
+      answer: "Yes. Every US campaign is researched, written, and edited specifically for American search intent, US English idioms, regulatory nuances, and local competitive benchmarks.",
+    },
+    {
+      question: "Do we own the ad accounts, website, and content?",
+      answer: "100%. You retain full administrative ownership of all Google Ads, Meta Ads, analytics properties, domains, code repositories, and creative assets from day one.",
+    },
+    {
+      question: "What's the minimum commitment?",
+      answer: "We offer flexible engagement structures tailored to project scope—from one-time website or AI video builds to 3-to-6-month growth retainers for compounding SEO and AEO results.",
+    },
+  ],
+  "/services/performance-marketing/": [
+    {
+      question: "What does a performance marketing agency do?",
+      answer: "A performance marketing agency plans, launches, and optimizes measurable paid media campaigns across Google Ads, Meta Ads, LinkedIn Ads, and YouTube—combining conversion tracking, landing page CRO, and creative testing to maximize ROAS and qualified pipeline.",
+    },
+    {
+      question: "How much ad budget do I need to start performance marketing?",
+      answer: "Ideal starting media budgets depend on your industry CPCs and target geography, typically beginning around ₹50,000–₹1,50,000/month in India or $1,500–$5,000/month internationally to gather statistically significant conversion data.",
+    },
+    {
+      question: "How soon can I see results from Google Ads and Meta Ads?",
+      answer: "Initial traffic and lead flow begin within 48–72 hours of campaign launch, while algorithmic learning, CPA reduction, and ROAS scaling mature over the first 30 to 60 days of structured creative and bidding tests.",
+    },
+    {
+      question: "Do you set up GA4, GTM, and server-side conversion tracking?",
+      answer: "Yes. Every performance marketing engagement includes end-to-end Google Tag Manager, GA4, Meta Pixel/Conversions API, and CRM lead-quality attribution setup before ad spend scales.",
+    },
+  ],
+  "/services/ai-video-production-agency/": [
+    {
+      question: "What is an AI Video Production Agency?",
+      answer: "An AI Video Production Agency combines generative AI video models, custom voice synthesis, and digital avatars with human creative direction, scriptwriting, and professional post-production to deliver broadcast-ready commercials, product films, and social reels faster and more cost-effectively than traditional shoots.",
+    },
+    {
+      question: "How does AI video production compare to traditional video production?",
+      answer: "AI video production reduces production timelines from 6–8 weeks to 7–14 days and eliminates physical location, studio, and reshoot overheads while allowing rapid multilingual localization and A/B hook testing.",
+    },
+    {
+      question: "Will the AI videos look realistic and match our brand guidelines?",
+      answer: "Yes. Our human creative directors, motion designers, and editors grade, composite, and refine every frame—integrating your exact product renders, typography, color palette, and brand tone.",
+    },
+    {
+      question: "Can you produce AI videos in multiple Indian and international languages?",
+      answer: "Absolutely. We produce lip-synced and voice-cloned versions across English, Hindi, Marathi, Tamil, Telugu, Arabic, and global languages so one master film scales across every regional market.",
+    },
+    {
+      question: "How does a specialized AI video production agency help brands scale campaigns?",
+      answer: "A specialized AI video production agency combines generative video models, voice cloning, and brand-consistent AI avatars with human creative direction and studio-grade editing. This reduces campaign turnaround from weeks to days while producing TV commercials, product films, and multilingual social reels at lower cost than physical shoots.",
+    },
+  ],
+};
+
+const APPENDED_PAGE_FAQS: Record<string, FaqItem[]> = {
+  "/services/geo/": [
+    {
+      question: "What do Generative Engine Optimization (GEO) services include?",
+      answer: "Generative Engine Optimization services include entity graph structuring, schema markup engineering, AI crawler accessibility audits, extractable answer-block copywriting, and authoritative off-site brand mention campaigns. D'Genius Solutions pairs these GEO deliverables with measurable citation tracking so your business earns consistent recommendations inside ChatGPT, Perplexity, Google AI Overviews, and Gemini.",
+    },
+  ],
+  "/aeo-dubai/": [
+    {
+      question: "What results should UAE brands expect from specialized AEO services?",
+      answer: "Specialized AEO services help UAE and Dubai businesses capture Google AI Overviews, Featured Snippets, People Also Ask boxes, and brand recommendations in ChatGPT and Perplexity. D'Genius Solutions combines bilingual entity optimization, transparent service-area signaling, and conversion-focused answer architecture to turn zero-click visibility into qualified regional leads.",
+    },
+    {
+      question: "How do businesses choose the best AEO agency in Dubai?",
+      answer: "Choose an AEO agency in Dubai that backs AI visibility claims with verifiable Search Console data, Schema.org JSON-LD entity architecture, clean technical Core Web Vitals, and transparent UAE service-area signaling. D'Genius Solutions pairs answer-capsule copywriting with bilingual AEO audits so Dubai brands win citations without doorway-page risk.",
+    },
+  ],
+  "/services/ai-production-dubai-page/": [
+    {
+      question: "What does AI corporate video production in Dubai include?",
+      answer: "AI corporate video production in Dubai includes concept scripting, brand-consistent visual storyboarding, multilingual English and Arabic AI avatars, voiceover synthesis, product compositing, and cinema-grade editing. D'Genius Solutions delivers boardroom explainers, investor films, and B2B launch assets in 7 to 14 days without expensive studio hires or location permits.",
+    },
+    {
+      question: "How does AI video for marketing in Dubai improve paid campaign ROI?",
+      answer: "AI video for marketing in Dubai lets consumer, real estate, and eCommerce brands launch high-retention ad variations, seasonal promotions, and localized Reels in days instead of weeks. Rapid creative testing lowers CPA across Meta, YouTube, and TikTok while keeping product visuals and brand guidelines consistent.",
+    },
+  ],
+  "/services/seo-service-in-banglore/": [
+    {
+      question: "What sets an enterprise SEO company in Bangalore apart for SaaS and tech brands?",
+      answer: "An enterprise SEO company in Bangalore must handle large JavaScript architectures, Next.js and React rendering, programmatic landing clusters, and multi-region SaaS pipelines. D'Genius Solutions combines engineering-led technical SEO, Search Console telemetry, and high-intent commercial content to convert organic impressions across Bengaluru and global markets into demo requests.",
+    },
+    {
+      question: "How does an AI SEO agency in Bangalore improve visibility in Google AI Overviews and ChatGPT?",
+      answer: "An AI SEO agency in Bangalore combines technical crawlability and Schema.org entity graphs with extractable answer blocks and off-site authority signals. We structure product, pricing, and integration pages so Google AI Overviews, ChatGPT Search, Perplexity, and Gemini accurately understand and recommend your Bengaluru brand.",
+    },
+  ],
+  "/services/llm-seo-service/": [
+    {
+      question: "What do LLM SEO services include for ChatGPT, Gemini, and Perplexity?",
+      answer: "LLM SEO services structure your brand entities, Schema.org JSON-LD graphs, llms.txt markdown documentation, and high-authority citation sources so ChatGPT, Google Gemini, Claude, and Perplexity accurately understand what your business sells. D'Genius Solutions pairs entity engineering with extractable proof points to turn AI recommendations into qualified inbound enquiries.",
+    },
+    {
+      question: "Why hire a specialized LLM SEO company in India?",
+      answer: "Hiring a specialized LLM SEO company in India combines senior technical schema implementation, entity disambiguation, and multi-market content strategy with measurable attribution. D'Genius Solutions helps Indian, UAE, US, and Australian brands build verified machine-readable authority that compounds alongside traditional Google SEO.",
+    },
+  ],
+};
 
 export function buildGlobalEntitySchemas(): Record<string, unknown>[] {
   return [
@@ -59,7 +179,66 @@ export function buildRouteSchemas(input: {
     }),
   );
 
-  if (route.wordpressType === "service" || path === "/aeo-dubai/" || Boolean(seoOverride?.serviceType)) {
+  if (path === "/contact-us/" || path === "/services/seo-services-in-mumbai/") {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "ProfessionalService"],
+      "@id": LOCAL_BUSINESS_ID,
+      name: verifiedOrganization.name,
+      url: verifiedOrganization.url,
+      image: verifiedOrganization.logoUrl,
+      logo: { "@type": "ImageObject", "@id": LOGO_ID, url: verifiedOrganization.logoUrl },
+      email: verifiedOrganization.email,
+      telephone: verifiedOrganization.telephone,
+      priceRange: "$$",
+      hasMap: "https://maps.google.com/?q=D'Genius+Solutions+Khar+West+Mumbai",
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 19.066186,
+        longitude: 72.834937,
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "10:00",
+          closes: "19:00",
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Saturday"],
+          opens: "10:00",
+          closes: "15:00",
+        },
+      ],
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: verifiedOrganization.address.streetAddress,
+        addressLocality: verifiedOrganization.address.addressLocality,
+        addressRegion: verifiedOrganization.address.addressRegion,
+        postalCode: verifiedOrganization.address.postalCode,
+        addressCountry: verifiedOrganization.address.addressCountry,
+      },
+      areaServed: [...verifiedOrganization.areaServed],
+      knowsAbout: [...verifiedOrganization.knowsAbout],
+      sameAs: [...verifiedOrganization.sameAs],
+    });
+  }
+
+  const isCaseStudyUnderServices = path === "/services/shirdi-se-sai-tak-case-study/";
+
+  if (isCaseStudyUnderServices) {
+    schemas.push(
+      articleSchema({
+        headline: pageTitle,
+        description: pageDescription,
+        path,
+        datePublished: route.date || "2025-11-01",
+        dateModified: route.modified || "2026-03-01",
+        publisherId: ORGANIZATION_ID,
+      }),
+    );
+  } else if (route.wordpressType === "service" || path === "/aeo-dubai/" || Boolean(seoOverride?.serviceType)) {
     const isAiVideoAgency = path === "/services/ai-video-production-agency/";
     schemas.push(
       serviceSchema({
@@ -102,9 +281,29 @@ export function buildRouteSchemas(input: {
     schemas.push(breadcrumbSchema(breadcrumbs));
   }
 
-  const blockFaqs = extractFaqsFromBlocks(blocks);
-  const routeFaqs = route.faqItems || [];
-  const pageFaqs = routeFaqs.length >= blockFaqs.length && routeFaqs.length > 0 ? routeFaqs : (blockFaqs.length > 0 ? blockFaqs : routeFaqs);
+  const filterCleanFaqs = (items: FaqItem[]) =>
+    items.filter(
+      (item) =>
+        Boolean(item.question?.trim()) &&
+        Boolean(item.answer?.trim()) &&
+        item.answer.trim().length > 10 &&
+        !/\?\s*\+\s*/.test(item.answer),
+    );
+
+  const blockFaqs = filterCleanFaqs(extractFaqsFromBlocks(blocks));
+  const routeFaqs = filterCleanFaqs(route.faqItems || []);
+  const verifiedFallbackFaqs = VERIFIED_PAGE_FAQS[path] || [];
+  const baseFaqs =
+    verifiedFallbackFaqs.length > 0
+      ? verifiedFallbackFaqs
+      : routeFaqs.length >= blockFaqs.length && routeFaqs.length > 0
+        ? routeFaqs
+        : blockFaqs.length > 0
+          ? blockFaqs
+          : routeFaqs;
+  const extraFaqs = APPENDED_PAGE_FAQS[path] || [];
+  const existingQuestions = new Set(baseFaqs.map((f) => f.question.trim().toLowerCase()));
+  const pageFaqs = [...baseFaqs, ...extraFaqs.filter((f) => !existingQuestions.has(f.question.trim().toLowerCase()))];
   const faqSchemaExcludedPaths = new Set(["/better-ceasons-case-study/"]);
   if (pageFaqs.length > 0 && !faqSchemaExcludedPaths.has(path)) {
     schemas.push(faqSchema(pageFaqs));

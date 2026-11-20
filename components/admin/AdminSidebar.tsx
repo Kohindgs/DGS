@@ -118,6 +118,7 @@ const NAV_GROUPS: NavGroup[] = [
       { title: "Careers", href: "/admin/careers/", icon: UserCheck },
       { title: "Applications", href: "/admin/applications/", icon: FileUser },
       { title: "Assessments", href: "/admin/assessment/", icon: GraduationCap, badge: "OS", badgeVariant: "warning" },
+      { title: "Reference Checks", href: "/admin/reference-checks/", icon: FileCheck2, badge: "AI", badgeVariant: "info" },
       { title: "HR Pipeline", href: "/admin/hr-pipeline/", icon: Kanban },
     ],
   },

@@ -48,7 +48,7 @@ const handle = app.getRequestHandler();
 app
   .prepare()
   .then(() => {
-    createServer(async (req, res) => {
+    const server = createServer(async (req, res) => {
       try {
         const parsedUrl = parse(req.url, true);
         const urlPath = parsedUrl.pathname || '';
@@ -94,13 +94,42 @@ app
         res.statusCode = 500;
         res.end('Internal Server Error');
       }
-    })
+    });
+    server
       .once('error', (err) => {
         console.error('Server error:', err);
         process.exit(1);
       })
       .listen(port, () => {
         console.log("> DGS Next.js production server ready");
+
+        // Self-healing background trigger for scheduled blogs (startup + every 5 minutes)
+        const cronSecret = (process.env.DGS_CRON_SECRET || '').trim();
+        if (cronSecret) {
+          const triggerScheduledBlogs = () => {
+            try {
+              const addr = server.address();
+              const targetOrigin =
+                addr && typeof addr === 'object' && addr.port
+                  ? `http://127.0.0.1:${addr.port}`
+                  : (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dgeniussolutions.com').replace(/\/+$/, '');
+              fetch(`${targetOrigin}/api/internal/blogs/publish-scheduled`, {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${cronSecret}`,
+                  'x-trigger-source': 'server_interval',
+                  'Content-Type': 'application/json',
+                },
+              }).catch((err) => {
+                console.warn('[server-scheduler] Scheduled blog ping warning:', err && err.message ? err.message : err);
+              });
+            } catch (err) {
+              console.warn('[server-scheduler] Tick error:', err && err.message ? err.message : err);
+            }
+          };
+          setTimeout(triggerScheduledBlogs, 15_000).unref();
+          setInterval(triggerScheduledBlogs, 300_000).unref();
+        }
       });
   })
   .catch((err) => {

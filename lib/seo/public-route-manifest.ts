@@ -110,11 +110,17 @@ export async function getPublicRouteManifest(forceFresh = false): Promise<Public
     const seoOverride = getPageSeoOverride(r.path);
     const isIndexable = decision?.indexable ?? r.indexable;
     const includeInSitemap =
+      r.path !== "/our-services/" &&
       r.includeInSitemap &&
       (r.proposedAction === "KEEP_SAME_URL" || r.proposedAction === "PROTECTED") &&
       isIndexable;
 
-    const canonicalPath = decision?.canonicalPath || r.desiredCanonicalPath || r.canonical || r.path;
+    const canonicalPath =
+      seoOverride?.canonicalPath ||
+      decision?.canonicalPath ||
+      r.desiredCanonicalPath ||
+      r.canonical ||
+      r.path;
     const canonical = canonicalPath.startsWith("http")
       ? canonicalPath
       : `${siteConfig.url}${canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`}`;
@@ -125,7 +131,10 @@ export async function getPublicRouteManifest(forceFresh = false): Promise<Public
     // Reliable freshness: check hash registry first, then fallback to authentic registry date (omit if unproven)
     const hashEntry = rawHashes[r.path];
     const sourceDate = formatW3CDate(r.modified);
-    const lastModified = hashEntry?.lastModified || (sourceDate && sourceDate <= "2026-10-12" ? sourceDate : undefined);
+    const lastModified =
+      hashEntry?.lastModified ||
+      (sourceDate && sourceDate <= "2026-10-12" ? sourceDate : undefined) ||
+      (r.path === "/services/" ? "2026-10-12" : undefined);
 
     const item: PublicRouteManifestItem = {
       path: r.path,

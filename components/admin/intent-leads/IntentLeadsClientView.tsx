@@ -52,8 +52,9 @@ const SERVICE_LABELS: Record<string, string> = {
 const PLATFORM_LABELS: Record<string, { label: string; color: string; bg: string }> = {
   LINKEDIN_FEED: { label: "My LinkedIn Feed", color: "#60a5fa", bg: "rgba(37, 99, 235, 0.18)" },
   LINKEDIN_PUBLIC: { label: "LinkedIn", color: "#38bdf8", bg: "rgba(2, 132, 199, 0.18)" },
+  THREADS: { label: "🧵 Threads", color: "#f472b6", bg: "rgba(236, 72, 153, 0.18)" },
+  X_TWITTER: { label: "𝕏 X (Twitter)", color: "#e2e8f0", bg: "rgba(100, 116, 139, 0.25)" },
   REDDIT: { label: "Reddit Buyer Forum", color: "#fb923c", bg: "rgba(234, 88, 12, 0.18)" },
-  X_TWITTER: { label: "X / Twitter", color: "#cbd5e1", bg: "rgba(100, 116, 139, 0.22)" },
   WEB_FORUM: { label: "Web Forum", color: "#a78bfa", bg: "rgba(124, 58, 237, 0.18)" },
   GOOGLE_SERP_INTENT: { label: "Google Search", color: "#34d399", bg: "rgba(5, 150, 105, 0.18)" },
 };
@@ -69,7 +70,7 @@ const REGION_BADGES: Record<string, { label: string; color: string; bg: string }
 const FRESHNESS_BADGES: Record<string, { label: string; color: string; bg: string }> = {
   "1H_12H": { label: "⚡ 1h–12h Fresh", color: "#34d399", bg: "rgba(16, 185, 129, 0.2)" },
   "24H": { label: "🔥 Past 24 Hours", color: "#60a5fa", bg: "rgba(37, 99, 235, 0.2)" },
-  "3D": { label: "🕒 Within 3 Days", color: "#fbbf24", bg: "rgba(245, 158, 11, 0.18)" },
+  "3D": { label: "📅 Past Week (2d–7d)", color: "#fbbf24", bg: "rgba(245, 158, 11, 0.18)" },
 };
 
 export type VaultChannelTab =
@@ -77,9 +78,59 @@ export type VaultChannelTab =
   | "LINKEDIN_INDIA"
   | "LINKEDIN_USA"
   | "LINKEDIN_UAE"
+  | "THREADS_X"
   | "MY_LINKEDIN_FEED"
   | "REDDIT_FORUMS"
   | "GOOGLE_SEARCH";
+
+function parseUtcDate(val?: string | null): Date {
+  if (!val) return new Date();
+  const s = String(val).trim();
+  if (!s) return new Date();
+  if (s.endsWith("Z") || /[+-]\d{2}:\d{2}$/.test(s)) return new Date(s);
+  if (/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}/.test(s)) {
+    return new Date(`${s.replace(" ", "T")}Z`);
+  }
+  const d = new Date(s);
+  return Number.isNaN(d.getTime()) ? new Date() : d;
+}
+
+function formatIstDateTime(val?: string | null): string {
+  const d = parseUtcDate(val);
+  try {
+    return (
+      d.toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }) + " IST"
+    );
+  } catch {
+    return d.toLocaleString();
+  }
+}
+
+function formatIstTimeOnly(val?: string | null): string {
+  const d = parseUtcDate(val);
+  try {
+    return (
+      d.toLocaleTimeString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      }) + " IST"
+    );
+  } catch {
+    return d.toLocaleTimeString();
+  }
+}
 
 export default function IntentLeadsClientView({
   presetSearches,
@@ -105,6 +156,7 @@ export default function IntentLeadsClientView({
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [serviceFilter, setServiceFilter] = useState<string>("ALL");
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
+  const [sortBy, setSortBy] = useState<"LATEST_FIRST" | "SCORE_FIRST">("LATEST_FIRST");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const [isScanning, setIsScanning] = useState(false);
@@ -124,6 +176,7 @@ export default function IntentLeadsClientView({
   const [manualText, setManualText] = useState("");
   const [manualRegion, setManualRegion] = useState<"INDIA" | "USA" | "UAE_DUBAI" | "GLOBAL">("INDIA");
   const [isIngestingManual, setIsIngestingManual] = useState(false);
+  const [cronCountdownSec, setCronCountdownSec] = useState<number>(900);
 
   const bookmarkletRef = useRef<HTMLAnchorElement | null>(null);
 
@@ -143,6 +196,29 @@ export default function IntentLeadsClientView({
       }
     } catch {}
   }, []);
+
+  // Automatically sync latest signals every 60s & trigger 15-minute live auto-discovery cron while Vault is unlocked
+  useEffect(() => {
+    if (unlockedPin === "021514") {
+      refreshSignals(false);
+      const syncTimer = setInterval(() => {
+        refreshSignals(false);
+      }, 60 * 1000);
+      const countdownTimer = setInterval(() => {
+        setCronCountdownSec((prev) => {
+          if (prev <= 1) {
+            refreshSignals(true);
+            return 900;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => {
+        clearInterval(syncTimer);
+        clearInterval(countdownTimer);
+      };
+    }
+  }, [unlockedPin]);
 
   // Sync manualRegion default when switching LinkedIn regional tabs
   useEffect(() => {
@@ -235,21 +311,21 @@ export default function IntentLeadsClientView({
           var linkEl = el.querySelector('a[href*="/feed/update/"], a[href*="/posts/"]');
           var urn = el.getAttribute('data-urn') || '';
           var postUrl = linkEl ? linkEl.href : (urn ? 'https://www.linkedin.com/feed/update/' + urn : window.location.href);
-          posts.push({ postUrl: postUrl, pageUrl: window.location.href, authorName: authorName.slice(0,120), authorRole: authorRole.slice(0,160), ageText: ageText.slice(0,60), postText: text.slice(0,1800) });
+          posts.push({ postUrl: postUrl, pageUrl: window.location.href, authorName: authorName.slice(0,120), authorRole: authorRole.slice(0,160), ageText: ageText.slice(0,60), postText: text.slice(0,12000) });
         });
         if (posts.length === 0) {
           var sel = window.getSelection().toString().trim();
           if (sel.length > 25) {
-            posts.push({ postUrl: window.location.href, pageUrl: window.location.href, authorName: document.title.slice(0,80), ageText: '1h ago', postText: sel.slice(0,1800) });
+            posts.push({ postUrl: window.location.href, pageUrl: window.location.href, authorName: document.title.slice(0,80), ageText: '1h ago', postText: sel.slice(0,12000) });
           }
         }
         if (posts.length === 0) {
-          alert('DGS Scanner: Scroll through your LinkedIn Feed or Past-24h Search results first, or highlight a post text before clicking.');
+          alert('DGS Scanner: Scroll through your LinkedIn, X, or Threads search results first, or highlight a post text before clicking.');
           return;
         }
         var badge = document.createElement('div');
         badge.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:999999;background:#0f172a;color:#f8fafc;border:1px solid #3b82f6;padding:14px 20px;border-radius:12px;font-family:sans-serif;font-size:14px;box-shadow:0 12px 32px rgba(0,0,0,0.45);';
-        badge.innerText = 'DGS Buyer-Intent AI: Qualifying ' + posts.length + ' fresh LinkedIn posts...';
+        badge.innerText = 'DGS Buyer-Intent AI: Qualifying ' + posts.length + ' fresh agency buyer posts...';
         document.body.appendChild(badge);
         fetch('${endpoint}', {
           method: 'POST',
@@ -257,7 +333,7 @@ export default function IntentLeadsClientView({
           body: JSON.stringify({ token: '${ingestToken}', sendEmailDigest: true, posts: posts.slice(0, 30) })
         }).then(function(r){ return r.json(); }).then(function(res){
           badge.style.borderColor = '#10b981';
-          badge.innerText = res.message || ('Fetched ' + (res.result && res.result.qualifiedAdded || 0) + ' buyer leads & emailed alert!');
+          badge.innerText = res.message || ('Fetched ' + (res.result && res.result.qualifiedAdded || 0) + ' agency buyer leads & emailed alert!');
           setTimeout(function(){ badge.remove(); }, 6500);
         }).catch(function(err){
           badge.style.borderColor = '#ef4444';
@@ -275,19 +351,22 @@ export default function IntentLeadsClientView({
     }
   }, [bookmarkletHref, activeChannelTab, unlockedPin]);
 
-  // Compute channel counts for the bifurcated tab bar
+  // Compute channel counts for the bifurcated tab bar (includes all Past Week <=168h leads)
   const channelCounts = useMemo(() => {
-    const fresh = signals.filter((s) => (s.age_hours ?? 6) <= 72);
+    const fresh = signals.filter((s) => (s.age_hours ?? 6) <= 168);
     const isLinkedIn = (s: IntentLeadSignal) =>
       s.source_platform === "LINKEDIN_PUBLIC" || s.source_platform === "LINKEDIN_FEED";
+    const isThreadsOrX = (s: IntentLeadSignal) =>
+      s.source_platform === "THREADS" || s.source_platform === "X_TWITTER";
     const isForumOrReddit = (s: IntentLeadSignal) =>
-      s.source_platform === "REDDIT" || s.source_platform === "WEB_FORUM" || s.source_platform === "X_TWITTER";
+      s.source_platform === "REDDIT" || s.source_platform === "WEB_FORUM";
 
     return {
       ALL: fresh.length,
       LINKEDIN_INDIA: fresh.filter((s) => isLinkedIn(s) && s.target_region === "INDIA").length,
       LINKEDIN_USA: fresh.filter((s) => isLinkedIn(s) && (s.target_region === "USA" || s.target_region === "GLOBAL")).length,
       LINKEDIN_UAE: fresh.filter((s) => isLinkedIn(s) && s.target_region === "UAE_DUBAI").length,
+      THREADS_X: fresh.filter((s) => isThreadsOrX(s)).length,
       MY_LINKEDIN_FEED: fresh.filter((s) => s.source_platform === "LINKEDIN_FEED").length,
       REDDIT_FORUMS: fresh.filter((s) => isForumOrReddit(s)).length,
       GOOGLE_SEARCH: googleQueries.length,
@@ -295,18 +374,16 @@ export default function IntentLeadsClientView({
   }, [signals, googleQueries]);
 
   const filteredSignals = useMemo(() => {
-    return signals.filter((s) => {
+    const matching = signals.filter((s) => {
       const age = s.age_hours ?? 6;
-      if (age > 72) return false; // Never show stale leads > 3 days
+      if (age > 168) return false; // Never show stale leads > 7 days
       if (freshnessFilter === "1H_12H" && age > 12) return false;
       if (freshnessFilter === "24H" && age > 24) return false;
-      if (freshnessFilter === "3D" && age > 72) return false;
+      if (freshnessFilter === "3D" && age > 168) return false;
 
       const isLi = s.source_platform === "LINKEDIN_PUBLIC" || s.source_platform === "LINKEDIN_FEED";
-      const isForum =
-        s.source_platform === "REDDIT" ||
-        s.source_platform === "WEB_FORUM" ||
-        s.source_platform === "X_TWITTER";
+      const isThreadsOrX = s.source_platform === "THREADS" || s.source_platform === "X_TWITTER";
+      const isForum = s.source_platform === "REDDIT" || s.source_platform === "WEB_FORUM";
 
       // Bifurcated Channel Tab Filtering
       if (activeChannelTab === "LINKEDIN_INDIA") {
@@ -315,6 +392,8 @@ export default function IntentLeadsClientView({
         if (!isLi || (s.target_region !== "USA" && s.target_region !== "GLOBAL")) return false;
       } else if (activeChannelTab === "LINKEDIN_UAE") {
         if (!isLi || s.target_region !== "UAE_DUBAI") return false;
+      } else if (activeChannelTab === "THREADS_X") {
+        if (!isThreadsOrX) return false;
       } else if (activeChannelTab === "MY_LINKEDIN_FEED") {
         if (s.source_platform !== "LINKEDIN_FEED") return false;
       } else if (activeChannelTab === "REDDIT_FORUMS") {
@@ -331,7 +410,33 @@ export default function IntentLeadsClientView({
       }
       return true;
     });
-  }, [signals, activeChannelTab, freshnessFilter, regionFilter, serviceFilter, statusFilter, searchQuery]);
+
+    const statusOrder = (st: string) => (st === "NEW" ? 0 : st === "CONTACTED" ? 1 : 2);
+
+    return matching.slice().sort((a, b) => {
+      const stDiff = statusOrder(a.status) - statusOrder(b.status);
+      if (stDiff !== 0) return stDiff;
+
+      const ageA = a.age_hours ?? 1;
+      const ageB = b.age_hours ?? 1;
+      const discA = a.discovered_at ? parseUtcDate(a.discovered_at).getTime() : 0;
+      const discB = b.discovered_at ? parseUtcDate(b.discovered_at).getTime() : 0;
+      const pubA = a.published_at ? parseUtcDate(a.published_at).getTime() : discA;
+      const pubB = b.published_at ? parseUtcDate(b.published_at).getTime() : discB;
+
+      if (sortBy === "SCORE_FIRST") {
+        if (b.intent_score !== a.intent_score) return b.intent_score - a.intent_score;
+        if (ageA !== ageB) return ageA - ageB;
+        return discB - discA;
+      }
+
+      // Default: LATEST_FIRST — strictly newest/latest leads on top (1h -> 2h -> 3h -> ... -> 7d)
+      if (ageA !== ageB) return ageA - ageB;
+      if (discB !== discA) return discB - discA;
+      if (pubB !== pubA) return pubB - pubA;
+      return (b.intent_score || 0) - (a.intent_score || 0);
+    });
+  }, [signals, activeChannelTab, freshnessFilter, regionFilter, serviceFilter, statusFilter, sortBy, searchQuery]);
 
   const activePresetSearches = useMemo(() => {
     if (activeChannelTab === "LINKEDIN_INDIA") {
@@ -349,17 +454,39 @@ export default function IntentLeadsClientView({
   async function refreshSignals(showToast = false) {
     if (!unlockedPin) return;
     setIsRefreshing(true);
+    if (showToast) {
+      setScanBanner(
+        "Refreshing Vault & scanning live LinkedIn, Reddit, Threads & X for fresh agency/company buyer leads..."
+      );
+    }
     try {
-      const res = await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
-        cache: "no-store",
-        credentials: "same-origin",
-        headers: {
-          "X-DGS-Intent-Pin": unlockedPin,
-          "Cache-Control": "no-cache",
-        },
-      });
+      const res = showToast
+        ? await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
+            method: "POST",
+            cache: "no-store",
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json",
+              "X-DGS-Intent-Pin": unlockedPin,
+              "Cache-Control": "no-cache",
+            },
+            body: JSON.stringify({
+              action: "discover",
+              pin: unlockedPin,
+              serviceCategory: serviceFilter,
+              sendEmailDigest: false,
+            }),
+          })
+        : await fetch(`/api/admin/intent-leads/?t=${Date.now()}`, {
+            cache: "no-store",
+            credentials: "same-origin",
+            headers: {
+              "X-DGS-Intent-Pin": unlockedPin,
+              "Cache-Control": "no-cache",
+            },
+          });
       const data = await res.json();
-      if (data.ok) {
+      if (data.ok || Array.isArray(data.signals)) {
         setSignals(data.signals || []);
         setRuns(data.runs || []);
         if (data.linkedinSession) {
@@ -367,7 +494,11 @@ export default function IntentLeadsClientView({
           setLinkedinMaskedCookie(data.linkedinSession.maskedCookie || null);
         }
         if (showToast) {
-          setScanBanner(`Vault list refreshed (${(data.signals || []).length} verified service-needing buyer leads loaded).`);
+          const totalLoaded = (data.signals || []).length;
+          const summary = data.result?.summaryText
+            ? `${data.result.summaryText} (${totalLoaded} verified buyer leads in Vault)`
+            : `Vault list refreshed (${totalLoaded} verified service-needing buyer leads loaded).`;
+          setScanBanner(summary);
         }
       }
     } catch {
@@ -472,6 +603,15 @@ export default function IntentLeadsClientView({
         ? prev.filter((item) => item.id !== id)
         : prev.map((item) => (item.id === id ? { ...item, status } : item))
     );
+    setScanBanner(
+      status === "CONTACTED"
+        ? "Lead marked as Contacted ✓"
+        : status === "ARCHIVED"
+          ? "Lead archived in Vault 📦"
+          : status === "DISMISSED"
+            ? "Lead dismissed from Vault."
+            : "Lead reopened as New."
+    );
     await fetch("/api/admin/intent-leads/", {
       method: "POST",
       cache: "no-store",
@@ -536,23 +676,41 @@ export default function IntentLeadsClientView({
   }
 
   function copyText(key: string, text: string) {
-    navigator.clipboard.writeText(text);
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch {}
     setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2200);
+    setScanBanner(key.startsWith("reply-") ? "Copied Suggested Public Reply to clipboard!" : "Copied Suggested Direct Message (DM) to clipboard!");
+    setTimeout(() => setCopiedKey(null), 2500);
   }
 
+  const cronMm = String(Math.floor(cronCountdownSec / 60)).padStart(2, "0");
+  const cronSs = String(cronCountdownSec % 60).padStart(2, "0");
+  const latestRun = runs && runs.length > 0 ? runs[0] : null;
+
   // ============================================================================
-  // PRIVATE PIN GATE (PIN: 0215)
+  // PRIVATE PIN GATE (PIN: 021514)
   // ============================================================================
   if (!unlockedPin) {
     return (
       <div
         style={{
-          minHeight: "72vh",
+          minHeight: "74vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           padding: "24px",
+          position: "relative",
         }}
       >
         <form
@@ -564,53 +722,73 @@ export default function IntentLeadsClientView({
           }}
           style={{
             width: "100%",
-            maxWidth: "440px",
-            background: "linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92))",
-            border: "1px solid rgba(59, 130, 246, 0.35)",
-            borderRadius: "20px",
-            padding: "36px 32px",
-            boxShadow: "0 24px 60px rgba(0, 0, 0, 0.55)",
+            maxWidth: "460px",
+            background:
+              "linear-gradient(135deg, rgba(6, 182, 212, 0.14) 0%, rgba(124, 58, 237, 0.14) 50%, rgba(249, 115, 22, 0.12) 100%), rgba(15, 23, 42, 0.78)",
+            backdropFilter: "blur(28px) saturate(170%)",
+            WebkitBackdropFilter: "blur(28px) saturate(170%)",
+            border: "1px solid rgba(255, 255, 255, 0.16)",
+            borderRadius: "24px",
+            padding: "38px 34px",
+            boxShadow:
+              "0 28px 68px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.22)",
             textAlign: "center",
           }}
         >
+          {/* Official D'Genius Solutions Logo Emblem */}
           <div
             style={{
-              width: "56px",
-              height: "56px",
-              borderRadius: "16px",
-              background: "rgba(37, 99, 235, 0.2)",
-              border: "1px solid rgba(59, 130, 246, 0.4)",
-              display: "flex",
+              display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              margin: "0 auto 18px auto",
-              color: "#60a5fa",
+              padding: "14px 24px",
+              borderRadius: "18px",
+              background:
+                "linear-gradient(135deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.03))",
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+              boxShadow:
+                "0 12px 32px rgba(6, 182, 212, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.25)",
+              marginBottom: "18px",
             }}
           >
-            <Lock size={26} />
+            <img
+              src="/images/brand/dgs-logo-trimmed.png"
+              alt="D'Genius Solutions Official Logo"
+              style={{
+                height: "54px",
+                width: "auto",
+                objectFit: "contain",
+                filter: "drop-shadow(0 4px 14px rgba(124, 58, 237, 0.35))",
+              }}
+            />
           </div>
 
-          <div
-            style={{
-              display: "inline-block",
-              fontSize: "11px",
-              fontWeight: 800,
-              letterSpacing: "0.08em",
-              color: "#34d399",
-              background: "rgba(16, 185, 129, 0.16)",
-              padding: "4px 10px",
-              borderRadius: "999px",
-              marginBottom: "10px",
-            }}
-          >
-            PRIVATE EXECUTIVE VAULT • PIN PROTECTED
+          <div>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.08em",
+                color: "#34d399",
+                background: "rgba(16, 185, 129, 0.16)",
+                border: "1px solid rgba(52, 211, 153, 0.35)",
+                padding: "4px 12px",
+                borderRadius: "999px",
+                marginBottom: "12px",
+              }}
+            >
+              <Lock size={12} /> PRIVATE EXECUTIVE VAULT • PIN PROTECTED
+            </div>
           </div>
 
-          <h1 style={{ fontSize: "22px", fontWeight: 800, color: "#f8fafc", margin: "0 0 8px 0" }}>
-            Buyer-Intent Lead Vault
+          <h1 style={{ fontSize: "23px", fontWeight: 800, color: "#f8fafc", margin: "0 0 8px 0" }}>
+            D&apos;Genius Buyer-Intent Lead Vault
           </h1>
-          <p style={{ fontSize: "13px", color: "#94a3b8", margin: "0 0 24px 0", lineHeight: 1.55 }}>
-            This section is restricted and isolated from public website lead forms. Enter your 6-digit security passcode below to unlock fresh (<strong>1h–12h / 24h / &le;3d</strong>) buyer-intent leads.
+          <p style={{ fontSize: "13px", color: "#cbd5e1", margin: "0 0 24px 0", lineHeight: 1.55 }}>
+            Restricted executive radar isolated from public website lead forms. Enter your 6-digit security passcode below to unlock fresh (<strong>1h–12h / 24h / &le;7d</strong>) agency buyer leads.
           </p>
 
           <div style={{ marginBottom: "16px" }}>
@@ -637,12 +815,13 @@ export default function IntentLeadsClientView({
                 letterSpacing: pinInput ? "0.4em" : "0.04em",
                 fontSize: pinInput ? "24px" : "15px",
                 fontWeight: 800,
-                background: "#090d16",
+                background: "rgba(9, 13, 22, 0.78)",
+                backdropFilter: "blur(12px)",
                 color: "#f8fafc",
                 border: pinError
                   ? "1px solid #ef4444"
-                  : "1px solid rgba(59, 130, 246, 0.45)",
-                borderRadius: "12px",
+                  : "1px solid rgba(56, 189, 248, 0.45)",
+                borderRadius: "14px",
                 padding: "14px 16px",
                 outline: "none",
               }}
@@ -674,13 +853,14 @@ export default function IntentLeadsClientView({
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
-              background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+              background: "linear-gradient(135deg, #06b6d4 0%, #7c3aed 52%, #ec4899 100%)",
               color: "#ffffff",
-              border: "none",
+              border: "1px solid rgba(255, 255, 255, 0.22)",
               padding: "13px 20px",
-              borderRadius: "12px",
+              borderRadius: "14px",
               fontSize: "14px",
-              fontWeight: 700,
+              fontWeight: 800,
+              boxShadow: "0 10px 28px rgba(124, 58, 237, 0.38)",
               cursor: isUnlocking ? "wait" : "pointer",
             }}
           >
@@ -695,55 +875,136 @@ export default function IntentLeadsClientView({
   const ultraFreshCount = signals.filter((s) => (s.age_hours ?? 6) <= 12).length;
   const past24hCount = signals.filter((s) => (s.age_hours ?? 6) <= 24).length;
   const highUrgencyCount = signals.filter((s) => s.intent_score >= 80).length;
+  const newUncontactedCount = signals.filter((s) => s.status === "NEW").length;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px", paddingBottom: "48px" }}>
-      {/* Top Header */}
+    <div style={{ display: "flex", flexDirection: "column", gap: "22px", paddingBottom: "48px", position: "relative" }}>
+      {/* Glassmorphic Brand Hero Header with Official DGS Logo & Live 15m Cron Status */}
       <div
         style={{
+          position: "relative",
+          overflow: "hidden",
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: "16px",
-          background: "linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.85))",
-          border: "1px solid rgba(59, 130, 246, 0.25)",
-          borderRadius: "16px",
-          padding: "24px",
+          alignItems: "center",
+          gap: "20px",
+          background:
+            "linear-gradient(135deg, rgba(6, 182, 212, 0.16) 0%, rgba(124, 58, 237, 0.15) 45%, rgba(236, 72, 153, 0.12) 75%, rgba(249, 115, 22, 0.14) 100%), rgba(15, 23, 42, 0.72)",
+          backdropFilter: "blur(28px) saturate(175%)",
+          WebkitBackdropFilter: "blur(28px) saturate(175%)",
+          border: "1px solid rgba(255, 255, 255, 0.16)",
+          boxShadow:
+            "0 20px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.22)",
+          borderRadius: "22px",
+          padding: "24px 26px",
         }}
       >
-        <div style={{ maxWidth: "740px" }}>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-            <span
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "20px", maxWidth: "820px" }}>
+          {/* Official D'Genius Solutions Logo Glass Emblem */}
+          <div
+            style={{
+              display: "flex",
+               flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "14px 20px",
+              borderRadius: "18px",
+              background:
+                "linear-gradient(145deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%)",
+              backdropFilter: "blur(16px)",
+              border: "1px solid rgba(255, 255, 255, 0.22)",
+              boxShadow:
+                "0 12px 32px rgba(6, 182, 212, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
+              flexShrink: 0,
+            }}
+          >
+            <img
+              src="/images/brand/dgs-logo-trimmed.png"
+              alt="D'Genius Solutions Official Logo"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                background: "rgba(16, 185, 129, 0.18)",
-                color: "#34d399",
-                border: "1px solid rgba(16, 185, 129, 0.35)",
-                padding: "4px 10px",
-                borderRadius: "999px",
-                fontSize: "12px",
-                fontWeight: 700,
+                height: "56px",
+                width: "auto",
+                objectFit: "contain",
+                filter: "drop-shadow(0 4px 12px rgba(0, 198, 255, 0.28))",
+              }}
+            />
+          </div>
+
+          <div style={{ flex: "1 1 460px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "linear-gradient(135deg, rgba(16, 185, 129, 0.24), rgba(6, 182, 212, 0.20))",
+                  color: "#6ee7b7",
+                  border: "1px solid rgba(52, 211, 153, 0.45)",
+                  padding: "4px 11px",
+                  borderRadius: "999px",
+                  fontSize: "11px",
+                  fontWeight: 800,
+                  boxShadow: "0 0 16px rgba(16, 185, 129, 0.22)",
+                }}
+              >
+                <Lock size={12} /> PRIVATE PIN VAULT UNLOCKED
+              </span>
+
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "linear-gradient(135deg, rgba(6, 182, 212, 0.20), rgba(139, 92, 246, 0.22))",
+                  color: "#7dd3fc",
+                  border: "1px solid rgba(56, 189, 248, 0.40)",
+                  padding: "4px 11px",
+                  borderRadius: "999px",
+                  fontSize: "11px",
+                  fontWeight: 800,
+                }}
+              >
+                🟢 15-Min Auto-Cron Active • Next Scan in {cronMm}:{cronSs}
+              </span>
+
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  background: "rgba(236, 72, 153, 0.16)",
+                  color: "#f9a8d4",
+                  border: "1px solid rgba(244, 114, 182, 0.35)",
+                  padding: "4px 10px",
+                  borderRadius: "999px",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                }}
+              >
+                Agency / Company / Production House Buyers Only
+              </span>
+            </div>
+
+            <h1
+              style={{
+                fontSize: "24px",
+                fontWeight: 800,
+                color: "#f8fafc",
+                margin: "0 0 6px 0",
+                letterSpacing: "-0.01em",
               }}
             >
-              <Lock size={13} /> PRIVATE PIN VAULT UNLOCKED
-            </span>
-            <span style={{ fontSize: "12px", color: "#93c5fd", fontWeight: 600 }}>
-              ⚡ Freshness Enforced: 1h–12h • 24h • Max 3 Days Old (Never sent via Website Lead Forms)
-            </span>
+              D&apos;Genius Agency Buyer-Intent Vault (LinkedIn • X • Threads • Reddit)
+            </h1>
+            <p style={{ fontSize: "13.5px", color: "#cbd5e1", margin: 0, lineHeight: 1.55 }}>
+              Exclusively captures <strong style={{ color: "#ffffff" }}>verified agency &amp; company buyer leads</strong> (founders &amp; decision makers explicitly looking for an{" "}
+              <strong style={{ color: "#67e8f9" }}>
+                SEO Agency, Digital Marketing Company, Website Development Agency, or AI Video Production Company / House
+              </strong>
+              ). Auto-discovery cron executes every <strong>15 minutes</strong> &amp; highlights fresh leads with distinct glass colors.
+            </p>
           </div>
-          <h1 style={{ fontSize: "24px", fontWeight: 800, color: "#f8fafc", margin: "0 0 6px 0" }}>
-            Private Buyer-Intent & LinkedIn Lead Vault
-          </h1>
-          <p style={{ fontSize: "14px", color: "#94a3b8", margin: 0, lineHeight: 1.55 }}>
-            Exclusively captures <strong style={{ color: "#e2e8f0" }}>warm/hot buyer-intent leads</strong> (people actively asking to hire or get recommendations for{" "}
-            <strong style={{ color: "#e2e8f0" }}>
-              SEO, AEO/GEO, Website Development & AMC, AI Video Production, Performance Marketing, and Branding
-            </strong>
-            ) within the last <strong>1–12 hours, 24 hours, or 3 days</strong>. Whenever new leads are fetched, you receive an instant email alert.
-          </p>
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", alignItems: "center" }}>
@@ -755,13 +1016,14 @@ export default function IntentLeadsClientView({
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              background: "#2563eb",
+              background: "linear-gradient(135deg, #06b6d4 0%, #7c3aed 52%, #ec4899 100%)",
               color: "#ffffff",
-              border: "none",
+              border: "1px solid rgba(255, 255, 255, 0.25)",
+              boxShadow: "0 8px 24px rgba(124, 58, 237, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25)",
               padding: "10px 18px",
-              borderRadius: "10px",
+              borderRadius: "12px",
               fontSize: "13px",
-              fontWeight: 700,
+              fontWeight: 800,
               cursor: isScanning ? "wait" : "pointer",
               opacity: isScanning ? 0.75 : 1,
             }}
@@ -773,18 +1035,22 @@ export default function IntentLeadsClientView({
           <button
             type="button"
             disabled={isRefreshing || isScanning}
-            onClick={() => refreshSignals(true)}
+            onClick={() => {
+              setCronCountdownSec(900);
+              refreshSignals(true);
+            }}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
-              background: "rgba(37, 99, 235, 0.16)",
-              color: "#93c5fd",
-              border: "1px solid rgba(59, 130, 246, 0.38)",
-              padding: "10px 14px",
-              borderRadius: "10px",
+              background: "linear-gradient(135deg, rgba(6, 182, 212, 0.22), rgba(59, 130, 246, 0.18))",
+              backdropFilter: "blur(14px)",
+              color: "#bae6fd",
+              border: "1px solid rgba(56, 189, 248, 0.45)",
+              padding: "10px 15px",
+              borderRadius: "12px",
               fontSize: "12px",
-              fontWeight: 700,
+              fontWeight: 800,
               cursor: isRefreshing ? "wait" : "pointer",
             }}
           >
@@ -799,15 +1065,18 @@ export default function IntentLeadsClientView({
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
-              background: linkedinConnected ? "rgba(16, 185, 129, 0.16)" : "rgba(245, 158, 11, 0.16)",
-              color: linkedinConnected ? "#34d399" : "#fbbf24",
+              background: linkedinConnected
+                ? "linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(6, 182, 212, 0.16))"
+                : "rgba(245, 158, 11, 0.18)",
+              backdropFilter: "blur(14px)",
+              color: linkedinConnected ? "#6ee7b7" : "#fbbf24",
               border: linkedinConnected
-                ? "1px solid rgba(16, 185, 129, 0.35)"
-                : "1px solid rgba(245, 158, 11, 0.38)",
+                ? "1px solid rgba(52, 211, 153, 0.45)"
+                : "1px solid rgba(245, 158, 11, 0.42)",
               padding: "10px 14px",
-              borderRadius: "10px",
+              borderRadius: "12px",
               fontSize: "12px",
-              fontWeight: 700,
+              fontWeight: 800,
               cursor: "pointer",
             }}
           >
@@ -824,11 +1093,12 @@ export default function IntentLeadsClientView({
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
-              background: "rgba(239, 68, 68, 0.14)",
-              color: "#f87171",
-              border: "1px solid rgba(239, 68, 68, 0.3)",
+              background: "rgba(239, 68, 68, 0.16)",
+              backdropFilter: "blur(14px)",
+              color: "#fca5a5",
+              border: "1px solid rgba(248, 113, 113, 0.35)",
               padding: "10px 14px",
-              borderRadius: "10px",
+              borderRadius: "12px",
               fontSize: "12px",
               fontWeight: 700,
               cursor: "pointer",
@@ -839,14 +1109,65 @@ export default function IntentLeadsClientView({
         </div>
       </div>
 
+      {/* Live 15-Minute Auto-Cron Heartbeat & Discovery Telemetry Bar */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "12px",
+          background:
+            "linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.10) 35%, rgba(124, 58, 237, 0.10) 70%, rgba(249, 115, 22, 0.10) 100%), rgba(15, 23, 42, 0.65)",
+          backdropFilter: "blur(20px) saturate(150%)",
+          WebkitBackdropFilter: "blur(20px) saturate(150%)",
+          border: "1px solid rgba(52, 211, 153, 0.32)",
+          boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.12)",
+          borderRadius: "14px",
+          padding: "11px 16px",
+          fontSize: "12px",
+        }}
+      >
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "10px" }}>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              background: "rgba(16, 185, 129, 0.22)",
+              color: "#6ee7b7",
+              border: "1px solid rgba(52, 211, 153, 0.45)",
+              padding: "3px 10px",
+              borderRadius: "999px",
+              fontSize: "11px",
+              fontWeight: 800,
+            }}
+          >
+            ⚡ AUTO-CRON RUNNING (EVERY 15M)
+          </span>
+          <span style={{ color: "#e2e8f0", fontWeight: 600 }}>
+            {latestRun
+              ? `Latest Run (${latestRun.run_type}): Evaluated ${latestRun.raw_candidates_found} live posts across ${latestRun.queries_executed} queries • Rejected ${latestRun.rejected_noise_count} noise/freelancers • Completed ${formatIstTimeOnly(latestRun.completed_at || latestRun.started_at)}`
+              : "15-Minute Auto-Cron active across LinkedIn India, USA, UAE, Reddit, Threads & X"}
+          </span>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", color: "#7dd3fc", fontWeight: 700 }}>
+          <span>Auto-Syncs Every 60s</span>
+          <span>•</span>
+          <span>Next Live Discovery Scan: {cronMm}:{cronSs}</span>
+        </div>
+      </div>
+
       {/* LinkedIn Session Auto-Sync Configuration Drawer */}
       {showLinkedinConnect && (
         <form
           onSubmit={handleSaveLinkedinSession}
           style={{
-            background: "linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 58, 138, 0.25))",
-            border: "1px solid rgba(59, 130, 246, 0.45)",
-            borderRadius: "14px",
+            background: "linear-gradient(135deg, rgba(15, 23, 42, 0.90), rgba(30, 58, 138, 0.32))",
+            backdropFilter: "blur(22px)",
+            border: "1px solid rgba(56, 189, 248, 0.45)",
+            borderRadius: "16px",
             padding: "18px 20px",
             display: "flex",
             flexDirection: "column",
@@ -881,7 +1202,7 @@ export default function IntentLeadsClientView({
               type="submit"
               disabled={isSavingLinkedin}
               style={{
-                background: "#2563eb",
+                background: "linear-gradient(135deg, #06b6d4, #7c3aed)",
                 color: "#ffffff",
                 border: "none",
                 borderRadius: "8px",
@@ -905,16 +1226,17 @@ export default function IntentLeadsClientView({
             justifyContent: "space-between",
             alignItems: "center",
             gap: "12px",
-            background: "rgba(37, 99, 235, 0.14)",
-            border: "1px solid rgba(59, 130, 246, 0.35)",
-            borderRadius: "12px",
+            background: "linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(124, 58, 237, 0.16))",
+            backdropFilter: "blur(18px)",
+            border: "1px solid rgba(56, 189, 248, 0.42)",
+            borderRadius: "14px",
             padding: "12px 16px",
-            color: "#e2e8f0",
+            color: "#f8fafc",
             fontSize: "13px",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Sparkles size={16} color="#60a5fa" />
+            <Sparkles size={16} color="#38bdf8" />
             <span>{scanBanner}</span>
           </div>
           <button
@@ -923,7 +1245,7 @@ export default function IntentLeadsClientView({
             style={{
               background: "transparent",
               border: "none",
-              color: "#94a3b8",
+              color: "#cbd5e1",
               cursor: "pointer",
               fontSize: "12px",
             }}
@@ -933,101 +1255,133 @@ export default function IntentLeadsClientView({
         </div>
       )}
 
-      {/* KPI Summary Cards */}
+      {/* Glassmorphic Multi-Color Gradient KPI Summary Cards */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
           gap: "14px",
         }}
       >
+        {/* Card 1: Emerald-Cyan Aurora Glass */}
         <div
           style={{
-            background: "rgba(15, 23, 42, 0.75)",
-            border: "1px solid rgba(16, 185, 129, 0.28)",
-            borderRadius: "14px",
-            padding: "16px 18px",
+            background:
+              "linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(6, 182, 212, 0.14) 55%, rgba(15, 23, 42, 0.65) 100%)",
+            backdropFilter: "blur(24px) saturate(160%)",
+            WebkitBackdropFilter: "blur(24px) saturate(160%)",
+            border: "1px solid rgba(52, 211, 153, 0.42)",
+            boxShadow: "0 14px 34px -8px rgba(16, 185, 129, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.20)",
+            borderRadius: "18px",
+            padding: "18px 20px",
           }}
         >
-          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
-            ⚡ Ultra-Fresh (1h to 12h Old)
+          <div style={{ fontSize: "12px", fontWeight: 700, color: "#a7f3d0", marginBottom: "4px" }}>
+            ✨ New &amp; Ultra-Fresh (1h to 12h Old)
           </div>
-          <div style={{ fontSize: "26px", fontWeight: 800, color: "#34d399" }}>{ultraFreshCount}</div>
-          <div style={{ fontSize: "11px", color: "#34d399", marginTop: "4px" }}>
-            Highest reply-to-call conversion window
+          <div style={{ fontSize: "30px", fontWeight: 800, color: "#34d399", letterSpacing: "-0.02em" }}>
+            {ultraFreshCount}
+          </div>
+          <div style={{ fontSize: "11px", color: "#6ee7b7", marginTop: "4px", fontWeight: 600 }}>
+             Emerald-Cyan Glass • Highest conversion window
           </div>
         </div>
 
+        {/* Card 2: Cyan-Indigo Glass */}
         <div
           style={{
-            background: "rgba(15, 23, 42, 0.75)",
-            border: "1px solid rgba(59, 130, 246, 0.28)",
-            borderRadius: "14px",
-            padding: "16px 18px",
+            background:
+              "linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(99, 102, 241, 0.14) 55%, rgba(15, 23, 42, 0.65) 100%)",
+            backdropFilter: "blur(24px) saturate(160%)",
+            WebkitBackdropFilter: "blur(24px) saturate(160%)",
+            border: "1px solid rgba(56, 189, 248, 0.42)",
+            boxShadow: "0 14px 34px -8px rgba(14, 165, 233, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.20)",
+            borderRadius: "18px",
+            padding: "18px 20px",
           }}
         >
-          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
+          <div style={{ fontSize: "12px", fontWeight: 700, color: "#bae6fd", marginBottom: "4px" }}>
             🔥 Last 24 Hours Total
           </div>
-          <div style={{ fontSize: "26px", fontWeight: 800, color: "#60a5fa" }}>{past24hCount}</div>
-          <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-            Posted within the past 24 hours
+          <div style={{ fontSize: "30px", fontWeight: 800, color: "#38bdf8", letterSpacing: "-0.02em" }}>
+            {past24hCount}
+          </div>
+          <div style={{ fontSize: "11px", color: "#93c5fd", marginTop: "4px", fontWeight: 600 }}>
+            Sky-Indigo Glass • Posted within 24 hours
           </div>
         </div>
 
+        {/* Card 3: Violet-Magenta Glass */}
         <div
           style={{
-            background: "rgba(15, 23, 42, 0.75)",
-            border: "1px solid rgba(148, 163, 184, 0.14)",
-            borderRadius: "14px",
-            padding: "16px 18px",
+            background:
+              "linear-gradient(135deg, rgba(139, 92, 246, 0.22) 0%, rgba(236, 72, 153, 0.14) 55%, rgba(15, 23, 42, 0.65) 100%)",
+            backdropFilter: "blur(24px) saturate(160%)",
+            WebkitBackdropFilter: "blur(24px) saturate(160%)",
+            border: "1px solid rgba(192, 132, 252, 0.40)",
+            boxShadow: "0 14px 34px -8px rgba(139, 92, 246, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.20)",
+            borderRadius: "18px",
+            padding: "18px 20px",
           }}
         >
-          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
+          <div style={{ fontSize: "12px", fontWeight: 700, color: "#e9d5ff", marginBottom: "4px" }}>
             📅 Active Vault (Past Week / &le; 7d)
           </div>
-          <div style={{ fontSize: "26px", fontWeight: 800, color: "#f8fafc" }}>{signals.length}</div>
-          <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-            Includes Past 24h &amp; Past Week buyer leads
+          <div style={{ fontSize: "30px", fontWeight: 800, color: "#e879f9", letterSpacing: "-0.02em" }}>
+            {signals.length}
+          </div>
+          <div style={{ fontSize: "11px", color: "#f0abfc", marginTop: "4px", fontWeight: 600 }}>
+            {newUncontactedCount} Unread New Leads • Violet-Rose Glass
           </div>
         </div>
 
+        {/* Card 4: Warm Orange-Magenta Glass */}
         <div
           style={{
-            background: "rgba(15, 23, 42, 0.75)",
-            border: "1px solid rgba(249, 115, 22, 0.28)",
-            borderRadius: "14px",
-            padding: "16px 18px",
+            background:
+              "linear-gradient(135deg, rgba(249, 115, 22, 0.22) 0%, rgba(236, 72, 153, 0.14) 55%, rgba(15, 23, 42, 0.65) 100%)",
+            backdropFilter: "blur(24px) saturate(160%)",
+            WebkitBackdropFilter: "blur(24px) saturate(160%)",
+            border: "1px solid rgba(251, 146, 60, 0.42)",
+            boxShadow: "0 14px 34px -8px rgba(249, 115, 22, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.20)",
+            borderRadius: "18px",
+            padding: "18px 20px",
           }}
         >
-          <div style={{ fontSize: "12px", color: "#94a3b8", marginBottom: "4px" }}>
-            Hot Buyer Intent (Score 80+)
+          <div style={{ fontSize: "12px", fontWeight: 700, color: "#fed7aa", marginBottom: "4px" }}>
+            🎯 Hot Buyer Intent (Score 80+)
           </div>
-          <div style={{ fontSize: "26px", fontWeight: 800, color: "#f97316" }}>{highUrgencyCount}</div>
-          <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-            Cold chatter & job seekers rejected
+          <div style={{ fontSize: "30px", fontWeight: 800, color: "#fb923c", letterSpacing: "-0.02em" }}>
+            {highUrgencyCount}
+          </div>
+          <div style={{ fontSize: "11px", color: "#fdba74", marginTop: "4px", fontWeight: 600 }}>
+            Freelancers &amp; self-promos strictly rejected
           </div>
         </div>
       </div>
 
-      {/* SOURCE & REGION BIFURCATION TABS */}
+      {/* SOURCE & REGION BIFURCATION TABS (Glassmorphic Multi-Color Bar) */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          background: "rgba(15, 23, 42, 0.82)",
-          border: "1px solid rgba(59, 130, 246, 0.25)",
-          borderRadius: "14px",
-          padding: "14px 16px",
+          gap: "12px",
+          background:
+            "linear-gradient(135deg, rgba(6, 182, 212, 0.10) 0%, rgba(124, 58, 237, 0.10) 50%, rgba(249, 115, 22, 0.08) 100%), rgba(15, 23, 42, 0.72)",
+          backdropFilter: "blur(24px) saturate(165%)",
+          WebkitBackdropFilter: "blur(24px) saturate(165%)",
+          border: "1px solid rgba(255, 255, 255, 0.14)",
+          boxShadow: "0 14px 36px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.16)",
+          borderRadius: "18px",
+          padding: "16px 18px",
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
-          <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.06em", color: "#93c5fd" }}>
-            BIFURCATED LEAD CHANNELS BY SOURCE & REGION
+          <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "0.06em", color: "#7dd3fc" }}>
+            BIFURCATED LEAD CHANNELS BY SOURCE &amp; REGION (LINKEDIN • THREADS • X • REDDIT)
           </span>
-          <span style={{ fontSize: "12px", color: "#34d399", fontWeight: 700 }}>
-            🔒 Zero LinkedIn Login Needed • Safe Browser-Session Bookmarklet + 30m Automated Forum & Search Radar
+          <span style={{ fontSize: "12px", color: "#6ee7b7", fontWeight: 700 }}>
+            ⏱️ 15-Minute Auto-Cron Active • Strict Agency / Company / Production House Filter (Freelancers Excluded)
           </span>
         </div>
 
@@ -1036,19 +1390,19 @@ export default function IntentLeadsClientView({
             [
               {
                 key: "ALL" as VaultChannelTab,
-                label: "🌐 All Fresh Leads",
+                label: "🌐 All Agency Buyer Leads",
                 count: channelCounts.ALL,
-                accent: "#3b82f6",
+                accent: "#38bdf8",
               },
               {
                 key: "LINKEDIN_INDIA" as VaultChannelTab,
                 label: "🇮🇳 LinkedIn India",
                 count: channelCounts.LINKEDIN_INDIA,
-                accent: "#f97316",
+                accent: "#fb923c",
               },
               {
                 key: "LINKEDIN_USA" as VaultChannelTab,
-                label: "🇺🇸 LinkedIn USA",
+                label: "🇺🇸 LinkedIn USA & Global",
                 count: channelCounts.LINKEDIN_USA,
                 accent: "#60a5fa",
               },
@@ -1056,17 +1410,23 @@ export default function IntentLeadsClientView({
                 key: "LINKEDIN_UAE" as VaultChannelTab,
                 label: "🇦🇪 LinkedIn UAE / Dubai",
                 count: channelCounts.LINKEDIN_UAE,
-                accent: "#10b981",
+                accent: "#34d399",
+              },
+              {
+                key: "THREADS_X" as VaultChannelTab,
+                label: "🧵 Threads & 𝕏 X Buyer Leads",
+                count: channelCounts.THREADS_X,
+                accent: "#f472b6",
               },
               {
                 key: "MY_LINKEDIN_FEED" as VaultChannelTab,
                 label: "⚡ My LinkedIn Feed (1-Click Scanner)",
                 count: channelCounts.MY_LINKEDIN_FEED,
-                accent: "#8b5cf6",
+                accent: "#c084fc",
               },
               {
                 key: "REDDIT_FORUMS" as VaultChannelTab,
-                label: "💬 Reddit & Startup Forums",
+                label: "💬 Reddit Buyer Forums",
                 count: channelCounts.REDDIT_FORUMS,
                 accent: "#fb923c",
               },
@@ -1092,20 +1452,27 @@ export default function IntentLeadsClientView({
                   alignItems: "center",
                   gap: "8px",
                   padding: "10px 14px",
-                  borderRadius: "10px",
+                  borderRadius: "12px",
                   fontSize: "13px",
                   fontWeight: 700,
                   cursor: "pointer",
-                  background: isActive ? "#2563eb" : "rgba(2, 6, 23, 0.7)",
-                  color: isActive ? "#ffffff" : "#cbd5e1",
-                  border: isActive ? "1px solid #60a5fa" : "1px solid rgba(148, 163, 184, 0.2)",
-                  boxShadow: isActive ? "0 6px 18px rgba(37, 99, 235, 0.35)" : "none",
+                  background: isActive
+                    ? "linear-gradient(135deg, #06b6d4 0%, #7c3aed 55%, #ec4899 100%)"
+                    : "rgba(15, 23, 42, 0.58)",
+                  backdropFilter: "blur(12px)",
+                  color: isActive ? "#ffffff" : "#e2e8f0",
+                  border: isActive
+                    ? "1px solid rgba(255, 255, 255, 0.32)"
+                    : "1px solid rgba(255, 255, 255, 0.10)",
+                  boxShadow: isActive
+                    ? "0 8px 22px rgba(124, 58, 237, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.25)"
+                    : "none",
                 }}
               >
                 <span>{tab.label}</span>
                 <span
                   style={{
-                    background: isActive ? "rgba(255, 255, 255, 0.22)" : "rgba(148, 163, 184, 0.16)",
+                    background: isActive ? "rgba(255, 255, 255, 0.24)" : "rgba(255, 255, 255, 0.08)",
                     color: isActive ? "#ffffff" : tab.accent,
                     padding: "2px 8px",
                     borderRadius: "999px",
@@ -1121,10 +1488,11 @@ export default function IntentLeadsClientView({
         </div>
       </div>
 
-      {/* LINKEDIN REGIONAL & PERSONAL FEED HUB (Shown on LinkedIn India, LinkedIn USA, LinkedIn UAE, and My LinkedIn Feed tabs) */}
+      {/* LINKEDIN, THREADS & X REGIONAL SEARCH HUB */}
       {(activeChannelTab === "LINKEDIN_INDIA" ||
         activeChannelTab === "LINKEDIN_USA" ||
         activeChannelTab === "LINKEDIN_UAE" ||
+        activeChannelTab === "THREADS_X" ||
         activeChannelTab === "MY_LINKEDIN_FEED") && (
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div
@@ -1139,7 +1507,7 @@ export default function IntentLeadsClientView({
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <ShieldCheck size={18} color="#34d399" />
                 <span style={{ fontSize: "12px", fontWeight: 800, color: "#34d399", letterSpacing: "0.04em" }}>
-                  DO WE NEED YOUR LINKEDIN LOGIN? NO — NEVER SHARE YOUR PASSWORD OR COOKIES
+                  AGENCY / COMPANY / PRODUCTION HOUSE BUYERS ONLY • FREELANCER POSTS EXCLUDED
                 </span>
               </div>
               <span
@@ -1155,39 +1523,33 @@ export default function IntentLeadsClientView({
                 {activeChannelTab === "LINKEDIN_INDIA"
                   ? "🇮🇳 LinkedIn India (Mumbai • Bangalore • Delhi NCR • Pune • Hyderabad)"
                   : activeChannelTab === "LINKEDIN_USA"
-                    ? "🇺🇸 LinkedIn USA (US Founders • SaaS • E-Commerce • Agencies)"
+                    ? "🇺🇸 LinkedIn USA & Global (Founders • SaaS • E-Commerce • Enterprise)"
                     : activeChannelTab === "LINKEDIN_UAE"
                       ? "🇦🇪 LinkedIn UAE / Dubai (Dubai • Abu Dhabi • MENA)"
-                      : "⚡ Personal LinkedIn Feed & Network"}
+                      : activeChannelTab === "THREADS_X"
+                        ? "🧵 Threads & 𝕏 X Live Agency Buyer Search"
+                        : "⚡ Personal LinkedIn Feed & Network"}
               </span>
             </div>
 
             <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#f8fafc", margin: "0 0 8px 0" }}>
               {activeChannelTab === "LINKEDIN_INDIA"
-                ? "🇮🇳 LinkedIn India Past-24h Buyer Feed & 1-Click Browser Scanner"
+                ? "🇮🇳 LinkedIn India Agency Buyer Feed & 1-Click Browser Scanner"
                 : activeChannelTab === "LINKEDIN_USA"
-                  ? "🇺🇸 LinkedIn USA Past-24h Buyer Feed & 1-Click Browser Scanner"
+                  ? "🇺🇸 LinkedIn USA Agency Buyer Feed & 1-Click Browser Scanner"
                   : activeChannelTab === "LINKEDIN_UAE"
-                    ? "🇦🇪 LinkedIn UAE / Dubai Past-24h Buyer Feed & 1-Click Browser Scanner"
-                    : "⚡ How to Fetch Leads From Your Personal LinkedIn Feed Without Sharing Your Login"}
+                    ? "🇦🇪 LinkedIn UAE / Dubai Agency Buyer Feed & 1-Click Browser Scanner"
+                    : activeChannelTab === "THREADS_X"
+                      ? "🧵 Threads & 𝕏 X (Twitter) Live Agency / Production House Buyer Search"
+                      : "⚡ How to Fetch Leads From Your Personal LinkedIn, X, or Threads Feed"}
             </h2>
 
             <p style={{ fontSize: "13px", color: "#cbd5e1", lineHeight: 1.6, margin: "0 0 16px 0", maxWidth: "880px" }}>
-              Giving your LinkedIn email/password to a cloud server can trigger LinkedIn security restrictions. Instead, because you are already logged into LinkedIn in your own browser:
+              Every preset search below targets decision makers explicitly asking for an <strong>Agency, Company, or AI Video Production House</strong> (strictly filtering out <code>&quot;hire someone&quot;</code> and <code>&quot;freelancer&quot;</code> posts).
               <br />
-              <strong>Step 1:</strong> Drag <strong>⚡ Scan LinkedIn Feed to DGS</strong> below to your browser Bookmarks Bar once.{" "}
-              <strong>Step 2:</strong> Click any{" "}
-              <strong>
-                {activeChannelTab === "LINKEDIN_INDIA"
-                  ? "🇮🇳 LinkedIn India (Past 24h)"
-                  : activeChannelTab === "LINKEDIN_USA"
-                    ? "🇺🇸 LinkedIn USA (Past 24h)"
-                    : activeChannelTab === "LINKEDIN_UAE"
-                      ? "🇦🇪 LinkedIn UAE (Past 24h)"
-                      : "LinkedIn (Past 24h)"}
-              </strong>{" "}
-              search button below (or open your personal LinkedIn Home Feed).{" "}
-              <strong>Step 3:</strong> Click <strong>⚡ Scan LinkedIn Feed to DGS</strong> in your Bookmarks Bar — it reads the visible posts on your screen, auto-tags the region, filters for warm buyer intent (&le;72h old), saves them directly into this tab, and sends your email alert!
+              <strong>Step 1:</strong> Drag <strong>⚡ Scan Feed to DGS</strong> below to your browser Bookmarks Bar once.{" "}
+              <strong>Step 2:</strong> Click any <strong>LinkedIn (Past 24h)</strong>, <strong>𝕏 X (Live)</strong>, or <strong>🧵 Threads</strong> search button below.{" "}
+              <strong>Step 3:</strong> Click <strong>⚡ Scan Feed to DGS</strong> in your Bookmarks Bar to qualify and save visible agency buyer posts directly into your Vault!
             </p>
 
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px", marginBottom: "18px" }}>
@@ -1197,7 +1559,7 @@ export default function IntentLeadsClientView({
                 onClick={(e) => {
                   e.preventDefault();
                   alert(
-                    "Drag this button to your browser Bookmarks Bar (Ctrl+Shift+B)! Then click it whenever you have LinkedIn open in your browser."
+                    "Drag this button to your browser Bookmarks Bar (Ctrl+Shift+B)! Then click it whenever you have LinkedIn, X, or Threads open in your browser."
                   );
                 }}
                 style={{
@@ -1216,7 +1578,7 @@ export default function IntentLeadsClientView({
                   cursor: "grab",
                 }}
               >
-                <Bookmark size={15} />⚡ Scan LinkedIn Feed to DGS
+                <Bookmark size={15} />⚡ Scan Feed to DGS
               </a>
 
               <a
@@ -1237,15 +1599,15 @@ export default function IntentLeadsClientView({
                   textDecoration: "none",
                 }}
               >
-                Open My LinkedIn Feed ↗
+                Open LinkedIn Feed ↗
               </a>
 
               <span style={{ fontSize: "12px", color: "#94a3b8" }}>
-                ← Drag the blue button to your Bookmarks Bar (<code>Ctrl+Shift+B</code>), then click it on any LinkedIn page.
+                ← Drag the blue button to your Bookmarks Bar (<code>Ctrl+Shift+B</code>), then click it on any LinkedIn, X, or Threads page.
               </span>
             </div>
 
-            {/* Region-Filtered LinkedIn Past-24h Search Cards */}
+            {/* Region-Filtered LinkedIn, X & Threads Search Cards */}
             <div
               style={{
                 display: "grid",
@@ -1293,7 +1655,7 @@ export default function IntentLeadsClientView({
                             borderRadius: "6px",
                           }}
                         >
-                          {regBadge.label} • Past 24h
+                          {regBadge.label} • Agency Buyers
                         </span>
                       </div>
                       <div style={{ fontSize: "13px", fontWeight: 700, color: "#f8fafc" }}>
@@ -1319,8 +1681,77 @@ export default function IntentLeadsClientView({
                           fontWeight: 700,
                         }}
                       >
-                        LinkedIn (Past 24h) <ArrowUpRight size={12} />
+                        LinkedIn (24h) <ArrowUpRight size={12} />
                       </a>
+
+                      {preset.linkedinSearchWeekUrl && (
+                        <a
+                          href={preset.linkedinSearchWeekUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            background: "rgba(59, 130, 246, 0.22)",
+                            color: "#93c5fd",
+                            border: "1px solid rgba(59, 130, 246, 0.45)",
+                            textDecoration: "none",
+                            padding: "6px 11px",
+                            borderRadius: "8px",
+                            fontSize: "11px",
+                            fontWeight: 700,
+                          }}
+                        >
+                          LinkedIn (Week) <ArrowUpRight size={12} />
+                        </a>
+                      )}
+
+                      {preset.xSearchUrl && (
+                        <a
+                          href={preset.xSearchUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            background: "rgba(100, 116, 139, 0.28)",
+                            color: "#f8fafc",
+                            border: "1px solid rgba(148, 163, 184, 0.4)",
+                            textDecoration: "none",
+                            padding: "6px 11px",
+                            borderRadius: "8px",
+                            fontSize: "11px",
+                            fontWeight: 700,
+                          }}
+                        >
+                          𝕏 X (Live) <ArrowUpRight size={12} />
+                        </a>
+                      )}
+
+                      {preset.threadsSearchUrl && (
+                        <a
+                          href={preset.threadsSearchUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            background: "rgba(236, 72, 153, 0.18)",
+                            color: "#f472b6",
+                            border: "1px solid rgba(236, 72, 153, 0.4)",
+                            textDecoration: "none",
+                            padding: "6px 11px",
+                            borderRadius: "8px",
+                            fontSize: "11px",
+                            fontWeight: 700,
+                          }}
+                        >
+                          🧵 Threads <ArrowUpRight size={12} />
+                        </a>
+                      )}
 
                       <a
                         href={preset.googleDork24hUrl}
@@ -1340,28 +1771,7 @@ export default function IntentLeadsClientView({
                           fontWeight: 600,
                         }}
                       >
-                        Google Dork (24h) <ExternalLink size={11} />
-                      </a>
-
-                      <a
-                        href={preset.googleDork3dUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "5px",
-                          background: "rgba(245, 158, 11, 0.16)",
-                          color: "#fbbf24",
-                          border: "1px solid rgba(245, 158, 11, 0.3)",
-                          textDecoration: "none",
-                          padding: "6px 11px",
-                          borderRadius: "8px",
-                          fontSize: "11px",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Google Dork (3d) <ExternalLink size={11} />
+                        Google (24h) <ExternalLink size={11} />
                       </a>
                     </div>
                   </div>
@@ -1506,111 +1916,303 @@ export default function IntentLeadsClientView({
       {/* LEADS STREAM (Shown on All Leads, LinkedIn India, LinkedIn USA, LinkedIn UAE, My LinkedIn Feed, and Reddit & Forums tabs) */}
       {activeChannelTab !== "GOOGLE_SEARCH" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-          {/* Freshness Quick-Pills + Region & Service Filters */}
+          {/* Glassmorphic Filter Bar + Visual Color Legend for New Leads */}
           <div
             style={{
               display: "flex",
-              flexWrap: "wrap",
-              gap: "10px",
-              alignItems: "center",
-              background: "rgba(15, 23, 42, 0.75)",
-              border: "1px solid rgba(148, 163, 184, 0.14)",
-              borderRadius: "12px",
-              padding: "14px 16px",
+              flexDirection: "column",
+              gap: "12px",
+              background:
+                "linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.08) 45%, rgba(124, 58, 237, 0.08) 100%), rgba(15, 23, 42, 0.72)",
+              backdropFilter: "blur(24px) saturate(165%)",
+              WebkitBackdropFilter: "blur(24px) saturate(165%)",
+              border: "1px solid rgba(255, 255, 255, 0.14)",
+              boxShadow: "0 12px 32px -8px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.15)",
+              borderRadius: "16px",
+              padding: "16px 18px",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "12px" }}>
-              <Clock size={14} /> Freshness:
-            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#cbd5e1", fontSize: "12px", fontWeight: 700 }}>
+                <Clock size={14} /> Freshness:
+              </div>
 
-            {[
-              { key: "ALL", label: "All Fresh (Past Week)" },
-              { key: "1H_12H", label: "⚡ 1h to 12h Old" },
-              { key: "24H", label: "🔥 Past 24 Hours" },
-              { key: "3D", label: "📅 Past Week (2d–7d)" },
-            ].map((pill) => (
-              <button
-                key={pill.key}
-                type="button"
-                onClick={() => setFreshnessFilter(pill.key)}
-                style={{
-                  background:
-                    freshnessFilter === pill.key ? "rgba(37, 99, 235, 0.25)" : "rgba(2, 6, 23, 0.6)",
-                  color: freshnessFilter === pill.key ? "#60a5fa" : "#94a3b8",
-                  border:
-                    freshnessFilter === pill.key
-                      ? "1px solid #3b82f6"
-                      : "1px solid rgba(148, 163, 184, 0.2)",
-                  borderRadius: "8px",
-                  padding: "6px 12px",
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
-              >
-                {pill.label}
-              </button>
-            ))}
+              {[
+                { key: "ALL", label: "All Fresh (Past Week)" },
+                { key: "1H_12H", label: "✨ 1h to 12h New" },
+                { key: "24H", label: "🔥 Past 24 Hours" },
+                { key: "3D", label: "📅 Past Week (≤7 Days)" },
+              ].map((pill) => (
+                <button
+                  key={pill.key}
+                  type="button"
+                  onClick={() => setFreshnessFilter(pill.key)}
+                  style={{
+                    background:
+                      freshnessFilter === pill.key
+                        ? "linear-gradient(135deg, rgba(6, 182, 212, 0.32), rgba(124, 58, 237, 0.32))"
+                        : "rgba(15, 23, 42, 0.58)",
+                    backdropFilter: "blur(10px)",
+                    color: freshnessFilter === pill.key ? "#ffffff" : "#cbd5e1",
+                    border:
+                      freshnessFilter === pill.key
+                        ? "1px solid rgba(56, 189, 248, 0.6)"
+                        : "1px solid rgba(255, 255, 255, 0.12)",
+                    borderRadius: "10px",
+                    padding: "6px 12px",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  {pill.label}
+                </button>
+              ))}
 
-            {(activeChannelTab === "ALL" || activeChannelTab === "REDDIT_FORUMS") && (
               <select
+                aria-label="Filter by Region"
                 value={regionFilter}
-                onChange={(e) => setRegionFilter(e.target.value)}
+                onChange={(e) => {
+                  const nextRegion = e.target.value;
+                  setRegionFilter(nextRegion);
+                  if (
+                    nextRegion !== "ALL" &&
+                    (activeChannelTab === "LINKEDIN_INDIA" ||
+                      activeChannelTab === "LINKEDIN_USA" ||
+                      activeChannelTab === "LINKEDIN_UAE")
+                  ) {
+                    setActiveChannelTab("ALL");
+                  }
+                }}
                 style={{
-                  background: "#0f172a",
-                  color: "#e2e8f0",
-                  border: "1px solid rgba(148, 163, 184, 0.25)",
-                  borderRadius: "8px",
+                  background: "rgba(9, 13, 22, 0.78)",
+                  color: "#f1f5f9",
+                  border: "1px solid rgba(255, 255, 255, 0.16)",
+                  borderRadius: "10px",
                   padding: "7px 12px",
                   fontSize: "12px",
+                  cursor: "pointer",
                 }}
               >
                 <option value="ALL">All Regions (India / USA / UAE / Global)</option>
                 <option value="INDIA">🇮🇳 India</option>
-                <option value="USA">🇺🇸 USA & North America</option>
+                <option value="USA">🇺🇸 USA &amp; North America</option>
                 <option value="UAE_DUBAI">🇦🇪 UAE / Dubai</option>
                 <option value="UK">🇬🇧 UK</option>
                 <option value="GLOBAL">🌍 Global</option>
               </select>
-            )}
 
-            <select
-              value={serviceFilter}
-              onChange={(e) => setServiceFilter(e.target.value)}
-              style={{
-                background: "#0f172a",
-                color: "#e2e8f0",
-                border: "1px solid rgba(148, 163, 184, 0.25)",
-                borderRadius: "8px",
-                padding: "7px 12px",
-                fontSize: "12px",
-              }}
-            >
-              <option value="ALL">All DGS Services</option>
-              <option value="SEO">SEO (/services/seo/)</option>
-              <option value="AEO_GEO">AEO / GEO (/services/aeo-geo-aio/)</option>
-              <option value="WEB_DEV">Website Dev & AMC (/services/website-development/)</option>
-              <option value="AI_VIDEO">AI Video (/services/ai-video-production-agency/)</option>
-              <option value="PAID_MEDIA">Performance Marketing (/services/digital-marketing/)</option>
-              <option value="BRANDING">Branding & Social (/services/branding/)</option>
-            </select>
-
-            <div style={{ position: "relative", flex: "1 1 180px" }}>
-              <input
-                type="text"
-                placeholder="Filter by keyword, city (Mumbai, USA, Dubai)..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+              <select
+                aria-label="Filter by Service"
+                value={serviceFilter}
+                onChange={(e) => setServiceFilter(e.target.value)}
                 style={{
-                  width: "100%",
-                  background: "#0f172a",
-                  color: "#e2e8f0",
-                  border: "1px solid rgba(148, 163, 184, 0.25)",
-                  borderRadius: "8px",
+                  background: "rgba(9, 13, 22, 0.78)",
+                  color: "#f1f5f9",
+                  border: "1px solid rgba(255, 255, 255, 0.16)",
+                  borderRadius: "10px",
                   padding: "7px 12px",
                   fontSize: "12px",
+                  cursor: "pointer",
                 }}
-              />
+              >
+                <option value="ALL">All DGS Services</option>
+                <option value="SEO">SEO (/services/seo/)</option>
+                <option value="AEO_GEO">AEO / GEO (/services/aeo-geo-aio/)</option>
+                <option value="WEB_DEV">Website Dev &amp; AMC (/services/website-development/)</option>
+                <option value="AI_VIDEO">AI Video (/services/ai-video-production-agency/)</option>
+                <option value="PAID_MEDIA">Performance Marketing (/services/digital-marketing/)</option>
+                <option value="BRANDING">Branding &amp; Social (/services/branding/)</option>
+              </select>
+
+              <select
+                aria-label="Filter by Lead Status"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                style={{
+                  background: "rgba(9, 13, 22, 0.78)",
+                  color: "#f1f5f9",
+                  border: "1px solid rgba(255, 255, 255, 0.16)",
+                  borderRadius: "10px",
+                  padding: "7px 12px",
+                  fontSize: "12px",
+                  cursor: "pointer",
+                }}
+              >
+                <option value="ALL">All Lead Statuses</option>
+                <option value="NEW">🟢 New (Uncontacted)</option>
+                <option value="CONTACTED">✓ Contacted</option>
+                <option value="ARCHIVED">📦 Archived in Vault</option>
+              </select>
+
+              <select
+                aria-label="Sort Leads Order"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as "LATEST_FIRST" | "SCORE_FIRST")}
+                style={{
+                  background: "linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(6, 182, 212, 0.18)), rgba(9, 13, 22, 0.85)",
+                  color: "#6ee7b7",
+                  border: "1px solid rgba(52, 211, 153, 0.48)",
+                  borderRadius: "10px",
+                  padding: "7px 12px",
+                  fontSize: "12px",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                }}
+              >
+                <option value="LATEST_FIRST" style={{ background: "#090d16", color: "#6ee7b7" }}>
+                  ⚡ Sort: Latest Leads on Top (1h → 7d)
+                </option>
+                <option value="SCORE_FIRST" style={{ background: "#090d16", color: "#f8fafc" }}>
+                  🔥 Sort: Highest Buyer Score First
+                </option>
+              </select>
+
+              <div style={{ position: "relative", flex: "1 1 180px" }}>
+                <input
+                  type="text"
+                  placeholder="Filter by keyword, city (Mumbai, USA, Dubai)..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: "100%",
+                    background: "rgba(9, 13, 22, 0.78)",
+                    color: "#f1f5f9",
+                    border: "1px solid rgba(255, 255, 255, 0.16)",
+                    borderRadius: "10px",
+                    padding: "7px 12px",
+                    fontSize: "12px",
+                  }}
+                />
+              </div>
+
+              {(freshnessFilter !== "ALL" ||
+                regionFilter !== "ALL" ||
+                serviceFilter !== "ALL" ||
+                statusFilter !== "ALL" ||
+                searchQuery.trim() !== "") && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFreshnessFilter("ALL");
+                    setRegionFilter("ALL");
+                    setServiceFilter("ALL");
+                    setStatusFilter("ALL");
+                    setSearchQuery("");
+                  }}
+                  style={{
+                    background: "rgba(239, 68, 68, 0.18)",
+                    color: "#fca5a5",
+                    border: "1px solid rgba(248, 113, 113, 0.4)",
+                    borderRadius: "10px",
+                    padding: "6px 12px",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  Reset Filters
+                </button>
+              )}
+
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 800,
+                  color: "#6ee7b7",
+                  background: "linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(6, 182, 212, 0.18))",
+                  border: "1px solid rgba(52, 211, 153, 0.42)",
+                  padding: "6px 12px",
+                  borderRadius: "10px",
+                }}
+              >
+                Showing {filteredSignals.length} of {signals.length} Leads (Latest on Top)
+              </span>
+            </div>
+
+            {/* Color Legend Bar for New Leads vs 24h vs Past Week vs Contacted */}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                gap: "12px",
+                paddingTop: "10px",
+                borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+                fontSize: "11px",
+                color: "#cbd5e1",
+              }}
+            >
+              <span style={{ fontWeight: 800, color: "#f8fafc", letterSpacing: "0.03em" }}>
+                🎨 LEAD COLOR GUIDE:
+              </span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "linear-gradient(135deg, rgba(16, 185, 129, 0.24), rgba(6, 182, 212, 0.20))",
+                  border: "1px solid rgba(52, 211, 153, 0.48)",
+                  color: "#6ee7b7",
+                  padding: "3px 10px",
+                  borderRadius: "999px",
+                  fontWeight: 800,
+                }}
+              >
+                ✨ New &amp; Ultra-Fresh (1h–12h Unread) — Emerald-Cyan Aurora Glass
+              </span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(99, 102, 241, 0.18))",
+                  border: "1px solid rgba(56, 189, 248, 0.45)",
+                  color: "#7dd3fc",
+                  padding: "3px 10px",
+                  borderRadius: "999px",
+                  fontWeight: 700,
+                }}
+              >
+                🔥 Active 24h Window (12h–24h) — Sky-Indigo Glass
+              </span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(236, 72, 153, 0.18))",
+                  border: "1px solid rgba(192, 132, 252, 0.42)",
+                  color: "#f0abfc",
+                  padding: "3px 10px",
+                  borderRadius: "999px",
+                  fontWeight: 700,
+                }}
+              >
+                📅 Past Week (2d–7d) — Violet-Magenta-Orange Glass
+              </span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(217, 119, 6, 0.16))",
+                  border: "1px solid rgba(251, 191, 36, 0.42)",
+                  color: "#fde68a",
+                  padding: "3px 10px",
+                  borderRadius: "999px",
+                  fontWeight: 700,
+                }}
+              >
+                ✓ Contacted — Amber-Gold Glass
+              </span>
             </div>
           </div>
 
@@ -1619,6 +2221,7 @@ export default function IntentLeadsClientView({
             <div
               style={{
                 background: "rgba(15, 23, 42, 0.7)",
+                backdropFilter: "blur(20px)",
                 border: "1px dashed rgba(148, 163, 184, 0.25)",
                 borderRadius: "16px",
                 padding: "36px 24px",
@@ -1628,65 +2231,131 @@ export default function IntentLeadsClientView({
               <Radar size={34} color="#60a5fa" style={{ margin: "0 auto 12px auto" }} />
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#f8fafc", margin: "0 0 6px 0" }}>
                 {activeChannelTab === "LINKEDIN_INDIA"
-                  ? "No Saved 🇮🇳 LinkedIn India Leads in This Filter Yet — Use the Past-24h Buttons Above!"
+                  ? "No Saved 🇮🇳 LinkedIn India Leads Matching Current Filters"
                   : activeChannelTab === "LINKEDIN_USA"
-                    ? "No Saved 🇺🇸 LinkedIn USA Leads in This Filter Yet — Use the Past-24h Buttons Above!"
+                    ? "No Saved 🇺🇸 LinkedIn USA Leads Matching Current Filters"
                     : activeChannelTab === "LINKEDIN_UAE"
-                      ? "No Saved 🇦🇪 LinkedIn UAE / Dubai Leads in This Filter Yet — Use the Past-24h Buttons Above!"
-                      : "No Fresh (≤72h) Warm Buyer Leads in This Filter Yet"}
+                      ? "No Saved 🇦🇪 LinkedIn UAE / Dubai Leads Matching Current Filters"
+                      : "No Warm Buyer Leads Matching Current Filters"}
               </h3>
               <p style={{ fontSize: "13px", color: "#94a3b8", maxWidth: "620px", margin: "0 auto 18px auto", lineHeight: 1.55 }}>
-                {activeChannelTab === "LINKEDIN_INDIA" ||
-                activeChannelTab === "LINKEDIN_USA" ||
-                activeChannelTab === "LINKEDIN_UAE" ||
-                activeChannelTab === "MY_LINKEDIN_FEED"
-                  ? "Click any 'LinkedIn (Past 24h)' or 'Google Dork (24h)' button above to open live LinkedIn buyer posts in your browser, then click the '⚡ Scan LinkedIn Feed to DGS' bookmarklet (or paste a post above) to populate this tab and trigger an email alert."
-                  : "Click 'Fetch Fresh Leads Now (+ Email Alert)' to scan the last 1h–72h of buyer requests, or switch to the LinkedIn India / LinkedIn USA tabs."}
+                {freshnessFilter !== "ALL" ||
+                regionFilter !== "ALL" ||
+                serviceFilter !== "ALL" ||
+                statusFilter !== "ALL" ||
+                searchQuery.trim() !== ""
+                  ? "Try clicking 'Reset Filters' below to view all verified buyer leads in this channel."
+                  : "Click any 'LinkedIn (Past 24h)' or 'LinkedIn (Past Week)' button above to open live LinkedIn buyer posts in your browser, or click 'Fetch Fresh Leads Now'."}
               </p>
-              <button
-                type="button"
-                disabled={isScanning}
-                onClick={handleRunLiveDiscovery}
-                style={{
-                  background: "#2563eb",
-                  color: "#ffffff",
-                  border: "none",
-                  padding: "10px 18px",
-                  borderRadius: "10px",
-                  fontSize: "13px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
-              >
-                Fetch Fresh Leads Now
-              </button>
+              <div style={{ display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap" }}>
+                {(freshnessFilter !== "ALL" ||
+                  regionFilter !== "ALL" ||
+                  serviceFilter !== "ALL" ||
+                  statusFilter !== "ALL" ||
+                  searchQuery.trim() !== "") && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFreshnessFilter("ALL");
+                      setRegionFilter("ALL");
+                      setServiceFilter("ALL");
+                      setStatusFilter("ALL");
+                      setSearchQuery("");
+                    }}
+                    style={{
+                      background: "rgba(239, 68, 68, 0.18)",
+                      color: "#f87171",
+                      border: "1px solid rgba(239, 68, 68, 0.4)",
+                      padding: "10px 18px",
+                      borderRadius: "10px",
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Reset All Filters
+                  </button>
+                )}
+                <button
+                  type="button"
+                  disabled={isScanning}
+                  onClick={handleRunLiveDiscovery}
+                  style={{
+                    background: "linear-gradient(135deg, #06b6d4, #7c3aed)",
+                    color: "#ffffff",
+                    border: "none",
+                    padding: "10px 18px",
+                    borderRadius: "10px",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  Fetch Fresh Leads Now
+                </button>
+              </div>
             </div>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              {filteredSignals.map((sig) => {
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              {filteredSignals.map((sig, index) => {
                 const plat = PLATFORM_LABELS[sig.source_platform] || PLATFORM_LABELS.LINKEDIN_PUBLIC;
                 const regBadge = REGION_BADGES[sig.target_region] || REGION_BADGES.GLOBAL;
                 const ageHours = sig.age_hours ?? 6;
                 const tierKey = ageHours <= 12 ? "1H_12H" : ageHours <= 24 ? "24H" : "3D";
                 const freshBadge = FRESHNESS_BADGES[tierKey];
+                const isNewUltraFresh = sig.status === "NEW" && ageHours <= 12;
+                const isNew24h = sig.status === "NEW" && ageHours > 12 && ageHours <= 24;
+                const isContacted = sig.status === "CONTACTED";
+
+                // Distinct Glassmorphism & Subtle Color Gradients per Lead Tier
+                const cardBackground = isContacted
+                  ? "linear-gradient(135deg, rgba(245, 158, 11, 0.17) 0%, rgba(217, 119, 6, 0.10) 48%, rgba(15, 23, 42, 0.74) 100%)"
+                  : isNewUltraFresh
+                    ? "linear-gradient(135deg, rgba(16, 185, 129, 0.21) 0%, rgba(6, 182, 212, 0.15) 48%, rgba(15, 23, 42, 0.68) 100%)"
+                    : isNew24h
+                      ? "linear-gradient(135deg, rgba(14, 165, 233, 0.19) 0%, rgba(99, 102, 241, 0.14) 50%, rgba(15, 23, 42, 0.72) 100%)"
+                      : "linear-gradient(135deg, rgba(139, 92, 246, 0.17) 0%, rgba(236, 72, 153, 0.11) 52%, rgba(249, 115, 22, 0.08) 100%), rgba(15, 23, 42, 0.74)";
+
+                const cardBorder = isContacted
+                  ? "1px solid rgba(251, 191, 36, 0.45)"
+                  : isNewUltraFresh
+                    ? "1px solid rgba(52, 211, 153, 0.52)"
+                    : isNew24h
+                      ? "1px solid rgba(56, 189, 248, 0.46)"
+                      : "1px solid rgba(192, 132, 252, 0.40)";
+
+                const cardLeftAccent = isContacted
+                  ? "5px solid #f59e0b"
+                  : isNewUltraFresh
+                    ? "5px solid #10b981"
+                    : isNew24h
+                      ? "5px solid #38bdf8"
+                      : "5px solid #c084fc";
+
+                const cardShadow = isNewUltraFresh
+                  ? "0 18px 42px -10px rgba(16, 185, 129, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.22)"
+                  : isNew24h
+                    ? "0 16px 38px -10px rgba(14, 165, 233, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.18)"
+                    : "0 14px 34px -10px rgba(139, 92, 246, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.15)";
 
                 return (
                   <div
                     key={sig.id}
                     style={{
-                      background: "rgba(15, 23, 42, 0.85)",
-                      border:
-                        ageHours <= 12
-                          ? "1px solid rgba(16, 185, 129, 0.4)"
-                          : "1px solid rgba(148, 163, 184, 0.16)",
-                      borderRadius: "14px",
-                      padding: "20px",
+                      background: cardBackground,
+                      backdropFilter: "blur(24px) saturate(165%)",
+                      WebkitBackdropFilter: "blur(24px) saturate(165%)",
+                      border: cardBorder,
+                      borderLeft: cardLeftAccent,
+                      boxShadow: cardShadow,
+                      borderRadius: "18px",
+                      padding: "20px 22px",
                       display: "flex",
                       flexDirection: "column",
                       gap: "14px",
                     }}
                   >
-                    {/* Top Row: Freshness + Platform + Region + Service + Intent Score */}
+                    {/* Top Row: NEW LEAD Pill + Freshness + Platform + Region + Service + Intent Score */}
                     <div
                       style={{
                         display: "flex",
@@ -1697,6 +2366,60 @@ export default function IntentLeadsClientView({
                       }}
                     >
                       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px" }}>
+                        {sortBy === "LATEST_FIRST" && index < 3 && (
+                          <span
+                            style={{
+                              background: "linear-gradient(135deg, #06b6d4 0%, #7c3aed 100%)",
+                              color: "#ffffff",
+                              border: "1px solid rgba(255, 255, 255, 0.28)",
+                              padding: "4px 10px",
+                              borderRadius: "999px",
+                              fontSize: "11px",
+                              fontWeight: 900,
+                              letterSpacing: "0.04em",
+                            }}
+                          >
+                            ⚡ #{index + 1} LATEST
+                          </span>
+                        )}
+
+                        {isNewUltraFresh && (
+                          <span
+                            style={{
+                              background: "linear-gradient(135deg, #10b981 0%, #06b6d4 100%)",
+                              color: "#ffffff",
+                              boxShadow: "0 0 18px rgba(16, 185, 129, 0.55)",
+                              padding: "4px 11px",
+                              borderRadius: "999px",
+                              fontSize: "11px",
+                              fontWeight: 900,
+                              letterSpacing: "0.04em",
+                            }}
+                          >
+                            ✨ NEW LEAD
+                          </span>
+                        )}
+
+                        {!isNewUltraFresh && sig.status === "NEW" && (
+                          <span
+                            style={{
+                              background: isNew24h
+                                ? "linear-gradient(135deg, rgba(14, 165, 233, 0.35), rgba(99, 102, 241, 0.35))"
+                                : "linear-gradient(135deg, rgba(139, 92, 246, 0.32), rgba(236, 72, 153, 0.28))",
+                              color: isNew24h ? "#bae6fd" : "#f5d0fe",
+                              border: isNew24h
+                                ? "1px solid rgba(56, 189, 248, 0.55)"
+                                : "1px solid rgba(192, 132, 252, 0.5)",
+                              padding: "4px 10px",
+                              borderRadius: "999px",
+                              fontSize: "11px",
+                              fontWeight: 800,
+                            }}
+                          >
+                            {isNew24h ? "🔥 24H ACTIVE BUYER" : "🟣 UNREAD BUYER"}
+                          </span>
+                        )}
+
                         <span
                           style={{
                             background: freshBadge.bg,
@@ -1739,8 +2462,9 @@ export default function IntentLeadsClientView({
 
                         <span
                           style={{
-                            background: "rgba(99, 102, 241, 0.16)",
-                            color: "#a5b4fc",
+                            background: "rgba(99, 102, 241, 0.20)",
+                            color: "#c7d2fe",
+                            border: "1px solid rgba(129, 140, 248, 0.32)",
                             padding: "4px 10px",
                             borderRadius: "999px",
                             fontSize: "11px",
@@ -1752,9 +2476,9 @@ export default function IntentLeadsClientView({
 
                         <span
                           style={{
-                            background: "rgba(16, 185, 129, 0.14)",
-                            color: "#34d399",
-                            border: "1px solid rgba(52, 211, 153, 0.35)",
+                            background: "rgba(16, 185, 129, 0.18)",
+                            color: "#6ee7b7",
+                            border: "1px solid rgba(52, 211, 153, 0.42)",
                             padding: "4px 10px",
                             borderRadius: "999px",
                             fontSize: "11px",
@@ -1767,12 +2491,13 @@ export default function IntentLeadsClientView({
                         {sig.status === "CONTACTED" && (
                           <span
                             style={{
-                              background: "rgba(59, 130, 246, 0.2)",
-                              color: "#93c5fd",
+                              background: "rgba(245, 158, 11, 0.24)",
+                              color: "#fde68a",
+                              border: "1px solid rgba(251, 191, 36, 0.45)",
                               padding: "4px 10px",
                               borderRadius: "999px",
                               fontSize: "11px",
-                              fontWeight: 700,
+                              fontWeight: 800,
                             }}
                           >
                             ✓ Contacted
@@ -1780,20 +2505,33 @@ export default function IntentLeadsClientView({
                         )}
                       </div>
 
-                      <div style={{ fontSize: "11px", color: "#64748b", display: "flex", alignItems: "center", gap: "5px" }}>
-                        <Clock size={12} />
-                        Fetched {new Date(sig.discovered_at).toLocaleString()}
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          color: "#e2e8f0",
+                          background: "rgba(15, 23, 42, 0.55)",
+                          border: "1px solid rgba(255, 255, 255, 0.14)",
+                          padding: "4px 10px",
+                          borderRadius: "999px",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                        }}
+                      >
+                        <Clock size={12} color="#34d399" />
+                        Posted ~{ageHours}h ago • Fetched {formatIstDateTime(sig.discovered_at)}
                       </div>
                     </div>
 
-                    {/* Author, Company Legitimacy & Post Text */}
+                    {/* Author, Company Legitimacy & Full Untruncated Post Message */}
                     <div>
-                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                        <span style={{ fontSize: "15px", fontWeight: 700, color: "#f8fafc" }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                        <span style={{ fontSize: "16px", fontWeight: 800, color: "#ffffff" }}>
                           {sig.author_name ? `${sig.author_name}` : sig.post_title || "Active Service Buyer"}
                         </span>
                         {sig.author_role ? (
-                          <span style={{ fontWeight: 500, color: "#94a3b8", fontSize: "13px" }}>
+                          <span style={{ fontWeight: 500, color: "#cbd5e1", fontSize: "13px" }}>
                             • {sig.author_role}
                           </span>
                         ) : null}
@@ -1802,17 +2540,17 @@ export default function IntentLeadsClientView({
                           style={{
                             background:
                               sig.company_legitimacy_status === "VERIFIED_LIVE_COMPANY"
-                                ? "rgba(16, 185, 129, 0.2)"
+                                ? "rgba(16, 185, 129, 0.22)"
                                 : sig.company_legitimacy_status === "VERIFIED_DECISION_MAKER"
-                                  ? "rgba(59, 130, 246, 0.2)"
-                                  : "rgba(148, 163, 184, 0.16)",
+                                  ? "rgba(59, 130, 246, 0.22)"
+                                  : "rgba(148, 163, 184, 0.18)",
                             color:
                               sig.company_legitimacy_status === "VERIFIED_LIVE_COMPANY"
-                                ? "#34d399"
+                                ? "#6ee7b7"
                                 : sig.company_legitimacy_status === "VERIFIED_DECISION_MAKER"
-                                  ? "#60a5fa"
-                                  : "#cbd5e1",
-                            border: "1px solid rgba(59, 130, 246, 0.28)",
+                                  ? "#93c5fd"
+                                  : "#e2e8f0",
+                            border: "1px solid rgba(255, 255, 255, 0.18)",
                             padding: "2px 9px",
                             borderRadius: "6px",
                             fontSize: "11px",
@@ -1828,8 +2566,9 @@ export default function IntentLeadsClientView({
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
-                              background: "rgba(16, 185, 129, 0.15)",
-                              color: "#34d399",
+                              background: "rgba(16, 185, 129, 0.18)",
+                              color: "#6ee7b7",
+                              border: "1px solid rgba(52, 211, 153, 0.35)",
                               padding: "2px 8px",
                               borderRadius: "6px",
                               fontSize: "11px",
@@ -1844,8 +2583,9 @@ export default function IntentLeadsClientView({
                         {sig.buyer_persona_type && (
                           <span
                             style={{
-                              background: "rgba(168, 85, 247, 0.16)",
-                              color: "#c084fc",
+                              background: "rgba(168, 85, 247, 0.20)",
+                              color: "#e9d5ff",
+                              border: "1px solid rgba(192, 132, 252, 0.3)",
                               padding: "2px 8px",
                               borderRadius: "6px",
                               fontSize: "11px",
@@ -1859,8 +2599,9 @@ export default function IntentLeadsClientView({
                         {sig.contact_hint ? (
                           <span
                             style={{
-                              background: "rgba(245, 158, 11, 0.18)",
-                              color: "#fbbf24",
+                              background: "rgba(245, 158, 11, 0.20)",
+                              color: "#fde68a",
+                              border: "1px solid rgba(251, 191, 36, 0.35)",
                               padding: "2px 8px",
                               borderRadius: "6px",
                               fontSize: "11px",
@@ -1872,23 +2613,101 @@ export default function IntentLeadsClientView({
                         ) : null}
                       </div>
 
-                      <p
+                      {/* VERIFICATION LINKS, WEBSITE, EMAIL ID & PHONE NUMBER PANEL (Frosted Glass) */}
+                      <div
                         style={{
-                          fontSize: "13px",
-                          color: "#cbd5e1",
-                          lineHeight: 1.6,
-                          margin: "0 0 10px 0",
-                          background: "rgba(2, 6, 23, 0.55)",
-                          padding: "12px 14px",
-                          borderRadius: "10px",
-                          border: "1px solid rgba(148, 163, 184, 0.1)",
+                          display: "grid",
+                          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                          gap: "10px",
+                          background: "linear-gradient(135deg, rgba(15, 23, 42, 0.58), rgba(2, 6, 23, 0.48))",
+                          backdropFilter: "blur(14px)",
+                          border: "1px solid rgba(255, 255, 255, 0.14)",
+                          boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.10)",
+                          borderRadius: "12px",
+                          padding: "12px 15px",
+                          marginBottom: "10px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontSize: "10px", fontWeight: 800, color: "#7dd3fc", letterSpacing: "0.04em", marginBottom: "3px" }}>
+                            🔗 LINKEDIN / SOURCE VERIFICATION LINK
+                          </div>
+                          <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+                            <a
+                              href={sig.post_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: "#bae6fd", fontWeight: 700, textDecoration: "underline", wordBreak: "break-all" }}
+                            >
+                              {sig.post_url} ↗
+                            </a>
+                            {sig.author_profile_url && sig.author_profile_url !== sig.post_url && (
+                              <a
+                                href={sig.author_profile_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: "#e2e8f0", fontSize: "11px", textDecoration: "underline", wordBreak: "break-all" }}
+                              >
+                                👤 Author Profile: {sig.author_profile_url} ↗
+                              </a>
+                            )}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div style={{ fontSize: "10px", fontWeight: 800, color: "#6ee7b7", letterSpacing: "0.04em", marginBottom: "3px" }}>
+                            🌐 COMPANY &amp; WEBSITE LINK
+                          </div>
+                          <div style={{ color: "#f1f5f9" }}>
+                            {sig.company_name ? <strong style={{ display: "block", marginBottom: "2px" }}>{sig.company_name}</strong> : null}
+                            {sig.company_domain ? (
+                              <a
+                                href={`https://${sig.company_domain.replace(/^https?:\/\//, "")}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: "#6ee7b7", fontWeight: 700, textDecoration: "underline", wordBreak: "break-all" }}
+                              >
+                                https://{sig.company_domain.replace(/^https?:\/\//, "")} ↗
+                              </a>
+                            ) : (
+                              <span style={{ color: "#cbd5e1", fontSize: "11px" }}>No external website listed — verify via profile link</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div style={{ fontSize: "10px", fontWeight: 800, color: "#fde68a", letterSpacing: "0.04em", marginBottom: "3px" }}>
+                            📧 EMAIL ID &amp; 📞 PHONE / DIRECT CONTACT
+                          </div>
+                          <div style={{ color: "#fef08a", fontWeight: 600, wordBreak: "break-word", lineHeight: 1.45 }}>
+                            {sig.contact_hint || "Direct Message via LinkedIn / Reddit Profile Link"}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          fontSize: "14px",
+                          color: "#f8fafc",
+                          lineHeight: 1.68,
+                          margin: "0 0 12px 0",
+                          background: "rgba(2, 6, 23, 0.46)",
+                          backdropFilter: "blur(12px)",
+                          padding: "14px 16px",
+                          borderRadius: "12px",
+                          border: "1px solid rgba(255, 255, 255, 0.12)",
+                          whiteSpace: "pre-wrap",
+                          wordBreak: "break-word",
+                          overflow: "visible",
+                          maxHeight: "none",
                         }}
                       >
                         {sig.post_text}
-                      </p>
+                      </div>
 
                       {sig.ai_reasoning && (
-                        <div style={{ fontSize: "12px", color: "#93c5fd", display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
+                        <div style={{ fontSize: "12px", color: "#bae6fd", display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
                           <Sparkles size={13} />
                           <span>
                             <strong>AI Buyer-Intent Verification:</strong> {sig.ai_reasoning}
@@ -1920,29 +2739,30 @@ export default function IntentLeadsClientView({
                               display: "grid",
                               gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
                               gap: "10px",
-                              background: "rgba(15, 23, 42, 0.9)",
-                              border: "1px solid rgba(16, 185, 129, 0.25)",
-                              borderRadius: "10px",
-                              padding: "12px",
+                              background: "linear-gradient(135deg, rgba(15, 23, 42, 0.55), rgba(2, 6, 23, 0.45))",
+                              backdropFilter: "blur(12px)",
+                              border: "1px solid rgba(255, 255, 255, 0.12)",
+                              borderRadius: "12px",
+                              padding: "12px 14px",
                               marginTop: "8px",
                               fontSize: "12px",
                             }}
                           >
                             {breakdown && (
                               <div>
-                                <div style={{ fontSize: "11px", fontWeight: 800, color: "#34d399", marginBottom: "4px" }}>
-                                  🎯 INTENT & BUYING STAGE BREAKDOWN
+                                <div style={{ fontSize: "11px", fontWeight: 800, color: "#6ee7b7", marginBottom: "4px" }}>
+                                  🎯 INTENT &amp; BUYING STAGE BREAKDOWN
                                 </div>
-                                <div style={{ color: "#e2e8f0", marginBottom: "3px" }}>
+                                <div style={{ color: "#f1f5f9", marginBottom: "3px" }}>
                                   <strong>Stage:</strong> {String(breakdown.buyingStage || "ACTIVE_SHORTLIST").replace(/_/g, " ")}
                                 </div>
                                 {Array.isArray(breakdown.painPointsDetected) && breakdown.painPointsDetected.length > 0 && (
-                                  <div style={{ color: "#cbd5e1", marginBottom: "3px" }}>
+                                  <div style={{ color: "#e2e8f0", marginBottom: "3px" }}>
                                     <strong>Pain Point:</strong> {breakdown.painPointsDetected.join(" • ")}
                                   </div>
                                 )}
                                 {breakdown.budgetOrScaleSignal && (
-                                  <div style={{ color: "#fbbf24" }}>
+                                  <div style={{ color: "#fde68a" }}>
                                     <strong>Scale / Budget Signal:</strong> {breakdown.budgetOrScaleSignal}
                                   </div>
                                 )}
@@ -1951,21 +2771,21 @@ export default function IntentLeadsClientView({
 
                             {playbook && (
                               <div>
-                                <div style={{ fontSize: "11px", fontWeight: 800, color: "#60a5fa", marginBottom: "4px" }}>
-                                  🏢 COMPANY VALIDATION & CONVERSION PLAYBOOK
+                                <div style={{ fontSize: "11px", fontWeight: 800, color: "#7dd3fc", marginBottom: "4px" }}>
+                                  🏢 COMPANY VALIDATION &amp; CONVERSION PLAYBOOK
                                 </div>
                                 {playbook.companyVerificationNote && (
-                                  <div style={{ color: "#cbd5e1", marginBottom: "3px" }}>
+                                  <div style={{ color: "#e2e8f0", marginBottom: "3px" }}>
                                     <strong>Legitimacy Check:</strong> {playbook.companyVerificationNote}
                                   </div>
                                 )}
                                 {playbook.recommendedHook && (
-                                  <div style={{ color: "#e2e8f0", marginBottom: "3px" }}>
+                                  <div style={{ color: "#f1f5f9", marginBottom: "3px" }}>
                                     <strong>Winning Angle:</strong> {playbook.recommendedHook}
                                   </div>
                                 )}
                                 {playbook.caseStudyToMention && (
-                                  <div style={{ color: "#a5b4fc" }}>
+                                  <div style={{ color: "#d8b4fe" }}>
                                     <strong>DGS Proof to Share:</strong> {playbook.caseStudyToMention}
                                   </div>
                                 )}
@@ -1983,10 +2803,11 @@ export default function IntentLeadsClientView({
                           display: "grid",
                           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
                           gap: "12px",
-                          background: "rgba(30, 41, 59, 0.45)",
-                          borderRadius: "10px",
-                          padding: "12px",
-                          border: "1px solid rgba(59, 130, 246, 0.18)",
+                          background: "rgba(15, 23, 42, 0.46)",
+                          backdropFilter: "blur(12px)",
+                          borderRadius: "12px",
+                          padding: "12px 14px",
+                          border: "1px solid rgba(255, 255, 255, 0.12)",
                         }}
                       >
                         {sig.suggested_reply && (

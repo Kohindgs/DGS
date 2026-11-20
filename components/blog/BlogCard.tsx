@@ -21,14 +21,16 @@ export function BlogCard({ post }: { post: BlogPostMeta }) {
   return (
     <article className={styles.card}>
       {post.featuredImage?.src ? (
-        <Link href={post.path} className={styles.cardImgWrap} tabIndex={-1} aria-hidden="true">
+        <Link href={post.path} className={styles.cardImgWrap} aria-label={post.title}>
           <Image
             src={post.featuredImage.src}
             alt={post.featuredImage.alt || post.title}
-            fill
+            width={640}
+            height={360}
             unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1600px) 33vw, 25vw"
             className={styles.cardImg}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
             loading="lazy"
           />
         </Link>

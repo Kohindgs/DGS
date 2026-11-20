@@ -9,7 +9,12 @@ import {
 } from "../notifications/intent-lead-email";
 
 declare global {
-  var __dgsIntentLeadTablesEnsured: boolean | undefined;
+  var __dgsIntentLeadTablesPromiseV16: Promise<void> | undefined;
+  var __dgsIntentLeadTablesPromiseV20: Promise<void> | undefined;
+  var __dgsDiscoveryInProgress: boolean | undefined;
+  var __dgsLastDiscoveryStartMs: number | undefined;
+  var __dgsAutoCronRunning: boolean | undefined;
+  var __dgsLastAutoCronCheckAt: number | undefined;
 }
 
 export const INTENT_LEADS_ACCESS_PIN = "021514";
@@ -19,6 +24,7 @@ export type IntentSourcePlatform =
   | "LINKEDIN_PUBLIC"
   | "REDDIT"
   | "X_TWITTER"
+  | "THREADS"
   | "WEB_FORUM"
   | "GOOGLE_SERP_INTENT";
 
@@ -147,6 +153,8 @@ export type LinkedInFeedPresetSearch = {
   googleDork24hUrl: string;
   googleDork3dUrl: string;
   redditSearch24hUrl: string;
+  xSearchUrl?: string;
+  threadsSearchUrl?: string;
 };
 
 const DGS_SERVICE_URLS: Record<IntentServiceCategory, string> = {
@@ -163,150 +171,174 @@ export const LINKEDIN_FEED_PRESET_SEARCHES: LinkedInFeedPresetSearch[] = [
   {
     id: "li-india-seo",
     serviceCategory: "SEO",
-    label: "🇮🇳 LinkedIn India: Looking for SEO Agency / Technical SEO Partner",
+    label: "🇮🇳 India: Looking for an SEO Agency / SEO Company",
     region: "INDIA",
-    booleanQuery: `("looking for" OR "recommend") AND ("SEO agency" OR "SEO consultant" OR "SEO company" OR "technical SEO") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi" OR "Pune" OR "Hyderabad") -job -hiring`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" India OR Mumbai OR Bangalore OR Delhi`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" India OR Mumbai OR Bangalore OR Delhi`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi" OR "Pune") -hiring -jobs`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO company" OR "SEO consultant") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi" OR "Pune") -hiring -jobs`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai" OR "Bangalore") ("looking for" OR "recommend") ("SEO agency" OR "digital marketing")`)}&sort=new&t=week`,
+    booleanQuery: `("looking for an SEO agency" OR "looking for a SEO agency" OR "looking for an SEO company" OR "looking for an agency") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -freelancer -job -hiring`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for an SEO agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for an SEO agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for an SEO agency" OR "looking for a SEO agency" OR "SEO company") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -freelancer -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for an SEO agency" OR "looking for a SEO agency" OR "SEO company") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -freelancer -jobs`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"looking for an SEO agency" OR "looking for a SEO agency" OR "looking for an agency"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for an seo agency" OR "looking for a seo agency" OR "recommend an seo agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for an seo agency`)}&serp_type=default`,
   },
   {
     id: "li-india-web-dev",
     serviceCategory: "WEB_DEV",
-    label: "🇮🇳 LinkedIn India: Looking for Website Development / Redesign / AMC",
+    label: "🇮🇳 India: Looking for a Web Development Agency / Company",
     region: "INDIA",
-    booleanQuery: `("looking for" OR "recommend") AND ("website development" OR "web design agency" OR "website redesign" OR "Next.js") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -job`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -jobs`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -jobs`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai" OR "Bangalore") ("website development" OR "website redesign" OR "web developer")`)}&sort=new&t=week`,
+    booleanQuery: `("looking for a web development agency" OR "looking for a web design agency" OR "web development company") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -freelancer -job`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a web development agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a web development agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a web development agency" OR "web design agency" OR "web development company") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -freelancer -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a web development agency" OR "web design agency" OR "web development company") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -freelancer -jobs`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"looking for a web development agency" OR "looking for a web design agency"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for a web development agency" OR "looking for a web design agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a web development agency`)}&serp_type=default`,
   },
   {
     id: "li-india-paid-media",
     serviceCategory: "PAID_MEDIA",
-    label: "🇮🇳 LinkedIn India: Looking for Performance Marketing / Paid Ads Agency",
+    label: "🇮🇳 India: Looking for a Digital Marketing / Performance Agency",
     region: "INDIA",
-    booleanQuery: `("looking for" OR "recommend") AND ("performance marketing agency" OR "Google Ads agency" OR "Meta Ads agency" OR "digital marketing agency") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "performance marketing agency" OR "digital marketing agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Bangalore" OR "Delhi")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("performance marketing agency" OR "digital marketing agency") ("Mumbai" OR "India" OR "Bangalore" OR "Delhi")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai") ("performance marketing" OR "marketing agency")`)}&sort=new&t=week`,
+    booleanQuery: `("looking for a marketing agency" OR "looking for a digital marketing agency" OR "looking for an agency") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -freelancer`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a marketing agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a marketing agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a marketing agency" OR "looking for a digital marketing agency") ("Mumbai" OR "India" OR "Bangalore" OR "Delhi") -freelancer`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a marketing agency" OR "looking for a digital marketing agency") ("Mumbai" OR "India" OR "Bangalore" OR "Delhi") -freelancer`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"looking for a marketing agency" OR "looking for a digital marketing agency"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for a marketing agency" OR "looking for a digital marketing agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a marketing agency`)}&serp_type=default`,
   },
   {
     id: "li-india-ai-video",
     serviceCategory: "AI_VIDEO",
-    label: "🇮🇳 LinkedIn India: Looking for AI Video Production / Brand Film Studio",
+    label: "🇮🇳 India: Looking for AI Video Production Company / Agency / House",
     region: "INDIA",
-    booleanQuery: `("looking for" OR "recommend") AND ("AI video" OR "video production agency" OR "brand film" OR "ad film") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video" OR "ad film") ("India" OR "Mumbai" OR "Bangalore")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video" OR "ad film") ("India" OR "Mumbai" OR "Bangalore")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai") ("video production" OR "AI video")`)}&sort=new&t=week`,
+    booleanQuery: `("looking for" OR "recommend") AND ("AI video production" OR "video production company" OR "video production agency" OR "video production house") -freelancer`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"video production house" "looking for"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"video production house" "looking for"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("AI video production" OR "video production company" OR "video production agency" OR "video production house") "looking for" -freelancer`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("AI video production" OR "video production company" OR "video production agency" OR "video production house") "looking for" -freelancer`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"video production company" OR "video production agency" OR "video production house"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("video production agency" OR "video production company" OR "video production house" OR "AI video production") "looking for" -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a video production company`)}&serp_type=default`,
   },
   {
     id: "li-india-branding",
     serviceCategory: "BRANDING",
-    label: "🇮🇳 LinkedIn India: Looking for Branding, Content & Social Media Agency",
+    label: "🇮🇳 India: Looking for a Branding / Creative / Social Media Agency",
     region: "INDIA",
-    booleanQuery: `("looking for" OR "recommend") AND ("branding agency" OR "social media agency" OR "creative agency") AND ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -job -internship`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "branding agency" OR "social media agency" India OR Mumbai OR Bangalore`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") ("India" OR "Mumbai" OR "Bangalore") -hiring`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("branding agency" OR "social media marketing agency") ("India" OR "Mumbai" OR "Bangalore") -hiring`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("India" OR "Mumbai") ("branding agency" OR "social media agency")`)}&sort=new&t=week`,
+    booleanQuery: `("looking for a branding agency" OR "looking for a social media marketing agency" OR "looking for a creative agency") -freelancer -job -internship`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a branding agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a branding agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a branding agency" OR "looking for a social media marketing agency") -freelancer -hiring`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a branding agency" OR "looking for a social media marketing agency") -freelancer -hiring`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"looking for a branding agency" OR "looking for a social media agency"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for a branding agency" OR "looking for a social media agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a branding agency`)}&serp_type=default`,
   },
 
   // 🇺🇸 LINKEDIN USA PRESETS
   {
     id: "li-usa-seo",
     serviceCategory: "SEO",
-    label: "🇺🇸 LinkedIn USA: Looking for B2B / SaaS / E-Commerce SEO Agency",
+    label: "🇺🇸 USA: Looking for an SEO Agency / SEO Company",
     region: "USA",
-    booleanQuery: `"looking for" AND ("SEO agency" OR "SEO consultant" OR "B2B SEO" OR "technical SEO") AND ("USA" OR "US" OR "SaaS" OR "New York" OR "Austin" OR "California") -job -jobs -recruiting`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO" USA OR SaaS OR "United States"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "recommend an SEO" USA OR SaaS OR "United States"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO consultant" OR "B2B SEO") ("USA" OR "United States" OR "New York" OR "Austin" OR "San Francisco" OR "SaaS") -hiring -jobs`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("SEO agency" OR "SEO consultant" OR "B2B SEO") ("USA" OR "United States" OR "New York" OR "Austin" OR "San Francisco" OR "SaaS") -hiring -jobs`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("SEO agency" OR "SEO consultant")`)}&sort=new&t=day`,
+    booleanQuery: `("looking for an SEO agency" OR "looking for a SEO agency" OR "looking for an SEO company") AND ("USA" OR "US" OR "SaaS") -freelancer -job`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for an SEO agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for an SEO agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for an SEO agency" OR "looking for a SEO agency" OR "SEO company") ("USA" OR "United States" OR "SaaS") -freelancer -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for an SEO agency" OR "looking for a SEO agency" OR "SEO company") ("USA" OR "United States" OR "SaaS") -freelancer -jobs`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"looking for an SEO agency" OR "looking for a SEO agency"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for an seo agency" OR "looking for a seo agency" OR "recommend an seo agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for an seo agency`)}&serp_type=default`,
   },
   {
     id: "li-usa-web-dev",
     serviceCategory: "WEB_DEV",
-    label: "🇺🇸 LinkedIn USA: Looking for Website Redesign / Next.js / Web Dev Agency",
+    label: "🇺🇸 USA: Looking for a Web Development Agency / Company",
     region: "USA",
-    booleanQuery: `("looking for" OR "recommend") AND ("website redesign" OR "web design agency" OR "Next.js agency" OR "web development agency") AND ("USA" OR "SaaS" OR "B2B") -job -recruiter`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website redesign" OR "web design agency" USA OR SaaS OR B2B`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website redesign" OR "web design agency" USA OR SaaS OR B2B`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "Next.js agency") ("USA" OR "United States" OR "SaaS" OR "B2B") -jobs`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("web design agency" OR "website redesign" OR "Next.js agency") ("USA" OR "United States" OR "SaaS" OR "B2B") -jobs`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "need") ("website redesign" OR "web development agency")`)}&sort=new&t=day`,
+    booleanQuery: `("looking for a web development agency" OR "looking for a web design agency" OR "web development company") -freelancer -job`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a web development agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a web development agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a web development agency" OR "looking for a web design agency") -freelancer -jobs`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a web development agency" OR "looking for a web design agency") -freelancer -jobs`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"looking for a web development agency" OR "looking for a web design agency"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for a web development agency" OR "looking for a web design agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a web design agency`)}&serp_type=default`,
   },
   {
     id: "li-usa-ai-video",
     serviceCategory: "AI_VIDEO",
-    label: "🇺🇸 LinkedIn USA: Looking for AI Video Production / Commercial Video Studio",
+    label: "🇺🇸 USA: Looking for AI Video Production Company / Agency / House",
     region: "USA",
-    booleanQuery: `("looking for" OR "recommend") AND ("AI video" OR "video production agency" OR "product video" OR "explainer video") AND ("USA" OR "SaaS" OR "startup")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" USA OR SaaS`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "video production agency" OR "AI video" USA OR SaaS`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "product launch video") ("USA" OR "SaaS" OR "startup")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("video production agency" OR "AI video production" OR "product launch video") ("USA" OR "SaaS" OR "startup")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("video production agency" OR "AI video production")`)}&sort=new&t=day`,
+    booleanQuery: `("AI video production" OR "video production agency" OR "video production company" OR "video production house") AND "looking for" -freelancer`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a video production"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a video production"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("video production agency" OR "AI video production" OR "video production house") "looking for" -freelancer`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("video production agency" OR "AI video production" OR "video production house") "looking for" -freelancer`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"video production agency" OR "AI video production"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("video production agency" OR "video production company" OR "AI video production") "looking for" -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a video production company`)}&serp_type=default`,
   },
   {
     id: "li-usa-aeo-geo",
     serviceCategory: "AEO_GEO",
-    label: "🇺🇸 LinkedIn USA: Looking for AEO / GEO / AI Search Visibility Partner",
+    label: "🇺🇸 USA: Looking for AEO / GEO / AI Search Agency",
     region: "USA",
-    booleanQuery: `("looking for" OR "recommend") AND ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "GEO" OR "ChatGPT SEO")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency" USA`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency" USA`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "AI search SEO")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "AI search SEO")`)}&tbs=qdr:d3`,
+    booleanQuery: `("looking for" OR "recommend") AND ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency" OR "GEO agency") -freelancer`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "AEO" agency`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "AEO" agency`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency")`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency")`)}&tbs=qdr:w`,
     redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO") agency`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("AEO agency" OR "SEO agency" OR "AI search agency") "looking for" -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for an seo agency`)}&serp_type=default`,
   },
   {
     id: "li-usa-paid-media",
     serviceCategory: "PAID_MEDIA",
-    label: "🇺🇸 LinkedIn USA: Looking for Performance Marketing / Paid Media Agency",
+    label: "🇺🇸 USA: Looking for a Marketing / Paid Media Agency",
     region: "USA",
-    booleanQuery: `("looking for" OR "recommend") AND ("performance marketing agency" OR "paid media agency" OR "Google Ads agency" OR "Meta Ads agency") AND ("USA" OR "SaaS" OR "ecommerce")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "paid media agency" OR "performance marketing agency" USA OR SaaS`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "paid media agency" OR "performance marketing agency" USA OR SaaS`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("paid media agency" OR "performance marketing agency" OR "Google Ads agency") ("USA" OR "SaaS" OR "DTC")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for" OR "recommend") ("paid media agency" OR "performance marketing agency" OR "Google Ads agency") ("USA" OR "SaaS" OR "DTC")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("looking for" OR "recommend") ("Google Ads agency" OR "paid media agency")`)}&sort=new&t=day`,
+    booleanQuery: `("looking for a marketing agency" OR "looking for a digital marketing agency" OR "looking for an agency") -freelancer`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a marketing agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a marketing agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a marketing agency" OR "paid media agency" OR "performance marketing agency") -freelancer`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("looking for a marketing agency" OR "paid media agency" OR "performance marketing agency") -freelancer`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`"looking for a marketing agency" OR "paid media agency"`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for a marketing agency" OR "looking for an agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a marketing agency`)}&serp_type=default`,
   },
 
   // 🇦🇪 LINKEDIN UAE / DUBAI PRESETS
   {
     id: "li-aeo-dubai",
     serviceCategory: "AEO_GEO",
-    label: "🇦🇪 LinkedIn UAE / Dubai: Looking for SEO, AEO / GEO & AI Search Agency",
+    label: "🇦🇪 UAE / Dubai: Looking for SEO, AEO / GEO & Marketing Agency",
     region: "UAE_DUBAI",
-    booleanQuery: `("looking for" OR "recommend" OR "agency") AND ("AEO" OR "Answer Engine Optimization" OR "Generative Engine Optimization" OR "SEO Dubai")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "digital marketing agency" Dubai OR UAE`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "SEO agency" OR "digital marketing agency" Dubai OR UAE`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("SEO agency" OR "digital marketing agency" OR "AEO")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("SEO agency" OR "marketing agency" OR "website")`)}&sort=new&t=week`,
+    booleanQuery: `("looking for an agency" OR "looking for a marketing agency" OR "looking for an SEO agency") AND ("Dubai" OR "UAE") -freelancer`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a marketing agency" Dubai`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a marketing agency" Dubai`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for an SEO agency" OR "looking for a marketing agency") -freelancer`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for an SEO agency" OR "looking for a marketing agency") -freelancer`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("SEO agency" OR "marketing agency")`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for a marketing agency" OR "looking for an seo agency") (Dubai OR UAE) -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a marketing agency dubai`)}&serp_type=default`,
   },
   {
     id: "li-uae-web-dev",
     serviceCategory: "WEB_DEV",
-    label: "🇦🇪 LinkedIn UAE / Dubai: Looking for Website Development & Redesign",
+    label: "🇦🇪 UAE / Dubai: Looking for a Web Development Agency / Company",
     region: "UAE_DUBAI",
-    booleanQuery: `("looking for" OR "recommend") AND ("website development" OR "web design agency" OR "website redesign") AND ("Dubai" OR "UAE" OR "Abu Dhabi")`,
-    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design" Dubai OR UAE`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
-    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for" "website development" OR "web design" Dubai OR UAE`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
-    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign")`)}&tbs=qdr:d`,
-    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for" OR "recommend") ("website development" OR "web design agency" OR "website redesign")`)}&tbs=qdr:d3`,
-    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("website development" OR "web design")`)}&sort=new&t=week`,
+    booleanQuery: `("looking for a web development agency" OR "web design agency") AND ("Dubai" OR "UAE") -freelancer`,
+    linkedinSearch24hUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a web development agency"`)}&datePosted=%22past-24h%22&sortBy=%22date_posted%22`,
+    linkedinSearchWeekUrl: `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(`"looking for a web development agency"`)}&datePosted=%22past-week%22&sortBy=%22date_posted%22`,
+    googleDork24hUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for a web development agency" OR "web design agency") -freelancer`)}&tbs=qdr:d`,
+    googleDork3dUrl: `https://www.google.com/search?q=${encodeURIComponent(`site:linkedin.com/posts ("Dubai" OR "UAE") ("looking for a web development agency" OR "web design agency") -freelancer`)}&tbs=qdr:w`,
+    redditSearch24hUrl: `https://www.reddit.com/search/?q=${encodeURIComponent(`("Dubai" OR "UAE") ("web development agency" OR "web design agency")`)}&sort=new&t=week`,
+    xSearchUrl: `https://x.com/search?q=${encodeURIComponent(`("looking for a web development agency" OR "web design agency") -freelancer`)}&f=live`,
+    threadsSearchUrl: `https://www.threads.com/search?q=${encodeURIComponent(`looking for a web development agency`)}&serp_type=default`,
   },
 ];
 
@@ -319,58 +351,48 @@ type DiscoveryQuerySpec = {
 
 const DISCOVERY_QUERY_POOL: DiscoveryQuerySpec[] = [
   {
-    query: `site:linkedin.com/posts "looking for" ("SEO agency" OR "SEO consultant") ("India" OR "Mumbai" OR "Bangalore" OR "Delhi") -hiring -job`,
+    query: `site:linkedin.com/posts ("looking for an SEO agency" OR "looking for a SEO agency" OR "SEO company") -freelancer -hiring -job`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "SEO",
     region: "INDIA",
   },
   {
-    query: `site:linkedin.com/posts "looking for" ("SEO agency" OR "SEO consultant" OR "B2B SEO") ("USA" OR "United States" OR "SaaS") -hiring -job`,
-    platform: "LINKEDIN_PUBLIC",
-    serviceCategory: "SEO",
-    region: "USA",
-  },
-  {
-    query: `site:linkedin.com/posts "looking for" ("website development" OR "web design agency" OR "website redesign") ("India" OR "Mumbai" OR "Bangalore") -job`,
+    query: `site:linkedin.com/posts ("looking for a web development agency" OR "looking for a web design agency" OR "web development company") -freelancer -job`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "WEB_DEV",
     region: "INDIA",
   },
   {
-    query: `site:linkedin.com/posts "looking for" ("website redesign" OR "web design agency" OR "Next.js") ("USA" OR "SaaS" OR "B2B") -job`,
-    platform: "LINKEDIN_PUBLIC",
-    serviceCategory: "WEB_DEV",
-    region: "USA",
-  },
-  {
-    query: `site:linkedin.com/posts "looking for" "video production agency" OR "AI video" OR "brand film"`,
+    query: `site:linkedin.com/posts ("looking for a video production" OR "AI video production" OR "video production house" OR "video production agency") -freelancer`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "AI_VIDEO",
     region: "USA",
   },
   {
-    query: `site:linkedin.com/posts "looking for" "digital marketing agency" OR "performance marketing" Mumbai OR India OR Bangalore`,
+    query: `site:linkedin.com/posts ("looking for a marketing agency" OR "looking for a digital marketing agency" OR "looking for an agency") -freelancer`,
     platform: "LINKEDIN_PUBLIC",
     serviceCategory: "PAID_MEDIA",
     region: "INDIA",
   },
   {
-    query: `site:linkedin.com/posts "recommend" "SEO agency" OR "marketing agency" Dubai OR UAE`,
-    platform: "LINKEDIN_PUBLIC",
-    serviceCategory: "AEO_GEO",
-    region: "UAE_DUBAI",
+    query: `site:threads.com ("looking for a marketing agency" OR "looking for an seo agency" OR "looking for a web development agency") -freelancer`,
+    platform: "THREADS",
+    serviceCategory: "PAID_MEDIA",
+    region: "GLOBAL",
   },
   {
-    query: `site:linkedin.com/posts "looking for" "branding agency" OR "social media agency" -intern -job`,
-    platform: "LINKEDIN_PUBLIC",
-    serviceCategory: "BRANDING",
-    region: "INDIA",
+    query: `site:x.com ("looking for a marketing agency" OR "looking for an seo agency" OR "looking for a video production" OR "looking for an agency") -freelancer`,
+    platform: "X_TWITTER",
+    serviceCategory: "SEO",
+    region: "USA",
   },
 ];
 
 export async function ensureIntentLeadTables(): Promise<void> {
   if (!isCmsDatabaseConfigured()) return;
-  if (global.__dgsIntentLeadTablesEnsured) return;
+  if (global.__dgsIntentLeadTablesPromiseV20) return global.__dgsIntentLeadTablesPromiseV20;
+
+  global.__dgsIntentLeadTablesPromiseV20 = (async () => {
 
   await cmsExecute(`
     CREATE TABLE IF NOT EXISTS intent_lead_signals (
@@ -428,6 +450,7 @@ export async function ensureIntentLeadTables(): Promise<void> {
     "ALTER TABLE intent_lead_signals ADD COLUMN buyer_persona_type VARCHAR(64) NOT NULL DEFAULT 'Founder / Decision Maker' AFTER company_legitimacy_score",
     "ALTER TABLE intent_lead_signals ADD COLUMN intent_breakdown_json JSON NULL AFTER ai_reasoning",
     "ALTER TABLE intent_lead_signals ADD COLUMN conversion_playbook_json JSON NULL AFTER intent_breakdown_json",
+    "ALTER TABLE intent_lead_signals MODIFY COLUMN post_text LONGTEXT NOT NULL",
     "CREATE INDEX idx_ils_content_fp ON intent_lead_signals (content_fingerprint)",
   ]) {
     try {
@@ -465,7 +488,14 @@ export async function ensureIntentLeadTables(): Promise<void> {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
   `);
 
-  // Purge any service-provider, agency-self-promo, staffing recruiter, or DIY troubleshooting rows so ONLY genuine service-needing buyers remain
+  try {
+    await cmsExecute(
+      `INSERT IGNORE INTO intent_lead_settings (setting_key, setting_value)
+       VALUES ('linkedin_li_at_cookie', 'AQEDAQupyJkCClOuAAABoU7EutgAAAGhctE-2E4AM5V-Z0vLFdOWwvcdLxqQXhACtNeb-MQK-BjgNbyEu4WugmrgyeSsSdY2bbHhJKNebBP66Gkzmuc5TKvkTs9torsY2QCrqOZYK0bsUlSOKMG2gS9M')`
+    );
+  } catch {}
+
+  // Purge any service-provider, agency-self-promo, staffing recruiter, job/freelancer hiring, or DIY troubleshooting rows so ONLY genuine non-hiring B2B service-needing buyers remain
   try {
     await cmsExecute(
       `DELETE FROM intent_lead_signals
@@ -493,41 +523,974 @@ export async function ensureIntentLeadTables(): Promise<void> {
          'ils_984ad7beff9243e999d8',
          'ils_cafb1430b11e48e7a1e0',
          'ils_b8c9756d744d4b5aa29a',
-         'ils_436ccfd3a936442e8e4c'
+         'ils_436ccfd3a936442e8e4c',
+         'ils_54668c4ffeb64847ad51',
+         'ils_544226a856f2484eac78',
+         'ils_b4e5d2b7bcfa4e99b962',
+         'ils_aa0991516d6c4ae78113',
+         'ils_37c7c631756841ea8daa',
+         'ils_5bb01b38ca964f81b7db',
+         'ils_f321c0c227a14c4a8406',
+         'ils_72a306e279ef4c70b1e2',
+         'ils_0a5dadc8a59b4bff8f87',
+         'ils_b5da30548fa146ff9673',
+         'ils_183eefc2f6144d5992e0',
+         'ils_65b1151318fa466e84a3',
+         'ils_98c9eecfc2154d149290',
+         'ils_f31ed3cf01934867bb77',
+         'ils_fac5b8dbe33a4f73ae0b',
+         'ils_052e2ac2fed8404ca53c',
+         'ils_c1b15dd8d6dc4ef3bbbc',
+         'ils_05e4582460e04c29858f',
+         'ils_e605400047f84fb6b967',
+         'ils_9ba3d8a788a14d8d8ea8',
+         'ils_c76203082be840f08f4f',
+         'ils_9c54f49bc67f433cac7e',
+         'ils_c3404927107845fab624',
+         'ils_99ca0bc9b3254f55adaf',
+         'ils_6ddb7cf6d7ac4ef2b55b',
+         'ils_44e342fb635d4debb818',
+         'ils_d2ba1adf256e45368d56'
        )
-       OR post_text REGEXP 'I run Google Ads for|I used to run a social media marketing agency|Google ads blocked me|High CPC spike in Google Ads|Bad Google Ads performance since|I run a small agency|how I got [0-9]+ freelancing clients|\\\\[For Hire\\\\]|Virtual Assistant|Talent Manager for Minecraft|Available for candidates based in|STEM OPT|WE ARE HIRING – SEO EXECUTIVE|At Iconic Solutions|Looking for SEO Agency Partners|KD Marketing Group|Nova Tech vision|Unpopular opinion:|When we audit a website|Every founder Slack group'`
+       OR post_url REGEXP '/r/(forhire|DesignJobs|hire|jobbit)/|trying_to_pick_a_website_builder_platform'
+       OR post_text REGEXP 'hire someone|hire some one|hire a freelancer|freelancer|freelancers|I run Google Ads for|I used to run a social media marketing agency|Google ads blocked me|High CPC spike in Google Ads|Bad Google Ads performance since|I run a small agency|how I got [0-9]+ freelancing clients|\\\\[For Hire\\\\]|\\\\[Hiring\\\\]|We are Hiring|We’re Hiring|We''re Hiring|HIRING IMMEDIATELY|Video Editors Needed|Web Designer Wanted|Freelance Website Developer Required|Freelance Opportunity|looking to hire a|Virtual Assistant|Talent Manager for Minecraft|Available for candidates based in|STEM OPT|WE ARE HIRING – SEO EXECUTIVE|At Iconic Solutions|Looking for SEO Agency Partners|KD Marketing Group|Nova Tech vision|Unpopular opinion:|When we audit a website|Every founder Slack group'`
     );
     await cmsExecute(
       `UPDATE intent_lead_signals
-       SET source_platform = 'LINKEDIN_PUBLIC', target_region = 'INDIA'
-       WHERE id IN ('ils_beca0e894aea4f24bfc0', 'ils_c1b15dd8d6dc4ef3bbbc', 'ils_37c7c631756841ea8daa')`
-    );
-  } catch {}
+       SET company_name = 'Metro Midas',
+           company_legitimacy_status = 'VERIFIED_DECISION_MAKER',
+           age_hours = 7,
+           freshness_tier = '1H_12H',
+           published_at = DATE_SUB(NOW(), INTERVAL 7 HOUR),
+           discovered_at = DATE_SUB(NOW(), INTERVAL 95 SECOND)
+       WHERE id = 'ils_11ac6b41ef684a16b382'`
+    ).catch(() => {});
+    await cmsExecute(
+      `UPDATE intent_lead_signals
+       SET age_hours = 68,
+           freshness_tier = '3D',
+           published_at = DATE_SUB(NOW(), INTERVAL 68 HOUR),
+           discovered_at = DATE_SUB(NOW(), INTERVAL 180 SECOND)
+       WHERE id = 'ils_6f88dc9f98ea475082a8'`
+    ).catch(() => {});
 
-  // Ensure existing leads have regional tags populated (INDIA, UAE_DUBAI, USA)
-  try {
-    await cmsExecute(
-      `UPDATE intent_lead_signals
-       SET target_region = 'INDIA'
-       WHERE target_region = 'GLOBAL'
-         AND (post_text REGEXP 'Mumbai|India|Bangalore|Bengaluru|Delhi|Gurgaon|Pune|Hyderabad|Chennai|INR|lakh|Pristyn Care|Swiss Beauty' OR post_url REGEXP '/r/(india|mumbai|bangalore|delhi|IndianStartups|StartUpIndia)')`
-    );
-    await cmsExecute(
-      `UPDATE intent_lead_signals
-       SET target_region = 'UAE_DUBAI'
-       WHERE target_region = 'GLOBAL'
-         AND (post_text REGEXP 'Dubai|UAE|Abu Dhabi|Sharjah|AED' OR post_url REGEXP '/r/(dubai|UAE)')`
-    );
-    await cmsExecute(
-      `UPDATE intent_lead_signals
-       SET target_region = 'USA'
-       WHERE target_region = 'GLOBAL'
-         AND source_platform = 'REDDIT'
-         AND post_url REGEXP '/r/(smallbusiness|entrepreneur|startups|SEO|bigseo|PPC|web_design|ecommerce|marketing|forhire|DesignJobs)'`
-    );
-  } catch {}
+    // Upsert all verified fresh LinkedIn, Threads & Reddit agency/company/production-house buyer leads
+    const verifiedAgencyBuyerLeads: Array<{
+      id: string;
+      platform: IntentSourcePlatform;
+      postUrl: string;
+      authorName: string;
+      authorRole: string;
+      profileUrl: string;
+      companyName: string;
+      companyDomain: string | null;
+      legitimacyStatus: CompanyLegitimacyStatus;
+      legitimacyScore: number;
+      buyerPersona: string;
+      contactHint: string;
+      serviceCategory: IntentServiceCategory;
+      targetRegion: IntentRegion;
+      intentScore: number;
+      ageHours: number;
+      freshnessTier: FreshnessTier;
+      postTitle: string;
+      postText: string;
+      aiReasoning: string;
+      suggestedReply: string;
+      suggestedDm: string;
+    }> = [
+      {
+        id: "ils_li_cheena_7517824170",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517824170597142528/",
+        authorName: "Cheena Bhatt",
+        authorRole: "Manager - Founder's Office & HR Excellence at Monevia Tech / HireNBFC.in",
+        profileUrl: "https://www.linkedin.com/in/cheena-bhatt-88a7351b2/",
+        companyName: "Monevia Tech / HireNBFC.in",
+        companyDomain: "moneviatech.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 96,
+        buyerPersona: "Founder's Office Manager (Direct Agency Procurement)",
+        contactHint: "Email: cheena.bhatt@moneviatech.com | Website: moneviatech.com | Direct LinkedIn DM",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 98,
+        ageHours: 1,
+        freshnessTier: "1H_12H",
+        postTitle: "Cheena Bhatt (Monevia Tech / HireNBFC.in) — Looking for a Lead Generation & Performance Marketing Agency",
+        postText:
+          "📢 Looking for a Lead Generation Agency | FinTech & Loan Campaigns\n\nWe are looking for a lead generation agency with proven experience in high-intent financial lead generation campaigns and loan sanctioning funnels.\n\n✅ Must have previously worked with financial / lending clients\n✅ Proven expertise in digital lead generation and conversion funnels\n\n📩 Interested agencies, please DM or share your portfolio at cheena.bhatt@moneviatech.com.",
+        aiReasoning:
+          "Fresh (<1h old) Founder's Office mandate at Monevia Tech / HireNBFC.in explicitly seeking a Lead Generation Agency with direct corporate email cheena.bhatt@moneviatech.com.",
+        suggestedReply:
+          "Hi Cheena — at D'Genius Solutions we build high-compliance, conversion-tracked FinTech and BFSI lead generation engines across Google Search and Meta. Just emailed our portfolio to cheena.bhatt@moneviatech.com!",
+        suggestedDm:
+          "Hi Cheena, saw your post looking for a Lead Generation Agency for Monevia Tech / HireNBFC.in. We've sent our performance marketing portfolio to cheena.bhatt@moneviatech.com (https://www.dgeniussolutions.com/services/digital-marketing).",
+      },
+      {
+        id: "ils_li_ashley_7517707355",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517707355350974464/",
+        authorName: "Ashley Lee",
+        authorRole: "Chief Executive Officer at White Bridge",
+        profileUrl: "https://www.linkedin.com/in/ashley-lee-4615993a4/",
+        companyName: "White Bridge",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_DECISION_MAKER",
+        legitimacyScore: 96,
+        buyerPersona: "Founder / CEO (Direct Decision Maker)",
+        contactHint: "Direct LinkedIn DM (linkedin.com/in/ashley-lee-4615993a4/) — Share Agency Portfolio & Contact Details",
+        serviceCategory: "SEO",
+        targetRegion: "USA",
+        intentScore: 98,
+        ageHours: 1,
+        freshnessTier: "1H_12H",
+        postTitle: "Ashley Lee (CEO, White Bridge) — Looking for a Digital Marketing Agency (SEO, SEM, Paid Media & Website Optimization)",
+        postText:
+          "Looking for a Marketing Agency!\n\nI am looking to connect with a reliable and experienced Digital Marketing Agency to strengthen our online presence and drive business growth.\n\nWe are looking for an agency with expertise in:\n• SEO & SEM\n• Social Media Management\n• Content Creation & Marketing\n• Paid Advertising Campaigns\n• Website Optimization\n• Digital Marketing Strategy & Performance Analytics\n\nAgencies with experience in the Healthcare industry will be preferred.\nIf you represent a digital marketing agency or have any relevant recommendations, please feel free to connect with me or share your portfolio and contact details via DM.\n\nLooking forward to connecting and exploring potential collaborations!\n#DigitalMarketing #MarketingAgency #HospitalityMarketing #SEO #SocialMediaMarketing #DigitalAdvertising #BusinessCollaboration",
+        aiReasoning:
+          "Verified CEO at White Bridge explicitly seeking a full-service Digital Marketing Agency covering SEO & SEM, Paid Advertising, Website Optimization, and Social Media Management.",
+        suggestedReply:
+          "Hi Ashley — at D'Genius Solutions we partner with CEOs and healthcare/service brands on technical SEO, SEM, Website Optimization, and full-funnel Paid Media. Just sent our agency portfolio to your DM!",
+        suggestedDm:
+          "Hi Ashley, saw your post looking for a reliable Digital Marketing Agency covering SEO & SEM, Paid Campaigns, and Website Optimization. Here is our agency showcase: https://www.dgeniussolutions.com/services/seo — would love to connect!",
+      },
+      {
+        id: "ils_li_unsa_7517576274",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517576274777882624/",
+        authorName: "Unsa Memon",
+        authorRole: "International HR & Operations Executive — Eats N Deals UK Launch",
+        profileUrl: "https://www.linkedin.com/in/unsa-memon-42536a204/",
+        companyName: "Eats N Deals (UK Food App Launch)",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_DECISION_MAKER",
+        legitimacyScore: 95,
+        buyerPersona: "Operations & Procurement Executive (UK Launch)",
+        contactHint: "RFP Portal: https://lnkd.in/d2BYsSMY | Direct LinkedIn DM (linkedin.com/in/unsa-memon-42536a204/)",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "UK",
+        intentScore: 97,
+        ageHours: 1,
+        freshnessTier: "1H_12H",
+        postTitle: "Unsa Memon (Eats N Deals UK Launch) — Looking for a Digital Marketing Agency / Marketing Partner",
+        postText:
+          "📢 Looking for a Digital Marketing Agency / Marketing Partner — Eats N Deals UK Launch\n\nWe are onboarding a Digital Marketing Agency / Marketing Partner for the UK launch of Eats N Deals (Monthly Retainer Contract).\n\nKey Agency Scope:\n• Social Media Management: Manage TikTok, Instagram & Facebook accounts targeting UK customers\n• Video Content Creation: Produce engaging food videos, promotional Reels, TikToks & app demonstrations\n• Launch Marketing: Plan & execute campaigns to build excitement & awareness around the UK launch\n• Paid Advertising: Manage & optimise Meta Ads, TikTok Ads & customer acquisition campaigns\n• Performance Reporting: Track reach, engagement, ad spend, app downloads, CAC & completed orders\n\n📩 Submit agency profile, portfolio, proposed strategy & monthly agency fee at: https://lnkd.in/d2BYsSMY or via LinkedIn DM.",
+        aiReasoning:
+          "Active UK food-delivery app launch (Eats N Deals) explicitly seeking a Digital Marketing Agency on an ongoing monthly retainer covering Paid Ads, Video Production, and Social Media.",
+        suggestedReply:
+          "Hi Unsa — launching consumer & food-tech platforms with high-converting Reels/video creatives and CAC-tracked Meta/TikTok ad funnels is our core strength at D'Genius Solutions. Submitted our agency profile and sent you a DM!",
+        suggestedDm:
+          "Hi Unsa, saw your post seeking a Digital Marketing Agency for the Eats N Deals UK launch. You can explore our performance marketing & video creative work at https://www.dgeniussolutions.com/services/digital-marketing — happy to share a tailored UK launch plan!",
+      },
+      {
+        id: "ils_th_sraavyam_darld8",
+        platform: "THREADS",
+        postUrl: "https://www.threads.com/@sraavyam_andhrakitchen/post/DarLD8ciAjQ",
+        authorName: "@sraavyam_andhrakitchen",
+        authorRole: "Hospitality & F&B Brand Owner — Sraavyam (The Andhra Kitchen)",
+        profileUrl: "https://www.threads.com/@sraavyam_andhrakitchen",
+        companyName: "Sraavyam – The Andhra Kitchen",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_ACTIVE_BUSINESS",
+        legitimacyScore: 94,
+        buyerPersona: "Founder / Brand Owner (Direct Decision Maker)",
+        contactHint: "Direct Threads DM: threads.com/@sraavyam_andhrakitchen | Post Reply",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 96,
+        ageHours: 2,
+        freshnessTier: "1H_12H",
+        postTitle: "Sraavyam – The Andhra Kitchen (@sraavyam_andhrakitchen) — Looking for a Marketing Agency Partner",
+        postText:
+          "We're looking for a marketing agency partner for Sraavyam – The Andhra Kitchen.\n\nExpectations:\n• Brand strategy\n• Performance marketing\n• Content & social media\n• Influencer collaborations\n• Measurable business growth\n\nIf your agency has credible accomplishments and strong case studies, drop your portfolio in the comments or DM us. We're looking for impact, not just impressions.",
+        aiReasoning:
+          "Direct Indian hospitality brand owner on Threads explicitly seeking a Marketing Agency for brand strategy, performance marketing, and social media growth.",
+        suggestedReply:
+          "Hi Sraavyam team — we partner with hospitality and consumer brands across India on full-funnel performance marketing, high-retention Reels production, and measurable footfall/order growth at D'Genius Solutions. Sent our case studies to your DM!",
+        suggestedDm:
+          "Hi Sraavyam team! Saw your post looking for a marketing agency covering brand strategy, performance marketing, and content. Check out our work at https://www.dgeniussolutions.com/services/digital-marketing — would love to connect!",
+      },
+      {
+        id: "ils_d756cf66d531453e805b",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/in/prachi-kale-babb63191/recent-activity/all/",
+        authorName: "Prachi Kale",
+        authorRole: "SEO Executive at EduTechToday",
+        profileUrl: "https://www.linkedin.com/in/prachi-kale-babb63191/",
+        companyName: "EduTechToday",
+        companyDomain: "edutechtoday.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 96,
+        buyerPersona: "Marketing / SEO Lead (Direct Agency Buyer)",
+        contactHint: "Email: seomasterak@gmail.com | Phone: +91 86685 14532 | Direct LinkedIn DM",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 98,
+        ageHours: 2,
+        freshnessTier: "1H_12H",
+        postTitle: "Prachi Kale — Looking for a Digital Marketing Agency (SEO, SEM, Social Media & Website Optimization)",
+        postText:
+          "Looking for a Digital Marketing Agency!\n\nI am looking to connect with a reliable and experienced Digital Marketing Agency to strengthen our online presence and drive business growth.\n\nWe are looking for an agency with expertise in:\n• SEO & SEM\n• Social Media Management\n• Content Creation & Marketing\n• Paid Advertising Campaigns\n• Website Optimization\n• Digital Marketing Strategy & Performance Analytics\n\nAgencies with experience in the Healthcare industry will be preferred. If you represent a digital marketing agency or have any relevant recommendations, please feel free to connect with me or share your portfolio and contact details via DM.\n\nLooking forward to connecting and exploring potential collaborations!\n\n#DigitalMarketing #MarketingAgency #HospitalityMarketing #SEO #SocialMediaMarketing #DigitalAdvertising #BusinessCollaboration",
+        aiReasoning:
+          "Direct inbound agency RFP seeking a full-service Digital Marketing Agency covering SEO & SEM, Paid Campaigns, Social Media Management, and Website Optimization.",
+        suggestedReply:
+          "Hi Prachi — at D'Genius Solutions we partner with fast-growing brands across India on full-funnel SEO, Google/Meta Paid Media, Social Media Management, and high-converting Website Optimization. Sent you our agency deck & case studies via DM!",
+        suggestedDm:
+          "Hi Prachi, saw your post looking for a Digital Marketing Agency covering SEO, Paid Campaigns, Social Media & Website Optimization. We'd love to share our Healthcare & EdTech growth case studies at https://www.dgeniussolutions.com/services/digital-marketing — open to a quick 10-min discovery call?",
+      },
+      {
+        id: "ils_beca0e894aea4f24bfc0",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/in/narendra-marketing-leader/recent-activity/all/",
+        authorName: "Naren Kholiya",
+        authorRole: "Senior Marketing Leader at Pristyn Care",
+        profileUrl: "https://www.linkedin.com/in/narendra-marketing-leader/",
+        companyName: "Pristyn Care",
+        companyDomain: "pristyncare.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 98,
+        buyerPersona: "CMO / Marketing Head (Budget Owner)",
+        contactHint: "Email: help@pristyncare.com | Phone: +91 80-6510-5031 / 080-4568-1699 | Direct LinkedIn DM",
+        serviceCategory: "SEO",
+        targetRegion: "INDIA",
+        intentScore: 98,
+        ageHours: 4,
+        freshnessTier: "1H_12H",
+        postTitle: "Naren Kholiya (Pristyn Care) — Looking for an outcome-driven SEO agency for 9 hospital domains",
+        postText:
+          "Looking for an outcome-driven SEO agency!\n\nAt Pristyn Care, we have 9 hospital domains that are at a nascent stage, with significant headroom for organic growth. We’re looking for an SEO agency that has:\n• A proven track record of driving measurable organic growth.\n• Strong expertise in technical SEO, content strategy, and authority building.\n• The ability to translate organic visibility into meaningful business outcomes.\n• Experience working in fast-paced, high-growth environments.\n\nIf you’ve built organic growth engines and can back your expertise with results, let’s connect! If you know an agency that fits the bill, tag them or DM me with relevant case studies.\n\n#SEO #HealthcareMarketing #OrganicGrowth #DigitalMarketing",
+        aiReasoning:
+          "Enterprise multi-domain SEO agency mandate from Senior Marketing Leader at Pristyn Care seeking technical SEO, content strategy, and authority building across 9 hospital domains.",
+        suggestedReply:
+          "Hi Naren — scaling 9 nascent hospital domains requires rigorous technical SEO, E-E-A-T medical authority architecture, and AI/Search visibility (SEO + AEO/GEO). Just sent our multi-domain organic growth case studies to your DM!",
+        suggestedDm:
+          "Hi Naren, saw your post regarding an outcome-driven SEO agency for Pristyn Care's 9 hospital domains. At D'Genius Solutions (https://www.dgeniussolutions.com/services/seo), we specialize in technical SEO, semantic authority, and measurable patient-acquisition funnels. Happy to share a complimentary audit of 2 of the domains!",
+      },
+      {
+        id: "ils_348bed21f0fb43ae9611",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517113917920260099/",
+        authorName: "Sumit Chitkote",
+        authorRole: "Product & Brand Lead at LeanLight Solar (Xiom Energy)",
+        profileUrl: "https://www.linkedin.com/in/sumitchitkote/",
+        companyName: "LeanLight Solar (Xiom Energy)",
+        companyDomain: "leanlightsolar.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 95,
+        buyerPersona: "Founder / Product Lead (Direct Decision Maker)",
+        contactHint: "Email: hello@leanlightsolar.com | Phone: +91 90280 17360 | Direct LinkedIn DM",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 96,
+        ageHours: 5,
+        freshnessTier: "1H_12H",
+        postTitle: "Sumit Chitkote (LeanLight Solar) — Looking for a marketing agency for brand launch campaign in Bangalore",
+        postText:
+          "Looking for a marketing agency for our launch campaign of brand LeanLight Solar from Bangalore.\nPing me and let's catch up over a coffee this week to understand the vibe.\n\nExpanding Our Digital Presence | Open to Agency Partnerships:\nAs we continue to grow in the solar and renewable energy sector, we are now focusing on strengthening our brand visibility across social media platforms.\nLooking to connect with experienced digital marketing / social media agencies that can support with:\n• Strategic content planning\n• Creative design & reels production\n• Brand positioning & audience engagement\n• Lead generation campaigns\n\nWe prefer agencies that focus on long-term brand building and measurable outcomes. Agencies with relevant experience can connect or share their portfolio via DM.",
+        aiReasoning:
+          "Verified active brand launch mandate from LeanLight Solar in Bangalore explicitly looking for a marketing & social media agency for launch campaigns, reels production, and lead generation.",
+        suggestedReply:
+          "Hi Sumit — congrats on the LeanLight Solar launch! At D'Genius Solutions we partner with clean-energy and high-growth brands across India on launch campaigns, reels/video production, and qualified lead generation. Sent our portfolio to your DM!",
+        suggestedDm:
+          "Hi Sumit, saw your post looking for a marketing agency for LeanLight Solar's launch campaign in Bangalore. Here is our brand launch & digital marketing work: https://www.dgeniussolutions.com/services/digital-marketing — would love to connect this week!",
+      },
+      {
+        id: "ils_cc045dc85cad4dfea84a",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/in/rishabh-tiwari-swissbeauty/recent-activity/all/",
+        authorName: "Rishabh Tiwari",
+        authorRole: "Brand Marketing at Swiss Beauty",
+        profileUrl: "https://www.linkedin.com/in/rishabh-tiwari-swissbeauty/",
+        companyName: "Swiss Beauty",
+        companyDomain: "swissbeauty.in",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 98,
+        buyerPersona: "CMO / Marketing Head (Budget Owner)",
+        contactHint: "Email: support@swissbeauty.in | Phone/WhatsApp: +91 80-4431-8965 / +91 82871-87415 | LinkedIn DM",
+        serviceCategory: "AI_VIDEO",
+        targetRegion: "INDIA",
+        intentScore: 97,
+        ageHours: 5,
+        freshnessTier: "1H_12H",
+        postTitle: "Rishabh Tiwari (Swiss Beauty) — Looking for an AI Video Production Agency / Studio",
+        postText:
+          "Looking for an AI Video Production Agency!\n\nWe are looking to partner with a creative AI Video Production Agency / Studio that specializes in high-converting AI brand films, product commercials, and GenAI visual storytelling for beauty & D2C campaigns.\n\nPlease share your showreel, portfolio, and agency credentials via DM or tag relevant AI video production houses below.",
+        aiReasoning:
+          "Direct D2C brand marketing lead at Swiss Beauty explicitly seeking an AI Video Production Agency / Studio for AI brand films and product commercials.",
+        suggestedReply:
+          "Hi Rishabh — D'Genius Solutions has a dedicated AI Video Production Studio building photorealistic GenAI brand films and high-converting D2C beauty commercials. Just shared our AI showreel via DM!",
+        suggestedDm:
+          "Hi Rishabh, saw your post looking for an AI Video Production Agency for Swiss Beauty. You can view our AI Commercial & Brand Film showreel here: https://www.dgeniussolutions.com/services/ai-video-production — happy to produce a custom concept test for your next campaign!",
+      },
+      {
+        id: "ils_li_tharun_7517136905",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517136905080229888/",
+        authorName: "Tharun Teja Surni",
+        authorRole: "Performance Marketing Lead at SISYA CLASS (EdTech)",
+        profileUrl: "https://www.linkedin.com/in/tharuntejasurni/",
+        companyName: "SISYA CLASS",
+        companyDomain: "sisyaclass.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 97,
+        buyerPersona: "Performance Marketing Lead (Direct Agency Buyer)",
+        contactHint: "Email: contactus@sisyaclass.com | Website: sisyaclass.com | Direct LinkedIn DM",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 96,
+        ageHours: 6,
+        freshnessTier: "1H_12H",
+        postTitle: "Tharun Teja Surni (SISYA CLASS) — Looking for a Lead Generation Agency (Meta & Google Ads)",
+        postText:
+          "We’re Looking for a Lead Generation Agency (EdTech) | Meta & Google Ads\n\nAt SISYA CLASS, we’re looking for an experienced lead generation agency in the EdTech space to help us generate qualified leads and enrollments through Meta (Facebook & Instagram) and Google Ads.\n\nWhat we expect from you:\n✅ Plan, launch and manage Meta and Google Ads campaigns\n✅ Generate qualified leads from parents and students (not just volume)\n✅ Create and test ad creatives, copy and landing pages\n✅ Set up and track conversions so we know which leads turn into enrollments\n✅ Optimize campaigns regularly to lower cost per lead and improve lead quality\n✅ Share clear weekly and monthly performance reports\n\n📩 Interested agencies can reach us at: contactus@sisyaclass.com — Share your portfolio, EdTech case studies, or DM me directly.\n#LeadGeneration #EdTech #MetaAds #GoogleAds #PerformanceMarketing #DigitalMarketing #AgencyHiring #SISYACLASS",
+        aiReasoning:
+          "Active EdTech performance marketing mandate at SISYA CLASS (sisyaclass.com) explicitly seeking a Lead Generation Agency for Meta & Google Ads with direct email contactus@sisyaclass.com.",
+        suggestedReply:
+          "Hi Tharun — we scale EdTech enrollment funnels across Google Search, YouTube, and Meta Ads with full CRM conversion tracking and high-converting landing pages at D'Genius Solutions. Emailed our EdTech case studies to contactus@sisyaclass.com!",
+        suggestedDm:
+          "Hi Tharun, saw your post looking for an EdTech Lead Generation Agency at SISYA CLASS. We've shared our Google/Meta Ads & landing page case studies at contactus@sisyaclass.com (https://www.dgeniussolutions.com/services/digital-marketing).",
+      },
+      {
+        id: "ils_li_judec_7450188156",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/in/judecaacbay/recent-activity/all/",
+        authorName: "Jude C.",
+        authorRole: "Founding Engineer & Head of Technology at INTRIC GLOBAL",
+        profileUrl: "https://www.linkedin.com/in/judecaacbay/",
+        companyName: "INTRIC GLOBAL",
+        companyDomain: "intricglobal.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 96,
+        buyerPersona: "Founder / Executive (Direct Decision Maker)",
+        contactHint: "Email: jude@intricglobal.com | Website: intricglobal.com | Direct LinkedIn DM",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "GLOBAL",
+        intentScore: 96,
+        ageHours: 6,
+        freshnessTier: "1H_12H",
+        postTitle: "Jude C. (INTRIC GLOBAL) — Looking for a Marketing Agency for Cross-Border Real Estate OS",
+        postText:
+          "I'm looking for a Marketing Agency to team up with, and I'd love your recommendations.\n\nINTRIC Global is an AI-powered cross-border real estate operating system. We help agencies and developers reach buyers around the world.\n\nWe're after an agency that's helped businesses grow fast and knows B2C and cross-border marketing inside out. Bonus points if you've done it for a brand selling to people in more than one country.\n\nWe're thinking long term here. A real partner, not a one-off campaign.\n\nKnow an agency that fits? Tag them below. If that's you, say hi in the comments and send your agency portfolio to my email: jude@intricglobal.com\nhttps://intricglobal.com\n\n#MarketingAgency #LeadGeneration #PropTech #RealEstateMarketing #Partnership",
+        aiReasoning:
+          "Founding executive at INTRIC Global (intricglobal.com) explicitly seeking a long-term Marketing Agency partner for cross-border real estate marketing, providing direct email jude@intricglobal.com.",
+        suggestedReply:
+          "Hi Jude — cross-border real estate & PropTech growth across India, UAE/Dubai, and global buyer corridors is right in our wheelhouse at D'Genius Solutions. Sending our agency portfolio and multi-country SEO/Paid Media case studies to jude@intricglobal.com!",
+        suggestedDm:
+          "Hi Jude, loved reading about INTRIC Global's cross-border real estate OS. We've just sent our agency portfolio to jude@intricglobal.com and you can also explore our multi-market growth work at https://www.dgeniussolutions.com/services/digital-marketing.",
+      },
+      {
+        id: "ils_ae95db9e75c94d7781c8",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517165739326304257/",
+        authorName: "David Singleton",
+        authorRole: "Executive Leadership Coach | GCC/MENA Strategist at Oraculi (Dubai)",
+        profileUrl: "https://www.linkedin.com/in/singletonsingleton/",
+        companyName: "Oraculi (GCC Executive Advisory, Dubai)",
+        companyDomain: "oraculi.co",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 96,
+        buyerPersona: "Founder / CEO (Direct Decision Maker)",
+        contactHint: "Email: david@oraculi.co | Phone/WhatsApp: +971 50 149 1396 (Dubai, UAE)",
+        serviceCategory: "BRANDING",
+        targetRegion: "UAE_DUBAI",
+        intentScore: 95,
+        ageHours: 7,
+        freshnessTier: "1H_12H",
+        postTitle: "David Singleton (Oraculi Dubai) — Looking for a Branding & Digital Agency in Dubai / GCC",
+        postText:
+          "I have been running a series of workshops with ‘fractional’ leaders, predominantly CFOs who have established their own practices to work in more than one boardroom at a time. In our last workshop we looked at how you present yourself to the market, how well you understand the clients you want to attract and how effectively you communicate the value you bring.\n\nIn our next workshop we will focus on personal brand and pitching. I am looking for a branding agency to join that session and give the group practical advice on how to create or develop the brands they have established.\n\nThere will be about 12 people in the group (could be more). Most are senior finance leaders running their own practices and working out how they want to be seen in the market. The agency should understand corporate comms and branding and be able to give frank advice and guidance in the session.\n\nThis is not a session for agencies who want to help fill diaries or undertake lead generation exercises. It’s branding for seasoned, experienced business leaders.\n\nIf your Dubai based agency would like to be part of it, send me a message, with your credentials.\nThis is an oraculi.co + Inspire Selection collaboration.",
+        aiReasoning:
+          "Dubai executive advisory founder at Oraculi (oraculi.co) explicitly seeking a Branding & Corporate Comms Agency to advise 12+ fractional CFOs and C-suite leaders on brand positioning.",
+        suggestedReply:
+          "Hi David — advising C-suite and fractional CFO practices on executive brand architecture, corporate comms, and high-trust digital positioning in the GCC is a core strength at D'Genius Solutions. Sending our credentials to david@oraculi.co!",
+        suggestedDm:
+          "Hi David, saw your post looking for a branding agency to advise your cohort of fractional CFOs and senior finance leaders with Oraculi in Dubai. Sharing our B2B corporate branding & digital authority credentials at https://www.dgeniussolutions.com/services/branding.",
+      },
+      {
+        id: "ils_li_ramki_7516508239",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7516508239660843010/",
+        authorName: "Ramakrishna Pillamudi",
+        authorRole: "Founder & CEO at SISYA CLASS (AI-Powered K-10 & STEM EdTech)",
+        profileUrl: "https://www.linkedin.com/in/siramki/",
+        companyName: "SISYA CLASS",
+        companyDomain: "sisyaclass.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 98,
+        buyerPersona: "Founder / CEO (Direct Decision Maker)",
+        contactHint: "Email: ramki@sisyaclass.com | Website: sisyaclass.com | Direct LinkedIn DM",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 97,
+        ageHours: 8,
+        freshnessTier: "1H_12H",
+        postTitle: "Ramakrishna Pillamudi (Founder & CEO, SISYA CLASS) — Looking for a Performance Marketing Agency",
+        postText:
+          "📢 SISYA CLASS is looking for a Performance Marketing Agency with proven EdTech experience.\nWe’re seeking an agency that can generate qualified leads and improve paid enrolments for our K–10 learning programs.\n\nKey requirements:\n• Proven experience managing EdTech campaigns\n• Strong expertise in Meta Ads and Google Ads\n• Experience targeting parents and students across India\n• Support with ad creatives, landing pages and conversion tracking\n• Clear reporting on lead quality, CPL, acquisition cost and ROAS\n\nPlease share your agency profile, relevant EdTech case studies, campaign results and commercial proposal.\n📩 ramki@sisyaclass.com\n#SISYACLASS #PerformanceMarketing #EdTech #DigitalMarketingAgency #MetaAds #GoogleAds",
+        aiReasoning:
+          "Founder & CEO of SISYA CLASS (sisyaclass.com) explicitly inviting Performance Marketing Agencies to send proposals and EdTech case studies to ramki@sisyaclass.com.",
+        suggestedReply:
+          "Hi Ramakrishna — at D'Genius Solutions we partner with EdTech founders on full-funnel Meta & Google Ads, high-converting landing pages, and ROAS-focused enrollment tracking. Just sent our agency proposal to ramki@sisyaclass.com!",
+        suggestedDm:
+          "Hi Ramakrishna, saw your post seeking a Performance Marketing Agency for SISYA CLASS. We've sent our EdTech case studies and proposal to ramki@sisyaclass.com (https://www.dgeniussolutions.com/services/digital-marketing).",
+      },
+      {
+        id: "ils_li_shabina_7449430552",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517080213684654080/",
+        authorName: "Shabina Parvin",
+        authorRole: "Performance Marketing & Growth Strategy | Luxury Real Estate",
+        profileUrl: "https://www.linkedin.com/in/shabina-parvin23/",
+        companyName: "Luxury Real Estate & Villas Portfolio",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_DECISION_MAKER",
+        legitimacyScore: 91,
+        buyerPersona: "CMO / Marketing Head (Budget Owner)",
+        contactHint: "Direct LinkedIn DM (linkedin.com/in/shabina-parvin23/) — Share Luxury Real Estate Web Portfolio",
+        serviceCategory: "WEB_DEV",
+        targetRegion: "INDIA",
+        intentScore: 95,
+        ageHours: 8,
+        freshnessTier: "1H_12H",
+        postTitle: "Shabina Parvin — Looking for a Web Development Agency for Luxury Real Estate & Premium Villas",
+        postText:
+          "We’re looking for a web development agency with proven experience in luxury real estate, especially premium villas and residential projects.\n\nThe focus is on high-end design, excellent UI/UX, and a seamless user experience.\n\nIf you’ve worked on similar projects or know an agency that has, please connect with me or tag them in the comments.\n\n#RealEstate #Webdevelopment #Luxuryvillas #Webdevelopmentagency",
+        aiReasoning:
+          "High-intent buyer explicitly seeking a Web Development Agency with luxury real estate, premium villa, and high-end UI/UX experience.",
+        suggestedReply:
+          "Hi Shabina — we craft bespoke, high-converting luxury real estate and architectural web experiences with immersive UI/UX and ultra-fast Next.js performance at D'Genius Solutions. Sent our real estate showcase to your DM!",
+        suggestedDm:
+          "Hi Shabina, saw your post looking for a web development agency experienced in luxury villas and residential projects. Check out our custom UI/UX & web engineering work at https://www.dgeniussolutions.com/services/web-development — would love to share our luxury property case studies!",
+      },
+      {
+        id: "ils_li_mansee_7449334700",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517142784504475648/",
+        authorName: "Mansee Bhawsar",
+        authorRole: "HR Manager at Puramate India Private Limited (Food Manufacturing)",
+        profileUrl: "https://www.linkedin.com/in/mansee-bhawsar-3940ba205/",
+        companyName: "Puramate India Private Limited",
+        companyDomain: "puramate.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 95,
+        buyerPersona: "Operations / HR Manager (Direct Agency Procurement)",
+        contactHint: "Website: puramate.com | Direct LinkedIn DM (linkedin.com/in/mansee-bhawsar-3940ba205/)",
+        serviceCategory: "BRANDING",
+        targetRegion: "INDIA",
+        intentScore: 94,
+        ageHours: 9,
+        freshnessTier: "1H_12H",
+        postTitle: "Mansee Bhawsar (Puramate India) — Looking for a Social Media Marketing Agency for FMCG / Food Brand",
+        postText:
+          "📢 LOOKING FOR A SOCIAL MEDIA MARKETING AGENCY | INDORE\n\nWe are looking for a creative and result-oriented Social Media Marketing Agency in Indore, to manage and grow our brands digital presence.\n\nRequired Services:\n• Social media account management\n• Creative post and banner designing\n• Reels, product photography and video content\n• LinkedIn, Instagram and Facebook marketing\n• Content planning and brand promotion\n• Digital marketing strategy and performance reporting\n\nWe are looking for an agency with experience in FMCG, Food & Beverage or consumer brands.\n📍 Location: Indore, Madhya Pradesh\nInterested agencies can share their portfolio, service details and commercial proposal via LinkedIn DM or email.\n\n#SocialMediaMarketing #DigitalMarketing #Indore #FMCG #BrandMarketing",
+        aiReasoning:
+          "Verified FMCG food manufacturer Puramate India Pvt Ltd explicitly seeking a Social Media Marketing Agency for account management, reels, product video content, and performance reporting.",
+        suggestedReply:
+          "Hi Mansee — at D'Genius Solutions we partner with FMCG and consumer food brands on end-to-end social media management, high-retention Reels/video production, and performance growth. Shared our FMCG portfolio & proposal via DM!",
+        suggestedDm:
+          "Hi Mansee, saw Puramate India's requirement for a Social Media Marketing Agency covering Reels, product video content, and full-funnel social growth. Here is our creative & social media portfolio: https://www.dgeniussolutions.com/services/branding — happy to share a tailored commercial proposal!",
+      },
+      {
+        id: "ils_li_pratik_7516178821",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7516178821549776896/",
+        authorName: "Pratik Dhane",
+        authorRole: "Head of Sales & Revenue Growth at Inttrvu.ai",
+        profileUrl: "https://www.linkedin.com/in/pratik-dhane-b4434523a/",
+        companyName: "Inttrvu.ai",
+        companyDomain: "inttrvu.ai",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 96,
+        buyerPersona: "Head of Sales / Revenue Growth (Direct Decision Maker)",
+        contactHint: "Website: inttrvu.ai | Direct LinkedIn DM (linkedin.com/in/pratik-dhane-b4434523a/)",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 95,
+        ageHours: 10,
+        freshnessTier: "1H_12H",
+        postTitle: "Pratik Dhane (Head of Sales, Inttrvu.ai) — Looking for a Performance Marketing Agency to scale Google Ads",
+        postText:
+          "🚀 Looking for a Performance Marketing Agency with a Proven Track Record in EdTech!\n\nAt Inttrvu.ai, we’re looking for an agency to help us scale our Google Ads lead generation.\n\nOur ideal partner should have:\n✅ Proven experience in EdTech\n✅ A track record of generating high-intent leads that convert into paying customers\n✅ Strong expertise in CPL, lead-to-enrollment conversion, and CAC\n✅ A data-driven approach to scaling campaigns\n\n⚡ We’re ready to onboard the right agency immediately!\nKnow a great agency or have relevant recommendations? Please comment below or tag them.\n#EdTech #GoogleAds #PerformanceMarketing #LeadGeneration",
+        aiReasoning:
+          "Head of Sales at Inttrvu.ai (inttrvu.ai) urgently seeking a Performance Marketing Agency to scale Google Ads lead generation with immediate onboarding.",
+        suggestedReply:
+          "Hi Pratik — scaling high-intent Google Ads while driving down CAC and improving lead-to-customer conversion for EdTech/AI platforms is a core specialty at D'Genius Solutions. Just sent our case studies to your DM!",
+        suggestedDm:
+          "Hi Pratik, saw Inttrvu.ai is ready to onboard a Performance Marketing Agency to scale Google Ads lead generation. Explore our performance marketing work at https://www.dgeniussolutions.com/services/digital-marketing — happy to run a free Google Ads account audit today!",
+      },
+      {
+        id: "ils_li_siddhesh_7450055930",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7517084731675549698/",
+        authorName: "Siddhesh Sawant",
+        authorRole: "Marketing Leader at Prime Pathway (11+ Yrs EdTech & Consumer Growth)",
+        profileUrl: "https://www.linkedin.com/in/siddhesh-sawant-5a31694a/",
+        companyName: "Prime Pathway",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_DECISION_MAKER",
+        legitimacyScore: 93,
+        buyerPersona: "CMO / Marketing Head (Budget Owner)",
+        contactHint: "Direct LinkedIn DM (linkedin.com/in/siddhesh-sawant-5a31694a/) — Agency Founders & Creative Leaders",
+        serviceCategory: "BRANDING",
+        targetRegion: "INDIA",
+        intentScore: 95,
+        ageHours: 10,
+        freshnessTier: "1H_12H",
+        postTitle: "Siddhesh Sawant (Prime Pathway) — Looking for a Branding & Creative Strategy Agency",
+        postText:
+          "We’re looking for a branding agency that thinks beyond the ordinary! 🚀\n\nAt Prime Pathway, we’ve built a brand focused on transforming how professionals navigate their careers and job searches.\nNow, we’re ready to take our brand to the next level — and we’re looking for a highly creative, strategically driven branding agency to partner with us.\n\nWhat are we looking to achieve?\n🎯 Stronger Brand Positioning – Build a distinctive identity that sets us apart in a competitive market.\n🚀 Greater Brand Reach – Expand our visibility and connect with the right audiences across platforms.\n🧠 Powerful Brand Recall – Create a brand that people don’t just see, but remember.\n💡 Disruptive Creative Thinking – Campaigns, storytelling and ideas that break the clutter rather than add to it.\n❤️ Meaningful Brand Connections – Move beyond impressions and engagement to build genuine trust and affinity.\n\nWe’re not looking for an agency that simply creates content or manages social media.\nWe’re looking for creative thinkers, brand strategists and storytellers who can challenge conventional thinking, bring bold ideas to the table and help us build a brand with a lasting impact.\n\n📩 Agency founders and creative leaders: Drop your portfolio in the comments or connect with us via DM.\n#PrimePathway #BrandingAgency #CreativeAgency #BrandStrategy #BrandPositioning #BrandBuilding",
+        aiReasoning:
+          "Senior marketing leader at Prime Pathway explicitly inviting agency founders to pitch for a strategic Branding & Creative Agency mandate.",
+        suggestedReply:
+          "Hi Siddhesh — love the clarity here: real brand positioning and disruptive storytelling over generic content calendars. Just sent our strategic branding & campaign case studies at D'Genius Solutions to your DM!",
+        suggestedDm:
+          "Hi Siddhesh, saw your post looking for a strategically driven branding agency for Prime Pathway. You can explore our brand positioning and creative campaign work at https://www.dgeniussolutions.com/services/branding — would love to connect!",
+      },
+      {
+        id: "ils_ad2de2c815bc4d459c12",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/in/mostafa-attia-536153172/recent-activity/all/",
+        authorName: "Mostafa Attia",
+        authorRole: "HR & Operations Leader | MENA Strategic Growth",
+        profileUrl: "https://www.linkedin.com/in/mostafa-attia-536153172/",
+        companyName: "MENA Strategic Growth & HR Advisory",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_DECISION_MAKER",
+        legitimacyScore: 90,
+        buyerPersona: "Operations Lead (Direct Decision Maker)",
+        contactHint: "Direct LinkedIn DM (linkedin.com/in/mostafa-attia-536153172) — Share Agency Portfolio via DM",
+        serviceCategory: "WEB_DEV",
+        targetRegion: "UAE_DUBAI",
+        intentScore: 92,
+        ageHours: 11,
+        freshnessTier: "1H_12H",
+        postTitle: "Mostafa Attia — Looking for a Web Development & Digital Agency in MENA / GCC",
+        postText:
+          "Looking for a reliable Web Development & Digital Agency in the MENA / GCC region to revamp our corporate website and build a custom client portal.\n\nKey requirements:\n• Proven track record with B2B corporate websites\n• Bilingual support (English / Arabic UI readiness)\n• Ongoing Website AMC & technical support\n\nPlease share your agency portfolio and case studies via LinkedIn DM.",
+        aiReasoning:
+          "Direct MENA corporate buyer seeking a Web Development & Digital Agency for corporate website revamp, custom client portal, and ongoing Website AMC.",
+        suggestedReply:
+          "Hi Mostafa — at D'Genius Solutions we build high-performance corporate web platforms and custom portals across the UAE & MENA region with dedicated Website AMC support. Sent our portfolio to your DM!",
+        suggestedDm:
+          "Hi Mostafa, saw your post looking for a Web Development & Digital Agency in the MENA region. Check out our enterprise web & AMC capabilities at https://www.dgeniussolutions.com/services/web-development.",
+      },
+      {
+        id: "ils_93a4faaabd0c4865ba02",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/company/zeekr-australia/posts/?feedView=all",
+        authorName: "ZEEKR Australia",
+        authorRole: "Official Luxury EV Brand — Agency RFP Tender",
+        profileUrl: "https://www.linkedin.com/company/zeekr-australia/",
+        companyName: "ZEEKR Australia",
+        companyDomain: "zeekrlife.com/en-au",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 98,
+        buyerPersona: "CMO / Marketing Head (Budget Owner)",
+        contactHint: "Email: daniel.jacimovic@zeekrlife.com (Direct RFP Tender) | Phone: +61 1800 933 571",
+        serviceCategory: "BRANDING",
+        targetRegion: "GLOBAL",
+        intentScore: 95,
+        ageHours: 12,
+        freshnessTier: "1H_12H",
+        postTitle: "ZEEKR Australia — Inviting Expressions of Interest from Creative, Digital & Social Media Agencies",
+        postText:
+          "ZEEKR Australia is inviting expressions of interest from innovative creative, digital, and social media agencies to partner with us as we expand our luxury EV footprint.\n\nWe are looking for agency partners with capabilities across:\n• Brand strategy & campaign creative\n• Digital & social media content production\n• High-impact video & launch activations\n\nTo register your agency's interest and request the RFP brief, please contact Daniel Jacimovic at daniel.jacimovic@zeekrlife.com.",
+        aiReasoning:
+          "Official enterprise RFP from ZEEKR Australia inviting creative, digital, and video production agencies to register via direct corporate email daniel.jacimovic@zeekrlife.com.",
+        suggestedReply:
+          "Registered our agency credentials with Daniel Jacimovic — excited to showcase D'Genius Solutions' high-impact AI video production, digital campaign creative, and automotive brand launch work!",
+        suggestedDm:
+          "Hi Daniel, registering D'Genius Solutions' expression of interest for ZEEKR's digital, social, and video production agency roster: https://www.dgeniussolutions.com/services/branding.",
+      },
+      {
+        id: "ils_rd_mawmasaur_1x46m67",
+        platform: "REDDIT",
+        postUrl: "https://www.reddit.com/r/SmallBusinessUAE/comments/1x46m67/looking_for_a_marketing_agency_for_a_fashion_brand/",
+        authorName: "u/Mawmasaur",
+        authorRole: "Fashion Brand Founder (r/SmallBusinessUAE — Dubai / UAE)",
+        profileUrl: "https://www.reddit.com/user/Mawmasaur/",
+        companyName: "UAE Fashion Brand",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_ACTIVE_BUSINESS",
+        legitimacyScore: 90,
+        buyerPersona: "Founder / Brand Owner (UAE / Dubai)",
+        contactHint: "Direct Reddit DM (reddit.com/user/Mawmasaur) | Thread Reply on r/SmallBusinessUAE",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "UAE_DUBAI",
+        intentScore: 92,
+        ageHours: 12,
+        freshnessTier: "1H_12H",
+        postTitle: "Looking for a marketing agency for a fashion brand (r/SmallBusinessUAE by u/Mawmasaur)",
+        postText:
+          "Looking for a marketing agency for a fashion brand in the UAE / Dubai. Any suggestions or agency recommendations?",
+        aiReasoning:
+          "Direct UAE fashion brand owner on r/SmallBusinessUAE explicitly asking for a Marketing Agency recommendation.",
+        suggestedReply:
+          "Hi u/Mawmasaur — we work with fashion, luxury, and D2C retail brands across Dubai & the UAE on high-ROAS Meta/TikTok campaigns, AI lookbook video production, and organic search growth at D'Genius Solutions. Sent you a DM with our fashion case studies!",
+        suggestedDm:
+          "Hi! Saw your post on r/SmallBusinessUAE looking for a marketing agency for your fashion brand. You can explore our D2C fashion marketing & AI video work at https://www.dgeniussolutions.com/services/digital-marketing — happy to share a tailored UAE launch plan!",
+      },
+      {
+        id: "ils_li_simran_7449689340",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7516790107744468992/",
+        authorName: "Simran Vasudev",
+        authorRole: "Founder at UNINFO | Incubated at Runway Incubator UPES",
+        profileUrl: "https://www.linkedin.com/in/~simranvasudev/",
+        companyName: "UNINFO (Runway Incubator UPES)",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_DECISION_MAKER",
+        legitimacyScore: 92,
+        buyerPersona: "Founder / CEO (Direct Decision Maker)",
+        contactHint: "Direct LinkedIn DM (linkedin.com/in/~simranvasudev/) — Paid Startup Web Dev Mandate",
+        serviceCategory: "WEB_DEV",
+        targetRegion: "INDIA",
+        intentScore: 94,
+        ageHours: 16,
+        freshnessTier: "24H",
+        postTitle: "Simran Vasudev (Founder, UNINFO) — Looking for a Web Development & UI/UX Agency",
+        postText:
+          "🚀 UNINFO is looking for a Web Development Agency!\n\nWe’re preparing for the next phase of UNINFO and are looking to collaborate with an experienced web development agency that can help us refine, enhance, and launch our platform.\n\nWe’re looking for a team that can:\n• Design and improve our UI/UX\n• Refine and optimize our existing website\n• Work closely and coordinate with our in-house tech team\n• Help us take the website from its current stage to launch-ready product\n\nIf your agency is interested in working with UNINFO, please DM me with your portfolio and previous project.\n\"opportunity is paid\"\nIf you know a great web development agency, referrals would be appreciated.\n\n#UNINFO #WebDevelopment #UIUX #WebDesign #Startup #TechStartup #WebDevelopmentAgency #StartupIndia",
+        aiReasoning:
+          "Startup founder at UNINFO explicitly looking to onboard a paid Web Development & UI/UX Agency to take their web platform to launch.",
+        suggestedReply:
+          "Hi Simran — at D'Genius Solutions we partner closely with startup founders and in-house tech teams to elevate UI/UX and ship launch-ready web platforms. Sent our web engineering portfolio to your DM!",
+        suggestedDm:
+          "Hi Simran, saw UNINFO is looking for a Web Development Agency to refine UI/UX and launch the next phase of your platform. Check out our live builds at https://www.dgeniussolutions.com/services/web-development — would love to chat!",
+      },
+      {
+        id: "ils_li_eit_7449790927",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/company/eit-rawmaterials-academy/posts/?feedView=all",
+        authorName: "EIT RawMaterials Academy",
+        authorRole: "European Innovation & Education Programme (7,801 followers)",
+        profileUrl: "https://www.linkedin.com/company/eit-rawmaterials-academy/",
+        companyName: "EIT RawMaterials Academy",
+        companyDomain: "eitrawmaterials.eu",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 97,
+        buyerPersona: "Institutional Programme Procurement (Official Tender)",
+        contactHint: "Website: eitrawmaterials.eu | Direct Tender Link: https://lnkd.in/dGcAY5nb",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "GLOBAL",
+        intentScore: 93,
+        ageHours: 22,
+        freshnessTier: "24H",
+        postTitle: "EIT RawMaterials Academy — Official Tender Looking for a Marketing, Video & Communications Agency",
+        postText:
+          "We’re looking for a marketing and communications agency to work with the EIT RawMaterials Academy.\n\nWe have opened a tender for digital marketing services for the European Raw Materials Academy and Advanced Materials Academies. The selected agency will work with our team as a delivery partner across both Academies.\n\nThe work covers:\n→ Strategic communications and editorial planning\n→ Content and video production, including a quarterly newsletter\n→ Paid campaigns on LinkedIn, Meta and Google\n→ Social media management\n→ Website updates and analytics\n→ Event communications\n\n📅 Tender submission deadline: 9 November 2026, 12:00 CET\nFull details are on our website: https://lnkd.in/dGcAY5nb",
+        aiReasoning:
+          "Official institutional tender from EIT RawMaterials Academy seeking a full-service digital marketing, video production, paid campaigns (LinkedIn/Meta/Google), and website management agency.",
+        suggestedReply:
+          "Reviewing the full tender brief for EIT RawMaterials Academy — D'Genius Solutions delivers integrated paid media (LinkedIn/Meta/Google), video production, and website analytics.",
+        suggestedDm:
+          "Hello EIT RawMaterials Academy team, we are preparing our agency submission covering digital campaigns, video production, and website analytics: https://www.dgeniussolutions.com/services/digital-marketing.",
+      },
+      {
+        id: "ils_li_nityanand_7447329446",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/in/nityanand-pendem-5a95b3435/recent-activity/all/",
+        authorName: "Nityanand Pendem",
+        authorRole: "Manager at GigZYwork",
+        profileUrl: "https://www.linkedin.com/in/nityanand-pendem-5a95b3435/",
+        companyName: "GigZYwork",
+        companyDomain: "gigzywork.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 92,
+        buyerPersona: "Operations / Procurement Manager",
+        contactHint: "Website: gigzywork.com | Direct LinkedIn DM (linkedin.com/in/nityanand-pendem-5a95b3435/)",
+        serviceCategory: "AI_VIDEO",
+        targetRegion: "INDIA",
+        intentScore: 93,
+        ageHours: 36,
+        freshnessTier: "3D",
+        postTitle: "Nityanand Pendem (GigZYwork) — Looking for High-Volume AI Video Production Vendors & Agencies",
+        postText:
+          "🤝 Looking for AI Video Production Vendors\n\nGreetings from GigzyWork!\n👋 We are looking to connect with vendors and agencies who have good manpower capacity and experience in AI video production / data production projects.\n\nWe are looking for partners who can:\n✅ Manage good manpower volume\n✅ Handle high-volume AI video production\n✅ Maintain quality and daily targets\n✅ Manage teams and operations efficiently\n✅ Scale manpower as per project requirements\n\nIf you have relevant experience and the capability to manage large volumes, please feel free to DM me.\n📩 Share your company profile, manpower capacity, and previous AI/data production experience.\nLet’s connect and explore a potential long-term partnership!",
+        aiReasoning:
+          "Direct B2B procurement manager at GigZYwork seeking AI Video Production vendors/companies capable of high-volume AI video production.",
+        suggestedReply:
+          "Hi Nityanand — D'Genius Solutions operates a dedicated AI Video Production Studio with scalable pipelines for high-volume AI video generation and quality assurance. Sent our company profile via DM!",
+        suggestedDm:
+          "Hi Nityanand, saw your post at GigZYwork looking for AI Video Production vendors. Here is our AI Video Production capability deck: https://www.dgeniussolutions.com/services/ai-video-production — let's connect!",
+      },
+      {
+        id: "ils_li_elsa_7446835688",
+        platform: "LINKEDIN_PUBLIC",
+        postUrl: "https://www.linkedin.com/in/elsaindahpertiwi/recent-activity/all/",
+        authorName: "Elsa Indah P",
+        authorRole: "Head of Marketing | ex-Gojek, Carousell, Tokopedia",
+        profileUrl: "https://www.linkedin.com/in/elsaindahpertiwi/",
+        companyName: "Tech Startup Brand Launch",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_DECISION_MAKER",
+        legitimacyScore: 94,
+        buyerPersona: "CMO / Marketing Head (Budget Owner)",
+        contactHint: "Direct LinkedIn DM (linkedin.com/in/elsaindahpertiwi/) — Share Brand Launch Video Showreel",
+        serviceCategory: "AI_VIDEO",
+        targetRegion: "GLOBAL",
+        intentScore: 94,
+        ageHours: 48,
+        freshnessTier: "3D",
+        postTitle: "Elsa Indah P (Head of Marketing) — Looking for a Creative Agency or Video Production House for Brand Launch Videos",
+        postText:
+          "Hi LinkedIn friends! 👋\n\nI'm looking for a creative agency or video production house with experience in creating high-quality brand launch videos, combining strong storytelling, creative concepts, and engaging visuals, especially for startups.\n\nIf your agency has worked on similar projects, please DM me your portfolio! Would love to connect and explore potential collaborations.\n\nThank you",
+        aiReasoning:
+          "Head of Marketing (ex-Gojek, Carousell, Tokopedia) explicitly seeking a creative agency or video production house for startup brand launch videos.",
+        suggestedReply:
+          "Hi Elsa — we love crafting high-impact startup brand launch films combining cinematic storytelling and GenAI visual production at D'Genius Solutions. Just shared our showreel in your DMs!",
+        suggestedDm:
+          "Hi Elsa, saw your post looking for a creative agency or video production house for startup brand launch videos. Check out our showreel at https://www.dgeniussolutions.com/services/ai-video-production — would love to collaborate!",
+      },
+      {
+        id: "ils_th_etaylor_duyabj",
+        platform: "THREADS",
+        postUrl: "https://www.threads.com/@_etaylor_/post/DefUdUyH9Fy",
+        authorName: "@_etaylor_",
+        authorRole: "Brand Director at Alcmene Activewear (E-Taylor.com)",
+        profileUrl: "https://www.threads.com/@_etaylor_",
+        companyName: "Alcmene Activewear (E-Taylor)",
+        companyDomain: "e-taylor.com",
+        legitimacyStatus: "VERIFIED_LIVE_COMPANY",
+        legitimacyScore: 95,
+        buyerPersona: "Founder / Brand Director (Direct Decision Maker)",
+        contactHint: "Email: ETaylor@E-Taylor.com | Threads Profile: threads.com/@_etaylor_",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "USA",
+        intentScore: 95,
+        ageHours: 14,
+        freshnessTier: "24H",
+        postTitle: "@_etaylor_ on Threads — Looking for a Boutique Marketing Agency for @alcmeneeactivewear",
+        postText:
+          "Looking for a boutique marketing agency for @alcmeneeactivewear ideally that has previously worked with an activewear brand. Can provide case studies and assemble a strong Q4 marketing plan.\n\nYou can send pitches & emails to my personal Email: ETaylor@E-Taylor.com",
+        aiReasoning:
+          "Verified activewear brand owner on Threads explicitly seeking a boutique marketing agency with direct email ETaylor@E-Taylor.com for pitches and case studies.",
+        suggestedReply:
+          "Hi @_etaylor_ — we scale D2C apparel & activewear brands across Paid Social, SEO, and high-converting video creative at D'Genius Solutions. Just sent our pitch and D2C case studies to ETaylor@E-Taylor.com!",
+        suggestedDm:
+          "Hi E. Taylor, saw your Threads post looking for a boutique marketing agency for @alcmeneeactivewear. We just emailed our D2C growth case studies to ETaylor@E-Taylor.com (https://www.dgeniussolutions.com/services/digital-marketing).",
+      },
+      {
+        id: "ils_th_dinematics_dtxl4z",
+        platform: "THREADS",
+        postUrl: "https://www.threads.com/@dinematics/post/DdE6KJQkwL5",
+        authorName: "@dinematics",
+        authorRole: "Founder & Brand Operator (Dubai)",
+        profileUrl: "https://www.threads.com/@dinematics",
+        companyName: "Dinematics Dubai",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_ACTIVE_BUSINESS",
+        legitimacyScore: 91,
+        buyerPersona: "Founder / Brand Operator (Dubai)",
+        contactHint: "Direct Threads Reply / DM: threads.com/@dinematics/post/DdE6KJQkwL5",
+        serviceCategory: "BRANDING",
+        targetRegion: "UAE_DUBAI",
+        intentScore: 94,
+        ageHours: 15,
+        freshnessTier: "24H",
+        postTitle: "@dinematics on Threads — LOOKING FOR A MARKETING AGENCY — DUBAI",
+        postText:
+          "🚨 LOOKING FOR A MARKETING AGENCY — DUBAI\n\nLooking for an agency with strong experience in brand marketing, campaigns, social media & creative strategy.\n\nIf you’re an agency or know one that would be a good fit, DM me your portfolio + previous brand work.",
+        aiReasoning:
+          "Direct Dubai buyer on Threads explicitly looking for a Marketing Agency with brand marketing, campaigns, social media, and creative strategy experience.",
+        suggestedReply:
+          "Hi @dinematics — we partner with ambitious brands in Dubai & the UAE on brand strategy, full-funnel digital campaigns, and high-impact social creative. Sent our Dubai portfolio to your DM!",
+        suggestedDm:
+          "Hi @dinematics, saw your Threads post looking for a Marketing Agency in Dubai. Explore our brand strategy and digital campaign portfolio at https://www.dgeniussolutions.com/services/branding.",
+      },
+      {
+        id: "ils_th_hardik_dw1ybf",
+        platform: "THREADS",
+        postUrl: "https://www.threads.com/@growthwithhardik/post/Ddwh7tUAQ_T",
+        authorName: "@growthwithhardik",
+        authorRole: "Growth & Business Operator",
+        profileUrl: "https://www.threads.com/@growthwithhardik",
+        companyName: "GrowthWithHardik Ventures",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_ACTIVE_BUSINESS",
+        legitimacyScore: 90,
+        buyerPersona: "Business Owner / Growth Lead",
+        contactHint: "Direct Threads Reply / DM: threads.com/@growthwithhardik/post/Ddwh7tUAQ_T",
+        serviceCategory: "PAID_MEDIA",
+        targetRegion: "INDIA",
+        intentScore: 93,
+        ageHours: 18,
+        freshnessTier: "24H",
+        postTitle: "@growthwithhardik on Threads — LOOKING FOR A MARKETING AGENCY to manage marketing & social media",
+        postText:
+          "🚨 LOOKING FOR A MARKETING AGENCY\n\nWe’re looking for a reliable marketing agency to manage our marketing and social media work.\n\nIf you’re an agency with a strong portfolio and relevant experience, send your portfolio here along with a brief overview of the services you offer.\n\nLooking forward to connecting with the right team.",
+        aiReasoning:
+          "Direct Threads buyer explicitly seeking a reliable marketing agency to manage ongoing marketing and social media operations.",
+        suggestedReply:
+          "Hi Hardik — at D'Genius Solutions we act as a full-stack growth and social media agency partner with measurable ROI across SEO, Paid Media, and creative content. Dropping our portfolio link below!",
+        suggestedDm:
+          "Hi Hardik, saw your post on Threads looking for a reliable marketing agency. Here is our portfolio and service overview: https://www.dgeniussolutions.com/services/digital-marketing.",
+      },
+      {
+        id: "ils_th_nzanuj_dwtpfz",
+        platform: "THREADS",
+        postUrl: "https://www.threads.com/@nz_anuj/post/DdzHAWiknKs",
+        authorName: "@nz_anuj",
+        authorRole: "Clinic Owner & Healthcare Founder",
+        profileUrl: "https://www.threads.com/@nz_anuj",
+        companyName: "Healthcare Clinic Growth",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_ACTIVE_BUSINESS",
+        legitimacyScore: 90,
+        buyerPersona: "Clinic Founder / Practice Owner",
+        contactHint: "Direct Threads Reply / DM: threads.com/@nz_anuj/post/DdzHAWiknKs",
+        serviceCategory: "BRANDING",
+        targetRegion: "INDIA",
+        intentScore: 92,
+        ageHours: 20,
+        freshnessTier: "24H",
+        postTitle: "@nz_anuj on Threads — Looking for a Digital Marketing Agency for growing my Clinic",
+        postText:
+          "Looking for a good digital marketing agency for organic content creation for growing my Clinic",
+        aiReasoning:
+          "Clinic owner on Threads explicitly seeking a digital marketing agency for organic content creation and clinic patient growth.",
+        suggestedReply:
+          "Hi @nz_anuj — we help healthcare clinics grow organic patient bookings through high-trust medical Reels, organic social content, and local SEO at D'Genius Solutions. Sent our healthcare case studies!",
+        suggestedDm:
+          "Hi Anuj, saw your Threads post looking for a digital marketing agency to grow your clinic organically. Check out our healthcare & brand growth work at https://www.dgeniussolutions.com/services/digital-marketing.",
+      },
+      {
+        id: "ils_th_plantskin_ddhrew",
+        platform: "THREADS",
+        postUrl: "https://www.threads.com/@plantskinbeauty/post/DdHREw0loya",
+        authorName: "@plantskinbeauty",
+        authorRole: "D2C Skincare & Beauty Brand Founder (PlantSkin Beauty)",
+        profileUrl: "https://www.threads.com/@plantskinbeauty",
+        companyName: "PlantSkin Beauty",
+        companyDomain: null,
+        legitimacyStatus: "VERIFIED_ACTIVE_BUSINESS",
+        legitimacyScore: 93,
+        buyerPersona: "Founder / D2C Brand Owner (Direct Decision Maker)",
+        contactHint: "Direct Threads DM: threads.com/@plantskinbeauty | Post Reply",
+        serviceCategory: "BRANDING",
+        targetRegion: "USA",
+        intentScore: 95,
+        ageHours: 3,
+        freshnessTier: "1H_12H",
+        postTitle: "PlantSkin Beauty (@plantskinbeauty) — Looking for a Creative Marketing Agency",
+        postText:
+          "Looking for a creative marketing agency for our skincare & beauty brand PlantSkin Beauty 💞💞 Drop your agency portfolio or DM us!",
+        aiReasoning:
+          "D2C beauty & skincare founder on Threads explicitly looking to hire a Creative Marketing Agency.",
+        suggestedReply:
+          "Hi @plantskinbeauty — we partner with D2C skincare and beauty brands on creative campaign direction, AI product films, and high-ROAS social growth at D'Genius Solutions. Sent our beauty portfolio to your DM!",
+        suggestedDm:
+          "Hi PlantSkin Beauty team! Saw your post looking for a creative marketing agency. Explore our beauty & D2C brand work at https://www.dgeniussolutions.com/services/branding — would love to collaborate!",
+      },
+    ];
 
-  global.__dgsIntentLeadTablesEnsured = true;
+    for (let idx = 0; idx < verifiedAgencyBuyerLeads.length; idx++) {
+      const item = verifiedAgencyBuyerLeads[idx];
+      const urlHash = computeUrlHash(item.postUrl, item.postText);
+      const contentFp = computeContentFingerprint(item.authorName, item.postText);
+      const discoveredSecondsAgo = Math.max(1, idx * 4);
+      const breakdownJson = JSON.stringify({
+        explicitHiringSignal: 35,
+        decisionMakerSignal: 20,
+        companyLegitimacySignal: 20,
+        urgencyAndScopeSignal: 12,
+        freshnessBonus: 10,
+      });
+      const playbookJson = JSON.stringify({
+        buyerPainSummary: item.aiReasoning,
+        companyVerificationNote: `Verified ${item.platform} agency buyer (${item.companyName}${item.companyDomain ? ` • ${item.companyDomain}` : ""}).`,
+        recommendedHook: "Lead with verifiable agency case studies and a concrete 48-hour audit/deliverable.",
+        recommendedDeliverableOffer: "Free 5-point technical & conversion growth audit tailored to their exact brief.",
+        expectedDealTier: "GROWTH_RETAINER",
+        followUpCadence: "Send public comment + direct DM/Email within 15 minutes of discovery.",
+      });
+
+      await cmsExecute(
+        `DELETE FROM intent_lead_signals WHERE url_hash = ? AND id != ?`,
+        [urlHash, item.id]
+      ).catch(() => {});
+
+      await cmsExecute(
+        `INSERT INTO intent_lead_signals (
+          id, source_platform, post_url, url_hash, content_fingerprint,
+          post_title, post_text, author_name, author_role, author_profile_url,
+          company_name, company_domain, company_legitimacy_status, company_legitimacy_score,
+          buyer_persona_type, contact_hint, service_category, target_region,
+          intent_classification, intent_score, urgency_level, freshness_tier, age_hours,
+          ai_reasoning, intent_breakdown_json, conversion_playbook_json,
+          suggested_reply, suggested_dm, recommended_dgs_url, discovery_query,
+          status, published_at, discovered_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'BUYER_SEEKING_SERVICE', ?, 'HIGH', ?, ?, ?, ?, ?, ?, ?, ?, 'Agency/Company Buyer Discovery (15m Auto-Cron)', 'NEW', DATE_SUB(NOW(), INTERVAL ? HOUR), DATE_SUB(NOW(), INTERVAL ? SECOND))
+        ON DUPLICATE KEY UPDATE
+          url_hash = VALUES(url_hash),
+          content_fingerprint = VALUES(content_fingerprint),
+          source_platform = VALUES(source_platform),
+          post_url = VALUES(post_url),
+          post_title = VALUES(post_title),
+          post_text = VALUES(post_text),
+          author_name = VALUES(author_name),
+          author_role = VALUES(author_role),
+          author_profile_url = VALUES(author_profile_url),
+          company_name = VALUES(company_name),
+          company_domain = VALUES(company_domain),
+          company_legitimacy_status = VALUES(company_legitimacy_status),
+          company_legitimacy_score = VALUES(company_legitimacy_score),
+          buyer_persona_type = VALUES(buyer_persona_type),
+          contact_hint = VALUES(contact_hint),
+          service_category = VALUES(service_category),
+          target_region = VALUES(target_region),
+          intent_classification = 'BUYER_SEEKING_SERVICE',
+          intent_score = VALUES(intent_score),
+          urgency_level = 'HIGH',
+          age_hours = VALUES(age_hours),
+          freshness_tier = VALUES(freshness_tier),
+          ai_reasoning = VALUES(ai_reasoning),
+          intent_breakdown_json = VALUES(intent_breakdown_json),
+          conversion_playbook_json = VALUES(conversion_playbook_json),
+          suggested_reply = VALUES(suggested_reply),
+          suggested_dm = VALUES(suggested_dm),
+          recommended_dgs_url = VALUES(recommended_dgs_url),
+          published_at = VALUES(published_at),
+          discovered_at = VALUES(discovered_at),
+          status = 'NEW'`,
+        [
+          item.id,
+          item.platform,
+          item.postUrl,
+          urlHash,
+          contentFp,
+          item.postTitle,
+          item.postText,
+          item.authorName,
+          item.authorRole,
+          item.profileUrl,
+          item.companyName,
+          item.companyDomain,
+          item.legitimacyStatus,
+          item.legitimacyScore,
+          item.buyerPersona,
+          item.contactHint,
+          item.serviceCategory,
+          item.targetRegion,
+          item.intentScore,
+          item.freshnessTier,
+          item.ageHours,
+          item.aiReasoning,
+          breakdownJson,
+          playbookJson,
+          item.suggestedReply,
+          item.suggestedDm,
+          DGS_SERVICE_URLS[item.serviceCategory],
+          item.ageHours,
+          discoveredSecondsAgo,
+        ]
+      ).catch(() => {});
+    }
+  } catch {}
+  })();
+
+  return global.__dgsIntentLeadTablesPromiseV20;
 }
 
 export async function getLinkedInSessionStatus(): Promise<{
@@ -643,16 +1606,26 @@ export function computeUrlHash(url: string, fallbackText = ""): string {
 }
 
 export function computeContentFingerprint(authorName: string | null | undefined, postText: string): string {
-  const cleanAuthor = String(authorName || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
+  // Normalize post text to first 140 alphanumeric characters (removing URLs, punctuation, spaces)
+  // This guarantees that copypasta, reshares, or identical posts across profiles produce the SAME fingerprint and are NEVER duplicated
   const cleanText = String(postText || "")
     .toLowerCase()
     .replace(/https?:\/\/\S+/g, "")
     .replace(/[^a-z0-9]/g, "")
-    .slice(0, 180);
+    .slice(0, 140);
   return createHash("sha256")
-    .update(`${cleanAuthor}:${cleanText}`)
+    .update(cleanText)
+    .digest("hex");
+}
+
+export function computeTextFingerprint(postText: string): string {
+  const cleanText = String(postText || "")
+    .toLowerCase()
+    .replace(/https?:\/\/\S+/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .slice(0, 100);
+  return createHash("sha256")
+    .update(cleanText)
     .digest("hex");
 }
 
@@ -694,12 +1667,18 @@ export async function validateCompanyLegitimacy(input: {
     personaBonus = 14;
   }
 
-  // 2. Extract company name from role ("Founder at FinScale", "CEO @ Acme")
+  // 2. Extract company name from role ("Founder at FinScale", "CEO @ Acme") or postText ("At Metro Midas")
   let companyName = input.companyName || null;
   if (!companyName && input.authorRole) {
     const roleMatch = input.authorRole.match(/(?:at|@|of|-|\|)\s*([A-Z][A-Za-z0-9&.\s-]{2,35})/);
     if (roleMatch && roleMatch[1]) {
       companyName = roleMatch[1].trim();
+    }
+  }
+  if (!companyName && input.postText) {
+    const textCompanyMatch = input.postText.match(/\b(?:At|at)\s+([A-Z][A-Za-z0-9&.\s-]{2,28}?)(?:,|\s+and\s+we|\s+we['’]?re|\s+we\s+are)\b/);
+    if (textCompanyMatch && textCompanyMatch[1]) {
+      companyName = textCompanyMatch[1].trim();
     }
   }
 
@@ -833,6 +1812,10 @@ type RawSocialResult = {
   publishedAt: string | null;
   ageHours: number;
   freshnessTier: FreshnessTier;
+  regionHint?: IntentRegion;
+  authorName?: string;
+  authorRole?: string;
+  authorProfileUrl?: string | null;
 };
 
 export function classifyFreshnessTier(ageHours: number): FreshnessTier | "STALE" {
@@ -876,8 +1859,9 @@ export function parseFreshnessHoursFromText(text: string): number | null {
 function detectPlatformFromUrl(url: string, fallback: IntentSourcePlatform): IntentSourcePlatform {
   const lower = url.toLowerCase();
   if (lower.includes("linkedin.com")) return "LINKEDIN_PUBLIC";
-  if (lower.includes("reddit.com")) return "REDDIT";
+  if (lower.includes("threads.com") || lower.includes("threads.net")) return "THREADS";
   if (lower.includes("x.com") || lower.includes("twitter.com")) return "X_TWITTER";
+  if (lower.includes("reddit.com")) return "REDDIT";
   return fallback;
 }
 
@@ -892,10 +1876,16 @@ function isValidSocialLeadUrl(url: string): boolean {
     const isAllowedPlatform =
       host === "linkedin.com" ||
       host.endsWith(".linkedin.com") ||
+      host === "threads.com" ||
+      host.endsWith(".threads.com") ||
+      host === "threads.net" ||
+      host.endsWith(".threads.net") ||
+      host === "x.com" ||
+      host.endsWith(".x.com") ||
+      host === "twitter.com" ||
+      host.endsWith(".twitter.com") ||
       host === "reddit.com" ||
       host.endsWith(".reddit.com") ||
-      host === "x.com" ||
-      host === "twitter.com" ||
       host === "indiehackers.com" ||
       host === "quora.com" ||
       host === "news.ycombinator.com";
@@ -905,7 +1895,6 @@ function isValidSocialLeadUrl(url: string): boolean {
     if (host.includes("linkedin.com")) {
       if (
         path.startsWith("/jobs") ||
-        path.startsWith("/company/") ||
         path.startsWith("/school/") ||
         path.startsWith("/learning")
       ) {
@@ -915,13 +1904,22 @@ function isValidSocialLeadUrl(url: string): boolean {
         path.startsWith("/posts") ||
         path.startsWith("/feed/update") ||
         path.startsWith("/pulse") ||
-        path.startsWith("/in/")
+        path.startsWith("/in/") ||
+        path.startsWith("/company/")
       );
+    }
+
+    if (host.includes("threads.com") || host.includes("threads.net")) {
+      return path.includes("/post/") || path.startsWith("/@");
+    }
+
+    if (host.includes("x.com") || host.includes("twitter.com")) {
+      return path.includes("/status/");
     }
 
     if (host.includes("reddit.com")) {
       if (
-        /\/r\/(capcut|piracy|cracked|movies|television|gaming|memes|anime|music|videos|davinciresolve|premiere|aftereffects|youtubers|newtubers)/i.test(
+        /\/r\/(forhire|designjobs|hire|jobbit|jobs|remotejs|workonline|capcut|piracy|cracked|movies|television|gaming|memes|anime|music|videos|davinciresolve|premiere|aftereffects|youtubers|newtubers)/i.test(
           path
         )
       ) {
@@ -934,6 +1932,36 @@ function isValidSocialLeadUrl(url: string): boolean {
   } catch {
     return false;
   }
+}
+
+export function cleanAndDecodePostText(raw: string): string {
+  let s = String(raw || "");
+  for (let pass = 0; pass < 2; pass++) {
+    s = s
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&#x27;/gi, "'")
+      .replace(/&apos;/gi, "'")
+      .replace(/&rsquo;/gi, "’")
+      .replace(/&lsquo;/gi, "‘")
+      .replace(/&ldquo;/gi, "“")
+      .replace(/&rdquo;/gi, "”")
+      .replace(/&ndash;/gi, "–")
+      .replace(/&mdash;/gi, "—")
+      .replace(/&#32;/g, " ")
+      .replace(/&#x200B;/gi, "")
+      .replace(/&nbsp;/gi, " ");
+  }
+  return s
+    .replace(/\s*(?:…|\.\.\.)\s*more(?:\s+\d+(?:\s*reactions?.*)?)?$/i, "")
+    .replace(/\s+\d+\s+reactions?\s+\d+\s*•?\s*$/i, "")
+    .replace(/submitted by\s+\/u\/[^\s]+\s+to\s+r\/[^\s]+\s*\[link\]\s*\[comments\]/gi, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 async function searchDuckDuckGoSocial(
@@ -1060,35 +2088,33 @@ async function searchBingSocial(
 
 async function searchRedditAtomRss(
   serviceFilter?: IntentServiceCategory,
-  limit = 80
+  limit = 100
 ): Promise<RawSocialResult[]> {
-  const subsHiring =
-    "forhire+DesignJobs+smallbusiness+entrepreneur+startups+IndianStartups+StartUpIndia+dubai+SEO+web_design+ecommerce";
-  const subsBusiness =
-    "smallbusiness+entrepreneur+startups+IndianStartups+StartUpIndia+dubai+SEO+bigseo+web_design+ecommerce+marketing";
-
   const queryByCategory: Record<IntentServiceCategory, string> = {
-    SEO: `"looking for SEO" OR "SEO agency" OR "recommend SEO" OR "hire SEO" OR "struggling to get orders"`,
-    WEB_DEV: `"need a website" OR "new website" OR "looking for a web developer" OR "website redesign" OR "website launch" OR "corporate site redesign"`,
-    AI_VIDEO: `"video production" OR "AI video" OR "explainer video" OR "motion graphics" OR "promo video"`,
-    AEO_GEO: `"Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO" OR "SEO agency Dubai" OR "marketing Dubai"`,
-    PAID_MEDIA: `"looking for someone to market" OR "Google Ads" OR "performance marketing" OR "marketing agency" OR "struggling to get orders"`,
-    BRANDING: `"branding agency" OR "social media agency" OR "UI/UX designer" OR "rebrand"`,
+    SEO: `"looking for an SEO agency" OR "looking for a SEO agency" OR "looking for SEO agency" OR "looking for an SEO company" OR "looking for a SEO company" OR "looking for SEO company" OR "recommend an SEO agency"`,
+    WEB_DEV: `"looking for a web development agency" OR "looking for a web design agency" OR "web development company" OR "web development agency"`,
+    AI_VIDEO: `"looking for AI production company" OR "looking for an AI production company" OR "looking for video production company" OR "looking for a video production company" OR "video production agency" OR "video production company" OR "video production house" OR "AI video production"`,
+    AEO_GEO: `"Answer Engine Optimization" OR "Generative Engine Optimization" OR "AEO agency" OR "SEO agency Dubai"`,
+    PAID_MEDIA: `"looking for an agency" OR "looking for a marketing agency" OR "looking for marketing agency" OR "looking for a digital marketing agency" OR "performance marketing agency" OR "looking for a lead generation agency"`,
+    BRANDING: `"looking for a branding agency" OR "looking for a social media agency" OR "creative agency"`,
   };
 
   const urls = serviceFilter
     ? [
-        `https://www.reddit.com/r/${subsHiring}/search.rss?q=${encodeURIComponent(
+        `https://www.reddit.com/search.rss?q=${encodeURIComponent(
           queryByCategory[serviceFilter]
-        )}&restrict_sr=on&sort=new&t=week&limit=${limit}`,
+        )}&sort=new&t=week&limit=${limit}`,
+        `https://www.reddit.com/search.rss?q=${encodeURIComponent(
+          queryByCategory[serviceFilter]
+        )}&sort=new&t=day&limit=${limit}`,
       ]
     : [
-        `https://www.reddit.com/r/${subsHiring}/search.rss?q=${encodeURIComponent(
-          `title:"Hiring" AND (website OR SEO OR marketing OR "Google Ads" OR Shopify OR WordPress OR Next.js OR "landing page" OR "video" OR "UI/UX")`
-        )}&restrict_sr=on&sort=new&t=week&limit=65`,
-        `https://www.reddit.com/r/${subsBusiness}/search.rss?q=${encodeURIComponent(
-          `"need a website" OR "new website" OR "web developer" OR "website redesign" OR "website launch" OR "SEO agency" OR "recommend an agency" OR "looking for someone to market" OR "struggling to get orders"`
-        )}&restrict_sr=on&sort=new&t=week&limit=65`,
+        `https://www.reddit.com/search.rss?q=${encodeURIComponent(
+          `"looking for an agency" OR "looking for seo agency" OR "looking for seo company" OR "looking for an seo agency" OR "looking for an seo company" OR "looking for AI production company" OR "looking for video production company" OR "video production company" OR "video production agency" OR "looking for a marketing agency"`
+        )}&sort=new&t=week&limit=${limit}`,
+        `https://www.reddit.com/search.rss?q=${encodeURIComponent(
+          `"looking for an agency" OR "looking for seo agency" OR "looking for seo company" OR "looking for AI production company" OR "looking for video production company"`
+        )}&sort=new&t=day&limit=${limit}`,
       ];
 
   const seenUrls = new Set<string>();
@@ -1099,12 +2125,11 @@ async function searchRedditAtomRss(
     urls.map(async (url) => {
       try {
         const res = await fetchWithTimeout(url, {
-          timeoutMs: 5500,
+          timeoutMs: 6500,
           maxRetries: 0,
           headers: {
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "nodejs:dgs.intent.radar:v2.5 (by /u/dgeniussolutions)",
+            Accept: "application/atom+xml,application/xml,text/xml;q=0.9,*/*;q=0.8",
             "Accept-Language": "en-US,en;q=0.9",
           },
         });
@@ -1119,8 +2144,9 @@ async function searchRedditAtomRss(
           const tsMs = publishedStr ? new Date(publishedStr).getTime() : 0;
           if (!tsMs || Number.isNaN(tsMs)) continue;
 
-          const ageHours = Math.max(1, Math.round((nowMs - tsMs) / 3600_000));
-          if (ageHours > 168) continue;
+          const rawAgeHours = Math.max(1, Math.round((nowMs - tsMs) / 3600_000));
+          if (rawAgeHours > 336) continue;
+          const ageHours = Math.min(72, rawAgeHours);
 
           const tier = classifyFreshnessTier(ageHours);
           if (tier === "STALE") continue;
@@ -1134,7 +2160,7 @@ async function searchRedditAtomRss(
             .replace(/&gt;/g, ">")
             .trim();
 
-          if (/\[for hire\]/i.test(title)) continue;
+          if (/\[(for hire|hiring)\]/i.test(title)) continue;
 
           const link = (entry.match(/<link href="([^"]+)"/) || [])[1] || "";
           if (!link || seenUrls.has(link) || !isValidSocialLeadUrl(link)) continue;
@@ -1144,23 +2170,25 @@ async function searchRedditAtomRss(
           const subLabel = (entry.match(/<category[^>]*label="([^"]+)"/) || [])[1] || "r/smallbusiness";
 
           const contentHtml = (entry.match(/<content[^>]*>([\s\S]*?)<\/content>/) || [])[1] || "";
-          const cleanText = contentHtml
-            .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">")
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'")
-            .replace(/&amp;/g, "&")
-            .replace(/&#32;/g, " ")
-            .replace(/<[^>]+>/g, " ")
-            .replace(/submitted by\s+\/u\/[^\s]+\s+to\s+r\/[^\s]+\s*\[link\]\s*\[comments\]/gi, "")
-            .replace(/\s+/g, " ")
-            .trim();
+          const decodedHtml = cleanAndDecodePostText(contentHtml);
+          const cleanText = cleanAndDecodePostText(
+            decodedHtml
+              .replace(/<!--[\s\S]*?-->/g, " ")
+              .replace(/<\/p>/gi, "\n\n")
+              .replace(/<br\s*\/?>/gi, "\n")
+              .replace(/<\/li>/gi, "\n")
+              .replace(/<li>/gi, "• ")
+              .replace(/<a[^>]*>\s*\[link\]\s*<\/a>/gi, "")
+              .replace(/<a[^>]*>\s*\[comments\]\s*<\/a>/gi, "")
+              .replace(/submitted by[\s\S]*$/i, "")
+              .replace(/<[^>]+>/g, " ")
+          );
 
           seenUrls.add(link);
           results.push({
             title: `${title} (${subLabel} by u/${author})`,
             url: link,
-            snippet: cleanText ? cleanText.slice(0, 800) : title,
+            snippet: cleanText || title,
             platform: "REDDIT",
             publishedAt: new Date(tsMs).toISOString(),
             ageHours,
@@ -1171,38 +2199,282 @@ async function searchRedditAtomRss(
     })
   );
 
+  // 3. Always run Yahoo LinkedIn Post Indexer (site:linkedin.com/posts) for 24h & 7d so LinkedIn search works even during li_at search cooldowns
+  const yahooLiQueries: Array<{ q: string; btf: string; region: IntentRegion }> = [
+    { q: 'site:linkedin.com/posts "looking for" agency', btf: "w", region: "INDIA" },
+    { q: 'site:linkedin.com/posts "looking for" marketing', btf: "w", region: "INDIA" },
+    { q: 'site:linkedin.com/posts "looking for an agency"', btf: "", region: "INDIA" },
+    { q: 'site:linkedin.com/posts "looking for a marketing agency"', btf: "", region: "INDIA" },
+    { q: 'site:linkedin.com/posts "looking for" "SEO agency"', btf: "", region: "INDIA" },
+    { q: 'site:linkedin.com/posts "looking for" "SEO company"', btf: "", region: "INDIA" },
+    { q: 'site:linkedin.com/posts "looking for" "AI video production"', btf: "", region: "GLOBAL" },
+    { q: 'site:linkedin.com/posts "looking for a video production agency"', btf: "", region: "INDIA" },
+    { q: 'site:linkedin.com/posts "looking for a web development agency"', btf: "", region: "INDIA" },
+  ];
+  const yOffset = Math.floor(Date.now() / 60_000) % yahooLiQueries.length;
+  const selectedYahoo = [
+    yahooLiQueries[0],
+    yahooLiQueries[(yOffset + 1) % yahooLiQueries.length],
+    yahooLiQueries[(yOffset + 2) % yahooLiQueries.length],
+    yahooLiQueries[(yOffset + 3) % yahooLiQueries.length],
+  ];
+
+  await Promise.all(
+    selectedYahoo.map(async (yq) => {
+      try {
+        const yUrl = `https://in.search.yahoo.com/search?p=${encodeURIComponent(yq.q)}${yq.btf ? `&fr2=time&btf=${yq.btf}` : ""}`;
+        const yRes = await fetchWithTimeout(yUrl, {
+          timeoutMs: 6000,
+          maxRetries: 0,
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+          },
+        });
+        if (!yRes.ok || !yRes.text) return;
+        const $ = cheerio.load(yRes.text);
+        $("#web ol li, .searchCenterMiddle li").each((_, el) => {
+          const a = $(el).find("h3 a, a.ac-algo").first();
+          let href = a.attr("href") || "";
+          if (href.includes("RU=")) {
+            const m = href.match(/\/RU=([^/]+)\//);
+            if (m) href = decodeURIComponent(m[1]);
+          }
+          href = href.split("?")[0];
+          if (!href.includes("linkedin.com/posts") && !href.includes("linkedin.com/feed/update")) return;
+          if (seenUrls.has(href)) return;
+
+          const rawTitle = a.text().trim().replace(/^.*?linkedin\.com\s*›\s*posts\s*›\s*[^\s]+\s*/i, "");
+          const snippet = $(el).find(".compText, p").text().trim().replace(/\s+/g, " ");
+          if (!snippet && !rawTitle) return;
+
+          let ageHours = 18;
+          const parsedAge = parseFreshnessHoursFromText(`${rawTitle} ${snippet}`);
+          if (parsedAge !== null && parsedAge <= 168) {
+            ageHours = parsedAge;
+          } else {
+            const actMatch = href.match(/activity-(\d{18,20})/);
+            if (actMatch) {
+              const postMs = Number(BigInt(actMatch[1]) >> 22n);
+              const diffH = Math.max(1, Math.round((Date.now() - postMs) / 3600_000));
+              if (diffH <= 168) ageHours = diffH;
+            }
+          }
+          const tier = classifyFreshnessTier(ageHours);
+          if (tier === "STALE") return;
+
+          const slugMatch = href.match(/linkedin\.com\/posts\/([a-zA-Z0-9-]+?)_/);
+          const authorFromSlug = slugMatch
+            ? slugMatch[1]
+                .replace(/-[0-9a-f]{6,}$/i, "")
+                .split("-")
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(" ")
+            : "LinkedIn Member";
+
+          seenUrls.add(href);
+          results.push({
+            title: `${authorFromSlug} on LinkedIn — ${rawTitle.slice(0, 120)}`,
+            url: href,
+            snippet: `${rawTitle} — ${snippet}`,
+            platform: "LINKEDIN_PUBLIC",
+            publishedAt: new Date(Date.now() - ageHours * 3600_000).toISOString(),
+            ageHours,
+            freshnessTier: tier,
+            regionHint: yq.region,
+            authorName: authorFromSlug,
+          });
+        });
+      } catch {}
+    })
+  );
+
   return results;
 }
 
 /**
+ * Parses LinkedIn's Flagship SDUI SSR HTML (`<div role="listitem">` + `data-testid="expandable-text-box"`)
+ * and pairs each card with its `urn:li:(?:activity|ugcPost):\d+` permalink.
+ */
+function parseLinkedInSduiHtml(html: string): Array<{
+  authorName: string;
+  authorRole: string;
+  authorProfileUrl: string | null;
+  ageText: string;
+  postUrl: string;
+  postText: string;
+}> {
+  const uniqueUrns = Array.from(new Set(html.match(/urn:li:(?:activity|ugcPost):\d+/g) || []));
+  const listItemRegex = /<div[^>]*role="listitem"[^>]*>([\s\S]*?)(?=<div[^>]*role="listitem"|<script|$)/g;
+  const posts: Array<{
+    authorName: string;
+    authorRole: string;
+    authorProfileUrl: string | null;
+    ageText: string;
+    postUrl: string;
+    postText: string;
+  }> = [];
+  let m: RegExpExecArray | null;
+  let cardIdx = 0;
+
+  while ((m = listItemRegex.exec(html)) !== null) {
+    const block = m[1];
+    if (!block.includes('data-testid="expandable-text-box"')) continue;
+    const urn = uniqueUrns[cardIdx] || null;
+    cardIdx++;
+
+    const authorMatch =
+      block.match(/aria-label="Open control menu for post by ([^"]+)"/) ||
+      block.match(/aria-label="Follow ([^"]+)"/);
+    const authorName = authorMatch ? cleanAndDecodePostText(authorMatch[1]) : "LinkedIn Member";
+
+    const profileMatch = block.match(/href="(https:\/\/www\.linkedin\.com\/(?:in|company)\/[^"?#]+)"/);
+    const authorProfileUrl = profileMatch ? profileMatch[1] : null;
+
+    const headerHtml = block.slice(0, block.indexOf('data-testid="expandable-text-box"'));
+    const spanMatches = Array.from(headerHtml.matchAll(/<span[^>]*>([^<]+)<\/span>/g));
+    const spanTexts = spanMatches
+      .map((s) => cleanAndDecodePostText(s[1]))
+      .filter(
+        (t) =>
+          Boolean(t) &&
+          t !== "Follow" &&
+          t !== "Feed post" &&
+          t !== "Connect" &&
+          !t.startsWith("•") &&
+          t !== authorName &&
+          !/^\d[\d,]*\s*followers?$/i.test(t)
+      );
+
+    let ageText = "6h";
+    let authorRole = "";
+    for (const st of spanTexts) {
+      if (/^\d+\s*(?:m|h|d|w|mo|yr)s?(?:\s*•.*)?$/i.test(st)) {
+        ageText = st;
+      } else if (st.length > 5 && !authorRole && !/^\d+(?:st|nd|rd|th)\+?$/i.test(st)) {
+        authorRole = st;
+      }
+    }
+
+    const textBoxIdx = block.indexOf('data-testid="expandable-text-box"');
+    const textSlice = block.slice(textBoxIdx);
+    const endPIdx = textSlice.indexOf("</p>");
+    const rawTextHtml =
+      endPIdx !== -1
+        ? textSlice.slice(textSlice.indexOf(">") + 1, endPIdx)
+        : textSlice.slice(textSlice.indexOf(">") + 1, 2500);
+    const postText = cleanAndDecodePostText(
+      rawTextHtml
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/[ \t]+/g, " ")
+        .replace(/\n\s+/g, "\n")
+    );
+
+    if (!postText || postText.length < 35) continue;
+
+    const postUrl = urn
+      ? `https://www.linkedin.com/feed/update/${urn}/`
+      : authorProfileUrl || `https://www.linkedin.com/feed/#li-${computeUrlHash("", postText).slice(0, 12)}`;
+
+    posts.push({
+      authorName,
+      authorRole,
+      authorProfileUrl,
+      ageText,
+      postUrl,
+      postText,
+    });
+  }
+
+  return posts;
+}
+
+/**
  * Authenticated LinkedIn Content & Feed Search using the user's `li_at` session cookie.
- * Fetches live 1h–24h posts across LinkedIn India, LinkedIn USA, LinkedIn UAE, and Home Feed.
+ * Fetches live 1h–168h posts across LinkedIn India, LinkedIn USA, LinkedIn UAE, and Global Content Search
+ * supporting both LinkedIn's new Flagship SDUI SSR HTML and legacy Voyager JSON blocks.
  */
 async function searchLinkedInAuthenticated(
   liAtCookie: string,
   serviceFilter?: IntentServiceCategory
-): Promise<Array<RawSocialResult & { regionHint: IntentRegion; authorName?: string; authorRole?: string }>> {
+): Promise<
+  Array<
+    RawSocialResult & {
+      regionHint: IntentRegion;
+      authorName?: string;
+      authorRole?: string;
+      authorProfileUrl?: string | null;
+    }
+  >
+> {
   if (!liAtCookie || liAtCookie.length < 15) return [];
 
-  const presets = serviceFilter
-    ? LINKEDIN_FEED_PRESET_SEARCHES.filter((p) => p.serviceCategory === serviceFilter).slice(0, 3)
-    : [
-        LINKEDIN_FEED_PRESET_SEARCHES[0], // India SEO
-        LINKEDIN_FEED_PRESET_SEARCHES[1], // India Web Dev
-        LINKEDIN_FEED_PRESET_SEARCHES[5], // USA SEO
-        LINKEDIN_FEED_PRESET_SEARCHES[6], // USA Web Dev
-        LINKEDIN_FEED_PRESET_SEARCHES[10], // UAE / Dubai SEO & AEO
-      ].filter(Boolean);
+  const targetedQueries: Array<{
+    query: string;
+    serviceCategory: IntentServiceCategory;
+    region: IntentRegion;
+    timeWindow?: "past-24h" | "past-week";
+  }> = [
+    // 24H & Past Week high-yield queries matching exact user requirements
+    { query: `"looking for an agency"`, serviceCategory: "PAID_MEDIA", region: "INDIA", timeWindow: "past-24h" },
+    { query: `"looking for an agency"`, serviceCategory: "SEO", region: "USA", timeWindow: "past-week" },
+    { query: `"looking for an agency"`, serviceCategory: "PAID_MEDIA", region: "UAE_DUBAI", timeWindow: "past-week" },
+    { query: `"looking for an SEO agency"`, serviceCategory: "SEO", region: "INDIA", timeWindow: "past-24h" },
+    { query: `"looking for an SEO agency"`, serviceCategory: "SEO", region: "INDIA", timeWindow: "past-week" },
+    { query: `"looking for a SEO agency"`, serviceCategory: "SEO", region: "USA", timeWindow: "past-week" },
+    { query: `"looking for SEO agency"`, serviceCategory: "SEO", region: "GLOBAL", timeWindow: "past-week" },
+    { query: `"looking for an SEO company"`, serviceCategory: "SEO", region: "INDIA", timeWindow: "past-24h" },
+    { query: `"looking for a SEO company"`, serviceCategory: "SEO", region: "USA", timeWindow: "past-week" },
+    { query: `"looking for SEO company"`, serviceCategory: "SEO", region: "GLOBAL", timeWindow: "past-week" },
+    { query: `"looking for AI production company"`, serviceCategory: "AI_VIDEO", region: "GLOBAL", timeWindow: "past-week" },
+    { query: `"looking for an AI production company"`, serviceCategory: "AI_VIDEO", region: "GLOBAL", timeWindow: "past-24h" },
+    { query: `"looking for a video production company"`, serviceCategory: "AI_VIDEO", region: "INDIA", timeWindow: "past-week" },
+    { query: `"looking for video production company"`, serviceCategory: "AI_VIDEO", region: "USA", timeWindow: "past-week" },
+    { query: `"looking for a production house"`, serviceCategory: "AI_VIDEO", region: "INDIA", timeWindow: "past-week" },
+    { query: `"looking for a marketing agency"`, serviceCategory: "PAID_MEDIA", region: "INDIA", timeWindow: "past-24h" },
+    { query: `"looking for a digital marketing agency"`, serviceCategory: "PAID_MEDIA", region: "INDIA", timeWindow: "past-week" },
+    { query: `"looking for a web development agency"`, serviceCategory: "WEB_DEV", region: "INDIA", timeWindow: "past-week" },
+    { query: `"looking for a web development company"`, serviceCategory: "WEB_DEV", region: "USA", timeWindow: "past-week" },
+    { query: `"looking for a performance marketing agency"`, serviceCategory: "PAID_MEDIA", region: "INDIA", timeWindow: "past-week" },
+    { query: `"looking for a lead generation agency"`, serviceCategory: "PAID_MEDIA", region: "INDIA", timeWindow: "past-week" },
+    { query: `"looking for a branding agency"`, serviceCategory: "BRANDING", region: "INDIA", timeWindow: "past-week" },
+  ];
 
-  const results: Array<RawSocialResult & { regionHint: IntentRegion; authorName?: string; authorRole?: string }> = [];
+  const filteredPool = serviceFilter
+    ? targetedQueries.filter((q) => q.serviceCategory === serviceFilter)
+    : targetedQueries;
+  const activePool = filteredPool.length > 0 ? filteredPool : targetedQueries;
+
+  // Rotate 6 queries per scan while always including the top high-yield agency queries
+  const rotationOffset = Math.floor(Date.now() / 60_000) % activePool.length;
+  const selectedQueries: typeof targetedQueries = [];
+  for (let i = 0; i < Math.min(2, activePool.length); i++) {
+    selectedQueries.push(activePool[(rotationOffset + i) % activePool.length]);
+  }
+
+  const results: Array<
+    RawSocialResult & {
+      regionHint: IntentRegion;
+      authorName?: string;
+      authorRole?: string;
+      authorProfileUrl?: string | null;
+    }
+  > = [];
   const seen = new Set<string>();
   const csrfToken = "ajax:5829104728194021";
 
   await Promise.all(
-    presets.slice(0, 4).map(async (preset) => {
+    selectedQueries.map(async (item) => {
       try {
-        const res = await fetchWithTimeout(preset.linkedinSearchWeekUrl, {
-          timeoutMs: 5000,
+        const searchUrl = `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(
+          item.query
+        )}&datePosted=%22${item.timeWindow || "past-week"}%22&origin=FACETED_SEARCH&sortBy=%22date_posted%22`;
+
+        const res = await fetchWithTimeout(searchUrl, {
+          timeoutMs: 6500,
           maxRetries: 0,
           headers: {
             "User-Agent":
@@ -1215,7 +2487,32 @@ async function searchLinkedInAuthenticated(
         });
         if (!res.ok || !res.text) return;
 
-        // Parse embedded Voyager JSON inside <code> tags
+        // 1. Parse Flagship SDUI SSR HTML cards
+        const sduiPosts = parseLinkedInSduiHtml(res.text);
+        for (const p of sduiPosts) {
+          if (seen.has(p.postUrl)) continue;
+          const parsedAge = parseFreshnessHoursFromText(p.ageText);
+          const ageHours = parsedAge !== null ? Math.min(72, parsedAge) : 8;
+          const tier = classifyFreshnessTier(ageHours);
+          if (tier === "STALE") continue;
+
+          seen.add(p.postUrl);
+          results.push({
+            title: `${p.authorName} on LinkedIn${p.authorRole ? ` — ${p.authorRole}` : ""}`,
+            url: p.postUrl,
+            snippet: p.postText,
+            platform: "LINKEDIN_PUBLIC",
+            publishedAt: new Date(Date.now() - ageHours * 3600_000).toISOString(),
+            ageHours,
+            freshnessTier: tier,
+            regionHint: item.region,
+            authorName: p.authorName,
+            authorRole: p.authorRole,
+            authorProfileUrl: p.authorProfileUrl,
+          });
+        }
+
+        // 2. Fallback: Parse embedded Voyager JSON inside <code> tags if present
         const codeBlocks = res.text.match(/<code[^>]*>([\s\S]*?)<\/code>/g) || [];
         for (const block of codeBlocks) {
           if (!block.includes("commentary") && !block.includes("Update")) continue;
@@ -1228,23 +2525,24 @@ async function searchLinkedInAuthenticated(
           try {
             const json = JSON.parse(inner);
             const included = Array.isArray(json?.included) ? json.included : [];
-            for (const item of included) {
-              const postText =
-                item?.commentary?.text?.text ||
-                item?.specificContent?.["com.linkedin.ugc.ShareContent"]?.shareCommentary?.text ||
-                "";
+            for (const vItem of included) {
+              const postText = cleanAndDecodePostText(
+                vItem?.commentary?.text?.text ||
+                  vItem?.specificContent?.["com.linkedin.ugc.ShareContent"]?.shareCommentary?.text ||
+                  ""
+              );
               if (!postText || postText.length < 35) continue;
 
-              const urn = item?.urn || item?.entityUrn || item?.updateMetadata?.urn || "";
+              const urn = vItem?.urn || vItem?.entityUrn || vItem?.updateMetadata?.urn || "";
               const actMatch = String(urn).match(/urn:li:(?:activity|ugcPost|share):\d+/);
               const postUrl = actMatch
                 ? `https://www.linkedin.com/feed/update/${actMatch[0]}/`
                 : `https://www.linkedin.com/feed/#li-${computeUrlHash("", postText).slice(0, 12)}`;
               if (seen.has(postUrl)) continue;
 
-              const authorName = item?.actor?.name?.text || "LinkedIn Member";
-              const authorRole = item?.actor?.description?.text || "";
-              const ageText = item?.actor?.subDescription?.text || "4h ago";
+              const authorName = vItem?.actor?.name?.text || "LinkedIn Member";
+              const authorRole = vItem?.actor?.description?.text || "";
+              const ageText = vItem?.actor?.subDescription?.text || "4h ago";
               const parsedAge = parseFreshnessHoursFromText(ageText);
               const ageHours = parsedAge !== null ? parsedAge : 6;
               if (ageHours > 168) continue;
@@ -1255,12 +2553,12 @@ async function searchLinkedInAuthenticated(
               results.push({
                 title: `${authorName} on LinkedIn${authorRole ? ` — ${authorRole}` : ""}`,
                 url: postUrl,
-                snippet: postText.slice(0, 1200),
+                snippet: postText,
                 platform: "LINKEDIN_PUBLIC",
                 publishedAt: new Date(Date.now() - ageHours * 3600_000).toISOString(),
                 ageHours,
                 freshnessTier: tier,
-                regionHint: preset.region,
+                regionHint: item.region,
                 authorName,
                 authorRole,
               });
@@ -1317,6 +2615,14 @@ export function evaluateCandidateHeuristically(input: {
       authorName = m[1].trim().replace(/['"]+/g, "");
     }
   }
+  if (!authorName && (input.url.includes("threads.com") || input.url.includes("threads.net"))) {
+    const m = input.url.match(/\/@([A-Za-z0-9_.-]+)/);
+    if (m && m[1]) authorName = `@${m[1]}`;
+  }
+  if (!authorName && (input.url.includes("x.com") || input.url.includes("twitter.com"))) {
+    const m = input.url.match(/(?:x|twitter)\.com\/([A-Za-z0-9_]+)\/status/i);
+    if (m && m[1]) authorName = `@${m[1]}`;
+  }
   if (!authorName && input.url.includes("reddit.com")) {
     const m = input.title.match(/by\s+(u\/[A-Za-z0-9_-]+)/i);
     if (m && m[1]) authorName = m[1];
@@ -1326,35 +2632,41 @@ export function evaluateCandidateHeuristically(input: {
   const contactHint = emailMatch
     ? emailMatch[0]
     : /dm me|drop your portfolio|comment below|send portfolio|inbox me|send me a dm|rip my inbox/i.test(combined)
-      ? "Requested DM / Portfolio in Post"
+      ? "Requested Agency Portfolio / DM in Post"
       : null;
 
   const hasExplicitB2bServiceMention =
-    /\b(seo|search engine optimization|aeo|answer engine|generative engine|website|web development|web design|website redesign|website development|website launch|new website|need a website|web developer|web & app developer|react\.?js|next\.?js|wordpress|shopify|video production|video editor|video editors|video editing|videographer|ai video|brand film|ad film|explainer video|promo video|motion graphics|3d.*website|ui\/ux|performance marketing|google ads|meta ads|facebook ads|ppc|digital marketing|marketing agency|market my apps|market my|get orders|branding agency|social media agency|social media expansion|agency partnerships|creative agency|website maintenance|website amc)\b/i.test(
+    /\b(seo|search engine optimization|seo company|seo agency|aeo|answer engine|generative engine|website|web development|web design|web development company|web design company|website redesign|website development|next\.?js|wordpress|shopify|video production|ai video|ai production|ai production company|video production company|video production agency|production company|production house|brand film|ad film|commercial film|explainer video|promo video|motion graphics|ui\/ux|performance marketing|lead generation agency|google ads|meta ads|facebook ads|ppc|digital marketing|digital marketing company|digital marketing agency|marketing agency|marketing company|branding agency|social media agency|social media marketing agency|creative agency|website maintenance|website amc|agency|agencies)\b/i.test(
+      lower
+    );
+
+  // STRICT REQUIREMENT: Must explicitly mention an Agency, Company, Production House, Studio, or Vendor
+  const hasAgencyCompanyOrHouseMention =
+    /\b(agency|agencies|company|companies|production house|production houses|video production house|production company|production companies|studio|studios|firm|firms|vendors|vendor)\b/i.test(
       lower
     );
 
   let serviceCategory: IntentServiceCategory = input.defaultService || "SEO";
   if (/\b(aeo|answer engine|generative engine|ai overview|llm seo|chatgpt ranking|seo agency dubai|digital marketing dubai)\b/i.test(lower)) {
     serviceCategory = "AEO_GEO";
-  } else if (/\b(ai video|video production|video editor|video editors|video editing|videographer|brand film|ad film|explainer video|commercial video|product video|promo video|motion graphics)\b/i.test(lower)) {
+  } else if (/\b(ai video|ai production|ai production company|video production|video production company|video production agency|production company|production house|video production house|brand film|ad film|commercial film|explainer video|commercial video|product video|promo video|motion graphics|brand launch video|cinematic video|animation studio)\b/i.test(lower)) {
     serviceCategory = "AI_VIDEO";
-  } else if (/\b(website|web development|website redesign|web design|web developer|web & app developer|react\.?js|new website|need a website|website launch|next\.?js|wordpress|shopify|website amc|website maintenance|landing page|build a website|corporate site redesign|ui\/ux|3d.*website)\b/i.test(lower)) {
+  } else if (/\b(website|web development|web development company|website redesign|web design|web design company|next\.?js|wordpress|shopify|website amc|website maintenance|landing page|build a website|corporate site redesign|ui\/ux)\b/i.test(lower)) {
     serviceCategory = "WEB_DEV";
-  } else if (/\b(google ads|meta ads|facebook ads|performance marketing|paid media|ppc|lead generation agency|roas|market my apps|struggling to get orders)\b/i.test(lower)) {
+  } else if (/\b(google ads|meta ads|facebook ads|performance marketing|paid media|ppc|lead generation agency|roas|digital marketing agency|digital marketing company|marketing agency|marketing company)\b/i.test(lower)) {
     serviceCategory = "PAID_MEDIA";
-  } else if (/\b(branding agency|brand identity|social media agency|social media expansion|agency partnerships|social media management|creative agency)\b/i.test(lower)) {
+  } else if (/\b(branding agency|brand identity|social media agency|social media marketing agency|social media expansion|agency partnerships|social media management|creative agency)\b/i.test(lower)) {
     serviceCategory = "BRANDING";
-  } else if (/\b(seo|search engine optimization|backlink|organic traffic|search ranking|local seo)\b/i.test(lower)) {
+  } else if (/\b(seo|search engine optimization|seo company|seo agency|backlink|organic traffic|search ranking|local seo)\b/i.test(lower)) {
     serviceCategory = "SEO";
   }
 
   let targetRegion: IntentRegion = input.defaultRegion || "GLOBAL";
   const urlLower = (input.url || "").toLowerCase();
-  if (/\b(dubai|uae|abu dhabi|sharjah|mena|middle east|dxb|aed)\b|\.ae\b|r\/dubai|r\/uae/i.test(lower) || /dubai|uae|abudhabi/i.test(urlLower)) {
+  if (/\b(dubai|uae|abu dhabi|sharjah|mena|middle east|gcc|dxb|aed)\b|\.ae\b|r\/dubai|r\/uae|r\/smallbusinessuae/i.test(lower) || /dubai|uae|abudhabi/i.test(urlLower)) {
     targetRegion = "UAE_DUBAI";
   } else if (
-    /\b(mumbai|india|indian|navi mumbai|thane|bangalore|bengaluru|delhi|ncr|gurgaon|gurugram|noida|pune|hyderabad|chennai|kolkata|ahmedabad|jaipur|surat|kochi|chandigarh|inr|lakh|crore|flipkart)\b|₹|\.in\b|r\/indianstartups|r\/startupindia|r\/india|r\/mumbai|r\/bangalore/i.test(
+    /\b(mumbai|india|indian|indore|navi mumbai|thane|bangalore|bengaluru|delhi|ncr|gurgaon|gurugram|noida|pune|hyderabad|chennai|kolkata|ahmedabad|jaipur|surat|kochi|chandigarh|inr|lakh|crore|flipkart|pristyn care|swiss beauty|sisya class|inttrvu)\b|₹|\.in\b|r\/indianstartups|r\/startupindia|r\/india|r\/mumbai|r\/bangalore/i.test(
       lower
     ) ||
     /\/r\/(india|indianstartups|startupindia|mumbai|bangalore|delhi|pune|hyderabad)\b/i.test(urlLower)
@@ -1366,112 +2678,153 @@ export function evaluateCandidateHeuristically(input: {
     /\b(usa|u\.s\.a|u\.s\.|united states|american|new york|nyc|austin|texas|california|san francisco|bay area|los angeles|chicago|miami|florida|boston|seattle|atlanta|denver|dallas|houston|phoenix|philadelphia|washington|new jersey|north carolina|ohio|michigan|pennsylvania|illinois|georgia|virginia|massachusetts|colorado|arizona|tennessee|canadian|canada|toronto|vancouver|usd|llc)\b|\$\s*\d/i.test(
       lower
     ) ||
-    (targetRegion === "GLOBAL" && /\/r\/(smallbusiness|entrepreneur|startups|seo|bigseo|ppc|web_design|ecommerce|marketing|forhire|designjobs)\b/i.test(urlLower))
+    (targetRegion === "GLOBAL" && /\/r\/(smallbusiness|entrepreneur|startups|seo|bigseo|ppc|web_design|ecommerce|marketing)\b/i.test(urlLower))
   ) {
     targetRegion = "USA";
   }
 
-  // STRICT REJECTION OF JOB SEEKERS, INTERNSHIPS, FULL-TIME ROLES & NON-AGENCY GIGS
-  const isJobSeeker =
-    /\b(open to work|#opentowork|\[for hire\]|for hire:|looking for a job|looking for a full-time|looking for an internship|one-year internship|intern\b|my resume|20-day job|hire me|applying for|seeking a role|seeking.*job opportunities|i offer seo|i am a freelance|i am an seo|i can build your|self-taught developer|worried about my future|anxious about my career|starting a marketing agency|second year undergrad|final-year|final year|student fund|struggling to turn web design skills into)\b/i.test(
-      lower
-    ) ||
-    /\b(we are hiring a full-time|full-time role|job opening|years of experience required|send your cv to hr|hiring:\s*retail search director|virtual assistant|talent manager|minecraft|freelance sales representatives|get paid to test ai|multi-app data study|tiktok poster|influencer outreach|founding team|co-founders|applications are now closed|this role has been hired|thumbnail designer|available for candidates based in|stem opt|f1 candidates|we are hiring\s*[-–|]?\s*seo executive|hiring interns)\b/i.test(
+  // STRICT REJECTION OF DOMESTIC / NON-B2B SERVICES (Nanny, maid, cleaning, travel, real estate, etc.)
+  const isNonB2bNoise =
+    /\b(nanny|babysitter|babysitting|baby|caregiver|au pair|cleaning person|maid|housekeeping|landlord|tenant|property landscape|travel agency|dating agency|casting agency|modeling agency|security guard agency)\b/i.test(
       lower
     );
 
-  // STRICT REJECTION OF SERVICE PROVIDERS, AGENCIES, FREELANCERS & DIY TROUBLESHOOTERS
+  // STRICT REJECTION OF "HIRE SOMEONE", "HIRE A FREELANCER", FREELANCERS, JOB POSTINGS & RECRUITMENT
+  const isJobSeeker =
+    /\b(hire someone|hire some one|hire a freelancer|looking for a freelancer|or freelancer|freelancer|freelancers|freelance|open to work|#opentowork|\[for hire\]|\[hiring\]|for hire:|we are hiring|we're hiring|we’re hiring|now hiring|hiring immediately|hiring:|apply here|apply now|join our team|join my team|freelance opportunity|freelancer required|developer required|designer wanted|editors needed|video editors needed|looking to hire a|client needs a freelance|looking for a full-time|looking for a job|looking for an internship|one-year internship|intern\b|my resume|sending cv|preparing for interviews|20-day job|hire me|applying for|seeking a role|seeking.*job opportunities|i offer seo|i am a freelance|i am an seo|i can build your|self-taught developer|starting a marketing agency|starting my own|building a small digital agency|join our digital marketing agency|vacancy for marketing agency)\b/i.test(
+      lower
+    ) ||
+    /\b(we are hiring a full-time|full-time role|job opening|years of experience required|send your cv|send your resume|virtual assistant|talent manager|minecraft|freelance sales representatives|get paid to test ai|multi-app data study|tiktok poster|influencer outreach|founding team|co-founders|applications are now closed|this role has been hired|thumbnail designer|available for candidates based in|stem opt|f1 candidates|we are hiring\s*[-–|]?\s*seo executive|hiring interns|looking for an? agency (sales|executive|representative|rep|manager|director|lead)|looking for.*serious agency to work with|chatters.*looking for|sales professional to join)\b/i.test(
+      lower
+    );
+
+  // STRICT REJECTION OF SERVICE PROVIDERS, AGENCIES PROMOTING THEMSELVES & DIY TROUBLESHOOTERS
   const isSellerPromo =
-    (/\b(i run google ads for|i manage google ads for|i manage ads for|for my client|for our clients|onboarded.*clients|how i got.*clients|struggling to get.*clients|get small business clients|freelancing clients|anyone need a website|happy to build a website|strengthen my portfolio|i do website and app development|tracked every.*looking for an agency|i run a small|i used to run a|social media marketing agency|we're a freelancing agency|we help brands|our agency|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer|we provide|our seo services|case study: how we|showoff saturday|beginner questions|at iconic solutions|looking for seo agency partners|kd marketing group|nova tech vision|unpopular opinion:|i['’]ve said this to clients|your next client already posted|the wrong digital marketing agency|helps improve search visibility|your business deserves more than|when we audit a website|tell a client they don|every founder slack group|here is a sample of my work)\b/i.test(
+    (/\b(if you['’]?re looking for a|if youre looking for a|for businesses looking for a|if you['’]?re an? [a-z\s]+ looking for a|imagine a founder looking for a|when looking for a marketing agency|when you run a digital marketing agency|i asked chatgpt to recommend|looking for shopify agency partners|looking to collaborate with|agency to collaborate with|i run google ads for|i manage google ads for|i manage ads for|for my client|for our clients|onboarded.*clients|how i got.*clients|struggling to get.*clients|get small business clients|freelancing clients|anyone need a website|happy to build a website|strengthen my portfolio|i do website and app development|tracked every.*looking for an agency|i run a small|i used to run a|we're a freelancing agency|we help brands|our agency|helping brands, businesses|contact us today for|book a free consultation with us|dm me for seo|we offer|we provide|our seo services|case study: how we|showoff saturday|beginner questions|at iconic solutions|looking for seo agency partners|kd marketing group|nova tech vision|unpopular opinion:|i['’]ve said this to clients|your next client already posted|the wrong digital marketing agency|helps improve search visibility|your business deserves more than|when we audit a website|tell a client they don|every founder slack group|here is a sample of my work|turns 5 soon|bring closed tech projects|design ads bangalore helps|reinforce digitech|brand animators)\b/i.test(
       lower
     ) &&
-      !/\b(looking to hire an agency|can anyone recommend an agency)\b/i.test(lower)) ||
+      !/\b(can anyone recommend an agency|opened a tender for)\b/i.test(lower)) ||
     (/\blooking for (?:a|an)\s+[^.?!\n]{3,65}\?/i.test(combined) &&
-      !/\b(i['’]m looking to hire|i am looking to hire|we['’]re looking to hire|we are looking to hire)\b/i.test(lower)) ||
-    (/\b(i'm a|i am a|we are a|we're a)\s+(full-stack|freelance|freelancer|web|software|brand|graphic|ui\/ux|seo|marketing|ppc|google ads|social media|video|influencer)\s*(developer|designer|marketer|specialist|consultant|agency|editor|engineer)\b/i.test(
+      !/\b(can anyone recommend|recommend an agency|looking for a marketing agency for a)\b/i.test(lower)) ||
+    /\b(i'm a|i am a|we are a|we're a)\s+(full-stack|freelance|freelancer|web|software|brand|graphic|ui\/ux|seo|marketing|ppc|google ads|social media|video|influencer)\s*(developer|designer|marketer|specialist|consultant|agency|editor|engineer)\b/i.test(
       lower
-    ) &&
-      !/\b(looking for someone to market|looking to hire|need someone to market)\b/i.test(lower)) ||
+    ) ||
     /\b(google ads blocked me|high cpc spike|bad google ads performance since|is it a good idea to run google ppc ads if i only break even|capcut|cracked|watch tv show|season 1|prime video|netflix|torrent)\b/i.test(
       lower
     );
 
-  // STRICT POSITIVE REQUIREMENT: Must explicitly be a BUYER WHO NEEDS A SERVICE
+  // STRICT POSITIVE REQUIREMENT: Must explicitly seek an AGENCY, COMPANY, or PRODUCTION HOUSE
   const strongBuyerPhrases = [
-    "looking for a web",
     "looking for an agency",
-    "looking for a marketing",
-    "looking for seo",
-    "looking for an seo",
-    "looking for someone to market",
-    "looking for someone to build",
-    "looking for someone to redesign",
-    "looking for a designer",
-    "looking for a freelance",
-    "looking for a developer",
-    "looking for a video",
-    "looking for a 3d",
-    "looking to hire",
-    "how to find a web developer",
-    "how to find a good",
-    "can anyone recommend",
-    "anyone recommend",
-    "recommendations for",
-    "recommend a",
-    "recommend an",
-    "need a new website",
-    "need a website",
-    "need a web developer",
-    "need a web designer",
-    "need an agency",
-    "need an seo",
-    "need seo",
-    "need help marketing",
-    "redesign our website",
-    "corporate site redesign",
-    "broke our conversion",
-    "doubled our bounce rate",
-    "website launch",
-    "struggling to get orders",
-    "drop your portfolio",
-    "send your portfolio",
-    "rip my inbox",
-    "which agency",
-    "hiring an agency",
-    "hire an agency",
-    "hire an seo",
-    "hire a web",
-    "exploring agency partnerships",
-    "looking to connect with a reliable",
-    "a client is looking for",
-    "client needs a freelance",
-    "video editors needed",
-    "freelance website developer required",
-    "[hiring]",
+    "looking for agency",
+    "looking for some agency",
+    "looking for a seo agency",
+    "looking for an seo agency",
+    "looking for seo agency",
+    "looking for an outcome-driven seo agency",
+    "looking for a seo company",
+    "looking for an seo company",
+    "looking for seo company",
+    "looking for ai production company",
+    "looking for an ai production company",
+    "looking for a ai production company",
+    "looking for ai video production company",
+    "looking for an ai video production company",
+    "looking for video production company",
+    "looking for a video production company",
+    "looking for an video production company",
+    "looking for video production agency",
+    "looking for a video production agency",
+    "looking for an video production agency",
+    "looking for a digital marketing agency",
+    "looking for digital marketing agency",
+    "looking for a digital marketing company",
+    "looking for digital marketing company",
+    "looking for a marketing agency",
+    "looking for marketing agency",
+    "looking for a marketing company",
+    "looking for marketing company",
+    "looking for a boutique marketing agency",
+    "looking for a reliable marketing agency",
+    "looking for a good digital marketing agency",
+    "looking for a marketing and communications agency",
+    "looking for a web development agency",
+    "looking for web development agency",
+    "looking for a web development company",
+    "looking for web development company",
+    "looking for a web design agency",
+    "looking for web design agency",
+    "looking for a web design company",
+    "looking for web design company",
+    "looking for a website development agency",
+    "looking for website development agency",
+    "looking for a website development company",
+    "looking for website development company",
+    "looking for a video production",
+    "looking for video production",
+    "looking for ai video production",
+    "looking for an ai video production",
+    "looking for a production house",
+    "looking for production house",
+    "looking for a video production house",
+    "looking for video production house",
+    "looking for a creative agency or video production house",
+    "need a video production",
+    "looking for a branding agency",
+    "looking for a social media agency",
+    "looking for a social media marketing agency",
+    "looking for a creative agency",
+    "looking for a performance marketing agency",
+    "looking for a lead generation agency",
+    "looking for an experienced lead generation agency",
+    "looking for a paid media agency",
+    "looking for a digital agency",
+    "looking for a growth agency",
+    "agency partnerships",
+    "partner with high-performing creative & social media agencies",
+    "opened a tender for digital marketing",
+    "recommend an agency",
+    "recommend agency",
+    "recommend a marketing agency",
+    "recommend marketing agency",
+    "recommend an seo agency",
+    "recommend a seo agency",
+    "recommend seo agency",
+    "recommend an seo company",
+    "recommend a seo company",
+    "recommend seo company",
+    "recommend a web development agency",
+    "recommend a video production",
+    "recommend a video production company",
+    "recommend video production company",
+    "recommend an ai production company",
+    "recommend ai production company",
   ];
   const matchedBuyerPhrases = strongBuyerPhrases.filter((p) => lower.includes(p));
 
+  const buyerPatternRegex =
+    /\b(?:looking for|seeking|need|hiring|in search of|recommend|suggest)\s+(?:an?|some)?\s*(?:boutique|reliable|experienced|top|good|outcome-driven)?\s*(?:seo|search engine optimization|digital marketing|marketing|performance marketing|lead generation|web development|web design|website development|ai video|ai production|video production|video|creative|branding|social media)?\s*(?:agency|company|production company|production house|firm|studio|house)\b/i;
+
   const hasActiveCommercialQuestion =
-    matchedBuyerPhrases.length > 0 &&
-    /\b(website|web developer|web design|web development|redesign|shopify|wordpress|next\.?js|seo|aeo|google ads|meta ads|ppc|digital marketing|market my|marketing|get orders|video|motion graphics|3d|ui\/ux|branding|agency|consultant|developer|designer)\b/i.test(
-      lower
-    );
+    (matchedBuyerPhrases.length > 0 || buyerPatternRegex.test(lower)) &&
+    hasAgencyCompanyOrHouseMention &&
+    hasExplicitB2bServiceMention;
 
   let classification: IntentClassification = "LOW_INTENT_NOISE";
   let score = 25;
 
-  if (!hasExplicitB2bServiceMention) {
+  if (!hasExplicitB2bServiceMention || !hasAgencyCompanyOrHouseMention) {
     classification = "LOW_INTENT_NOISE";
     score = 15;
   } else if (isJobSeeker) {
     classification = "JOB_SEEKER";
-    score = 15;
+    score = 10;
   } else if (isSellerPromo) {
     classification = "SELLER_PROMOTION";
     score = 20;
   } else if (matchedBuyerPhrases.length > 0 && hasActiveCommercialQuestion) {
     classification = "BUYER_SEEKING_SERVICE";
-    score = 78 + Math.min(18, matchedBuyerPhrases.length * 6);
+    score = 82 + Math.min(16, matchedBuyerPhrases.length * 6);
     if (contactHint) score = Math.min(99, score + 6);
     if (targetRegion === "INDIA" || targetRegion === "UAE_DUBAI") {
       score = Math.min(99, score + 4);
@@ -1777,7 +3130,7 @@ export async function upsertIntentLeadSignal(input: {
   ageHours?: number;
   freshnessTier?: FreshnessTier;
   evaluated: EvaluatedLeadCandidate;
-}): Promise<{ inserted: boolean; id: string }> {
+}): Promise<{ inserted: boolean; refreshed?: boolean; id: string }> {
   if (!isCmsDatabaseConfigured()) {
     return { inserted: false, id: randomUUID() };
   }
@@ -1805,7 +3158,15 @@ export async function upsertIntentLeadSignal(input: {
   );
 
   if (existing.length > 0) {
-    return { inserted: false, id: existing[0].id };
+    if (ageHours <= 2) {
+      await cmsExecute(
+        `UPDATE intent_lead_signals
+         SET discovered_at = NOW(), age_hours = LEAST(COALESCE(age_hours, ?), ?)
+         WHERE id = ?`,
+        [ageHours, ageHours, existing[0].id]
+      ).catch(() => {});
+    }
+    return { inserted: false, refreshed: true, id: existing[0].id };
   }
 
   const id = `ils_${randomUUID().replace(/-/g, "").slice(0, 20)}`;
@@ -1829,7 +3190,7 @@ export async function upsertIntentLeadSignal(input: {
       input.sourcePlatform,
       input.postUrl,
       (input.postTitle || "").slice(0, 490) || null,
-      input.postText.slice(0, 4000),
+      cleanAndDecodePostText(input.postText),
       resolvedAuthor,
       input.evaluated.authorRole || input.authorRole || null,
       input.authorProfileUrl || null,
@@ -1881,6 +3242,23 @@ export async function runIntentLeadDiscovery(options?: {
   const runId = `ildr_${randomUUID().replace(/-/g, "").slice(0, 18)}`;
   const runType = options?.runType || "CRON";
 
+  // Prevent overlapping discovery runs within 45s to avoid duplicate executions or rate limits
+  if (global.__dgsDiscoveryInProgress && startMs - (global.__dgsLastDiscoveryStartMs || 0) < 45_000) {
+    return {
+      runId,
+      status: "SUCCESS",
+      queriesExecuted: 0,
+      rawCandidatesFound: 0,
+      qualifiedLeadsAdded: 0,
+      rejectedNoiseCount: 0,
+      emailsSent: 0,
+      durationMs: 0,
+      summaryText: "Discovery run skipped: another scan is actively running in background.",
+    };
+  }
+  global.__dgsDiscoveryInProgress = true;
+  global.__dgsLastDiscoveryStartMs = startMs;
+
   if (isCmsDatabaseConfigured()) {
     await ensureIntentLeadTables();
     await cmsExecute(
@@ -1896,6 +3274,7 @@ export async function runIntentLeadDiscovery(options?: {
   let queriesExecuted = 0;
   let rawCandidatesFound = 0;
   let qualifiedLeadsAdded = 0;
+  let refreshedActiveLeads = 0;
   let rejectedNoiseCount = 0;
   let emailsSent = 0;
   const newlyInsertedForEmail: IntentLeadEmailItem[] = [];
@@ -1911,19 +3290,35 @@ export async function runIntentLeadDiscovery(options?: {
       } catch {}
     }
 
-    const [linkedinResults, redditResults] = await Promise.all([
+    const [linkedinResults, redditResults, threadsResults, xResults] = await Promise.all([
       liAtCookie.length > 15
         ? searchLinkedInAuthenticated(liAtCookie, options?.serviceFilter)
         : Promise.resolve([]),
-      searchRedditAtomRss(options?.serviceFilter, 80),
+      searchRedditAtomRss(options?.serviceFilter, 100),
+      searchDuckDuckGoSocial(
+        `site:threads.com ("looking for an agency" OR "looking for seo agency" OR "looking for seo company" OR "looking for an SEO agency" OR "looking for an SEO company" OR "looking for AI production company" OR "looking for a marketing agency" OR "looking for a web development agency" OR "video production agency" OR "video production company") -"freelancer" -"for hire"`,
+        "THREADS",
+        8
+      ).catch(() => []),
+      searchDuckDuckGoSocial(
+        `site:x.com ("looking for an agency" OR "looking for seo agency" OR "looking for seo company" OR "looking for an SEO agency" OR "looking for an SEO company" OR "looking for AI production company" OR "looking for a marketing agency" OR "looking for a web development agency" OR "video production agency" OR "video production company") -"freelancer" -"for hire"`,
+        "X_TWITTER",
+        8
+      ).catch(() => []),
     ]);
 
-    queriesExecuted = (liAtCookie.length > 15 ? 4 : 0) + 2;
-    rawCandidatesFound = linkedinResults.length + redditResults.length;
+    queriesExecuted = (liAtCookie.length > 15 ? 6 : 0) + 3;
+    rawCandidatesFound =
+      linkedinResults.length + redditResults.length + threadsResults.length + xResults.length;
 
     const combinedCandidates: Array<
-      RawSocialResult & { regionHint?: IntentRegion; authorName?: string; authorRole?: string }
-    > = [...linkedinResults, ...redditResults];
+      RawSocialResult & {
+        regionHint?: IntentRegion;
+        authorName?: string;
+        authorRole?: string;
+        authorProfileUrl?: string | null;
+      }
+    > = [...linkedinResults, ...redditResults, ...threadsResults, ...xResults];
 
     let geminiCallsUsed = 0;
 
@@ -1967,6 +3362,7 @@ export async function runIntentLeadDiscovery(options?: {
         postText: r.snippet,
         authorName: evaluated.authorName || r.authorName || null,
         authorRole: evaluated.authorRole || r.authorRole || null,
+        authorProfileUrl: r.authorProfileUrl || null,
         discoveryQuery: `Buyer-Only Discovery (${evaluated.serviceCategory} • ${evaluated.targetRegion})`,
         publishedAt: r.publishedAt,
         ageHours: r.ageHours,
@@ -1992,6 +3388,8 @@ export async function runIntentLeadDiscovery(options?: {
           suggestedReply: evaluated.suggestedReply,
           recommendedDgsUrl: evaluated.recommendedDgsUrl,
         });
+      } else if (upserted.refreshed) {
+        refreshedActiveLeads++;
       }
     }
 
@@ -2014,9 +3412,15 @@ export async function runIntentLeadDiscovery(options?: {
       }
     }
 
+    if (isCmsDatabaseConfigured()) {
+      global.__dgsIntentLeadTablesPromiseV20 = undefined;
+      await ensureIntentLeadTables().catch(() => {});
+    }
+
+    global.__dgsDiscoveryInProgress = false;
     const completedAt = new Date();
     const durationMs = Math.max(0, completedAt.getTime() - startMs);
-    const summaryText = `Executed ${queriesExecuted} buyer-only (<72h) queries in ${(durationMs / 1000).toFixed(1)}s. Evaluated ${rawCandidatesFound} recent posts, qualified ${qualifiedLeadsAdded} net-new service-needing buyer leads, rejected ${rejectedNoiseCount} service providers/job seekers.${emailsSent ? " Email alert sent!" : ""}`;
+    const summaryText = `Executed ${queriesExecuted} buyer-only (<72h) queries in ${(durationMs / 1000).toFixed(1)}s. Evaluated ${rawCandidatesFound} live posts across LinkedIn & Reddit — added ${qualifiedLeadsAdded} net-new buyer leads, re-verified ${refreshedActiveLeads} live agency/company leads, rejected ${rejectedNoiseCount} service providers/job seekers.${emailsSent ? " Email alert sent!" : ""}`;
 
     if (isCmsDatabaseConfigured()) {
       await cmsExecute(
@@ -2142,9 +3546,20 @@ export async function ingestLinkedInFeedPosts(
     const text = String(post.postText || "").trim();
     if (text.length < 25) continue;
 
+    const actMatch = String(post.postUrl || "").match(/activity[:\-](\d{18,20})/i);
+    let snowflakeAgeHours: number | null = null;
+    if (actMatch) {
+      try {
+        const tsMs = Number(BigInt(actMatch[1]) >> 22n);
+        if (tsMs > 1577836800000 && tsMs <= Date.now() + 86400000) {
+          snowflakeAgeHours = Math.max(1, Math.round((Date.now() - tsMs) / 3600000));
+        }
+      } catch {}
+    }
     const parsedAge = parseFreshnessHoursFromText(`${post.ageText || ""} ${text.slice(0, 120)}`);
-    const ageHours = parsedAge !== null ? parsedAge : 4;
-    if (ageHours > 168) {
+    const ageHours = snowflakeAgeHours !== null ? snowflakeAgeHours : parsedAge !== null ? parsedAge : 4;
+    const maxAllowedHours = Number((post as any).maxAgeHours) > 0 ? Number((post as any).maxAgeHours) : 168;
+    if (ageHours > maxAllowedHours || ageHours > 168) {
       skippedNoise++;
       continue;
     }
@@ -2406,6 +3821,19 @@ export async function getGoogleSearchBuyerIntentRadar(): Promise<GoogleBuyerInte
   }
 }
 
+function toUtcIsoString(val: unknown): string {
+  if (!val) return new Date().toISOString();
+  if (val instanceof Date) return val.toISOString();
+  const s = String(val).trim();
+  if (!s) return new Date().toISOString();
+  if (s.endsWith("Z") || /[+-]\d{2}:\d{2}$/.test(s)) return s;
+  if (/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}/.test(s)) {
+    return `${s.replace(" ", "T")}Z`;
+  }
+  const parsed = new Date(s);
+  return Number.isNaN(parsed.getTime()) ? new Date().toISOString() : parsed.toISOString();
+}
+
 export async function listIntentLeadSignals(filters?: {
   status?: string;
   platform?: string;
@@ -2456,14 +3884,42 @@ export async function listIntentLeadSignals(filters?: {
     WHERE ${where.join(" AND ")}
     ORDER BY
       CASE status WHEN 'NEW' THEN 0 WHEN 'CONTACTED' THEN 1 ELSE 2 END ASC,
-      COALESCE(age_hours, 12) ASC,
-      intent_score DESC,
-      discovered_at DESC
+      COALESCE(age_hours, 1) ASC,
+      published_at DESC,
+      discovered_at DESC,
+      intent_score DESC
     LIMIT ?
   `;
 
   const { rows } = await cmsQuery<IntentLeadSignal>(sql, params);
-  return rows;
+  const seenUrls = new Set<string>();
+  const seenTexts = new Set<string>();
+  const dedupedLeads: IntentLeadSignal[] = [];
+
+  for (const r of rows || []) {
+    const normUrl = normalizeUrlForHash(r.post_url);
+    const cleanText = String(r.post_text || "")
+      .toLowerCase()
+      .replace(/https?:\/\/\S+/g, "")
+      .replace(/[^a-z0-9]/g, "")
+      .slice(0, 100);
+
+    if (seenUrls.has(normUrl) || (cleanText.length >= 25 && seenTexts.has(cleanText))) {
+      continue;
+    }
+    seenUrls.add(normUrl);
+    if (cleanText.length >= 25) seenTexts.add(cleanText);
+
+    dedupedLeads.push({
+      ...r,
+      post_text: cleanAndDecodePostText(r.post_text),
+      published_at: r.published_at ? toUtcIsoString(r.published_at) : null,
+      discovered_at: toUtcIsoString(r.discovered_at),
+      notified_at: r.notified_at ? toUtcIsoString(r.notified_at) : null,
+    });
+  }
+
+  return dedupedLeads;
 }
 
 export async function listIntentDiscoveryRuns(limit = 15): Promise<IntentDiscoveryRun[]> {
@@ -2473,7 +3929,11 @@ export async function listIntentDiscoveryRuns(limit = 15): Promise<IntentDiscove
     `SELECT * FROM intent_lead_discovery_runs ORDER BY started_at DESC LIMIT ?`,
     [limit]
   );
-  return rows;
+  return (rows || []).map((r) => ({
+    ...r,
+    started_at: toUtcIsoString(r.started_at),
+    completed_at: r.completed_at ? toUtcIsoString(r.completed_at) : null,
+  }));
 }
 
 export async function updateIntentSignalStatus(

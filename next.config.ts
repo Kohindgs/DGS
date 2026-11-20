@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
   compress: true,
+  experimental: {
+    cpus: 4,
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "www.dgeniussolutions.com" },
@@ -119,19 +122,100 @@ const nextConfig: NextConfig = {
         destination: "/us-landing-page/",
         permanent: true,
       },
+      {
+        source: "/about/",
+        destination: "/about-us/",
+        permanent: true,
+      },
+      {
+        source: "/services/web-development/",
+        destination: "/services/website-development-amc/",
+        permanent: true,
+      },
+      {
+        source: "/locations/digital-marketing-agency-in-mumbai/",
+        destination: "/services/seo-services-in-mumbai/",
+        permanent: true,
+      },
+      {
+        source: "/services/aeo/",
+        destination: "/services/aeo-services-in-mumbai/",
+        permanent: true,
+      },
+      {
+        source: "/services/llm-seo/",
+        destination: "/services/llm-seo-service/",
+        permanent: true,
+      },
     ];
   },
   async headers() {
+    const securityHeaders = [
+      {
+        key: "Strict-Transport-Security",
+        value: "max-age=63072000; includeSubDomains; preload",
+      },
+      {
+        key: "X-Content-Type-Options",
+        value: "nosniff",
+      },
+      {
+        key: "X-Frame-Options",
+        value: "SAMEORIGIN",
+      },
+      {
+        key: "Referrer-Policy",
+        value: "strict-origin-when-cross-origin",
+      },
+      {
+        key: "Permissions-Policy",
+        value: "camera=(), microphone=(), geolocation=()",
+      },
+    ];
     return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+      {
+        source: "/",
+        headers: [
+          ...securityHeaders,
+          { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
+      {
+        source: "/services/:path*",
+        headers: [
+          ...securityHeaders,
+          { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
+      {
+        source: "/blogs/:path*",
+        headers: [
+          ...securityHeaders,
+          { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
+      {
+        source: "/(about-us|contact-us|portfolio|case_studies|seo-pricing|australia-page|us-landing-page|aeo-dubai)/",
+        headers: [
+          ...securityHeaders,
+          { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
       {
         source: "/wp-mirror-css/:path*",
         headers: [
+          ...securityHeaders,
           { key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" },
         ],
       },
       {
         source: "/wp-content/uploads/:path*",
         headers: [
+          ...securityHeaders,
           { key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" },
         ],
       },

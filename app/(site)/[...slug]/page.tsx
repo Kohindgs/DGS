@@ -51,10 +51,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
       const slugValue = path.replace(/^\/blogs\/|\/$/g, "");
       const cmsBlog = await getPublishedCmsBlogBySlug(slugValue);
       const article = cmsBlog ? cmsBlogToPublicPost(cmsBlog) : null;
+      const seoOverride = getPageSeoOverride(path);
       if (article) {
         return buildPageMetadata({
-          title: article.title,
-          description: article.description,
+          title: seoOverride?.title || article.title,
+          description: seoOverride?.description || article.description,
+          ogTitle: seoOverride?.ogTitle,
+          twitterTitle: seoOverride?.twitterTitle,
           path: article.path,
           canonicalPath: article.canonical || article.path,
           indexable: true,
@@ -83,7 +86,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   const title = seoOverride?.title || route.title || "Page";
   const description = seoOverride?.description || route.description || "";
   const canonicalFromRoute = route.desiredCanonicalPath || route.canonical || path;
-  const canonicalPath = decision?.canonicalPath || canonicalFromRoute;
+  const canonicalPath = seoOverride?.canonicalPath || decision?.canonicalPath || canonicalFromRoute;
 
   return buildPageMetadata({
     title,
@@ -148,6 +151,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
             organizationId: ORGANIZATION_ID,
             websiteId: WEBSITE_ID,
           }),
+          blogPostingSchema,
           breadcrumbSchema(breadcrumbItems),
         ];
 
@@ -157,7 +161,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
 
         return (
           <>
-            <JsonLd id="schema-blogposting" value={blogPostingSchema as unknown as JsonLdValue} />
             <JsonLd
               id="schema-graph"
               value={{ "@context": "https://schema.org", "@graph": companionSchemas } as unknown as JsonLdValue}
@@ -188,7 +191,16 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
   }
 
   if (path.startsWith("/blogs/") && path !== "/blogs/") {
-    const article = await getBlogPostBySlug(path);
+    const rawArticle = await getBlogPostBySlug(path);
+    const seoOverride = getPageSeoOverride(path);
+    const article = rawArticle
+      ? {
+          ...rawArticle,
+          title: seoOverride?.title || rawArticle.title,
+          description: seoOverride?.description || rawArticle.description,
+          modified: seoOverride ? "2026-11-14T18:00:00Z" : rawArticle.modified,
+        }
+      : null;
     if (!article) {
       notFound();
     }
@@ -218,6 +230,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
         organizationId: ORGANIZATION_ID,
         websiteId: WEBSITE_ID,
       }),
+      blogPostingSchema,
       breadcrumbSchema(breadcrumbItems),
     ];
 
@@ -229,7 +242,6 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug?:
 
     return (
       <>
-        <JsonLd id="schema-blogposting" value={blogPostingSchema as unknown as JsonLdValue} />
         <JsonLd
           id="schema-graph"
           value={{ "@context": "https://schema.org", "@graph": companionSchemas } as unknown as JsonLdValue}

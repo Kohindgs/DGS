@@ -232,9 +232,12 @@ async function sendAlertEmail(item) {
     },
   });
 
+  const rawRecipients = (process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => Boolean(s) && !/ankur\.vishwakarma/i.test(s));
   const recipient =
-    process.env.DGS_SEARCH_UPDATE_NOTIFICATION_TO ||
-    "ankur.vishwakarma@dgeniussolutions.com";
+    rawRecipients.length > 0 ? rawRecipients.join(", ") : "kohin@dgeniussolutions.com";
   const from = process.env.DGS_SMTP_FROM || process.env.DGS_SMTP_USER;
 
   const subject = `[DGS Search Alert] [${item.severity}] ${item.title}`;

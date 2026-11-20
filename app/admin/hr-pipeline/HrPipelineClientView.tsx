@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import SaaSTable, { type Column } from "@/components/admin/SaaSTable";
 import PageHeader from "@/components/admin/PageHeader";
 import {
@@ -106,6 +107,9 @@ export default function HrPipelineClientView({
       const data = await res.json();
       if (res.ok && data.success) {
         setCandidateDocs(data.documents || []);
+        if (data.candidate) {
+          setSelectedCandidate((prev) => (prev && prev.id === cand.id ? { ...prev, ...data.candidate } : prev));
+        }
       }
     } catch (err) {
       console.error("Error loading candidate documents:", err);
@@ -503,6 +507,25 @@ export default function HrPipelineClientView({
                   </button>
                 </div>
               </label>
+
+              {/* Background Reference Verification */}
+              <div style={{ borderTop: "1px solid var(--dgs-border)", paddingTop: "14px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
+                <div>
+                  <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--dgs-text-primary)" }}>
+                    Last Employer Reference Check
+                  </div>
+                  <div style={{ fontSize: "0.75rem", color: "var(--dgs-text-dim)" }}>
+                    Scan CV, feed POC contact details, and verify employment from hr@dgeniussolutions.com.
+                  </div>
+                </div>
+                <Link
+                  href={`/admin/reference-checks/?tab=feeder&candidate=${encodeURIComponent(selectedCandidate.candidate_name || "")}&email=${encodeURIComponent(selectedCandidate.candidate_email || "")}&phone=${encodeURIComponent(selectedCandidate.candidate_phone || "")}`}
+                  className="dgs-saas-btn secondary sm"
+                  style={{ fontSize: "0.78rem", textDecoration: "none" }}
+                >
+                  Open Reference Check
+                </Link>
+              </div>
 
               {/* Document Tracking (REQ-31) */}
               <div style={{ borderTop: "1px solid var(--dgs-border)", paddingTop: "14px" }}>

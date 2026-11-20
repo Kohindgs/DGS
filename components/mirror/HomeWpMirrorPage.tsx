@@ -67,6 +67,12 @@ export async function HomeWpMirrorPage() {
       {prepared.fontLinks?.map((linkHtml, index) => {
         const parsed = parseHtmlLinkTag(linkHtml);
         if (!parsed) return null;
+        if (
+          parsed.rel === "preload" &&
+          parsed.href?.includes("thoughtful-logo-concept-featuring-ai-meaningful-way.webp")
+        ) {
+          return null;
+        }
         return (
           <link
             key={`font-${index}`}

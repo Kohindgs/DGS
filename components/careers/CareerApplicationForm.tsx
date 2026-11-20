@@ -138,7 +138,7 @@ export function CareerApplicationForm({
     }
 
     try {
-      const response = await fetch("/api/career/apply", {
+      const response = await fetch("/api/career/apply/", {
         method: "POST",
         body: formData,
       });
@@ -366,11 +366,16 @@ export function CareerApplicationForm({
                     </div>
                   </div>
                 ) : (
-                  <label className={styles.dropzoneButton}>
+                  <label
+                    htmlFor="career-portfolio-upload"
+                    className={styles.dropzoneButton}
+                    onClick={() => portfolioInputRef.current?.click()}
+                  >
                     <span>Choose PDF File (up to 15 MB)</span>
                   </label>
                 )}
                 <input
+                  id="career-portfolio-upload"
                   ref={portfolioInputRef}
                   type="file"
                   accept=".pdf"
@@ -384,7 +389,7 @@ export function CareerApplicationForm({
 
         {/* CV Upload */}
         <div className={styles.fullWidth}>
-          <label>Attach Resume / CV *</label>
+          <label htmlFor="career-resume-upload">Attach Resume / CV *</label>
           {resumeFile ? (
             <div className={styles.fileCard}>
               <div className={styles.fileMeta}>
@@ -411,11 +416,16 @@ export function CareerApplicationForm({
               </div>
             </div>
           ) : (
-            <label className={styles.dropzoneButton}>
+            <label
+              htmlFor="career-resume-upload"
+              className={styles.dropzoneButton}
+              onClick={() => resumeInputRef.current?.click()}
+            >
               <span>Upload CV (.pdf, .doc, .docx &bull; max 5 MB)</span>
             </label>
           )}
           <input
+            id="career-resume-upload"
             ref={resumeInputRef}
             name="resume"
             type="file"

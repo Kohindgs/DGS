@@ -29,8 +29,8 @@ export function InnerMirrorWidgets() {
     const root = document.querySelector(".dgs-wp-mirror-inner");
     if (!root) return;
 
-    // 1. FAQ Accordions (.faq-item, .case-faq-trigger)
-    const hasFaq = Boolean(root.querySelector(".faq-item, .case-faq-trigger"));
+    // 1. FAQ Accordions (.faq-item, .case-faq-trigger, .dgs-ai-faq-q)
+    const hasFaq = Boolean(root.querySelector(".faq-item, .case-faq-trigger, .dgs-ai-faq-item"));
     let onFaqClick: ((event: Event) => void) | undefined;
 
     if (hasFaq) {
@@ -54,6 +54,26 @@ export function InnerMirrorWidgets() {
               if (other !== item) setAnswerOpen(other, false);
             }
             setAnswerOpen(item, shouldOpen);
+            return;
+          }
+        }
+
+        // AI Production Ads LP FAQ (.dgs-ai-faq-q)
+        const aiFaqQuestion = target?.closest?.(".dgs-ai-faq-q");
+        if (aiFaqQuestion && root.contains(aiFaqQuestion)) {
+          const item = aiFaqQuestion.closest<HTMLElement>(".dgs-ai-faq-item");
+          if (item) {
+            event.preventDefault();
+            const isOpen = item.classList.contains("active");
+            const list = item.closest(".dgs-ai-faq") || root;
+            for (const other of list.querySelectorAll<HTMLElement>(".dgs-ai-faq-item.active")) {
+              if (other !== item) {
+                other.classList.remove("active");
+                other.querySelector(".dgs-ai-faq-q")?.setAttribute("aria-expanded", "false");
+              }
+            }
+            item.classList.toggle("active", !isOpen);
+            aiFaqQuestion.setAttribute("aria-expanded", String(!isOpen));
             return;
           }
         }

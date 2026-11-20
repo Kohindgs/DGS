@@ -246,33 +246,44 @@ async function getDashboardData() {
       }
       if (stats.ga4Connected) {
         try {
-          // Strictly query current 28-day window metrics
-          const { rows } = await cmsQuery<{
-            total_sessions: number;
-            total_views: number;
-            total_key_events: number;
-            avg_engagement_rate: number;
-            last_date: string;
-          }>(`
-            SELECT 
-              SUM(sessions) as total_sessions,
-              SUM(views) as total_views,
-              SUM(key_events) as total_key_events,
-              AVG(engagement_rate) as avg_engagement_rate,
-              MAX(metric_date) as last_date
-            FROM (
-              SELECT sessions, views, key_events, engagement_rate, metric_date
+          const { rows: ga4SyncRuns } = await cmsQuery<any>(
+            `SELECT sessions, views, key_events, engagement_rate, completed_at, window_end
+             FROM ga4_sync_runs
+             WHERE status = 'completed'
+             ORDER BY completed_at DESC LIMIT 1`
+          );
+          if (ga4SyncRuns && ga4SyncRuns.length > 0) {
+            stats.ga4Sessions = Number(ga4SyncRuns[0].sessions ?? 0);
+            stats.ga4Views = Number(ga4SyncRuns[0].views ?? 0);
+            stats.ga4EngagementRate = Number((Number(ga4SyncRuns[0].engagement_rate || 0) * 100).toFixed(1));
+            stats.ga4KeyEvents = Number(ga4SyncRuns[0].key_events ?? 0);
+            if (!stats.ga4LastSync && ga4SyncRuns[0].window_end) {
+              stats.ga4LastSync = formatSyncDate(ga4SyncRuns[0].window_end);
+            }
+          } else {
+            const { rows } = await cmsQuery<{
+              total_sessions: number;
+              total_views: number;
+              total_key_events: number;
+              avg_engagement_rate: number;
+              last_date: string;
+            }>(`
+              SELECT 
+                SUM(sessions) as total_sessions,
+                SUM(views) as total_views,
+                SUM(key_events) as total_key_events,
+                AVG(engagement_rate) as avg_engagement_rate,
+                MAX(metric_date) as last_date
               FROM ga4_daily_metrics
-              ORDER BY metric_date DESC
-              LIMIT 28
-            ) as recent_28d
-          `);
-          if (rows && rows[0]) {
-            stats.ga4Sessions = Number(rows[0].total_sessions ?? 0);
-            stats.ga4Views = Number(rows[0].total_views ?? 0);
-            stats.ga4EngagementRate = Number((Number(rows[0].avg_engagement_rate || 0) * 100).toFixed(1));
-            stats.ga4KeyEvents = Number(rows[0].total_key_events ?? 0);
-            if (!stats.ga4LastSync) stats.ga4LastSync = formatSyncDate(rows[0].last_date);
+              WHERE metric_date >= DATE_SUB(CURDATE(), INTERVAL 31 DAY)
+            `);
+            if (rows && rows[0]) {
+              stats.ga4Sessions = Number(rows[0].total_sessions ?? 0);
+              stats.ga4Views = Number(rows[0].total_views ?? 0);
+              stats.ga4EngagementRate = Number((Number(rows[0].avg_engagement_rate || 0) * 100).toFixed(1));
+              stats.ga4KeyEvents = Number(rows[0].total_key_events ?? 0);
+              if (!stats.ga4LastSync) stats.ga4LastSync = formatSyncDate(rows[0].last_date);
+            }
           }
         } catch {}
       }

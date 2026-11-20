@@ -1341,7 +1341,7 @@ async function dispatchDeduplicatedAlert(params: {
     // 3. Record in google_update_notifications table with unique constraint
     const notifId = randomUUID();
     const sentAt = new Date().toISOString().slice(0, 19).replace("T", " ");
-    const recipient = emailResult.recipient || "ankur.vishwakarma@dgeniussolutions.com";
+    const recipient = emailResult.recipient || "kohin@dgeniussolutions.com";
 
     await cmsExecute(
       `INSERT INTO google_update_notifications

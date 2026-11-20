@@ -123,6 +123,32 @@ export function prepareHomepageMirror(content: WpMirrorContent): PreparedHomepag
   );
 
   mainHtml = rewriteWpUrls(mainHtml);
+
+  // Ensure all <img> elements have explicit width and height attributes to prevent CLS
+  mainHtml = mainHtml.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
+    if (/\bwidth=/i.test(attrs) && /\bheight=/i.test(attrs)) return match;
+    const isLogoOrIcon = /logo|icon|badge|chip|avatar/i.test(attrs);
+    const w = isLogoOrIcon ? "160" : "800";
+    const h = isLogoOrIcon ? "60" : "500";
+    let next = match;
+    if (!/\bwidth=/i.test(attrs)) next = next.replace(/<img\b/i, `<img width="${w}"`);
+    if (!/\bheight=/i.test(attrs)) next = next.replace(/<img\b/i, `<img height="${h}"`);
+    return next;
+  });
+
+  // Ensure any empty overlay <a> links have an accessible aria-label
+  mainHtml = mainHtml.replace(
+    /<a\b([^>]*href=["']([^"']+)["'][^>]*)>\s*<\/a>/gi,
+    (match, attrs, href) => {
+      if (/\baria-label=/i.test(attrs)) return match;
+      const cleanLabel =
+        href === "#" || href.startsWith("#")
+          ? "Explore section"
+          : `Explore ${href.replace(/^\/+|\/+$/g, "").replace(/[-/]+/g, " ") || "D'Genius Solutions"}`;
+      return `<a${attrs} aria-label="${cleanLabel}"></a>`;
+    },
+  );
+
   const segments = buildSegments(mainHtml);
 
   const combinedStyles = rewriteWpUrls(

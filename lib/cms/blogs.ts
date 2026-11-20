@@ -148,6 +148,23 @@ function stripHtmlText(html: string): string {
   return html.replace(/<[^>]+>/g, " ").replace(/&[^;]+;/g, " ").replace(/\s+/g, " ").trim();
 }
 
+let lastLazyScheduleCheckMs = 0;
+
+/**
+ * Throttled lazy self-healing check (max once per 60s) so due scheduled blogs go live on time
+ * even if external GitHub Actions cron triggers are delayed.
+ */
+async function ensureDueScheduledBlogsPublishedLazy(): Promise<void> {
+  const now = Date.now();
+  if (now - lastLazyScheduleCheckMs < 60_000) return;
+  lastLazyScheduleCheckMs = now;
+  try {
+    await checkAndPublishScheduledBlogsDetailed();
+  } catch (err) {
+    console.warn("[blogs] Lazy scheduled check warning:", err);
+  }
+}
+
 // 1. List Blogs with Filtering, View Tabs, Search, and Counts
 export async function listCmsBlogsDetailed(params?: {
   view?: BlogFilterView;
@@ -161,6 +178,7 @@ export async function listCmsBlogsDetailed(params?: {
   limit: number;
   counts: BlogViewCounts;
 }> {
+  await ensureDueScheduledBlogsPublishedLazy();
   const view = params?.view || "all";
   const search = params?.search?.trim() || "";
   const page = Math.max(1, Number(params?.page || 1));
@@ -1119,6 +1137,7 @@ export async function checkAndPublishScheduledBlogs(): Promise<string[]> {
 
 // 12. List Published Blogs for Public Archive & Sitemaps
 export async function listPublishedCmsBlogs(limit = 100): Promise<CmsPublishedBlog[]> {
+  await ensureDueScheduledBlogsPublishedLazy();
   const safeLimit = Math.min(Math.max(limit, 1), 200);
   const result = await cmsQuery<CmsPublishedBlog>(
     `SELECT id, slug, title, excerpt, content, status, published_at, updated_at
@@ -1133,6 +1152,7 @@ export async function listPublishedCmsBlogs(limit = 100): Promise<CmsPublishedBl
 
 // 13. Get Single Published Blog by Slug for Public Rendering
 export async function getPublishedCmsBlogBySlug(slug: string): Promise<CmsPublishedBlog | null> {
+  await ensureDueScheduledBlogsPublishedLazy();
   const result = await cmsQuery<CmsPublishedBlog>(
     `SELECT id, slug, title, excerpt, content, status, author_name,
             content_owner, reviewer, review_date, review_status, source_type,
@@ -1225,7 +1245,24 @@ export function cmsBlogToPublicPost(blog: CmsPublishedBlog) {
   // Build TOC
   const toc: Array<{ id: string; text: string; level: 2 | 3 }> = [];
   const usedIds = new Set<string>();
-  const anchoredHtml = (content.bodyHtml || "").replace(
+  const sanitizedBodyHtml = (content.bodyHtml || "")
+    .replace(
+      /<p\b[^>]*>\s*(?:<(?:strong|em|b|i|span)[^>]*>\s*)*(?:Generate an image|Image Prompt|Prompt:|Suggested Read:?)\b[\s\S]*?<\/p>/gi,
+      "",
+    )
+    .replace(/\bbest seo services in india\b/g, "best SEO services in India")
+    .replace(/\baffordable seo services in india\b/g, "affordable SEO services in India")
+    .replace(/\bseo packages in india\b/g, "SEO packages in India")
+    .replace(/\bprofessional seo services\b/g, "professional SEO services")
+    .replace(/\btop seo company in india\b/g, "top SEO company in India")
+    .replace(/<img\b([^>]*)>/gi, (match, attrs) => {
+      if (/\bwidth=/i.test(attrs) && /\bheight=/i.test(attrs)) return match;
+      let next = match;
+      if (!/\bwidth=/i.test(attrs)) next = next.replace(/<img\b/i, '<img width="800"');
+      if (!/\bheight=/i.test(attrs)) next = next.replace(/<img\b/i, '<img height="450"');
+      return next;
+    });
+  const anchoredHtml = sanitizedBodyHtml.replace(
     /<h([23])([^>]*)>([\s\S]*?)<\/h\1>/gi,
     (full, levelRaw, attrs, inner) => {
       const headingText = stripHtmlText(String(inner));
