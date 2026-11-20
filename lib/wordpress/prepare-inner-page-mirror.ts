@@ -21,6 +21,16 @@ function stripLeadingCloseTags(html: string): string {
   return html.replace(/^(?:\s*<\/(?:div|header|section|main|span|nav|aside)>)+/i, "").trim();
 }
 
+function stripEmbeddedDocumentWrapper(html: string): string {
+  let out = html;
+  if (/<(?:!doctype|html|head)\b/i.test(out)) {
+    out = out
+      .replace(/<!DOCTYPE\b[^>]*>[\s\S]*?<body\b[^>]*>/gi, "")
+      .replace(/<\/body>\s*<\/html>/gi, "");
+  }
+  return out;
+}
+
 function normalizeSemanticH1(path: string, html: string): string {
   let output = html;
   output = output.replace(
@@ -400,7 +410,7 @@ export function prepareInnerPageMirror(
   }
   let body = stripReviewStructuredData(
     markElementorBackgroundsReady(
-      unwrapMirrorLazyMedia(stripCapturedFooters(stripLeadingCloseTags(content.body || ""))),
+      unwrapMirrorLazyMedia(stripCapturedFooters(stripEmbeddedDocumentWrapper(stripLeadingCloseTags(content.body || "")))),
     ),
   );
   if (content.path === "/portfolio/") {

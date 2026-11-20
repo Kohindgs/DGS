@@ -132,6 +132,16 @@ const APPENDED_PAGE_FAQS: Record<string, FaqItem[]> = {
       answer: "Hiring a specialized LLM SEO company in India combines senior technical schema implementation, entity disambiguation, and multi-market content strategy with measurable attribution. D'Genius Solutions helps Indian, UAE, US, and Australian brands build verified machine-readable authority that compounds alongside traditional Google SEO.",
     },
   ],
+  "/services/seo-services-in-mumbai/": [
+    {
+      question: "What does an AI SEO agency in Mumbai do differently from traditional SEO?",
+      answer: "An AI SEO agency in Mumbai combines core technical SEO, Core Web Vitals, and local search signals with Answer Engine Optimization (AEO), structured entity graphs, and extractable answer blocks so your brand ranks both in classic Google listings and inside AI Overviews, ChatGPT, and Perplexity.",
+    },
+    {
+      question: "What is included in professional SEO services in Mumbai at D'Genius Solutions?",
+      answer: "Our professional SEO services in Mumbai include full-site technical audits, direct code-level fixes across Next.js and WordPress, commercial intent keyword mapping, on-page and FAQ architecture, local Google Business Profile optimization, and transparent Search Console conversion reporting.",
+    },
+  ],
 };
 
 export function buildGlobalEntitySchemas(): Record<string, unknown>[] {
