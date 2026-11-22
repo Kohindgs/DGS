@@ -63,24 +63,44 @@ const VERIFIED_PAGE_FAQS: Record<string, FaqItem[]> = {
   ],
   "/services/ai-video-production-agency/": [
     {
-      question: "What is an AI Video Production Agency?",
-      answer: "An AI Video Production Agency combines generative AI video models, custom voice synthesis, and digital avatars with human creative direction, scriptwriting, and professional post-production to deliver broadcast-ready commercials, product films, and social reels faster and more cost-effectively than traditional shoots.",
+      question: "Is D’Genius Solutions an AI video production agency in Mumbai?",
+      answer: "Yes. D’Genius Solutions works as an AI video production agency in Mumbai for brands that need AI-generated ads, AI commercials, AI product videos, AI brand films, AI avatar videos, AI mascot videos, AI reels and campaign visuals with strategy, scripting, editing and delivery.",
     },
     {
-      question: "How does AI video production compare to traditional video production?",
-      answer: "AI video production reduces production timelines from 6–8 weeks to 7–14 days and eliminates physical location, studio, and reshoot overheads while allowing rapid multilingual localization and A/B hook testing.",
+      question: "Which AI video production house in Mumbai creates ads, films and product videos?",
+      answer: "D’Genius Solutions is an AI video production house and agency in Mumbai that creates AI ads, product videos, AI avatar videos, mascot videos, jewellery videos, social media reels and brand films for businesses that need faster campaign-ready video content with human creative direction and editing.",
     },
     {
-      question: "Will the AI videos look realistic and match our brand guidelines?",
-      answer: "Yes. Our human creative directors, motion designers, and editors grade, composite, and refine every frame—integrating your exact product renders, typography, color palette, and brand tone.",
+      question: "What is AI video production in Mumbai?",
+      answer: "AI video production in Mumbai is the process of creating campaign-ready videos with generative AI tools, scripting, creative direction, editing, sound design and platform formatting. D’Genius Solutions provides this service for ads, reels, product launches, brand films, explainers and website campaigns.",
     },
     {
-      question: "Can you produce AI videos in multiple Indian and international languages?",
-      answer: "Absolutely. We produce lip-synced and voice-cloned versions across English, Hindi, Marathi, Tamil, Telugu, Arabic, and global languages so one master film scales across every regional market.",
+      question: "What is the cost of AI video production in Mumbai?",
+      answer: "The cost of AI video production in Mumbai depends on video length, style, script, number of scenes, AI avatar needs, voiceover, editing, music, revisions and platform formats. D’Genius Solutions provides custom AI video production pricing based on the campaign goal and creative complexity.",
+    },
+    {
+      question: "Which Mumbai areas do you serve for AI video production?",
+      answer: "D’Genius Solutions serves Mumbai, Andheri West, Bandra, BKC, Lower Parel, Powai, Goregaon, Malad, Navi Mumbai, Thane and India-wide remote clients for AI video production, AI ad films, product videos, avatar videos, mascot videos and brand campaigns.",
+    },
+    {
+      question: "What types of AI videos can D’Genius Solutions create?",
+      answer: "D’Genius Solutions creates AI video ads, product videos, AI avatar videos, AI mascot videos, jewellery videos, festival videos, social media reels, brand films, explainers, concept films and campaign videos for brands in Mumbai and across India.",
+    },
+    {
+      question: "Do you provide AI ad film production in Mumbai?",
+      answer: "Yes. D’Genius Solutions provides AI ad film production in Mumbai for brands that need AI commercials, product launch videos, brand films, festive campaign videos, performance ad creatives and social media video assets.",
+    },
+    {
+      question: "Can AI video production replace traditional video shoots?",
+      answer: "AI video production can reduce the need for traditional shoots for many ads, explainers, social media videos, product visuals and concept films. For premium campaigns, AI production can also work with traditional editing, scripting, sound design and creative direction.",
     },
     {
       question: "How does a specialized AI video production agency help brands scale campaigns?",
       answer: "A specialized AI video production agency combines generative video models, voice cloning, and brand-consistent AI avatars with human creative direction and studio-grade editing. This reduces campaign turnaround from weeks to days while producing TV commercials, product films, and multilingual social reels at lower cost than physical shoots.",
+    },
+    {
+      question: "Does D’Genius Solutions produce industry-specific AI videos in Mumbai for pharma, jewellery, fintech, IT, and documentaries?",
+      answer: "Yes. From Khar West, Mumbai, D’Genius Solutions produces AI pharma and healthcare explainers, photorealistic luxury jewellery films, fintech and BFSI app commercials, B2B IT and SaaS product demos, EdTech curriculum modules, TV commercials, and documentary storytelling films in 7 to 14 days.",
     },
   ],
 };
@@ -281,11 +301,27 @@ export function buildRouteSchemas(input: {
         ...(isAiVideoAgency
           ? {
               hasOfferCatalog: {
-                name: "Industry AI Video Production Services",
+                name: "Industry AI Video Production Services in Mumbai",
                 itemListElement: [
                   {
                     name: "Automotive & Automobile Sales AI Video Production",
                     description: "AI video production for car launches, vehicle feature explainers, and dealership marketing campaigns.",
+                  },
+                  {
+                    name: "Pharmaceutical & Healthcare AI Video Production",
+                    description: "Compliant mechanism-of-action animations, medical device explainers, and multilingual patient communication videos.",
+                  },
+                  {
+                    name: "Jewellery & Luxury Retail AI Video Production",
+                    description: "Photorealistic macro jewellery commercials, bridal lookbooks, and festive collection reels without physical studio risk.",
+                  },
+                  {
+                    name: "Fintech & BFSI AI Video Production",
+                    description: "Product launch ads, onboarding explainers, and vernacular customer education videos for fintech and financial services.",
+                  },
+                  {
+                    name: "IT & B2B SaaS AI Video Production",
+                    description: "Software product walkthroughs, enterprise explainer films, and LinkedIn video ads for IT and SaaS teams.",
                   },
                   {
                     name: "EdTech & Education AI Video Production",
@@ -298,6 +334,10 @@ export function buildRouteSchemas(input: {
                   {
                     name: "Manufacturing & Industrial AI Video Production",
                     description: "Machinery explainers, technical process walkthroughs, and B2B sales presentation videos.",
+                  },
+                  {
+                    name: "AI TV Commercials & Documentary Films",
+                    description: "Broadcast-ready AI TV commercials, OTT spots, and narrative brand documentary films.",
                   },
                 ],
               },

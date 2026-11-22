@@ -481,7 +481,7 @@ export function buildServicesHubHtml(): string {
               <span class="dgs-sh-badge is-coral">AI Studio</span>
               <span class="dgs-sh-num">05</span>
             </div>
-            <h3 class="dgs-sh-card-title">AI Video Production Agency</h3>
+            <h3 class="dgs-sh-card-title">AI Video Production Agency in Mumbai</h3>
             <p class="dgs-sh-card-desc">
               Cinema-grade AI commercial films, TVCs, product launch videos, mythological &amp; brand storytelling, and high-ROAS performance video ads delivered at 5x traditional studio speed.
             </p>
@@ -492,7 +492,7 @@ export function buildServicesHubHtml(): string {
               <span class="dgs-sh-tag">AI Avatars &amp; Mascots</span>
             </div>
           </div>
-          <span class="dgs-sh-card-link">Explore AI Video Production →</span>
+          <span class="dgs-sh-card-link">Explore AI Video Production Agency in Mumbai →</span>
         </a>
 
         <a href="/services/website-development-amc/" class="dgs-sh-card">

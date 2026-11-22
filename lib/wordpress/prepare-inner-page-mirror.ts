@@ -174,6 +174,14 @@ function stripReviewStructuredData(html: string): string {
   return output;
 }
 
+function stripAiVideoInlineMicrodata(path: string, html: string): string {
+  if (path !== "/services/ai-video-production-agency/") return html;
+  return html
+    .replace(/\s*\bitemscope\b(?:=["'][^"']*["'])?/gi, "")
+    .replace(/\s*\bitemtype=["']https?:\/\/schema\.org\/[^"']*["']/gi, "")
+    .replace(/\s*\bitemprop=["'][^"']*["']/gi, "");
+}
+
 function remediateMirrorImageAlts(path: string, html: string): string {
   let output = html;
 
@@ -284,7 +292,7 @@ function appendSemanticAuthoritySections(path: string, html: string): string {
   <ul style="margin:0 0 22px;padding-left:20px;line-height:1.75;font-size:0.98rem;color:rgba(241,245,249,0.86);">
     <li><strong>75+ Brands Scaled Globally:</strong> Proven organic and paid growth across India, the UAE (Dubai), the United States, and Australia, including enterprise and high-growth leaders such as <em>TheWorldGrad</em> (6x organic traffic), <em>Weavings Manpower</em> (17.4K search clicks), <em>Pidilite</em>, <em>Cello</em>, <em>Bajaj</em>, and <em>HumanXT</em>.</li>
     <li><strong>Full-Funnel Search &amp; AI Visibility:</strong> Integrated execution across <a href="/services/seo-services-in-mumbai/" style="${linkStyle}">SEO Services in Mumbai</a>, <a href="/services/aeo-services-in-mumbai/" style="${linkStyle}">Answer Engine Optimization (AEO)</a>, <a href="/services/geo/" style="${linkStyle}">Generative Engine Optimization (GEO)</a>, and <a href="/services/llm-seo-service/" style="${linkStyle}">LLM SEO</a>.</li>
-    <li><strong>Engineering, Creative &amp; Paid Media Under One Roof:</strong> Direct deployment across <a href="/services/website-development-amc/" style="${linkStyle}">Custom Website Development &amp; AMC</a>, <a href="/services/ai-video-production-agency/" style="${linkStyle}">AI Video Production</a>, <a href="/services/performance-marketing/" style="${linkStyle}">Performance Marketing (Google &amp; Meta Ads)</a>, <a href="/services/social-media-marketing/" style="${linkStyle}">Social Media Marketing</a>, <a href="/services/branding/" style="${linkStyle}">Brand Strategy &amp; Identity Design</a>, and <a href="/services/content-creation/" style="${linkStyle}">SEO Content Creation</a>.</li>
+    <li><strong>Engineering, Creative &amp; Paid Media Under One Roof:</strong> Direct deployment across <a href="/services/website-development-amc/" style="${linkStyle}">Custom Website Development &amp; AMC</a>, <a href="/services/ai-video-production-agency/" style="${linkStyle}">AI Video Production Agency in Mumbai</a>, <a href="/services/performance-marketing/" style="${linkStyle}">Performance Marketing (Google &amp; Meta Ads)</a>, <a href="/services/social-media-marketing/" style="${linkStyle}">Social Media Marketing</a>, <a href="/services/branding/" style="${linkStyle}">Brand Strategy &amp; Identity Design</a>, and <a href="/services/content-creation/" style="${linkStyle}">SEO Content Creation</a>.</li>
   </ul>
   <p style="margin:0;font-size:0.95rem;color:rgba(241,245,249,0.88);">
     Explore our <a href="/services/" style="${linkStyle}">Complete Digital Marketing &amp; AI Services Hub</a> or review our <a href="/case_studies/" style="${linkStyle}">Verified Client Case Studies</a>.
@@ -332,9 +340,9 @@ function appendSemanticAuthoritySections(path: string, html: string): string {
           "D'Genius Solutions is a premier Answer Engine Optimization (AEO) agency in Khar West, Mumbai backed by verified client case studies—including 6x organic traffic growth for TheWorldGrad and 17.4K+ high-intent clicks for Weavings Manpower. We structure your service pages and FAQs to capture Featured Snippets, People Also Ask, and Google AI Overviews.",
       },
       "/services/ai-video-production-agency/": {
-        heading: "AI Video Production Company & Creative Studio in Mumbai, India",
+        heading: "AI Video Production Agency in Mumbai — Studio Output Without Physical Shoot Delays",
         answer:
-          "Ranked among the leading AI video production companies in Mumbai and India, D'Genius Solutions produces broadcast-ready AI video ads, product films, jewellery videos, AI avatars, and OTT commercials without expensive physical studio shoots—helping brands launch high-converting video campaigns faster and at scale.",
+          "D'Genius Solutions is a specialized AI video production agency in Khar West, Mumbai producing AI commercials, product films, luxury jewellery reels, pharma/IT explainers, AI avatars, and broadcast TVCs in 7 to 14 days—combining generative video direction with cinema-grade editing and multilingual voiceovers.",
       },
     };
 
@@ -367,7 +375,7 @@ function appendSemanticAuthoritySections(path: string, html: string): string {
     <a href="/services/geo/" style="${linkStyle}margin-left:6px;">Generative Engine Optimization (GEO)</a> •
     <a href="/services/llm-seo-service/" style="${linkStyle}margin-left:6px;">LLM SEO Services</a> •
     <a href="/services/website-development-amc/" style="${linkStyle}margin-left:6px;">Website Development &amp; AMC</a> •
-    <a href="/services/ai-video-production-agency/" style="${linkStyle}margin-left:6px;">AI Video Production Agency</a> •
+    <a href="/services/ai-video-production-agency/" style="${linkStyle}margin-left:6px;">AI Video Production Agency in Mumbai</a> •
     <a href="/services/performance-marketing/" style="${linkStyle}margin-left:6px;">Performance Marketing</a> •
     <a href="/services/social-media-marketing/" style="${linkStyle}margin-left:6px;">Social Media Marketing</a> •
     <a href="/services/branding/" style="${linkStyle}margin-left:6px;">Branding</a> •
@@ -408,9 +416,12 @@ export function prepareInnerPageMirror(
       fontLinks: content.fontLinks?.map((tag) => rewriteWpUrls(tag)),
     };
   }
-  let body = stripReviewStructuredData(
-    markElementorBackgroundsReady(
-      unwrapMirrorLazyMedia(stripCapturedFooters(stripEmbeddedDocumentWrapper(stripLeadingCloseTags(content.body || "")))),
+  let body = stripAiVideoInlineMicrodata(
+    content.path,
+    stripReviewStructuredData(
+      markElementorBackgroundsReady(
+        unwrapMirrorLazyMedia(stripCapturedFooters(stripEmbeddedDocumentWrapper(stripLeadingCloseTags(content.body || "")))),
+      ),
     ),
   );
   if (content.path === "/portfolio/") {

@@ -32,13 +32,13 @@ const PAGE_SEO_OVERRIDES: Record<string, PageSeoOverride> = {
   },
   "/services/ai-video-production-agency/": {
     title: "AI Video Production Agency in Mumbai | D’Genius Solutions",
-    description: "Leading AI video production agency & company in Mumbai, India creating AI video ads, product films, avatars, reels & TV commercials—no studio shoots required.",
+    description: "Leading AI video production agency in Mumbai creating AI brand films, product ads, avatars, TV commercials & reels in 7–14 days without physical studio shoots.",
     ogTitle: "AI Video Production Agency in Mumbai | D’Genius Solutions",
     twitterTitle: "AI Video Production Agency in Mumbai | D’Genius Solutions",
-    breadcrumbLabel: "AI Video Production Agency",
-    serviceName: "AI Video Production Services",
-    serviceType: "AI Video Production, AI Video Ads, AI Product Videos, AI Avatar Videos, AI TV Commercials, AI Brand Films",
-    areaServed: ["Mumbai", "Maharashtra", "India", "United Arab Emirates", "United States", "Australia"],
+    breadcrumbLabel: "AI Video Production Agency in Mumbai",
+    serviceName: "AI Video Production Agency & Studio in Mumbai",
+    serviceType: "AI Video Production Agency, AI Corporate & Brand Films, AI E-Commerce & Product Videos, AI Avatar Videos, AI TV Commercials, AI Documentary Films",
+    areaServed: ["Mumbai", "Andheri", "Bandra", "BKC", "Lower Parel", "Powai", "Navi Mumbai", "Thane", "Maharashtra", "India"],
   },
   "/services/seo-services-in-mumbai/": {
     title: "SEO Agency in Mumbai | Enterprise & AI SEO Services | DGS",
