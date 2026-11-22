@@ -142,6 +142,26 @@ const APPENDED_PAGE_FAQS: Record<string, FaqItem[]> = {
       answer: "Our professional SEO services in Mumbai include full-site technical audits, direct code-level fixes across Next.js and WordPress, commercial intent keyword mapping, on-page and FAQ architecture, local Google Business Profile optimization, and transparent Search Console conversion reporting.",
     },
   ],
+  "/services/seo-service-in-gurugram/": [
+    {
+      question: "What makes an AI SEO agency in Gurugram different from a legacy SEO vendor?",
+      answer: "An AI SEO agency in Gurugram optimizes both classic Google rankings and generative answer engines like AI Overviews, ChatGPT, and Perplexity—combining Core Web Vitals engineering, JSON-LD entity graphs, and commercial B2B landing pages tailored to NCR enterprise buyers.",
+    },
+    {
+      question: "Which industries in Gurugram and Delhi NCR benefit most from enterprise SEO services?",
+      answer: "SaaS platforms, IT/ITeS consultancies, real estate developers, healthcare networks, and B2B manufacturing brands across Cyber City, Udyog Vihar, Golf Course Road, and Delhi NCR see compounding organic pipeline and lower blended CAC with structured technical and AI SEO.",
+    },
+  ],
+  "/services/seo-services-in-hyderabad/": [
+    {
+      question: "Why partner with an AI SEO agency in Hyderabad for enterprise and SaaS growth?",
+      answer: "An AI SEO agency in Hyderabad helps B2B SaaS, HITEC City tech firms, pharma, and healthcare organizations capture high-intent search demand across classic SERPs and AI answer engines through schema precision, topical authority hubs, and measurable Search Console attribution.",
+    },
+    {
+      question: "How does D'Genius Solutions execute SEO services in Hyderabad without slowing internal dev teams?",
+      answer: "D'Genius Solutions handles technical audits, metadata architecture, internal linking, FAQ schema, and CMS-native optimizations directly while coordinating cleanly with engineering teams when deeper Next.js or WordPress template upgrades are needed.",
+    },
+  ],
 };
 
 export function buildGlobalEntitySchemas(): Record<string, unknown>[] {
