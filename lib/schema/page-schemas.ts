@@ -182,6 +182,28 @@ const APPENDED_PAGE_FAQS: Record<string, FaqItem[]> = {
       answer: "D'Genius Solutions handles technical audits, metadata architecture, internal linking, FAQ schema, and CMS-native optimizations directly while coordinating cleanly with engineering teams when deeper Next.js or WordPress template upgrades are needed.",
     },
   ],
+  "/services/shirdi-se-sai-tak-case-study/": [
+    {
+      question: "What is the Shirdi Se Sai Tak AI avatar series?",
+      answer: "Shirdi Se Sai Tak is a devotional AI avatar video series inspired by Sai Baba-themed spiritual storytelling. It uses AI-generated visuals, avatar-led scenes, emotional messaging, editing and vertical video formatting for Instagram Reels and YouTube Shorts.",
+    },
+    {
+      question: "Can D’Genius Solutions create a similar AI avatar series for other brands?",
+      answer: "Yes. D’Genius Solutions can create AI avatar video series for devotional pages, mythology content, brand mascots, education, healthcare, real estate, coaching, corporate communication and social media storytelling.",
+    },
+    {
+      question: "Which platforms are these Shirdi Se Sai Tak AI avatar videos made for?",
+      answer: "The videos are mainly planned for Instagram Reels, YouTube Shorts, Facebook Reels, WhatsApp sharing and website portfolio pages. They can also be adapted for paid ads and landing pages when needed.",
+    },
+    {
+      question: "Why use AI avatars for devotional content?",
+      answer: "AI avatars help devotional content become more visual, consistent and scalable. They allow creators to build recognizable spiritual video formats without depending on frequent live shoots, sets or production logistics.",
+    },
+    {
+      question: "What does DGS handle in AI avatar video production?",
+      answer: "DGS handles content strategy, scripting, visual direction, AI avatar scene creation, editing, sound, subtitles, social media formatting and final campaign-ready video exports.",
+    },
+  ],
 };
 
 export function buildGlobalEntitySchemas(): Record<string, unknown>[] {

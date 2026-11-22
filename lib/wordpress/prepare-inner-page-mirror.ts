@@ -174,8 +174,7 @@ function stripReviewStructuredData(html: string): string {
   return output;
 }
 
-function stripAiVideoInlineMicrodata(path: string, html: string): string {
-  if (path !== "/services/ai-video-production-agency/") return html;
+function stripLegacyMirrorMicrodata(html: string): string {
   return html
     .replace(/\s*\bitemscope\b(?:=["'][^"']*["'])?/gi, "")
     .replace(/\s*\bitemtype=["']https?:\/\/schema\.org\/[^"']*["']/gi, "")
@@ -416,8 +415,7 @@ export function prepareInnerPageMirror(
       fontLinks: content.fontLinks?.map((tag) => rewriteWpUrls(tag)),
     };
   }
-  let body = stripAiVideoInlineMicrodata(
-    content.path,
+  let body = stripLegacyMirrorMicrodata(
     stripReviewStructuredData(
       markElementorBackgroundsReady(
         unwrapMirrorLazyMedia(stripCapturedFooters(stripEmbeddedDocumentWrapper(stripLeadingCloseTags(content.body || "")))),

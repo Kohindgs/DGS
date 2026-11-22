@@ -12,7 +12,7 @@ import styles from "./career.module.css";
 export async function generateMetadata(): Promise<Metadata> {
   const title = "Careers at D'Genius Solutions | Jobs in Khar West, Mumbai";
   const description =
-    "Explore current career opportunities at D'Genius Solutions in Khar West, Mumbai across digital marketing, SEO, design, technology, content and AI-led creative work.";
+    "Explore career opportunities at D'Genius Solutions in Khar West, Mumbai across SEO, digital marketing, UI/UX design, web tech, content & AI video production.";
   const indexable = isPublicIndexingEnabled();
 
   return {
